@@ -1,5 +1,5 @@
 ---
-title: "Sistemas de Información en el Contexto de Negocios"
+title: "Sistemas de Información en el Contexto Empresarial"
 subtitle: "Clase 1 - Big Data y Analytics"
 author: "Universidad San Sebastián"
 ---
@@ -8,7 +8,7 @@ author: "Universidad San Sebastián"
 
 **Big Data y Analytics**
 
-Unidad 1: Sistemas de Información en el Contexto de Negocios
+Unidad 1: Sistemas de Información en el Contexto Empresarial
 
 ::: {.notes}
 Dar la bienvenida a los estudiantes. Explicar que hoy tendrán una experiencia práctica antes de la teoría.

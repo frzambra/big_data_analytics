@@ -303,210 +303,210 @@
   {
     "objectID": "clases/class_week_1.html#bienvenidos",
     "href": "clases/class_week_1.html#bienvenidos",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "Bienvenidos",
-    "text": "Bienvenidos\nBig Data y Analytics\nUnidad 1: Sistemas de Información en el Contexto de Negocios\n\nDar la bienvenida a los estudiantes. Explicar que hoy tendrán una experiencia práctica antes de la teoría."
+    "text": "Bienvenidos\nBig Data y Analytics\nUnidad 1: Sistemas de Información en el Contexto Empresarial\n\nDar la bienvenida a los estudiantes. Explicar que hoy tendrán una experiencia práctica antes de la teoría."
   },
   {
     "objectID": "clases/class_week_1.html#situación-real-lunes-900-am",
     "href": "clases/class_week_1.html#situación-real-lunes-900-am",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "Situación Real: Lunes 9:00 AM",
     "text": "Situación Real: Lunes 9:00 AM\nReunión de Gerencia - TechStyle\nMaría González, Gerente de Marketing de TechStyle (tienda online de retail), debe presentar su propuesta para la campaña del próximo mes.\nPresupuesto: $15.000.000 CLP\nPregunta: ¿En qué categoría de productos invertir para maximizar las ventas?\n\nPlantear el escenario como si los estudiantes estuvieran en esa sala. Hacer que se sientan parte de la situación."
   },
   {
     "objectID": "clases/class_week_1.html#techstyle-la-empresa",
     "href": "clases/class_week_1.html#techstyle-la-empresa",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "TechStyle: La Empresa",
     "text": "TechStyle: La Empresa\n\nFundada: 2018\nModelo: E-commerce (ropa, accesorios, electrónica, hogar)\nClientes: 450.000 usuarios registrados\nOperación: Nacional (Chile)\nDesafío: Crecimiento sostenible en mercado competitivo\n\n\n¿Cómo debería María tomar esta decisión?\n\n\nPreguntar a los estudiantes: ¿Ustedes qué harían? ¿Intuición? ¿Experiencia pasada?"
   },
   {
     "objectID": "clases/class_week_1.html#el-activo-de-techstyle-sus-datos",
     "href": "clases/class_week_1.html#el-activo-de-techstyle-sus-datos",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "El Activo de TechStyle: Sus Datos",
     "text": "El Activo de TechStyle: Sus Datos\nMaría tiene acceso a las bases de datos de la empresa:\n\nTabla users: 450.000 registros\nTabla orders: 2.340.000 registros\nTabla order_items: 8.750.000 registros\nTabla products: 12.500 registros\n\n\nDatos de 5 años de operación\n\n\nEnfatizar el VOLUMEN. Esto es Big Data en contexto empresarial real."
   },
   {
     "objectID": "clases/class_week_1.html#ejemplo-tabla-order_items",
     "href": "clases/class_week_1.html#ejemplo-tabla-order_items",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "Ejemplo: Tabla order_items",
     "text": "Ejemplo: Tabla order_items\n\n\n\norder_id\nproduct_id\nquantity\nunit_price\ncategory\n\n\n\n\n875432\n4521\n2\n29.990\nRopa\n\n\n875432\n8834\n1\n89.990\nElectrónica\n\n\n875433\n2341\n3\n15.990\nHogar\n\n\n875433\n5512\n1\n125.000\nElectrónica\n\n\n875434\n7821\n1\n45.990\nAccesorios\n\n\n\n… y así 8.750.000 filas más\n\nMostrar que son datos “crudos”. No son útiles así tal cual."
   },
   {
     "objectID": "clases/class_week_1.html#el-equipo-de-análisis-trabajó",
     "href": "clases/class_week_1.html#el-equipo-de-análisis-trabajó",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "El Equipo de Análisis Trabajó",
     "text": "El Equipo de Análisis Trabajó\nMaría pidió al equipo técnico que procesara los datos.\nPregunta realizada: “¿Cuál categoría genera más ventas y tiene mejor margen?”\n\nEl equipo analizó 5 años de datos en minutos\n\n\nNo explicar cómo. Solo enfatizar que procesaron millones de registros rápidamente."
   },
   {
     "objectID": "clases/class_week_1.html#resultado-del-análisis",
     "href": "clases/class_week_1.html#resultado-del-análisis",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "Resultado del Análisis",
     "text": "Resultado del Análisis\n\n\n\n\n\n\n\n\n\n\nCategoría\nVentas Totales (CLP)\nCantidad Órdenes\nMargen Promedio\nTendencia\n\n\n\n\nElectrónica\n3.840.000.000\n156.000\n22%\n↗ +15%\n\n\nRopa\n2.950.000.000\n312.000\n35%\n→ 0%\n\n\nHogar\n1.870.000.000\n98.000\n28%\n↗ +8%\n\n\nAccesorios\n1.120.000.000\n187.000\n42%\n↘ -5%\n\n\n\n\nDar tiempo para que lean la tabla. Preguntar qué observan."
   },
   {
     "objectID": "clases/class_week_1.html#interpretación",
     "href": "clases/class_week_1.html#interpretación",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "Interpretación",
     "text": "Interpretación\n\nElectrónica: mayor volumen, pero margen bajo (22%)\nRopa: buen equilibrio, pero sin crecimiento\nHogar: creciendo (+8%), margen aceptable (28%)\nAccesorios: mejor margen (42%), pero decreciendo (-5%)\n\n\n¿Qué decisión tomarían ustedes?\n\n\nAbrir discusión. No hay respuesta única. Depende de la estrategia."
   },
   {
     "objectID": "clases/class_week_1.html#discusión-1",
     "href": "clases/class_week_1.html#discusión-1",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "💬 Discusión 1",
     "text": "💬 Discusión 1\nEn grupos de 3-4 personas:\n\n¿Qué observan en los resultados?\n¿En qué categoría invertirían? ¿Por qué?\n¿Qué información adicional necesitarían?\n\nTiempo: 5 minutos\n\nCircular por la sala. Escuchar argumentos. Preparar para compartir."
   },
   {
     "objectID": "clases/class_week_1.html#compartiendo-ideas",
     "href": "clases/class_week_1.html#compartiendo-ideas",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "Compartiendo Ideas",
     "text": "Compartiendo Ideas\n¿Qué decidió cada grupo?\n\nObservación clave: Diferentes grupos pueden llegar a diferentes conclusiones con los mismos datos.\n\n\nPero todos usaron EVIDENCIA para decidir\n\n\nValidar todas las respuestas. Enfatizar que usaron datos, no solo intuición."
   },
   {
     "objectID": "clases/class_week_1.html#discusión-2",
     "href": "clases/class_week_1.html#discusión-2",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "💬 Discusión 2",
     "text": "💬 Discusión 2\nPregunta crítica:\n¿María podría haber tomado esta decisión sin acceso a estos datos?\n¿Qué hubiera pasado?\n\nLlevar a los estudiantes a reconocer que sin datos, la decisión sería por intuición o experiencia pasada solamente."
   },
   {
     "objectID": "clases/class_week_1.html#lo-que-acabamos-de-ver",
     "href": "clases/class_week_1.html#lo-que-acabamos-de-ver",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "Lo Que Acabamos de Ver",
     "text": "Lo Que Acabamos de Ver\n✓ Una empresa real con millones de registros ✓ Una pregunta de negocio concreta ✓ Datos transformados en algo útil ✓ Una decisión fundamentada\n\nAhora entendamos QUÉ pasó aquí\n\n\nTransición hacia los conceptos formales. “Vieron el pastel, ahora veamos los ingredientes”."
   },
   {
     "objectID": "clases/class_week_1.html#conceptos-fundamentales",
     "href": "clases/class_week_1.html#conceptos-fundamentales",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "Conceptos Fundamentales",
     "text": "Conceptos Fundamentales\n1. Dato\nRegistro individual, sin contexto.\nEjemplo: 29.990 Electrónica 2023-03-15\n\nPor sí solos, no dicen mucho\n\n\nEnfatizar que los datos son “materia prima”. No son útiles aislados."
   },
   {
     "objectID": "clases/class_week_1.html#conceptos-fundamentales-1",
     "href": "clases/class_week_1.html#conceptos-fundamentales-1",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "Conceptos Fundamentales",
     "text": "Conceptos Fundamentales\n2. Información\nDatos organizados y procesados con significado.\nEjemplo: “La categoría Electrónica generó $3.840 millones en ventas durante 2023”\n\nAhora tiene contexto y significado\n\n\nLa información surge cuando procesamos y organizamos datos."
   },
   {
     "objectID": "clases/class_week_1.html#conceptos-fundamentales-2",
     "href": "clases/class_week_1.html#conceptos-fundamentales-2",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "Conceptos Fundamentales",
     "text": "Conceptos Fundamentales\n3. Conocimiento\nInformación interpretada basada en experiencia y contexto.\nEjemplo: “Electrónica tiene alto volumen pero bajo margen. Invertir allí requiere más presupuesto para obtener el mismo retorno que Hogar, que está creciendo.”\n\nEs información + análisis + experiencia\n\n\nEl conocimiento permite DECIDIR. Es el nivel más alto."
   },
   {
     "objectID": "clases/class_week_1.html#la-jerarquía-del-valor",
     "href": "clases/class_week_1.html#la-jerarquía-del-valor",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "La Jerarquía del Valor",
     "text": "La Jerarquía del Valor\n              DECISIÓN\n                 ↑\n           CONOCIMIENTO\n                 ↑\n            INFORMACIÓN\n                 ↑\n               DATOS\n\nCada nivel agrega valor al anterior\n\n\nEste es el modelo fundamental del curso. Siempre volvemos a esto."
   },
   {
     "objectID": "clases/class_week_1.html#conectando-con-techstyle",
     "href": "clases/class_week_1.html#conectando-con-techstyle",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "Conectando con TechStyle",
     "text": "Conectando con TechStyle\nDatos: Los 8.750.000 registros de order_items\nInformación: La tabla con ventas por categoría\nConocimiento: “Hogar está creciendo y tiene buen margen”\nDecisión: Invertir $15M en campaña de categoría Hogar\n\nCerrar el círculo. Volver al caso inicial con los conceptos aprendidos."
   },
   {
     "objectID": "clases/class_week_1.html#discusión-3",
     "href": "clases/class_week_1.html#discusión-3",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "💬 Discusión 3",
     "text": "💬 Discusión 3\nEn parejas:\nIdentifiquen qué es DATO y qué es INFORMACIÓN en estos ejemplos:\n\n“Cliente ID: 45821”\n“El 65% de nuestros clientes son mujeres entre 25-34 años”\n“Temperatura: 23°C”\n“Las ventas aumentan 30% los días de lluvia”\n\nTiempo: 3 minutos\n\n1 y 3 son datos. 2 y 4 son información (datos procesados con significado)."
   },
   {
     "objectID": "clases/class_week_1.html#cómo-pasamos-de-datos-a-decisiones",
     "href": "clases/class_week_1.html#cómo-pasamos-de-datos-a-decisiones",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "¿Cómo Pasamos de Datos a Decisiones?",
     "text": "¿Cómo Pasamos de Datos a Decisiones?\n\nNecesitamos un Sistema de Información\n\n\nCapturar datos\nAlmacenar datos de forma estructurada\nProcesar datos\nPresentar información útil\nApoyar decisiones\n\n\nIntroducir el concepto de Sistema de Información como respuesta a una necesidad."
   },
   {
     "objectID": "clases/class_week_1.html#sistemas-de-información-si",
     "href": "clases/class_week_1.html#sistemas-de-información-si",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "Sistemas de Información (SI)",
     "text": "Sistemas de Información (SI)\nDefinición:\nConjunto de componentes interrelacionados que capturan, almacenan, procesan y distribuyen información para apoyar la toma de decisiones en una organización.\n\nNo son solo computadoras Incluyen: personas, procesos, datos, tecnología\n\n\nEnfatizar que SI es más amplio que solo software."
   },
   {
     "objectID": "clases/class_week_1.html#por-qué-techstyle-necesita-un-si",
     "href": "clases/class_week_1.html#por-qué-techstyle-necesita-un-si",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "¿Por Qué TechStyle Necesita un SI?",
     "text": "¿Por Qué TechStyle Necesita un SI?\n\nVolumen: 8.750.000 registros (imposible analizar manualmente)\nVelocidad: Decisión en minutos, no semanas\nPrecisión: Cálculos exactos (no aproximaciones)\nDisponibilidad: Acceso cuando se necesita\nConsistencia: Misma información para toda la organización\n\n\nConectar características de Big Data con necesidades de negocio."
   },
   {
     "objectID": "clases/class_week_1.html#el-si-de-techstyle-simplificado",
     "href": "clases/class_week_1.html#el-si-de-techstyle-simplificado",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "El SI de TechStyle (Simplificado)",
     "text": "El SI de TechStyle (Simplificado)\n   [Sitio Web] → [Base de Datos] → [Análisis] → [Dashboards]\n        ↓              ↓               ↓              ↓\n   Captura        Almacena        Procesa        Presenta\n     Datos          Datos          Datos       Información\n\nCada venta, cada click, cada producto visto se registra automáticamente\n\n\nMostrar el flujo completo de manera simple y visual."
   },
   {
     "objectID": "clases/class_week_1.html#discusión-4",
     "href": "clases/class_week_1.html#discusión-4",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "💬 Discusión 4",
     "text": "💬 Discusión 4\nPregunta para la clase:\n¿Qué otras decisiones importantes debe tomar TechStyle que requieren datos?\nEjemplos de áreas: Inventario | Marketing | Finanzas | Logística | Recursos Humanos\n\nAbrir discusión abierta. Mostrar que TODAS las áreas necesitan datos."
   },
   {
     "objectID": "clases/class_week_1.html#ejemplos-de-decisiones-con-datos",
     "href": "clases/class_week_1.html#ejemplos-de-decisiones-con-datos",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "Ejemplos de Decisiones con Datos",
     "text": "Ejemplos de Decisiones con Datos\n\nInventario: ¿Cuántas unidades comprar de cada producto?\nMarketing: ¿A qué clientes enviar promociones?\nFinanzas: ¿Es el negocio rentable por región?\nLogística: ¿Dónde ubicar un nuevo centro de distribución?\nRR.HH.: ¿Cuánto personal necesitamos en temporada alta?\n\n\nTodas requieren transformar datos en información"
   },
   {
     "objectID": "clases/class_week_1.html#actividad-grupal",
     "href": "clases/class_week_1.html#actividad-grupal",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "Actividad Grupal",
     "text": "Actividad Grupal\nContexto: TechStyle quiere mejorar su Sistema de Información.\nTarea en grupos (4-5 personas):\nIdentifiquen 5 tipos de datos que TechStyle DEBE registrar para tomar mejores decisiones de negocio.\nPara cada dato, expliquen: - ¿Qué decisión apoya? - ¿Por qué es importante?\nTiempo: 10 minutos Entrega: Presentación de 2 minutos por grupo\n\nCircular, guiar. Ejemplo: “Hora exacta de cada compra” → decisión sobre horarios de envío."
   },
   {
     "objectID": "clases/class_week_1.html#reflexión-final",
     "href": "clases/class_week_1.html#reflexión-final",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "Reflexión Final",
     "text": "Reflexión Final\nPregunta de cierre:\nAntes de esta clase, ¿cómo creían que las empresas tomaban decisiones?\n\nAhora saben: Las organizaciones modernas basan sus decisiones en datos estructurados y procesados por Sistemas de Información.\n\n\nCerrar con reflexión personal. Conectar con su experiencia previa."
   },
   {
     "objectID": "clases/class_week_1.html#lo-que-aprendimos-hoy",
     "href": "clases/class_week_1.html#lo-que-aprendimos-hoy",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "Lo Que Aprendimos Hoy",
     "text": "Lo Que Aprendimos Hoy\n\nLas empresas generan millones de datos cada día\nLos datos por sí solos no son útiles\nNecesitamos transformar datos en información\nLos Sistemas de Información hacen posible esa transformación\nLas decisiones de negocio deben basarse en evidencia\n\n\nVieron el pastel antes de conocer los ingredientes"
   },
   {
     "objectID": "clases/class_week_1.html#próxima-clase",
     "href": "clases/class_week_1.html#próxima-clase",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "Próxima Clase",
     "text": "Próxima Clase\nTema: Componentes de un Sistema de Información\nExploraremos:\n\nHardware, Software, Datos, Personas, Procesos\nRoles en un SI (usuarios, analistas, administradores)\nCómo interactúan estos componentes\n\n\nPreparen: Piensen en sistemas que usan diariamente (redes sociales, banca, transporte)"
   },
   {
     "objectID": "clases/class_week_1.html#preguntas",
     "href": "clases/class_week_1.html#preguntas",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "Preguntas",
     "text": "Preguntas\n¿Dudas o comentarios?\nContacto: [correo del profesor]\nPróxima clase: [fecha y hora]"
   },
   {
     "objectID": "clases/class_week_1.html#gracias",
     "href": "clases/class_week_1.html#gracias",
-    "title": "Sistemas de Información en el Contexto de Negocios",
+    "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "¡Gracias!",
     "text": "¡Gracias!\nBig Data y Analytics Universidad San Sebastián\n\nAgradecer participación. Recordar actividad de próxima clase."
   },

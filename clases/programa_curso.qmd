@@ -93,7 +93,7 @@ Es un curso sobre cómo **transformar datos en decisiones**.
 ::: {}
 ::: {.caja-azul}
 **Unidad 1**
-*Semanas 1–6*
+*Semanas 1–4 · Solemne 1: semana 5*
 
 **Sistemas de Información en el Contexto Empresarial**
 
@@ -104,7 +104,7 @@ Es un curso sobre cómo **transformar datos en decisiones**.
 
 ::: {.caja-azul}
 **Unidad 2**
-*Semanas 7–9*
+*Semanas 6–9 · Solemne 2: semana 10*
 
 **Fundamentos de Bases de Datos**
 
@@ -115,7 +115,7 @@ Es un curso sobre cómo **transformar datos en decisiones**.
 ::: {}
 ::: {.caja-tierra}
 **Unidad 3**
-*Semanas 10–18*
+*Semanas 11–15 · Solemne 3: semana 16*
 
 **Modelamiento y Gestión de Base de Datos**
 
@@ -148,6 +148,7 @@ Es un curso sobre cómo **transformar datos en decisiones**.
 - Importancia de los SI en la toma de decisiones
 - Actores y roles dentro de un SI
 - Tipos de sistemas: **DSS · CMI · CRM · EIS**
+- Calidad de datos y Big Data
 
 **Resultado:**
 *Explica los distintos sistemas de información en el contexto de la toma de decisiones organizacionales.*
@@ -162,7 +163,7 @@ Es un curso sobre cómo **transformar datos en decisiones**.
 *¿Qué decisiones puedo tomar si conecto estos sistemas?*
 
 ::: {.caja-tierra}
-**36h directas · 18h indirectas**
+**Semanas 1–4 · Solemne 1: semana 5**
 :::
 :::
 
@@ -201,7 +202,7 @@ Es un curso sobre cómo **transformar datos en decisiones**.
 *¿Cómo represento la realidad del negocio en tablas y relaciones?*
 
 ::: {.caja-tierra}
-**18h directas · 9h indirectas**
+**Semanas 6–9 · Solemne 2: semana 10**
 :::
 :::
 
@@ -241,7 +242,7 @@ Es un curso sobre cómo **transformar datos en decisiones**.
 *¿Qué consultas necesita la gerencia para tomar decisiones hoy?*
 
 ::: {.caja-tierra}
-**54h directas · 27h indirectas**
+**Semanas 11–15 · Solemne 3: semana 16**
 :::
 :::
 
@@ -257,21 +258,21 @@ Es un curso sobre cómo **transformar datos en decisiones**.
 
 ::: {}
 ::: {.caja-azul}
-**Solemne 1 · 30%**
+**Solemne 1 · 30%** *(Semana 5)*
 
 - Controles parciales: **10%**
 - Prueba escrita individual: **20%**
 :::
 
 ::: {.caja-azul}
-**Solemne 2 · 35%**
+**Solemne 2 · 35%** *(Semana 10)*
 
 - Controles parciales: **10%**
 - Analítica de base de datos: **25%**
 :::
 
 ::: {.caja-azul}
-**Solemne 3 · 35%**
+**Solemne 3 · 35%** *(Semana 16)*
 
 - Controles parciales: **10%**
 - Creación de BD relacional y análisis: **25%**

@@ -18,35 +18,35 @@
     "href": "clases/programa_curso.html#el-recorrido-del-semestre",
     "title": "Big Data y Analytics",
     "section": "El recorrido del semestre",
-    "text": "El recorrido del semestre\n\n\n\n\nUnidad 1 Semanas 1–6\nSistemas de Información en el Contexto Empresarial\n¿Cómo fluye la información en una organización?\n\n\n\nUnidad 2 Semanas 7–9\nFundamentos de Bases de Datos\n¿Cómo se modela la realidad de una empresa?\n\n\n\n\nUnidad 3 Semanas 10–18\nModelamiento y Gestión de Base de Datos\n¿Cómo se construye y consulta una base de datos real?\n\n\n\nCada unidad parte de un problema de negocio y termina con una solución concreta en datos."
+    "text": "El recorrido del semestre\n\n\n\n\nUnidad 1 Semanas 1–4 · Solemne 1: semana 5\nSistemas de Información en el Contexto Empresarial\n¿Cómo fluye la información en una organización?\n\n\n\nUnidad 2 Semanas 6–9 · Solemne 2: semana 10\nFundamentos de Bases de Datos\n¿Cómo se modela la realidad de una empresa?\n\n\n\n\nUnidad 3 Semanas 11–15 · Solemne 3: semana 16\nModelamiento y Gestión de Base de Datos\n¿Cómo se construye y consulta una base de datos real?\n\n\n\nCada unidad parte de un problema de negocio y termina con una solución concreta en datos."
   },
   {
     "objectID": "clases/programa_curso.html#unidad-1-sistemas-de-información",
     "href": "clases/programa_curso.html#unidad-1-sistemas-de-información",
     "title": "Big Data y Analytics",
     "section": "Unidad 1 · Sistemas de Información",
-    "text": "Unidad 1 · Sistemas de Información\n\nSistemas de Información en el Contexto Empresarial\n\n\n\n¿Qué aprenderás?\n\nDefinición y componentes de un sistema de información\nImportancia de los SI en la toma de decisiones\nActores y roles dentro de un SI\nTipos de sistemas: DSS · CMI · CRM · EIS\n\nResultado: Explica los distintos sistemas de información en el contexto de la toma de decisiones organizacionales.\n\n\nEjemplo aplicado:\n\nLa empresa de retail necesita entender qué sistema registra las ventas, cuál gestiona el inventario y cómo se relacionan.\n\nPregunta clave: ¿Qué decisiones puedo tomar si conecto estos sistemas?\n\n36h directas · 18h indirectas"
+    "text": "Unidad 1 · Sistemas de Información\n\nSistemas de Información en el Contexto Empresarial\n\n\n\n¿Qué aprenderás?\n\nDefinición y componentes de un sistema de información\nImportancia de los SI en la toma de decisiones\nActores y roles dentro de un SI\nTipos de sistemas: DSS · CMI · CRM · EIS\nCalidad de datos y Big Data\n\nResultado: Explica los distintos sistemas de información en el contexto de la toma de decisiones organizacionales.\n\n\nEjemplo aplicado:\n\nLa empresa de retail necesita entender qué sistema registra las ventas, cuál gestiona el inventario y cómo se relacionan.\n\nPregunta clave: ¿Qué decisiones puedo tomar si conecto estos sistemas?\n\nSemanas 1–4 · Solemne 1: semana 5"
   },
   {
     "objectID": "clases/programa_curso.html#unidad-2-fundamentos-de-bases-de-datos",
     "href": "clases/programa_curso.html#unidad-2-fundamentos-de-bases-de-datos",
     "title": "Big Data y Analytics",
     "section": "Unidad 2 · Fundamentos de Bases de Datos",
-    "text": "Unidad 2 · Fundamentos de Bases de Datos\n\nFundamentos de Bases de Datos\n\n\n\n¿Qué aprenderás?\n\nDiagrama de Caso de Uso\nDiagrama Esquema UML\nModelo Relacional\nModelo Entidad–Relación\n\nResultado: Diseña un sistema de información mediante el modelo relacional para la toma de decisiones en contextos organizacionales.\n\n\nEjemplo aplicado:\n\nAntes de crear la base de datos del retail, necesitamos modelar sus entidades: productos, clientes, sucursales, ventas.\n\nPregunta clave: ¿Cómo represento la realidad del negocio en tablas y relaciones?\n\n18h directas · 9h indirectas"
+    "text": "Unidad 2 · Fundamentos de Bases de Datos\n\nFundamentos de Bases de Datos\n\n\n\n¿Qué aprenderás?\n\nDiagrama de Caso de Uso\nDiagrama Esquema UML\nModelo Relacional\nModelo Entidad–Relación\n\nResultado: Diseña un sistema de información mediante el modelo relacional para la toma de decisiones en contextos organizacionales.\n\n\nEjemplo aplicado:\n\nAntes de crear la base de datos del retail, necesitamos modelar sus entidades: productos, clientes, sucursales, ventas.\n\nPregunta clave: ¿Cómo represento la realidad del negocio en tablas y relaciones?\n\nSemanas 6–9 · Solemne 2: semana 10"
   },
   {
     "objectID": "clases/programa_curso.html#unidad-3-modelamiento-y-gestión",
     "href": "clases/programa_curso.html#unidad-3-modelamiento-y-gestión",
     "title": "Big Data y Analytics",
     "section": "Unidad 3 · Modelamiento y Gestión",
-    "text": "Unidad 3 · Modelamiento y Gestión\n\nModelamiento y Gestión de Base de Datos\n\n\n\n¿Qué aprenderás?\n\nTeoría de la Normalización\nDiccionario de datos\nBase de datos en MySQL\nAlmacenamiento y consultas SQL\nGestión de transacciones\n\nResultado: Construye base de datos para gestionar información en la toma de decisiones empresariales.\n\n\nEjemplo aplicado:\n\nConstruimos la base de datos de ventas del retail, diseñamos consultas que respondan preguntas gerenciales y generamos reportes accionables.\n\nPregunta clave: ¿Qué consultas necesita la gerencia para tomar decisiones hoy?\n\n54h directas · 27h indirectas"
+    "text": "Unidad 3 · Modelamiento y Gestión\n\nModelamiento y Gestión de Base de Datos\n\n\n\n¿Qué aprenderás?\n\nTeoría de la Normalización\nDiccionario de datos\nBase de datos en MySQL\nAlmacenamiento y consultas SQL\nGestión de transacciones\n\nResultado: Construye base de datos para gestionar información en la toma de decisiones empresariales.\n\n\nEjemplo aplicado:\n\nConstruimos la base de datos de ventas del retail, diseñamos consultas que respondan preguntas gerenciales y generamos reportes accionables.\n\nPregunta clave: ¿Qué consultas necesita la gerencia para tomar decisiones hoy?\n\nSemanas 11–15 · Solemne 3: semana 16"
   },
   {
     "objectID": "clases/programa_curso.html#evaluaciones",
     "href": "clases/programa_curso.html#evaluaciones",
     "title": "Big Data y Analytics",
     "section": "Evaluaciones",
-    "text": "Evaluaciones\n\n\n\nSolemne 1 · 30%\n\nControles parciales: 10%\nPrueba escrita individual: 20%\n\n\n\nSolemne 2 · 35%\n\nControles parciales: 10%\nAnalítica de base de datos: 25%\n\n\n\nSolemne 3 · 35%\n\nControles parciales: 10%\nCreación de BD relacional y análisis: 25%\n\n\n\n\n\nEvaluación Recuperativa\nVoluntaria · Última semana del semestre\nReemplaza una solemne no rendida, con justificación válida.\nCubre toda la materia del semestre o un conjunto definido por el docente.\n\n\nLos controles parciales se rinden durante el desarrollo de cada unidad."
+    "text": "Evaluaciones\n\n\n\nSolemne 1 · 30% (Semana 5)\n\nControles parciales: 10%\nPrueba escrita individual: 20%\n\n\n\nSolemne 2 · 35% (Semana 10)\n\nControles parciales: 10%\nAnalítica de base de datos: 25%\n\n\n\nSolemne 3 · 35% (Semana 16)\n\nControles parciales: 10%\nCreación de BD relacional y análisis: 25%\n\n\n\n\n\nEvaluación Recuperativa\nVoluntaria · Última semana del semestre\nReemplaza una solemne no rendida, con justificación válida.\nCubre toda la materia del semestre o un conjunto definido por el docente.\n\n\nLos controles parciales se rinden durante el desarrollo de cada unidad."
   },
   {
     "objectID": "clases/programa_curso.html#requisitos-de-aprobación",
@@ -70,284 +70,130 @@
     "text": "El objetivo final\n\nAl terminar este curso serás capaz de sentarte frente a un gerente, entender su problema, y decirle:\n\n\n\n“Tengo los datos, el modelo y las consultas. Aquí está la respuesta.”\n\n\n\n\nSD6.2 · Perfil de Egreso USS\nGenera información a partir de la gestión de datos para contribuir en la toma de decisiones de la organización.\n\n\nValores del curso\n\nHonestidad en el análisis\nResponsabilidad con los datos\nPrudencia en las conclusiones"
   },
   {
-    "objectID": "clases/class_week_6.html#el-recorrido-de-la-unidad-1",
-    "href": "clases/class_week_6.html#el-recorrido-de-la-unidad-1",
-    "title": "Integración y Síntesis: Unidad 1",
-    "section": "El Recorrido de la Unidad 1",
-    "text": "El Recorrido de la Unidad 1\n6 semanas, un solo hilo conductor: los datos como base de las decisiones\n\nSemana 1: Datos → Información → Conocimiento → Decisión · Introducción a los SI\nSemana 2: Componentes, actores, niveles y tipos de SI\nSemana 3: CMI y flujo de información organizacional\nSemana 4: Calidad de datos e integridad ética\nSemana 5: Big Data, OLTP, OLAP y arquitectura de datos\n\n\nHoy: integramos todo antes de la Solemne 1\n\n\nMostrar el mapa completo. Los estudiantes a veces no ven la coherencia entre clases. Hoy es el momento de construir esa visión integrada."
-  },
-  {
-    "objectID": "clases/class_week_6.html#el-modelo-central-del-curso",
-    "href": "clases/class_week_6.html#el-modelo-central-del-curso",
-    "title": "Integración y Síntesis: Unidad 1",
-    "section": "El Modelo Central del Curso",
-    "text": "El Modelo Central del Curso\nTodo lo que vimos en la Unidad 1 se puede resumir en este modelo:\n   REALIDAD ORGANIZACIONAL\n           ↓\n      [Datos brutos]  ← registrados por OLTP\n           ↓\n   [Información procesada]  ← generada por OLAP / Data Warehouse\n           ↓\n   [Conocimiento] ← construido con BI, DSS, CRM\n           ↓\n   [DECISIÓN]  ← apoyada por CMI, EIS\n           ↓\n   [Acción en la organización]\n\nEste es el modelo pedagógico central del curso. Asegurarse de que los estudiantes lo vean claramente. Cada concepto de la unidad corresponde a un eslabón de esta cadena."
-  },
-  {
-    "objectID": "clases/class_week_6.html#repaso-los-5-conceptos-clave",
-    "href": "clases/class_week_6.html#repaso-los-5-conceptos-clave",
-    "title": "Integración y Síntesis: Unidad 1",
-    "section": "Repaso: Los 5 Conceptos Clave",
-    "text": "Repaso: Los 5 Conceptos Clave\n1. Sistema de Información\nConjunto de componentes (hardware, software, datos, personas, procesos) que capturan, almacenan, procesan y distribuyen información para apoyar decisiones.\n\n2. Los 3 Niveles Organizacionales\n\nOperativo → TPS (registro de transacciones)\nTáctico → BI, DSS, CRM (análisis y gestión)\nEstratégico → EIS, CMI (decisiones ejecutivas)\n\n\n\nRepaso concentrado. No profundizar en cada concepto — ya lo vieron en detalle. El objetivo es activar la memoria y conectar los conceptos entre sí."
-  },
-  {
-    "objectID": "clases/class_week_6.html#repaso-los-5-conceptos-clave-cont.",
-    "href": "clases/class_week_6.html#repaso-los-5-conceptos-clave-cont.",
-    "title": "Integración y Síntesis: Unidad 1",
-    "section": "Repaso: Los 5 Conceptos Clave (cont.)",
-    "text": "Repaso: Los 5 Conceptos Clave (cont.)\n3. Cuadro de Mando Integral (CMI)\nTraduce la estrategia en 4 perspectivas: Financiera, Cliente, Procesos, Aprendizaje. Cada perspectiva tiene KPIs medidos con datos del SI.\n\n4. Calidad de Datos\nExactitud · Completitud · Consistencia · Oportunidad\nDatos de mala calidad → decisiones incorrectas.\n\n\n5. Big Data y Arquitectura\nLas 5 V. OLTP (operacional) → ETL → Data Warehouse (analítico) → BI.\n\n\nVerificar que los estudiantes recuerden estos 5 conceptos. Preguntar: ¿alguien puede explicar la diferencia entre OLTP y OLAP con sus propias palabras?"
-  },
-  {
-    "objectID": "clases/class_week_6.html#discusión-1-preguntas-de-integración",
-    "href": "clases/class_week_6.html#discusión-1-preguntas-de-integración",
-    "title": "Integración y Síntesis: Unidad 1",
-    "section": "💬 Discusión 1: Preguntas de Integración",
-    "text": "💬 Discusión 1: Preguntas de Integración\nPara toda la clase (10 minutos):\nRespondan estas preguntas conectando los conceptos de la unidad:\n\n¿Por qué el CEO de TechStyle necesita un EIS en vez de acceder directamente a las tablas OLTP?\n¿Cómo afecta la falta de consistencia de datos al CMI de una empresa?\n¿En qué perspectiva del CMI impacta principalmente tener un buen proceso ETL?\n\n\n1: El EIS agrega y resume datos de múltiples sistemas; el CEO no puede ni debe revisar millones de registros. 2: KPIs del CMI construidos sobre datos inconsistentes dan señales incorrectas → decisiones erróneas. 3: Procesos internos (el ETL es un proceso interno de datos) y también Aprendizaje (la infraestructura de datos habilita el aprendizaje organizacional)."
-  },
-  {
-    "objectID": "clases/class_week_6.html#caso-integrador-servirápido",
-    "href": "clases/class_week_6.html#caso-integrador-servirápido",
-    "title": "Integración y Síntesis: Unidad 1",
-    "section": "Caso Integrador: ServiRápido",
-    "text": "Caso Integrador: ServiRápido\nEl desafío de hoy:\nServiRápido es una empresa de servicios de mantención del hogar (gasfitería, electricidad, cerrajería) que opera en Santiago.\n\nFundada: 2020\nOperación: 180 técnicos en terreno · 3.200 servicios mensuales\nClientes: 42.000 hogares registrados\nProblema: crecen rápido pero no saben si son rentables por zona\n\n\nServiRápido no tiene un Sistema de Información estructurado. Usted fue contratado como analista para diseñarlo.\n\n\nUsar ServiRápido como caso nuevo para evaluar comprensión en contexto diferente a TechStyle. El escenario es deliberadamente diferente: servicio presencial, técnicos en terreno, empresa mediana."
-  },
-  {
-    "objectID": "clases/class_week_6.html#servirápido-los-datos-que-tiene",
-    "href": "clases/class_week_6.html#servirápido-los-datos-que-tiene",
-    "title": "Integración y Síntesis: Unidad 1",
-    "section": "ServiRápido: Los Datos que Tiene",
-    "text": "ServiRápido: Los Datos que Tiene\nActualmente ServiRápido registra sus operaciones en:\n\nGoogle Sheets: lista de servicios realizados (fecha, dirección, tipo de servicio, técnico, cobro)\nWhatsApp: comunicación con técnicos y clientes\nEmail: envío de facturas y reclamos\nNotas en papel: inventario de repuestos en camionetas\n\n\n¿Cuáles son los problemas de este “sistema”?\n\n\nEste escenario refleja la realidad de miles de PYMEs en Chile. No tiene un SI formal. Los datos están dispersos, no estructurados, difíciles de analizar. Preguntar a los estudiantes: ¿qué dimensiones de calidad están en riesgo aquí?"
-  },
-  {
-    "objectID": "clases/class_week_6.html#actividad-diseñar-el-si-de-servirápido",
-    "href": "clases/class_week_6.html#actividad-diseñar-el-si-de-servirápido",
-    "title": "Integración y Síntesis: Unidad 1",
-    "section": "Actividad: Diseñar el SI de ServiRápido",
-    "text": "Actividad: Diseñar el SI de ServiRápido\nEn grupos de 4-5 personas (20 minutos):\nParte 1 — Diagnóstico (5 min): Identifiquen 3 problemas de calidad de datos y 3 barreras al flujo de información en el sistema actual de ServiRápido.\nParte 2 — Diseño del SI (10 min): Diseñen el Sistema de Información para ServiRápido: - ¿Qué componentes necesita? (hardware, software, datos, personas, procesos) - ¿Qué tipos de SI implementarían? (TPS, BI, DSS, CRM, EIS) - ¿Necesita un Data Warehouse? ¿Por qué?\nParte 3 — CMI (5 min): Diseñen un CMI básico: 1 objetivo y 1 KPI por perspectiva.\n\nParte 1: datos en papel → exactitud y completitud en riesgo; WhatsApp → no estructurado, no analizable; no hay consistencia entre medios. Parte 2: TPS para registro de servicios, CRM para gestión de clientes, BI para análisis de rentabilidad por zona. Parte 3: Financiero=margen por servicio, Cliente=NPS o tasa de recontratación, Procesos=tiempo de respuesta, Aprendizaje=capacitación de técnicos."
-  },
-  {
-    "objectID": "clases/class_week_6.html#presentación-de-grupos",
-    "href": "clases/class_week_6.html#presentación-de-grupos",
-    "title": "Integración y Síntesis: Unidad 1",
-    "section": "Presentación de Grupos",
-    "text": "Presentación de Grupos\nCada grupo presenta en 3 minutos:\n\nLos 3 principales problemas de calidad identificados\nLos tipos de SI priorizados y por qué\nEl CMI diseñado\n\n\nAl escuchar a otros grupos:\n\n¿Qué propuestas agregarías a tu diseño?\n¿Qué elementos te parecen más importantes?\n\n\n\nDar tiempo real para presentaciones. Hacer preguntas a los grupos para profundizar. Validar todas las propuestas siempre que estén fundamentadas. El objetivo no es una sola respuesta correcta sino que puedan justificar sus decisiones."
-  },
-  {
-    "objectID": "clases/class_week_6.html#reflexión-qué-aprendimos-en-la-unidad-1",
-    "href": "clases/class_week_6.html#reflexión-qué-aprendimos-en-la-unidad-1",
-    "title": "Integración y Síntesis: Unidad 1",
-    "section": "Reflexión: ¿Qué Aprendimos en la Unidad 1?",
-    "text": "Reflexión: ¿Qué Aprendimos en la Unidad 1?\nLa pregunta central de esta unidad fue:\n¿Cómo transforman las organizaciones sus datos en decisiones?\n\n\nCon Sistemas de Información que capturan, almacenan y procesan datos\nCon arquitecturas adecuadas al volumen y velocidad de los datos\nCon datos de calidad que representen fielmente la realidad\nCon marcos de gestión como el CMI que conectan datos con estrategia\nCon ética e integridad en el uso de los datos de personas\n\n\n\nEste es el cierre conceptual de la unidad. Asegurarse de que los estudiantes puedan articular esta respuesta con sus propias palabras."
-  },
-  {
-    "objectID": "clases/class_week_6.html#la-cadena-de-valor-de-los-datos",
-    "href": "clases/class_week_6.html#la-cadena-de-valor-de-los-datos",
-    "title": "Integración y Síntesis: Unidad 1",
-    "section": "La Cadena de Valor de los Datos",
-    "text": "La Cadena de Valor de los Datos\nDel dato a la decisión: un proceso no trivial\n  Dato bruto → Almacenamiento (OLTP) → Integración (ETL)\n       ↓                                      ↓\n  Contexto                           Data Warehouse\n       ↓                                      ↓\n  Información                          BI / CMI / DSS\n       ↓                                      ↓\n  Conocimiento                        EIS / Dashboards\n       ↓                                      ↓\n                     DECISIÓN ←────────────────\n\nCada eslabón requiere tecnología, personas y procesos. Ninguno puede fallar.\n\n\nEste diagrama integra todos los conceptos de la unidad en una sola imagen. Es el diagrama que deberían poder reproducir (aunque sea de memoria aproximada) en la solemne."
-  },
-  {
-    "objectID": "clases/class_week_6.html#lo-que-viene-unidad-2",
-    "href": "clases/class_week_6.html#lo-que-viene-unidad-2",
-    "title": "Integración y Síntesis: Unidad 1",
-    "section": "Lo Que Viene: Unidad 2",
-    "text": "Lo Que Viene: Unidad 2\nUnidad 2: Fundamentos de Bases de Datos\nEn la Unidad 1 aprendimos para qué sirven los datos en una organización.\nEn la Unidad 2 aprenderemos cómo se modelan y estructuran esos datos:\n\nDiagrama de Caso de Uso\nDiagrama Esquema UML\nModelo Entidad-Relación\nModelo Relacional\n\n\nLa pregunta que guiará la Unidad 2: ¿Cómo represento la realidad de TechStyle en tablas y relaciones?\n\n\nPreparar la transición. La Unidad 2 es más técnica pero conecta directamente con lo que vieron: las tablas que vieron en la Unidad 1 (users, orders, order_items) tienen una estructura detrás que aprenderemos a diseñar."
-  },
-  {
-    "objectID": "clases/class_week_6.html#preparación-para-la-solemne-1",
-    "href": "clases/class_week_6.html#preparación-para-la-solemne-1",
-    "title": "Integración y Síntesis: Unidad 1",
-    "section": "Preparación para la Solemne 1",
-    "text": "Preparación para la Solemne 1\nLa evaluación cubrirá los contenidos de la Unidad 1:\n\nConceptos de dato, información, conocimiento y decisión\nComponentes y tipos de Sistemas de Información\nNiveles organizacionales y actores\nCuadro de Mando Integral: perspectivas y KPIs\nCalidad de datos: dimensiones e impacto\nBig Data: las 5 V, OLTP, OLAP, Data Warehouse, ETL\n\n\nFormato: prueba escrita individual (40 minutos) + controles parciales (10%)\n\n\nSer específico sobre el formato para que los estudiantes sepan qué esperar. Recordar que los controles parciales ya cuentan. Ofrecer espacio para preguntas sobre el contenido."
-  },
-  {
-    "objectID": "clases/class_week_6.html#consejos-para-la-solemne",
-    "href": "clases/class_week_6.html#consejos-para-la-solemne",
-    "title": "Integración y Síntesis: Unidad 1",
-    "section": "Consejos para la Solemne",
-    "text": "Consejos para la Solemne\n\nEstudien los casos de TechStyle y FoodRapid: los conceptos siempre se aplican en contexto\nNo memoricen definiciones: entiendan para qué sirve cada concepto\nPractiquen diseñar un CMI para una empresa ficticia\nPractiquen identificar problemas de calidad en extractos de datos\nPiensen en la cadena completa: dato → información → decisión\n\n\nLa pregunta más frecuente en evaluaciones de SI: “dada esta empresa, ¿qué sistema implementarías y por qué?”\n\n\nEstos son tips genuinos para la evaluación, no relleno. El énfasis en “para qué sirve” vs. “definición” es clave: la solemne evaluará aplicación, no memorización."
-  },
-  {
-    "objectID": "clases/class_week_6.html#discusión-final-reflexión-personal",
-    "href": "clases/class_week_6.html#discusión-final-reflexión-personal",
-    "title": "Integración y Síntesis: Unidad 1",
-    "section": "💬 Discusión Final: Reflexión Personal",
-    "text": "💬 Discusión Final: Reflexión Personal\nCierre de la Unidad 1\nTómense 3 minutos para responder:\n\n¿Cuál fue el concepto que más les costó entender? ¿Lo lograron?\n¿En qué trabajo o empresa futura creen que usarán lo que aprendieron?\n¿Qué pregunta quedó sin responder?\n\n\nEsta discusión es importante para el docente: permite identificar qué conceptos necesitan refuerzo antes de la solemne. Responder directamente las preguntas que surjan."
-  },
-  {
-    "objectID": "clases/class_week_6.html#lo-que-aprendimos-en-la-unidad-1",
-    "href": "clases/class_week_6.html#lo-que-aprendimos-en-la-unidad-1",
-    "title": "Integración y Síntesis: Unidad 1",
-    "section": "Lo Que Aprendimos en la Unidad 1",
-    "text": "Lo Que Aprendimos en la Unidad 1\n\nLos SI son la infraestructura que transforma datos en decisiones\nCada nivel organizacional necesita distintos tipos de información\nEl CMI alinea los datos con la estrategia de la organización\nLos datos de calidad son la base de todo análisis confiable\nBig Data requiere arquitecturas especializadas (OLTP, OLAP, DW)\nEl manejo de datos implica responsabilidades éticas reales\n\n\nLa Unidad 2 nos dará las herramientas técnicas para construir esa base de datos."
-  },
-  {
-    "objectID": "clases/class_week_6.html#preguntas",
-    "href": "clases/class_week_6.html#preguntas",
-    "title": "Integración y Síntesis: Unidad 1",
-    "section": "Preguntas",
-    "text": "Preguntas\n¿Dudas sobre el contenido de la Unidad 1?\nContacto: [correo del profesor]\nSolemne 1: [fecha y hora]"
-  },
-  {
-    "objectID": "clases/class_week_6.html#gracias",
-    "href": "clases/class_week_6.html#gracias",
-    "title": "Integración y Síntesis: Unidad 1",
-    "section": "¡Gracias!",
-    "text": "¡Gracias!\nFin de la Unidad 1\nSistemas de Información en el Contexto Empresarial\nUniversidad San Sebastián\n\nAgradecer la participación durante toda la unidad. Desear éxito en la solemne. Recordar que hay espacio para consultas antes de la evaluación."
-  },
-  {
     "objectID": "clases/class_week_4.html#qué-vimos-la-semana-pasada",
     "href": "clases/class_week_4.html#qué-vimos-la-semana-pasada",
-    "title": "Calidad de la Información y Ética en los Datos",
+    "title": "Big Data y Síntesis de la Unidad 1",
     "section": "¿Qué Vimos la Semana Pasada?",
-    "text": "¿Qué Vimos la Semana Pasada?\n\nEl CMI traduce la estrategia en 4 perspectivas y KPIs\nLa información fluye de forma vertical, horizontal y externa\nLos SI son la infraestructura del flujo de información\n\n\nHoy: ¿Qué pasa cuando los datos en los que confiamos están equivocados?\n\n\nRepaso rápido. Preguntar: ¿cuáles son las 4 perspectivas del CMI? Conectar directamente: toda esa hermosa arquitectura de información falla si los datos son malos."
+    "text": "¿Qué Vimos la Semana Pasada?\n\nEl CMI traduce la estrategia en 4 perspectivas y KPIs medibles\nLa calidad de datos tiene 4 dimensiones: exactitud, completitud, consistencia, oportunidad\nEl manejo de datos implica responsabilidades éticas reales\n\n\nHoy: ¿Qué pasa cuando los datos crecen tanto que los sistemas tradicionales no pueden manejarlos? Y cerramos la Unidad 1.\n\n\nRepaso rápido. Esta es la última clase de contenido antes de la Solemne 1. Es importante que los estudiantes lleguen preparados para integrar."
   },
   {
-    "objectID": "clases/class_week_4.html#situación-una-decisión-costosa-en-techstyle",
-    "href": "clases/class_week_4.html#situación-una-decisión-costosa-en-techstyle",
-    "title": "Calidad de la Información y Ética en los Datos",
-    "section": "Situación: Una Decisión Costosa en TechStyle",
-    "text": "Situación: Una Decisión Costosa en TechStyle\nOctubre 2024 — Reunión de Dirección\nEl gerente de logística presenta el informe del mes:\n“El 92% de los pedidos se entregó en menos de 48 horas. Cumplimos la meta.”\n\nEl CEO aprueba el bono de desempeño del equipo.\nUn mes después: llegan 1.200 reclamos de clientes que esperaron más de 5 días.\n\n\nPlantear el suspenso antes de revelar qué pasó. Preguntar: ¿qué creen que ocurrió? Dejar que los estudiantes especulen."
+    "objectID": "clases/class_week_4.html#situación-techstyle-en-el-año-2028",
+    "href": "clases/class_week_4.html#situación-techstyle-en-el-año-2028",
+    "title": "Big Data y Síntesis de la Unidad 1",
+    "section": "Situación: TechStyle en el Año 2028",
+    "text": "Situación: TechStyle en el Año 2028\nTechStyle creció exponencialmente:\n\nDe 450.000 a 8.500.000 clientes registrados\nDe 2.3M a 47 millones de órdenes históricas\nExpandida a 6 países de Latinoamérica\nRegistra clicks, tiempo en página, búsquedas por cada usuario\nIntegra datos de redes sociales, clima y eventos locales\n\n\nEl sistema de base de datos actual colapsa cada fin de semana.\nTechStyle ya no tiene un problema de “sistemas de información”. Tiene un problema de Big Data.\n\n\nEl salto conceptual es importante: el mismo tipo de problema (capturar, almacenar, procesar datos) pero a una escala que requiere arquitecturas completamente diferentes."
   },
   {
-    "objectID": "clases/class_week_4.html#qué-había-pasado",
-    "href": "clases/class_week_4.html#qué-había-pasado",
-    "title": "Calidad de la Información y Ética en los Datos",
-    "section": "¿Qué Había Pasado?",
-    "text": "¿Qué Había Pasado?\n\nUn error en el sistema contaba como “entregado” cuando el repartidor salía del almacén\nNo cuando el pedido llegaba realmente al cliente\nEl 92% de “entregas exitosas” medía salidas del almacén, no entregas reales\nLos datos eran técnicamente correctos, pero medían lo equivocado\n\n\nConsecuencia: Bonos pagados por metas no cumplidas. Clientes enfurecidos. Confianza destruida.\n\n\nEste es un ejemplo de datos que son “correctos” en sentido técnico (realmente se registró esa información) pero que son de mala calidad porque no representan la realidad que se quería medir. La calidad no es solo exactitud, es relevancia y representación."
+    "objectID": "clases/class_week_4.html#qué-es-big-data",
+    "href": "clases/class_week_4.html#qué-es-big-data",
+    "title": "Big Data y Síntesis de la Unidad 1",
+    "section": "¿Qué es Big Data?",
+    "text": "¿Qué es Big Data?\nNo es solo “muchos datos”.\nBig Data se define por un conjunto de características conocidas como las 5 V:\n  Volumen · Velocidad · Variedad · Veracidad · Valor\n\nCada “V” representa un desafío distinto que los sistemas tradicionales no pueden resolver.\n\n\nOriginalmente eran 3 V (Laney, 2001). Luego se agregaron Veracidad y Valor. El punto no es memorizar las V, sino entender que Big Data es cualitativamente diferente a los datos tradicionales."
   },
   {
-    "objectID": "clases/class_week_4.html#qué-es-la-calidad-de-la-información",
-    "href": "clases/class_week_4.html#qué-es-la-calidad-de-la-información",
-    "title": "Calidad de la Información y Ética en los Datos",
-    "section": "¿Qué es la Calidad de la Información?",
-    "text": "¿Qué es la Calidad de la Información?\nLa calidad de la información es el grado en que los datos representan fielmente la realidad que se quiere medir y son adecuados para el propósito con que se usan.\n\n4 dimensiones principales:\n\nExactitud: ¿los datos son correctos?\nCompletitud: ¿están todos los datos necesarios?\nConsistencia: ¿los datos coinciden entre sistemas?\nOportunidad: ¿los datos están disponibles cuando se necesitan?\n\n\n\nNo es una lista para memorizar. Es un marco para diagnosticar problemas. Cada dimensión puede causar decisiones incorrectas de una forma diferente."
+    "objectID": "clases/class_week_4.html#v1-volumen-v2-velocidad",
+    "href": "clases/class_week_4.html#v1-volumen-v2-velocidad",
+    "title": "Big Data y Síntesis de la Unidad 1",
+    "section": "V1: Volumen · V2: Velocidad",
+    "text": "V1: Volumen · V2: Velocidad\n\n\nVolumen: la cantidad es masiva\n\nTechStyle 2028: miles de millones de registros\nSe mide en Terabytes y Petabytes\nLos sistemas relacionales no escalan bien\n\n\n\nVelocidad: se genera y debe procesarse rápido\n\n12.000 transacciones/minuto en Black Friday\nStock debe actualizarse en milisegundos\nDetección de fraude: menos de 100ms\n\n\n\n\nTechStyle ya no puede esperar un reporte diario — necesita información en tiempo real.\n\n\nVolumen solo no hace Big Data. Velocidad tampoco. Es la combinación de las 5 V lo que crea el desafío. Un banco tiene ambas características: millones de transacciones diarias que deben procesarse instantáneamente."
   },
   {
-    "objectID": "clases/class_week_4.html#dimensión-1-exactitud",
-    "href": "clases/class_week_4.html#dimensión-1-exactitud",
-    "title": "Calidad de la Información y Ética en los Datos",
-    "section": "Dimensión 1: Exactitud",
-    "text": "Dimensión 1: Exactitud\n¿Los datos representan correctamente la realidad?\n\nEl valor registrado corresponde al valor real\nIncluye errores de ingreso, errores de sistema, medición incorrecta\nCausa más común: ingreso manual de datos por personas\n\n\nTechStyle — Ejemplo de falta de exactitud:\nLa dirección del cliente se ingresó como “Av. Providencia 1234, Santiago” pero debía ser “Av. Providencia 1234, Ñuñoa”. El pedido llega tarde y el cliente reclama.\n\n\nPreguntar: ¿han tenido alguna vez un paquete que llegó a la dirección equivocada? Ese es un error de exactitud. Conectar con experiencias reales de los estudiantes."
-  },
-  {
-    "objectID": "clases/class_week_4.html#dimensión-2-completitud",
-    "href": "clases/class_week_4.html#dimensión-2-completitud",
-    "title": "Calidad de la Información y Ética en los Datos",
-    "section": "Dimensión 2: Completitud",
-    "text": "Dimensión 2: Completitud\n¿Están todos los datos que se necesitan?\n\nDatos faltantes o nulos donde debería haber valores\nRegistros incompletos que no pueden usarse en análisis\nCausa más común: campos opcionales que deberían ser obligatorios\n\n\nTechStyle — Ejemplo de falta de completitud:\nEl 23% de los registros de clientes no tiene número de teléfono. Cuando hay un problema con el pedido, no se puede contactar al cliente directamente.\n\n\nLos datos faltantes son un problema silencioso. No causan errores visibles en el sistema, pero degradan la calidad del análisis. Un analista que promedia ventas sin notar que faltan 20% de los registros obtendrá conclusiones incorrectas."
-  },
-  {
-    "objectID": "clases/class_week_4.html#dimensión-3-consistencia",
-    "href": "clases/class_week_4.html#dimensión-3-consistencia",
-    "title": "Calidad de la Información y Ética en los Datos",
-    "section": "Dimensión 3: Consistencia",
-    "text": "Dimensión 3: Consistencia\n¿Los datos dicen lo mismo en todos los sistemas?\n\nEl mismo dato aparece con valores distintos en sistemas diferentes\nCausada por sistemas desconectados o actualizaciones parciales\nEs el problema más difícil de detectar\n\n\nTechStyle — Ejemplo de inconsistencia:\n\n\n\nSistema\nStock Producto “Audífonos Pro”\n\n\n\n\nSistema de ventas\n45 unidades\n\n\nSistema de bodega\n38 unidades\n\n\nSistema de compras\n52 unidades\n\n\n\n¿Cuántas hay realmente?\n\n\nEste problema es extremadamente común en empresas que tienen sistemas heredados o que crecieron comprando software de distintos proveedores. Cada sistema tiene su propia “versión de la verdad”."
-  },
-  {
-    "objectID": "clases/class_week_4.html#dimensión-4-oportunidad",
-    "href": "clases/class_week_4.html#dimensión-4-oportunidad",
-    "title": "Calidad de la Información y Ética en los Datos",
-    "section": "Dimensión 4: Oportunidad",
-    "text": "Dimensión 4: Oportunidad\n¿Los datos están disponibles cuando se necesitan?\n\nDatos correctos pero que llegan tarde ya no sirven para decidir\nReportes que se generan semanal o mensualmente para decisiones diarias\nCausa más común: procesos batch, sistemas sin tiempo real\n\n\nTechStyle — Ejemplo de falta de oportunidad:\nEl reporte de quiebre de stock se genera cada lunes a las 8am. El viernes en la tarde se agotó el producto más vendido. El equipo de compras no lo supo hasta el lunes siguiente.\n\n\nEn el mundo actual, la oportunidad se ha vuelto crítica. Las empresas que antes toleraban reportes semanales ahora necesitan dashboards en tiempo real porque los clientes y mercados reaccionan en minutos."
-  },
-  {
-    "objectID": "clases/class_week_4.html#el-costo-de-los-datos-de-mala-calidad",
-    "href": "clases/class_week_4.html#el-costo-de-los-datos-de-mala-calidad",
-    "title": "Calidad de la Información y Ética en los Datos",
-    "section": "El Costo de los Datos de Mala Calidad",
-    "text": "El Costo de los Datos de Mala Calidad\n\nDecisiones incorrectas: invertir en el mercado equivocado\nCostos operativos: retrabajos, correcciones, recursos desperdiciados\nPérdida de confianza: los usuarios dejan de usar el SI\nRiesgo reputacional: errores visibles para clientes o reguladores\nCostos legales: datos incorrectos en reportes regulatorios\n\n\nEstimación: las empresas pierden entre 15-25% de sus ingresos por mala calidad de datos (Gartner)\n\n\nLa cifra de Gartner es impactante. Aunque es una estimación, muestra que la calidad de datos no es un problema técnico menor: es un problema de negocio con impacto financiero directo."
+    "objectID": "clases/class_week_4.html#v3-variedad-v4-veracidad-v5-valor",
+    "href": "clases/class_week_4.html#v3-variedad-v4-veracidad-v5-valor",
+    "title": "Big Data y Síntesis de la Unidad 1",
+    "section": "V3: Variedad · V4: Veracidad · V5: Valor",
+    "text": "V3: Variedad · V4: Veracidad · V5: Valor\n\n\n\n\n\n\n\n\nV\nDescripción\nEjemplo TechStyle\n\n\n\n\nVariedad\nDatos de múltiples formatos y fuentes\nÓrdenes (tablas) + Reseñas (texto) + Fotos + Clicks (logs)\n\n\nVeracidad\nNo todos los datos son confiables\nReseñas falsas entre 500.000 mensuales\n\n\nValor\nLos datos solo valen si generan decisiones útiles\n¿Vale almacenar cada movimiento del cursor?\n\n\n\n\nLa V más importante es el Valor: si no sabes para qué sirve el dato, no vale la pena recolectarlo.\n\n\nLa Variedad es el cambio más dramático. Las BD relacionales manejan bien datos estructurados (tablas), pero son rígidas con texto, imágenes o logs. El Valor conecta Big Data con el marco central del curso: los datos sirven para tomar decisiones."
   },
   {
     "objectID": "clases/class_week_4.html#discusión-1",
     "href": "clases/class_week_4.html#discusión-1",
-    "title": "Calidad de la Información y Ética en los Datos",
+    "title": "Big Data y Síntesis de la Unidad 1",
     "section": "💬 Discusión 1",
-    "text": "💬 Discusión 1\nEn parejas (5 minutos):\nTechStyle encontró estos problemas en su base de datos:\n\nEl 15% de los emails de clientes son inválidos (ej. “juan@.com”)\nLa columna “fecha_nacimiento” está vacía en 40% de los registros\nEl precio del mismo producto difiere en la app y en el sitio web\nLos reportes de ventas se generan cada 3 días\n\nPara cada problema: ¿qué dimensión de calidad afecta? ¿Qué decisión de negocio podría fallar?\n\nRespuestas: 1=Exactitud (campañas de email fallidas), 2=Completitud (segmentación por edad imposible), 3=Consistencia (cliente paga precio incorrecto), 4=Oportunidad (no se puede reaccionar a tendencias diarias)."
+    "text": "💬 Discusión 1\nEn grupos de 3 (6 minutos):\nUna empresa de transporte urbano (como Uber o un metro) genera Big Data constantemente.\nIdentifiquen las 5 V con ejemplos concretos para esa empresa:\n\n\n\nV\nEjemplo concreto\n\n\n\n\nVolumen\n\n\n\nVelocidad\n\n\n\nVariedad\n\n\n\nVeracidad\n\n\n\nValor\n\n\n\n\n\nUber: Volumen (millones de viajes/día), Velocidad (GPS cada segundo), Variedad (GPS + pagos + calificaciones + mensajes), Veracidad (calificaciones falsas), Valor (precio dinámico según demanda en tiempo real = decisión de negocio que vale millones)."
   },
   {
-    "objectID": "clases/class_week_4.html#quién-es-responsable-de-la-calidad-de-los-datos",
-    "href": "clases/class_week_4.html#quién-es-responsable-de-la-calidad-de-los-datos",
-    "title": "Calidad de la Información y Ética en los Datos",
-    "section": "¿Quién es Responsable de la Calidad de los Datos?",
-    "text": "¿Quién es Responsable de la Calidad de los Datos?\nUna pregunta incómoda…\n\nRespuesta incorrecta: “El área de TI”\nRespuesta correcta: Todos\n\n\nQuien ingresa los datos: ingresa correctamente\nQuien usa los datos: reporta anomalías que detecta\nQuien diseña el sistema: crea validaciones que previenen errores\nLa dirección: establece una cultura de calidad de datos\n\n\nEste es un cambio de mentalidad importante. La calidad de datos no es un problema técnico que “el área de sistemas resuelve”. Es una responsabilidad compartida. Conectar con el componente “Personas” de los SI."
+    "objectID": "clases/class_week_4.html#del-sistema-operacional-al-analítico",
+    "href": "clases/class_week_4.html#del-sistema-operacional-al-analítico",
+    "title": "Big Data y Síntesis de la Unidad 1",
+    "section": "Del Sistema Operacional al Analítico",
+    "text": "Del Sistema Operacional al Analítico\nTechStyle tiene 2 necesidades de datos radicalmente distintas:\n\n  NECESIDAD 1: Registrar cada venta en tiempo real\n  → Rápido, muchas escrituras simultáneas, datos actuales\n\n  NECESIDAD 2: Analizar 5 años de ventas para decidir\n  → Complejo, pocas escrituras, grandes lecturas históricas\n\n\n¿Puede el mismo sistema hacer ambas eficientemente?\nNo. Por eso existen 2 arquitecturas distintas: OLTP y OLAP.\n\n\nEsta tensión es la motivación central para OLTP/OLAP. No es una preferencia técnica: son requerimientos que se contradicen entre sí."
   },
   {
-    "objectID": "clases/class_week_4.html#gobierno-de-datos",
-    "href": "clases/class_week_4.html#gobierno-de-datos",
-    "title": "Calidad de la Información y Ética en los Datos",
-    "section": "Gobierno de Datos",
-    "text": "Gobierno de Datos\n¿Qué es?\nConjunto de políticas, procesos y responsabilidades que garantizan que los datos sean gestionados como un activo estratégico de la organización.\n\nIncluye:\n\nDefinir dueños de datos (quién es responsable de qué datos)\nEstablecer estándares de calidad (qué se considera correcto)\nCrear procesos de validación (cómo se verifica la calidad)\nDocumentar los datos con un diccionario de datos\n\n\n\nEl diccionario de datos será importante en la Unidad 3. Mencionarlo como “lo veremos más adelante, pero ya saben para qué sirve”."
+    "objectID": "clases/class_week_4.html#oltp-vs.-olap",
+    "href": "clases/class_week_4.html#oltp-vs.-olap",
+    "title": "Big Data y Síntesis de la Unidad 1",
+    "section": "OLTP vs. OLAP",
+    "text": "OLTP vs. OLAP\n\n\n\n\n\n\n\n\nCaracterística\nOLTP\nOLAP\n\n\n\n\nPropósito\nRegistrar operaciones\nAnalizar histórico\n\n\nUsuarios\nMiles (clientes, operarios)\nPocos (analistas, gerentes)\n\n\nOperaciones\nMuchas escrituras pequeñas\nPocas lecturas complejas\n\n\nDatos\nActuales\nHistóricos (años)\n\n\nRespuesta\nMilisegundos\nSegundos a minutos\n\n\nEjemplo\nSistema de ventas online\nDashboard de BI / CMI\n\n\n\n\nTechStyle “¿está disponible este producto?” → OLTP\n“¿cuál fue la categoría más vendida en los últimos 3 años?” → OLAP\n\n\nPreguntas sobre “ahora” van a OLTP; preguntas sobre “patrones históricos” van a OLAP. Esta distinción es conceptualmente importante y prácticamente útil en cualquier trabajo de datos."
   },
   {
-    "objectID": "clases/class_week_4.html#ética-en-el-manejo-de-datos",
-    "href": "clases/class_week_4.html#ética-en-el-manejo-de-datos",
-    "title": "Calidad de la Información y Ética en los Datos",
-    "section": "Ética en el Manejo de Datos",
-    "text": "Ética en el Manejo de Datos\nLos datos no son solo un recurso técnico: son información sobre personas\n\nCuando TechStyle tiene datos de sus 450.000 clientes, tiene:\n\nSus nombres, direcciones y teléfonos\nSus hábitos de compra y preferencias\nSus datos de pago\nPatrones de comportamiento que el cliente ni sabe que revela\n\n\n\n¿Qué responsabilidades tiene TechStyle con esa información?\n\n\nEste momento de reflexión es importante. Los estudiantes serán profesionales que manejarán datos de personas reales. Establecer el marco ético desde ahora."
+    "objectID": "clases/class_week_4.html#el-data-warehouse-integrando-todo",
+    "href": "clases/class_week_4.html#el-data-warehouse-integrando-todo",
+    "title": "Big Data y Síntesis de la Unidad 1",
+    "section": "El Data Warehouse: Integrando Todo",
+    "text": "El Data Warehouse: Integrando Todo\nLos datos van del OLTP al OLAP mediante transformación\n┌─────────────────────────────────────┐\n│         FUENTES OLTP                │\n│  BD Ventas · BD Clientes · CRM      │\n└──────────────────┬──────────────────┘\n                   │  ETL (cada noche)\n                   ▼\n        ┌──────────────────────┐\n        │    DATA WAREHOUSE    │\n        │   (OLAP · Historial) │\n        └──────────┬───────────┘\n                   │\n      ┌────────────┼────────────┐\n      ▼            ▼            ▼\n   [BI / CMI]  [Reportes]  [Analítica]\n\nEl Data Warehouse resuelve el problema de silos: integra datos de múltiples sistemas OLTP en un repositorio coherente optimizado para análisis. Es el corazón de la arquitectura de Business Intelligence."
   },
   {
-    "objectID": "clases/class_week_4.html#principios-éticos-en-el-manejo-de-datos",
-    "href": "clases/class_week_4.html#principios-éticos-en-el-manejo-de-datos",
-    "title": "Calidad de la Información y Ética en los Datos",
-    "section": "Principios Éticos en el Manejo de Datos",
-    "text": "Principios Éticos en el Manejo de Datos\n\nTransparencia: los clientes saben qué datos se recolectan y para qué\nProporcionalidad: recolectar solo los datos realmente necesarios\nSeguridad: proteger los datos contra accesos no autorizados\nNo discriminación: no usar datos para perjudicar grupos específicos\nResponsabilidad: asumir las consecuencias del mal uso\n\n\nNo es necesario profundizar en la legislación (eso puede variar). Enfocarse en los principios que guían el comportamiento ético independientemente del país o normativa."
+    "objectID": "clases/class_week_4.html#etl-el-proceso-de-integración",
+    "href": "clases/class_week_4.html#etl-el-proceso-de-integración",
+    "title": "Big Data y Síntesis de la Unidad 1",
+    "section": "ETL: El Proceso de Integración",
+    "text": "ETL: El Proceso de Integración\nExtract · Transform · Load\n\nExtraer: obtener datos de los sistemas OLTP fuente\nTransformar: limpiar, estandarizar, integrar, aplicar calidad de datos\nCargar: insertar en el Data Warehouse\n\n\nTechStyle: cada noche a las 2am, el proceso ETL extrae datos de ventas, bodega y CRM; los limpia y estandariza; y los carga en el Data Warehouse.\nA las 7am el analista tiene datos frescos para el CMI del día.\n\n\nETL es donde se “paga el precio” de la integración. La transformación puede ser compleja: sistemas con formatos distintos, monedas distintas, nombres distintos para el mismo concepto. Aquí es donde la calidad de datos (clase anterior) se convierte en proceso sistemático."
   },
   {
-    "objectID": "clases/class_week_4.html#la-ley-de-protección-de-datos-en-chile",
-    "href": "clases/class_week_4.html#la-ley-de-protección-de-datos-en-chile",
-    "title": "Calidad de la Información y Ética en los Datos",
-    "section": "La Ley de Protección de Datos en Chile",
-    "text": "La Ley de Protección de Datos en Chile\nLey N° 19.628 sobre Protección de la Vida Privada\n\nRegula el tratamiento de datos personales en Chile\nLos datos solo pueden usarse para el fin para el que fueron recolectados\nLas personas tienen derecho a acceder, rectificar y eliminar sus datos\nLas empresas deben proteger los datos con medidas de seguridad adecuadas\n\n\nEn proceso: Chile avanza hacia una ley más moderna y robusta (Ley 21.719, 2024), alineada con estándares internacionales como el GDPR europeo.\n\n\nNo profundizar en detalles legales. El punto es que el manejo de datos tiene implicancias legales reales. Los futuros profesionales deben ser conscientes de esto."
+    "objectID": "clases/class_week_4.html#el-modelo-completo-de-techstyle",
+    "href": "clases/class_week_4.html#el-modelo-completo-de-techstyle",
+    "title": "Big Data y Síntesis de la Unidad 1",
+    "section": "El Modelo Completo de TechStyle",
+    "text": "El Modelo Completo de TechStyle\n   [Clientes compran]  →  OLTP  →  datos en tiempo real\n                                         ↓\n                                   ETL (noche)\n                                         ↓\n                               DATA WAREHOUSE (OLAP)\n                                         ↓\n                      ┌──────────────────────────────┐\n                      ▼              ▼               ▼\n                   CMI con       Reportes        Análisis\n                   4 KPIs       de ventas       predictivo\n                      ↓\n               DECISIONES DE NEGOCIO\n\nCada concepto de la Unidad 1 corresponde a un eslabón de esta cadena.\n\n\nEste es el diagrama de cierre. Los estudiantes ya conocen todos los componentes: SI (semana 1), tipos de SI/TPS/BI (semana 2), CMI/calidad (semana 3), Big Data/OLTP/OLAP/DW (hoy). Todo está conectado."
   },
   {
-    "objectID": "clases/class_week_4.html#discusión-2",
-    "href": "clases/class_week_4.html#discusión-2",
-    "title": "Calidad de la Información y Ética en los Datos",
-    "section": "💬 Discusión 2",
-    "text": "💬 Discusión 2\nPara toda la clase (8 minutos):\nTechStyle está evaluando 3 iniciativas con sus datos de clientes:\n\nVender la base de datos de clientes a marcas asociadas para que envíen publicidad\nUsar el historial de compras para subir los precios a clientes que “claramente pueden pagar más”\nAnalizar el comportamiento de clientes para personalizar recomendaciones de productos\n\n¿Cuáles son éticas? ¿Cuáles no? ¿Por qué? ¿Depende de cómo se haga?\n\n1 y 2 son claramente problemáticas (1 viola la proporcionalidad y transparencia, 2 es discriminación por poder adquisitivo). 3 es ética si se hace con transparencia y consentimiento. El objetivo es que los estudiantes desarrollen criterio propio, no solo memorizar reglas."
+    "objectID": "clases/class_week_4.html#síntesis-los-5-conceptos-clave-de-la-unidad-1",
+    "href": "clases/class_week_4.html#síntesis-los-5-conceptos-clave-de-la-unidad-1",
+    "title": "Big Data y Síntesis de la Unidad 1",
+    "section": "Síntesis: Los 5 Conceptos Clave de la Unidad 1",
+    "text": "Síntesis: Los 5 Conceptos Clave de la Unidad 1\n\nSistema de Información — conjunto de componentes que transforma datos en información para apoyar decisiones. Tiene 5 elementos: hardware, software, datos, personas, procesos.\nNiveles y Tipos de SI — 3 niveles (operativo, táctico, estratégico) con SI distintos (TPS, BI, DSS, CRM, EIS).\nCMI — 4 perspectivas (Financiera, Cliente, Procesos, Aprendizaje) con KPIs que conectan estrategia y datos.\nCalidad de Datos — 4 dimensiones (exactitud, completitud, consistencia, oportunidad). Datos malos = decisiones malas.\nBig Data y Arquitectura — 5 V, OLTP (operacional), OLAP (analítico), Data Warehouse, ETL.\n\n\nEste repaso es el corazón de la preparación para la solemne. Pedir a los estudiantes que anoten qué concepto sienten menos claro para abordarlo en la actividad."
   },
   {
-    "objectID": "clases/class_week_4.html#integridad-académica-y-profesional",
-    "href": "clases/class_week_4.html#integridad-académica-y-profesional",
-    "title": "Calidad de la Información y Ética en los Datos",
-    "section": "Integridad Académica y Profesional",
-    "text": "Integridad Académica y Profesional\nEl mismo principio aplica en la universidad:\n\nPresentar datos reales, no manipulados para llegar al resultado esperado\nCitar fuentes cuando se usan datos de otros\nNo fabricar ni alterar resultados en informes o evaluaciones\nReportar hallazgos incómodos aunque contradigan la hipótesis inicial\n\n\nUn analista de datos íntegro dice “los datos no muestran lo que esperábamos” en vez de ajustar los datos hasta que muestren lo que quería.\n\n\nConectar con el contexto universitario. La integridad en el manejo de datos se aprende aquí, no solo en el trabajo. Las malas prácticas en la universidad prefiguran malas prácticas profesionales."
+    "objectID": "clases/class_week_4.html#caso-integrador-servirápido",
+    "href": "clases/class_week_4.html#caso-integrador-servirápido",
+    "title": "Big Data y Síntesis de la Unidad 1",
+    "section": "Caso Integrador: ServiRápido",
+    "text": "Caso Integrador: ServiRápido\nServiRápido: empresa de mantención del hogar (gasfitería, electricidad, cerrajería) con 180 técnicos y 3.200 servicios mensuales en Santiago.\nActualmente gestiona sus datos con: - Google Sheets para registrar servicios - WhatsApp para coordinar con técnicos - Email para enviar facturas - Notas en papel para inventario de repuestos\n\nProblema: No saben si son rentables por zona ni qué técnicos tienen mejor desempeño.\nSu rol: analista de datos contratado para diseñar el SI de ServiRápido.\n\n\nEste escenario refleja la realidad de miles de PYMEs en Chile. Tiene todos los problemas vistos en la unidad: datos dispersos, mala calidad, sin arquitectura analítica."
   },
   {
-    "objectID": "clases/class_week_4.html#actividad-auditoría-de-calidad-de-datos",
-    "href": "clases/class_week_4.html#actividad-auditoría-de-calidad-de-datos",
-    "title": "Calidad de la Información y Ética en los Datos",
-    "section": "Actividad: Auditoría de Calidad de Datos",
-    "text": "Actividad: Auditoría de Calidad de Datos\nContexto: TechStyle entrega este extracto de su tabla customers:\n\n\n\nid\nnombre\nemail\ntelefono\nregion\nfecha_reg\n\n\n\n\n1\nJuan P.\njuan@gmail.com\n98765432\nRM\n2022-03-15\n\n\n2\nMaría\nNULL\n56912345\nRM\n2022-03-16\n\n\n3\nCarlos R.\ncarlos@hotmail\nNULL\nNULL\n2022-03-15\n\n\n4\nAna M.\nana@gmail.com\n98765432\nValpo\nNULL\n\n\n5\nJuan P.\njuan@gmail.com\n98765432\nRM\n2022-03-17\n\n\n\nEn grupos de 3 (10 minutos):\n\nIdentifiquen todos los problemas de calidad y clasifíquenlos por dimensión\n¿Qué decisiones de negocio se verían afectadas?\n¿Qué reglas de validación debería tener el sistema para prevenirlos?\n\n\nProblemas: fila 2 sin apellido y sin email (completitud), fila 3 email inválido sin @.com (exactitud) y sin teléfono/región (completitud), fila 4 sin fecha (completitud) y teléfono duplicado con fila 1 (consistencia), fila 5 duplicado exacto de fila 1 (consistencia). Reglas: email válido obligatorio, teléfono único, región obligatoria, fecha obligatoria."
+    "objectID": "clases/class_week_4.html#actividad-diseñar-el-si-de-servirápido",
+    "href": "clases/class_week_4.html#actividad-diseñar-el-si-de-servirápido",
+    "title": "Big Data y Síntesis de la Unidad 1",
+    "section": "Actividad: Diseñar el SI de ServiRápido",
+    "text": "Actividad: Diseñar el SI de ServiRápido\nEn grupos de 4-5 personas (15 minutos):\nParte 1 — Diagnóstico: identifiquen 2 problemas de calidad de datos y 2 barreras al flujo de información.\nParte 2 — Diseño del SI: propongan qué tipos de SI necesita ServiRápido y por qué (TPS, BI, CRM, etc.).\nParte 3 — CMI: diseñen 1 objetivo y 1 KPI por cada perspectiva del CMI.\nPresentación: 2 minutos por grupo.\n\nParte 1: datos en papel → exactitud y completitud en riesgo; WhatsApp → no estructurado, no analizable. Parte 2: TPS para registro de servicios, CRM para clientes, BI para análisis de rentabilidad por zona. Parte 3: Financiero=margen por servicio, Cliente=tasa de recontratación, Procesos=tiempo de respuesta, Aprendizaje=capacitación de técnicos."
+  },
+  {
+    "objectID": "clases/class_week_4.html#preparación-para-la-solemne-1",
+    "href": "clases/class_week_4.html#preparación-para-la-solemne-1",
+    "title": "Big Data y Síntesis de la Unidad 1",
+    "section": "Preparación para la Solemne 1",
+    "text": "Preparación para la Solemne 1\nSemana 5 — Evaluación Unidad 1\n\nTemas: todos los conceptos de las semanas 1 a 4\nFormato: prueba escrita individual\nEnfoque: aplicación en contexto, no memorización de definiciones\n\n\nTipo de pregunta frecuente: “Dada esta empresa, ¿qué SI implementarías y por qué?”\nPractiquen: diseñar un CMI, identificar dimensiones de calidad, explicar la diferencia OLTP/OLAP.\n\n\nSer muy claro sobre el tipo de pregunta de la solemne. Los estudiantes tienden a memorizar definiciones; el énfasis debe estar en poder aplicar los conceptos a un caso nuevo."
   },
   {
     "objectID": "clases/class_week_4.html#lo-que-aprendimos-hoy",
     "href": "clases/class_week_4.html#lo-que-aprendimos-hoy",
-    "title": "Calidad de la Información y Ética en los Datos",
+    "title": "Big Data y Síntesis de la Unidad 1",
     "section": "Lo Que Aprendimos Hoy",
-    "text": "Lo Que Aprendimos Hoy\n\nLa calidad de datos tiene 4 dimensiones: exactitud, completitud, consistencia, oportunidad\nLos datos de mala calidad generan decisiones incorrectas con costos reales\nLa calidad de datos es responsabilidad de todos, no solo de TI\nEl gobierno de datos establece políticas para gestionar los datos como activo\nEl manejo de datos personales tiene responsabilidades éticas y legales\n\n\nUn dato incorrecto puede ser más peligroso que no tener el dato."
-  },
-  {
-    "objectID": "clases/class_week_4.html#próxima-clase",
-    "href": "clases/class_week_4.html#próxima-clase",
-    "title": "Calidad de la Información y Ética en los Datos",
-    "section": "Próxima Clase",
-    "text": "Próxima Clase\nTema: Big Data: Características y Arquitectura de Datos\nExploraremos:\n\n¿Qué hace que los datos sean “Big Data”? Las 5 V\nDiferencia entre sistemas OLTP y OLAP\n¿Qué es un Data Warehouse?\nLa arquitectura de datos moderna\n\n\nReflexionen: ¿Cuántos datos genera su smartphone en un día? ¿Quién los usa y para qué?\n\n\nPreparar la transición hacia Big Data. La pregunta sobre el smartphone es para mostrar que ya viven en un mundo de Big Data sin darse cuenta."
+    "text": "Lo Que Aprendimos Hoy\n\nBig Data se define por las 5 V: Volumen, Velocidad, Variedad, Veracidad, Valor\nLos sistemas OLTP registran operaciones en tiempo real; los OLAP analizan histórico\nEl Data Warehouse integra datos de múltiples fuentes para análisis\nEl proceso ETL conecta los sistemas operacionales con el almacén analítico\nTodos los conceptos de la Unidad 1 forman una cadena completa: dato → decisión\n\n\nBig Data no es el objetivo: el objetivo son las decisiones que habilita."
   },
   {
     "objectID": "clases/class_week_4.html#preguntas",
     "href": "clases/class_week_4.html#preguntas",
-    "title": "Calidad de la Información y Ética en los Datos",
+    "title": "Big Data y Síntesis de la Unidad 1",
     "section": "Preguntas",
-    "text": "Preguntas\n¿Dudas o comentarios?\nContacto: [correo del profesor]\nPróxima clase: [fecha y hora]"
+    "text": "Preguntas\n¿Dudas sobre el contenido de la Unidad 1?\nSemana 5: Solemne 1\nContacto: [correo del profesor]"
   },
   {
     "objectID": "clases/class_week_4.html#gracias",
     "href": "clases/class_week_4.html#gracias",
-    "title": "Calidad de la Información y Ética en los Datos",
+    "title": "Big Data y Síntesis de la Unidad 1",
     "section": "¡Gracias!",
-    "text": "¡Gracias!\nBig Data y Analytics Universidad San Sebastián\n\nAgradecer participación. Recordar reflexionar sobre los datos que genera su smartphone."
+    "text": "¡Gracias!\nFin del contenido de la Unidad 1\nBig Data y Analytics · Universidad San Sebastián\n\nAgradecer participación. Recordar que la solemne es la próxima semana y ofrecer espacio para consultas."
   },
   {
     "objectID": "clases/class_week_2.html#qué-vimos-la-semana-pasada",
@@ -557,7 +403,7 @@
     "href": "clases/class_week_2.html#próxima-clase",
     "title": "Componentes, Actores y Tipos de Sistemas de Información",
     "section": "Próxima Clase",
-    "text": "Próxima Clase\nTema: Modelos de Datos y Bases de Datos Relacionales\nExploraremos:\n\n¿Cómo se organiza la información en una base de datos?\n¿Qué es un modelo relacional?\nTablas, campos, registros y relaciones\nEl modelo de datos de TechStyle\n\n\nPreparen: Piensen en cómo están organizados los datos de una tienda física (productos, precios, clientes, compras)\n\n\nLa próxima clase conecta el concepto de SI con la implementación técnica: cómo se almacenan realmente los datos que hemos visto."
+    "text": "Próxima Clase\nTema: CMI, Calidad de Datos y Ética\nExploraremos:\n\nEl Cuadro de Mando Integral (CMI): 4 perspectivas y KPIs\n¿Qué hace que un dato sea de calidad?\nImpacto de los datos malos en las decisiones del CMI\nÉtica en el manejo de datos de personas\n\n\nReflexionen: ¿Han tomado alguna vez una decisión basada en información incorrecta? ¿Qué pasó?\n\n\nLa próxima clase conecta el CMI (herramienta estratégica) con la calidad de los datos que lo alimentan. Preparar con una reflexión personal sobre decisiones con mala información."
   },
   {
     "objectID": "clases/class_week_2.html#preguntas",
@@ -578,7 +424,7 @@
     "href": "index.html",
     "title": "",
     "section": "",
-    "text": "Big Data y Analytics\n    Ingeniería Comercial · Facultad de Economía, Negocios y Gobierno · 2026\n  \n  \n    ICOM E015\n    3er Semestre · 5 créditos SCT\n  \n\n\n\n\n  \n  \n    \n    Presentaciones del Curso\n    \n  \n\n  \n    \n      Sesión 0\n      Conociendo a tu Profesor\n      Ciencia de Datos Espaciales · Recursos Hídricos · Investigación de Impacto\n      Ver presentación →\n    \n    \n      Sesión 0\n      Programa del Curso\n      Unidades, contenidos, evaluaciones y requisitos de aprobación\n      Ver presentación →\n    \n  \n\n  \n  \n    \n    Unidad 1 · Sistemas de Información en el Contexto Empresarial\n    \n  \n\n  \n    \n      Semana 1\n      Sistemas de Información en el Contexto de Negocios\n      Introducción, decisiones y flujo de información organizacional\n      Ver presentación →\n    \n    \n      Semana 2\n      Componentes, Actores y Tipos de Sistemas de Información\n      DSS, CMI, CRM, EIS — roles y niveles organizacionales\n      Ver presentación →\n    \n    \n      Semana 3\n      CMI y Flujo de Información en la Organización\n      Balanced Scorecard · 4 perspectivas · KPIs · flujo vertical, horizontal y externo\n      Ver presentación →\n    \n    \n      Semana 4\n      Calidad de la Información y Ética en los Datos\n      Exactitud · Completitud · Consistencia · Oportunidad · Gobierno de datos\n      Ver presentación →\n    \n    \n      Semana 5\n      Big Data: Características y Arquitectura de Datos\n      Las 5 V · OLTP vs OLAP · Data Warehouse · ETL\n      Ver presentación →\n    \n    \n      Semana 6\n      Integración y Síntesis: Unidad 1\n      Caso integrador · Repaso completo · Preparación Solemne 1\n      Ver presentación →\n    \n  \n\n  \n  \n    \n    Unidad 2 · Fundamentos de Bases de Datos\n    \n  \n\n  \n    \n      Semana 7\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 8\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 9\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n  \n\n  \n  \n    \n    Unidad 3 · Modelamiento y Gestión de Base de Datos\n    \n  \n\n  \n    \n      Semana 10\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 11\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 12\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 13\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 14\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 15\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 16\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 17\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 18\n      Próximamente\n      Contenido en preparación\n      Próximamente"
+    "text": "Big Data y Analytics\n    Ingeniería Comercial · Facultad de Economía, Negocios y Gobierno · 2026\n  \n  \n    ICOM E015\n    3er Semestre · 5 créditos SCT\n  \n\n\n\n\n  \n  \n    \n    Presentaciones del Curso\n    \n  \n\n  \n    \n      Sesión 0\n      Conociendo a tu Profesor\n      Ciencia de Datos Espaciales · Recursos Hídricos · Investigación de Impacto\n      Ver presentación →\n    \n    \n      Sesión 0\n      Programa del Curso\n      Unidades, contenidos, evaluaciones y requisitos de aprobación\n      Ver presentación →\n    \n  \n\n  \n  \n    \n    Unidad 1 · Sistemas de Información en el Contexto Empresarial\n    \n  \n\n  \n    \n      Semana 1\n      Sistemas de Información en el Contexto de Negocios\n      Datos · Información · Conocimiento · Decisión · Introducción a los SI\n      Ver presentación →\n    \n    \n      Semana 2\n      Componentes, Actores y Tipos de Sistemas de Información\n      Hardware · Software · Personas · Procesos · TPS · BI · DSS · CRM · EIS\n      Ver presentación →\n    \n    \n      Semana 3\n      CMI, Calidad de Datos y Ética\n      Balanced Scorecard · 4 perspectivas · KPIs · Exactitud · Completitud · Consistencia\n      Ver presentación →\n    \n    \n      Semana 4\n      Big Data y Síntesis de la Unidad 1\n      Las 5 V · OLTP vs OLAP · Data Warehouse · ETL · Repaso integrador\n      Ver presentación →\n    \n    \n      Semana 5\n      Solemne 1\n      Evaluación Unidad 1 · Prueba escrita individual (20%) + controles parciales (10%)\n      30% de la nota final\n    \n  \n\n  \n  \n    \n    Unidad 2 · Fundamentos de Bases de Datos\n    \n  \n\n  \n    \n      Semana 6\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 7\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 8\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 9\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 10\n      Solemne 2\n      Evaluación Unidad 2 · Analítica de base de datos (25%) + controles parciales (10%)\n      35% de la nota final\n    \n  \n\n  \n  \n    \n    Unidad 3 · Modelamiento y Gestión de Base de Datos\n    \n  \n\n  \n    \n      Semana 11\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 12\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 13\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 14\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 15\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 16\n      Solemne 3\n      Evaluación Unidad 3 · Creación de BD relacional y análisis (25%) + controles parciales (10%)\n      35% de la nota final"
   },
   {
     "objectID": "clases/class_week_1.html#bienvenidos",
@@ -793,352 +639,128 @@
   {
     "objectID": "clases/class_week_3.html#qué-vimos-la-semana-pasada",
     "href": "clases/class_week_3.html#qué-vimos-la-semana-pasada",
-    "title": "CMI y Flujo de Información en la Organización",
+    "title": "CMI, Calidad de Datos y Ética",
     "section": "¿Qué Vimos la Semana Pasada?",
-    "text": "¿Qué Vimos la Semana Pasada?\n\nUn SI tiene 5 componentes: hardware, software, datos, personas, procesos\nExisten 3 niveles organizacionales: operativo, táctico, estratégico\nLos tipos de SI sirven a niveles distintos: TPS, BI, DSS, CRM, EIS\n\n\nHoy: ¿Cómo alinea una organización todos estos sistemas hacia un mismo objetivo?\n\n\nRepaso rápido. Preguntar: ¿recuerdan los 3 niveles organizacionales? ¿Qué SI usaba el CEO Roberto? Conectar con la clase anterior."
+    "text": "¿Qué Vimos la Semana Pasada?\n\nUn SI tiene 5 componentes: hardware, software, datos, personas, procesos\nExisten 3 niveles organizacionales: operativo, táctico, estratégico\nLos tipos de SI sirven a niveles distintos: TPS, BI, DSS, CRM, EIS\n\n\nHoy: ¿Cómo alinea una organización estos sistemas hacia un objetivo? ¿Y qué pasa si los datos son incorrectos?\n\n\nRepaso rápido. Preguntar: ¿recuerdan los 3 niveles organizacionales? ¿Qué SI usaba el CEO Roberto?"
   },
   {
     "objectID": "clases/class_week_3.html#situación-el-ceo-de-techstyle-tiene-un-problema",
     "href": "clases/class_week_3.html#situación-el-ceo-de-techstyle-tiene-un-problema",
-    "title": "CMI y Flujo de Información en la Organización",
+    "title": "CMI, Calidad de Datos y Ética",
     "section": "Situación: El CEO de TechStyle tiene un Problema",
-    "text": "Situación: El CEO de TechStyle tiene un Problema\nRoberto, CEO de TechStyle, recibe el informe de fin de año:\n\nVentas: +12% ✓\nSatisfacción de clientes: -8% ✗\nTiempos de entrega: sin mejora ✗\nRotación de personal: +18% ✗\n\n\n¿Está TechStyle teniendo un buen año o un mal año?\n\n\nEl escenario muestra que mirar solo las ventas no basta. Introducir la necesidad de una visión más completa del desempeño."
-  },
-  {
-    "objectID": "clases/class_week_3.html#el-problema-de-gestionar-solo-con-datos-financieros",
-    "href": "clases/class_week_3.html#el-problema-de-gestionar-solo-con-datos-financieros",
-    "title": "CMI y Flujo de Información en la Organización",
-    "section": "El Problema de Gestionar Solo con Datos Financieros",
-    "text": "El Problema de Gestionar Solo con Datos Financieros\n\nEl resultado financiero refleja el pasado, no el futuro\nUna empresa puede crecer en ventas y estar perdiendo clientes valiosos\nLos empleados insatisfechos abandonan → pérdida de conocimiento\nLos procesos ineficientes aumentan costos silenciosamente\n\n\n¿Cómo tener una visión completa y equilibrada del desempeño?\n\n\nEsta es la motivación para el CMI. No se trata solo de cuánto ganamos, sino de qué tan sano está el negocio en todas sus dimensiones."
+    "text": "Situación: El CEO de TechStyle tiene un Problema\nRoberto recibe el informe de fin de año:\n\nVentas: +12% ✓\nSatisfacción de clientes: -8% ✗\nTiempos de entrega: sin mejora ✗\nRotación de personal: +18% ✗\n\n\n¿Está TechStyle teniendo un buen año o un mal año?\nMirar solo los datos financieros no es suficiente.\n\n\nMotivar la necesidad de una visión balanceada del desempeño. No solo finanzas."
   },
   {
     "objectID": "clases/class_week_3.html#el-cuadro-de-mando-integral-cmi",
     "href": "clases/class_week_3.html#el-cuadro-de-mando-integral-cmi",
-    "title": "CMI y Flujo de Información en la Organización",
+    "title": "CMI, Calidad de Datos y Ética",
     "section": "El Cuadro de Mando Integral (CMI)",
-    "text": "El Cuadro de Mando Integral (CMI)\n¿Qué es?\nHerramienta de gestión estratégica que traduce la visión y estrategia de una organización en un conjunto balanceado de indicadores.\n\nCreado por: Kaplan y Norton (Harvard, 1992)\nPrincipio: Lo que no se mide, no se gestiona.\n\n\nEn inglés: Balanced Scorecard (BSC)\n\n\nNo profundizar en la historia. Enfatizar el principio central: necesitamos medir más que solo dinero para gestionar bien una empresa."
+    "text": "El Cuadro de Mando Integral (CMI)\nHerramienta que traduce la estrategia de una organización en un conjunto balanceado de indicadores medibles.\n\nLas 4 Perspectivas:\n            VISIÓN Y ESTRATEGIA\n                    │\n     ┌──────────────┼──────────────┐\n     ▼              ▼              ▼\n FINANCIERA      CLIENTE      APRENDIZAJE\n                    │\n             PROCESOS INTERNOS\n\n\nKaplan y Norton, Harvard, 1992. Lo que no se mide, no se gestiona."
   },
   {
     "objectID": "clases/class_week_3.html#las-4-perspectivas-del-cmi",
     "href": "clases/class_week_3.html#las-4-perspectivas-del-cmi",
-    "title": "CMI y Flujo de Información en la Organización",
+    "title": "CMI, Calidad de Datos y Ética",
     "section": "Las 4 Perspectivas del CMI",
-    "text": "Las 4 Perspectivas del CMI\n            ┌─────────────────────────────────┐\n            │        VISIÓN Y ESTRATEGIA      │\n            └───────────────┬─────────────────┘\n                            │\n         ┌──────────────────┼──────────────────┐\n         ▼                  ▼                  ▼\n   ┌──────────┐      ┌──────────┐      ┌──────────────┐\n   │FINANCIERA│      │ CLIENTE  │      │  APRENDIZAJE │\n   │          │      │          │      │  Y CRECIMIEN.│\n   └──────────┘      └──────────┘      └──────────────┘\n                            │\n                     ┌──────────────┐\n                     │  PROCESOS    │\n                     │  INTERNOS    │\n                     └──────────────┘\n\nMostrar que las 4 perspectivas están conectadas y al servicio de la estrategia. Ninguna perspectiva es más importante que otra; son complementarias."
-  },
-  {
-    "objectID": "clases/class_week_3.html#perspectiva-1-financiera",
-    "href": "clases/class_week_3.html#perspectiva-1-financiera",
-    "title": "CMI y Flujo de Información en la Organización",
-    "section": "Perspectiva 1: Financiera",
-    "text": "Perspectiva 1: Financiera\n¿Cómo nos ven los accionistas?\n\nMide el desempeño económico de la organización\nIndicadores típicos: ingresos, rentabilidad, costos, retorno sobre inversión\nEs el resultado final de todo lo que hace la empresa\nPero… es un indicador tardío (refleja lo que ya pasó)\n\n\nTechStyle: Ventas totales, margen por categoría, costo de adquisición de cliente (CAC)\n\n\nEnfatizar que la perspectiva financiera es importante pero insuficiente sola. Es la consecuencia de las otras perspectivas, no la causa."
-  },
-  {
-    "objectID": "clases/class_week_3.html#perspectiva-2-cliente",
-    "href": "clases/class_week_3.html#perspectiva-2-cliente",
-    "title": "CMI y Flujo de Información en la Organización",
-    "section": "Perspectiva 2: Cliente",
-    "text": "Perspectiva 2: Cliente\n¿Cómo nos ven nuestros clientes?\n\nMide la satisfacción, retención y captación de clientes\nIndicadores típicos: NPS, tasa de retención, tiempo de resolución de reclamos\nUn cliente satisfecho → repite → recomienda\nUn cliente insatisfecho → abandona → habla mal\n\n\nTechStyle: NPS (Net Promoter Score), tasa de clientes que recompran, reclamos resueltos en menos de 24h\n\n\nEl NPS es una métrica clave en e-commerce. Preguntar: ¿cuántos de ustedes han recomendado alguna tienda online? ¿Por qué? Esa es la perspectiva del cliente en acción."
-  },
-  {
-    "objectID": "clases/class_week_3.html#perspectiva-3-procesos-internos",
-    "href": "clases/class_week_3.html#perspectiva-3-procesos-internos",
-    "title": "CMI y Flujo de Información en la Organización",
-    "section": "Perspectiva 3: Procesos Internos",
-    "text": "Perspectiva 3: Procesos Internos\n¿En qué procesos debemos ser excelentes?\n\nMide la eficiencia y calidad de los procesos clave\nIndicadores típicos: tiempo de ciclo, tasa de error, velocidad de entrega\nProcesos eficientes → menores costos → mejor servicio\nIdentifica cuellos de botella que afectan al cliente\n\n\nTechStyle: Tiempo promedio de entrega, % de pedidos entregados a tiempo, tasa de devoluciones\n\n\nEn TechStyle, si el proceso de despacho tiene errores, el cliente lo sufre directamente. Esta perspectiva conecta con la del cliente."
-  },
-  {
-    "objectID": "clases/class_week_3.html#perspectiva-4-aprendizaje-y-crecimiento",
-    "href": "clases/class_week_3.html#perspectiva-4-aprendizaje-y-crecimiento",
-    "title": "CMI y Flujo de Información en la Organización",
-    "section": "Perspectiva 4: Aprendizaje y Crecimiento",
-    "text": "Perspectiva 4: Aprendizaje y Crecimiento\n¿Podemos continuar mejorando y creando valor?\n\nMide la capacidad de la organización para innovar y aprender\nIndicadores típicos: satisfacción de empleados, capacitación, retención de talento\nEs la base de todas las otras perspectivas\nSin personas capaces y motivadas, nada funciona\n\n\nTechStyle: Índice de satisfacción laboral, horas de capacitación por empleado, rotación de personal\n\n\nEsta es la perspectiva más ignorada pero más importante a largo plazo. Una empresa que no invierte en sus empleados verá deteriorarse todas las demás perspectivas."
+    "text": "Las 4 Perspectivas del CMI\n\n\n\n\n\n\n\n\nPerspectiva\nPregunta clave\nEjemplo TechStyle\n\n\n\n\nFinanciera\n¿Cómo nos ven los accionistas?\nMargen neto por categoría\n\n\nCliente\n¿Cómo nos ven los clientes?\nTasa de recompra, NPS\n\n\nProcesos\n¿En qué procesos debemos ser excelentes?\n% entregas a tiempo\n\n\nAprendizaje\n¿Podemos seguir mejorando?\nRotación de personal\n\n\n\n\nCada perspectiva se mide con indicadores clave (KPIs)\n\n\nKPI = Key Performance Indicator. Conectar: los KPIs se alimentan con datos del SI (TPS, BI, CRM)."
   },
   {
     "objectID": "clases/class_week_3.html#el-cmi-de-techstyle",
     "href": "clases/class_week_3.html#el-cmi-de-techstyle",
-    "title": "CMI y Flujo de Información en la Organización",
+    "title": "CMI, Calidad de Datos y Ética",
     "section": "El CMI de TechStyle",
-    "text": "El CMI de TechStyle\n\n\n\nPerspectiva\nObjetivo\nIndicador\nMeta\n\n\n\n\nFinanciera\nAumentar rentabilidad\nMargen neto\n≥ 15%\n\n\nCliente\nFidelizar clientes\nTasa de recompra\n≥ 60%\n\n\nProcesos\nMejorar entrega\n% entrega en plazo\n≥ 95%\n\n\nAprendizaje\nRetener talento\nRotación anual\n≤ 10%\n\n\n\n\nCada indicador está conectado con los otros\n\n\nMostrar la interconexión: si mejoran los procesos (entrega), mejora la satisfacción del cliente, lo que mejora la retención, lo que mejora las finanzas. Todo está relacionado."
+    "text": "El CMI de TechStyle\n\n\n\nPerspectiva\nObjetivo\nKPI\nMeta\n\n\n\n\nFinanciera\nAumentar rentabilidad\nMargen neto\n≥ 15%\n\n\nCliente\nFidelizar clientes\nTasa de recompra\n≥ 60%\n\n\nProcesos\nMejorar entrega\n% entrega en plazo\n≥ 95%\n\n\nAprendizaje\nRetener talento\nRotación anual\n≤ 10%\n\n\n\n\nEl SI alimenta al CMI. El CMI guía al SI.\nSi mejoran los procesos → mejora el cliente → mejoran las finanzas.\n\n\nTodo está interconectado. El CMI obliga a pensar en las consecuencias de cada decisión en todas las perspectivas."
   },
   {
     "objectID": "clases/class_week_3.html#discusión-1",
     "href": "clases/class_week_3.html#discusión-1",
-    "title": "CMI y Flujo de Información en la Organización",
+    "title": "CMI, Calidad de Datos y Ética",
     "section": "💬 Discusión 1",
-    "text": "💬 Discusión 1\nEn grupos de 3 (8 minutos):\nTechStyle quiere mejorar su desempeño. Para cada perspectiva del CMI:\n\nPropongan 2 indicadores relevantes para TechStyle\n¿Qué información necesitan para medirlos?\n¿Qué SI (TPS, BI, CRM, EIS) entregaría esa información?\n\n\nGuiar: ¿De qué tablas de la base de datos vendría cada indicador? Conectar CMI con los tipos de SI vistos la semana pasada. Esperar respuestas diversas y validar todas."
+    "text": "💬 Discusión 1\nEn grupos de 3 (7 minutos):\nFoodRapid (delivery con 200.000 pedidos/día) quiere mejorar su desempeño.\nPara cada perspectiva del CMI, propongan: 1. Un objetivo estratégico 2. Un KPI concreto y medible 3. ¿De qué tipo de SI (TPS, BI, CRM…) viene ese dato?\n\nGuiar: ¿qué define el éxito de un delivery? La velocidad, la satisfacción, los márgenes. Conectar KPIs con los tipos de SI de la semana pasada."
   },
   {
-    "objectID": "clases/class_week_3.html#el-cmi-como-puente-entre-estrategia-y-datos",
-    "href": "clases/class_week_3.html#el-cmi-como-puente-entre-estrategia-y-datos",
-    "title": "CMI y Flujo de Información en la Organización",
-    "section": "El CMI como Puente entre Estrategia y Datos",
-    "text": "El CMI como Puente entre Estrategia y Datos\n  Visión estratégica\n         ↓\n  Objetivos por perspectiva\n         ↓\n  Indicadores (KPIs)\n         ↓\n  Datos en el Sistema de Información\n         ↓\n  Monitoreo y decisión\n\nEl SI alimenta al CMI. El CMI guía al SI.\n\n\nEste diagrama es clave: el CMI no funciona sin datos. Y los datos solo tienen valor si sirven para medir algo que importa estratégicamente."
+    "objectID": "clases/class_week_3.html#el-cmi-como-puente-estrategia-datos",
+    "href": "clases/class_week_3.html#el-cmi-como-puente-estrategia-datos",
+    "title": "CMI, Calidad de Datos y Ética",
+    "section": "El CMI como Puente: Estrategia → Datos",
+    "text": "El CMI como Puente: Estrategia → Datos\n   Visión estratégica\n          ↓\n   Objetivos por perspectiva\n          ↓\n   Indicadores (KPIs)\n          ↓\n   Datos en el Sistema de Información\n          ↓\n   Monitoreo y ajuste\n\nSin datos de calidad, el CMI muestra una realidad falsa.\n\n\nEsta es la transición perfecta hacia la segunda parte de la clase: si los datos son incorrectos, todos los KPIs del CMI son incorrectos, y las decisiones que toma el CEO serán incorrectas."
   },
   {
-    "objectID": "clases/class_week_3.html#flujo-de-información-en-la-organización",
-    "href": "clases/class_week_3.html#flujo-de-información-en-la-organización",
-    "title": "CMI y Flujo de Información en la Organización",
-    "section": "Flujo de Información en la Organización",
-    "text": "Flujo de Información en la Organización\n¿Cómo circula la información dentro de TechStyle?\nNo solo importa qué información existe, sino cómo y a quién llega.\n\nExisten 3 flujos principales:\n\nVertical: entre niveles jerárquicos\nHorizontal: entre áreas o departamentos\nExterno: con clientes, proveedores, reguladores\n\n\n\nIntroducir el concepto de flujo de información como algo dinámico. La información no solo existe: viaja. Y si no llega a quien la necesita, no sirve."
+    "objectID": "clases/class_week_3.html#situación-una-decisión-costosa-en-techstyle",
+    "href": "clases/class_week_3.html#situación-una-decisión-costosa-en-techstyle",
+    "title": "CMI, Calidad de Datos y Ética",
+    "section": "Situación: Una Decisión Costosa en TechStyle",
+    "text": "Situación: Una Decisión Costosa en TechStyle\nEl gerente de logística presenta su informe:\n“El 92% de los pedidos se entregó en menos de 48h. Cumplimos la meta.”\nEl CEO aprueba el bono de desempeño del equipo.\n\nUn mes después: llegan 1.200 reclamos de clientes que esperaron más de 5 días.\n¿Qué pasó?\n\n\nPresentar el misterio antes de revelar la causa. Dejar que los estudiantes especulen."
   },
   {
-    "objectID": "clases/class_week_3.html#flujo-vertical-de-arriba-hacia-abajo",
-    "href": "clases/class_week_3.html#flujo-vertical-de-arriba-hacia-abajo",
-    "title": "CMI y Flujo de Información en la Organización",
-    "section": "Flujo Vertical: De Arriba hacia Abajo",
-    "text": "Flujo Vertical: De Arriba hacia Abajo\nInformación que baja: instrucciones y objetivos\n\nEl CEO define metas anuales → llegan al gerente de marketing\nEl gerente fija presupuesto → llega al equipo de campaña\nLa estrategia se traduce en tareas operativas\n\n\nRiesgo: la información se distorsiona o se pierde en cada nivel\n\n\nAnalogía: como el “teléfono loco”. Cada vez que la información pasa por una persona, puede cambiar un poco. Los SI mitigan este riesgo al hacer la información explícita y registrada."
+    "objectID": "clases/class_week_3.html#el-problema-de-calidad-de-datos",
+    "href": "clases/class_week_3.html#el-problema-de-calidad-de-datos",
+    "title": "CMI, Calidad de Datos y Ética",
+    "section": "El Problema de Calidad de Datos",
+    "text": "El Problema de Calidad de Datos\n\nUn error en el sistema contaba como “entregado” cuando el repartidor salía del almacén\nNo cuando el pedido llegaba realmente al cliente\nEl 92% medía salidas del almacén, no entregas reales\nLos datos eran técnicamente registrados, pero no representaban la realidad\n\n\nConsecuencia: Bonos pagados, clientes furiosos, confianza destruida.\nUn KPI del CMI (entregas a tiempo) basado en datos incorrectos → decisión incorrecta.\n\n\nEste es el puente entre las dos partes de la clase. Los datos malos destruyen el CMI y todas las decisiones que se basan en él."
   },
   {
-    "objectID": "clases/class_week_3.html#flujo-vertical-de-abajo-hacia-arriba",
-    "href": "clases/class_week_3.html#flujo-vertical-de-abajo-hacia-arriba",
-    "title": "CMI y Flujo de Información en la Organización",
-    "section": "Flujo Vertical: De Abajo hacia Arriba",
-    "text": "Flujo Vertical: De Abajo hacia Arriba\nInformación que sube: datos operativos y alertas\n\nLa repartidora Sofía marca “pedido entregado” → el sistema actualiza\nEl sistema detecta un atraso → alerta al jefe de logística\nEl jefe genera un reporte → llega al gerente\nEl gerente lo incluye en el informe para el CEO\n\n\nSin este flujo, la alta dirección no sabe qué pasa en la operación\n\n\nEste es el flujo más crítico para la toma de decisiones. Los SI automatizan gran parte de este flujo, reemplazando reportes manuales lentos con dashboards en tiempo real."
+    "objectID": "clases/class_week_3.html#las-4-dimensiones-de-la-calidad-de-datos",
+    "href": "clases/class_week_3.html#las-4-dimensiones-de-la-calidad-de-datos",
+    "title": "CMI, Calidad de Datos y Ética",
+    "section": "Las 4 Dimensiones de la Calidad de Datos",
+    "text": "Las 4 Dimensiones de la Calidad de Datos\nLa calidad de datos es el grado en que los datos representan fielmente la realidad para el propósito que se necesitan.\n\n\n\n\n\n\n\n\n\nDimensión\nPregunta\nEjemplo TechStyle\n\n\n\n\nExactitud\n¿Es correcto el valor?\nDirección del cliente mal escrita\n\n\nCompletitud\n¿Están todos los datos?\n23% de clientes sin teléfono\n\n\nConsistencia\n¿Dicen lo mismo todos los sistemas?\nStock diferente en bodega vs. web\n\n\nOportunidad\n¿Llegan a tiempo?\nReporte de stock generado semanalmente\n\n\n\n\n\nCada dimensión puede causar decisiones incorrectas de forma diferente. Exactitud = datos incorrectos. Completitud = datos faltantes. Consistencia = contradicciones. Oportunidad = datos que llegan tarde."
   },
   {
-    "objectID": "clases/class_week_3.html#flujo-horizontal-entre-departamentos",
-    "href": "clases/class_week_3.html#flujo-horizontal-entre-departamentos",
-    "title": "CMI y Flujo de Información en la Organización",
-    "section": "Flujo Horizontal: Entre Departamentos",
-    "text": "Flujo Horizontal: Entre Departamentos\nLa coordinación que hace funcionar la empresa\n  Marketing → Ventas → Logística → Bodega → Finanzas\n      ↕           ↕          ↕         ↕          ↕\n                     [Sistema Compartido]\n\nTechStyle: Cuando Marketing lanza una campaña, Logística debe saber que habrá más pedidos. Finanzas necesita proyectar el flujo de caja.\n\n\nEl flujo horizontal es donde más fallas ocurren. Las áreas trabajan en silos, con sus propios sistemas, y la información no fluye. Los ERP y sistemas integrados resuelven esto."
-  },
-  {
-    "objectID": "clases/class_week_3.html#flujo-externo-con-el-entorno",
-    "href": "clases/class_week_3.html#flujo-externo-con-el-entorno",
-    "title": "CMI y Flujo de Información en la Organización",
-    "section": "Flujo Externo: Con el Entorno",
-    "text": "Flujo Externo: Con el Entorno\nInformación que entra y sale de la organización\n\nClientes → realizan pedidos, envían reclamos, dejan reseñas\nProveedores → envían facturas, confirman stock, notifican retrasos\nReguladores → exigen reportes de impuestos, cumplimiento\nCompetencia → precios, nuevos productos (inteligencia de mercado)\n\n\nTechStyle necesita SI que gestionen también el entorno externo\n\n\nEl CRM gestiona el flujo con clientes. Los sistemas de proveedores (supply chain) gestionan el flujo externo hacia atrás. La inteligencia de mercado es más difícil de sistematizar."
-  },
-  {
-    "objectID": "clases/class_week_3.html#barreras-al-flujo-de-información",
-    "href": "clases/class_week_3.html#barreras-al-flujo-de-información",
-    "title": "CMI y Flujo de Información en la Organización",
-    "section": "Barreras al Flujo de Información",
-    "text": "Barreras al Flujo de Información\n¿Por qué la información no siempre llega a quien la necesita?\n\nSilos organizacionales: cada área guarda su información\nSistemas incompatibles: marketing usa Excel, logística usa SAP\nCultura de la información: “esta información es mía”\nSobrecarga de datos: tanta información que nadie la procesa\nFalta de procesos: nadie definió quién comunica qué a quién\n\n\nEstos problemas son tan comunes que tienen nombre. El “silo” es una de las principales razones por las que las empresas invierten en sistemas integrados (ERP)."
+    "objectID": "clases/class_week_3.html#el-costo-de-los-datos-de-mala-calidad",
+    "href": "clases/class_week_3.html#el-costo-de-los-datos-de-mala-calidad",
+    "title": "CMI, Calidad de Datos y Ética",
+    "section": "El Costo de los Datos de Mala Calidad",
+    "text": "El Costo de los Datos de Mala Calidad\n\nDecisiones incorrectas: invertir donde no corresponde\nCostos operativos: retrabajos y correcciones\nPérdida de confianza: los usuarios dejan de usar el sistema\nDaño reputacional: errores visibles para clientes\n\n\nEstimación: las empresas pierden entre 15–25% de sus ingresos por mala calidad de datos (Gartner)\n¿Quién es responsable? → Todos: quien ingresa, quien usa, quien diseña.\n\n\nNo es un problema del área de TI solamente. Conectar con el componente “Personas” del SI: todos deben cuidar la calidad."
   },
   {
     "objectID": "clases/class_week_3.html#discusión-2",
     "href": "clases/class_week_3.html#discusión-2",
-    "title": "CMI y Flujo de Información en la Organización",
+    "title": "CMI, Calidad de Datos y Ética",
     "section": "💬 Discusión 2",
-    "text": "💬 Discusión 2\nPara toda la clase (5 minutos):\nEn TechStyle ocurrió esto: El equipo de Marketing lanzó una campaña de Electrónica el mismo día que Bodega reportó quiebre de stock en esa categoría.\n\n¿Qué tipo de falla en el flujo de información ocurrió?\n¿Qué barreras estaban presentes?\n¿Qué SI podría haber prevenido esto?\n\n\nRespuesta esperada: falla en flujo horizontal (entre áreas). Barrera: silos, sistemas incompatibles. Solución: un sistema integrado (ERP) o alertas automáticas de stock que lleguen al equipo de Marketing antes de lanzar campañas."
+    "text": "💬 Discusión 2\nEn parejas (5 minutos):\nTechStyle encontró estos problemas en su base de datos:\n\nEl 15% de los emails son inválidos (ej. juan@.com)\nLa columna fecha_nacimiento está vacía en 40% de los registros\nEl precio del mismo producto difiere en la app y en el sitio web\nLos reportes de ventas se generan cada 3 días\n\n¿Qué dimensión afecta cada problema? ¿Qué decisión de negocio podría fallar?\n\n1=Exactitud (campañas de email fallidas), 2=Completitud (segmentación por edad imposible), 3=Consistencia (cliente paga precio incorrecto), 4=Oportunidad (no se puede reaccionar a tendencias del día)."
   },
   {
-    "objectID": "clases/class_week_3.html#los-si-como-infraestructura-del-flujo",
-    "href": "clases/class_week_3.html#los-si-como-infraestructura-del-flujo",
-    "title": "CMI y Flujo de Información en la Organización",
-    "section": "Los SI como Infraestructura del Flujo",
-    "text": "Los SI como Infraestructura del Flujo\nCada tipo de SI gestiona un flujo específico\n\n\n\nFlujo\nSI responsable\nEjemplo en TechStyle\n\n\n\n\nVertical (operativo→gerencia)\nTPS + BI\nReporte de ventas diarias\n\n\nVertical (estrategia→equipo)\nEIS\nMetas del CEO distribuidas\n\n\nHorizontal\nERP / integraciones\nStock actualizado en tiempo real\n\n\nExterno (clientes)\nCRM\nHistorial de interacciones\n\n\nExterno (proveedor)\nSCM\nÓrdenes de compra automáticas\n\n\n\n\nSCM = Supply Chain Management. No profundizar mucho. El punto es que distintos SI están diseñados para distintos flujos de información."
+    "objectID": "clases/class_week_3.html#ética-en-el-manejo-de-datos",
+    "href": "clases/class_week_3.html#ética-en-el-manejo-de-datos",
+    "title": "CMI, Calidad de Datos y Ética",
+    "section": "Ética en el Manejo de Datos",
+    "text": "Ética en el Manejo de Datos\nLos datos no son solo un recurso técnico: son información sobre personas reales.\n\nTechStyle tiene nombres, direcciones y hábitos de compra de 450.000 personas\nLos clientes confían en que esa información se usará responsablemente\nMal uso → daño real a personas, sanciones legales, pérdida de reputación\n\n\nPrincipios éticos clave:\n\nTransparencia: el cliente sabe qué datos se recolectan y para qué\nProporcionalidad: recolectar solo lo necesario\nSeguridad: proteger los datos de accesos no autorizados\n\n\n\nNo profundizar en legislación. El punto es el principio: los futuros profesionales manejarán datos de personas reales y tienen responsabilidades."
   },
   {
-    "objectID": "clases/class_week_3.html#actividad-diseñar-el-cmi-de-foodrapid",
-    "href": "clases/class_week_3.html#actividad-diseñar-el-cmi-de-foodrapid",
-    "title": "CMI y Flujo de Información en la Organización",
-    "section": "Actividad: Diseñar el CMI de “FoodRapid”",
-    "text": "Actividad: Diseñar el CMI de “FoodRapid”\nContexto: FoodRapid es un delivery de comida con 5.000 restaurantes y 200.000 pedidos diarios.\nEn grupos de 4-5 personas (15 minutos):\n\nDefinan la estrategia principal de FoodRapid (¿en qué quiere ser mejor?)\nDiseñen el CMI completo con:\n\n1 objetivo por perspectiva\n1 indicador (KPI) por objetivo\n1 meta concreta\n\nIdentifiquen qué datos necesitan y de qué SI vendrían\n\nPresentación: 2 minutos por grupo\n\nEstrategia posible: liderazgo en velocidad de entrega, o liderazgo en variedad de restaurantes. Guiar a que la estrategia se refleje en todos los KPIs. Un grupo con estrategia de “velocidad” debería tener KPIs muy distintos a uno con estrategia de “variedad”."
-  },
-  {
-    "objectID": "clases/class_week_3.html#reflexión-el-cmi-como-lenguaje-común",
-    "href": "clases/class_week_3.html#reflexión-el-cmi-como-lenguaje-común",
-    "title": "CMI y Flujo de Información en la Organización",
-    "section": "Reflexión: El CMI como Lenguaje Común",
-    "text": "Reflexión: El CMI como Lenguaje Común\n¿Por qué el CMI es tan poderoso?\n\nTraduce la estrategia en objetivos medibles\nDa a todos los niveles el mismo marco de referencia\nConecta las decisiones operativas con la visión estratégica\nIdentifica qué información realmente importa medir\n\n\nSin CMI: cada área mide lo que le parece. Con CMI: todos reman en la misma dirección.\n\n\nLa metáfora del remo es útil. Sin un CMI, es como si cada remero de un bote remara en una dirección diferente. Con el CMI, todos van al mismo destino."
+    "objectID": "clases/class_week_3.html#actividad-auditoría-de-calidad-de-datos",
+    "href": "clases/class_week_3.html#actividad-auditoría-de-calidad-de-datos",
+    "title": "CMI, Calidad de Datos y Ética",
+    "section": "Actividad: Auditoría de Calidad de Datos",
+    "text": "Actividad: Auditoría de Calidad de Datos\nTechStyle entrega este extracto de su tabla customers:\n\n\n\nid\nnombre\nemail\ntelefono\nregion\nfecha_reg\n\n\n\n\n1\nJuan P.\njuan@gmail.com\n98765432\nRM\n2022-03-15\n\n\n2\nMaría\nNULL\n56912345\nRM\n2022-03-16\n\n\n3\nCarlos R.\ncarlos@hotmail\nNULL\nNULL\n2022-03-15\n\n\n4\nAna M.\nana@gmail.com\n98765432\nValpo\nNULL\n\n\n5\nJuan P.\njuan@gmail.com\n98765432\nRM\n2022-03-17\n\n\n\nEn grupos de 3 (10 minutos):\n\nIdentifiquen todos los problemas y clasifíquenlos por dimensión de calidad\n¿Qué decisiones de negocio se verían afectadas?\n¿Qué reglas de validación debería tener el sistema?\n\n\nFila 2: sin apellido, sin email (completitud). Fila 3: email inválido sin dominio completo (exactitud), sin teléfono/región (completitud). Fila 4: sin fecha (completitud), teléfono igual a fila 1 (consistencia/exactitud). Fila 5: duplicado exacto de fila 1 (consistencia). Reglas: email válido obligatorio, teléfono único, región obligatoria."
   },
   {
     "objectID": "clases/class_week_3.html#lo-que-aprendimos-hoy",
     "href": "clases/class_week_3.html#lo-que-aprendimos-hoy",
-    "title": "CMI y Flujo de Información en la Organización",
+    "title": "CMI, Calidad de Datos y Ética",
     "section": "Lo Que Aprendimos Hoy",
-    "text": "Lo Que Aprendimos Hoy\n\nEl CMI traduce la estrategia en 4 perspectivas equilibradas\nLas 4 perspectivas son: Financiera, Cliente, Procesos, Aprendizaje\nLos KPIs hacen medibles los objetivos estratégicos\nLa información fluye de forma vertical, horizontal y externa\nLos SI son la infraestructura que hace posible ese flujo\n\n\nEl SI alimenta al CMI. El CMI guía al SI."
+    "text": "Lo Que Aprendimos Hoy\n\nEl CMI traduce la estrategia en 4 perspectivas: Financiera, Cliente, Procesos, Aprendizaje\nLos KPIs hacen medibles los objetivos estratégicos alimentados por datos del SI\nLa calidad de datos tiene 4 dimensiones: exactitud, completitud, consistencia, oportunidad\nLos datos de mala calidad generan decisiones incorrectas con costos reales\nEl manejo de datos de personas implica responsabilidades éticas\n\n\nSin datos de calidad, el mejor CMI del mundo es inútil."
   },
   {
     "objectID": "clases/class_week_3.html#próxima-clase",
     "href": "clases/class_week_3.html#próxima-clase",
-    "title": "CMI y Flujo de Información en la Organización",
+    "title": "CMI, Calidad de Datos y Ética",
     "section": "Próxima Clase",
-    "text": "Próxima Clase\nTema: Calidad de la Información y Ética en el Manejo de Datos\nExploraremos:\n\n¿Qué hace que un dato sea de calidad?\nImpacto de los datos malos en las decisiones\nGobierno de datos y responsabilidades\nÉtica y privacidad en el manejo de datos\n\n\nReflexionen: ¿Han tomado alguna vez una decisión basada en información incorrecta? ¿Qué pasó?\n\n\nLa calidad de datos es un problema universal. Preparar a los estudiantes con una experiencia personal para conectar con el tema."
+    "text": "Próxima Clase\nTema: Big Data y Síntesis de la Unidad 1\nExploraremos:\n\n¿Qué hace que los datos sean “Big Data”? Las 5 V\nOLTP vs. OLAP: sistemas transaccionales vs. analíticos\nData Warehouse y el proceso ETL\nRepaso integrador de toda la Unidad 1\n\n\nReflexionen: ¿Cuántos datos genera su smartphone en un día? ¿Quién los usa y para qué?\n\n\nLa próxima clase cierra la unidad con Big Data y la síntesis. Es clave que lleguen habiendo repasado los conceptos anteriores."
   },
   {
     "objectID": "clases/class_week_3.html#preguntas",
     "href": "clases/class_week_3.html#preguntas",
-    "title": "CMI y Flujo de Información en la Organización",
+    "title": "CMI, Calidad de Datos y Ética",
     "section": "Preguntas",
     "text": "Preguntas\n¿Dudas o comentarios?\nContacto: [correo del profesor]\nPróxima clase: [fecha y hora]"
   },
   {
     "objectID": "clases/class_week_3.html#gracias",
     "href": "clases/class_week_3.html#gracias",
-    "title": "CMI y Flujo de Información en la Organización",
+    "title": "CMI, Calidad de Datos y Ética",
     "section": "¡Gracias!",
-    "text": "¡Gracias!\nBig Data y Analytics Universidad San Sebastián\n\nAgradecer participación. Recordar que reflexionen sobre decisiones tomadas con mala información."
-  },
-  {
-    "objectID": "clases/class_week_5.html#qué-vimos-la-semana-pasada",
-    "href": "clases/class_week_5.html#qué-vimos-la-semana-pasada",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "¿Qué Vimos la Semana Pasada?",
-    "text": "¿Qué Vimos la Semana Pasada?\n\nLa calidad de datos tiene 4 dimensiones: exactitud, completitud, consistencia, oportunidad\nLos datos de mala calidad generan decisiones incorrectas con costos reales\nEl manejo de datos tiene responsabilidades éticas y legales\n\n\nHoy: ¿Qué pasa cuando los datos crecen tanto que los sistemas tradicionales no pueden manejarlos?\n\n\nRepaso rápido. Conectar: hasta ahora hablamos de sistemas de información y calidad. Ahora enfrentamos el desafío de escala: qué pasa cuando hay demasiados datos."
-  },
-  {
-    "objectID": "clases/class_week_5.html#situación-techstyle-en-el-año-2028",
-    "href": "clases/class_week_5.html#situación-techstyle-en-el-año-2028",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "Situación: TechStyle en el Año 2028",
-    "text": "Situación: TechStyle en el Año 2028\nTechStyle creció más de lo esperado:\n\nDe 450.000 a 8.500.000 clientes registrados\nDe 2.3M a 47 millones de órdenes históricas\nExpandió a 6 países de Latinoamérica\nRegistra clicks, scrolls, tiempo de vista en cada página del sitio\nIntegra datos de redes sociales, clima y eventos locales\n\n\nEl sistema de base de datos actual colapsa cada fin de semana.\n\n\nProyectar TechStyle al futuro para ilustrar el problema de escala. No es ficción: este es exactamente el crecimiento que empresas como Falabella o Ripley han experimentado."
-  },
-  {
-    "objectID": "clases/class_week_5.html#el-problema-de-escala",
-    "href": "clases/class_week_5.html#el-problema-de-escala",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "El Problema de Escala",
-    "text": "El Problema de Escala\nEl sistema actual fue diseñado para 450.000 clientes, no para 8.5 millones.\n\nConsultas que antes tomaban 2 segundos ahora toman 8 minutos\nEl servidor se cae durante el Black Friday\nLos reportes del CMI llegan con 3 días de retraso\nNo hay forma de analizar el comportamiento de navegación web (millones de clicks/día)\n\n\nTechStyle ya no tiene un problema de “sistemas de información”. Tiene un problema de Big Data.\n\n\nEl salto conceptual es importante: el mismo tipo de problema (capturar, almacenar, procesar, presentar datos) pero a una escala que requiere arquitecturas completamente diferentes."
-  },
-  {
-    "objectID": "clases/class_week_5.html#qué-es-big-data",
-    "href": "clases/class_week_5.html#qué-es-big-data",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "¿Qué es Big Data?",
-    "text": "¿Qué es Big Data?\nNo es solo “muchos datos”.\n\nBig Data se define por un conjunto de características que lo distinguen de los datos tradicionales.\nLas más conocidas son las 5 V:\n\n\n  Volumen · Velocidad · Variedad · Veracidad · Valor\n\n\nOriginalmente eran 3 V (Volumen, Velocidad, Variedad), propuestas por Doug Laney en 2001. Luego se agregaron Veracidad y Valor. Hoy algunos hablan de 7 u 8 V, pero las 5 son las más establecidas."
-  },
-  {
-    "objectID": "clases/class_week_5.html#v1-volumen",
-    "href": "clases/class_week_5.html#v1-volumen",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "V1: Volumen",
-    "text": "V1: Volumen\nLa cantidad de datos generados es masiva\n\nSe mide en Terabytes, Petabytes, Exabytes\nTechStyle 2028: 47M de órdenes × múltiples ítems = miles de millones de registros\nProblema: los sistemas relacionales tradicionales no escalan bien más allá de cierto punto\n\n\nPara dimensionar:\n\n\n\nEscala\nTamaño\nEquivalente\n\n\n\n\n1 GB\n1.000 MB\nUn libro de 250 páginas en texto\n\n\n1 TB\n1.000 GB\n250.000 libros\n\n\n1 PB\n1.000 TB\nTodos los libros de la Biblioteca del Congreso\n\n\n\n\n\nEl volumen por sí solo no hace que algo sea Big Data. Una empresa con 1 TB de datos bien organizados puede manejarlo con tecnología convencional. Es la combinación de las 5 V lo que crea el desafío."
-  },
-  {
-    "objectID": "clases/class_week_5.html#v2-velocidad",
-    "href": "clases/class_week_5.html#v2-velocidad",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "V2: Velocidad",
-    "text": "V2: Velocidad\nLos datos se generan y deben procesarse a gran velocidad\n\nTechStyle 2028: 12.000 transacciones por minuto en Black Friday\nRedes sociales: millones de posts por minuto\nSensores IoT: miles de lecturas por segundo\nEl desafío: procesar, analizar y responder en tiempo real\n\n\nEn TechStyle: si un producto se agota, el sistema debe actualizar el stock en milisegundos, no en horas.\n\n\nLa velocidad es la dimensión más exigente técnicamente. Los sistemas diseñados para procesar datos en lotes (batch) no sirven cuando se necesita respuesta en tiempo real. Ejemplo: detección de fraude en tarjetas de crédito debe ocurrir en menos de 100 ms."
-  },
-  {
-    "objectID": "clases/class_week_5.html#v3-variedad",
-    "href": "clases/class_week_5.html#v3-variedad",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "V3: Variedad",
-    "text": "V3: Variedad\nLos datos vienen en múltiples formatos y fuentes\n\nDatos estructurados: tablas de bases de datos (órdenes, clientes, productos)\nDatos semi-estructurados: JSON de la API, logs del servidor, XML\nDatos no estructurados: fotos de productos, reseñas de texto, videos de unboxing\nFuentes externas: clima, redes sociales, datos macroeconómicos\n\n\nTechStyle 2028: 60% de sus datos valiosos son no estructurados (reseñas, fotos, comportamiento web)\n\n\nEste es el cambio más dramático respecto a los sistemas tradicionales. Las bases de datos relacionales manejan bien los datos estructurados, pero son muy rígidas con datos no estructurados. Aquí es donde entran tecnologías como NoSQL, data lakes, etc."
-  },
-  {
-    "objectID": "clases/class_week_5.html#v4-veracidad",
-    "href": "clases/class_week_5.html#v4-veracidad",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "V4: Veracidad",
-    "text": "V4: Veracidad\nNo todos los datos son confiables\n\nDatos provenientes de sensores con fallas\nReseñas falsas o manipuladas\nDatos de redes sociales con ruido, ironía, contexto\nInconsistencias entre fuentes externas\n\n\nEl problema: a mayor volumen y variedad, más difícil garantizar la veracidad.\nTechStyle: ¿cómo distinguir una reseña genuina de una falsa cuando hay 500.000 reseñas nuevas al mes?\n\n\nLa veracidad conecta directamente con la calidad de datos de la clase anterior, pero ahora amplificada por el volumen. No se puede revisar manualmente: necesitas algoritmos que detecten datos sospechosos."
-  },
-  {
-    "objectID": "clases/class_week_5.html#v5-valor",
-    "href": "clases/class_week_5.html#v5-valor",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "V5: Valor",
-    "text": "V5: Valor\nLos datos solo justifican su costo si generan valor\n\nAlmacenar y procesar Big Data es caro\nNo todos los datos capturados son útiles\nEl objetivo final siempre es apoyar una decisión o crear ventaja competitiva\nLa pregunta clave: ¿qué decisión mejora con estos datos?\n\n\nTechStyle: ¿Vale la pena almacenar cada movimiento del cursor de cada usuario, o es suficiente con los clicks?\n\n\nLa V de Valor es la más importante conceptualmente, aunque sea la última. Conecta Big Data de vuelta con el marco del curso: los datos tienen valor solo cuando apoyan decisiones. Si no puedes responder “¿para qué sirve este dato?”, probablemente no valga la pena recolectarlo."
-  },
-  {
-    "objectID": "clases/class_week_5.html#las-5-v-en-techstyle",
-    "href": "clases/class_week_5.html#las-5-v-en-techstyle",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "Las 5 V en TechStyle",
-    "text": "Las 5 V en TechStyle\n\n\n\n\n\n\n\nCaracterística\nEjemplo en TechStyle\n\n\n\n\nVolumen\n47M órdenes, miles de millones de clicks\n\n\nVelocidad\n12.000 transacciones/minuto en Black Friday\n\n\nVariedad\nÓrdenes + reseñas + fotos + datos de navegación\n\n\nVeracidad\nFiltrar reseñas falsas entre 500.000 mensuales\n\n\nValor\nPredecir qué producto comprar antes de que lo sepa el cliente\n\n\n\n\nLa última fila (Valor) menciona predicción: esto conecta hacia Machine Learning y analítica avanzada que verán en cursos futuros. Mencionarlo brevemente como “hacia dónde va la analítica”."
-  },
-  {
-    "objectID": "clases/class_week_5.html#discusión-1",
-    "href": "clases/class_week_5.html#discusión-1",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "💬 Discusión 1",
-    "text": "💬 Discusión 1\nEn grupos de 3 (7 minutos):\nAnalicen el sistema de información de una empresa de transporte urbano (como Uber o un servicio de metro):\n\nIdentifiquen las 5 V con ejemplos concretos\n¿Cuál de las 5 V es el mayor desafío para esa empresa?\n¿Qué decisiones podría mejorar si gestiona bien ese Big Data?\n\n\nUber: Volumen (millones de viajes diarios), Velocidad (ubicación GPS cada segundo), Variedad (GPS + pagos + calificaciones + mensajes), Veracidad (calificaciones falsas o manipuladas), Valor (precio dinámico en tiempo real según demanda). El desafío mayor probablemente sea velocidad (matching conductor-pasajero debe ocurrir en segundos)."
-  },
-  {
-    "objectID": "clases/class_week_5.html#del-sistema-transaccional-al-analítico",
-    "href": "clases/class_week_5.html#del-sistema-transaccional-al-analítico",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "Del Sistema Transaccional al Analítico",
-    "text": "Del Sistema Transaccional al Analítico\nTechStyle tiene 2 grandes necesidades de datos que son muy distintas:\n\n  NECESIDAD 1: Registrar cada venta en tiempo real\n  → Rápido, transaccional, muchas escrituras simultáneas\n\n  NECESIDAD 2: Analizar 5 años de ventas para tomar decisiones\n  → Lento, analítico, pocas escrituras, muchas lecturas\n\n\n¿Puede el mismo sistema hacer ambas cosas?\nNo eficientemente. Por eso existen 2 arquitecturas distintas.\n\n\nEsta es la motivación para presentar OLTP y OLAP. No se trata de preferencias técnicas: son arquitecturas diseñadas para propósitos radicalmente diferentes que entran en conflicto si se mezclan."
-  },
-  {
-    "objectID": "clases/class_week_5.html#oltp-sistemas-transaccionales",
-    "href": "clases/class_week_5.html#oltp-sistemas-transaccionales",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "OLTP: Sistemas Transaccionales",
-    "text": "OLTP: Sistemas Transaccionales\nOnline Transaction Processing\n\nDiseñado para registrar operaciones en tiempo real\nMuchas transacciones pequeñas y simultáneas\nOptimizado para escritura rápida\nDatos actuales (poco historial)\nAlta disponibilidad (no puede caerse)\n\n\nTechStyle: cuando el cliente hace clic en “Comprar”, el sistema OLTP registra la transacción, descuenta el stock y confirma el pago en milisegundos.\n\n\nOLTP es lo que los estudiantes conocen como “la base de datos de la empresa”. Es lo que se usa en los cajeros automáticos, las tiendas online, los hospitales para registrar pacientes. La clave es: optimizado para escrituras rápidas y confiables."
-  },
-  {
-    "objectID": "clases/class_week_5.html#olap-sistemas-analíticos",
-    "href": "clases/class_week_5.html#olap-sistemas-analíticos",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "OLAP: Sistemas Analíticos",
-    "text": "OLAP: Sistemas Analíticos\nOnline Analytical Processing\n\nDiseñado para analizar grandes volúmenes de datos históricos\nPocas consultas complejas sobre millones de registros\nOptimizado para lectura rápida y agregaciones\nDatos históricos (años de información)\nMayor tolerancia a latencia (segundos o minutos está bien)\n\n\nTechStyle: cuando el analista Juan consulta “ventas por categoría del último trimestre vs. mismo periodo del año anterior”, lo hace en el sistema OLAP.\n\n\nOLAP es el motor detrás de los dashboards y reportes de BI. La clave: optimizado para leer y agregar grandes cantidades de datos, no para escribir rápido. Por eso un sistema OLAP puede tomar minutos en responder, pero una consulta que en OLTP tardaría horas."
-  },
-  {
-    "objectID": "clases/class_week_5.html#oltp-vs.-olap-comparación",
-    "href": "clases/class_week_5.html#oltp-vs.-olap-comparación",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "OLTP vs. OLAP: Comparación",
-    "text": "OLTP vs. OLAP: Comparación\n\n\n\nCaracterística\nOLTP\nOLAP\n\n\n\n\nPropósito\nRegistrar operaciones\nAnalizar datos\n\n\nUsuarios\nMiles (clientes, operarios)\nPocos (analistas, gerentes)\n\n\nOperaciones\nMuchas escrituras pequeñas\nPocas lecturas complejas\n\n\nDatos\nActuales\nHistóricos (años)\n\n\nEjemplo\nSistema de ventas\nDashboard de BI\n\n\nTiempo de respuesta\nMilisegundos\nSegundos a minutos\n\n\n\n\nLa tabla es suficiente para que quede claro. No necesitan memorizar todos los detalles, sino entender la diferencia conceptual: propósitos distintos, arquitecturas distintas."
-  },
-  {
-    "objectID": "clases/class_week_5.html#cómo-se-conectan-el-data-warehouse",
-    "href": "clases/class_week_5.html#cómo-se-conectan-el-data-warehouse",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "¿Cómo se Conectan? El Data Warehouse",
-    "text": "¿Cómo se Conectan? El Data Warehouse\nLos datos van del OLTP al OLAP mediante un proceso de transformación\n  [Sistemas OLTP]                    [Sistema OLAP]\n  ─────────────                      ─────────────\n  BD Ventas        ─┐\n  BD Clientes      ─┤  ETL  ──►  Data Warehouse  ──►  BI / Dashboards\n  BD Logística     ─┘                                  CMI / Reportes\n  BD CRM           ─┘\n\nEl Data Warehouse es el repositorio central de datos históricos para análisis.\n\n\nEl Data Warehouse resuelve el problema de silos: integra datos de múltiples sistemas OLTP en un único repositorio coherente optimizado para análisis. Es el corazón de la arquitectura de Business Intelligence."
-  },
-  {
-    "objectID": "clases/class_week_5.html#etl-el-proceso-de-integración",
-    "href": "clases/class_week_5.html#etl-el-proceso-de-integración",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "ETL: El Proceso de Integración",
-    "text": "ETL: El Proceso de Integración\nExtract, Transform, Load\n\nExtraer: obtener datos de los sistemas fuente (OLTP, sistemas externos)\nTransformar: limpiar, estandarizar, integrar, aplicar reglas de calidad\nCargar: insertar los datos transformados en el Data Warehouse\n\n\nTechStyle: cada noche a las 2am, el proceso ETL extrae datos del sistema de ventas, bodega y CRM; los limpia y estandariza; y los carga en el Data Warehouse. A las 7am el analista tiene datos frescos para el reporte del día.\n\n\nETL es donde se “paga el precio” de la integración. La transformación puede ser compleja: los sistemas fuente pueden usar formatos distintos, monedas distintas, nombres distintos para el mismo concepto. Aquí es donde la calidad de datos (clase anterior) se convierte en un proceso sistemático."
-  },
-  {
-    "objectID": "clases/class_week_5.html#discusión-2",
-    "href": "clases/class_week_5.html#discusión-2",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "💬 Discusión 2",
-    "text": "💬 Discusión 2\nEn parejas (5 minutos):\nTechStyle necesita responder estas preguntas. ¿En qué sistema buscaría la información: OLTP o OLAP?\n\n“¿Está disponible el producto #4521 para venta ahora mismo?”\n“¿Cuál fue la categoría más vendida en los últimos 3 años por región?”\n“¿Cuántos pedidos están en estado ‘en despacho’ en este momento?”\n“¿Qué clientes compraron Electrónica en verano pero no en invierno durante los últimos 4 años?”\n\n\n1 y 3 son OLTP (estado actual, tiempo real). 2 y 4 son OLAP (histórico, analítico). El punto clave: preguntas sobre “ahora” van a OLTP; preguntas sobre “patrones históricos” van a OLAP."
-  },
-  {
-    "objectID": "clases/class_week_5.html#la-arquitectura-de-datos-de-techstyle",
-    "href": "clases/class_week_5.html#la-arquitectura-de-datos-de-techstyle",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "La Arquitectura de Datos de TechStyle",
-    "text": "La Arquitectura de Datos de TechStyle\n┌──────────────────────────────────────────────────────┐\n│                    FUENTES DE DATOS                  │\n│  Tienda Web · App Móvil · Bodega · CRM · Logística   │\n└───────────────────────┬──────────────────────────────┘\n                        │  (datos en tiempo real)\n                        ▼\n             ┌──────────────────────┐\n             │   SISTEMAS OLTP      │\n             │  (BD Operacionales)  │\n             └──────────┬───────────┘\n                        │  ETL (noche)\n                        ▼\n             ┌──────────────────────┐\n             │   DATA WAREHOUSE     │\n             │   (OLAP · Historial) │\n             └──────────┬───────────┘\n                        │\n          ┌─────────────┼──────────────┐\n          ▼             ▼              ▼\n       [BI/CMI]     [Reportes]    [Analítica]\n\nEste diagrama resume toda la arquitectura del curso. Los estudiantes ya conocen todos los componentes: OLTP (sistemas que registran operaciones), ETL (proceso de integración), Data Warehouse (repositorio analítico), BI (herramientas de análisis y CMI)."
-  },
-  {
-    "objectID": "clases/class_week_5.html#actividad-arquitectura-de-datos-para-foodrapid",
-    "href": "clases/class_week_5.html#actividad-arquitectura-de-datos-para-foodrapid",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "Actividad: Arquitectura de Datos para FoodRapid",
-    "text": "Actividad: Arquitectura de Datos para FoodRapid\nContexto: FoodRapid (5.000 restaurantes, 200.000 pedidos/día) necesita diseñar su arquitectura de datos.\nEn grupos de 4-5 personas (15 minutos):\n\nIdentifiquen las 5 V de Big Data en FoodRapid con ejemplos\nDiseñen la arquitectura de datos de FoodRapid:\n\n¿Qué sistemas OLTP necesita?\n¿Qué datos debería tener su Data Warehouse?\n¿Qué preguntas respondería el sistema OLAP?\n\n¿Qué decisiones de negocio clave se apoyan con esa arquitectura?\n\nPresentación: 2 minutos por grupo\n\nOLTP de FoodRapid: sistema de pedidos (tiempo real), sistema de pagos, sistema de asignación de repartidores. Data Warehouse: historial de pedidos por zona/hora/restaurante/clima. OLAP: ¿Cuáles son los restaurantes con mejor tiempo de entrega? ¿Qué zonas tienen más demanda los viernes a las 8pm?"
-  },
-  {
-    "objectID": "clases/class_week_5.html#lo-que-aprendimos-hoy",
-    "href": "clases/class_week_5.html#lo-que-aprendimos-hoy",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "Lo Que Aprendimos Hoy",
-    "text": "Lo Que Aprendimos Hoy\n\nBig Data se define por las 5 V: Volumen, Velocidad, Variedad, Veracidad, Valor\nLos sistemas OLTP están optimizados para registrar operaciones en tiempo real\nLos sistemas OLAP están optimizados para analizar grandes volúmenes de datos históricos\nEl Data Warehouse integra datos de múltiples fuentes para análisis\nEl proceso ETL conecta los sistemas operacionales con el almacén analítico\n\n\nBig Data no es el objetivo: el objetivo son las decisiones que habilita."
-  },
-  {
-    "objectID": "clases/class_week_5.html#próxima-clase",
-    "href": "clases/class_week_5.html#próxima-clase",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "Próxima Clase",
-    "text": "Próxima Clase\nTema: Integración y Síntesis de la Unidad 1\nExploraremos:\n\nRepaso integrado de todos los conceptos de la unidad\nCaso integrador con una nueva empresa\nPreparación para la Solemne 1\n\n\nRevisen: los conceptos clave de las últimas 5 clases. Anoten dudas que quieran resolver.\n\n\nLa próxima clase es de integración. Es importante que los estudiantes lleguen con sus notas y dudas identificadas, para aprovechar el espacio de repaso."
-  },
-  {
-    "objectID": "clases/class_week_5.html#preguntas",
-    "href": "clases/class_week_5.html#preguntas",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "Preguntas",
-    "text": "Preguntas\n¿Dudas o comentarios?\nContacto: [correo del profesor]\nPróxima clase: [fecha y hora]"
-  },
-  {
-    "objectID": "clases/class_week_5.html#gracias",
-    "href": "clases/class_week_5.html#gracias",
-    "title": "Big Data: Características y Arquitectura de Datos",
-    "section": "¡Gracias!",
-    "text": "¡Gracias!\nBig Data y Analytics Universidad San Sebastián\n\nAgradecer participación. Recordar revisar los conceptos antes de la próxima clase de integración."
+    "text": "¡Gracias!\nBig Data y Analytics Universidad San Sebastián\n\nAgradecer participación. Recordar que la próxima clase cierra la Unidad 1 antes de la Solemne."
   },
   {
     "objectID": "clases/presentacion_docente.html#bienvenidos",

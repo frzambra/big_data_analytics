@@ -1,5 +1,5 @@
 ---
-title: "CMI y Flujo de Información en la Organización"
+title: "CMI, Calidad de Datos y Ética"
 subtitle: "Clase 3 - Big Data y Analytics"
 author: "Universidad San Sebastián"
 ---
@@ -13,18 +13,18 @@ author: "Universidad San Sebastián"
 :::
 
 ::: {.fragment}
-**Hoy**: ¿Cómo alinea una organización todos estos sistemas hacia un mismo objetivo?
+**Hoy**: ¿Cómo alinea una organización estos sistemas hacia un objetivo? ¿Y qué pasa si los datos son incorrectos?
 :::
 
 ::: {.notes}
-Repaso rápido. Preguntar: ¿recuerdan los 3 niveles organizacionales? ¿Qué SI usaba el CEO Roberto? Conectar con la clase anterior.
+Repaso rápido. Preguntar: ¿recuerdan los 3 niveles organizacionales? ¿Qué SI usaba el CEO Roberto?
 :::
 
 ---
 
 ## Situación: El CEO de TechStyle tiene un Problema
 
-**Roberto, CEO de TechStyle, recibe el informe de fin de año:**
+**Roberto recibe el informe de fin de año:**
 
 ::: {.incremental}
 - Ventas: +12% ✓
@@ -35,416 +35,265 @@ Repaso rápido. Preguntar: ¿recuerdan los 3 niveles organizacionales? ¿Qué SI
 
 ::: {.fragment}
 **¿Está TechStyle teniendo un buen año o un mal año?**
+
+Mirar solo los datos financieros no es suficiente.
 :::
 
 ::: {.notes}
-El escenario muestra que mirar solo las ventas no basta. Introducir la necesidad de una visión más completa del desempeño.
-:::
-
----
-
-## El Problema de Gestionar Solo con Datos Financieros
-
-::: {.incremental}
-- El **resultado financiero** refleja el pasado, no el futuro
-- Una empresa puede **crecer en ventas** y estar perdiendo clientes valiosos
-- Los empleados insatisfechos **abandonan** → pérdida de conocimiento
-- Los procesos ineficientes **aumentan costos** silenciosamente
-:::
-
-::: {.fragment}
-**¿Cómo tener una visión completa y equilibrada del desempeño?**
-:::
-
-::: {.notes}
-Esta es la motivación para el CMI. No se trata solo de cuánto ganamos, sino de qué tan sano está el negocio en todas sus dimensiones.
+Motivar la necesidad de una visión balanceada del desempeño. No solo finanzas.
 :::
 
 ---
 
 ## El Cuadro de Mando Integral (CMI)
 
-**¿Qué es?**
-
-Herramienta de gestión estratégica que traduce la visión y estrategia de una organización en un **conjunto balanceado de indicadores**.
+Herramienta que traduce la estrategia de una organización en un **conjunto balanceado de indicadores** medibles.
 
 ::: {.fragment}
-**Creado por**: Kaplan y Norton (Harvard, 1992)
+**Las 4 Perspectivas:**
 
-**Principio**: Lo que no se mide, no se gestiona.
-:::
-
-::: {.fragment}
-**En inglés**: *Balanced Scorecard (BSC)*
+```
+            VISIÓN Y ESTRATEGIA
+                    │
+     ┌──────────────┼──────────────┐
+     ▼              ▼              ▼
+ FINANCIERA      CLIENTE      APRENDIZAJE
+                    │
+             PROCESOS INTERNOS
+```
 :::
 
 ::: {.notes}
-No profundizar en la historia. Enfatizar el principio central: necesitamos medir más que solo dinero para gestionar bien una empresa.
+Kaplan y Norton, Harvard, 1992. Lo que no se mide, no se gestiona.
 :::
 
 ---
 
 ## Las 4 Perspectivas del CMI
 
-```
-            ┌─────────────────────────────────┐
-            │        VISIÓN Y ESTRATEGIA      │
-            └───────────────┬─────────────────┘
-                            │
-         ┌──────────────────┼──────────────────┐
-         ▼                  ▼                  ▼
-   ┌──────────┐      ┌──────────┐      ┌──────────────┐
-   │FINANCIERA│      │ CLIENTE  │      │  APRENDIZAJE │
-   │          │      │          │      │  Y CRECIMIEN.│
-   └──────────┘      └──────────┘      └──────────────┘
-                            │
-                     ┌──────────────┐
-                     │  PROCESOS    │
-                     │  INTERNOS    │
-                     └──────────────┘
-```
-
-::: {.notes}
-Mostrar que las 4 perspectivas están conectadas y al servicio de la estrategia. Ninguna perspectiva es más importante que otra; son complementarias.
-:::
-
----
-
-## Perspectiva 1: Financiera
-
-**¿Cómo nos ven los accionistas?**
-
-::: {.incremental}
-- Mide el **desempeño económico** de la organización
-- Indicadores típicos: ingresos, rentabilidad, costos, retorno sobre inversión
-- Es el resultado final de todo lo que hace la empresa
-- Pero... es un **indicador tardío** (refleja lo que ya pasó)
-:::
+| Perspectiva | Pregunta clave | Ejemplo TechStyle |
+|------------|---------------|------------------|
+| **Financiera** | ¿Cómo nos ven los accionistas? | Margen neto por categoría |
+| **Cliente** | ¿Cómo nos ven los clientes? | Tasa de recompra, NPS |
+| **Procesos** | ¿En qué procesos debemos ser excelentes? | % entregas a tiempo |
+| **Aprendizaje** | ¿Podemos seguir mejorando? | Rotación de personal |
 
 ::: {.fragment}
-**TechStyle**: Ventas totales, margen por categoría, costo de adquisición de cliente (CAC)
+**Cada perspectiva se mide con indicadores clave (KPIs)**
 :::
 
 ::: {.notes}
-Enfatizar que la perspectiva financiera es importante pero insuficiente sola. Es la consecuencia de las otras perspectivas, no la causa.
-:::
-
----
-
-## Perspectiva 2: Cliente
-
-**¿Cómo nos ven nuestros clientes?**
-
-::: {.incremental}
-- Mide la **satisfacción, retención y captación** de clientes
-- Indicadores típicos: NPS, tasa de retención, tiempo de resolución de reclamos
-- Un cliente satisfecho → repite → recomienda
-- Un cliente insatisfecho → abandona → habla mal
-:::
-
-::: {.fragment}
-**TechStyle**: NPS (Net Promoter Score), tasa de clientes que recompran, reclamos resueltos en menos de 24h
-:::
-
-::: {.notes}
-El NPS es una métrica clave en e-commerce. Preguntar: ¿cuántos de ustedes han recomendado alguna tienda online? ¿Por qué? Esa es la perspectiva del cliente en acción.
-:::
-
----
-
-## Perspectiva 3: Procesos Internos
-
-**¿En qué procesos debemos ser excelentes?**
-
-::: {.incremental}
-- Mide la **eficiencia y calidad** de los procesos clave
-- Indicadores típicos: tiempo de ciclo, tasa de error, velocidad de entrega
-- Procesos eficientes → menores costos → mejor servicio
-- Identifica **cuellos de botella** que afectan al cliente
-:::
-
-::: {.fragment}
-**TechStyle**: Tiempo promedio de entrega, % de pedidos entregados a tiempo, tasa de devoluciones
-:::
-
-::: {.notes}
-En TechStyle, si el proceso de despacho tiene errores, el cliente lo sufre directamente. Esta perspectiva conecta con la del cliente.
-:::
-
----
-
-## Perspectiva 4: Aprendizaje y Crecimiento
-
-**¿Podemos continuar mejorando y creando valor?**
-
-::: {.incremental}
-- Mide la **capacidad de la organización** para innovar y aprender
-- Indicadores típicos: satisfacción de empleados, capacitación, retención de talento
-- Es la **base** de todas las otras perspectivas
-- Sin personas capaces y motivadas, nada funciona
-:::
-
-::: {.fragment}
-**TechStyle**: Índice de satisfacción laboral, horas de capacitación por empleado, rotación de personal
-:::
-
-::: {.notes}
-Esta es la perspectiva más ignorada pero más importante a largo plazo. Una empresa que no invierte en sus empleados verá deteriorarse todas las demás perspectivas.
+KPI = Key Performance Indicator. Conectar: los KPIs se alimentan con datos del SI (TPS, BI, CRM).
 :::
 
 ---
 
 ## El CMI de TechStyle
 
-| Perspectiva | Objetivo | Indicador | Meta |
-|-------------|----------|-----------|------|
+| Perspectiva | Objetivo | KPI | Meta |
+|-------------|----------|-----|------|
 | Financiera | Aumentar rentabilidad | Margen neto | ≥ 15% |
 | Cliente | Fidelizar clientes | Tasa de recompra | ≥ 60% |
 | Procesos | Mejorar entrega | % entrega en plazo | ≥ 95% |
 | Aprendizaje | Retener talento | Rotación anual | ≤ 10% |
 
 ::: {.fragment}
-**Cada indicador está conectado con los otros**
+**El SI alimenta al CMI. El CMI guía al SI.**
+
+Si mejoran los procesos → mejora el cliente → mejoran las finanzas.
 :::
 
 ::: {.notes}
-Mostrar la interconexión: si mejoran los procesos (entrega), mejora la satisfacción del cliente, lo que mejora la retención, lo que mejora las finanzas. Todo está relacionado.
+Todo está interconectado. El CMI obliga a pensar en las consecuencias de cada decisión en todas las perspectivas.
 :::
 
 ---
 
 ## 💬 Discusión 1
 
-**En grupos de 3 (8 minutos)**:
+**En grupos de 3 (7 minutos)**:
 
-TechStyle quiere mejorar su desempeño. Para cada perspectiva del CMI:
+FoodRapid (delivery con 200.000 pedidos/día) quiere mejorar su desempeño.
 
-1. Propongan **2 indicadores** relevantes para TechStyle
-2. ¿Qué **información** necesitan para medirlos?
-3. ¿Qué **SI** (TPS, BI, CRM, EIS) entregaría esa información?
+Para cada perspectiva del CMI, propongan:
+1. Un **objetivo** estratégico
+2. Un **KPI** concreto y medible
+3. ¿De qué **tipo de SI** (TPS, BI, CRM...) viene ese dato?
 
 ::: {.notes}
-Guiar: ¿De qué tablas de la base de datos vendría cada indicador? Conectar CMI con los tipos de SI vistos la semana pasada. Esperar respuestas diversas y validar todas.
+Guiar: ¿qué define el éxito de un delivery? La velocidad, la satisfacción, los márgenes. Conectar KPIs con los tipos de SI de la semana pasada.
 :::
 
 ---
 
-## El CMI como Puente entre Estrategia y Datos
+## El CMI como Puente: Estrategia → Datos
 
 ```
-  Visión estratégica
-         ↓
-  Objetivos por perspectiva
-         ↓
-  Indicadores (KPIs)
-         ↓
-  Datos en el Sistema de Información
-         ↓
-  Monitoreo y decisión
-```
-
-::: {.fragment}
-**El SI alimenta al CMI. El CMI guía al SI.**
-:::
-
-::: {.notes}
-Este diagrama es clave: el CMI no funciona sin datos. Y los datos solo tienen valor si sirven para medir algo que importa estratégicamente.
-:::
-
----
-
-## Flujo de Información en la Organización
-
-**¿Cómo circula la información dentro de TechStyle?**
-
-No solo importa **qué información** existe, sino **cómo y a quién llega**.
-
-::: {.fragment}
-Existen 3 flujos principales:
-
-- **Vertical**: entre niveles jerárquicos
-- **Horizontal**: entre áreas o departamentos
-- **Externo**: con clientes, proveedores, reguladores
-:::
-
-::: {.notes}
-Introducir el concepto de flujo de información como algo dinámico. La información no solo existe: viaja. Y si no llega a quien la necesita, no sirve.
-:::
-
----
-
-## Flujo Vertical: De Arriba hacia Abajo
-
-**Información que baja: instrucciones y objetivos**
-
-::: {.incremental}
-- El CEO define metas anuales → llegan al gerente de marketing
-- El gerente fija presupuesto → llega al equipo de campaña
-- La estrategia se traduce en tareas operativas
-:::
-
-::: {.fragment}
-**Riesgo**: la información se distorsiona o se pierde en cada nivel
-:::
-
-::: {.notes}
-Analogía: como el "teléfono loco". Cada vez que la información pasa por una persona, puede cambiar un poco. Los SI mitigan este riesgo al hacer la información explícita y registrada.
-:::
-
----
-
-## Flujo Vertical: De Abajo hacia Arriba
-
-**Información que sube: datos operativos y alertas**
-
-::: {.incremental}
-- La repartidora Sofía marca "pedido entregado" → el sistema actualiza
-- El sistema detecta un atraso → alerta al jefe de logística
-- El jefe genera un reporte → llega al gerente
-- El gerente lo incluye en el informe para el CEO
-:::
-
-::: {.fragment}
-**Sin este flujo, la alta dirección no sabe qué pasa en la operación**
-:::
-
-::: {.notes}
-Este es el flujo más crítico para la toma de decisiones. Los SI automatizan gran parte de este flujo, reemplazando reportes manuales lentos con dashboards en tiempo real.
-:::
-
----
-
-## Flujo Horizontal: Entre Departamentos
-
-**La coordinación que hace funcionar la empresa**
-
-```
-  Marketing → Ventas → Logística → Bodega → Finanzas
-      ↕           ↕          ↕         ↕          ↕
-                     [Sistema Compartido]
+   Visión estratégica
+          ↓
+   Objetivos por perspectiva
+          ↓
+   Indicadores (KPIs)
+          ↓
+   Datos en el Sistema de Información
+          ↓
+   Monitoreo y ajuste
 ```
 
 ::: {.fragment}
-**TechStyle**: Cuando Marketing lanza una campaña, Logística debe saber que habrá más pedidos. Finanzas necesita proyectar el flujo de caja.
+**Sin datos de calidad, el CMI muestra una realidad falsa.**
 :::
 
 ::: {.notes}
-El flujo horizontal es donde más fallas ocurren. Las áreas trabajan en silos, con sus propios sistemas, y la información no fluye. Los ERP y sistemas integrados resuelven esto.
+Esta es la transición perfecta hacia la segunda parte de la clase: si los datos son incorrectos, todos los KPIs del CMI son incorrectos, y las decisiones que toma el CEO serán incorrectas.
 :::
 
 ---
 
-## Flujo Externo: Con el Entorno
+## Situación: Una Decisión Costosa en TechStyle
 
-**Información que entra y sale de la organización**
+**El gerente de logística presenta su informe:**
+
+*"El 92% de los pedidos se entregó en menos de 48h. Cumplimos la meta."*
+
+El CEO aprueba el bono de desempeño del equipo.
+
+::: {.fragment}
+**Un mes después**: llegan 1.200 reclamos de clientes que esperaron más de 5 días.
+
+**¿Qué pasó?**
+:::
+
+::: {.notes}
+Presentar el misterio antes de revelar la causa. Dejar que los estudiantes especulen.
+:::
+
+---
+
+## El Problema de Calidad de Datos
 
 ::: {.incremental}
-- **Clientes** → realizan pedidos, envían reclamos, dejan reseñas
-- **Proveedores** → envían facturas, confirman stock, notifican retrasos
-- **Reguladores** → exigen reportes de impuestos, cumplimiento
-- **Competencia** → precios, nuevos productos (inteligencia de mercado)
+- Un error en el sistema contaba como "entregado" cuando el repartidor **salía del almacén**
+- No cuando el pedido llegaba **realmente** al cliente
+- El 92% medía **salidas del almacén**, no entregas reales
+- Los datos eran técnicamente registrados, pero **no representaban la realidad**
 :::
 
 ::: {.fragment}
-**TechStyle necesita SI que gestionen también el entorno externo**
+**Consecuencia**: Bonos pagados, clientes furiosos, confianza destruida.
+
+Un KPI del CMI (entregas a tiempo) basado en datos incorrectos → decisión incorrecta.
 :::
 
 ::: {.notes}
-El CRM gestiona el flujo con clientes. Los sistemas de proveedores (supply chain) gestionan el flujo externo hacia atrás. La inteligencia de mercado es más difícil de sistematizar.
+Este es el puente entre las dos partes de la clase. Los datos malos destruyen el CMI y todas las decisiones que se basan en él.
 :::
 
 ---
 
-## Barreras al Flujo de Información
+## Las 4 Dimensiones de la Calidad de Datos
 
-**¿Por qué la información no siempre llega a quien la necesita?**
+La calidad de datos es el grado en que los datos **representan fielmente la realidad** para el propósito que se necesitan.
 
-::: {.incremental}
-- **Silos organizacionales**: cada área guarda su información
-- **Sistemas incompatibles**: marketing usa Excel, logística usa SAP
-- **Cultura de la información**: "esta información es mía"
-- **Sobrecarga de datos**: tanta información que nadie la procesa
-- **Falta de procesos**: nadie definió quién comunica qué a quién
+::: {.fragment}
+| Dimensión | Pregunta | Ejemplo TechStyle |
+|-----------|----------|------------------|
+| **Exactitud** | ¿Es correcto el valor? | Dirección del cliente mal escrita |
+| **Completitud** | ¿Están todos los datos? | 23% de clientes sin teléfono |
+| **Consistencia** | ¿Dicen lo mismo todos los sistemas? | Stock diferente en bodega vs. web |
+| **Oportunidad** | ¿Llegan a tiempo? | Reporte de stock generado semanalmente |
 :::
 
 ::: {.notes}
-Estos problemas son tan comunes que tienen nombre. El "silo" es una de las principales razones por las que las empresas invierten en sistemas integrados (ERP).
+Cada dimensión puede causar decisiones incorrectas de forma diferente. Exactitud = datos incorrectos. Completitud = datos faltantes. Consistencia = contradicciones. Oportunidad = datos que llegan tarde.
+:::
+
+---
+
+## El Costo de los Datos de Mala Calidad
+
+::: {.incremental}
+- **Decisiones incorrectas**: invertir donde no corresponde
+- **Costos operativos**: retrabajos y correcciones
+- **Pérdida de confianza**: los usuarios dejan de usar el sistema
+- **Daño reputacional**: errores visibles para clientes
+:::
+
+::: {.fragment}
+*Estimación: las empresas pierden entre 15–25% de sus ingresos por mala calidad de datos (Gartner)*
+
+**¿Quién es responsable?** → Todos: quien ingresa, quien usa, quien diseña.
+:::
+
+::: {.notes}
+No es un problema del área de TI solamente. Conectar con el componente "Personas" del SI: todos deben cuidar la calidad.
 :::
 
 ---
 
 ## 💬 Discusión 2
 
-**Para toda la clase (5 minutos)**:
+**En parejas (5 minutos)**:
 
-En TechStyle ocurrió esto: El equipo de Marketing lanzó una campaña de Electrónica el mismo día que Bodega reportó quiebre de stock en esa categoría.
+TechStyle encontró estos problemas en su base de datos:
 
-1. ¿Qué tipo de falla en el flujo de información ocurrió?
-2. ¿Qué barreras estaban presentes?
-3. ¿Qué SI podría haber prevenido esto?
+1. El 15% de los emails son inválidos (ej. `juan@.com`)
+2. La columna `fecha_nacimiento` está vacía en 40% de los registros
+3. El precio del mismo producto difiere en la app y en el sitio web
+4. Los reportes de ventas se generan cada 3 días
+
+¿Qué dimensión afecta cada problema? ¿Qué decisión de negocio podría fallar?
 
 ::: {.notes}
-Respuesta esperada: falla en flujo horizontal (entre áreas). Barrera: silos, sistemas incompatibles. Solución: un sistema integrado (ERP) o alertas automáticas de stock que lleguen al equipo de Marketing antes de lanzar campañas.
+1=Exactitud (campañas de email fallidas), 2=Completitud (segmentación por edad imposible), 3=Consistencia (cliente paga precio incorrecto), 4=Oportunidad (no se puede reaccionar a tendencias del día).
 :::
 
 ---
 
-## Los SI como Infraestructura del Flujo
+## Ética en el Manejo de Datos
 
-**Cada tipo de SI gestiona un flujo específico**
-
-| Flujo | SI responsable | Ejemplo en TechStyle |
-|-------|---------------|----------------------|
-| Vertical (operativo→gerencia) | TPS + BI | Reporte de ventas diarias |
-| Vertical (estrategia→equipo) | EIS | Metas del CEO distribuidas |
-| Horizontal | ERP / integraciones | Stock actualizado en tiempo real |
-| Externo (clientes) | CRM | Historial de interacciones |
-| Externo (proveedor) | SCM | Órdenes de compra automáticas |
-
-::: {.notes}
-SCM = Supply Chain Management. No profundizar mucho. El punto es que distintos SI están diseñados para distintos flujos de información.
-:::
-
----
-
-## Actividad: Diseñar el CMI de "FoodRapid"
-
-**Contexto**: FoodRapid es un delivery de comida con 5.000 restaurantes y 200.000 pedidos diarios.
-
-**En grupos de 4-5 personas (15 minutos)**:
-
-1. Definan la **estrategia principal** de FoodRapid (¿en qué quiere ser mejor?)
-2. Diseñen el **CMI completo** con:
-   - 1 objetivo por perspectiva
-   - 1 indicador (KPI) por objetivo
-   - 1 meta concreta
-3. Identifiquen **qué datos necesitan** y de qué SI vendrían
-
-**Presentación**: 2 minutos por grupo
-
-::: {.notes}
-Estrategia posible: liderazgo en velocidad de entrega, o liderazgo en variedad de restaurantes. Guiar a que la estrategia se refleje en todos los KPIs. Un grupo con estrategia de "velocidad" debería tener KPIs muy distintos a uno con estrategia de "variedad".
-:::
-
----
-
-## Reflexión: El CMI como Lenguaje Común
-
-**¿Por qué el CMI es tan poderoso?**
+**Los datos no son solo un recurso técnico: son información sobre personas reales.**
 
 ::: {.incremental}
-- Traduce la estrategia en **objetivos medibles**
-- Da a todos los niveles el **mismo marco de referencia**
-- Conecta las **decisiones operativas** con la visión estratégica
-- Identifica qué información **realmente importa** medir
+- TechStyle tiene nombres, direcciones y hábitos de compra de **450.000 personas**
+- Los clientes confían en que esa información se usará responsablemente
+- Mal uso → daño real a personas, sanciones legales, pérdida de reputación
 :::
 
 ::: {.fragment}
-**Sin CMI**: cada área mide lo que le parece. Con CMI: todos reman en la misma dirección.
+**Principios éticos clave:**
+
+- **Transparencia**: el cliente sabe qué datos se recolectan y para qué
+- **Proporcionalidad**: recolectar solo lo necesario
+- **Seguridad**: proteger los datos de accesos no autorizados
 :::
 
 ::: {.notes}
-La metáfora del remo es útil. Sin un CMI, es como si cada remero de un bote remara en una dirección diferente. Con el CMI, todos van al mismo destino.
+No profundizar en legislación. El punto es el principio: los futuros profesionales manejarán datos de personas reales y tienen responsabilidades.
+:::
+
+---
+
+## Actividad: Auditoría de Calidad de Datos
+
+**TechStyle entrega este extracto de su tabla `customers`**:
+
+| id | nombre | email | telefono | region | fecha_reg |
+|----|--------|-------|----------|--------|-----------|
+| 1 | Juan P. | juan@gmail.com | 98765432 | RM | 2022-03-15 |
+| 2 | María | NULL | 56912345 | RM | 2022-03-16 |
+| 3 | Carlos R. | carlos@hotmail | NULL | NULL | 2022-03-15 |
+| 4 | Ana M. | ana@gmail.com | 98765432 | Valpo | NULL |
+| 5 | Juan P. | juan@gmail.com | 98765432 | RM | 2022-03-17 |
+
+**En grupos de 3 (10 minutos)**:
+
+1. Identifiquen **todos los problemas** y clasifíquenlos por dimensión de calidad
+2. ¿Qué decisiones de negocio se verían afectadas?
+3. ¿Qué reglas de validación debería tener el sistema?
+
+::: {.notes}
+Fila 2: sin apellido, sin email (completitud). Fila 3: email inválido sin dominio completo (exactitud), sin teléfono/región (completitud). Fila 4: sin fecha (completitud), teléfono igual a fila 1 (consistencia/exactitud). Fila 5: duplicado exacto de fila 1 (consistencia). Reglas: email válido obligatorio, teléfono único, región obligatoria.
 :::
 
 ---
@@ -452,36 +301,36 @@ La metáfora del remo es útil. Sin un CMI, es como si cada remero de un bote re
 ## Lo Que Aprendimos Hoy
 
 ::: {.incremental}
-1. El **CMI** traduce la estrategia en 4 perspectivas equilibradas
-2. Las 4 perspectivas son: **Financiera, Cliente, Procesos, Aprendizaje**
-3. Los **KPIs** hacen medibles los objetivos estratégicos
-4. La información fluye de forma **vertical, horizontal y externa**
-5. Los **SI son la infraestructura** que hace posible ese flujo
+1. El **CMI** traduce la estrategia en 4 perspectivas: Financiera, Cliente, Procesos, Aprendizaje
+2. Los **KPIs** hacen medibles los objetivos estratégicos alimentados por datos del SI
+3. La **calidad de datos** tiene 4 dimensiones: exactitud, completitud, consistencia, oportunidad
+4. Los datos de mala calidad generan **decisiones incorrectas** con costos reales
+5. El manejo de datos de personas implica **responsabilidades éticas**
 :::
 
 ::: {.fragment}
-**El SI alimenta al CMI. El CMI guía al SI.**
+**Sin datos de calidad, el mejor CMI del mundo es inútil.**
 :::
 
 ---
 
 ## Próxima Clase
 
-**Tema**: Calidad de la Información y Ética en el Manejo de Datos
+**Tema**: Big Data y Síntesis de la Unidad 1
 
 **Exploraremos**:
 
-- ¿Qué hace que un dato sea de calidad?
-- Impacto de los datos malos en las decisiones
-- Gobierno de datos y responsabilidades
-- Ética y privacidad en el manejo de datos
+- ¿Qué hace que los datos sean "Big Data"? Las 5 V
+- OLTP vs. OLAP: sistemas transaccionales vs. analíticos
+- Data Warehouse y el proceso ETL
+- Repaso integrador de toda la Unidad 1
 
 ::: {.fragment}
-**Reflexionen**: ¿Han tomado alguna vez una decisión basada en información incorrecta? ¿Qué pasó?
+**Reflexionen**: ¿Cuántos datos genera su smartphone en un día? ¿Quién los usa y para qué?
 :::
 
 ::: {.notes}
-La calidad de datos es un problema universal. Preparar a los estudiantes con una experiencia personal para conectar con el tema.
+La próxima clase cierra la unidad con Big Data y la síntesis. Es clave que lleguen habiendo repasado los conceptos anteriores.
 :::
 
 ---
@@ -502,5 +351,5 @@ La calidad de datos es un problema universal. Preparar a los estudiantes con una
 Universidad San Sebastián
 
 ::: {.notes}
-Agradecer participación. Recordar que reflexionen sobre decisiones tomadas con mala información.
+Agradecer participación. Recordar que la próxima clase cierra la Unidad 1 antes de la Solemne.
 :::

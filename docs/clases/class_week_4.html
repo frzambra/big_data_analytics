@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.8.25">
 
   <meta name="author" content="Universidad San Sebastián">
-  <title>Calidad de la Información y Ética en los Datos</title>
+  <title>Big Data y Síntesis de la Unidad 1</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -129,7 +129,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Calidad de la Información y Ética en los Datos</h1>
+  <h1 class="title">Big Data y Síntesis de la Unidad 1</h1>
   <p class="subtitle">Clase 4 - Big Data y Analytics</p>
 
 <div class="quarto-title-authors">
@@ -144,15 +144,15 @@ Universidad San Sebastián
 <section id="qué-vimos-la-semana-pasada" class="slide level2">
 <h2>¿Qué Vimos la Semana Pasada?</h2>
 <ul>
-<li class="fragment">El <strong>CMI</strong> traduce la estrategia en 4 perspectivas y KPIs</li>
-<li class="fragment">La información fluye de forma <strong>vertical, horizontal y externa</strong></li>
-<li class="fragment">Los <strong>SI son la infraestructura</strong> del flujo de información</li>
+<li class="fragment">El <strong>CMI</strong> traduce la estrategia en 4 perspectivas y KPIs medibles</li>
+<li class="fragment">La <strong>calidad de datos</strong> tiene 4 dimensiones: exactitud, completitud, consistencia, oportunidad</li>
+<li class="fragment">El manejo de datos implica <strong>responsabilidades éticas</strong> reales</li>
 </ul>
 <div class="fragment">
-<p><strong>Hoy</strong>: ¿Qué pasa cuando los datos en los que confiamos están equivocados?</p>
+<p><strong>Hoy</strong>: ¿Qué pasa cuando los datos crecen tanto que los sistemas tradicionales no pueden manejarlos? Y cerramos la Unidad 1.</p>
 </div>
 <aside class="notes">
-<p>Repaso rápido. Preguntar: ¿cuáles son las 4 perspectivas del CMI? Conectar directamente: toda esa hermosa arquitectura de información falla si los datos son malos.</p>
+<p>Repaso rápido. Esta es la última clase de contenido antes de la Solemne 1. Es importante que los estudiantes lleguen preparados para integrar.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -165,42 +165,22 @@ Universidad San Sebastián
           display:block!important;
       }</style></aside>
 </section>
-<section id="situación-una-decisión-costosa-en-techstyle" class="slide level2">
-<h2>Situación: Una Decisión Costosa en TechStyle</h2>
-<p><strong>Octubre 2024 — Reunión de Dirección</strong></p>
-<p>El gerente de logística presenta el informe del mes:</p>
-<p><em>“El 92% de los pedidos se entregó en menos de 48 horas. Cumplimos la meta.”</em></p>
-<div class="fragment">
-<p>El CEO aprueba el bono de desempeño del equipo.</p>
-<p><strong>Un mes después</strong>: llegan 1.200 reclamos de clientes que esperaron más de 5 días.</p>
-</div>
-<aside class="notes">
-<p>Plantear el suspenso antes de revelar qué pasó. Preguntar: ¿qué creen que ocurrió? Dejar que los estudiantes especulen.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="qué-había-pasado" class="slide level2">
-<h2>¿Qué Había Pasado?</h2>
+<section id="situación-techstyle-en-el-año-2028" class="slide level2">
+<h2>Situación: TechStyle en el Año 2028</h2>
+<p><strong>TechStyle creció exponencialmente:</strong></p>
 <ul>
-<li class="fragment">Un error en el sistema contaba como “entregado” cuando el repartidor salía del almacén</li>
-<li class="fragment">No cuando el pedido llegaba realmente al cliente</li>
-<li class="fragment">El <strong>92% de “entregas exitosas”</strong> medía salidas del almacén, no entregas reales</li>
-<li class="fragment">Los datos eran técnicamente correctos, pero medían lo equivocado</li>
+<li class="fragment">De 450.000 a <strong>8.500.000</strong> clientes registrados</li>
+<li class="fragment">De 2.3M a <strong>47 millones</strong> de órdenes históricas</li>
+<li class="fragment">Expandida a <strong>6 países</strong> de Latinoamérica</li>
+<li class="fragment">Registra <strong>clicks, tiempo en página, búsquedas</strong> por cada usuario</li>
+<li class="fragment">Integra datos de <strong>redes sociales</strong>, clima y eventos locales</li>
 </ul>
 <div class="fragment">
-<p><strong>Consecuencia</strong>: Bonos pagados por metas no cumplidas. Clientes enfurecidos. Confianza destruida.</p>
+<p><strong>El sistema de base de datos actual colapsa cada fin de semana.</strong></p>
+<p>TechStyle ya no tiene un problema de “sistemas de información”. Tiene un problema de <strong>Big Data</strong>.</p>
 </div>
 <aside class="notes">
-<p>Este es un ejemplo de datos que son “correctos” en sentido técnico (realmente se registró esa información) pero que son de mala calidad porque no representan la realidad que se quería medir. La calidad no es solo exactitud, es relevancia y representación.</p>
+<p>El salto conceptual es importante: el mismo tipo de problema (capturar, almacenar, procesar datos) pero a una escala que requiere arquitecturas completamente diferentes.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -213,20 +193,16 @@ Universidad San Sebastián
           display:block!important;
       }</style></aside>
 </section>
-<section id="qué-es-la-calidad-de-la-información" class="slide level2">
-<h2>¿Qué es la Calidad de la Información?</h2>
-<p>La <strong>calidad</strong> de la información es el grado en que los datos <strong>representan fielmente la realidad</strong> que se quiere medir y son <strong>adecuados para el propósito</strong> con que se usan.</p>
+<section id="qué-es-big-data" class="slide level2">
+<h2>¿Qué es Big Data?</h2>
+<p><strong>No es solo “muchos datos”.</strong></p>
+<p>Big Data se define por un conjunto de características conocidas como las <strong>5 V</strong>:</p>
+<pre><code>  Volumen · Velocidad · Variedad · Veracidad · Valor</code></pre>
 <div class="fragment">
-<p><strong>4 dimensiones principales</strong>:</p>
-<ul>
-<li><strong>Exactitud</strong>: ¿los datos son correctos?</li>
-<li><strong>Completitud</strong>: ¿están todos los datos necesarios?</li>
-<li><strong>Consistencia</strong>: ¿los datos coinciden entre sistemas?</li>
-<li><strong>Oportunidad</strong>: ¿los datos están disponibles cuando se necesitan?</li>
-</ul>
+<p>Cada “V” representa un desafío distinto que los sistemas tradicionales no pueden resolver.</p>
 </div>
 <aside class="notes">
-<p>No es una lista para memorizar. Es un marco para diagnosticar problemas. Cada dimensión puede causar decisiones incorrectas de una forma diferente.</p>
+<p>Originalmente eran 3 V (Laney, 2001). Luego se agregaron Veracidad y Valor. El punto no es memorizar las V, sino entender que Big Data es cualitativamente diferente a los datos tradicionales.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -239,20 +215,31 @@ Universidad San Sebastián
           display:block!important;
       }</style></aside>
 </section>
-<section id="dimensión-1-exactitud" class="slide level2">
-<h2>Dimensión 1: Exactitud</h2>
-<p><strong>¿Los datos representan correctamente la realidad?</strong></p>
+<section id="v1-volumen-v2-velocidad" class="slide level2">
+<h2>V1: Volumen · V2: Velocidad</h2>
+<div class="cols-2">
+<div>
+<p><strong>Volumen</strong>: la cantidad es masiva</p>
 <ul>
-<li class="fragment">El valor registrado corresponde al valor real</li>
-<li class="fragment">Incluye errores de ingreso, errores de sistema, medición incorrecta</li>
-<li class="fragment"><strong>Causa más común</strong>: ingreso manual de datos por personas</li>
+<li class="fragment">TechStyle 2028: miles de millones de registros</li>
+<li class="fragment">Se mide en Terabytes y Petabytes</li>
+<li class="fragment">Los sistemas relacionales no escalan bien</li>
 </ul>
+</div>
+<div>
+<p><strong>Velocidad</strong>: se genera y debe procesarse rápido</p>
+<ul>
+<li class="fragment">12.000 transacciones/minuto en Black Friday</li>
+<li class="fragment">Stock debe actualizarse en milisegundos</li>
+<li class="fragment">Detección de fraude: menos de 100ms</li>
+</ul>
+</div>
+</div>
 <div class="fragment">
-<p><strong>TechStyle — Ejemplo de falta de exactitud</strong>:</p>
-<p>La dirección del cliente se ingresó como “Av. Providencia 1234, Santiago” pero debía ser “Av. Providencia 1234, <strong>Ñuñoa</strong>”. El pedido llega tarde y el cliente reclama.</p>
+<p><strong>TechStyle ya no puede esperar un reporte diario — necesita información en tiempo real.</strong></p>
 </div>
 <aside class="notes">
-<p>Preguntar: ¿han tenido alguna vez un paquete que llegó a la dirección equivocada? Ese es un error de exactitud. Conectar con experiencias reales de los estudiantes.</p>
+<p>Volumen solo no hace Big Data. Velocidad tampoco. Es la combinación de las 5 V lo que crea el desafío. Un banco tiene ambas características: millones de transacciones diarias que deben procesarse instantáneamente.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -265,120 +252,44 @@ Universidad San Sebastián
           display:block!important;
       }</style></aside>
 </section>
-<section id="dimensión-2-completitud" class="slide level2">
-<h2>Dimensión 2: Completitud</h2>
-<p><strong>¿Están todos los datos que se necesitan?</strong></p>
-<ul>
-<li class="fragment">Datos faltantes o nulos donde debería haber valores</li>
-<li class="fragment">Registros incompletos que no pueden usarse en análisis</li>
-<li class="fragment"><strong>Causa más común</strong>: campos opcionales que deberían ser obligatorios</li>
-</ul>
-<div class="fragment">
-<p><strong>TechStyle — Ejemplo de falta de completitud</strong>:</p>
-<p>El 23% de los registros de clientes no tiene número de teléfono. Cuando hay un problema con el pedido, no se puede contactar al cliente directamente.</p>
-</div>
-<aside class="notes">
-<p>Los datos faltantes son un problema silencioso. No causan errores visibles en el sistema, pero degradan la calidad del análisis. Un analista que promedia ventas sin notar que faltan 20% de los registros obtendrá conclusiones incorrectas.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="dimensión-3-consistencia" class="slide level2">
-<h2>Dimensión 3: Consistencia</h2>
-<p><strong>¿Los datos dicen lo mismo en todos los sistemas?</strong></p>
-<ul>
-<li class="fragment">El mismo dato aparece con valores distintos en sistemas diferentes</li>
-<li class="fragment">Causada por sistemas desconectados o actualizaciones parciales</li>
-<li class="fragment">Es el problema más difícil de detectar</li>
-</ul>
-<div class="fragment">
-<p><strong>TechStyle — Ejemplo de inconsistencia</strong>:</p>
+<section id="v3-variedad-v4-veracidad-v5-valor" class="slide level2">
+<h2>V3: Variedad · V4: Veracidad · V5: Valor</h2>
 <table class="caption-top">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 38%">
+<col style="width: 52%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Sistema</th>
-<th>Stock Producto “Audífonos Pro”</th>
+<th>V</th>
+<th>Descripción</th>
+<th>Ejemplo TechStyle</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Sistema de ventas</td>
-<td>45 unidades</td>
+<td><strong>Variedad</strong></td>
+<td>Datos de múltiples formatos y fuentes</td>
+<td>Órdenes (tablas) + Reseñas (texto) + Fotos + Clicks (logs)</td>
 </tr>
 <tr class="even">
-<td>Sistema de bodega</td>
-<td>38 unidades</td>
+<td><strong>Veracidad</strong></td>
+<td>No todos los datos son confiables</td>
+<td>Reseñas falsas entre 500.000 mensuales</td>
 </tr>
 <tr class="odd">
-<td>Sistema de compras</td>
-<td>52 unidades</td>
+<td><strong>Valor</strong></td>
+<td>Los datos solo valen si generan decisiones útiles</td>
+<td>¿Vale almacenar cada movimiento del cursor?</td>
 </tr>
 </tbody>
 </table>
-<p><strong>¿Cuántas hay realmente?</strong></p>
-</div>
-<aside class="notes">
-<p>Este problema es extremadamente común en empresas que tienen sistemas heredados o que crecieron comprando software de distintos proveedores. Cada sistema tiene su propia “versión de la verdad”.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="dimensión-4-oportunidad" class="slide level2">
-<h2>Dimensión 4: Oportunidad</h2>
-<p><strong>¿Los datos están disponibles cuando se necesitan?</strong></p>
-<ul>
-<li class="fragment">Datos correctos pero que llegan tarde ya no sirven para decidir</li>
-<li class="fragment">Reportes que se generan semanal o mensualmente para decisiones diarias</li>
-<li class="fragment"><strong>Causa más común</strong>: procesos batch, sistemas sin tiempo real</li>
-</ul>
 <div class="fragment">
-<p><strong>TechStyle — Ejemplo de falta de oportunidad</strong>:</p>
-<p>El reporte de quiebre de stock se genera <strong>cada lunes a las 8am</strong>. El viernes en la tarde se agotó el producto más vendido. El equipo de compras no lo supo hasta el lunes siguiente.</p>
+<p><strong>La V más importante es el Valor</strong>: si no sabes para qué sirve el dato, no vale la pena recolectarlo.</p>
 </div>
 <aside class="notes">
-<p>En el mundo actual, la oportunidad se ha vuelto crítica. Las empresas que antes toleraban reportes semanales ahora necesitan dashboards en tiempo real porque los clientes y mercados reaccionan en minutos.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="el-costo-de-los-datos-de-mala-calidad" class="slide level2">
-<h2>El Costo de los Datos de Mala Calidad</h2>
-<ul>
-<li class="fragment"><strong>Decisiones incorrectas</strong>: invertir en el mercado equivocado</li>
-<li class="fragment"><strong>Costos operativos</strong>: retrabajos, correcciones, recursos desperdiciados</li>
-<li class="fragment"><strong>Pérdida de confianza</strong>: los usuarios dejan de usar el SI</li>
-<li class="fragment"><strong>Riesgo reputacional</strong>: errores visibles para clientes o reguladores</li>
-<li class="fragment"><strong>Costos legales</strong>: datos incorrectos en reportes regulatorios</li>
-</ul>
-<div class="fragment">
-<p><strong>Estimación</strong>: las empresas pierden entre 15-25% de sus ingresos por mala calidad de datos (Gartner)</p>
-</div>
-<aside class="notes">
-<p>La cifra de Gartner es impactante. Aunque es una estimación, muestra que la calidad de datos no es un problema técnico menor: es un problema de negocio con impacto financiero directo.</p>
+<p>La Variedad es el cambio más dramático. Las BD relacionales manejan bien datos estructurados (tablas), pero son rígidas con texto, imágenes o logs. El Valor conecta Big Data con el marco central del curso: los datos sirven para tomar decisiones.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -393,276 +304,315 @@ Universidad San Sebastián
 </section>
 <section id="discusión-1" class="slide level2">
 <h2>💬 Discusión 1</h2>
-<p><strong>En parejas (5 minutos)</strong>:</p>
-<p>TechStyle encontró estos problemas en su base de datos:</p>
-<ol type="1">
-<li>El 15% de los emails de clientes son inválidos (ej. “juan@.com”)</li>
-<li>La columna “fecha_nacimiento” está vacía en 40% de los registros</li>
-<li>El precio del mismo producto difiere en la app y en el sitio web</li>
-<li>Los reportes de ventas se generan cada 3 días</li>
-</ol>
-<p>Para cada problema: ¿qué dimensión de calidad afecta? ¿Qué decisión de negocio podría fallar?</p>
-<aside class="notes">
-<p>Respuestas: 1=Exactitud (campañas de email fallidas), 2=Completitud (segmentación por edad imposible), 3=Consistencia (cliente paga precio incorrecto), 4=Oportunidad (no se puede reaccionar a tendencias diarias).</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="quién-es-responsable-de-la-calidad-de-los-datos" class="slide level2">
-<h2>¿Quién es Responsable de la Calidad de los Datos?</h2>
-<p><strong>Una pregunta incómoda…</strong></p>
-<div class="fragment">
-<p><strong>Respuesta incorrecta</strong>: “El área de TI”</p>
-<p><strong>Respuesta correcta</strong>: <strong>Todos</strong></p>
-</div>
-<ul>
-<li class="fragment"><strong>Quien ingresa</strong> los datos: ingresa correctamente</li>
-<li class="fragment"><strong>Quien usa</strong> los datos: reporta anomalías que detecta</li>
-<li class="fragment"><strong>Quien diseña</strong> el sistema: crea validaciones que previenen errores</li>
-<li class="fragment"><strong>La dirección</strong>: establece una cultura de calidad de datos</li>
-</ul>
-<aside class="notes">
-<p>Este es un cambio de mentalidad importante. La calidad de datos no es un problema técnico que “el área de sistemas resuelve”. Es una responsabilidad compartida. Conectar con el componente “Personas” de los SI.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="gobierno-de-datos" class="slide level2">
-<h2>Gobierno de Datos</h2>
-<p><strong>¿Qué es?</strong></p>
-<p>Conjunto de <strong>políticas, procesos y responsabilidades</strong> que garantizan que los datos sean gestionados como un activo estratégico de la organización.</p>
-<div class="fragment">
-<p><strong>Incluye</strong>:</p>
-<ul>
-<li>Definir <strong>dueños de datos</strong> (quién es responsable de qué datos)</li>
-<li>Establecer <strong>estándares de calidad</strong> (qué se considera correcto)</li>
-<li>Crear <strong>procesos de validación</strong> (cómo se verifica la calidad)</li>
-<li>Documentar los datos con un <strong>diccionario de datos</strong></li>
-</ul>
-</div>
-<aside class="notes">
-<p>El diccionario de datos será importante en la Unidad 3. Mencionarlo como “lo veremos más adelante, pero ya saben para qué sirve”.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="ética-en-el-manejo-de-datos" class="slide level2">
-<h2>Ética en el Manejo de Datos</h2>
-<p><strong>Los datos no son solo un recurso técnico: son información sobre personas</strong></p>
-<div class="fragment">
-<p>Cuando TechStyle tiene datos de sus 450.000 clientes, tiene:</p>
-<ul>
-<li class="fragment">Sus nombres, direcciones y teléfonos</li>
-<li class="fragment">Sus hábitos de compra y preferencias</li>
-<li class="fragment">Sus datos de pago</li>
-<li class="fragment">Patrones de comportamiento que el cliente ni sabe que revela</li>
-</ul>
-</div>
-<div class="fragment">
-<p><strong>¿Qué responsabilidades tiene TechStyle con esa información?</strong></p>
-</div>
-<aside class="notes">
-<p>Este momento de reflexión es importante. Los estudiantes serán profesionales que manejarán datos de personas reales. Establecer el marco ético desde ahora.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="principios-éticos-en-el-manejo-de-datos" class="slide level2">
-<h2>Principios Éticos en el Manejo de Datos</h2>
-<ul>
-<li class="fragment"><strong>Transparencia</strong>: los clientes saben qué datos se recolectan y para qué</li>
-<li class="fragment"><strong>Proporcionalidad</strong>: recolectar solo los datos realmente necesarios</li>
-<li class="fragment"><strong>Seguridad</strong>: proteger los datos contra accesos no autorizados</li>
-<li class="fragment"><strong>No discriminación</strong>: no usar datos para perjudicar grupos específicos</li>
-<li class="fragment"><strong>Responsabilidad</strong>: asumir las consecuencias del mal uso</li>
-</ul>
-<aside class="notes">
-<p>No es necesario profundizar en la legislación (eso puede variar). Enfocarse en los principios que guían el comportamiento ético independientemente del país o normativa.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="la-ley-de-protección-de-datos-en-chile" class="slide level2">
-<h2>La Ley de Protección de Datos en Chile</h2>
-<p><strong>Ley N° 19.628 sobre Protección de la Vida Privada</strong></p>
-<ul>
-<li class="fragment">Regula el tratamiento de datos personales en Chile</li>
-<li class="fragment">Los datos solo pueden usarse para el fin para el que fueron recolectados</li>
-<li class="fragment">Las personas tienen derecho a acceder, rectificar y eliminar sus datos</li>
-<li class="fragment">Las empresas deben proteger los datos con medidas de seguridad adecuadas</li>
-</ul>
-<div class="fragment">
-<p><strong>En proceso</strong>: Chile avanza hacia una ley más moderna y robusta (Ley 21.719, 2024), alineada con estándares internacionales como el GDPR europeo.</p>
-</div>
-<aside class="notes">
-<p>No profundizar en detalles legales. El punto es que el manejo de datos tiene implicancias legales reales. Los futuros profesionales deben ser conscientes de esto.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="discusión-2" class="slide level2">
-<h2>💬 Discusión 2</h2>
-<p><strong>Para toda la clase (8 minutos)</strong>:</p>
-<p>TechStyle está evaluando 3 iniciativas con sus datos de clientes:</p>
-<ol type="1">
-<li>Vender la base de datos de clientes a marcas asociadas para que envíen publicidad</li>
-<li>Usar el historial de compras para subir los precios a clientes que “claramente pueden pagar más”</li>
-<li>Analizar el comportamiento de clientes para personalizar recomendaciones de productos</li>
-</ol>
-<p><strong>¿Cuáles son éticas? ¿Cuáles no? ¿Por qué? ¿Depende de cómo se haga?</strong></p>
-<aside class="notes">
-<p>1 y 2 son claramente problemáticas (1 viola la proporcionalidad y transparencia, 2 es discriminación por poder adquisitivo). 3 es ética si se hace con transparencia y consentimiento. El objetivo es que los estudiantes desarrollen criterio propio, no solo memorizar reglas.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="integridad-académica-y-profesional" class="slide level2">
-<h2>Integridad Académica y Profesional</h2>
-<p><strong>El mismo principio aplica en la universidad:</strong></p>
-<ul>
-<li class="fragment">Presentar datos reales, no manipulados para llegar al resultado esperado</li>
-<li class="fragment">Citar fuentes cuando se usan datos de otros</li>
-<li class="fragment">No fabricar ni alterar resultados en informes o evaluaciones</li>
-<li class="fragment">Reportar hallazgos incómodos aunque contradigan la hipótesis inicial</li>
-</ul>
-<div class="fragment">
-<p><strong>Un analista de datos íntegro dice “los datos no muestran lo que esperábamos” en vez de ajustar los datos hasta que muestren lo que quería.</strong></p>
-</div>
-<aside class="notes">
-<p>Conectar con el contexto universitario. La integridad en el manejo de datos se aprende aquí, no solo en el trabajo. Las malas prácticas en la universidad prefiguran malas prácticas profesionales.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="actividad-auditoría-de-calidad-de-datos" class="slide level2">
-<h2>Actividad: Auditoría de Calidad de Datos</h2>
-<p><strong>Contexto</strong>: TechStyle entrega este extracto de su tabla <code>customers</code>:</p>
+<p><strong>En grupos de 3 (6 minutos)</strong>:</p>
+<p>Una empresa de transporte urbano (como Uber o un metro) genera Big Data constantemente.</p>
+<p>Identifiquen las <strong>5 V</strong> con ejemplos concretos para esa empresa:</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
-<th>id</th>
-<th>nombre</th>
-<th>email</th>
-<th>telefono</th>
-<th>region</th>
-<th>fecha_reg</th>
+<th>V</th>
+<th>Ejemplo concreto</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>1</td>
-<td>Juan P.</td>
-<td>juan@gmail.com</td>
-<td>98765432</td>
-<td>RM</td>
-<td>2022-03-15</td>
+<td>Volumen</td>
+<td></td>
 </tr>
 <tr class="even">
-<td>2</td>
-<td>María</td>
-<td>NULL</td>
-<td>56912345</td>
-<td>RM</td>
-<td>2022-03-16</td>
+<td>Velocidad</td>
+<td></td>
 </tr>
 <tr class="odd">
-<td>3</td>
-<td>Carlos R.</td>
-<td>carlos@hotmail</td>
-<td>NULL</td>
-<td>NULL</td>
-<td>2022-03-15</td>
+<td>Variedad</td>
+<td></td>
 </tr>
 <tr class="even">
-<td>4</td>
-<td>Ana M.</td>
-<td>ana@gmail.com</td>
-<td>98765432</td>
-<td>Valpo</td>
-<td>NULL</td>
+<td>Veracidad</td>
+<td></td>
 </tr>
 <tr class="odd">
-<td>5</td>
-<td>Juan P.</td>
-<td>juan@gmail.com</td>
-<td>98765432</td>
-<td>RM</td>
-<td>2022-03-17</td>
+<td>Valor</td>
+<td></td>
 </tr>
 </tbody>
 </table>
-<p><strong>En grupos de 3 (10 minutos)</strong>:</p>
+<aside class="notes">
+<p>Uber: Volumen (millones de viajes/día), Velocidad (GPS cada segundo), Variedad (GPS + pagos + calificaciones + mensajes), Veracidad (calificaciones falsas), Valor (precio dinámico según demanda en tiempo real = decisión de negocio que vale millones).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="del-sistema-operacional-al-analítico" class="slide level2">
+<h2>Del Sistema Operacional al Analítico</h2>
+<p><strong>TechStyle tiene 2 necesidades de datos radicalmente distintas:</strong></p>
+<div class="fragment">
+<pre><code>  NECESIDAD 1: Registrar cada venta en tiempo real
+  → Rápido, muchas escrituras simultáneas, datos actuales
+
+  NECESIDAD 2: Analizar 5 años de ventas para decidir
+  → Complejo, pocas escrituras, grandes lecturas históricas</code></pre>
+</div>
+<div class="fragment">
+<p><strong>¿Puede el mismo sistema hacer ambas eficientemente?</strong></p>
+<p><em>No.&nbsp;Por eso existen 2 arquitecturas distintas: OLTP y OLAP.</em></p>
+</div>
+<aside class="notes">
+<p>Esta tensión es la motivación central para OLTP/OLAP. No es una preferencia técnica: son requerimientos que se contradicen entre sí.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="oltp-vs.-olap" class="slide level2">
+<h2>OLTP vs.&nbsp;OLAP</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 55%">
+<col style="width: 22%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Característica</th>
+<th>OLTP</th>
+<th>OLAP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Propósito</strong></td>
+<td>Registrar operaciones</td>
+<td>Analizar histórico</td>
+</tr>
+<tr class="even">
+<td><strong>Usuarios</strong></td>
+<td>Miles (clientes, operarios)</td>
+<td>Pocos (analistas, gerentes)</td>
+</tr>
+<tr class="odd">
+<td><strong>Operaciones</strong></td>
+<td>Muchas escrituras pequeñas</td>
+<td>Pocas lecturas complejas</td>
+</tr>
+<tr class="even">
+<td><strong>Datos</strong></td>
+<td>Actuales</td>
+<td>Históricos (años)</td>
+</tr>
+<tr class="odd">
+<td><strong>Respuesta</strong></td>
+<td>Milisegundos</td>
+<td>Segundos a minutos</td>
+</tr>
+<tr class="even">
+<td><strong>Ejemplo</strong></td>
+<td>Sistema de ventas online</td>
+<td>Dashboard de BI / CMI</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p><strong>TechStyle “¿está disponible este producto?” → OLTP</strong></p>
+<p><strong>“¿cuál fue la categoría más vendida en los últimos 3 años?” → OLAP</strong></p>
+</div>
+<aside class="notes">
+<p>Preguntas sobre “ahora” van a OLTP; preguntas sobre “patrones históricos” van a OLAP. Esta distinción es conceptualmente importante y prácticamente útil en cualquier trabajo de datos.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="el-data-warehouse-integrando-todo" class="slide level2">
+<h2>El Data Warehouse: Integrando Todo</h2>
+<p><strong>Los datos van del OLTP al OLAP mediante transformación</strong></p>
+<pre><code>┌─────────────────────────────────────┐
+│         FUENTES OLTP                │
+│  BD Ventas · BD Clientes · CRM      │
+└──────────────────┬──────────────────┘
+                   │  ETL (cada noche)
+                   ▼
+        ┌──────────────────────┐
+        │    DATA WAREHOUSE    │
+        │   (OLAP · Historial) │
+        └──────────┬───────────┘
+                   │
+      ┌────────────┼────────────┐
+      ▼            ▼            ▼
+   [BI / CMI]  [Reportes]  [Analítica]</code></pre>
+<aside class="notes">
+<p>El Data Warehouse resuelve el problema de silos: integra datos de múltiples sistemas OLTP en un repositorio coherente optimizado para análisis. Es el corazón de la arquitectura de Business Intelligence.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="etl-el-proceso-de-integración" class="slide level2">
+<h2>ETL: El Proceso de Integración</h2>
+<p><strong>Extract · Transform · Load</strong></p>
+<ul>
+<li class="fragment"><strong>Extraer</strong>: obtener datos de los sistemas OLTP fuente</li>
+<li class="fragment"><strong>Transformar</strong>: limpiar, estandarizar, integrar, aplicar calidad de datos</li>
+<li class="fragment"><strong>Cargar</strong>: insertar en el Data Warehouse</li>
+</ul>
+<div class="fragment">
+<p><strong>TechStyle</strong>: cada noche a las 2am, el proceso ETL extrae datos de ventas, bodega y CRM; los limpia y estandariza; y los carga en el Data Warehouse.</p>
+<p>A las 7am el analista tiene datos frescos para el CMI del día.</p>
+</div>
+<aside class="notes">
+<p>ETL es donde se “paga el precio” de la integración. La transformación puede ser compleja: sistemas con formatos distintos, monedas distintas, nombres distintos para el mismo concepto. Aquí es donde la calidad de datos (clase anterior) se convierte en proceso sistemático.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="el-modelo-completo-de-techstyle" class="slide level2">
+<h2>El Modelo Completo de TechStyle</h2>
+<pre><code>   [Clientes compran]  →  OLTP  →  datos en tiempo real
+                                         ↓
+                                   ETL (noche)
+                                         ↓
+                               DATA WAREHOUSE (OLAP)
+                                         ↓
+                      ┌──────────────────────────────┐
+                      ▼              ▼               ▼
+                   CMI con       Reportes        Análisis
+                   4 KPIs       de ventas       predictivo
+                      ↓
+               DECISIONES DE NEGOCIO</code></pre>
+<div class="fragment">
+<p><strong>Cada concepto de la Unidad 1 corresponde a un eslabón de esta cadena.</strong></p>
+</div>
+<aside class="notes">
+<p>Este es el diagrama de cierre. Los estudiantes ya conocen todos los componentes: SI (semana 1), tipos de SI/TPS/BI (semana 2), CMI/calidad (semana 3), Big Data/OLTP/OLAP/DW (hoy). Todo está conectado.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="síntesis-los-5-conceptos-clave-de-la-unidad-1" class="slide level2">
+<h2>Síntesis: Los 5 Conceptos Clave de la Unidad 1</h2>
 <ol type="1">
-<li>Identifiquen <strong>todos los problemas de calidad</strong> y clasifíquenlos por dimensión</li>
-<li>¿Qué decisiones de negocio se verían afectadas?</li>
-<li>¿Qué reglas de validación debería tener el sistema para prevenirlos?</li>
+<li class="fragment"><p><strong>Sistema de Información</strong> — conjunto de componentes que transforma datos en información para apoyar decisiones. Tiene 5 elementos: hardware, software, datos, personas, procesos.</p></li>
+<li class="fragment"><p><strong>Niveles y Tipos de SI</strong> — 3 niveles (operativo, táctico, estratégico) con SI distintos (TPS, BI, DSS, CRM, EIS).</p></li>
+<li class="fragment"><p><strong>CMI</strong> — 4 perspectivas (Financiera, Cliente, Procesos, Aprendizaje) con KPIs que conectan estrategia y datos.</p></li>
+<li class="fragment"><p><strong>Calidad de Datos</strong> — 4 dimensiones (exactitud, completitud, consistencia, oportunidad). Datos malos = decisiones malas.</p></li>
+<li class="fragment"><p><strong>Big Data y Arquitectura</strong> — 5 V, OLTP (operacional), OLAP (analítico), Data Warehouse, ETL.</p></li>
 </ol>
 <aside class="notes">
-<p>Problemas: fila 2 sin apellido y sin email (completitud), fila 3 email inválido sin @.com (exactitud) y sin teléfono/región (completitud), fila 4 sin fecha (completitud) y teléfono duplicado con fila 1 (consistencia), fila 5 duplicado exacto de fila 1 (consistencia). Reglas: email válido obligatorio, teléfono único, región obligatoria, fecha obligatoria.</p>
+<p>Este repaso es el corazón de la preparación para la solemne. Pedir a los estudiantes que anoten qué concepto sienten menos claro para abordarlo en la actividad.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="caso-integrador-servirápido" class="slide level2">
+<h2>Caso Integrador: ServiRápido</h2>
+<p><strong>ServiRápido</strong>: empresa de mantención del hogar (gasfitería, electricidad, cerrajería) con 180 técnicos y 3.200 servicios mensuales en Santiago.</p>
+<p><strong>Actualmente gestiona sus datos con</strong>: - Google Sheets para registrar servicios - WhatsApp para coordinar con técnicos - Email para enviar facturas - Notas en papel para inventario de repuestos</p>
+<div class="fragment">
+<p><strong>Problema</strong>: No saben si son rentables por zona ni qué técnicos tienen mejor desempeño.</p>
+<p><strong>Su rol</strong>: analista de datos contratado para diseñar el SI de ServiRápido.</p>
+</div>
+<aside class="notes">
+<p>Este escenario refleja la realidad de miles de PYMEs en Chile. Tiene todos los problemas vistos en la unidad: datos dispersos, mala calidad, sin arquitectura analítica.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="actividad-diseñar-el-si-de-servirápido" class="slide level2">
+<h2>Actividad: Diseñar el SI de ServiRápido</h2>
+<p><strong>En grupos de 4-5 personas (15 minutos)</strong>:</p>
+<p><strong>Parte 1 — Diagnóstico</strong>: identifiquen 2 problemas de calidad de datos y 2 barreras al flujo de información.</p>
+<p><strong>Parte 2 — Diseño del SI</strong>: propongan qué tipos de SI necesita ServiRápido y por qué (TPS, BI, CRM, etc.).</p>
+<p><strong>Parte 3 — CMI</strong>: diseñen 1 objetivo y 1 KPI por cada perspectiva del CMI.</p>
+<p><strong>Presentación</strong>: 2 minutos por grupo.</p>
+<aside class="notes">
+<p>Parte 1: datos en papel → exactitud y completitud en riesgo; WhatsApp → no estructurado, no analizable. Parte 2: TPS para registro de servicios, CRM para clientes, BI para análisis de rentabilidad por zona. Parte 3: Financiero=margen por servicio, Cliente=tasa de recontratación, Procesos=tiempo de respuesta, Aprendizaje=capacitación de técnicos.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="preparación-para-la-solemne-1" class="slide level2">
+<h2>Preparación para la Solemne 1</h2>
+<p><strong>Semana 5 — Evaluación Unidad 1</strong></p>
+<ul>
+<li class="fragment">Temas: todos los conceptos de las semanas 1 a 4</li>
+<li class="fragment">Formato: prueba escrita individual</li>
+<li class="fragment">Enfoque: <strong>aplicación en contexto</strong>, no memorización de definiciones</li>
+</ul>
+<div class="fragment">
+<p><strong>Tipo de pregunta frecuente</strong>: <em>“Dada esta empresa, ¿qué SI implementarías y por qué?”</em></p>
+<p><strong>Practiquen</strong>: diseñar un CMI, identificar dimensiones de calidad, explicar la diferencia OLTP/OLAP.</p>
+</div>
+<aside class="notes">
+<p>Ser muy claro sobre el tipo de pregunta de la solemne. Los estudiantes tienden a memorizar definiciones; el énfasis debe estar en poder aplicar los conceptos a un caso nuevo.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -678,54 +628,28 @@ Universidad San Sebastián
 <section id="lo-que-aprendimos-hoy" class="slide level2">
 <h2>Lo Que Aprendimos Hoy</h2>
 <ol type="1">
-<li class="fragment">La calidad de datos tiene <strong>4 dimensiones</strong>: exactitud, completitud, consistencia, oportunidad</li>
-<li class="fragment">Los datos de mala calidad generan <strong>decisiones incorrectas</strong> con costos reales</li>
-<li class="fragment">La calidad de datos es <strong>responsabilidad de todos</strong>, no solo de TI</li>
-<li class="fragment">El <strong>gobierno de datos</strong> establece políticas para gestionar los datos como activo</li>
-<li class="fragment">El manejo de datos personales tiene <strong>responsabilidades éticas y legales</strong></li>
+<li class="fragment">Big Data se define por las <strong>5 V</strong>: Volumen, Velocidad, Variedad, Veracidad, Valor</li>
+<li class="fragment">Los sistemas <strong>OLTP</strong> registran operaciones en tiempo real; los <strong>OLAP</strong> analizan histórico</li>
+<li class="fragment">El <strong>Data Warehouse</strong> integra datos de múltiples fuentes para análisis</li>
+<li class="fragment">El proceso <strong>ETL</strong> conecta los sistemas operacionales con el almacén analítico</li>
+<li class="fragment">Todos los conceptos de la Unidad 1 forman una <strong>cadena completa</strong>: dato → decisión</li>
 </ol>
 <div class="fragment">
-<p><strong>Un dato incorrecto puede ser más peligroso que no tener el dato.</strong></p>
+<p><strong>Big Data no es el objetivo: el objetivo son las decisiones que habilita.</strong></p>
 </div>
-</section>
-<section id="próxima-clase" class="slide level2">
-<h2>Próxima Clase</h2>
-<p><strong>Tema</strong>: Big Data: Características y Arquitectura de Datos</p>
-<p><strong>Exploraremos</strong>:</p>
-<ul>
-<li>¿Qué hace que los datos sean “Big Data”? Las 5 V</li>
-<li>Diferencia entre sistemas OLTP y OLAP</li>
-<li>¿Qué es un Data Warehouse?</li>
-<li>La arquitectura de datos moderna</li>
-</ul>
-<div class="fragment">
-<p><strong>Reflexionen</strong>: ¿Cuántos datos genera su smartphone en un día? ¿Quién los usa y para qué?</p>
-</div>
-<aside class="notes">
-<p>Preparar la transición hacia Big Data. La pregunta sobre el smartphone es para mostrar que ya viven en un mundo de Big Data sin darse cuenta.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section id="preguntas" class="slide level2">
 <h2>Preguntas</h2>
-<p>¿Dudas o comentarios?</p>
+<p>¿Dudas sobre el contenido de la Unidad 1?</p>
+<p><strong>Semana 5</strong>: Solemne 1</p>
 <p><strong>Contacto</strong>: [correo del profesor]</p>
-<p><strong>Próxima clase</strong>: [fecha y hora]</p>
 </section>
 <section id="gracias" class="slide level2">
 <h2>¡Gracias!</h2>
-<p><strong>Big Data y Analytics</strong> Universidad San Sebastián</p>
+<p><strong>Fin del contenido de la Unidad 1</strong></p>
+<p><em>Big Data y Analytics · Universidad San Sebastián</em></p>
 <aside class="notes">
-<p>Agradecer participación. Recordar reflexionar sobre los datos que genera su smartphone.</p>
+<p>Agradecer participación. Recordar que la solemne es la próxima semana y ofrecer espacio para consultas.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;

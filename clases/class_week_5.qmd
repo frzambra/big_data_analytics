@@ -1,0 +1,486 @@
+---
+title: "Big Data: Características y Arquitectura de Datos"
+subtitle: "Clase 5 - Big Data y Analytics"
+author: "Universidad San Sebastián"
+---
+
+## ¿Qué Vimos la Semana Pasada?
+
+::: {.incremental}
+- La calidad de datos tiene **4 dimensiones**: exactitud, completitud, consistencia, oportunidad
+- Los datos de mala calidad generan **decisiones incorrectas** con costos reales
+- El manejo de datos tiene **responsabilidades éticas y legales**
+:::
+
+::: {.fragment}
+**Hoy**: ¿Qué pasa cuando los datos crecen tanto que los sistemas tradicionales no pueden manejarlos?
+:::
+
+::: {.notes}
+Repaso rápido. Conectar: hasta ahora hablamos de sistemas de información y calidad. Ahora enfrentamos el desafío de escala: qué pasa cuando hay demasiados datos.
+:::
+
+---
+
+## Situación: TechStyle en el Año 2028
+
+**TechStyle creció más de lo esperado:**
+
+::: {.incremental}
+- De 450.000 a **8.500.000** clientes registrados
+- De 2.3M a **47 millones** de órdenes históricas
+- Expandió a **6 países** de Latinoamérica
+- Registra **clicks, scrolls, tiempo de vista** en cada página del sitio
+- Integra datos de **redes sociales**, clima y eventos locales
+:::
+
+::: {.fragment}
+**El sistema de base de datos actual colapsa cada fin de semana.**
+:::
+
+::: {.notes}
+Proyectar TechStyle al futuro para ilustrar el problema de escala. No es ficción: este es exactamente el crecimiento que empresas como Falabella o Ripley han experimentado.
+:::
+
+---
+
+## El Problema de Escala
+
+**El sistema actual fue diseñado para 450.000 clientes, no para 8.5 millones.**
+
+::: {.incremental}
+- Consultas que antes tomaban 2 segundos ahora toman 8 minutos
+- El servidor se cae durante el Black Friday
+- Los reportes del CMI llegan con 3 días de retraso
+- No hay forma de analizar el comportamiento de navegación web (millones de clicks/día)
+:::
+
+::: {.fragment}
+**TechStyle ya no tiene un problema de "sistemas de información". Tiene un problema de **Big Data**.**
+:::
+
+::: {.notes}
+El salto conceptual es importante: el mismo tipo de problema (capturar, almacenar, procesar, presentar datos) pero a una escala que requiere arquitecturas completamente diferentes.
+:::
+
+---
+
+## ¿Qué es Big Data?
+
+**No es solo "muchos datos".**
+
+::: {.fragment}
+Big Data se define por un conjunto de características que lo distinguen de los datos tradicionales.
+
+Las más conocidas son las **5 V**:
+:::
+
+::: {.fragment}
+```
+  Volumen · Velocidad · Variedad · Veracidad · Valor
+```
+:::
+
+::: {.notes}
+Originalmente eran 3 V (Volumen, Velocidad, Variedad), propuestas por Doug Laney en 2001. Luego se agregaron Veracidad y Valor. Hoy algunos hablan de 7 u 8 V, pero las 5 son las más establecidas.
+:::
+
+---
+
+## V1: Volumen
+
+**La cantidad de datos generados es masiva**
+
+::: {.incremental}
+- Se mide en **Terabytes, Petabytes, Exabytes**
+- TechStyle 2028: 47M de órdenes × múltiples ítems = miles de millones de registros
+- **Problema**: los sistemas relacionales tradicionales no escalan bien más allá de cierto punto
+:::
+
+::: {.fragment}
+**Para dimensionar**:
+
+| Escala | Tamaño | Equivalente |
+|--------|--------|-------------|
+| 1 GB | 1.000 MB | Un libro de 250 páginas en texto |
+| 1 TB | 1.000 GB | 250.000 libros |
+| 1 PB | 1.000 TB | Todos los libros de la Biblioteca del Congreso |
+:::
+
+::: {.notes}
+El volumen por sí solo no hace que algo sea Big Data. Una empresa con 1 TB de datos bien organizados puede manejarlo con tecnología convencional. Es la combinación de las 5 V lo que crea el desafío.
+:::
+
+---
+
+## V2: Velocidad
+
+**Los datos se generan y deben procesarse a gran velocidad**
+
+::: {.incremental}
+- TechStyle 2028: **12.000 transacciones por minuto** en Black Friday
+- Redes sociales: millones de posts por minuto
+- Sensores IoT: miles de lecturas por segundo
+- **El desafío**: procesar, analizar y responder en tiempo real
+:::
+
+::: {.fragment}
+**En TechStyle**: si un producto se agota, el sistema debe actualizar el stock en milisegundos, no en horas.
+:::
+
+::: {.notes}
+La velocidad es la dimensión más exigente técnicamente. Los sistemas diseñados para procesar datos en lotes (batch) no sirven cuando se necesita respuesta en tiempo real. Ejemplo: detección de fraude en tarjetas de crédito debe ocurrir en menos de 100 ms.
+:::
+
+---
+
+## V3: Variedad
+
+**Los datos vienen en múltiples formatos y fuentes**
+
+::: {.incremental}
+- **Datos estructurados**: tablas de bases de datos (órdenes, clientes, productos)
+- **Datos semi-estructurados**: JSON de la API, logs del servidor, XML
+- **Datos no estructurados**: fotos de productos, reseñas de texto, videos de unboxing
+- **Fuentes externas**: clima, redes sociales, datos macroeconómicos
+:::
+
+::: {.fragment}
+**TechStyle 2028**: 60% de sus datos valiosos son no estructurados (reseñas, fotos, comportamiento web)
+:::
+
+::: {.notes}
+Este es el cambio más dramático respecto a los sistemas tradicionales. Las bases de datos relacionales manejan bien los datos estructurados, pero son muy rígidas con datos no estructurados. Aquí es donde entran tecnologías como NoSQL, data lakes, etc.
+:::
+
+---
+
+## V4: Veracidad
+
+**No todos los datos son confiables**
+
+::: {.incremental}
+- Datos provenientes de **sensores con fallas**
+- Reseñas falsas o manipuladas
+- Datos de redes sociales con **ruido, ironía, contexto**
+- Inconsistencias entre fuentes externas
+:::
+
+::: {.fragment}
+**El problema**: a mayor volumen y variedad, más difícil garantizar la veracidad.
+
+**TechStyle**: ¿cómo distinguir una reseña genuina de una falsa cuando hay 500.000 reseñas nuevas al mes?
+:::
+
+::: {.notes}
+La veracidad conecta directamente con la calidad de datos de la clase anterior, pero ahora amplificada por el volumen. No se puede revisar manualmente: necesitas algoritmos que detecten datos sospechosos.
+:::
+
+---
+
+## V5: Valor
+
+**Los datos solo justifican su costo si generan valor**
+
+::: {.incremental}
+- Almacenar y procesar Big Data es **caro**
+- No todos los datos capturados son útiles
+- El objetivo final siempre es **apoyar una decisión** o crear ventaja competitiva
+- La pregunta clave: ¿qué decisión mejora con estos datos?
+:::
+
+::: {.fragment}
+**TechStyle**: ¿Vale la pena almacenar cada movimiento del cursor de cada usuario, o es suficiente con los clicks?
+:::
+
+::: {.notes}
+La V de Valor es la más importante conceptualmente, aunque sea la última. Conecta Big Data de vuelta con el marco del curso: los datos tienen valor solo cuando apoyan decisiones. Si no puedes responder "¿para qué sirve este dato?", probablemente no valga la pena recolectarlo.
+:::
+
+---
+
+## Las 5 V en TechStyle
+
+| Característica | Ejemplo en TechStyle |
+|---------------|---------------------|
+| Volumen | 47M órdenes, miles de millones de clicks |
+| Velocidad | 12.000 transacciones/minuto en Black Friday |
+| Variedad | Órdenes + reseñas + fotos + datos de navegación |
+| Veracidad | Filtrar reseñas falsas entre 500.000 mensuales |
+| Valor | Predecir qué producto comprar antes de que lo sepa el cliente |
+
+::: {.notes}
+La última fila (Valor) menciona predicción: esto conecta hacia Machine Learning y analítica avanzada que verán en cursos futuros. Mencionarlo brevemente como "hacia dónde va la analítica".
+:::
+
+---
+
+## 💬 Discusión 1
+
+**En grupos de 3 (7 minutos)**:
+
+Analicen el sistema de información de **una empresa de transporte urbano** (como Uber o un servicio de metro):
+
+1. Identifiquen las **5 V** con ejemplos concretos
+2. ¿Cuál de las 5 V es el mayor desafío para esa empresa?
+3. ¿Qué **decisiones** podría mejorar si gestiona bien ese Big Data?
+
+::: {.notes}
+Uber: Volumen (millones de viajes diarios), Velocidad (ubicación GPS cada segundo), Variedad (GPS + pagos + calificaciones + mensajes), Veracidad (calificaciones falsas o manipuladas), Valor (precio dinámico en tiempo real según demanda). El desafío mayor probablemente sea velocidad (matching conductor-pasajero debe ocurrir en segundos).
+:::
+
+---
+
+## Del Sistema Transaccional al Analítico
+
+**TechStyle tiene 2 grandes necesidades de datos que son muy distintas:**
+
+::: {.fragment}
+```
+  NECESIDAD 1: Registrar cada venta en tiempo real
+  → Rápido, transaccional, muchas escrituras simultáneas
+
+  NECESIDAD 2: Analizar 5 años de ventas para tomar decisiones
+  → Lento, analítico, pocas escrituras, muchas lecturas
+```
+:::
+
+::: {.fragment}
+**¿Puede el mismo sistema hacer ambas cosas?**
+
+*No eficientemente. Por eso existen 2 arquitecturas distintas.*
+:::
+
+::: {.notes}
+Esta es la motivación para presentar OLTP y OLAP. No se trata de preferencias técnicas: son arquitecturas diseñadas para propósitos radicalmente diferentes que entran en conflicto si se mezclan.
+:::
+
+---
+
+## OLTP: Sistemas Transaccionales
+
+**Online Transaction Processing**
+
+::: {.incremental}
+- Diseñado para **registrar operaciones en tiempo real**
+- Muchas transacciones pequeñas y simultáneas
+- Optimizado para **escritura rápida**
+- Datos actuales (poco historial)
+- Alta disponibilidad (no puede caerse)
+:::
+
+::: {.fragment}
+**TechStyle**: cuando el cliente hace clic en "Comprar", el sistema OLTP registra la transacción, descuenta el stock y confirma el pago en milisegundos.
+:::
+
+::: {.notes}
+OLTP es lo que los estudiantes conocen como "la base de datos de la empresa". Es lo que se usa en los cajeros automáticos, las tiendas online, los hospitales para registrar pacientes. La clave es: optimizado para escrituras rápidas y confiables.
+:::
+
+---
+
+## OLAP: Sistemas Analíticos
+
+**Online Analytical Processing**
+
+::: {.incremental}
+- Diseñado para **analizar grandes volúmenes de datos históricos**
+- Pocas consultas complejas sobre millones de registros
+- Optimizado para **lectura rápida y agregaciones**
+- Datos históricos (años de información)
+- Mayor tolerancia a latencia (segundos o minutos está bien)
+:::
+
+::: {.fragment}
+**TechStyle**: cuando el analista Juan consulta "ventas por categoría del último trimestre vs. mismo periodo del año anterior", lo hace en el sistema OLAP.
+:::
+
+::: {.notes}
+OLAP es el motor detrás de los dashboards y reportes de BI. La clave: optimizado para leer y agregar grandes cantidades de datos, no para escribir rápido. Por eso un sistema OLAP puede tomar minutos en responder, pero una consulta que en OLTP tardaría horas.
+:::
+
+---
+
+## OLTP vs. OLAP: Comparación
+
+| Característica | OLTP | OLAP |
+|---------------|------|------|
+| Propósito | Registrar operaciones | Analizar datos |
+| Usuarios | Miles (clientes, operarios) | Pocos (analistas, gerentes) |
+| Operaciones | Muchas escrituras pequeñas | Pocas lecturas complejas |
+| Datos | Actuales | Históricos (años) |
+| Ejemplo | Sistema de ventas | Dashboard de BI |
+| Tiempo de respuesta | Milisegundos | Segundos a minutos |
+
+::: {.notes}
+La tabla es suficiente para que quede claro. No necesitan memorizar todos los detalles, sino entender la diferencia conceptual: propósitos distintos, arquitecturas distintas.
+:::
+
+---
+
+## ¿Cómo se Conectan? El Data Warehouse
+
+**Los datos van del OLTP al OLAP mediante un proceso de transformación**
+
+```
+  [Sistemas OLTP]                    [Sistema OLAP]
+  ─────────────                      ─────────────
+  BD Ventas        ─┐
+  BD Clientes      ─┤  ETL  ──►  Data Warehouse  ──►  BI / Dashboards
+  BD Logística     ─┘                                  CMI / Reportes
+  BD CRM           ─┘
+```
+
+::: {.fragment}
+**El Data Warehouse es el repositorio central de datos históricos para análisis.**
+:::
+
+::: {.notes}
+El Data Warehouse resuelve el problema de silos: integra datos de múltiples sistemas OLTP en un único repositorio coherente optimizado para análisis. Es el corazón de la arquitectura de Business Intelligence.
+:::
+
+---
+
+## ETL: El Proceso de Integración
+
+**Extract, Transform, Load**
+
+::: {.incremental}
+- **Extraer**: obtener datos de los sistemas fuente (OLTP, sistemas externos)
+- **Transformar**: limpiar, estandarizar, integrar, aplicar reglas de calidad
+- **Cargar**: insertar los datos transformados en el Data Warehouse
+:::
+
+::: {.fragment}
+**TechStyle**: cada noche a las 2am, el proceso ETL extrae datos del sistema de ventas, bodega y CRM; los limpia y estandariza; y los carga en el Data Warehouse. A las 7am el analista tiene datos frescos para el reporte del día.
+:::
+
+::: {.notes}
+ETL es donde se "paga el precio" de la integración. La transformación puede ser compleja: los sistemas fuente pueden usar formatos distintos, monedas distintas, nombres distintos para el mismo concepto. Aquí es donde la calidad de datos (clase anterior) se convierte en un proceso sistemático.
+:::
+
+---
+
+## 💬 Discusión 2
+
+**En parejas (5 minutos)**:
+
+TechStyle necesita responder estas preguntas. ¿En qué sistema buscaría la información: OLTP o OLAP?
+
+1. "¿Está disponible el producto #4521 para venta ahora mismo?"
+2. "¿Cuál fue la categoría más vendida en los últimos 3 años por región?"
+3. "¿Cuántos pedidos están en estado 'en despacho' en este momento?"
+4. "¿Qué clientes compraron Electrónica en verano pero no en invierno durante los últimos 4 años?"
+
+::: {.notes}
+1 y 3 son OLTP (estado actual, tiempo real). 2 y 4 son OLAP (histórico, analítico). El punto clave: preguntas sobre "ahora" van a OLTP; preguntas sobre "patrones históricos" van a OLAP.
+:::
+
+---
+
+## La Arquitectura de Datos de TechStyle
+
+```
+┌──────────────────────────────────────────────────────┐
+│                    FUENTES DE DATOS                  │
+│  Tienda Web · App Móvil · Bodega · CRM · Logística   │
+└───────────────────────┬──────────────────────────────┘
+                        │  (datos en tiempo real)
+                        ▼
+             ┌──────────────────────┐
+             │   SISTEMAS OLTP      │
+             │  (BD Operacionales)  │
+             └──────────┬───────────┘
+                        │  ETL (noche)
+                        ▼
+             ┌──────────────────────┐
+             │   DATA WAREHOUSE     │
+             │   (OLAP · Historial) │
+             └──────────┬───────────┘
+                        │
+          ┌─────────────┼──────────────┐
+          ▼             ▼              ▼
+       [BI/CMI]     [Reportes]    [Analítica]
+```
+
+::: {.notes}
+Este diagrama resume toda la arquitectura del curso. Los estudiantes ya conocen todos los componentes: OLTP (sistemas que registran operaciones), ETL (proceso de integración), Data Warehouse (repositorio analítico), BI (herramientas de análisis y CMI).
+:::
+
+---
+
+## Actividad: Arquitectura de Datos para FoodRapid
+
+**Contexto**: FoodRapid (5.000 restaurantes, 200.000 pedidos/día) necesita diseñar su arquitectura de datos.
+
+**En grupos de 4-5 personas (15 minutos)**:
+
+1. Identifiquen **las 5 V de Big Data** en FoodRapid con ejemplos
+2. Diseñen la **arquitectura de datos** de FoodRapid:
+   - ¿Qué sistemas OLTP necesita?
+   - ¿Qué datos debería tener su Data Warehouse?
+   - ¿Qué preguntas respondería el sistema OLAP?
+3. ¿Qué **decisiones de negocio** clave se apoyan con esa arquitectura?
+
+**Presentación**: 2 minutos por grupo
+
+::: {.notes}
+OLTP de FoodRapid: sistema de pedidos (tiempo real), sistema de pagos, sistema de asignación de repartidores. Data Warehouse: historial de pedidos por zona/hora/restaurante/clima. OLAP: ¿Cuáles son los restaurantes con mejor tiempo de entrega? ¿Qué zonas tienen más demanda los viernes a las 8pm?
+:::
+
+---
+
+## Lo Que Aprendimos Hoy
+
+::: {.incremental}
+1. Big Data se define por las **5 V**: Volumen, Velocidad, Variedad, Veracidad, Valor
+2. Los sistemas **OLTP** están optimizados para registrar operaciones en tiempo real
+3. Los sistemas **OLAP** están optimizados para analizar grandes volúmenes de datos históricos
+4. El **Data Warehouse** integra datos de múltiples fuentes para análisis
+5. El proceso **ETL** conecta los sistemas operacionales con el almacén analítico
+:::
+
+::: {.fragment}
+**Big Data no es el objetivo: el objetivo son las decisiones que habilita.**
+:::
+
+---
+
+## Próxima Clase
+
+**Tema**: Integración y Síntesis de la Unidad 1
+
+**Exploraremos**:
+
+- Repaso integrado de todos los conceptos de la unidad
+- Caso integrador con una nueva empresa
+- Preparación para la Solemne 1
+
+::: {.fragment}
+**Revisen**: los conceptos clave de las últimas 5 clases. Anoten dudas que quieran resolver.
+:::
+
+::: {.notes}
+La próxima clase es de integración. Es importante que los estudiantes lleguen con sus notas y dudas identificadas, para aprovechar el espacio de repaso.
+:::
+
+---
+
+## Preguntas
+
+¿Dudas o comentarios?
+
+**Contacto**: [correo del profesor]
+
+**Próxima clase**: [fecha y hora]
+
+---
+
+## ¡Gracias!
+
+**Big Data y Analytics**
+Universidad San Sebastián
+
+::: {.notes}
+Agradecer participación. Recordar revisar los conceptos antes de la próxima clase de integración.
+:::

@@ -194,29 +194,29 @@ format:
       <span class="card-subtitle">DSS, CMI, CRM, EIS — roles y niveles organizacionales</span>
       <span class="card-arrow">Ver presentación →</span>
     </a>
-    <a class="card semana upcoming" href="#">
+    <a class="card semana" href="clases/class_week_3.html">
       <span class="card-tag">Semana 3</span>
-      <span class="card-title">Próximamente</span>
-      <span class="card-subtitle">Contenido en preparación</span>
-      <span class="card-arrow">Próximamente</span>
+      <span class="card-title">CMI y Flujo de Información en la Organización</span>
+      <span class="card-subtitle">Balanced Scorecard · 4 perspectivas · KPIs · flujo vertical, horizontal y externo</span>
+      <span class="card-arrow">Ver presentación →</span>
     </a>
-    <a class="card semana upcoming" href="#">
+    <a class="card semana" href="clases/class_week_4.html">
       <span class="card-tag">Semana 4</span>
-      <span class="card-title">Próximamente</span>
-      <span class="card-subtitle">Contenido en preparación</span>
-      <span class="card-arrow">Próximamente</span>
+      <span class="card-title">Calidad de la Información y Ética en los Datos</span>
+      <span class="card-subtitle">Exactitud · Completitud · Consistencia · Oportunidad · Gobierno de datos</span>
+      <span class="card-arrow">Ver presentación →</span>
     </a>
-    <a class="card semana upcoming" href="#">
+    <a class="card semana" href="clases/class_week_5.html">
       <span class="card-tag">Semana 5</span>
-      <span class="card-title">Próximamente</span>
-      <span class="card-subtitle">Contenido en preparación</span>
-      <span class="card-arrow">Próximamente</span>
+      <span class="card-title">Big Data: Características y Arquitectura de Datos</span>
+      <span class="card-subtitle">Las 5 V · OLTP vs OLAP · Data Warehouse · ETL</span>
+      <span class="card-arrow">Ver presentación →</span>
     </a>
-    <a class="card semana upcoming" href="#">
+    <a class="card semana" href="clases/class_week_6.html">
       <span class="card-tag">Semana 6</span>
-      <span class="card-title">Próximamente</span>
-      <span class="card-subtitle">Contenido en preparación</span>
-      <span class="card-arrow">Próximamente</span>
+      <span class="card-title">Integración y Síntesis: Unidad 1</span>
+      <span class="card-subtitle">Caso integrador · Repaso completo · Preparación Solemne 1</span>
+      <span class="card-arrow">Ver presentación →</span>
     </a>
   </div>
 

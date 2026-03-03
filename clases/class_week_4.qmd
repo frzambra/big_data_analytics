@@ -1,0 +1,439 @@
+---
+title: "Calidad de la Información y Ética en los Datos"
+subtitle: "Clase 4 - Big Data y Analytics"
+author: "Universidad San Sebastián"
+---
+
+## ¿Qué Vimos la Semana Pasada?
+
+::: {.incremental}
+- El **CMI** traduce la estrategia en 4 perspectivas y KPIs
+- La información fluye de forma **vertical, horizontal y externa**
+- Los **SI son la infraestructura** del flujo de información
+:::
+
+::: {.fragment}
+**Hoy**: ¿Qué pasa cuando los datos en los que confiamos están equivocados?
+:::
+
+::: {.notes}
+Repaso rápido. Preguntar: ¿cuáles son las 4 perspectivas del CMI? Conectar directamente: toda esa hermosa arquitectura de información falla si los datos son malos.
+:::
+
+---
+
+## Situación: Una Decisión Costosa en TechStyle
+
+**Octubre 2024 — Reunión de Dirección**
+
+El gerente de logística presenta el informe del mes:
+
+*"El 92% de los pedidos se entregó en menos de 48 horas. Cumplimos la meta."*
+
+::: {.fragment}
+El CEO aprueba el bono de desempeño del equipo.
+
+**Un mes después**: llegan 1.200 reclamos de clientes que esperaron más de 5 días.
+:::
+
+::: {.notes}
+Plantear el suspenso antes de revelar qué pasó. Preguntar: ¿qué creen que ocurrió? Dejar que los estudiantes especulen.
+:::
+
+---
+
+## ¿Qué Había Pasado?
+
+::: {.incremental}
+- Un error en el sistema contaba como "entregado" cuando el repartidor salía del almacén
+- No cuando el pedido llegaba realmente al cliente
+- El **92% de "entregas exitosas"** medía salidas del almacén, no entregas reales
+- Los datos eran técnicamente correctos, pero medían lo equivocado
+:::
+
+::: {.fragment}
+**Consecuencia**: Bonos pagados por metas no cumplidas. Clientes enfurecidos. Confianza destruida.
+:::
+
+::: {.notes}
+Este es un ejemplo de datos que son "correctos" en sentido técnico (realmente se registró esa información) pero que son de mala calidad porque no representan la realidad que se quería medir. La calidad no es solo exactitud, es relevancia y representación.
+:::
+
+---
+
+## ¿Qué es la Calidad de la Información?
+
+La **calidad** de la información es el grado en que los datos **representan fielmente la realidad** que se quiere medir y son **adecuados para el propósito** con que se usan.
+
+::: {.fragment}
+**4 dimensiones principales**:
+
+- **Exactitud**: ¿los datos son correctos?
+- **Completitud**: ¿están todos los datos necesarios?
+- **Consistencia**: ¿los datos coinciden entre sistemas?
+- **Oportunidad**: ¿los datos están disponibles cuando se necesitan?
+:::
+
+::: {.notes}
+No es una lista para memorizar. Es un marco para diagnosticar problemas. Cada dimensión puede causar decisiones incorrectas de una forma diferente.
+:::
+
+---
+
+## Dimensión 1: Exactitud
+
+**¿Los datos representan correctamente la realidad?**
+
+::: {.incremental}
+- El valor registrado corresponde al valor real
+- Incluye errores de ingreso, errores de sistema, medición incorrecta
+- **Causa más común**: ingreso manual de datos por personas
+:::
+
+::: {.fragment}
+**TechStyle — Ejemplo de falta de exactitud**:
+
+La dirección del cliente se ingresó como "Av. Providencia 1234, Santiago" pero debía ser "Av. Providencia 1234, **Ñuñoa**". El pedido llega tarde y el cliente reclama.
+:::
+
+::: {.notes}
+Preguntar: ¿han tenido alguna vez un paquete que llegó a la dirección equivocada? Ese es un error de exactitud. Conectar con experiencias reales de los estudiantes.
+:::
+
+---
+
+## Dimensión 2: Completitud
+
+**¿Están todos los datos que se necesitan?**
+
+::: {.incremental}
+- Datos faltantes o nulos donde debería haber valores
+- Registros incompletos que no pueden usarse en análisis
+- **Causa más común**: campos opcionales que deberían ser obligatorios
+:::
+
+::: {.fragment}
+**TechStyle — Ejemplo de falta de completitud**:
+
+El 23% de los registros de clientes no tiene número de teléfono. Cuando hay un problema con el pedido, no se puede contactar al cliente directamente.
+:::
+
+::: {.notes}
+Los datos faltantes son un problema silencioso. No causan errores visibles en el sistema, pero degradan la calidad del análisis. Un analista que promedia ventas sin notar que faltan 20% de los registros obtendrá conclusiones incorrectas.
+:::
+
+---
+
+## Dimensión 3: Consistencia
+
+**¿Los datos dicen lo mismo en todos los sistemas?**
+
+::: {.incremental}
+- El mismo dato aparece con valores distintos en sistemas diferentes
+- Causada por sistemas desconectados o actualizaciones parciales
+- Es el problema más difícil de detectar
+:::
+
+::: {.fragment}
+**TechStyle — Ejemplo de inconsistencia**:
+
+| Sistema | Stock Producto "Audífonos Pro" |
+|---------|-------------------------------|
+| Sistema de ventas | 45 unidades |
+| Sistema de bodega | 38 unidades |
+| Sistema de compras | 52 unidades |
+
+**¿Cuántas hay realmente?**
+:::
+
+::: {.notes}
+Este problema es extremadamente común en empresas que tienen sistemas heredados o que crecieron comprando software de distintos proveedores. Cada sistema tiene su propia "versión de la verdad".
+:::
+
+---
+
+## Dimensión 4: Oportunidad
+
+**¿Los datos están disponibles cuando se necesitan?**
+
+::: {.incremental}
+- Datos correctos pero que llegan tarde ya no sirven para decidir
+- Reportes que se generan semanal o mensualmente para decisiones diarias
+- **Causa más común**: procesos batch, sistemas sin tiempo real
+:::
+
+::: {.fragment}
+**TechStyle — Ejemplo de falta de oportunidad**:
+
+El reporte de quiebre de stock se genera **cada lunes a las 8am**. El viernes en la tarde se agotó el producto más vendido. El equipo de compras no lo supo hasta el lunes siguiente.
+:::
+
+::: {.notes}
+En el mundo actual, la oportunidad se ha vuelto crítica. Las empresas que antes toleraban reportes semanales ahora necesitan dashboards en tiempo real porque los clientes y mercados reaccionan en minutos.
+:::
+
+---
+
+## El Costo de los Datos de Mala Calidad
+
+::: {.incremental}
+- **Decisiones incorrectas**: invertir en el mercado equivocado
+- **Costos operativos**: retrabajos, correcciones, recursos desperdiciados
+- **Pérdida de confianza**: los usuarios dejan de usar el SI
+- **Riesgo reputacional**: errores visibles para clientes o reguladores
+- **Costos legales**: datos incorrectos en reportes regulatorios
+:::
+
+::: {.fragment}
+**Estimación**: las empresas pierden entre 15-25% de sus ingresos por mala calidad de datos (Gartner)
+:::
+
+::: {.notes}
+La cifra de Gartner es impactante. Aunque es una estimación, muestra que la calidad de datos no es un problema técnico menor: es un problema de negocio con impacto financiero directo.
+:::
+
+---
+
+## 💬 Discusión 1
+
+**En parejas (5 minutos)**:
+
+TechStyle encontró estos problemas en su base de datos:
+
+1. El 15% de los emails de clientes son inválidos (ej. "juan@.com")
+2. La columna "fecha_nacimiento" está vacía en 40% de los registros
+3. El precio del mismo producto difiere en la app y en el sitio web
+4. Los reportes de ventas se generan cada 3 días
+
+Para cada problema: ¿qué dimensión de calidad afecta? ¿Qué decisión de negocio podría fallar?
+
+::: {.notes}
+Respuestas: 1=Exactitud (campañas de email fallidas), 2=Completitud (segmentación por edad imposible), 3=Consistencia (cliente paga precio incorrecto), 4=Oportunidad (no se puede reaccionar a tendencias diarias).
+:::
+
+---
+
+## ¿Quién es Responsable de la Calidad de los Datos?
+
+**Una pregunta incómoda...**
+
+::: {.fragment}
+**Respuesta incorrecta**: "El área de TI"
+
+**Respuesta correcta**: **Todos**
+:::
+
+::: {.incremental}
+- **Quien ingresa** los datos: ingresa correctamente
+- **Quien usa** los datos: reporta anomalías que detecta
+- **Quien diseña** el sistema: crea validaciones que previenen errores
+- **La dirección**: establece una cultura de calidad de datos
+:::
+
+::: {.notes}
+Este es un cambio de mentalidad importante. La calidad de datos no es un problema técnico que "el área de sistemas resuelve". Es una responsabilidad compartida. Conectar con el componente "Personas" de los SI.
+:::
+
+---
+
+## Gobierno de Datos
+
+**¿Qué es?**
+
+Conjunto de **políticas, procesos y responsabilidades** que garantizan que los datos sean gestionados como un activo estratégico de la organización.
+
+::: {.fragment}
+**Incluye**:
+
+- Definir **dueños de datos** (quién es responsable de qué datos)
+- Establecer **estándares de calidad** (qué se considera correcto)
+- Crear **procesos de validación** (cómo se verifica la calidad)
+- Documentar los datos con un **diccionario de datos**
+:::
+
+::: {.notes}
+El diccionario de datos será importante en la Unidad 3. Mencionarlo como "lo veremos más adelante, pero ya saben para qué sirve".
+:::
+
+---
+
+## Ética en el Manejo de Datos
+
+**Los datos no son solo un recurso técnico: son información sobre personas**
+
+::: {.fragment}
+Cuando TechStyle tiene datos de sus 450.000 clientes, tiene:
+
+::: {.incremental}
+- Sus nombres, direcciones y teléfonos
+- Sus hábitos de compra y preferencias
+- Sus datos de pago
+- Patrones de comportamiento que el cliente ni sabe que revela
+:::
+:::
+
+::: {.fragment}
+**¿Qué responsabilidades tiene TechStyle con esa información?**
+:::
+
+::: {.notes}
+Este momento de reflexión es importante. Los estudiantes serán profesionales que manejarán datos de personas reales. Establecer el marco ético desde ahora.
+:::
+
+---
+
+## Principios Éticos en el Manejo de Datos
+
+::: {.incremental}
+- **Transparencia**: los clientes saben qué datos se recolectan y para qué
+- **Proporcionalidad**: recolectar solo los datos realmente necesarios
+- **Seguridad**: proteger los datos contra accesos no autorizados
+- **No discriminación**: no usar datos para perjudicar grupos específicos
+- **Responsabilidad**: asumir las consecuencias del mal uso
+:::
+
+::: {.notes}
+No es necesario profundizar en la legislación (eso puede variar). Enfocarse en los principios que guían el comportamiento ético independientemente del país o normativa.
+:::
+
+---
+
+## La Ley de Protección de Datos en Chile
+
+**Ley N° 19.628 sobre Protección de la Vida Privada**
+
+::: {.incremental}
+- Regula el tratamiento de datos personales en Chile
+- Los datos solo pueden usarse para el fin para el que fueron recolectados
+- Las personas tienen derecho a acceder, rectificar y eliminar sus datos
+- Las empresas deben proteger los datos con medidas de seguridad adecuadas
+:::
+
+::: {.fragment}
+**En proceso**: Chile avanza hacia una ley más moderna y robusta (Ley 21.719, 2024), alineada con estándares internacionales como el GDPR europeo.
+:::
+
+::: {.notes}
+No profundizar en detalles legales. El punto es que el manejo de datos tiene implicancias legales reales. Los futuros profesionales deben ser conscientes de esto.
+:::
+
+---
+
+## 💬 Discusión 2
+
+**Para toda la clase (8 minutos)**:
+
+TechStyle está evaluando 3 iniciativas con sus datos de clientes:
+
+1. Vender la base de datos de clientes a marcas asociadas para que envíen publicidad
+2. Usar el historial de compras para subir los precios a clientes que "claramente pueden pagar más"
+3. Analizar el comportamiento de clientes para personalizar recomendaciones de productos
+
+**¿Cuáles son éticas? ¿Cuáles no? ¿Por qué? ¿Depende de cómo se haga?**
+
+::: {.notes}
+1 y 2 son claramente problemáticas (1 viola la proporcionalidad y transparencia, 2 es discriminación por poder adquisitivo). 3 es ética si se hace con transparencia y consentimiento. El objetivo es que los estudiantes desarrollen criterio propio, no solo memorizar reglas.
+:::
+
+---
+
+## Integridad Académica y Profesional
+
+**El mismo principio aplica en la universidad:**
+
+::: {.incremental}
+- Presentar datos reales, no manipulados para llegar al resultado esperado
+- Citar fuentes cuando se usan datos de otros
+- No fabricar ni alterar resultados en informes o evaluaciones
+- Reportar hallazgos incómodos aunque contradigan la hipótesis inicial
+:::
+
+::: {.fragment}
+**Un analista de datos íntegro dice "los datos no muestran lo que esperábamos" en vez de ajustar los datos hasta que muestren lo que quería.**
+:::
+
+::: {.notes}
+Conectar con el contexto universitario. La integridad en el manejo de datos se aprende aquí, no solo en el trabajo. Las malas prácticas en la universidad prefiguran malas prácticas profesionales.
+:::
+
+---
+
+## Actividad: Auditoría de Calidad de Datos
+
+**Contexto**: TechStyle entrega este extracto de su tabla `customers`:
+
+| id | nombre | email | telefono | region | fecha_reg |
+|----|--------|-------|----------|--------|-----------|
+| 1 | Juan P. | juan@gmail.com | 98765432 | RM | 2022-03-15 |
+| 2 | María | NULL | 56912345 | RM | 2022-03-16 |
+| 3 | Carlos R. | carlos@hotmail | NULL | NULL | 2022-03-15 |
+| 4 | Ana M. | ana@gmail.com | 98765432 | Valpo | NULL |
+| 5 | Juan P. | juan@gmail.com | 98765432 | RM | 2022-03-17 |
+
+**En grupos de 3 (10 minutos)**:
+
+1. Identifiquen **todos los problemas de calidad** y clasifíquenlos por dimensión
+2. ¿Qué decisiones de negocio se verían afectadas?
+3. ¿Qué reglas de validación debería tener el sistema para prevenirlos?
+
+::: {.notes}
+Problemas: fila 2 sin apellido y sin email (completitud), fila 3 email inválido sin @.com (exactitud) y sin teléfono/región (completitud), fila 4 sin fecha (completitud) y teléfono duplicado con fila 1 (consistencia), fila 5 duplicado exacto de fila 1 (consistencia). Reglas: email válido obligatorio, teléfono único, región obligatoria, fecha obligatoria.
+:::
+
+---
+
+## Lo Que Aprendimos Hoy
+
+::: {.incremental}
+1. La calidad de datos tiene **4 dimensiones**: exactitud, completitud, consistencia, oportunidad
+2. Los datos de mala calidad generan **decisiones incorrectas** con costos reales
+3. La calidad de datos es **responsabilidad de todos**, no solo de TI
+4. El **gobierno de datos** establece políticas para gestionar los datos como activo
+5. El manejo de datos personales tiene **responsabilidades éticas y legales**
+:::
+
+::: {.fragment}
+**Un dato incorrecto puede ser más peligroso que no tener el dato.**
+:::
+
+---
+
+## Próxima Clase
+
+**Tema**: Big Data: Características y Arquitectura de Datos
+
+**Exploraremos**:
+
+- ¿Qué hace que los datos sean "Big Data"? Las 5 V
+- Diferencia entre sistemas OLTP y OLAP
+- ¿Qué es un Data Warehouse?
+- La arquitectura de datos moderna
+
+::: {.fragment}
+**Reflexionen**: ¿Cuántos datos genera su smartphone en un día? ¿Quién los usa y para qué?
+:::
+
+::: {.notes}
+Preparar la transición hacia Big Data. La pregunta sobre el smartphone es para mostrar que ya viven en un mundo de Big Data sin darse cuenta.
+:::
+
+---
+
+## Preguntas
+
+¿Dudas o comentarios?
+
+**Contacto**: [correo del profesor]
+
+**Próxima clase**: [fecha y hora]
+
+---
+
+## ¡Gracias!
+
+**Big Data y Analytics**
+Universidad San Sebastián
+
+::: {.notes}
+Agradecer participación. Recordar reflexionar sobre los datos que genera su smartphone.
+:::

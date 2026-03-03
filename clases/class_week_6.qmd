@@ -1,0 +1,373 @@
+---
+title: "Integración y Síntesis: Unidad 1"
+subtitle: "Clase 6 - Big Data y Analytics"
+author: "Universidad San Sebastián"
+---
+
+## El Recorrido de la Unidad 1
+
+**6 semanas, un solo hilo conductor: los datos como base de las decisiones**
+
+::: {.incremental}
+- **Semana 1**: Datos → Información → Conocimiento → Decisión · Introducción a los SI
+- **Semana 2**: Componentes, actores, niveles y tipos de SI
+- **Semana 3**: CMI y flujo de información organizacional
+- **Semana 4**: Calidad de datos e integridad ética
+- **Semana 5**: Big Data, OLTP, OLAP y arquitectura de datos
+:::
+
+::: {.fragment}
+**Hoy**: integramos todo antes de la Solemne 1
+:::
+
+::: {.notes}
+Mostrar el mapa completo. Los estudiantes a veces no ven la coherencia entre clases. Hoy es el momento de construir esa visión integrada.
+:::
+
+---
+
+## El Modelo Central del Curso
+
+**Todo lo que vimos en la Unidad 1 se puede resumir en este modelo:**
+
+```
+   REALIDAD ORGANIZACIONAL
+           ↓
+      [Datos brutos]  ← registrados por OLTP
+           ↓
+   [Información procesada]  ← generada por OLAP / Data Warehouse
+           ↓
+   [Conocimiento] ← construido con BI, DSS, CRM
+           ↓
+   [DECISIÓN]  ← apoyada por CMI, EIS
+           ↓
+   [Acción en la organización]
+```
+
+::: {.notes}
+Este es el modelo pedagógico central del curso. Asegurarse de que los estudiantes lo vean claramente. Cada concepto de la unidad corresponde a un eslabón de esta cadena.
+:::
+
+---
+
+## Repaso: Los 5 Conceptos Clave
+
+**1. Sistema de Información**
+
+Conjunto de componentes (hardware, software, datos, personas, procesos) que capturan, almacenan, procesan y distribuyen información para apoyar decisiones.
+
+::: {.fragment}
+**2. Los 3 Niveles Organizacionales**
+
+- Operativo → TPS (registro de transacciones)
+- Táctico → BI, DSS, CRM (análisis y gestión)
+- Estratégico → EIS, CMI (decisiones ejecutivas)
+:::
+
+::: {.notes}
+Repaso concentrado. No profundizar en cada concepto — ya lo vieron en detalle. El objetivo es activar la memoria y conectar los conceptos entre sí.
+:::
+
+---
+
+## Repaso: Los 5 Conceptos Clave (cont.)
+
+**3. Cuadro de Mando Integral (CMI)**
+
+Traduce la estrategia en 4 perspectivas: Financiera, Cliente, Procesos, Aprendizaje. Cada perspectiva tiene KPIs medidos con datos del SI.
+
+::: {.fragment}
+**4. Calidad de Datos**
+
+Exactitud · Completitud · Consistencia · Oportunidad
+
+Datos de mala calidad → decisiones incorrectas.
+:::
+
+::: {.fragment}
+**5. Big Data y Arquitectura**
+
+Las 5 V. OLTP (operacional) → ETL → Data Warehouse (analítico) → BI.
+:::
+
+::: {.notes}
+Verificar que los estudiantes recuerden estos 5 conceptos. Preguntar: ¿alguien puede explicar la diferencia entre OLTP y OLAP con sus propias palabras?
+:::
+
+---
+
+## 💬 Discusión 1: Preguntas de Integración
+
+**Para toda la clase (10 minutos)**:
+
+Respondan estas preguntas conectando los conceptos de la unidad:
+
+1. ¿Por qué el CEO de TechStyle necesita un EIS en vez de acceder directamente a las tablas OLTP?
+
+2. ¿Cómo afecta la falta de consistencia de datos al CMI de una empresa?
+
+3. ¿En qué perspectiva del CMI impacta principalmente tener un buen proceso ETL?
+
+::: {.notes}
+1: El EIS agrega y resume datos de múltiples sistemas; el CEO no puede ni debe revisar millones de registros. 2: KPIs del CMI construidos sobre datos inconsistentes dan señales incorrectas → decisiones erróneas. 3: Procesos internos (el ETL es un proceso interno de datos) y también Aprendizaje (la infraestructura de datos habilita el aprendizaje organizacional).
+:::
+
+---
+
+## Caso Integrador: ServiRápido
+
+**El desafío de hoy:**
+
+ServiRápido es una empresa de servicios de mantención del hogar (gasfitería, electricidad, cerrajería) que opera en Santiago.
+
+::: {.incremental}
+- **Fundada**: 2020
+- **Operación**: 180 técnicos en terreno · 3.200 servicios mensuales
+- **Clientes**: 42.000 hogares registrados
+- **Problema**: crecen rápido pero no saben si son rentables por zona
+:::
+
+::: {.fragment}
+**ServiRápido no tiene un Sistema de Información estructurado. Usted fue contratado como analista para diseñarlo.**
+:::
+
+::: {.notes}
+Usar ServiRápido como caso nuevo para evaluar comprensión en contexto diferente a TechStyle. El escenario es deliberadamente diferente: servicio presencial, técnicos en terreno, empresa mediana.
+:::
+
+---
+
+## ServiRápido: Los Datos que Tiene
+
+Actualmente ServiRápido registra sus operaciones en:
+
+::: {.incremental}
+- **Google Sheets**: lista de servicios realizados (fecha, dirección, tipo de servicio, técnico, cobro)
+- **WhatsApp**: comunicación con técnicos y clientes
+- **Email**: envío de facturas y reclamos
+- **Notas en papel**: inventario de repuestos en camionetas
+:::
+
+::: {.fragment}
+**¿Cuáles son los problemas de este "sistema"?**
+:::
+
+::: {.notes}
+Este escenario refleja la realidad de miles de PYMEs en Chile. No tiene un SI formal. Los datos están dispersos, no estructurados, difíciles de analizar. Preguntar a los estudiantes: ¿qué dimensiones de calidad están en riesgo aquí?
+:::
+
+---
+
+## Actividad: Diseñar el SI de ServiRápido
+
+**En grupos de 4-5 personas (20 minutos)**:
+
+**Parte 1 — Diagnóstico (5 min)**:
+Identifiquen 3 problemas de calidad de datos y 3 barreras al flujo de información en el sistema actual de ServiRápido.
+
+**Parte 2 — Diseño del SI (10 min)**:
+Diseñen el Sistema de Información para ServiRápido:
+- ¿Qué componentes necesita? (hardware, software, datos, personas, procesos)
+- ¿Qué tipos de SI implementarían? (TPS, BI, DSS, CRM, EIS)
+- ¿Necesita un Data Warehouse? ¿Por qué?
+
+**Parte 3 — CMI (5 min)**:
+Diseñen un CMI básico: 1 objetivo y 1 KPI por perspectiva.
+
+::: {.notes}
+Parte 1: datos en papel → exactitud y completitud en riesgo; WhatsApp → no estructurado, no analizable; no hay consistencia entre medios. Parte 2: TPS para registro de servicios, CRM para gestión de clientes, BI para análisis de rentabilidad por zona. Parte 3: Financiero=margen por servicio, Cliente=NPS o tasa de recontratación, Procesos=tiempo de respuesta, Aprendizaje=capacitación de técnicos.
+:::
+
+---
+
+## Presentación de Grupos
+
+**Cada grupo presenta en 3 minutos:**
+
+1. Los 3 principales problemas de calidad identificados
+2. Los tipos de SI priorizados y por qué
+3. El CMI diseñado
+
+::: {.fragment}
+**Al escuchar a otros grupos**:
+
+- ¿Qué propuestas agregarías a tu diseño?
+- ¿Qué elementos te parecen más importantes?
+:::
+
+::: {.notes}
+Dar tiempo real para presentaciones. Hacer preguntas a los grupos para profundizar. Validar todas las propuestas siempre que estén fundamentadas. El objetivo no es una sola respuesta correcta sino que puedan justificar sus decisiones.
+:::
+
+---
+
+## Reflexión: ¿Qué Aprendimos en la Unidad 1?
+
+**La pregunta central de esta unidad fue:**
+
+*¿Cómo transforman las organizaciones sus datos en decisiones?*
+
+::: {.fragment}
+::: {.incremental}
+- Con **Sistemas de Información** que capturan, almacenan y procesan datos
+- Con **arquitecturas adecuadas** al volumen y velocidad de los datos
+- Con **datos de calidad** que representen fielmente la realidad
+- Con **marcos de gestión** como el CMI que conectan datos con estrategia
+- Con **ética e integridad** en el uso de los datos de personas
+:::
+:::
+
+::: {.notes}
+Este es el cierre conceptual de la unidad. Asegurarse de que los estudiantes puedan articular esta respuesta con sus propias palabras.
+:::
+
+---
+
+## La Cadena de Valor de los Datos
+
+**Del dato a la decisión: un proceso no trivial**
+
+```
+  Dato bruto → Almacenamiento (OLTP) → Integración (ETL)
+       ↓                                      ↓
+  Contexto                           Data Warehouse
+       ↓                                      ↓
+  Información                          BI / CMI / DSS
+       ↓                                      ↓
+  Conocimiento                        EIS / Dashboards
+       ↓                                      ↓
+                     DECISIÓN ←────────────────
+```
+
+::: {.fragment}
+**Cada eslabón requiere tecnología, personas y procesos. Ninguno puede fallar.**
+:::
+
+::: {.notes}
+Este diagrama integra todos los conceptos de la unidad en una sola imagen. Es el diagrama que deberían poder reproducir (aunque sea de memoria aproximada) en la solemne.
+:::
+
+---
+
+## Lo Que Viene: Unidad 2
+
+**Unidad 2: Fundamentos de Bases de Datos**
+
+En la Unidad 1 aprendimos **para qué** sirven los datos en una organización.
+
+En la Unidad 2 aprenderemos **cómo** se modelan y estructuran esos datos:
+
+::: {.incremental}
+- Diagrama de Caso de Uso
+- Diagrama Esquema UML
+- Modelo Entidad-Relación
+- Modelo Relacional
+:::
+
+::: {.fragment}
+**La pregunta que guiará la Unidad 2**: ¿Cómo represento la realidad de TechStyle en tablas y relaciones?
+:::
+
+::: {.notes}
+Preparar la transición. La Unidad 2 es más técnica pero conecta directamente con lo que vieron: las tablas que vieron en la Unidad 1 (users, orders, order_items) tienen una estructura detrás que aprenderemos a diseñar.
+:::
+
+---
+
+## Preparación para la Solemne 1
+
+**La evaluación cubrirá los contenidos de la Unidad 1:**
+
+::: {.incremental}
+- Conceptos de dato, información, conocimiento y decisión
+- Componentes y tipos de Sistemas de Información
+- Niveles organizacionales y actores
+- Cuadro de Mando Integral: perspectivas y KPIs
+- Calidad de datos: dimensiones e impacto
+- Big Data: las 5 V, OLTP, OLAP, Data Warehouse, ETL
+:::
+
+::: {.fragment}
+**Formato**: prueba escrita individual (40 minutos) + controles parciales (10%)
+:::
+
+::: {.notes}
+Ser específico sobre el formato para que los estudiantes sepan qué esperar. Recordar que los controles parciales ya cuentan. Ofrecer espacio para preguntas sobre el contenido.
+:::
+
+---
+
+## Consejos para la Solemne
+
+::: {.incremental}
+- Estudien los **casos de TechStyle y FoodRapid**: los conceptos siempre se aplican en contexto
+- No memoricen definiciones: **entiendan para qué sirve** cada concepto
+- Practiquen **diseñar un CMI** para una empresa ficticia
+- Practiquen **identificar problemas de calidad** en extractos de datos
+- Piensen en la **cadena completa**: dato → información → decisión
+:::
+
+::: {.fragment}
+*La pregunta más frecuente en evaluaciones de SI: "dada esta empresa, ¿qué sistema implementarías y por qué?"*
+:::
+
+::: {.notes}
+Estos son tips genuinos para la evaluación, no relleno. El énfasis en "para qué sirve" vs. "definición" es clave: la solemne evaluará aplicación, no memorización.
+:::
+
+---
+
+## 💬 Discusión Final: Reflexión Personal
+
+**Cierre de la Unidad 1**
+
+Tómense 3 minutos para responder:
+
+1. ¿Cuál fue el concepto que más les costó entender? ¿Lo lograron?
+2. ¿En qué trabajo o empresa futura creen que usarán lo que aprendieron?
+3. ¿Qué pregunta quedó sin responder?
+
+::: {.notes}
+Esta discusión es importante para el docente: permite identificar qué conceptos necesitan refuerzo antes de la solemne. Responder directamente las preguntas que surjan.
+:::
+
+---
+
+## Lo Que Aprendimos en la Unidad 1
+
+::: {.incremental}
+1. Los **SI** son la infraestructura que transforma datos en decisiones
+2. Cada nivel organizacional necesita **distintos tipos de información**
+3. El **CMI** alinea los datos con la estrategia de la organización
+4. Los **datos de calidad** son la base de todo análisis confiable
+5. **Big Data** requiere arquitecturas especializadas (OLTP, OLAP, DW)
+6. El manejo de datos implica **responsabilidades éticas** reales
+:::
+
+::: {.fragment}
+**La Unidad 2 nos dará las herramientas técnicas para construir esa base de datos.**
+:::
+
+---
+
+## Preguntas
+
+¿Dudas sobre el contenido de la Unidad 1?
+
+**Contacto**: [correo del profesor]
+
+**Solemne 1**: [fecha y hora]
+
+---
+
+## ¡Gracias!
+
+**Fin de la Unidad 1**
+
+*Sistemas de Información en el Contexto Empresarial*
+
+Universidad San Sebastián
+
+::: {.notes}
+Agradecer la participación durante toda la unidad. Desear éxito en la solemne. Recordar que hay espacio para consultas antes de la evaluación.
+:::

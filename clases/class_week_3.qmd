@@ -1,0 +1,506 @@
+---
+title: "CMI y Flujo de Información en la Organización"
+subtitle: "Clase 3 - Big Data y Analytics"
+author: "Universidad San Sebastián"
+---
+
+## ¿Qué Vimos la Semana Pasada?
+
+::: {.incremental}
+- Un SI tiene **5 componentes**: hardware, software, datos, personas, procesos
+- Existen **3 niveles organizacionales**: operativo, táctico, estratégico
+- Los **tipos de SI** sirven a niveles distintos: TPS, BI, DSS, CRM, EIS
+:::
+
+::: {.fragment}
+**Hoy**: ¿Cómo alinea una organización todos estos sistemas hacia un mismo objetivo?
+:::
+
+::: {.notes}
+Repaso rápido. Preguntar: ¿recuerdan los 3 niveles organizacionales? ¿Qué SI usaba el CEO Roberto? Conectar con la clase anterior.
+:::
+
+---
+
+## Situación: El CEO de TechStyle tiene un Problema
+
+**Roberto, CEO de TechStyle, recibe el informe de fin de año:**
+
+::: {.incremental}
+- Ventas: +12% ✓
+- Satisfacción de clientes: -8% ✗
+- Tiempos de entrega: sin mejora ✗
+- Rotación de personal: +18% ✗
+:::
+
+::: {.fragment}
+**¿Está TechStyle teniendo un buen año o un mal año?**
+:::
+
+::: {.notes}
+El escenario muestra que mirar solo las ventas no basta. Introducir la necesidad de una visión más completa del desempeño.
+:::
+
+---
+
+## El Problema de Gestionar Solo con Datos Financieros
+
+::: {.incremental}
+- El **resultado financiero** refleja el pasado, no el futuro
+- Una empresa puede **crecer en ventas** y estar perdiendo clientes valiosos
+- Los empleados insatisfechos **abandonan** → pérdida de conocimiento
+- Los procesos ineficientes **aumentan costos** silenciosamente
+:::
+
+::: {.fragment}
+**¿Cómo tener una visión completa y equilibrada del desempeño?**
+:::
+
+::: {.notes}
+Esta es la motivación para el CMI. No se trata solo de cuánto ganamos, sino de qué tan sano está el negocio en todas sus dimensiones.
+:::
+
+---
+
+## El Cuadro de Mando Integral (CMI)
+
+**¿Qué es?**
+
+Herramienta de gestión estratégica que traduce la visión y estrategia de una organización en un **conjunto balanceado de indicadores**.
+
+::: {.fragment}
+**Creado por**: Kaplan y Norton (Harvard, 1992)
+
+**Principio**: Lo que no se mide, no se gestiona.
+:::
+
+::: {.fragment}
+**En inglés**: *Balanced Scorecard (BSC)*
+:::
+
+::: {.notes}
+No profundizar en la historia. Enfatizar el principio central: necesitamos medir más que solo dinero para gestionar bien una empresa.
+:::
+
+---
+
+## Las 4 Perspectivas del CMI
+
+```
+            ┌─────────────────────────────────┐
+            │        VISIÓN Y ESTRATEGIA      │
+            └───────────────┬─────────────────┘
+                            │
+         ┌──────────────────┼──────────────────┐
+         ▼                  ▼                  ▼
+   ┌──────────┐      ┌──────────┐      ┌──────────────┐
+   │FINANCIERA│      │ CLIENTE  │      │  APRENDIZAJE │
+   │          │      │          │      │  Y CRECIMIEN.│
+   └──────────┘      └──────────┘      └──────────────┘
+                            │
+                     ┌──────────────┐
+                     │  PROCESOS    │
+                     │  INTERNOS    │
+                     └──────────────┘
+```
+
+::: {.notes}
+Mostrar que las 4 perspectivas están conectadas y al servicio de la estrategia. Ninguna perspectiva es más importante que otra; son complementarias.
+:::
+
+---
+
+## Perspectiva 1: Financiera
+
+**¿Cómo nos ven los accionistas?**
+
+::: {.incremental}
+- Mide el **desempeño económico** de la organización
+- Indicadores típicos: ingresos, rentabilidad, costos, retorno sobre inversión
+- Es el resultado final de todo lo que hace la empresa
+- Pero... es un **indicador tardío** (refleja lo que ya pasó)
+:::
+
+::: {.fragment}
+**TechStyle**: Ventas totales, margen por categoría, costo de adquisición de cliente (CAC)
+:::
+
+::: {.notes}
+Enfatizar que la perspectiva financiera es importante pero insuficiente sola. Es la consecuencia de las otras perspectivas, no la causa.
+:::
+
+---
+
+## Perspectiva 2: Cliente
+
+**¿Cómo nos ven nuestros clientes?**
+
+::: {.incremental}
+- Mide la **satisfacción, retención y captación** de clientes
+- Indicadores típicos: NPS, tasa de retención, tiempo de resolución de reclamos
+- Un cliente satisfecho → repite → recomienda
+- Un cliente insatisfecho → abandona → habla mal
+:::
+
+::: {.fragment}
+**TechStyle**: NPS (Net Promoter Score), tasa de clientes que recompran, reclamos resueltos en menos de 24h
+:::
+
+::: {.notes}
+El NPS es una métrica clave en e-commerce. Preguntar: ¿cuántos de ustedes han recomendado alguna tienda online? ¿Por qué? Esa es la perspectiva del cliente en acción.
+:::
+
+---
+
+## Perspectiva 3: Procesos Internos
+
+**¿En qué procesos debemos ser excelentes?**
+
+::: {.incremental}
+- Mide la **eficiencia y calidad** de los procesos clave
+- Indicadores típicos: tiempo de ciclo, tasa de error, velocidad de entrega
+- Procesos eficientes → menores costos → mejor servicio
+- Identifica **cuellos de botella** que afectan al cliente
+:::
+
+::: {.fragment}
+**TechStyle**: Tiempo promedio de entrega, % de pedidos entregados a tiempo, tasa de devoluciones
+:::
+
+::: {.notes}
+En TechStyle, si el proceso de despacho tiene errores, el cliente lo sufre directamente. Esta perspectiva conecta con la del cliente.
+:::
+
+---
+
+## Perspectiva 4: Aprendizaje y Crecimiento
+
+**¿Podemos continuar mejorando y creando valor?**
+
+::: {.incremental}
+- Mide la **capacidad de la organización** para innovar y aprender
+- Indicadores típicos: satisfacción de empleados, capacitación, retención de talento
+- Es la **base** de todas las otras perspectivas
+- Sin personas capaces y motivadas, nada funciona
+:::
+
+::: {.fragment}
+**TechStyle**: Índice de satisfacción laboral, horas de capacitación por empleado, rotación de personal
+:::
+
+::: {.notes}
+Esta es la perspectiva más ignorada pero más importante a largo plazo. Una empresa que no invierte en sus empleados verá deteriorarse todas las demás perspectivas.
+:::
+
+---
+
+## El CMI de TechStyle
+
+| Perspectiva | Objetivo | Indicador | Meta |
+|-------------|----------|-----------|------|
+| Financiera | Aumentar rentabilidad | Margen neto | ≥ 15% |
+| Cliente | Fidelizar clientes | Tasa de recompra | ≥ 60% |
+| Procesos | Mejorar entrega | % entrega en plazo | ≥ 95% |
+| Aprendizaje | Retener talento | Rotación anual | ≤ 10% |
+
+::: {.fragment}
+**Cada indicador está conectado con los otros**
+:::
+
+::: {.notes}
+Mostrar la interconexión: si mejoran los procesos (entrega), mejora la satisfacción del cliente, lo que mejora la retención, lo que mejora las finanzas. Todo está relacionado.
+:::
+
+---
+
+## 💬 Discusión 1
+
+**En grupos de 3 (8 minutos)**:
+
+TechStyle quiere mejorar su desempeño. Para cada perspectiva del CMI:
+
+1. Propongan **2 indicadores** relevantes para TechStyle
+2. ¿Qué **información** necesitan para medirlos?
+3. ¿Qué **SI** (TPS, BI, CRM, EIS) entregaría esa información?
+
+::: {.notes}
+Guiar: ¿De qué tablas de la base de datos vendría cada indicador? Conectar CMI con los tipos de SI vistos la semana pasada. Esperar respuestas diversas y validar todas.
+:::
+
+---
+
+## El CMI como Puente entre Estrategia y Datos
+
+```
+  Visión estratégica
+         ↓
+  Objetivos por perspectiva
+         ↓
+  Indicadores (KPIs)
+         ↓
+  Datos en el Sistema de Información
+         ↓
+  Monitoreo y decisión
+```
+
+::: {.fragment}
+**El SI alimenta al CMI. El CMI guía al SI.**
+:::
+
+::: {.notes}
+Este diagrama es clave: el CMI no funciona sin datos. Y los datos solo tienen valor si sirven para medir algo que importa estratégicamente.
+:::
+
+---
+
+## Flujo de Información en la Organización
+
+**¿Cómo circula la información dentro de TechStyle?**
+
+No solo importa **qué información** existe, sino **cómo y a quién llega**.
+
+::: {.fragment}
+Existen 3 flujos principales:
+
+- **Vertical**: entre niveles jerárquicos
+- **Horizontal**: entre áreas o departamentos
+- **Externo**: con clientes, proveedores, reguladores
+:::
+
+::: {.notes}
+Introducir el concepto de flujo de información como algo dinámico. La información no solo existe: viaja. Y si no llega a quien la necesita, no sirve.
+:::
+
+---
+
+## Flujo Vertical: De Arriba hacia Abajo
+
+**Información que baja: instrucciones y objetivos**
+
+::: {.incremental}
+- El CEO define metas anuales → llegan al gerente de marketing
+- El gerente fija presupuesto → llega al equipo de campaña
+- La estrategia se traduce en tareas operativas
+:::
+
+::: {.fragment}
+**Riesgo**: la información se distorsiona o se pierde en cada nivel
+:::
+
+::: {.notes}
+Analogía: como el "teléfono loco". Cada vez que la información pasa por una persona, puede cambiar un poco. Los SI mitigan este riesgo al hacer la información explícita y registrada.
+:::
+
+---
+
+## Flujo Vertical: De Abajo hacia Arriba
+
+**Información que sube: datos operativos y alertas**
+
+::: {.incremental}
+- La repartidora Sofía marca "pedido entregado" → el sistema actualiza
+- El sistema detecta un atraso → alerta al jefe de logística
+- El jefe genera un reporte → llega al gerente
+- El gerente lo incluye en el informe para el CEO
+:::
+
+::: {.fragment}
+**Sin este flujo, la alta dirección no sabe qué pasa en la operación**
+:::
+
+::: {.notes}
+Este es el flujo más crítico para la toma de decisiones. Los SI automatizan gran parte de este flujo, reemplazando reportes manuales lentos con dashboards en tiempo real.
+:::
+
+---
+
+## Flujo Horizontal: Entre Departamentos
+
+**La coordinación que hace funcionar la empresa**
+
+```
+  Marketing → Ventas → Logística → Bodega → Finanzas
+      ↕           ↕          ↕         ↕          ↕
+                     [Sistema Compartido]
+```
+
+::: {.fragment}
+**TechStyle**: Cuando Marketing lanza una campaña, Logística debe saber que habrá más pedidos. Finanzas necesita proyectar el flujo de caja.
+:::
+
+::: {.notes}
+El flujo horizontal es donde más fallas ocurren. Las áreas trabajan en silos, con sus propios sistemas, y la información no fluye. Los ERP y sistemas integrados resuelven esto.
+:::
+
+---
+
+## Flujo Externo: Con el Entorno
+
+**Información que entra y sale de la organización**
+
+::: {.incremental}
+- **Clientes** → realizan pedidos, envían reclamos, dejan reseñas
+- **Proveedores** → envían facturas, confirman stock, notifican retrasos
+- **Reguladores** → exigen reportes de impuestos, cumplimiento
+- **Competencia** → precios, nuevos productos (inteligencia de mercado)
+:::
+
+::: {.fragment}
+**TechStyle necesita SI que gestionen también el entorno externo**
+:::
+
+::: {.notes}
+El CRM gestiona el flujo con clientes. Los sistemas de proveedores (supply chain) gestionan el flujo externo hacia atrás. La inteligencia de mercado es más difícil de sistematizar.
+:::
+
+---
+
+## Barreras al Flujo de Información
+
+**¿Por qué la información no siempre llega a quien la necesita?**
+
+::: {.incremental}
+- **Silos organizacionales**: cada área guarda su información
+- **Sistemas incompatibles**: marketing usa Excel, logística usa SAP
+- **Cultura de la información**: "esta información es mía"
+- **Sobrecarga de datos**: tanta información que nadie la procesa
+- **Falta de procesos**: nadie definió quién comunica qué a quién
+:::
+
+::: {.notes}
+Estos problemas son tan comunes que tienen nombre. El "silo" es una de las principales razones por las que las empresas invierten en sistemas integrados (ERP).
+:::
+
+---
+
+## 💬 Discusión 2
+
+**Para toda la clase (5 minutos)**:
+
+En TechStyle ocurrió esto: El equipo de Marketing lanzó una campaña de Electrónica el mismo día que Bodega reportó quiebre de stock en esa categoría.
+
+1. ¿Qué tipo de falla en el flujo de información ocurrió?
+2. ¿Qué barreras estaban presentes?
+3. ¿Qué SI podría haber prevenido esto?
+
+::: {.notes}
+Respuesta esperada: falla en flujo horizontal (entre áreas). Barrera: silos, sistemas incompatibles. Solución: un sistema integrado (ERP) o alertas automáticas de stock que lleguen al equipo de Marketing antes de lanzar campañas.
+:::
+
+---
+
+## Los SI como Infraestructura del Flujo
+
+**Cada tipo de SI gestiona un flujo específico**
+
+| Flujo | SI responsable | Ejemplo en TechStyle |
+|-------|---------------|----------------------|
+| Vertical (operativo→gerencia) | TPS + BI | Reporte de ventas diarias |
+| Vertical (estrategia→equipo) | EIS | Metas del CEO distribuidas |
+| Horizontal | ERP / integraciones | Stock actualizado en tiempo real |
+| Externo (clientes) | CRM | Historial de interacciones |
+| Externo (proveedor) | SCM | Órdenes de compra automáticas |
+
+::: {.notes}
+SCM = Supply Chain Management. No profundizar mucho. El punto es que distintos SI están diseñados para distintos flujos de información.
+:::
+
+---
+
+## Actividad: Diseñar el CMI de "FoodRapid"
+
+**Contexto**: FoodRapid es un delivery de comida con 5.000 restaurantes y 200.000 pedidos diarios.
+
+**En grupos de 4-5 personas (15 minutos)**:
+
+1. Definan la **estrategia principal** de FoodRapid (¿en qué quiere ser mejor?)
+2. Diseñen el **CMI completo** con:
+   - 1 objetivo por perspectiva
+   - 1 indicador (KPI) por objetivo
+   - 1 meta concreta
+3. Identifiquen **qué datos necesitan** y de qué SI vendrían
+
+**Presentación**: 2 minutos por grupo
+
+::: {.notes}
+Estrategia posible: liderazgo en velocidad de entrega, o liderazgo en variedad de restaurantes. Guiar a que la estrategia se refleje en todos los KPIs. Un grupo con estrategia de "velocidad" debería tener KPIs muy distintos a uno con estrategia de "variedad".
+:::
+
+---
+
+## Reflexión: El CMI como Lenguaje Común
+
+**¿Por qué el CMI es tan poderoso?**
+
+::: {.incremental}
+- Traduce la estrategia en **objetivos medibles**
+- Da a todos los niveles el **mismo marco de referencia**
+- Conecta las **decisiones operativas** con la visión estratégica
+- Identifica qué información **realmente importa** medir
+:::
+
+::: {.fragment}
+**Sin CMI**: cada área mide lo que le parece. Con CMI: todos reman en la misma dirección.
+:::
+
+::: {.notes}
+La metáfora del remo es útil. Sin un CMI, es como si cada remero de un bote remara en una dirección diferente. Con el CMI, todos van al mismo destino.
+:::
+
+---
+
+## Lo Que Aprendimos Hoy
+
+::: {.incremental}
+1. El **CMI** traduce la estrategia en 4 perspectivas equilibradas
+2. Las 4 perspectivas son: **Financiera, Cliente, Procesos, Aprendizaje**
+3. Los **KPIs** hacen medibles los objetivos estratégicos
+4. La información fluye de forma **vertical, horizontal y externa**
+5. Los **SI son la infraestructura** que hace posible ese flujo
+:::
+
+::: {.fragment}
+**El SI alimenta al CMI. El CMI guía al SI.**
+:::
+
+---
+
+## Próxima Clase
+
+**Tema**: Calidad de la Información y Ética en el Manejo de Datos
+
+**Exploraremos**:
+
+- ¿Qué hace que un dato sea de calidad?
+- Impacto de los datos malos en las decisiones
+- Gobierno de datos y responsabilidades
+- Ética y privacidad en el manejo de datos
+
+::: {.fragment}
+**Reflexionen**: ¿Han tomado alguna vez una decisión basada en información incorrecta? ¿Qué pasó?
+:::
+
+::: {.notes}
+La calidad de datos es un problema universal. Preparar a los estudiantes con una experiencia personal para conectar con el tema.
+:::
+
+---
+
+## Preguntas
+
+¿Dudas o comentarios?
+
+**Contacto**: [correo del profesor]
+
+**Próxima clase**: [fecha y hora]
+
+---
+
+## ¡Gracias!
+
+**Big Data y Analytics**
+Universidad San Sebastián
+
+::: {.notes}
+Agradecer participación. Recordar que reflexionen sobre decisiones tomadas con mala información.
+:::

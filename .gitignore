@@ -1,12 +1,6 @@
 # ── Quarto build output ───────────────────────────────────────────────────────
 .quarto/
 
-# Generated HTML files (rendered from .qmd — not source files)
-*.html
-
-# Quarto per-file dependency directories (e.g. class_week_1_files/)
-*_files/
-
 # Quarto freeze cache (reproducible computations)
 _freeze/
 

@@ -1,0 +1,645 @@
+---
+title: "Componentes, Actores y Tipos de Sistemas de Información"
+subtitle: "Clase 2 - Big Data y Analytics"
+author: "Universidad San Sebastián"
+format:
+  revealjs:
+    theme: default
+    incremental: false
+    slide-number: true
+---
+
+## ¿Qué Vimos la Semana Pasada?
+
+::: {.incremental}
+- Las empresas generan **millones de datos** cada día
+- Los **datos** por sí solos no son útiles
+- Transformamos datos → información → conocimiento → **decisión**
+- Los **Sistemas de Información** hacen posible esa transformación
+:::
+
+::: {.fragment}
+**Hoy**: ¿De qué está hecho un Sistema de Información?
+:::
+
+::: {.notes}
+Repaso rápido. Preguntar si alguien recuerda el ejemplo de TechStyle. Conectar directamente con la clase anterior.
+:::
+
+---
+
+## Situación: TechStyle Crece
+
+**El problema de éxito de TechStyle**
+
+TechStyle pasó de 50.000 a 450.000 clientes en 3 años.
+
+::: {.fragment}
+**El CEO le pregunta al equipo técnico**:
+
+*"Nuestro sistema actual está colapsando. ¿Qué necesitamos para seguir creciendo?"*
+:::
+
+::: {.notes}
+Presentar el escenario como continuación natural. El crecimiento trae nuevos desafíos tecnológicos y organizacionales.
+:::
+
+---
+
+## El Equipo Técnico Responde
+
+**"Para escalar, necesitamos fortalecer los 5 componentes de nuestro SI"**
+
+```
+┌─────────────────────────────────────────────┐
+│           SISTEMA DE INFORMACIÓN            │
+│                                             │
+│  Hardware  +  Software  +  Datos            │
+│                                             │
+│        +  Personas  +  Procesos             │
+└─────────────────────────────────────────────┘
+```
+
+::: {.fragment}
+**¿Qué significa cada uno?**
+:::
+
+::: {.notes}
+Introducir los 5 componentes como respuesta a una necesidad real de negocio. No son conceptos abstractos: TechStyle los necesita para sobrevivir.
+:::
+
+---
+
+## Componente 1: Hardware
+
+**La infraestructura física que procesa y almacena datos**
+
+::: {.incremental}
+- **Servidores**: almacenan las bases de datos de clientes y pedidos
+- **Dispositivos de red**: conectan las tiendas, bodegas y oficinas
+- **Terminales**: computadores del equipo de marketing y logística
+- **Dispositivos móviles**: los repartidores registran las entregas
+:::
+
+::: {.fragment}
+**TechStyle tiene 12 servidores en la nube procesando 24/7**
+:::
+
+::: {.notes}
+El hardware es tangible. Pedir a los estudiantes que piensen qué hardware usan ellos para interactuar con TechStyle (su celular al comprar).
+:::
+
+---
+
+## Componente 2: Software
+
+**Los programas que procesan, analizan y presentan datos**
+
+| Tipo | Ejemplo en TechStyle | Para qué sirve |
+|------|----------------------|----------------|
+| Sistema operativo | Linux Server | Base del sistema |
+| SGBD | PostgreSQL | Gestiona las BD |
+| App web | Tienda online | Recibe pedidos |
+| Analítico | Power BI | Genera reportes |
+| ERP | SAP | Integra procesos |
+
+::: {.fragment}
+**Sin software, el hardware es solo hierro**
+:::
+
+::: {.notes}
+SGBD = Sistema Gestor de Base de Datos. Sera clave para el resto del curso. Mencionarlo brevemente.
+:::
+
+---
+
+## Componente 3: Datos
+
+**El recurso más valioso de la organización**
+
+::: {.incremental}
+- **Datos de clientes**: quiénes son, dónde están, qué prefieren
+- **Datos de transacciones**: qué compran, cuándo, a qué precio
+- **Datos de productos**: stock, costos, proveedores
+- **Datos de logística**: tiempos de entrega, rutas, incidentes
+:::
+
+::: {.fragment}
+**TechStyle tiene 8.750.000 registros de ventas → activo estratégico**
+:::
+
+::: {.notes}
+Los datos son el "petróleo" del siglo XXI. Sin datos, el sistema no tiene nada que procesar ni analizar.
+:::
+
+---
+
+## Componente 4: Personas
+
+**Los actores que operan, mantienen y usan el SI**
+
+```
+┌─────────────────────────────────────────────────┐
+│                   PERSONAS                      │
+│                                                 │
+│  Directivos  →  usan la información             │
+│  Analistas   →  interpretan los datos           │
+│  Técnicos    →  mantienen el sistema            │
+│  Usuarios    →  ingresan y consultan datos      │
+└─────────────────────────────────────────────────┘
+```
+
+::: {.fragment}
+**El componente más crítico — y más complejo**
+:::
+
+::: {.notes}
+Enfatizar que la tecnología sin personas no sirve. Los sistemas fracasan por problemas humanos, no técnicos.
+:::
+
+---
+
+## Componente 5: Procesos
+
+**Las reglas y procedimientos que guían el uso del SI**
+
+::: {.incremental}
+- ¿Cómo se registra un pedido?
+- ¿Quién puede acceder a qué información?
+- ¿Cómo se actualiza el inventario tras una venta?
+- ¿Cuándo se generan los reportes de ventas?
+- ¿Cómo se responde a un reclamo de cliente?
+:::
+
+::: {.fragment}
+**Sin procesos, el SI sería caótico aunque tuviera tecnología de punta**
+:::
+
+::: {.notes}
+Los procesos son las "reglas del juego". Poner ejemplo: si no hay proceso para actualizar stock, dos personas pueden vender el mismo producto que no existe.
+:::
+
+---
+
+## Los 5 Componentes Interactúan
+
+```
+         [HARDWARE]
+              ↕
+         [SOFTWARE]
+              ↕
+           [DATOS]  ←→  [PROCESOS]
+              ↕
+          [PERSONAS]
+```
+
+::: {.fragment}
+**Un SI es tan fuerte como su componente más débil**
+:::
+
+::: {.notes}
+Analogía: como una cadena. Si falla un eslabón, falla toda la cadena. Ejemplo: excelente hardware, pero datos mal ingresados = información basura.
+:::
+
+---
+
+## 💬 Discusión 1
+
+**En parejas (5 minutos)**:
+
+TechStyle sufrió una falla en su sistema: durante 2 horas no se registraron los pedidos del Black Friday.
+
+1. ¿Qué componente(s) fallaron? ¿Por qué?
+2. ¿Qué impacto tiene en la empresa?
+3. ¿Qué proceso debería existir para prevenir esto?
+
+::: {.notes}
+Abrir múltiples posibilidades: hardware (servidor caído), software (bug), procesos (sin plan de contingencia), personas (nadie monitoreaba). No hay una sola respuesta correcta.
+:::
+
+---
+
+## Actores y Roles en un SI
+
+**¿Quiénes son las personas en un SI?**
+
+No todos interactúan igual con el sistema.
+
+::: {.fragment}
+Depende de:
+- **Nivel jerárquico** (operativo, táctico, estratégico)
+- **Tipo de acceso** (lectura, escritura, administración)
+- **Propósito** (ingresar datos, analizar, decidir)
+:::
+
+::: {.notes}
+Conectar con la idea de que las personas son uno de los 5 componentes. Ahora vamos a profundizar en ese componente.
+:::
+
+---
+
+## El Modelo de Niveles Organizacionales
+
+```
+         ┌─────────────────────┐
+         │   NIVEL ESTRATÉGICO │  → Alta gerencia
+         │      (Decisión)     │
+         ├─────────────────────┤
+         │   NIVEL TÁCTICO     │  → Gerentes medios
+         │    (Coordinación)   │
+         ├─────────────────────┤
+         │   NIVEL OPERATIVO   │  → Personal de campo
+         │    (Ejecución)      │
+         └─────────────────────┘
+```
+
+::: {.fragment}
+**Cada nivel necesita distintos tipos de información**
+:::
+
+::: {.notes}
+Este modelo es fundamental. Los distintos tipos de SI que veremos después corresponden a estos niveles. Plantar la semilla.
+:::
+
+---
+
+## Nivel Operativo: Usuarios Finales
+
+**Los que ejecutan las operaciones del día a día**
+
+::: {.incremental}
+- **Cajeros / operadores de ventas**: registran transacciones
+- **Repartidores**: confirman entregas en el sistema
+- **Bodegueros**: actualizan el inventario
+- **Call center**: ingresan reclamos y consultas
+:::
+
+::: {.fragment}
+**Necesitan**: interfaces simples, rápidas, sin errores posibles
+:::
+
+::: {.notes}
+En TechStyle: cuando el repartidor marca "entregado" en la app, está ingresando un dato al SI. Es usuario operativo.
+:::
+
+---
+
+## Nivel Táctico: Analistas y Gerentes Medios
+
+**Los que coordinan y toman decisiones intermedias**
+
+::: {.incremental}
+- **Gerente de marketing**: ¿Qué campaña lanzar este mes?
+- **Jefe de logística**: ¿Cuántos repartidores necesito el sábado?
+- **Analista de datos**: ¿Qué productos están a punto de agotarse?
+- **Supervisor de ventas**: ¿Por qué cayeron las ventas en la zona norte?
+:::
+
+::: {.fragment}
+**Necesitan**: reportes, tendencias, comparaciones, alertas
+:::
+
+::: {.notes}
+María González (la gerente de marketing del caso de la semana pasada) es un usuario táctico. Usó el SI para decidir dónde invertir los $15M.
+:::
+
+---
+
+## Nivel Estratégico: Alta Dirección
+
+**Los que definen el rumbo de la organización**
+
+::: {.incremental}
+- **CEO**: ¿Debemos expandirnos a nuevos mercados?
+- **CFO**: ¿La empresa es rentable en el largo plazo?
+- **Directorio**: ¿Cumplimos los objetivos estratégicos?
+:::
+
+::: {.fragment}
+**Necesitan**: resúmenes ejecutivos, indicadores clave (KPIs), proyecciones
+:::
+
+::: {.notes}
+La alta dirección no quiere ver 8 millones de registros. Quiere ver: "Crecimos 15% este trimestre". El SI debe entregar eso.
+:::
+
+---
+
+## El Equipo de TechStyle
+
+| Persona | Rol | Nivel | ¿Qué consulta en el SI? |
+|---------|-----|-------|------------------------|
+| Sofía (repartidora) | Usuario operativo | Operativo | Su ruta del día |
+| Juan (analista) | Analista de datos | Táctico | Ventas por región |
+| María (Gte. Mktg) | Gerente media | Táctico | ROI por campaña |
+| Roberto (CEO) | Director | Estratégico | Dashboard ejecutivo |
+
+::: {.notes}
+Poner caras y nombres al modelo abstracto. Estos personajes pueden aparecer durante el semestre.
+:::
+
+---
+
+## 💬 Discusión 2
+
+**Para toda la clase (5 minutos)**:
+
+TechStyle quiere saber: *"¿Por qué cayeron las ventas en la región de Valparaíso durante marzo?"*
+
+1. ¿Quién en TechStyle necesita esta información?
+2. ¿Qué tipo de información necesita cada actor?
+3. ¿Es la misma información para el analista que para el CEO?
+
+::: {.notes}
+El analista necesita el detalle (por producto, por día, por canal). El CEO necesita el resumen y la recomendación. Mismo problema, distintas necesidades.
+:::
+
+---
+
+## Tipos de Sistemas de Información
+
+**Un SI se diseña para servir a un nivel específico**
+
+::: {.fragment}
+```
+  Nivel Estratégico  →  EIS  (Executive Information Systems)
+  Nivel Táctico      →  DSS  (Decision Support Systems)
+                     →  BI   (Business Intelligence)
+                     →  CRM  (Customer Relationship Mgmt)
+  Nivel Operativo    →  TPS  (Transaction Processing Systems)
+```
+:::
+
+::: {.notes}
+No dar muchos detalles aún. Presentar el mapa general. Ahora vamos a ver cada uno con ejemplos de TechStyle.
+:::
+
+---
+
+## TPS: Sistemas de Procesamiento de Transacciones
+
+**El motor del nivel operativo**
+
+::: {.incremental}
+- Registran cada operación en tiempo real
+- Altamente confiables y rápidos
+- Manejan grandes volúmenes de transacciones
+- Ejemplos: registro de ventas, pagos, actualizaciones de inventario
+:::
+
+::: {.fragment}
+**En TechStyle**: cada compra online es una transacción registrada automáticamente en la base de datos
+:::
+
+::: {.notes}
+TPS es la base de todo. Sin un buen TPS, los datos son incorrectos y todo lo que viene encima falla. Conectar con la importancia de la calidad de datos.
+:::
+
+---
+
+## DSS: Sistemas de Apoyo a la Decisión
+
+**Herramientas para analizar situaciones complejas**
+
+::: {.incremental}
+- Permiten hacer simulaciones: *"¿Qué pasaría si...?"*
+- Combinan datos internos y externos
+- No toman la decisión, la **apoyan**
+- Requieren capacidad analítica del usuario
+:::
+
+::: {.fragment}
+**En TechStyle**: "Si bajo el precio de Electrónica en 10%, ¿cuánto aumentan las ventas?"
+:::
+
+::: {.notes}
+El DSS no dice "baja el precio". Muestra escenarios posibles. La decisión la toma María, la gerente.
+:::
+
+---
+
+## BI: Business Intelligence
+
+**Convirtiendo datos históricos en conocimiento estratégico**
+
+::: {.incremental}
+- Analiza grandes volúmenes de datos históricos
+- Genera reportes, dashboards y visualizaciones
+- Detecta tendencias y patrones
+- Compara periodos: este mes vs. el año pasado
+:::
+
+::: {.fragment}
+**En TechStyle**: el dashboard de ventas que María usa cada mañana muestra KPIs clave del negocio
+:::
+
+::: {.notes}
+BI es "mirar el retrovisor" con inteligencia. No predice el futuro, pero entiende el pasado muy bien. Es el tipo de sistema más usado en analítica de negocios.
+:::
+
+---
+
+## CRM: Customer Relationship Management
+
+**Gestión de la relación con los clientes**
+
+::: {.incremental}
+- Registra cada interacción con el cliente
+- Historial de compras, reclamos, preferencias
+- Permite personalizar la comunicación
+- Detecta clientes en riesgo de abandono (*churn*)
+:::
+
+::: {.fragment}
+**En TechStyle**: "Pedro compró 3 veces en el último mes, pero lleva 60 días sin comprar → enviarle una oferta personalizada"
+:::
+
+::: {.notes}
+El CRM transforma a los clientes de números en personas con historia. Es crítico en e-commerce donde no hay interacción cara a cara.
+:::
+
+---
+
+## EIS: Executive Information Systems
+
+**Información ejecutiva para decisiones estratégicas**
+
+::: {.incremental}
+- Resúmenes de alto nivel (KPIs, indicadores)
+- Información en tiempo real, visual, sin tecnicismos
+- Alertas automáticas cuando algo sale mal
+- Diseñado para personas con poco tiempo y mucho poder decisional
+:::
+
+::: {.fragment}
+**En TechStyle**: el CEO ve en su tablet: ventas del día, satisfacción de clientes, margen operacional
+:::
+
+::: {.notes}
+El EIS no muestra tablas con millones de filas. Muestra semáforos: verde, amarillo, rojo. Si algo está en rojo, el ejecutivo sabe que debe actuar.
+:::
+
+---
+
+## Resumen: Los SI de TechStyle
+
+```
+ CEO Roberto    → EIS  → "Ventas del mes: $1.2B (+8% vs meta)"
+
+ Gerente María  → DSS  → "¿Qué pasa si invierto en Hogar?"
+                 → BI   → "Tendencias de ventas por categoría"
+
+ Analista Juan  → BI   → "Reporte detallado por región"
+                 → CRM → "Clientes con alto riesgo de churn"
+
+ Repartidora Sofía → TPS → "Registrar entrega pedido #875432"
+```
+
+::: {.notes}
+Mostrar cómo los distintos actores usan distintos tipos de SI. Pedir a los estudiantes que identifiquen cuál usarían ellos si trabajaran en TechStyle.
+:::
+
+---
+
+## 💬 Discusión 3
+
+**En grupos de 3 (5 minutos)**:
+
+TechStyle detectó que las ventas cayeron 20% en la última semana.
+
+¿Qué tipo de SI usaría cada actor para entender y resolver el problema?
+
+| Actor | ¿Qué SI usa? | ¿Qué información busca? |
+|-------|-------------|------------------------|
+| CEO Roberto | | |
+| Gerente María | | |
+| Analista Juan | | |
+
+::: {.notes}
+CEO: EIS para ver si es general o puntual. María: DSS/BI para analizar por categoría y canal. Juan: BI con detalle por región, producto, hora del día.
+:::
+
+---
+
+## Actividad: Diseñando el SI de "FoodRapid"
+
+**Contexto**: FoodRapid es un servicio de delivery de comida con 5.000 restaurantes asociados y 200.000 pedidos diarios.
+
+**En grupos de 4-5 personas (15 minutos)**:
+
+Diseñen el Sistema de Información de FoodRapid:
+
+1. **Identifiquen** los 5 componentes del SI (con ejemplos concretos)
+2. **Definan** 3 actores y qué tipo de SI usa cada uno
+3. **Elijan** 2 tipos de SI prioritarios para implementar primero y justifiquen por qué
+
+**Presentación**: 2 minutos por grupo
+
+::: {.notes}
+FoodRapid es un caso paralelo a TechStyle. Permite ver los conceptos en un contexto diferente. Guiar a los grupos: ¿Qué datos recoge FoodRapid? ¿Quiénes los usan? ¿Para qué deciden?
+:::
+
+---
+
+## Reflexión: Más que Tecnología
+
+**¿Por qué no basta con comprar el mejor software?**
+
+::: {.incremental}
+- El SI más caro falla si las **personas** no lo adoptan
+- Los mejores datos no sirven si los **procesos** son deficientes
+- El mejor hardware no ayuda si el **software** está mal configurado
+- La mejor tecnología no reemplaza la **calidad de los datos**
+:::
+
+::: {.fragment}
+**El SI es un sistema socio-técnico: personas + tecnología**
+:::
+
+::: {.notes}
+Desmitificar la idea de que "con tecnología se resuelve todo". El cambio organizacional es tan importante como la tecnología.
+:::
+
+---
+
+## Conexión con la Toma de Decisiones
+
+**La cadena completa en TechStyle**
+
+```
+  Datos de ventas (TPS)
+        ↓
+  Análisis de tendencias (BI)
+        ↓
+  Simulación de escenarios (DSS)
+        ↓
+  Dashboard ejecutivo (EIS)
+        ↓
+  Decisión: invertir $15M en categoría Hogar
+```
+
+::: {.fragment}
+**Cada tipo de SI aporta un eslabón de la cadena decisional**
+:::
+
+::: {.notes}
+Mostrar que los tipos de SI no son competencia entre sí: son complementarios. Se usan juntos para apoyar decisiones de distintos niveles.
+:::
+
+---
+
+## Lo Que Aprendimos Hoy
+
+::: {.incremental}
+1. Un SI tiene **5 componentes**: hardware, software, datos, personas, procesos
+2. Existen **3 niveles organizacionales** con distintas necesidades de información
+3. Los **actores** interactúan con el SI según su rol y nivel
+4. Existen **distintos tipos de SI**: TPS, DSS, BI, CRM, EIS
+5. Cada tipo sirve a un **propósito diferente** en la toma de decisiones
+:::
+
+::: {.fragment}
+**Las organizaciones usan múltiples SI que trabajan juntos**
+:::
+
+---
+
+## Próxima Clase
+
+**Tema**: Modelos de Datos y Bases de Datos Relacionales
+
+**Exploraremos**:
+
+- ¿Cómo se organiza la información en una base de datos?
+- ¿Qué es un modelo relacional?
+- Tablas, campos, registros y relaciones
+- El modelo de datos de TechStyle
+
+::: {.fragment}
+**Preparen**: Piensen en cómo están organizados los datos de una tienda física (productos, precios, clientes, compras)
+:::
+
+::: {.notes}
+La próxima clase conecta el concepto de SI con la implementación técnica: cómo se almacenan realmente los datos que hemos visto.
+:::
+
+---
+
+## Preguntas
+
+¿Dudas o comentarios?
+
+**Contacto**: [correo del profesor]
+
+**Próxima clase**: [fecha y hora]
+
+---
+
+## ¡Gracias!
+
+**Big Data y Analytics**
+Universidad San Sebastián
+
+::: {.notes}
+Agradecer participación. Recordar preparar reflexión para la próxima clase.
+:::

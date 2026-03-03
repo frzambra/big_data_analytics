@@ -1,0 +1,422 @@
+---
+title: "Big Data y Analytics"
+subtitle: "Programa del Curso · ICOM E015 · Tercer Semestre"
+author: "Universidad San Sebastián"
+date: "Marzo 2026"
+format:
+  revealjs:
+    theme: default
+    css: ../styles/presentacion_docente.css
+    slide-number: true
+    incremental: false
+    transition: fade
+    background-transition: fade
+    footer: "Big Data y Analytics · Universidad San Sebastián · 2026"
+    logo: ../img/logo-horizontal-on-light.svg
+    title-slide-attributes:
+      data-background-color: "#1B3A6B"
+---
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAPOSITIVA 1 — MOTIVACIÓN
+     ══════════════════════════════════════════════════════════ -->
+
+## Una decisión que necesita datos
+
+::: {.cols-2}
+
+::: {}
+**Escenario:**
+
+Una empresa de retail chilena con 80 sucursales quiere saber:
+
+- ¿Qué productos están generando pérdidas?
+- ¿En qué regiones hay sobre-stock?
+- ¿Qué clientes están en riesgo de no volver?
+
+*El gerente tiene intuición. Pero necesita evidencia.*
+:::
+
+::: {.caja-tierra}
+**El problema real:**
+
+Los datos existen — en sistemas de venta, bodega, CRM — pero están dispersos, sin estructura, y nadie sabe cómo cruzarlos.
+
+**¿Quién resuelve eso?**
+*Tú, al terminar este curso.*
+:::
+
+:::
+
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAPOSITIVA 2 — ¿QUÉ ES ESTE CURSO?
+     ══════════════════════════════════════════════════════════ -->
+
+## ¿De qué trata este curso?
+
+::: {.seccion-header}
+**Big Data y Analytics — ICOM E015 · 5 créditos SCT · Tercer semestre**
+:::
+
+::: {.cols-2}
+
+::: {}
+**No es un curso de tecnología.**
+
+Es un curso sobre cómo **transformar datos en decisiones**.
+
+- Explorar grandes volúmenes de datos
+- Depurar y estructurar información
+- Construir bases de datos que respondan preguntas de negocio
+- Elaborar informes que apoyen la gerencia
+:::
+
+::: {.caja-azul}
+**Resultado de Aprendizaje General:**
+
+*Elabora informes con información generada a partir de la exploración y depuración de grandes bases de datos, que aportan a la toma de decisiones de la organización.*
+:::
+
+:::
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAPOSITIVA 3 — ESTRUCTURA GENERAL
+     ══════════════════════════════════════════════════════════ -->
+
+## El recorrido del semestre
+
+<br>
+
+::: {.cols-2}
+
+::: {}
+::: {.caja-azul}
+**Unidad 1**
+*Semanas 1–6*
+
+**Sistemas de Información en el Contexto Empresarial**
+
+¿Cómo fluye la información en una organización?
+:::
+
+<br>
+
+::: {.caja-azul}
+**Unidad 2**
+*Semanas 7–9*
+
+**Fundamentos de Bases de Datos**
+
+¿Cómo se modela la realidad de una empresa?
+:::
+:::
+
+::: {}
+::: {.caja-tierra}
+**Unidad 3**
+*Semanas 10–18*
+
+**Modelamiento y Gestión de Base de Datos**
+
+¿Cómo se construye y consulta una base de datos real?
+:::
+
+<br>
+
+> Cada unidad parte de un problema de negocio y termina con una solución concreta en datos.
+:::
+
+:::
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAPOSITIVA 4 — UNIDAD 1
+     ══════════════════════════════════════════════════════════ -->
+
+## Unidad 1 · Sistemas de Información
+
+::: {.seccion-header}
+**Sistemas de Información en el Contexto Empresarial**
+:::
+
+::: {.cols-2}
+
+::: {}
+**¿Qué aprenderás?**
+
+- Definición y componentes de un sistema de información
+- Importancia de los SI en la toma de decisiones
+- Actores y roles dentro de un SI
+- Tipos de sistemas: **DSS · CMI · CRM · EIS**
+
+**Resultado:**
+*Explica los distintos sistemas de información en el contexto de la toma de decisiones organizacionales.*
+:::
+
+::: {}
+**Ejemplo aplicado:**
+
+> La empresa de retail necesita entender qué sistema registra las ventas, cuál gestiona el inventario y cómo se relacionan.
+
+**Pregunta clave:**
+*¿Qué decisiones puedo tomar si conecto estos sistemas?*
+
+::: {.caja-tierra}
+**36h directas · 18h indirectas**
+:::
+:::
+
+:::
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAPOSITIVA 5 — UNIDAD 2
+     ══════════════════════════════════════════════════════════ -->
+
+## Unidad 2 · Fundamentos de Bases de Datos
+
+::: {.seccion-header}
+**Fundamentos de Bases de Datos**
+:::
+
+::: {.cols-2}
+
+::: {}
+**¿Qué aprenderás?**
+
+- Diagrama de Caso de Uso
+- Diagrama Esquema UML
+- Modelo Relacional
+- Modelo Entidad–Relación
+
+**Resultado:**
+*Diseña un sistema de información mediante el modelo relacional para la toma de decisiones en contextos organizacionales.*
+:::
+
+::: {}
+**Ejemplo aplicado:**
+
+> Antes de crear la base de datos del retail, necesitamos modelar sus entidades: productos, clientes, sucursales, ventas.
+
+**Pregunta clave:**
+*¿Cómo represento la realidad del negocio en tablas y relaciones?*
+
+::: {.caja-tierra}
+**18h directas · 9h indirectas**
+:::
+:::
+
+:::
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAPOSITIVA 6 — UNIDAD 3
+     ══════════════════════════════════════════════════════════ -->
+
+## Unidad 3 · Modelamiento y Gestión
+
+::: {.seccion-header}
+**Modelamiento y Gestión de Base de Datos**
+:::
+
+::: {.cols-2}
+
+::: {}
+**¿Qué aprenderás?**
+
+- Teoría de la Normalización
+- Diccionario de datos
+- Base de datos en **MySQL**
+- Almacenamiento y consultas SQL
+- Gestión de transacciones
+
+**Resultado:**
+*Construye base de datos para gestionar información en la toma de decisiones empresariales.*
+:::
+
+::: {}
+**Ejemplo aplicado:**
+
+> Construimos la base de datos de ventas del retail, diseñamos consultas que respondan preguntas gerenciales y generamos reportes accionables.
+
+**Pregunta clave:**
+*¿Qué consultas necesita la gerencia para tomar decisiones hoy?*
+
+::: {.caja-tierra}
+**54h directas · 27h indirectas**
+:::
+:::
+
+:::
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAPOSITIVA 7 — EVALUACIONES
+     ══════════════════════════════════════════════════════════ -->
+
+## Evaluaciones
+
+::: {.cols-2}
+
+::: {}
+::: {.caja-azul}
+**Solemne 1 · 30%**
+
+- Controles parciales: **10%**
+- Prueba escrita individual: **20%**
+:::
+
+::: {.caja-azul}
+**Solemne 2 · 35%**
+
+- Controles parciales: **10%**
+- Analítica de base de datos: **25%**
+:::
+
+::: {.caja-azul}
+**Solemne 3 · 35%**
+
+- Controles parciales: **10%**
+- Creación de BD relacional y análisis: **25%**
+:::
+:::
+
+::: {}
+::: {.caja-tierra}
+**Evaluación Recuperativa**
+
+Voluntaria · Última semana del semestre
+
+Reemplaza **una** solemne no rendida, con justificación válida.
+
+Cubre toda la materia del semestre o un conjunto definido por el docente.
+:::
+
+
+> Los controles parciales se rinden durante el desarrollo de cada unidad.
+:::
+
+:::
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAPOSITIVA 8 — REQUISITOS DE APROBACIÓN
+     ══════════════════════════════════════════════════════════ -->
+
+## Requisitos de Aprobación
+
+::: {.cols-2}
+
+::: {}
+::: {.seccion-header}
+**Nota mínima de aprobación**
+:::
+
+
+La calificación final debe ser **igual o superior a 4,0** para aprobar la asignatura.
+
+
+::: {.seccion-header}
+**Asistencia obligatoria**
+:::
+
+
+Se exige un mínimo de **90% de asistencia** a las clases prácticas de laboratorio.
+:::
+
+::: {}
+::: {.caja-tierra}
+**Resumen ponderaciones**
+
+| Evaluación | Peso |
+|---|---|
+| Solemne 1 | 30% |
+| Solemne 2 | 35% |
+| Solemne 3 | 35% |
+| **Total** | **100%** |
+
+:::
+
+<br>
+
+*La asignatura es de carácter práctico — la asistencia al laboratorio es parte del aprendizaje, no solo un requisito administrativo.*
+:::
+
+:::
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAPOSITIVA 9 — METODOLOGÍA
+     ══════════════════════════════════════════════════════════ -->
+
+## ¿Cómo trabajaremos?
+
+::: {.cols-2}
+
+::: {}
+**Enfoque del curso:**
+
+- Clases prácticas en **laboratorio de computación**
+- Aprendizaje basado en **simulación de escenarios reales**
+- Cada clase parte de un **problema de negocio concreto**
+- Uso guiado de software desde la primera sesión
+
+**Tu rol:**
+*Analista de datos contratado por una organización real.*
+:::
+
+::: {}
+::: {.caja-tierra}
+**Cada sesión sigue esta secuencia:**
+
+1. Problema de negocio
+2. Concepto que lo resuelve
+3. Aplicación en software
+4. Reflexión sobre la decisión
+:::
+
+<br>
+
+::: {.caja-azul}
+**Bibliografía principal:**
+
+Silberschatz, Korth & Sudarshan ·
+*Fundamentos de Bases de Datos* (6ª ed.)
+:::
+:::
+
+:::
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAPOSITIVA 10 — CIERRE
+     ══════════════════════════════════════════════════════════ -->
+
+## El objetivo final {background-color="#1B3A6B"}
+
+::: {style="color: #F7F4F0; text-align: center; margin-top: 0.5em;"}
+
+Al terminar este curso serás capaz de sentarte frente a un gerente, entender su problema, y decirle:
+
+:::
+
+<br>
+
+::: {style="color: #C4956A; text-align: center; font-size: 1.2em; font-weight: 700;"}
+*"Tengo los datos, el modelo y las consultas.*
+*Aquí está la respuesta."*
+:::
+
+<br>
+
+::: {.cols-2}
+
+::: {style="background: rgba(255,255,255,0.1); padding: 0.8em; border-radius: 8px; color: #F7F4F0;"}
+**SD6.2 · Perfil de Egreso USS**
+
+Genera información a partir de la gestión de datos para contribuir en la toma de decisiones de la organización.
+:::
+
+::: {style="background: rgba(196,149,106,0.25); padding: 0.8em; border-radius: 8px; color: #F7F4F0;"}
+**Valores del curso**
+
+- Honestidad en el análisis
+- Responsabilidad con los datos
+- Prudencia en las conclusiones
+:::
+
+:::

@@ -1,0 +1,17 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - index.qmd
+    - clases/*.qmd
+
+format:
+  revealjs:
+    theme: default
+    css: [styles/custom.css, styles/presentacion_docente.css]
+    logo: img/logo-horizontal-on-light.svg
+    slide-number: true
+    incremental: false
+    transition: slide
+    background-transition: fade
+    preview-links: auto

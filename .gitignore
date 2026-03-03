@@ -1,0 +1,25 @@
+# ── Quarto build output ───────────────────────────────────────────────────────
+_site/
+.quarto/
+
+# Generated HTML files (rendered from .qmd — not source files)
+*.html
+
+# Quarto per-file dependency directories (e.g. class_week_1_files/)
+*_files/
+
+# Quarto freeze cache (reproducible computations)
+_freeze/
+
+# ── PDFs in material/ (copyrighted textbooks / large binaries) ───────────────
+material/*.pdf
+
+# ── OS junk ──────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Editor / IDE ──────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo

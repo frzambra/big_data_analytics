@@ -1,0 +1,646 @@
+[
+  {
+    "objectID": "syllabus.html#conceptual-resources-involved",
+    "href": "syllabus.html#conceptual-resources-involved",
+    "title": "",
+    "section": "Conceptual Resources Involved",
+    "text": "Conceptual Resources Involved\n\nDefinition and components of information systems.\nImportance of information systems in organizations.\nActors and roles in information systems.\nTypes of management information systems: DSS, BMI, CMR, EIS, among others."
+  },
+  {
+    "objectID": "syllabus.html#procedural-resources-involved",
+    "href": "syllabus.html#procedural-resources-involved",
+    "title": "",
+    "section": "Procedural Resources Involved",
+    "text": "Procedural Resources Involved\n\nClassification of information system components according to their function in data processing and storage.\nEstablishing the importance of information systems in organizations, considering their impact on strategic decision-making.\nClassification of actors and roles in information systems according to their level of responsibility and access to information.\nExplanation of the types of management information systems based on their application at different organizational levels.\nDemonstration of integrity and ethical conduct in the development of academic activities, assessments, and professional internships."
+  },
+  {
+    "objectID": "clases/presentacion_docente.html#bienvenidos",
+    "href": "clases/presentacion_docente.html#bienvenidos",
+    "title": "Conociendo a tu Profesor",
+    "section": "Bienvenidos",
+    "text": "Bienvenidos\n\n\nProfesor Asociado · Investigador en Ciencia de Datos Espaciales\nDoctor en Ingeniería Agrícola (Recursos Hídricos)  Ingeniero Civil Agrícola  Universidad de Concepción\n\n\n\n“Los datos son el lenguaje con el que la Tierra nos habla. Aquí aprenderemos a escucharla.”\n\n\nApertura (1–2 min) Comenzar con energía y una sonrisa. Presentarse por nombre completo. Decir algo como: “No voy a empezar con un currículum. Voy a empezar con una pregunta: ¿cuántos de ustedes alguna vez han visto una noticia sobre sequías en Chile y se han preguntado cómo sabemos eso? Eso es exactamente lo que hacemos.” Generar expectativa antes de entrar en los detalles del perfil."
+  },
+  {
+    "objectID": "clases/presentacion_docente.html#mi-trayectoria-académica",
+    "href": "clases/presentacion_docente.html#mi-trayectoria-académica",
+    "title": "Conociendo a tu Profesor",
+    "section": "Mi Trayectoria Académica",
+    "text": "Mi Trayectoria Académica\n\n\nIngeniería Civil Agrícola Base en recursos hídricos, riego y manejo del territorio. La pregunta central desde el inicio: ¿Cómo gestionar el agua de manera sostenible?\n\n\nPostgrado · Doctorado en Ingeniería Agrícola Especialización en Recursos Hídricos. Investigación doctoral: análisis de la sequía agrícola en Chile continental.\n\n\nProfesor Asociado · Investigador Ciencia de Datos Espaciales aplicada al cambio climático y la aridificación. Publicaciones en revistas de alto impacto · Proyectos con financiamiento de la Agencia Nacional de Investigacióin y Desarrollo de Chile (ANID).\n\n\n\nEl hilo conductor: conectar datos del territorio con decisiones de política pública.\n\n\nTono: Narrativo, no curricular (2 min) No leer el CV. Contar la historia como un viaje con una pregunta guía. “Estudié ingeniería agrícola porque crecí viendo cómo el agua —o su ausencia— define el destino de comunidades enteras en Chile. El doctorado fue la respuesta a una frustración: teníamos intuición, pero necesitábamos evidencia rigurosa.” Destacar que la trayectoria siempre tuvo un propósito de impacto real, no solo académico."
+  },
+  {
+    "objectID": "clases/presentacion_docente.html#qué-es-la-ciencia-de-datos-espaciales",
+    "href": "clases/presentacion_docente.html#qué-es-la-ciencia-de-datos-espaciales",
+    "title": "Conociendo a tu Profesor",
+    "section": "¿Qué es la Ciencia de Datos Espaciales?",
+    "text": "¿Qué es la Ciencia de Datos Espaciales?\n\n\nLa disciplina en una frase:\n\nExtraer conocimiento significativo de datos que tienen una dimensión dónde en el espacio y el tiempo.\n\nTres pilares:\n\nSistemas de Información Geográfica (SIG) Representar el mundo como capas de datos\nEstadística Espacial Los vecinos importan: el espacio tiene autocorrelación\nCiencia de Datos Modelamiento, aprendizaje automático, visualización\n\n\n\n\nEjemplo concreto: ¿Dónde en Chile está cambiando la vegetación más rápido y por qué?\n\n\n\nHacer la disciplina tangible (2 min) Preguntar al curso: “¿Alguno usa Google Maps? ¿Ha visto las capas de tráfico o calor? Eso es Ciencia de Datos Espaciales aplicada a la vida diaria.” Luego escalar: “Nosotros lo aplicamos a preguntas de mayor escala: cambio climático, biodiversidad, recursos naturales.” Enfatizar que el espacio no es solo un contexto, es una variable que cambia los análisis."
+  },
+  {
+    "objectID": "clases/presentacion_docente.html#investigación-destacada-proyecto-odes",
+    "href": "clases/presentacion_docente.html#investigación-destacada-proyecto-odes",
+    "title": "Conociendo a tu Profesor",
+    "section": "Investigación Destacada: Proyecto ODES",
+    "text": "Investigación Destacada: Proyecto ODES\n\nODES — Observatorio de Sequía para la Agricultura y la Biodiversidad de Chile\n\n¿Qué buscamos?\n\nMonitorear en tiempo real la dinámica de sequías y desertificación en Chile\nIntegrar datos satelitales, climáticos e hidrológicos en una plataforma unificada\nGenerar indicadores accionables para gestores de recursos hídricos y políticas públicas\n\n¿Por qué es urgente?\n\nChile es uno de los países con mayor variabilidad climática del mundo. La zona central lleva más de una década en megasequía.\n\n\nEscala: Nacional · Resolución: Subcuencas hidrográficas · Frecuencia: Mensual\n\n\nConectar el proyecto con la realidad del país (2–3 min) Mostrar entusiasmo genuino aquí — este es trabajo que importa. “Cuando hay sequía en La Araucanía o en el Maule, los agricultores necesitan respuestas en semanas, no en años. ODES existe para acortar ese ciclo entre dato y decisión.” Si tienes una imagen del dashboard o del mapa de cobertura, este es el momento de mostrarla. Mencionar cómo el proyecto conecta con el curso: “Lo que ustedes van a aprender tiene aplicación directa en proyectos como este.”"
+  },
+  {
+    "objectID": "clases/presentacion_docente.html#investigación-publicaciones-recientes",
+    "href": "clases/presentacion_docente.html#investigación-publicaciones-recientes",
+    "title": "Conociendo a tu Profesor",
+    "section": "Investigación: Publicaciones Recientes",
+    "text": "Investigación: Publicaciones Recientes\nLínea central de investigación:\n\n“Land-cover fingerprints of a drying Chile”\n\n\n\n¿Qué encontramos?\n\nEl cambio en la vegetación de Chile son huellas de la aridificación\nDistintos ecosistemas responden de manera diferente a la falta de agua\nChile está pasando de una situación de sequía (eventual) a una de aridificación (permanente)\n\n\nDato clave: La zona mediterránea de Chile es uno de los 5 hotspots de biodiversidad más amenazados del planeta.\n\n\n\nOtras líneas activas:\n\nÍndices de sequía multivariados\nCambios en la fenología vegetal bajo escenarios de cambio climático\nIntegración de machine learning con datos de teledetección\nEstrés hídrico en huertos frutales\n\n\nPublicaciones en: Remote Sensing of Environment, Earth’s Future, Agricultural Water Management\n\n\n\n\nHacer la ciencia accesible (2 min) No entrar en detalles técnicos densos. La metáfora de las “huellas digitales” es poderosa. “Imagínense que el paisaje chileno es un paciente y los satélites son el equipo de diagnóstico. Las huellas de la aridificación son síntomas que aparecen en la vegetación antes de que el daño sea irreversible.” Si el tiempo lo permite, mencionar una pregunta de investigación abierta en la que los estudiantes podrían contribuir."
+  },
+  {
+    "objectID": "clases/presentacion_docente.html#las-herramientas-del-oficio",
+    "href": "clases/presentacion_docente.html#las-herramientas-del-oficio",
+    "title": "Conociendo a tu Profesor",
+    "section": "Las Herramientas del Oficio",
+    "text": "Las Herramientas del Oficio\n\n\nR Python Google Earth Engine\nR — El lenguaje del análisis riguroso\n\nEstadística espacial: sf, terra, stars\nVisualización: ggplot2, tmap\nFlujos de análisis reproducibles con tidyverse\n\nPython — Automatización y Machine Learning\n\nModelamiento predictivo: scikit-learn, xarray\nProcesamiento de grandes volúmenes de datos geoespaciales\nOrquestación de pipelines de datos\n\n\n\nGoogle Earth Engine — El telescopio de la Tierra\n\nAcceso a décadas de imágenes satelitales (Landsat, Sentinel, MODIS)\nCómputo en la nube a escala planetaria\nSin necesidad de descargar terabytes de datos\n\n\nLa filosofía: La herramienta sirve a la pregunta, no al revés. Primero define qué necesitas saber, luego elige cómo calcularlo.\n\n\n\n\nDesmitificar las herramientas (2 min) Muchos estudiantes se sienten intimidados por el stack técnico. “Cuando yo empecé, R me parecía inaccesible. Hoy es como un idioma que pienso con fluidez. La clave no es memorizar funciones, es entender qué pregunta estás respondiendo.” Mencionar que en el curso irán aprendiendo estas herramientas de forma progresiva, siempre con propósito. Hacer la analogía: “Un carpintero experto no elige el martillo antes de diseñar el mueble.”"
+  },
+  {
+    "objectID": "clases/presentacion_docente.html#por-qué-importa-este-trabajo",
+    "href": "clases/presentacion_docente.html#por-qué-importa-este-trabajo",
+    "title": "Conociendo a tu Profesor",
+    "section": "Por Qué Importa Este Trabajo",
+    "text": "Por Qué Importa Este Trabajo\n\n\nEl contexto global:\n\nEl cambio climático ya no es una predicción — es una medición\nChile experimenta una de las sequías más prolongadas de su historia\nMillones de personas y ecosistemas únicos en riesgo\n\n\nEl impacto directo:\n\nDecisiones de política hídrica basadas en evidencia\nAlertas tempranas para comunidades agrícolas vulnerables\nConservación de biodiversidad endémica amenazada\n\n\n\n\nZona de sacrificio o zona de oportunidad:\nLa Ciencia de Datos Espaciales puede ser la diferencia entre reaccionar a una crisis y anticiparla.\n\n\n\n“No analizamos el territorio por curiosidad académica. Lo hacemos porque hay decisiones reales que dependen de datos reales.”\n\n\n\n\nEl momento de más emoción en la presentación (2–3 min) Aquí debes hablar desde el corazón. ¿Por qué dedicas tu vida a esto? “Recuerdo hablar con agricultores en el Valle del Limarí que no sabían si plantar esa temporada porque el agua podría no llegar. Nuestros modelos no resuelven el problema del agua, pero pueden darles información a tiempo para tomar mejores decisiones.” Conectar con el presente: “La megasequía que vivimos no es solo una estadística — está transformando el paisaje de Chile de manera permanente. Entender eso es urgente.”"
+  },
+  {
+    "objectID": "clases/presentacion_docente.html#más-allá-del-laboratorio",
+    "href": "clases/presentacion_docente.html#más-allá-del-laboratorio",
+    "title": "Conociendo a tu Profesor",
+    "section": "Más Allá del Laboratorio",
+    "text": "Más Allá del Laboratorio\n\n\nEl corredor de fondo:\n\nAficionado al running\nPrimera media maratón (21 km)\nFilosofía del entrenamiento aplicada a la investigación:\n\n\nEl progreso no es lineal. Los mejores resultados vienen de la consistencia, no de los sprints.\n\nLo que el running me enseñó: Tolerancia al proceso lento · Gestión de la frustración · Celebrar kilómetros, no solo metas\n\n\nPadre de dos:\n\nLa perspectiva más importante que tengo\nMe recuerda diariamente para qué hacemos ciencia\n\nOtras curiosidades:\n\nLector de literatura\nAficionado del descenso, senderismo y vida en la naturaleza\nCreo firmemente en que la mejor ciencia es la que se puede explicar con claridad\n\n\nFuera del aula también soy persona — y eso importa.\n\n\n\n\nHumanizar el vínculo con los estudiantes (1–2 min) Este slide existe para romper la distancia profesor–alumno. “Les cuento esto porque creo que los mejores ambientes de aprendizaje son los que tienen confianza. Y la confianza comienza cuando nos vemos como personas, no solo como roles.” La analogía del running es genuinamente útil para hablar de los ritmos del aprendizaje: habrá semanas duras, habrá días de flujo, todo es parte del proceso. Invitar a los estudiantes a compartir también algo de ellos mismos en la próxima sesión."
+  },
+  {
+    "objectID": "clases/presentacion_docente.html#expectativas-y-mentoría",
+    "href": "clases/presentacion_docente.html#expectativas-y-mentoría",
+    "title": "Conociendo a tu Profesor",
+    "section": "Expectativas y Mentoría",
+    "text": "Expectativas y Mentoría\n\n\nCómo trabajo con estudiantes:\n\nPuertas abiertas — Las preguntas nunca son malas\nFeedback directo — Prefiero la claridad a la suavidad diplomática\nProceso sobre resultado — Me interesa cómo piensan, no solo la respuesta final\nTrabajo reproducible — Todo código y análisis debe poder repetirse\n\nLo que espero de ustedes:\n\nCuriosidad genuina\nTolerancia a la ambigüedad (los datos reales son complicados)\nComunicación proactiva si algo no está claro\n\n\n\nLo que pueden esperar de mí:\n\nClases preparadas con contexto real y aplicación práctica\nRetroalimentación oportuna y específica\nConexión honesta entre teoría y práctica profesional\n\n\nOportunidades disponibles:\n\nParticipación en proyectos de investigación activos\nAyudantías de investigación\nCo-autoría en publicaciones para estudiantes destacados\n\n\n\n\n\nEstablecer el contrato pedagógico (2 min) Este slide define la cultura del curso. Ser directo y claro aquí previene malentendidos después. “Mi trabajo no es hacerles fácil lo difícil. Mi trabajo es acompañarlos a través de lo difícil para que al final tengan una habilidad real.” Mencionar que están trabajando con datos del mundo real — eso significa que a veces el análisis no da el resultado esperado, y eso también es valioso. Sobre las oportunidades de investigación: “Si alguno tiene interés genuino en profundizar, venga a conversar. Siempre hay proyectos donde una mano adicional y curiosa es bienvenida.”"
+  },
+  {
+    "objectID": "clases/presentacion_docente.html#preguntas-conversación-contacto",
+    "href": "clases/presentacion_docente.html#preguntas-conversación-contacto",
+    "title": "Conociendo a tu Profesor",
+    "section": "Preguntas · Conversación · Contacto",
+    "text": "Preguntas · Conversación · Contacto\n\n¿Tienen preguntas?\nSobre el curso, la investigación, la carrera, el running… cualquier cosa.\n\n\n\n\nContacto:\n\nEmail institucional: francisco.zambrano@uss.cl\nOficina: El Condor 796 / Piso 4\nHorario de atención: Viernes 8:30 - 16:00\n\n\n\nRecursos adicionales:\n\nGitHub / ResearchGate: www.github.com/frzambra\nGoogle Scholar: https://scholar.google.com/citations?user=mKQRdOEAAAAJ&hl=es\nProyecto ODES: https://odes-chile.org\n\n\n\n\n“Los grandes análisis comienzan con una buena pregunta. Empecemos a hacer preguntas juntos.”\n\n\nCierre cálido y apertura al diálogo (2–3 min) No terminar con “¿Alguna pregunta?” de manera pasiva. Generar la conversación activamente. Sugerencias de preguntas para romper el silencio inicial: - “¿Alguien sabe qué es la megasequía chilena?” - “¿Cuántos han trabajado con datos geográficos antes?” - “¿Qué esperan llevarse de este curso?”\nSi el tiempo lo permite, pedir a dos o tres estudiantes que se presenten brevemente. Terminar con energía: “Me alegra estar aquí. Vamos a hacer trabajo que vale la pena.”"
+  },
+  {
+    "objectID": "clases/class_week_2.html#qué-vimos-la-semana-pasada",
+    "href": "clases/class_week_2.html#qué-vimos-la-semana-pasada",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "¿Qué Vimos la Semana Pasada?",
+    "text": "¿Qué Vimos la Semana Pasada?\n\nLas empresas generan millones de datos cada día\nLos datos por sí solos no son útiles\nTransformamos datos → información → conocimiento → decisión\nLos Sistemas de Información hacen posible esa transformación\n\n\nHoy: ¿De qué está hecho un Sistema de Información?\n\n\nRepaso rápido. Preguntar si alguien recuerda el ejemplo de TechStyle. Conectar directamente con la clase anterior."
+  },
+  {
+    "objectID": "clases/class_week_2.html#situación-techstyle-crece",
+    "href": "clases/class_week_2.html#situación-techstyle-crece",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "Situación: TechStyle Crece",
+    "text": "Situación: TechStyle Crece\nEl problema de éxito de TechStyle\nTechStyle pasó de 50.000 a 450.000 clientes en 3 años.\n\nEl CEO le pregunta al equipo técnico:\n“Nuestro sistema actual está colapsando. ¿Qué necesitamos para seguir creciendo?”\n\n\nPresentar el escenario como continuación natural. El crecimiento trae nuevos desafíos tecnológicos y organizacionales."
+  },
+  {
+    "objectID": "clases/class_week_2.html#el-equipo-técnico-responde",
+    "href": "clases/class_week_2.html#el-equipo-técnico-responde",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "El Equipo Técnico Responde",
+    "text": "El Equipo Técnico Responde\n“Para escalar, necesitamos fortalecer los 5 componentes de nuestro SI”\n┌─────────────────────────────────────────────┐\n│           SISTEMA DE INFORMACIÓN            │\n│                                             │\n│  Hardware  +  Software  +  Datos            │\n│                                             │\n│        +  Personas  +  Procesos             │\n└─────────────────────────────────────────────┘\n\n¿Qué significa cada uno?\n\n\nIntroducir los 5 componentes como respuesta a una necesidad real de negocio. No son conceptos abstractos: TechStyle los necesita para sobrevivir."
+  },
+  {
+    "objectID": "clases/class_week_2.html#componente-1-hardware",
+    "href": "clases/class_week_2.html#componente-1-hardware",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "Componente 1: Hardware",
+    "text": "Componente 1: Hardware\nLa infraestructura física que procesa y almacena datos\n\nServidores: almacenan las bases de datos de clientes y pedidos\nDispositivos de red: conectan las tiendas, bodegas y oficinas\nTerminales: computadores del equipo de marketing y logística\nDispositivos móviles: los repartidores registran las entregas\n\n\nTechStyle tiene 12 servidores en la nube procesando 24/7\n\n\nEl hardware es tangible. Pedir a los estudiantes que piensen qué hardware usan ellos para interactuar con TechStyle (su celular al comprar)."
+  },
+  {
+    "objectID": "clases/class_week_2.html#componente-2-software",
+    "href": "clases/class_week_2.html#componente-2-software",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "Componente 2: Software",
+    "text": "Componente 2: Software\nLos programas que procesan, analizan y presentan datos\n\n\n\nTipo\nEjemplo en TechStyle\nPara qué sirve\n\n\n\n\nSistema operativo\nLinux Server\nBase del sistema\n\n\nSGBD\nPostgreSQL\nGestiona las BD\n\n\nApp web\nTienda online\nRecibe pedidos\n\n\nAnalítico\nPower BI\nGenera reportes\n\n\nERP\nSAP\nIntegra procesos\n\n\n\n\nSin software, el hardware es solo hierro\n\n\nSGBD = Sistema Gestor de Base de Datos. Sera clave para el resto del curso. Mencionarlo brevemente."
+  },
+  {
+    "objectID": "clases/class_week_2.html#componente-3-datos",
+    "href": "clases/class_week_2.html#componente-3-datos",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "Componente 3: Datos",
+    "text": "Componente 3: Datos\nEl recurso más valioso de la organización\n\nDatos de clientes: quiénes son, dónde están, qué prefieren\nDatos de transacciones: qué compran, cuándo, a qué precio\nDatos de productos: stock, costos, proveedores\nDatos de logística: tiempos de entrega, rutas, incidentes\n\n\nTechStyle tiene 8.750.000 registros de ventas → activo estratégico\n\n\nLos datos son el “petróleo” del siglo XXI. Sin datos, el sistema no tiene nada que procesar ni analizar."
+  },
+  {
+    "objectID": "clases/class_week_2.html#componente-4-personas",
+    "href": "clases/class_week_2.html#componente-4-personas",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "Componente 4: Personas",
+    "text": "Componente 4: Personas\nLos actores que operan, mantienen y usan el SI\n┌─────────────────────────────────────────────────┐\n│                   PERSONAS                      │\n│                                                 │\n│  Directivos  →  usan la información             │\n│  Analistas   →  interpretan los datos           │\n│  Técnicos    →  mantienen el sistema            │\n│  Usuarios    →  ingresan y consultan datos      │\n└─────────────────────────────────────────────────┘\n\nEl componente más crítico — y más complejo\n\n\nEnfatizar que la tecnología sin personas no sirve. Los sistemas fracasan por problemas humanos, no técnicos."
+  },
+  {
+    "objectID": "clases/class_week_2.html#componente-5-procesos",
+    "href": "clases/class_week_2.html#componente-5-procesos",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "Componente 5: Procesos",
+    "text": "Componente 5: Procesos\nLas reglas y procedimientos que guían el uso del SI\n\n¿Cómo se registra un pedido?\n¿Quién puede acceder a qué información?\n¿Cómo se actualiza el inventario tras una venta?\n¿Cuándo se generan los reportes de ventas?\n¿Cómo se responde a un reclamo de cliente?\n\n\nSin procesos, el SI sería caótico aunque tuviera tecnología de punta\n\n\nLos procesos son las “reglas del juego”. Poner ejemplo: si no hay proceso para actualizar stock, dos personas pueden vender el mismo producto que no existe."
+  },
+  {
+    "objectID": "clases/class_week_2.html#los-5-componentes-interactúan",
+    "href": "clases/class_week_2.html#los-5-componentes-interactúan",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "Los 5 Componentes Interactúan",
+    "text": "Los 5 Componentes Interactúan\n         [HARDWARE]\n              ↕\n         [SOFTWARE]\n              ↕\n           [DATOS]  ←→  [PROCESOS]\n              ↕\n          [PERSONAS]\n\nUn SI es tan fuerte como su componente más débil\n\n\nAnalogía: como una cadena. Si falla un eslabón, falla toda la cadena. Ejemplo: excelente hardware, pero datos mal ingresados = información basura."
+  },
+  {
+    "objectID": "clases/class_week_2.html#discusión-1",
+    "href": "clases/class_week_2.html#discusión-1",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "💬 Discusión 1",
+    "text": "💬 Discusión 1\nEn parejas (5 minutos):\nTechStyle sufrió una falla en su sistema: durante 2 horas no se registraron los pedidos del Black Friday.\n\n¿Qué componente(s) fallaron? ¿Por qué?\n¿Qué impacto tiene en la empresa?\n¿Qué proceso debería existir para prevenir esto?\n\n\nAbrir múltiples posibilidades: hardware (servidor caído), software (bug), procesos (sin plan de contingencia), personas (nadie monitoreaba). No hay una sola respuesta correcta."
+  },
+  {
+    "objectID": "clases/class_week_2.html#actores-y-roles-en-un-si",
+    "href": "clases/class_week_2.html#actores-y-roles-en-un-si",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "Actores y Roles en un SI",
+    "text": "Actores y Roles en un SI\n¿Quiénes son las personas en un SI?\nNo todos interactúan igual con el sistema.\n\nDepende de: - Nivel jerárquico (operativo, táctico, estratégico) - Tipo de acceso (lectura, escritura, administración) - Propósito (ingresar datos, analizar, decidir)\n\n\nConectar con la idea de que las personas son uno de los 5 componentes. Ahora vamos a profundizar en ese componente."
+  },
+  {
+    "objectID": "clases/class_week_2.html#el-modelo-de-niveles-organizacionales",
+    "href": "clases/class_week_2.html#el-modelo-de-niveles-organizacionales",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "El Modelo de Niveles Organizacionales",
+    "text": "El Modelo de Niveles Organizacionales\n         ┌─────────────────────┐\n         │   NIVEL ESTRATÉGICO │  → Alta gerencia\n         │      (Decisión)     │\n         ├─────────────────────┤\n         │   NIVEL TÁCTICO     │  → Gerentes medios\n         │    (Coordinación)   │\n         ├─────────────────────┤\n         │   NIVEL OPERATIVO   │  → Personal de campo\n         │    (Ejecución)      │\n         └─────────────────────┘\n\nCada nivel necesita distintos tipos de información\n\n\nEste modelo es fundamental. Los distintos tipos de SI que veremos después corresponden a estos niveles. Plantar la semilla."
+  },
+  {
+    "objectID": "clases/class_week_2.html#nivel-operativo-usuarios-finales",
+    "href": "clases/class_week_2.html#nivel-operativo-usuarios-finales",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "Nivel Operativo: Usuarios Finales",
+    "text": "Nivel Operativo: Usuarios Finales\nLos que ejecutan las operaciones del día a día\n\nCajeros / operadores de ventas: registran transacciones\nRepartidores: confirman entregas en el sistema\nBodegueros: actualizan el inventario\nCall center: ingresan reclamos y consultas\n\n\nNecesitan: interfaces simples, rápidas, sin errores posibles\n\n\nEn TechStyle: cuando el repartidor marca “entregado” en la app, está ingresando un dato al SI. Es usuario operativo."
+  },
+  {
+    "objectID": "clases/class_week_2.html#nivel-táctico-analistas-y-gerentes-medios",
+    "href": "clases/class_week_2.html#nivel-táctico-analistas-y-gerentes-medios",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "Nivel Táctico: Analistas y Gerentes Medios",
+    "text": "Nivel Táctico: Analistas y Gerentes Medios\nLos que coordinan y toman decisiones intermedias\n\nGerente de marketing: ¿Qué campaña lanzar este mes?\nJefe de logística: ¿Cuántos repartidores necesito el sábado?\nAnalista de datos: ¿Qué productos están a punto de agotarse?\nSupervisor de ventas: ¿Por qué cayeron las ventas en la zona norte?\n\n\nNecesitan: reportes, tendencias, comparaciones, alertas\n\n\nMaría González (la gerente de marketing del caso de la semana pasada) es un usuario táctico. Usó el SI para decidir dónde invertir los $15M."
+  },
+  {
+    "objectID": "clases/class_week_2.html#nivel-estratégico-alta-dirección",
+    "href": "clases/class_week_2.html#nivel-estratégico-alta-dirección",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "Nivel Estratégico: Alta Dirección",
+    "text": "Nivel Estratégico: Alta Dirección\nLos que definen el rumbo de la organización\n\nCEO: ¿Debemos expandirnos a nuevos mercados?\nCFO: ¿La empresa es rentable en el largo plazo?\nDirectorio: ¿Cumplimos los objetivos estratégicos?\n\n\nNecesitan: resúmenes ejecutivos, indicadores clave (KPIs), proyecciones\n\n\nLa alta dirección no quiere ver 8 millones de registros. Quiere ver: “Crecimos 15% este trimestre”. El SI debe entregar eso."
+  },
+  {
+    "objectID": "clases/class_week_2.html#el-equipo-de-techstyle",
+    "href": "clases/class_week_2.html#el-equipo-de-techstyle",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "El Equipo de TechStyle",
+    "text": "El Equipo de TechStyle\n\n\n\n\n\n\n\n\n\nPersona\nRol\nNivel\n¿Qué consulta en el SI?\n\n\n\n\nSofía (repartidora)\nUsuario operativo\nOperativo\nSu ruta del día\n\n\nJuan (analista)\nAnalista de datos\nTáctico\nVentas por región\n\n\nMaría (Gte. Mktg)\nGerente media\nTáctico\nROI por campaña\n\n\nRoberto (CEO)\nDirector\nEstratégico\nDashboard ejecutivo\n\n\n\n\nPoner caras y nombres al modelo abstracto. Estos personajes pueden aparecer durante el semestre."
+  },
+  {
+    "objectID": "clases/class_week_2.html#discusión-2",
+    "href": "clases/class_week_2.html#discusión-2",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "💬 Discusión 2",
+    "text": "💬 Discusión 2\nPara toda la clase (5 minutos):\nTechStyle quiere saber: “¿Por qué cayeron las ventas en la región de Valparaíso durante marzo?”\n\n¿Quién en TechStyle necesita esta información?\n¿Qué tipo de información necesita cada actor?\n¿Es la misma información para el analista que para el CEO?\n\n\nEl analista necesita el detalle (por producto, por día, por canal). El CEO necesita el resumen y la recomendación. Mismo problema, distintas necesidades."
+  },
+  {
+    "objectID": "clases/class_week_2.html#tipos-de-sistemas-de-información",
+    "href": "clases/class_week_2.html#tipos-de-sistemas-de-información",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "Tipos de Sistemas de Información",
+    "text": "Tipos de Sistemas de Información\nUn SI se diseña para servir a un nivel específico\n\n  Nivel Estratégico  →  EIS  (Executive Information Systems)\n  Nivel Táctico      →  DSS  (Decision Support Systems)\n                     →  BI   (Business Intelligence)\n                     →  CRM  (Customer Relationship Mgmt)\n  Nivel Operativo    →  TPS  (Transaction Processing Systems)\n\n\nNo dar muchos detalles aún. Presentar el mapa general. Ahora vamos a ver cada uno con ejemplos de TechStyle."
+  },
+  {
+    "objectID": "clases/class_week_2.html#tps-sistemas-de-procesamiento-de-transacciones",
+    "href": "clases/class_week_2.html#tps-sistemas-de-procesamiento-de-transacciones",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "TPS: Sistemas de Procesamiento de Transacciones",
+    "text": "TPS: Sistemas de Procesamiento de Transacciones\nEl motor del nivel operativo\n\nRegistran cada operación en tiempo real\nAltamente confiables y rápidos\nManejan grandes volúmenes de transacciones\nEjemplos: registro de ventas, pagos, actualizaciones de inventario\n\n\nEn TechStyle: cada compra online es una transacción registrada automáticamente en la base de datos\n\n\nTPS es la base de todo. Sin un buen TPS, los datos son incorrectos y todo lo que viene encima falla. Conectar con la importancia de la calidad de datos."
+  },
+  {
+    "objectID": "clases/class_week_2.html#dss-sistemas-de-apoyo-a-la-decisión",
+    "href": "clases/class_week_2.html#dss-sistemas-de-apoyo-a-la-decisión",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "DSS: Sistemas de Apoyo a la Decisión",
+    "text": "DSS: Sistemas de Apoyo a la Decisión\nHerramientas para analizar situaciones complejas\n\nPermiten hacer simulaciones: “¿Qué pasaría si…?”\nCombinan datos internos y externos\nNo toman la decisión, la apoyan\nRequieren capacidad analítica del usuario\n\n\nEn TechStyle: “Si bajo el precio de Electrónica en 10%, ¿cuánto aumentan las ventas?”\n\n\nEl DSS no dice “baja el precio”. Muestra escenarios posibles. La decisión la toma María, la gerente."
+  },
+  {
+    "objectID": "clases/class_week_2.html#bi-business-intelligence",
+    "href": "clases/class_week_2.html#bi-business-intelligence",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "BI: Business Intelligence",
+    "text": "BI: Business Intelligence\nConvirtiendo datos históricos en conocimiento estratégico\n\nAnaliza grandes volúmenes de datos históricos\nGenera reportes, dashboards y visualizaciones\nDetecta tendencias y patrones\nCompara periodos: este mes vs. el año pasado\n\n\nEn TechStyle: el dashboard de ventas que María usa cada mañana muestra KPIs clave del negocio\n\n\nBI es “mirar el retrovisor” con inteligencia. No predice el futuro, pero entiende el pasado muy bien. Es el tipo de sistema más usado en analítica de negocios."
+  },
+  {
+    "objectID": "clases/class_week_2.html#crm-customer-relationship-management",
+    "href": "clases/class_week_2.html#crm-customer-relationship-management",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "CRM: Customer Relationship Management",
+    "text": "CRM: Customer Relationship Management\nGestión de la relación con los clientes\n\nRegistra cada interacción con el cliente\nHistorial de compras, reclamos, preferencias\nPermite personalizar la comunicación\nDetecta clientes en riesgo de abandono (churn)\n\n\nEn TechStyle: “Pedro compró 3 veces en el último mes, pero lleva 60 días sin comprar → enviarle una oferta personalizada”\n\n\nEl CRM transforma a los clientes de números en personas con historia. Es crítico en e-commerce donde no hay interacción cara a cara."
+  },
+  {
+    "objectID": "clases/class_week_2.html#eis-executive-information-systems",
+    "href": "clases/class_week_2.html#eis-executive-information-systems",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "EIS: Executive Information Systems",
+    "text": "EIS: Executive Information Systems\nInformación ejecutiva para decisiones estratégicas\n\nResúmenes de alto nivel (KPIs, indicadores)\nInformación en tiempo real, visual, sin tecnicismos\nAlertas automáticas cuando algo sale mal\nDiseñado para personas con poco tiempo y mucho poder decisional\n\n\nEn TechStyle: el CEO ve en su tablet: ventas del día, satisfacción de clientes, margen operacional\n\n\nEl EIS no muestra tablas con millones de filas. Muestra semáforos: verde, amarillo, rojo. Si algo está en rojo, el ejecutivo sabe que debe actuar."
+  },
+  {
+    "objectID": "clases/class_week_2.html#resumen-los-si-de-techstyle",
+    "href": "clases/class_week_2.html#resumen-los-si-de-techstyle",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "Resumen: Los SI de TechStyle",
+    "text": "Resumen: Los SI de TechStyle\n CEO Roberto    → EIS  → \"Ventas del mes: $1.2B (+8% vs meta)\"\n\n Gerente María  → DSS  → \"¿Qué pasa si invierto en Hogar?\"\n                 → BI   → \"Tendencias de ventas por categoría\"\n\n Analista Juan  → BI   → \"Reporte detallado por región\"\n                 → CRM → \"Clientes con alto riesgo de churn\"\n\n Repartidora Sofía → TPS → \"Registrar entrega pedido #875432\"\n\nMostrar cómo los distintos actores usan distintos tipos de SI. Pedir a los estudiantes que identifiquen cuál usarían ellos si trabajaran en TechStyle."
+  },
+  {
+    "objectID": "clases/class_week_2.html#discusión-3",
+    "href": "clases/class_week_2.html#discusión-3",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "💬 Discusión 3",
+    "text": "💬 Discusión 3\nEn grupos de 3 (5 minutos):\nTechStyle detectó que las ventas cayeron 20% en la última semana.\n¿Qué tipo de SI usaría cada actor para entender y resolver el problema?\n\n\n\nActor\n¿Qué SI usa?\n¿Qué información busca?\n\n\n\n\nCEO Roberto\n\n\n\n\nGerente María\n\n\n\n\nAnalista Juan\n\n\n\n\n\n\nCEO: EIS para ver si es general o puntual. María: DSS/BI para analizar por categoría y canal. Juan: BI con detalle por región, producto, hora del día."
+  },
+  {
+    "objectID": "clases/class_week_2.html#actividad-diseñando-el-si-de-foodrapid",
+    "href": "clases/class_week_2.html#actividad-diseñando-el-si-de-foodrapid",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "Actividad: Diseñando el SI de “FoodRapid”",
+    "text": "Actividad: Diseñando el SI de “FoodRapid”\nContexto: FoodRapid es un servicio de delivery de comida con 5.000 restaurantes asociados y 200.000 pedidos diarios.\nEn grupos de 4-5 personas (15 minutos):\nDiseñen el Sistema de Información de FoodRapid:\n\nIdentifiquen los 5 componentes del SI (con ejemplos concretos)\nDefinan 3 actores y qué tipo de SI usa cada uno\nElijan 2 tipos de SI prioritarios para implementar primero y justifiquen por qué\n\nPresentación: 2 minutos por grupo\n\nFoodRapid es un caso paralelo a TechStyle. Permite ver los conceptos en un contexto diferente. Guiar a los grupos: ¿Qué datos recoge FoodRapid? ¿Quiénes los usan? ¿Para qué deciden?"
+  },
+  {
+    "objectID": "clases/class_week_2.html#reflexión-más-que-tecnología",
+    "href": "clases/class_week_2.html#reflexión-más-que-tecnología",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "Reflexión: Más que Tecnología",
+    "text": "Reflexión: Más que Tecnología\n¿Por qué no basta con comprar el mejor software?\n\nEl SI más caro falla si las personas no lo adoptan\nLos mejores datos no sirven si los procesos son deficientes\nEl mejor hardware no ayuda si el software está mal configurado\nLa mejor tecnología no reemplaza la calidad de los datos\n\n\nEl SI es un sistema socio-técnico: personas + tecnología\n\n\nDesmitificar la idea de que “con tecnología se resuelve todo”. El cambio organizacional es tan importante como la tecnología."
+  },
+  {
+    "objectID": "clases/class_week_2.html#conexión-con-la-toma-de-decisiones",
+    "href": "clases/class_week_2.html#conexión-con-la-toma-de-decisiones",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "Conexión con la Toma de Decisiones",
+    "text": "Conexión con la Toma de Decisiones\nLa cadena completa en TechStyle\n  Datos de ventas (TPS)\n        ↓\n  Análisis de tendencias (BI)\n        ↓\n  Simulación de escenarios (DSS)\n        ↓\n  Dashboard ejecutivo (EIS)\n        ↓\n  Decisión: invertir $15M en categoría Hogar\n\nCada tipo de SI aporta un eslabón de la cadena decisional\n\n\nMostrar que los tipos de SI no son competencia entre sí: son complementarios. Se usan juntos para apoyar decisiones de distintos niveles."
+  },
+  {
+    "objectID": "clases/class_week_2.html#lo-que-aprendimos-hoy",
+    "href": "clases/class_week_2.html#lo-que-aprendimos-hoy",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "Lo Que Aprendimos Hoy",
+    "text": "Lo Que Aprendimos Hoy\n\nUn SI tiene 5 componentes: hardware, software, datos, personas, procesos\nExisten 3 niveles organizacionales con distintas necesidades de información\nLos actores interactúan con el SI según su rol y nivel\nExisten distintos tipos de SI: TPS, DSS, BI, CRM, EIS\nCada tipo sirve a un propósito diferente en la toma de decisiones\n\n\nLas organizaciones usan múltiples SI que trabajan juntos"
+  },
+  {
+    "objectID": "clases/class_week_2.html#próxima-clase",
+    "href": "clases/class_week_2.html#próxima-clase",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "Próxima Clase",
+    "text": "Próxima Clase\nTema: Modelos de Datos y Bases de Datos Relacionales\nExploraremos:\n\n¿Cómo se organiza la información en una base de datos?\n¿Qué es un modelo relacional?\nTablas, campos, registros y relaciones\nEl modelo de datos de TechStyle\n\n\nPreparen: Piensen en cómo están organizados los datos de una tienda física (productos, precios, clientes, compras)\n\n\nLa próxima clase conecta el concepto de SI con la implementación técnica: cómo se almacenan realmente los datos que hemos visto."
+  },
+  {
+    "objectID": "clases/class_week_2.html#preguntas",
+    "href": "clases/class_week_2.html#preguntas",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "Preguntas",
+    "text": "Preguntas\n¿Dudas o comentarios?\nContacto: [correo del profesor]\nPróxima clase: [fecha y hora]"
+  },
+  {
+    "objectID": "clases/class_week_2.html#gracias",
+    "href": "clases/class_week_2.html#gracias",
+    "title": "Componentes, Actores y Tipos de Sistemas de Información",
+    "section": "¡Gracias!",
+    "text": "¡Gracias!\nBig Data y Analytics Universidad San Sebastián\n\nAgradecer participación. Recordar preparar reflexión para la próxima clase."
+  },
+  {
+    "objectID": "clases/class_week_1.html#bienvenidos",
+    "href": "clases/class_week_1.html#bienvenidos",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "Bienvenidos",
+    "text": "Bienvenidos\nBig Data y Analytics\nUnidad 1: Sistemas de Información en el Contexto de Negocios\n\nDar la bienvenida a los estudiantes. Explicar que hoy tendrán una experiencia práctica antes de la teoría."
+  },
+  {
+    "objectID": "clases/class_week_1.html#situación-real-lunes-900-am",
+    "href": "clases/class_week_1.html#situación-real-lunes-900-am",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "Situación Real: Lunes 9:00 AM",
+    "text": "Situación Real: Lunes 9:00 AM\nReunión de Gerencia - TechStyle\nMaría González, Gerente de Marketing de TechStyle (tienda online de retail), debe presentar su propuesta para la campaña del próximo mes.\nPresupuesto: $15.000.000 CLP\nPregunta: ¿En qué categoría de productos invertir para maximizar las ventas?\n\nPlantear el escenario como si los estudiantes estuvieran en esa sala. Hacer que se sientan parte de la situación."
+  },
+  {
+    "objectID": "clases/class_week_1.html#techstyle-la-empresa",
+    "href": "clases/class_week_1.html#techstyle-la-empresa",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "TechStyle: La Empresa",
+    "text": "TechStyle: La Empresa\n\nFundada: 2018\nModelo: E-commerce (ropa, accesorios, electrónica, hogar)\nClientes: 450.000 usuarios registrados\nOperación: Nacional (Chile)\nDesafío: Crecimiento sostenible en mercado competitivo\n\n\n¿Cómo debería María tomar esta decisión?\n\n\nPreguntar a los estudiantes: ¿Ustedes qué harían? ¿Intuición? ¿Experiencia pasada?"
+  },
+  {
+    "objectID": "clases/class_week_1.html#el-activo-de-techstyle-sus-datos",
+    "href": "clases/class_week_1.html#el-activo-de-techstyle-sus-datos",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "El Activo de TechStyle: Sus Datos",
+    "text": "El Activo de TechStyle: Sus Datos\nMaría tiene acceso a las bases de datos de la empresa:\n\nTabla users: 450.000 registros\nTabla orders: 2.340.000 registros\nTabla order_items: 8.750.000 registros\nTabla products: 12.500 registros\n\n\nDatos de 5 años de operación\n\n\nEnfatizar el VOLUMEN. Esto es Big Data en contexto empresarial real."
+  },
+  {
+    "objectID": "clases/class_week_1.html#ejemplo-tabla-order_items",
+    "href": "clases/class_week_1.html#ejemplo-tabla-order_items",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "Ejemplo: Tabla order_items",
+    "text": "Ejemplo: Tabla order_items\n\n\n\norder_id\nproduct_id\nquantity\nunit_price\ncategory\n\n\n\n\n875432\n4521\n2\n29.990\nRopa\n\n\n875432\n8834\n1\n89.990\nElectrónica\n\n\n875433\n2341\n3\n15.990\nHogar\n\n\n875433\n5512\n1\n125.000\nElectrónica\n\n\n875434\n7821\n1\n45.990\nAccesorios\n\n\n\n… y así 8.750.000 filas más\n\nMostrar que son datos “crudos”. No son útiles así tal cual."
+  },
+  {
+    "objectID": "clases/class_week_1.html#el-equipo-de-análisis-trabajó",
+    "href": "clases/class_week_1.html#el-equipo-de-análisis-trabajó",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "El Equipo de Análisis Trabajó",
+    "text": "El Equipo de Análisis Trabajó\nMaría pidió al equipo técnico que procesara los datos.\nPregunta realizada: “¿Cuál categoría genera más ventas y tiene mejor margen?”\n\nEl equipo analizó 5 años de datos en minutos\n\n\nNo explicar cómo. Solo enfatizar que procesaron millones de registros rápidamente."
+  },
+  {
+    "objectID": "clases/class_week_1.html#resultado-del-análisis",
+    "href": "clases/class_week_1.html#resultado-del-análisis",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "Resultado del Análisis",
+    "text": "Resultado del Análisis\n\n\n\n\n\n\n\n\n\n\nCategoría\nVentas Totales (CLP)\nCantidad Órdenes\nMargen Promedio\nTendencia\n\n\n\n\nElectrónica\n3.840.000.000\n156.000\n22%\n↗ +15%\n\n\nRopa\n2.950.000.000\n312.000\n35%\n→ 0%\n\n\nHogar\n1.870.000.000\n98.000\n28%\n↗ +8%\n\n\nAccesorios\n1.120.000.000\n187.000\n42%\n↘ -5%\n\n\n\n\nDar tiempo para que lean la tabla. Preguntar qué observan."
+  },
+  {
+    "objectID": "clases/class_week_1.html#interpretación",
+    "href": "clases/class_week_1.html#interpretación",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "Interpretación",
+    "text": "Interpretación\n\nElectrónica: mayor volumen, pero margen bajo (22%)\nRopa: buen equilibrio, pero sin crecimiento\nHogar: creciendo (+8%), margen aceptable (28%)\nAccesorios: mejor margen (42%), pero decreciendo (-5%)\n\n\n¿Qué decisión tomarían ustedes?\n\n\nAbrir discusión. No hay respuesta única. Depende de la estrategia."
+  },
+  {
+    "objectID": "clases/class_week_1.html#discusión-1",
+    "href": "clases/class_week_1.html#discusión-1",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "💬 Discusión 1",
+    "text": "💬 Discusión 1\nEn grupos de 3-4 personas:\n\n¿Qué observan en los resultados?\n¿En qué categoría invertirían? ¿Por qué?\n¿Qué información adicional necesitarían?\n\nTiempo: 5 minutos\n\nCircular por la sala. Escuchar argumentos. Preparar para compartir."
+  },
+  {
+    "objectID": "clases/class_week_1.html#compartiendo-ideas",
+    "href": "clases/class_week_1.html#compartiendo-ideas",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "Compartiendo Ideas",
+    "text": "Compartiendo Ideas\n¿Qué decidió cada grupo?\n\nObservación clave: Diferentes grupos pueden llegar a diferentes conclusiones con los mismos datos.\n\n\nPero todos usaron EVIDENCIA para decidir\n\n\nValidar todas las respuestas. Enfatizar que usaron datos, no solo intuición."
+  },
+  {
+    "objectID": "clases/class_week_1.html#discusión-2",
+    "href": "clases/class_week_1.html#discusión-2",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "💬 Discusión 2",
+    "text": "💬 Discusión 2\nPregunta crítica:\n¿María podría haber tomado esta decisión sin acceso a estos datos?\n¿Qué hubiera pasado?\n\nLlevar a los estudiantes a reconocer que sin datos, la decisión sería por intuición o experiencia pasada solamente."
+  },
+  {
+    "objectID": "clases/class_week_1.html#lo-que-acabamos-de-ver",
+    "href": "clases/class_week_1.html#lo-que-acabamos-de-ver",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "Lo Que Acabamos de Ver",
+    "text": "Lo Que Acabamos de Ver\n✓ Una empresa real con millones de registros ✓ Una pregunta de negocio concreta ✓ Datos transformados en algo útil ✓ Una decisión fundamentada\n\nAhora entendamos QUÉ pasó aquí\n\n\nTransición hacia los conceptos formales. “Vieron el pastel, ahora veamos los ingredientes”."
+  },
+  {
+    "objectID": "clases/class_week_1.html#conceptos-fundamentales",
+    "href": "clases/class_week_1.html#conceptos-fundamentales",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "Conceptos Fundamentales",
+    "text": "Conceptos Fundamentales\n1. Dato\nRegistro individual, sin contexto.\nEjemplo: 29.990 Electrónica 2023-03-15\n\nPor sí solos, no dicen mucho\n\n\nEnfatizar que los datos son “materia prima”. No son útiles aislados."
+  },
+  {
+    "objectID": "clases/class_week_1.html#conceptos-fundamentales-1",
+    "href": "clases/class_week_1.html#conceptos-fundamentales-1",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "Conceptos Fundamentales",
+    "text": "Conceptos Fundamentales\n2. Información\nDatos organizados y procesados con significado.\nEjemplo: “La categoría Electrónica generó $3.840 millones en ventas durante 2023”\n\nAhora tiene contexto y significado\n\n\nLa información surge cuando procesamos y organizamos datos."
+  },
+  {
+    "objectID": "clases/class_week_1.html#conceptos-fundamentales-2",
+    "href": "clases/class_week_1.html#conceptos-fundamentales-2",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "Conceptos Fundamentales",
+    "text": "Conceptos Fundamentales\n3. Conocimiento\nInformación interpretada basada en experiencia y contexto.\nEjemplo: “Electrónica tiene alto volumen pero bajo margen. Invertir allí requiere más presupuesto para obtener el mismo retorno que Hogar, que está creciendo.”\n\nEs información + análisis + experiencia\n\n\nEl conocimiento permite DECIDIR. Es el nivel más alto."
+  },
+  {
+    "objectID": "clases/class_week_1.html#la-jerarquía-del-valor",
+    "href": "clases/class_week_1.html#la-jerarquía-del-valor",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "La Jerarquía del Valor",
+    "text": "La Jerarquía del Valor\n              DECISIÓN\n                 ↑\n           CONOCIMIENTO\n                 ↑\n            INFORMACIÓN\n                 ↑\n               DATOS\n\nCada nivel agrega valor al anterior\n\n\nEste es el modelo fundamental del curso. Siempre volvemos a esto."
+  },
+  {
+    "objectID": "clases/class_week_1.html#conectando-con-techstyle",
+    "href": "clases/class_week_1.html#conectando-con-techstyle",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "Conectando con TechStyle",
+    "text": "Conectando con TechStyle\nDatos: Los 8.750.000 registros de order_items\nInformación: La tabla con ventas por categoría\nConocimiento: “Hogar está creciendo y tiene buen margen”\nDecisión: Invertir $15M en campaña de categoría Hogar\n\nCerrar el círculo. Volver al caso inicial con los conceptos aprendidos."
+  },
+  {
+    "objectID": "clases/class_week_1.html#discusión-3",
+    "href": "clases/class_week_1.html#discusión-3",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "💬 Discusión 3",
+    "text": "💬 Discusión 3\nEn parejas:\nIdentifiquen qué es DATO y qué es INFORMACIÓN en estos ejemplos:\n\n“Cliente ID: 45821”\n“El 65% de nuestros clientes son mujeres entre 25-34 años”\n“Temperatura: 23°C”\n“Las ventas aumentan 30% los días de lluvia”\n\nTiempo: 3 minutos\n\n1 y 3 son datos. 2 y 4 son información (datos procesados con significado)."
+  },
+  {
+    "objectID": "clases/class_week_1.html#cómo-pasamos-de-datos-a-decisiones",
+    "href": "clases/class_week_1.html#cómo-pasamos-de-datos-a-decisiones",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "¿Cómo Pasamos de Datos a Decisiones?",
+    "text": "¿Cómo Pasamos de Datos a Decisiones?\n\nNecesitamos un Sistema de Información\n\n\nCapturar datos\nAlmacenar datos de forma estructurada\nProcesar datos\nPresentar información útil\nApoyar decisiones\n\n\nIntroducir el concepto de Sistema de Información como respuesta a una necesidad."
+  },
+  {
+    "objectID": "clases/class_week_1.html#sistemas-de-información-si",
+    "href": "clases/class_week_1.html#sistemas-de-información-si",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "Sistemas de Información (SI)",
+    "text": "Sistemas de Información (SI)\nDefinición:\nConjunto de componentes interrelacionados que capturan, almacenan, procesan y distribuyen información para apoyar la toma de decisiones en una organización.\n\nNo son solo computadoras Incluyen: personas, procesos, datos, tecnología\n\n\nEnfatizar que SI es más amplio que solo software."
+  },
+  {
+    "objectID": "clases/class_week_1.html#por-qué-techstyle-necesita-un-si",
+    "href": "clases/class_week_1.html#por-qué-techstyle-necesita-un-si",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "¿Por Qué TechStyle Necesita un SI?",
+    "text": "¿Por Qué TechStyle Necesita un SI?\n\nVolumen: 8.750.000 registros (imposible analizar manualmente)\nVelocidad: Decisión en minutos, no semanas\nPrecisión: Cálculos exactos (no aproximaciones)\nDisponibilidad: Acceso cuando se necesita\nConsistencia: Misma información para toda la organización\n\n\nConectar características de Big Data con necesidades de negocio."
+  },
+  {
+    "objectID": "clases/class_week_1.html#el-si-de-techstyle-simplificado",
+    "href": "clases/class_week_1.html#el-si-de-techstyle-simplificado",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "El SI de TechStyle (Simplificado)",
+    "text": "El SI de TechStyle (Simplificado)\n   [Sitio Web] → [Base de Datos] → [Análisis] → [Dashboards]\n        ↓              ↓               ↓              ↓\n   Captura        Almacena        Procesa        Presenta\n     Datos          Datos          Datos       Información\n\nCada venta, cada click, cada producto visto se registra automáticamente\n\n\nMostrar el flujo completo de manera simple y visual."
+  },
+  {
+    "objectID": "clases/class_week_1.html#discusión-4",
+    "href": "clases/class_week_1.html#discusión-4",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "💬 Discusión 4",
+    "text": "💬 Discusión 4\nPregunta para la clase:\n¿Qué otras decisiones importantes debe tomar TechStyle que requieren datos?\nEjemplos de áreas: Inventario | Marketing | Finanzas | Logística | Recursos Humanos\n\nAbrir discusión abierta. Mostrar que TODAS las áreas necesitan datos."
+  },
+  {
+    "objectID": "clases/class_week_1.html#ejemplos-de-decisiones-con-datos",
+    "href": "clases/class_week_1.html#ejemplos-de-decisiones-con-datos",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "Ejemplos de Decisiones con Datos",
+    "text": "Ejemplos de Decisiones con Datos\n\nInventario: ¿Cuántas unidades comprar de cada producto?\nMarketing: ¿A qué clientes enviar promociones?\nFinanzas: ¿Es el negocio rentable por región?\nLogística: ¿Dónde ubicar un nuevo centro de distribución?\nRR.HH.: ¿Cuánto personal necesitamos en temporada alta?\n\n\nTodas requieren transformar datos en información"
+  },
+  {
+    "objectID": "clases/class_week_1.html#actividad-grupal",
+    "href": "clases/class_week_1.html#actividad-grupal",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "Actividad Grupal",
+    "text": "Actividad Grupal\nContexto: TechStyle quiere mejorar su Sistema de Información.\nTarea en grupos (4-5 personas):\nIdentifiquen 5 tipos de datos que TechStyle DEBE registrar para tomar mejores decisiones de negocio.\nPara cada dato, expliquen: - ¿Qué decisión apoya? - ¿Por qué es importante?\nTiempo: 10 minutos Entrega: Presentación de 2 minutos por grupo\n\nCircular, guiar. Ejemplo: “Hora exacta de cada compra” → decisión sobre horarios de envío."
+  },
+  {
+    "objectID": "clases/class_week_1.html#reflexión-final",
+    "href": "clases/class_week_1.html#reflexión-final",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "Reflexión Final",
+    "text": "Reflexión Final\nPregunta de cierre:\nAntes de esta clase, ¿cómo creían que las empresas tomaban decisiones?\n\nAhora saben: Las organizaciones modernas basan sus decisiones en datos estructurados y procesados por Sistemas de Información.\n\n\nCerrar con reflexión personal. Conectar con su experiencia previa."
+  },
+  {
+    "objectID": "clases/class_week_1.html#lo-que-aprendimos-hoy",
+    "href": "clases/class_week_1.html#lo-que-aprendimos-hoy",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "Lo Que Aprendimos Hoy",
+    "text": "Lo Que Aprendimos Hoy\n\nLas empresas generan millones de datos cada día\nLos datos por sí solos no son útiles\nNecesitamos transformar datos en información\nLos Sistemas de Información hacen posible esa transformación\nLas decisiones de negocio deben basarse en evidencia\n\n\nVieron el pastel antes de conocer los ingredientes"
+  },
+  {
+    "objectID": "clases/class_week_1.html#próxima-clase",
+    "href": "clases/class_week_1.html#próxima-clase",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "Próxima Clase",
+    "text": "Próxima Clase\nTema: Componentes de un Sistema de Información\nExploraremos:\n\nHardware, Software, Datos, Personas, Procesos\nRoles en un SI (usuarios, analistas, administradores)\nCómo interactúan estos componentes\n\n\nPreparen: Piensen en sistemas que usan diariamente (redes sociales, banca, transporte)"
+  },
+  {
+    "objectID": "clases/class_week_1.html#preguntas",
+    "href": "clases/class_week_1.html#preguntas",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "Preguntas",
+    "text": "Preguntas\n¿Dudas o comentarios?\nContacto: [correo del profesor]\nPróxima clase: [fecha y hora]"
+  },
+  {
+    "objectID": "clases/class_week_1.html#gracias",
+    "href": "clases/class_week_1.html#gracias",
+    "title": "Sistemas de Información en el Contexto de Negocios",
+    "section": "¡Gracias!",
+    "text": "¡Gracias!\nBig Data y Analytics Universidad San Sebastián\n\nAgradecer participación. Recordar actividad de próxima clase."
+  },
+  {
+    "objectID": "CLAUDE.html#repository-overview",
+    "href": "CLAUDE.html#repository-overview",
+    "title": "",
+    "section": "Repository Overview",
+    "text": "Repository Overview\nThis is a teaching materials repository for the “Big Data and Analytics” university course at Universidad San Sebastián. The repository contains Quarto-based presentation materials (.qmd files) that follow a specific pedagogical framework focused on decision-making supported by data."
+  },
+  {
+    "objectID": "CLAUDE.html#course-philosophy-and-pedagogical-framework",
+    "href": "CLAUDE.html#course-philosophy-and-pedagogical-framework",
+    "title": "",
+    "section": "Course Philosophy and Pedagogical Framework",
+    "text": "Course Philosophy and Pedagogical Framework\nCore Principle: This course is not about tools first. It is about decision-making supported by data.\nKey Concept: A database is a structured representation of organizational reality.\nPedagogical Sequence: Decision → Information → Data → Information System → Data Model → Database → Analysis\nAll course materials must reflect this progression.\nSimulation-Based Learning Model\nStudents act as data analysts hired by an organization. All examples must revolve around a central business case that evolves throughout the semester.\nPreferred case types: - E-commerce - Retail - Delivery platform - Service company\nImportant: Avoid abstract or purely technical examples. Everything must be grounded in realistic business scenarios."
+  },
+  {
+    "objectID": "CLAUDE.html#presentation-structure-quarto-slides",
+    "href": "CLAUDE.html#presentation-structure-quarto-slides",
+    "title": "",
+    "section": "Presentation Structure (Quarto Slides)",
+    "text": "Presentation Structure (Quarto Slides)\nEach class presentation must follow this structure:\n\nMotivating Business Problem (realistic decision scenario)\nConceptual Explanation\nApplied Example\nGuided Practice\nReflection and Connection to Decision-Making\n\nSlide Requirements\n\nLanguage: All slides must be in Spanish\nAvoid excessive text\nUse diagrams whenever possible\nInclude discussion questions\nInclude at least one practical activity\nClearly connect theory to managerial decision-making"
+  },
+  {
+    "objectID": "CLAUDE.html#course-structure-and-file-organization",
+    "href": "CLAUDE.html#course-structure-and-file-organization",
+    "title": "",
+    "section": "Course Structure and File Organization",
+    "text": "Course Structure and File Organization\nUnit 1 Structure\n\nTotal duration: 36 teaching hours (40 minutes each)\nOrganization: 3 modules per teaching day, 2 hours (80 minutes) per module\nTeaching days: 6 days total\nContent mix: Each teaching day should mix concept and applied concept with examples\n\nFile Naming Convention\nClass files should be named as: - class_week_1.qmd - class_week_2.qmd - class_week_3.qmd - class_week_4.qmd - class_week_5.qmd - class_week_6.qmd\nAll class files should be placed in the clases/ directory."
+  },
+  {
+    "objectID": "CLAUDE.html#quarto-commands",
+    "href": "CLAUDE.html#quarto-commands",
+    "title": "",
+    "section": "Quarto Commands",
+    "text": "Quarto Commands\nRendering Presentations\n# Render a single presentation\nquarto render clases/class_week_1.qmd\n\n# Render all presentations\nquarto render clases/\n\n# Preview a presentation with live reload\nquarto preview clases/class_week_1.qmd\nTypical Quarto Presentation YAML Header\n---\ntitle: \"Título de la Presentación\"\nsubtitle: \"Subtítulo\"\nauthor: \"Big Data and Analytics\"\nformat:\n  revealjs:\n    theme: default\n    incremental: false\n    slide-number: true\n---"
+  },
+  {
+    "objectID": "CLAUDE.html#reference-materials",
+    "href": "CLAUDE.html#reference-materials",
+    "title": "",
+    "section": "Reference Materials",
+    "text": "Reference Materials\n\nsyllabus.md: Contains course content, units, and learning outcomes\nmaterial/: Contains reference PDFs and course materials"
+  },
+  {
+    "objectID": "CLAUDE.html#working-with-this-repository",
+    "href": "CLAUDE.html#working-with-this-repository",
+    "title": "",
+    "section": "Working with This Repository",
+    "text": "Working with This Repository\nWhen creating or modifying class presentations:\n\nAlways start with a realistic business problem\nEnsure all content is in Spanish\nFollow the pedagogical sequence (Decision → Information → Data → etc.)\nUse the business case approach (students as data analysts)\nInclude practical activities and discussion questions\nConnect all technical concepts to managerial decision-making\nUse diagrams and visual representations over text-heavy slides"
+  },
+  {
+    "objectID": "clases/programa_curso.html#una-decisión-que-necesita-datos",
+    "href": "clases/programa_curso.html#una-decisión-que-necesita-datos",
+    "title": "Big Data y Analytics",
+    "section": "Una decisión que necesita datos",
+    "text": "Una decisión que necesita datos\n\n\nEscenario:\nUna empresa de retail chilena con 80 sucursales quiere saber:\n\n¿Qué productos están generando pérdidas?\n¿En qué regiones hay sobre-stock?\n¿Qué clientes están en riesgo de no volver?\n\nEl gerente tiene intuición. Pero necesita evidencia.\n\n\nEl problema real:\nLos datos existen — en sistemas de venta, bodega, CRM — pero están dispersos, sin estructura, y nadie sabe cómo cruzarlos.\n¿Quién resuelve eso? Tú, al terminar este curso."
+  },
+  {
+    "objectID": "clases/programa_curso.html#de-qué-trata-este-curso",
+    "href": "clases/programa_curso.html#de-qué-trata-este-curso",
+    "title": "Big Data y Analytics",
+    "section": "¿De qué trata este curso?",
+    "text": "¿De qué trata este curso?\n\nBig Data y Analytics — ICOM E015 · 5 créditos SCT · Tercer semestre\n\n\n\nNo es un curso de tecnología.\nEs un curso sobre cómo transformar datos en decisiones.\n\nExplorar grandes volúmenes de datos\nDepurar y estructurar información\nConstruir bases de datos que respondan preguntas de negocio\nElaborar informes que apoyen la gerencia\n\n\n\nResultado de Aprendizaje General:\nElabora informes con información generada a partir de la exploración y depuración de grandes bases de datos, que aportan a la toma de decisiones de la organización."
+  },
+  {
+    "objectID": "clases/programa_curso.html#el-recorrido-del-semestre",
+    "href": "clases/programa_curso.html#el-recorrido-del-semestre",
+    "title": "Big Data y Analytics",
+    "section": "El recorrido del semestre",
+    "text": "El recorrido del semestre\n\n\n\n\nUnidad 1 Semanas 1–6\nSistemas de Información en el Contexto Empresarial\n¿Cómo fluye la información en una organización?\n\n\n\nUnidad 2 Semanas 7–9\nFundamentos de Bases de Datos\n¿Cómo se modela la realidad de una empresa?\n\n\n\n\nUnidad 3 Semanas 10–18\nModelamiento y Gestión de Base de Datos\n¿Cómo se construye y consulta una base de datos real?\n\n\n\nCada unidad parte de un problema de negocio y termina con una solución concreta en datos."
+  },
+  {
+    "objectID": "clases/programa_curso.html#unidad-1-sistemas-de-información",
+    "href": "clases/programa_curso.html#unidad-1-sistemas-de-información",
+    "title": "Big Data y Analytics",
+    "section": "Unidad 1 · Sistemas de Información",
+    "text": "Unidad 1 · Sistemas de Información\n\nSistemas de Información en el Contexto Empresarial\n\n\n\n¿Qué aprenderás?\n\nDefinición y componentes de un sistema de información\nImportancia de los SI en la toma de decisiones\nActores y roles dentro de un SI\nTipos de sistemas: DSS · CMI · CRM · EIS\n\nResultado: Explica los distintos sistemas de información en el contexto de la toma de decisiones organizacionales.\n\n\nEjemplo aplicado:\n\nLa empresa de retail necesita entender qué sistema registra las ventas, cuál gestiona el inventario y cómo se relacionan.\n\nPregunta clave: ¿Qué decisiones puedo tomar si conecto estos sistemas?\n\n36h directas · 18h indirectas"
+  },
+  {
+    "objectID": "clases/programa_curso.html#unidad-2-fundamentos-de-bases-de-datos",
+    "href": "clases/programa_curso.html#unidad-2-fundamentos-de-bases-de-datos",
+    "title": "Big Data y Analytics",
+    "section": "Unidad 2 · Fundamentos de Bases de Datos",
+    "text": "Unidad 2 · Fundamentos de Bases de Datos\n\nFundamentos de Bases de Datos\n\n\n\n¿Qué aprenderás?\n\nDiagrama de Caso de Uso\nDiagrama Esquema UML\nModelo Relacional\nModelo Entidad–Relación\n\nResultado: Diseña un sistema de información mediante el modelo relacional para la toma de decisiones en contextos organizacionales.\n\n\nEjemplo aplicado:\n\nAntes de crear la base de datos del retail, necesitamos modelar sus entidades: productos, clientes, sucursales, ventas.\n\nPregunta clave: ¿Cómo represento la realidad del negocio en tablas y relaciones?\n\n18h directas · 9h indirectas"
+  },
+  {
+    "objectID": "clases/programa_curso.html#unidad-3-modelamiento-y-gestión",
+    "href": "clases/programa_curso.html#unidad-3-modelamiento-y-gestión",
+    "title": "Big Data y Analytics",
+    "section": "Unidad 3 · Modelamiento y Gestión",
+    "text": "Unidad 3 · Modelamiento y Gestión\n\nModelamiento y Gestión de Base de Datos\n\n\n\n¿Qué aprenderás?\n\nTeoría de la Normalización\nDiccionario de datos\nBase de datos en MySQL\nAlmacenamiento y consultas SQL\nGestión de transacciones\n\nResultado: Construye base de datos para gestionar información en la toma de decisiones empresariales.\n\n\nEjemplo aplicado:\n\nConstruimos la base de datos de ventas del retail, diseñamos consultas que respondan preguntas gerenciales y generamos reportes accionables.\n\nPregunta clave: ¿Qué consultas necesita la gerencia para tomar decisiones hoy?\n\n54h directas · 27h indirectas"
+  },
+  {
+    "objectID": "clases/programa_curso.html#evaluaciones",
+    "href": "clases/programa_curso.html#evaluaciones",
+    "title": "Big Data y Analytics",
+    "section": "Evaluaciones",
+    "text": "Evaluaciones\n\n\n\nSolemne 1 · 30%\n\nControles parciales: 10%\nPrueba escrita individual: 20%\n\n\n\nSolemne 2 · 35%\n\nControles parciales: 10%\nAnalítica de base de datos: 25%\n\n\n\nSolemne 3 · 35%\n\nControles parciales: 10%\nCreación de BD relacional y análisis: 25%\n\n\n\n\n\nEvaluación Recuperativa\nVoluntaria · Última semana del semestre\nReemplaza una solemne no rendida, con justificación válida.\nCubre toda la materia del semestre o un conjunto definido por el docente.\n\n\nLos controles parciales se rinden durante el desarrollo de cada unidad."
+  },
+  {
+    "objectID": "clases/programa_curso.html#requisitos-de-aprobación",
+    "href": "clases/programa_curso.html#requisitos-de-aprobación",
+    "title": "Big Data y Analytics",
+    "section": "Requisitos de Aprobación",
+    "text": "Requisitos de Aprobación\n\n\n\nNota mínima de aprobación\n\nLa calificación final debe ser igual o superior a 4,0 para aprobar la asignatura.\n\nAsistencia obligatoria\n\nSe exige un mínimo de 90% de asistencia a las clases prácticas de laboratorio.\n\n\n\nResumen ponderaciones\n\n\n\nEvaluación\nPeso\n\n\n\n\nSolemne 1\n30%\n\n\nSolemne 2\n35%\n\n\nSolemne 3\n35%\n\n\nTotal\n100%\n\n\n\n\n\nLa asignatura es de carácter práctico — la asistencia al laboratorio es parte del aprendizaje, no solo un requisito administrativo."
+  },
+  {
+    "objectID": "clases/programa_curso.html#cómo-trabajaremos",
+    "href": "clases/programa_curso.html#cómo-trabajaremos",
+    "title": "Big Data y Analytics",
+    "section": "¿Cómo trabajaremos?",
+    "text": "¿Cómo trabajaremos?\n\n\nEnfoque del curso:\n\nClases prácticas en laboratorio de computación\nAprendizaje basado en simulación de escenarios reales\nCada clase parte de un problema de negocio concreto\nUso guiado de software desde la primera sesión\n\nTu rol: Analista de datos contratado por una organización real.\n\n\n\nCada sesión sigue esta secuencia:\n\nProblema de negocio\nConcepto que lo resuelve\nAplicación en software\nReflexión sobre la decisión\n\n\n\n\nBibliografía principal:\nSilberschatz, Korth & Sudarshan · Fundamentos de Bases de Datos (6ª ed.)"
+  },
+  {
+    "objectID": "clases/programa_curso.html#el-objetivo-final",
+    "href": "clases/programa_curso.html#el-objetivo-final",
+    "title": "Big Data y Analytics",
+    "section": "El objetivo final",
+    "text": "El objetivo final\n\nAl terminar este curso serás capaz de sentarte frente a un gerente, entender su problema, y decirle:\n\n\n\n“Tengo los datos, el modelo y las consultas. Aquí está la respuesta.”\n\n\n\n\nSD6.2 · Perfil de Egreso USS\nGenera información a partir de la gestión de datos para contribuir en la toma de decisiones de la organización.\n\n\nValores del curso\n\nHonestidad en el análisis\nResponsabilidad con los datos\nPrudencia en las conclusiones"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "",
+    "section": "",
+    "text": "Big Data y Analytics\n    Ingeniería Comercial · Facultad de Economía, Negocios y Gobierno · 2026\n  \n  \n    ICOM E015\n    3er Semestre · 5 créditos SCT\n  \n\n\n\n\n  \n  \n    \n    Presentaciones del Curso\n    \n  \n\n  \n    \n      Sesión 0\n      Conociendo a tu Profesor\n      Ciencia de Datos Espaciales · Recursos Hídricos · Investigación de Impacto\n      Ver presentación →\n    \n    \n      Sesión 0\n      Programa del Curso\n      Unidades, contenidos, evaluaciones y requisitos de aprobación\n      Ver presentación →\n    \n  \n\n  \n  \n    \n    Unidad 1 · Sistemas de Información en el Contexto Empresarial\n    \n  \n\n  \n    \n      Semana 1\n      Sistemas de Información en el Contexto de Negocios\n      Introducción, decisiones y flujo de información organizacional\n      Ver presentación →\n    \n    \n      Semana 2\n      Componentes, Actores y Tipos de Sistemas de Información\n      DSS, CMI, CRM, EIS — roles y niveles organizacionales\n      Ver presentación →\n    \n    \n      Semana 3\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 4\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 5\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 6\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n  \n\n  \n  \n    \n    Unidad 2 · Fundamentos de Bases de Datos\n    \n  \n\n  \n    \n      Semana 7\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 8\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 9\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n  \n\n  \n  \n    \n    Unidad 3 · Modelamiento y Gestión de Base de Datos\n    \n  \n\n  \n    \n      Semana 10\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 11\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 12\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 13\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 14\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 15\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 16\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 17\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 18\n      Próximamente\n      Contenido en preparación\n      Próximamente"
+  }
+]

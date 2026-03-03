@@ -1,5 +1,4 @@
 # ── Quarto build output ───────────────────────────────────────────────────────
-_site/
 .quarto/
 
 # Generated HTML files (rendered from .qmd — not source files)

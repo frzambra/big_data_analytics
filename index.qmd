@@ -1,16 +1,13 @@
 ---
-title: ""
+title: "Big Data y Analytics"
 format:
   html:
     page-layout: full
     toc: false
-    title-block-banner: false
 ---
 
 ```{=html}
 <style>
-  .quarto-title-block, #title-block-header, h1.title { display: none !important; }
-
   :root {
     --azul-oscuro:  #1B3A6B;
     --azul-medio:   #2C5F8A;
@@ -36,7 +33,7 @@ format:
   }
   .hero-logo { height: 64px; flex-shrink: 0; background: rgba(255,255,255,0.92); padding: 6px 10px; border-radius: 8px; }
   .hero-divider { width: 1px; height: 60px; background: rgba(255,255,255,0.3); flex-shrink: 0; }
-  .hero-title { margin: 0 0 0.25rem; font-size: 1.9rem; font-weight: 700; letter-spacing: -0.02em; color: #fff; }
+  .hero-text h1 { margin: 0 0 0.25rem; font-size: 1.9rem; font-weight: 700; letter-spacing: -0.02em; }
   .hero-text p  { margin: 0; font-size: 0.95rem; color: rgba(255,255,255,0.7); }
   .hero-badge {
     margin-left: auto;
@@ -135,25 +132,18 @@ format:
   /* ── Upcoming badge ─────────────────────────────────── */
   .card.upcoming { opacity: 0.5; pointer-events: none; }
   .card.upcoming .card-arrow { color: var(--gris-suave); }
-
-  /* ── Evaluación card ─────────────────────────────────── */
-  .card.evaluacion::before { background: var(--tierra-oscuro); }
-  .card.evaluacion { background: #fdf6f0; border-color: #e8c9a8; pointer-events: none; }
-  .card.evaluacion .card-tag { color: var(--tierra-oscuro); }
-  .card.evaluacion .card-title { color: var(--tierra-oscuro); }
-  .card.evaluacion .card-arrow { color: var(--tierra); }
 </style>
 
 <div class="hero">
   <img class="hero-logo" src="img/logo-horizontal-on-light.svg" alt="Universidad San Sebastián">
   <div class="hero-divider"></div>
   <div class="hero-text">
-    <div class="hero-title">Big Data y Analytics</div>
+    <h1>Big Data y Analytics</h1>
     <p>Ingeniería Comercial · Facultad de Economía, Negocios y Gobierno · 2026</p>
   </div>
   <div class="hero-badge">
     <span class="badge-code">ICOM E015</span>
-    <span class="badge-label">3er Semestre · 5 créditos SCT</span>
+    <span class="badge-label">5to Semestre · 5 créditos SCT</span>
   </div>
 </div>
 
@@ -192,33 +182,39 @@ format:
     <a class="card semana" href="clases/class_week_1.html">
       <span class="card-tag">Semana 1</span>
       <span class="card-title">Sistemas de Información en el Contexto de Negocios</span>
-      <span class="card-subtitle">Datos · Información · Conocimiento · Decisión · Introducción a los SI</span>
+      <span class="card-subtitle">Introducción, decisiones y flujo de información organizacional</span>
       <span class="card-arrow">Ver presentación →</span>
     </a>
     <a class="card semana" href="clases/class_week_2.html">
       <span class="card-tag">Semana 2</span>
       <span class="card-title">Componentes, Actores y Tipos de Sistemas de Información</span>
-      <span class="card-subtitle">Hardware · Software · Personas · Procesos · TPS · BI · DSS · CRM · EIS</span>
+      <span class="card-subtitle">DSS, CMI, CRM, EIS — roles y niveles organizacionales</span>
       <span class="card-arrow">Ver presentación →</span>
     </a>
-    <a class="card semana" href="clases/class_week_3.html">
+    <a class="card semana upcoming" href="#">
       <span class="card-tag">Semana 3</span>
-      <span class="card-title">CMI, Calidad de Datos y Ética</span>
-      <span class="card-subtitle">Balanced Scorecard · 4 perspectivas · KPIs · Exactitud · Completitud · Consistencia</span>
-      <span class="card-arrow">Ver presentación →</span>
+      <span class="card-title">Próximamente</span>
+      <span class="card-subtitle">Contenido en preparación</span>
+      <span class="card-arrow">Próximamente</span>
     </a>
-    <a class="card semana" href="clases/class_week_4.html">
+    <a class="card semana upcoming" href="#">
       <span class="card-tag">Semana 4</span>
-      <span class="card-title">Big Data y Síntesis de la Unidad 1</span>
-      <span class="card-subtitle">Las 5 V · OLTP vs OLAP · Data Warehouse · ETL · Repaso integrador</span>
-      <span class="card-arrow">Ver presentación →</span>
+      <span class="card-title">Próximamente</span>
+      <span class="card-subtitle">Contenido en preparación</span>
+      <span class="card-arrow">Próximamente</span>
     </a>
-    <div class="card evaluacion">
+    <a class="card semana upcoming" href="#">
       <span class="card-tag">Semana 5</span>
-      <span class="card-title">Solemne 1</span>
-      <span class="card-subtitle">Evaluación Unidad 1 · Prueba escrita individual (20%) + controles parciales (10%)</span>
-      <span class="card-arrow">30% de la nota final</span>
-    </div>
+      <span class="card-title">Próximamente</span>
+      <span class="card-subtitle">Contenido en preparación</span>
+      <span class="card-arrow">Próximamente</span>
+    </a>
+    <a class="card semana upcoming" href="#">
+      <span class="card-tag">Semana 6</span>
+      <span class="card-title">Próximamente</span>
+      <span class="card-subtitle">Contenido en preparación</span>
+      <span class="card-arrow">Próximamente</span>
+    </a>
   </div>
 
   <!-- ── Unidad 2 ─────────────────────────────────────── -->
@@ -229,12 +225,6 @@ format:
   </div>
 
   <div class="card-grid">
-    <a class="card semana upcoming" href="#">
-      <span class="card-tag">Semana 6</span>
-      <span class="card-title">Próximamente</span>
-      <span class="card-subtitle">Contenido en preparación</span>
-      <span class="card-arrow">Próximamente</span>
-    </a>
     <a class="card semana upcoming" href="#">
       <span class="card-tag">Semana 7</span>
       <span class="card-title">Próximamente</span>
@@ -253,12 +243,6 @@ format:
       <span class="card-subtitle">Contenido en preparación</span>
       <span class="card-arrow">Próximamente</span>
     </a>
-    <div class="card evaluacion">
-      <span class="card-tag">Semana 10</span>
-      <span class="card-title">Solemne 2</span>
-      <span class="card-subtitle">Evaluación Unidad 2 · Analítica de base de datos (25%) + controles parciales (10%)</span>
-      <span class="card-arrow">35% de la nota final</span>
-    </div>
   </div>
 
   <!-- ── Unidad 3 ─────────────────────────────────────── -->
@@ -269,6 +253,12 @@ format:
   </div>
 
   <div class="card-grid">
+    <a class="card semana upcoming" href="#">
+      <span class="card-tag">Semana 10</span>
+      <span class="card-title">Próximamente</span>
+      <span class="card-subtitle">Contenido en preparación</span>
+      <span class="card-arrow">Próximamente</span>
+    </a>
     <a class="card semana upcoming" href="#">
       <span class="card-tag">Semana 11</span>
       <span class="card-title">Próximamente</span>
@@ -299,12 +289,24 @@ format:
       <span class="card-subtitle">Contenido en preparación</span>
       <span class="card-arrow">Próximamente</span>
     </a>
-    <div class="card evaluacion">
+    <a class="card semana upcoming" href="#">
       <span class="card-tag">Semana 16</span>
-      <span class="card-title">Solemne 3</span>
-      <span class="card-subtitle">Evaluación Unidad 3 · Creación de BD relacional y análisis (25%) + controles parciales (10%)</span>
-      <span class="card-arrow">35% de la nota final</span>
-    </div>
+      <span class="card-title">Próximamente</span>
+      <span class="card-subtitle">Contenido en preparación</span>
+      <span class="card-arrow">Próximamente</span>
+    </a>
+    <a class="card semana upcoming" href="#">
+      <span class="card-tag">Semana 17</span>
+      <span class="card-title">Próximamente</span>
+      <span class="card-subtitle">Contenido en preparación</span>
+      <span class="card-arrow">Próximamente</span>
+    </a>
+    <a class="card semana upcoming" href="#">
+      <span class="card-tag">Semana 18</span>
+      <span class="card-title">Próximamente</span>
+      <span class="card-subtitle">Contenido en preparación</span>
+      <span class="card-arrow">Próximamente</span>
+    </a>
   </div>
 
 </div>

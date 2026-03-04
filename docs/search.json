@@ -508,7 +508,7 @@
     "href": "clases/class_week_1.html#lo-que-acabamos-de-ver",
     "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "Lo Que Acabamos de Ver",
-    "text": "Lo Que Acabamos de Ver\n✓ Una empresa real con millones de registros ✓ Una pregunta de negocio concreta ✓ Datos transformados en algo útil ✓ Una decisión fundamentada\n\nAhora entendamos QUÉ pasó aquí\n\n\nTransición hacia los conceptos formales. “Vieron el pastel, ahora veamos los ingredientes”."
+    "text": "Lo Que Acabamos de Ver\n✓ Una empresa real con millones de registros\n✓ Una pregunta de negocio concreta\n✓ Datos transformados en algo útil\n✓ Una decisión fundamentada\n\nAhora entendamos QUÉ pasó aquí\n\n\nTransición hacia los conceptos formales. “Vieron el pastel, ahora veamos los ingredientes”."
   },
   {
     "objectID": "clases/class_week_1.html#conceptos-fundamentales",
@@ -536,7 +536,7 @@
     "href": "clases/class_week_1.html#la-jerarquía-del-valor",
     "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "La Jerarquía del Valor",
-    "text": "La Jerarquía del Valor\n              DECISIÓN\n                 ↑\n           CONOCIMIENTO\n                 ↑\n            INFORMACIÓN\n                 ↑\n               DATOS\n\nCada nivel agrega valor al anterior\n\n\nEste es el modelo fundamental del curso. Siempre volvemos a esto."
+    "text": "La Jerarquía del Valor\n\n\nCada nivel agrega valor al anterior\n\n\nEste es el modelo fundamental del curso. Siempre volvemos a esto."
   },
   {
     "objectID": "clases/class_week_1.html#conectando-con-techstyle",
@@ -578,7 +578,7 @@
     "href": "clases/class_week_1.html#el-si-de-techstyle-simplificado",
     "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "El SI de TechStyle (Simplificado)",
-    "text": "El SI de TechStyle (Simplificado)\n   [Sitio Web] → [Base de Datos] → [Análisis] → [Dashboards]\n        ↓              ↓               ↓              ↓\n   Captura        Almacena        Procesa        Presenta\n     Datos          Datos          Datos       Información\n\nCada venta, cada click, cada producto visto se registra automáticamente\n\n\nMostrar el flujo completo de manera simple y visual."
+    "text": "El SI de TechStyle (Simplificado)\n\n\nCada venta, cada click, cada producto visto se registra automáticamente\n\n\nMostrar el flujo completo de manera simple y visual."
   },
   {
     "objectID": "clases/class_week_1.html#discusión-4",
@@ -627,7 +627,7 @@
     "href": "clases/class_week_1.html#preguntas",
     "title": "Sistemas de Información en el Contexto Empresarial",
     "section": "Preguntas",
-    "text": "Preguntas\n¿Dudas o comentarios?\nContacto: [correo del profesor]\nPróxima clase: [fecha y hora]"
+    "text": "Preguntas\n¿Dudas o comentarios?\nContacto: francisco.zambrano@uss.cl\nPróxima clase: Jueves 12 marzo a las 11:00"
   },
   {
     "objectID": "clases/class_week_1.html#gracias",
@@ -781,7 +781,7 @@
     "href": "clases/presentacion_docente.html#qué-es-la-ciencia-de-datos-espaciales",
     "title": "Conociendo a tu Profesor",
     "section": "¿Qué es la Ciencia de Datos Espaciales?",
-    "text": "¿Qué es la Ciencia de Datos Espaciales?\n\n\nLa disciplina en una frase:\n\nExtraer conocimiento significativo de datos que tienen una dimensión dónde en el espacio y el tiempo.\n\nTres pilares:\n\nSistemas de Información Geográfica (SIG) Representar el mundo como capas de datos\nEstadística Espacial Los vecinos importan: el espacio tiene autocorrelación\nCiencia de Datos Modelamiento, aprendizaje automático, visualización\n\n\n\n\nEjemplo concreto: ¿Dónde en Chile está cambiando la vegetación más rápido y por qué?\n\n\n\nHacer la disciplina tangible (2 min) Preguntar al curso: “¿Alguno usa Google Maps? ¿Ha visto las capas de tráfico o calor? Eso es Ciencia de Datos Espaciales aplicada a la vida diaria.” Luego escalar: “Nosotros lo aplicamos a preguntas de mayor escala: cambio climático, biodiversidad, recursos naturales.” Enfatizar que el espacio no es solo un contexto, es una variable que cambia los análisis."
+    "text": "¿Qué es la Ciencia de Datos Espaciales?\n\n\nLa disciplina en una frase:\n\nExtraer conocimiento significativo de datos que tienen una dimensión, ¿dónde?, en el espacio y el tiempo.\n\nTres pilares:\n\nSistemas de Información Geográfica (SIG) Representar el mundo como capas de datos\nEstadística Espacial Los vecinos importan: el espacio tiene autocorrelación\nCiencia de Datos Modelamiento, aprendizaje automático, visualización\n\n\n\n\nEjemplo concreto: ¿Dónde en Chile está cambiando la vegetación más rápido y por qué?\n\n\n\nHacer la disciplina tangible (2 min) Preguntar al curso: “¿Alguno usa Google Maps? ¿Ha visto las capas de tráfico o calor? Eso es Ciencia de Datos Espaciales aplicada a la vida diaria.” Luego escalar: “Nosotros lo aplicamos a preguntas de mayor escala: cambio climático, biodiversidad, recursos naturales.” Enfatizar que el espacio no es solo un contexto, es una variable que cambia los análisis."
   },
   {
     "objectID": "clases/presentacion_docente.html#investigación-destacada-proyecto-odes",
@@ -830,6 +830,6 @@
     "href": "clases/presentacion_docente.html#preguntas-conversación-contacto",
     "title": "Conociendo a tu Profesor",
     "section": "Preguntas · Conversación · Contacto",
-    "text": "Preguntas · Conversación · Contacto\n\n¿Tienen preguntas?\nSobre el curso, la investigación, la carrera, el running… cualquier cosa.\n\n\n\n\nContacto:\n\nEmail institucional: francisco.zambrano@uss.cl\nOficina: El Condor 796 / Piso 4\nHorario de atención: Viernes 8:30 - 16:00\n\n\n\nRecursos adicionales:\n\nGitHub / ResearchGate: www.github.com/frzambra\nGoogle Scholar: https://scholar.google.com/citations?user=mKQRdOEAAAAJ&hl=es\nProyecto ODES: https://odes-chile.org\n\n\n\n\n“Los grandes análisis comienzan con una buena pregunta. Empecemos a hacer preguntas juntos.”\n\n\nCierre cálido y apertura al diálogo (2–3 min) No terminar con “¿Alguna pregunta?” de manera pasiva. Generar la conversación activamente. Sugerencias de preguntas para romper el silencio inicial: - “¿Alguien sabe qué es la megasequía chilena?” - “¿Cuántos han trabajado con datos geográficos antes?” - “¿Qué esperan llevarse de este curso?”\nSi el tiempo lo permite, pedir a dos o tres estudiantes que se presenten brevemente. Terminar con energía: “Me alegra estar aquí. Vamos a hacer trabajo que vale la pena.”"
+    "text": "Preguntas · Conversación · Contacto\n\n¿Tienen preguntas?\nSobre el curso, la investigación, la carrera, el running… cualquier cosa.\n\n\n\n\nContacto:\n\nEmail: francisco.zambrano@uss.cl\nOficina: El Condor 796 / Piso 4\nAtención: Viernes 8:30 – 16:00\n\n\n\nRecursos adicionales:\n\nGitHub: github.com/frzambra\nGoogle Scholar: link\nProyecto ODES: odes-chile.org\n\n\n\n\n“Los grandes análisis comienzan con una buena pregunta. Empecemos a hacer preguntas juntos.”\n\n\nCierre cálido y apertura al diálogo (2–3 min) No terminar con “¿Alguna pregunta?” de manera pasiva. Generar la conversación activamente. Sugerencias de preguntas para romper el silencio inicial: - “¿Alguien sabe qué es la megasequía chilena?” - “¿Cuántos han trabajado con datos geográficos antes?” - “¿Qué esperan llevarse de este curso?”\nSi el tiempo lo permite, pedir a dos o tres estudiantes que se presenten brevemente. Terminar con energía: “Me alegra estar aquí. Vamos a hacer trabajo que vale la pena.”"
   }
 ]

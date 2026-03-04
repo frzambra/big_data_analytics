@@ -192,9 +192,9 @@ Llevar a los estudiantes a reconocer que sin datos, la decisión sería por intu
 ## Lo Que Acabamos de Ver
 
 ::: {.incremental}
-✓ Una empresa real con millones de registros
-✓ Una pregunta de negocio concreta
-✓ Datos transformados en algo útil
+✓ Una empresa real con millones de registros  
+✓ Una pregunta de negocio concreta  
+✓ Datos transformados en algo útil  
 ✓ Una decisión fundamentada
 :::
 
@@ -269,15 +269,7 @@ El conocimiento permite DECIDIR. Es el nivel más alto.
 
 ## La Jerarquía del Valor
 
-```
-              DECISIÓN
-                 ↑
-           CONOCIMIENTO
-                 ↑
-            INFORMACIÓN
-                 ↑
-               DATOS
-```
+![](../img/diagrama_jerarquia_dato.png)
 
 ::: {.fragment}
 **Cada nivel agrega valor al anterior**
@@ -379,12 +371,7 @@ Conectar características de Big Data con necesidades de negocio.
 
 ## El SI de TechStyle (Simplificado)
 
-```
-   [Sitio Web] → [Base de Datos] → [Análisis] → [Dashboards]
-        ↓              ↓               ↓              ↓
-   Captura        Almacena        Procesa        Presenta
-     Datos          Datos          Datos       Información
-```
+![](../img/diagrama_captura_datos-presenta_informacion.jpg)
 
 ::: {.fragment}
 **Cada venta, cada click, cada producto visto se registra automáticamente**
@@ -501,9 +488,9 @@ Cerrar con reflexión personal. Conectar con su experiencia previa.
 
 ¿Dudas o comentarios?
 
-**Contacto**: [correo del profesor]
+**Contacto**: francisco.zambrano@uss.cl
 
-**Próxima clase**: [fecha y hora]
+**Próxima clase**: Jueves 12 marzo a las 11:00
 
 ---
 

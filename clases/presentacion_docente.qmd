@@ -99,7 +99,7 @@ Destacar que la trayectoria siempre tuvo un propósito de impacto real, no solo 
 ::: {}
 **La disciplina en una frase:**
 
-> Extraer conocimiento significativo de datos que tienen una dimensión **dónde** en el espacio y el tiempo.
+> Extraer conocimiento significativo de datos que tienen una dimensión, **¿dónde?**, en el espacio y el tiempo.
 
 **Tres pilares:**
 
@@ -443,23 +443,23 @@ Sobre las oportunidades de investigación: *"Si alguno tiene interés genuino en
 
 ::: {.cols-2}
 
-::: {style="background: rgba(255,255,255,0.1); padding: 1em; border-radius: 8px; color: #F7F4F0;"}
+::: {style="background: rgba(255,255,255,0.15); padding: 1em; border-radius: 8px; color: #F7F4F0; border: 1px solid rgba(255,255,255,0.3);"}
 
 **Contacto:**
 
-- **Email institucional:** `francisco.zambrano@uss.cl`
-- **Oficina:** `El Condor 796 / Piso 4`
-- **Horario de atención:** `Viernes 8:30 - 16:00`
+- **Email:** francisco.zambrano@uss.cl
+- **Oficina:** El Condor 796 / Piso 4
+- **Atención:** Viernes 8:30 – 16:00
 
 :::
 
-::: {style="background: rgba(196,149,106,0.25); padding: 1em; border-radius: 8px; color: #F7F4F0;"}
+::: {style="background: rgba(196,149,106,0.35); padding: 1em; border-radius: 8px; color: #F7F4F0; border: 1px solid rgba(196,149,106,0.6);"}
 
 **Recursos adicionales:**
 
-- **GitHub / ResearchGate:** `www.github.com/frzambra`
-- **Google Scholar:** `https://scholar.google.com/citations?user=mKQRdOEAAAAJ&hl=es`
-- **Proyecto ODES:** `https://odes-chile.org`
+- **GitHub:** [github.com/frzambra](https://www.github.com/frzambra)
+- **Google Scholar:** [link](https://scholar.google.com/citations?user=mKQRdOEAAAAJ&hl=es)
+- **Proyecto ODES:** [odes-chile.org](https://odes-chile.org)
 
 :::
 

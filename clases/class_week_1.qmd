@@ -422,11 +422,13 @@ Abrir discusión abierta. Mostrar que TODAS las áreas necesitan datos.
 
 Identifiquen **5 tipos de datos** que TechStyle **DEBE** registrar para tomar mejores decisiones de negocio.
 
-Para cada dato, expliquen:
-- ¿Qué decisión apoya?
-- ¿Por qué es importante?
+Para cada dato, expliquen:  
+- ¿Qué decisión apoya?  
+- ¿Por qué es importante?  
 
-**Tiempo**: 10 minutos
+<br>
+
+**Tiempo**: 10 minutos  
 **Entrega**: Presentación de 2 minutos por grupo
 
 ::: {.notes}

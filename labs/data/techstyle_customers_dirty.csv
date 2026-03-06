@@ -1,0 +1,206 @@
+id,nombre,apellido,email,telefono,region,fecha_nacimiento,fecha_registro,segmento
+1,Javiera,Flores,javiera.flores@gmail.com,996493863,Biobío,1988-03-23,2020-03-10,Estándar
+2,Sebastián,Fuentes,,984304333,Los Lagos,1983-08-27,2021-10-04,Estándar
+3,Sebastián,Contreras,sebastián.contreras@gmail.com,964704189,Valparaíso,1975-01-23,2021-10-05,Premium
+4,Nicolás,Sepúlveda,nicolás.sepúlveda@gmail.com,933705307,Biobío,1994-11-15,2020-03-21,Estándar
+5,Felipe,Rojas,,933892205,RM,1980-10-08,2022-03-27,Premium
+6,Martín,,martín.torres@gmail.com,974867032,Valparaíso,2002-02-07,2022-10-10,Estándar
+7,Camila,Muñoz,camila.muñoz@gmail,998128100,Antofagasta,1979-09-23,2023-05-12,Básico
+8,Alejandro,Contreras,alejandro.contreras@gmail.com,929829822,RM,1980-10-13,2020-11-04,Básico
+9,Sebastián,Soto,,953659778,RM,1978-02-21,2020-02-25,Básico
+10,Catalina,Fuentes,catalina.fuentes@gmail.com,967045601,RM,1986-12-01,2023-03-16,Premium
+11,Daniela,Flores,daniela.flores@gmail.com,931050667,Valparaíso,1995-01-29,2022-01-26,Premium
+12,Javiera,Vargas,,980853774,RM,1984-03-27,2022-02-21,Estándar
+13,Diego,Flores,diego.flores@gmail.com,910183025,,1998-02-20,2020-05-24,Estándar
+14,Matías,Herrera,matías.herrera@gmail.com,970333053,RM,1996-04-02,2021-05-11,Premium
+15,Camila,Ramos,camila.ramos@gmail.com,969845276,,,2022-10-16,Premium
+16,Javiera,Díaz,javiera.díaz@gmail.com,944002147,Biobío,1983-03-20,2022-08-14,Básico
+17,Catalina,Sepúlveda,catalina.sepúlveda@gmail.com,977816807,Maule,1974-12-15,2020-05-02,Estándar
+18,María,Morales,maría.morales@gmail.com,923190487,RM,1981-06-15,2023-09-02,Básico
+19,Martín,Espinoza,martín.espinoza@gmail.com,954106502,RM,1977-04-12,2020-08-02,Estándar
+20,Camila,Torres,camila.torres@gmail.com,949529512,Antofagasta,1992-07-04,2022-11-16,Básico
+21,Daniela,Pérez,daniela.pérez@gmail.com,951574904,Los Lagos,1989-05-22,2023-12-24,Básico
+22,Francisco,Muñoz,francisco.muñoz@gmail,924912833,RM,1990-11-19,2022-07-28,Estándar
+23,Isidora,Flores,isidora.flores@gmail.com,989328380,Biobío,1972-11-13,2020-08-05,Premium
+24,Daniela,Morales,danielamoralesgmail.com,924781783,RM,1984-08-18,2021-04-11,Premium
+25,Andrés,Torres,andrés.torres@gmail.com,925161415,Biobío,1984-03-13,2023-01-22,Estándar
+26,Valentina,,valentina.castro@gmail.com,975857881,Biobío,1991-06-13,2022-06-12,Estándar
+27,Fernanda,,fernanda.castro@gmail.com,948108152,O'Higgins,1979-08-03,2020-07-09,Básico
+28,Javiera,Rojas,javiera.rojas@gmail.com,936720922,RM,1985-03-11,2021-02-14,Básico
+29,Valentina,Morales,valentina.morales@gmail.com,962385285,RM,,2023-03-18,Premium
+30,Martín,Soto,martín.soto@gmail,913860039,Biobío,2003-05-25,2020-08-30,Premium
+31,Pablo,Vargas,pablo.vargas@gmail.com,966711868,,1986-07-09,2023-06-11,Premium
+32,Pablo,Espinoza,,962463815,Valparaíso,1987-02-08,2021-02-22,Estándar
+33,Javiera,Castro,,993644995,O'Higgins,1989-06-16,2023-12-27,Premium
+34,Valentina,Fuentes,,929513094,Antofagasta,1990-07-19,2021-10-17,Premium
+35,Andrés,Sepúlveda,andrés.sepúlveda@gmail,959411699,Valparaíso,2000-03-15,2023-11-20,Premium
+36,Matías,Silva,matías.silva@gmail.com,984170763,Valparaíso,2003-12-26,2022-08-17,Básico
+37,Javiera,Ramos,javiera.ramos@gmail.com,940830120,O'Higgins,1973-11-17,2022-04-23,Básico
+38,Diego,Ramos,diego.ramos@gmail.com,923153230,RM,1985-04-23,2022-02-18,Premium
+39,Francisco,Contreras,francisco.contreras@gmail.com,910553745,Valparaíso,,,Premium
+40,Javiera,Díaz,javiera.díaz@gmail.com,933841913,,,2023-11-12,Básico
+41,Isidora,Gutiérrez,isidora.gutiérrez@gmail.com,986397410,La Araucanía,1977-09-10,2021-05-30,Premium
+42,Isidora,Vargas,isidora.vargas@gmail,910784780,Valparaíso,1987-09-19,2020-08-26,Premium
+43,Catalina,Silva,catalina.silva@gmail.com,935916466,RM,1979-12-23,2023-04-26,Premium
+44,Constanza,González,constanza.gonzález@gmail.com,991311077,Biobío,1971-07-25,2023-09-18,Premium
+45,Matías,Herrera,,928066831,RM,,2020-07-22,Básico
+46,SEBASTIÁN,Pérez,sebastián.pérez@gmail.com,991796786,RM,1990-05-30,2020-12-30,Estándar
+47,Sebastián,Martínez,sebastián.martínez@gmail.com,996710377,La Araucanía,1977-03-16,2021-06-09,Básico
+48,Javiera,Espinoza,javiera.espinoza@gmail.com,981848989,Antofagasta,1982-10-18,2021-01-08,Premium
+49,Isidora,Muñoz,isidora.muñoz@gmail.com,963518621,RM,1991-05-13,2021-09-09,Estándar
+50,Pablo,Vargas,pablo.vargas@gmail,952869025,La Araucanía,,2022-09-06,Básico
+51,Fernanda,González,fernanda.gonzález@gmail.com,910574350,Biobío,1970-06-06,2023-10-09,Premium
+52,ALEJANDRO,Morales,alejandro.morales@gmail.com,955987725,Los Lagos,1998-06-29,2021-06-19,Básico
+53,Andrés,Flores,andrés.flores@gmail.com,986135229,Valparaíso,1975-12-02,2021-09-19,Premium
+54,Felipe,Herrera,,923153230,La Araucanía,1990-04-18,2022-10-11,Premium
+55,DIEGO,Sepúlveda,diego.sepúlveda@gmail.com,913755114,RM,1976-05-29,2020-10-18,Básico
+56,Diego,Vargas,diego.vargas@gmail.com,945328305,RM,1997-06-30,2021-06-24,Básico
+57,Nicolás,Muñoz,nicolás.muñoz@gmail.com,917323881,RM,,2021-01-10,Premium
+58,Nicolás,Castro,nicolás.castro@gmail.com,935834405,RM,,2020-07-29,Premium
+59,Diego,Fuentes,diego.fuentes@gmail.com,987840078,Coquimbo,2003-12-29,2023-09-04,Premium
+60,Felipe,Herrera,,923153230,La Araucanía,1990-04-18,2022-10-11,Premium
+61,Francisco,Martínez,francisco.martínez@gmail.com,996413557,Maule,1987-12-15,2021-12-30,Estándar
+62,Camila,Díaz,camila.díaz@gmail.com,967975205,RM,1971-01-29,2023-04-28,Básico
+63,Nicolás,Pérez,nicolás.pérez@gmail.com,936853654,RM,,2021-09-17,Estándar
+64,Sebastián,González,sebastiángonzálezgmail.com,935796821,RM,1991-01-19,2021-12-05,Estándar
+65,Fernanda,Silva,fernanda.silva@gmail.com,977142220,RM,1975-05-31,2022-12-04,Básico
+66,Valentina,Vargas,valentina.vargas@gmail.com,912499514,Biobío,1982-01-27,2023-02-08,Básico
+67,Camila,Rojas,,927456803,RM,1991-05-13,2021-03-15,Estándar
+68,Diego,Torres,diego.torres@gmail.com,977194013,RM,,2023-06-09,Premium
+69,Sebastián,González,sebastián.gonzález@gmail.com,970239684,,1987-02-19,2023-10-21,Estándar
+70,Pablo,Sepúlveda,pablo.sepúlveda@gmail.com,932465588,Biobío,1970-01-09,2020-05-03,Estándar
+71,Isidora,,isidora.soto@gmail.com,977959068,Biobío,1972-12-23,2021-12-21,Estándar
+72,Valentina,González,valentinagonzálezgmail.com,935790180,RM,2000-07-02,2023-10-02,Premium
+73,Matías,Pérez,matías.pérez@gmail.com,930980122,RM,1997-03-04,2022-10-04,Premium
+74,Francisco,Silva,francisco.silva@gmail.com,946819677,Los Lagos,1978-08-10,2023-10-20,Premium
+75,Valentina,Martínez,,942921822,Maule,2001-08-26,2023-04-01,Estándar
+76,Constanza,Muñoz,,981684250,RM,1995-04-05,2020-05-23,Estándar
+77,Sofía,Martínez,sofía.martínez@gmail.com,995395644,,1985-12-20,2020-04-09,Estándar
+78,Valentina,Flores,valentina.flores@gmail.com,941688446,RM,2003-06-15,2023-04-06,Básico
+79,Fernanda,Castro,fernanda.castro@gmail.com,970388500,Biobío,1999-12-06,2022-07-08,Premium
+80,Valentina,Sepúlveda,valentinasepúlvedagmail.com,951350514,RM,1989-12-27,2023-02-22,Premium
+81,María,Torres,maría.torres@gmail.com,933449822,Biobío,,2020-03-06,Premium
+82,Alejandro,,alejandro.silva@gmail.com,990525899,Coquimbo,1997-10-16,2022-06-17,Premium
+83,Constanza,Espinoza,,975063411,RM,1973-09-13,2020-09-16,Básico
+84,Daniela,Díaz,daniela.díaz@gmail.com,973674613,La Araucanía,,2020-12-27,Premium
+85,ISIDORA,Fuentes,,924236463,RM,1984-07-06,2020-11-10,Premium
+86,Nicolás,Muñoz,nicolás.muñoz@gmail.com,917040602,RM,1994-02-08,2020-12-26,Premium
+87,Alejandro,Herrera,alejandro.herrera@gmail.com,923327047,Maule,,2023-08-18,Estándar
+88,Sofía,Morales,sofía.morales@gmail.com,913860039,RM,1982-04-17,2020-09-06,Básico
+89,Andrés,,andrés.rojas@gmail.com,993041052,RM,1994-04-22,2023-03-27,Premium
+90,Andrés,Silva,andrés.silva@gmail.com,968750274,,,2022-08-22,Estándar
+91,Sebastián,Silva,sebastián.silva@gmail.com,998546660,Los Lagos,1997-12-28,2020-01-22,Estándar
+92,Sebastián,Flores,sebastián.flores@gmail,975705089,Biobío,,2022-05-03,Premium
+93,Sebastián,Gutiérrez,sebastián.gutiérrez@gmail.com,959490380,RM,1973-06-07,2020-08-03,Básico
+94,Matías,Morales,matías.morales@gmail.com,955327823,Los Lagos,,2021-10-11,Básico
+95,Catalina,Silva,catalina.silva@gmail.com,958720925,O'Higgins,1971-08-26,2021-07-28,Estándar
+96,Francisco,Muñoz,francisco.muñoz@gmail.com,993366096,Valparaíso,1985-02-02,2022-05-22,Estándar
+97,Nicolás,González,nicolás.gonzález@gmail.com,918448940,RM,1970-12-28,2021-04-20,Básico
+98,Constanza,González,constanza.gonzález@gmail.com,926615289,Maule,,2021-02-24,Básico
+99,Diego,Martínez,diego.martínez@gmail.com,977571186,Valparaíso,,2020-08-21,Básico
+100,Camila,Gutiérrez,camila.gutiérrez@gmail.com,969750614,RM,2000-02-27,2020-09-09,Estándar
+101,María,Castro,,942112095,Valparaíso,,2023-06-04,Básico
+102,Javiera,Muñoz,,967566435,RM,1996-12-06,2021-06-16,Premium
+103,Javiera,Herrera,javiera.herrera@gmail.com,951937627,RM,2002-02-08,2022-03-07,Estándar
+104,Sebastián,Herrera,,989972230,Maule,2002-10-17,2023-02-09,Estándar
+105,Pablo,Espinoza,pablo.espinoza@gmail.com,920269972,RM,1999-08-28,2022-11-30,Estándar
+106,Felipe,Silva,felipe.silva@gmail.com,922342371,Biobío,2002-03-12,2023-03-30,Premium
+107,ISIDORA,Morales,isidora.morales@gmail.com,994125851,RM,1978-07-03,2023-07-03,Premium
+108,Francisco,Flores,francisco.flores@gmail.com,970390985,Maule,1997-12-25,2021-06-26,Estándar
+109,Sebastián,Fuentes,,982155988,Maule,1983-06-11,2021-10-29,Básico
+110,Sofía,Gutiérrez,sofía.gutiérrez@gmail.com,930290817,RM,2000-12-16,2022-11-21,Básico
+111,Fernanda,Vargas,fernanda.vargas@gmail.com,924236463,RM,,2022-11-23,Básico
+112,Catalina,Muñoz,,966640491,Valparaíso,1995-11-09,2021-10-08,Básico
+113,Camila,Pérez,camilapérezgmail.com,930689702,Valparaíso,1992-03-31,2022-04-25,Estándar
+114,Javiera,Gutiérrez,javiera.gutiérrez@gmail.com,923245372,RM,1979-08-08,2022-10-29,Básico
+115,Martín,Herrera,martín.herrera@gmail.com,912368781,RM,1997-04-19,2023-04-13,Estándar
+116,Sofía,Espinoza,sofíaespinozagmail.com,953609415,Coquimbo,,2023-03-11,Premium
+117,Felipe,Morales,felipe.morales@gmail.com,987304983,RM,1994-06-27,2020-10-08,Estándar
+118,Sofía,Vargas,sofía.vargas@gmail.com,936893461,RM,1998-09-25,2021-02-16,Premium
+119,Diego,Herrera,diego.herrera@gmail.com,931881401,RM,1974-08-06,2021-03-22,Premium
+120,Nicolás,Herrera,nicolás.herrera@gmail.com,937265709,RM,1978-07-19,2021-06-29,Estándar
+121,Alejandro,Soto,alejandro.soto@gmail.com,938582041,Valparaíso,1999-08-23,2022-08-15,Estándar
+122,Matías,Torres,matías.torres@gmail.com,975987927,RM,2000-02-24,2020-08-03,Estándar
+123,Javiera,Gutiérrez,javiera.gutiérrez@gmail.com,952441045,RM,2000-09-22,,Estándar
+124,Daniela,,daniela.silva@gmail.com,952869025,,2003-03-14,2022-02-08,Premium
+125,Alejandro,Contreras,alejandro.contreras@gmail.com,929108179,Maule,1986-09-30,,Premium
+126,Matías,Rojas,matías.rojas@gmail.com,934080385,RM,1973-12-31,2023-12-18,Básico
+127,Sebastián,Vargas,sebastiánvargasgmail.com,988809974,RM,1996-10-27,2020-06-25,Premium
+128,Andrés,Herrera,andrés.herrera@gmail.com,925098270,Valparaíso,2002-04-15,2020-10-30,Premium
+129,Felipe,Fuentes,felipe.fuentes@gmail.com,986556525,Coquimbo,1980-01-26,2020-02-12,Premium
+130,Isidora,Muñoz,isidora.muñoz@gmail.com,990128603,RM,1996-04-15,2021-04-29,Estándar
+131,Isidora,Espinoza,,923672496,Biobío,1995-03-26,2020-03-26,Básico
+132,Andrés,González,andrés.gonzález@gmail.com,942112095,Coquimbo,1989-04-22,2020-08-31,Estándar
+133,Martín,González,martín.gonzález@gmail.com,971575863,RM,1979-11-16,2020-05-15,Básico
+134,Fernanda,Silva,fernanda.silva@gmail.com,934080385,RM,1994-02-28,2021-01-25,Premium
+135,Daniela,Morales,daniela.morales@gmail.com,946838009,RM,1978-07-21,,Básico
+136,CONSTANZA,Castro,constanzacastrogmail.com,968104261,La Araucanía,1999-10-06,2023-01-10,Estándar
+137,Daniela,Ramos,daniela.ramos@gmail,958306200,Antofagasta,,2020-03-01,Premium
+138,Nicolás,,nicolás.torres@gmail.com,917386489,RM,1997-04-12,2023-08-06,Premium
+139,Fernanda,Herrera,fernanda.herrera@gmail.com,996869121,Valparaíso,,2020-06-20,Estándar
+140,Francisco,Herrera,,920926356,RM,1991-02-11,2023-09-20,Básico
+141,Constanza,Ramos,,985065432,RM,,2022-08-07,Premium
+142,Fernanda,Flores,,934762712,RM,1979-03-16,2023-02-25,Básico
+143,Alejandro,Contreras,alejandro.contreras@gmail.com,929829822,RM,1980-10-13,2020-11-04,Básico
+144,Fernanda,Sepúlveda,fernanda.sepúlveda@gmail.com,962394739,Maule,1988-09-12,2023-10-10,Básico
+145,Catalina,Castro,catalina.castro@gmail.com,986307568,RM,1972-02-21,2023-02-02,Premium
+146,Catalina,Castro,catalina.castro@gmail.com,986307568,RM,1972-02-21,2023-02-02,Premium
+147,Andrés,Espinoza,andrés.espinoza@gmail.com,997514936,Maule,1989-11-01,2023-11-29,Estándar
+148,Nicolás,Fuentes,,963598753,RM,,2022-03-23,Premium
+149,Isidora,Fuentes,isidora.fuentes@gmail.com,915860545,Biobío,1980-10-02,2020-11-19,Estándar
+150,Andrés,Muñoz,,969471365,,,2021-07-22,Básico
+151,Francisco,Pérez,francisco.pérez@gmail.com,969338400,La Araucanía,1985-03-12,2023-11-12,Premium
+152,Valentina,Gutiérrez,valentina.gutiérrez@gmail.com,925771632,RM,1993-10-13,2020-07-14,Básico
+153,Camila,González,camila.gonzález@gmail.com,950914476,,1977-04-04,2023-12-11,Estándar
+154,Sebastián,Silva,sebastián.silva@gmail.com,992681879,Antofagasta,,2021-01-22,Básico
+155,Daniela,Silva,daniela.silva@gmail.com,945884163,RM,,2023-10-25,Estándar
+156,Valentina,Soto,valentina.soto@gmail.com,923581521,La Araucanía,1970-12-10,2023-10-19,Premium
+157,Camila,González,camila.gonzález@gmail.com,946685578,RM,1988-08-05,2020-12-24,Básico
+158,Francisco,,francisco.silva@gmail.com,970239684,Antofagasta,2002-12-28,2020-10-16,Estándar
+159,Matías,Morales,matías.morales@gmail.com,932986369,RM,1973-10-28,2021-06-28,Estándar
+160,Valentina,Muñoz,,955327823,RM,2002-05-06,2020-03-28,Estándar
+161,Pablo,Soto,pablo.soto@gmail.com,930285078,Antofagasta,1999-07-27,2022-07-03,Estándar
+162,Camila,Pérez,camila.pérez@gmail.com,969313284,RM,,2021-09-09,Básico
+163,Nicolás,Torres,nicolás.torres@gmail.com,949922892,Biobío,,2023-06-09,Premium
+164,Camila,Castro,camila.castro@gmail.com,975829146,RM,,2023-05-20,Básico
+165,Matías,González,matías.gonzález@gmail.com,921264832,RM,1984-01-31,2023-05-17,Estándar
+166,Nicolás,Flores,nicolás.flores@gmail.com,914040500,Los Lagos,1986-10-23,2020-10-11,Básico
+167,Pablo,Muñoz,pablo.muñoz@gmail.com,977718480,RM,1997-10-18,2022-02-19,Estándar
+168,Francisco,Castro,francisco.castro@gmail.com,984059354,Valparaíso,1978-09-10,2023-09-13,Básico
+169,Andrés,Díaz,andrés.díaz@gmail.com,920254278,RM,1975-03-25,2020-09-25,Premium
+170,Matías,Díaz,matías.díaz@gmail.com,971330222,RM,1996-12-06,2021-09-30,Básico
+171,Matías,Díaz,matías.díaz@gmail.com,958173202,Valparaíso,1984-12-16,2023-10-28,Estándar
+172,Andrés,Torres,andrés.torres@gmail.com,915997180,RM,1988-09-24,2022-09-12,Básico
+173,ISIDORA,Fuentes,,969590884,Biobío,1972-05-08,2023-05-10,Premium
+174,Sebastián,Contreras,sebastián.contreras@gmail.com,964704189,Valparaíso,1975-01-23,2021-10-05,Premium
+175,Isidora,Gutiérrez,isidora.gutiérrez@gmail.com,969378298,Los Lagos,1987-06-05,2020-01-17,Estándar
+176,Valentina,,valentina.pérez@gmail.com,963584671,RM,1997-02-17,2021-05-20,Básico
+177,ISIDORA,Rojas,isidora.rojas@gmail,974995591,RM,,2022-06-02,Premium
+178,JAVIERA,Morales,,911137651,Valparaíso,,2020-01-25,Estándar
+179,Camila,Sepúlveda,,932787384,RM,1970-11-19,,Estándar
+180,Andrés,Pérez,andrés.pérez@gmail.com,951429578,RM,,2021-12-03,Estándar
+181,Constanza,Herrera,constanza.herrera@gmail.com,951621092,La Araucanía,,2023-05-20,Premium
+182,Francisco,Pérez,francisco.pérez@gmail.com,979748476,Biobío,2003-01-31,2021-05-22,Premium
+183,DANIELA,Espinoza,daniela.espinoza@gmail.com,996635285,RM,1992-01-27,2020-08-10,Premium
+184,Camila,González,camilagonzálezgmail.com,930601948,Biobío,,2022-01-03,Premium
+185,Andrés,Vargas,andrés.vargas@gmail,914966557,RM,1979-01-23,2020-11-22,Estándar
+186,Javiera,,javiera.castro@gmail.com,945351739,RM,1992-03-11,2023-04-25,Estándar
+187,Daniela,Rojas,daniela.rojas@gmail.com,955056176,Biobío,2003-01-02,2020-04-22,Básico
+188,Martín,Morales,martínmoralesgmail.com,962338292,La Araucanía,,2021-04-28,Estándar
+189,Pablo,Espinoza,pablo.espinoza@gmail,963015631,RM,,,Premium
+190,Isidora,Flores,isidora.flores@gmail.com,935902794,RM,1989-12-10,2020-01-20,Premium
+191,Camila,Flores,camila.flores@gmail.com,979596144,RM,1970-06-30,2020-12-17,Estándar
+192,Diego,Torres,diego.torres@gmail.com,977194013,RM,,2023-06-09,Premium
+193,Martín,Martínez,martín.martínez@gmail.com,919931717,RM,1982-06-10,2020-05-07,Estándar
+194,Sebastián,Herrera,sebastián.herrera@gmail.com,969676465,Maule,,2021-05-12,Premium
+195,María,Herrera,maría.herrera@gmail.com,984277128,O'Higgins,1986-09-28,2022-11-15,Básico
+196,Martín,Fuentes,martín.fuentes@gmail.com,987774748,Biobío,,2022-05-16,Básico
+197,Javiera,Martínez,javiera.martínez@gmail.com,929858055,RM,1992-04-06,2020-11-04,Premium
+198,Constanza,Vargas,constanza.vargas@gmail.com,996541691,RM,1980-12-23,2020-02-28,Premium
+199,Pablo,Sepúlveda,pablo.sepúlveda@gmail.com,968517739,RM,1979-01-19,2022-10-14,Básico
+200,Felipe,Soto,felipe.soto@gmail,962783304,RM,1971-08-31,2023-09-14,Básico
+201,Daniela,Vargas,danielavargasgmail.com,929588118,RM,1971-04-17,2021-08-17,Estándar
+202,Javiera,Gutiérrez,javiera.gutiérrez@gmail.com,985263692,Biobío,2001-10-26,2021-02-23,Premium
+203,Nicolás,Contreras,nicolás.contreras@gmail.com,935916466,RM,,2023-04-29,Premium
+204,SEBASTIÁN,Soto,sebastián.soto@gmail.com,984277128,Biobío,,2022-06-17,Premium
+205,Martín,González,martín.gonzález@gmail.com,954923454,RM,1973-09-02,2023-03-17,Premium

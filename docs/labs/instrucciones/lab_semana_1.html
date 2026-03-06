@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Big Data &amp; Analytics</title>
+<title>Laboratorio 1: De Dato Crudo a Decisión</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,23 +23,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a333dce611ac27a7528aff5758dbae1f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-538d5bc5c147f17fcaa17a1866cecc2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -75,21 +75,49 @@ ul.task-list li input[type="checkbox"] {
 
 <div id="quarto-search-results"></div>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#contexto" id="toc-contexto" class="nav-link active" data-scroll-target="#contexto"><span class="header-section-number">1</span> Contexto</a></li>
+  <li><a href="#instrucciones-generales" id="toc-instrucciones-generales" class="nav-link" data-scroll-target="#instrucciones-generales"><span class="header-section-number">2</span> Instrucciones generales</a></li>
+  <li><a href="#parte-1-explorar-los-datos-brutos-5-min" id="toc-parte-1-explorar-los-datos-brutos-5-min" class="nav-link" data-scroll-target="#parte-1-explorar-los-datos-brutos-5-min"><span class="header-section-number">3</span> Parte 1 — Explorar los datos brutos (5 min)</a>
+  <ul class="collapse">
+  <li><a href="#paso-1-abrir-el-archivo" id="toc-paso-1-abrir-el-archivo" class="nav-link" data-scroll-target="#paso-1-abrir-el-archivo"><span class="header-section-number">3.1</span> Paso 1: Abrir el archivo</a></li>
+  <li><a href="#paso-2-reflexión-inicial" id="toc-paso-2-reflexión-inicial" class="nav-link" data-scroll-target="#paso-2-reflexión-inicial"><span class="header-section-number">3.2</span> Paso 2: Reflexión inicial</a></li>
+  </ul></li>
+  <li><a href="#parte-2-transformar-datos-en-información-15-min" id="toc-parte-2-transformar-datos-en-información-15-min" class="nav-link" data-scroll-target="#parte-2-transformar-datos-en-información-15-min"><span class="header-section-number">4</span> Parte 2 — Transformar datos en información (15 min)</a>
+  <ul class="collapse">
+  <li><a href="#paso-3-crear-una-tabla-dinámica" id="toc-paso-3-crear-una-tabla-dinámica" class="nav-link" data-scroll-target="#paso-3-crear-una-tabla-dinámica"><span class="header-section-number">4.1</span> Paso 3: Crear una Tabla Dinámica</a></li>
+  <li><a href="#paso-4-analizar-tendencias-por-trimestre" id="toc-paso-4-analizar-tendencias-por-trimestre" class="nav-link" data-scroll-target="#paso-4-analizar-tendencias-por-trimestre"><span class="header-section-number">4.2</span> Paso 4: Analizar tendencias por trimestre</a></li>
+  <li><a href="#paso-5-analizar-por-región" id="toc-paso-5-analizar-por-región" class="nav-link" data-scroll-target="#paso-5-analizar-por-región"><span class="header-section-number">4.3</span> Paso 5: Analizar por región</a></li>
+  </ul></li>
+  <li><a href="#parte-3-de-información-a-decisión-10-min" id="toc-parte-3-de-información-a-decisión-10-min" class="nav-link" data-scroll-target="#parte-3-de-información-a-decisión-10-min"><span class="header-section-number">5</span> Parte 3 — De información a decisión (10 min)</a>
+  <ul class="collapse">
+  <li><a href="#paso-6-completar-la-tabla-de-análisis" id="toc-paso-6-completar-la-tabla-de-análisis" class="nav-link" data-scroll-target="#paso-6-completar-la-tabla-de-análisis"><span class="header-section-number">5.1</span> Paso 6: Completar la tabla de análisis</a></li>
+  <li><a href="#paso-7-tu-recomendación" id="toc-paso-7-tu-recomendación" class="nav-link" data-scroll-target="#paso-7-tu-recomendación"><span class="header-section-number">5.2</span> Paso 7: Tu recomendación</a></li>
+  </ul></li>
+  <li><a href="#parte-4-reflexión-final-5-min" id="toc-parte-4-reflexión-final-5-min" class="nav-link" data-scroll-target="#parte-4-reflexión-final-5-min"><span class="header-section-number">6</span> Parte 4 — Reflexión final (5 min)</a></li>
+  <li><a href="#entrega-y-discusión" id="toc-entrega-y-discusión" class="nav-link" data-scroll-target="#entrega-y-discusión"><span class="header-section-number">7</span> Entrega y discusión</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Big Data &amp; Analytics</h1>
+<h1 class="title">Laboratorio 1: De Dato Crudo a Decisión</h1>
+<p class="subtitle lead">Semana 1 · Big Data y Analytics · Universidad San Sebastián</p>
 </div>
 
 
 
-<div class="quarto-title-meta column-page">
+<div class="quarto-title-meta">
 
     
   
@@ -101,341 +129,298 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<style>
-  .quarto-title-block, #title-block-header, h1.title { display: none !important; }
-
-  :root {
-    --azul-oscuro:  #1B3A6B;
-    --azul-medio:   #2C5F8A;
-    --azul-claro:   #4A90C4;
-    --tierra:       #C4956A;
-    --tierra-oscuro:#8B6340;
-    --blanco-roto:  #F7F4F0;
-    --fondo-claro:  #EEF2F7;
-    --gris-pizarra: #4A5568;
-    --gris-suave:   #A0AEC0;
-    --verde-lab:    #2E7D52;
-    --verde-claro:  #4CAF73;
-  }
-
-  body { margin: 0; font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; background: var(--fondo-claro); color: var(--azul-oscuro); }
-
-  /* ── Hero ─────────────────────────────────────────── */
-  .hero {
-    background: linear-gradient(135deg, var(--azul-oscuro) 0%, var(--azul-medio) 70%, var(--azul-claro) 100%);
-    color: #fff;
-    padding: 3rem 4rem 2.5rem;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-  }
-  .hero-logo { height: 64px; flex-shrink: 0; background: rgba(255,255,255,0.92); padding: 6px 10px; border-radius: 8px; }
-  .hero-divider { width: 1px; height: 60px; background: rgba(255,255,255,0.3); flex-shrink: 0; }
-  .hero-title { margin: 0 0 0.25rem; font-size: 1.9rem; font-weight: 700; letter-spacing: -0.02em; color: #fff; }
-  .hero-text p  { margin: 0; font-size: 0.95rem; color: rgba(255,255,255,0.7); }
-  .hero-badge {
-    margin-left: auto;
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.25);
-    border-radius: 8px;
-    padding: 0.6rem 1.2rem;
-    text-align: center;
-    flex-shrink: 0;
-  }
-  .hero-badge .badge-code { font-size: 1.1rem; font-weight: 700; display: block; }
-  .hero-badge .badge-label { font-size: 0.75rem; color: rgba(255,255,255,0.65); }
-
-  /* ── Main content ──────────────────────────────────── */
-  .content { max-width: 960px; margin: 0 auto; padding: 2.5rem 2rem 4rem; }
-
-  /* ── Section heading ───────────────────────────────── */
-  .section-label {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin: 2.2rem 0 1rem;
-  }
-  .section-label .line { flex: 1; height: 1px; background: var(--azul-claro); opacity: 0.35; }
-  .section-label span {
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--azul-medio);
-    white-space: nowrap;
-  }
-
-  /* ── Cards ─────────────────────────────────────────── */
-  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
-
-  .card {
-    background: #fff;
-    border-radius: 10px;
-    border: 1px solid #dde4f0;
-    padding: 1.2rem 1.4rem;
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    transition: box-shadow 0.18s, transform 0.18s, border-color 0.18s;
-    position: relative;
-    overflow: hidden;
-  }
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 4px; height: 100%;
-    background: var(--azul-medio);
-    border-radius: 10px 0 0 10px;
-  }
-  .card.tierra::before  { background: var(--tierra); }
-  .card.semana::before  { background: var(--azul-claro); }
-
-  .card:hover {
-    box-shadow: 0 6px 24px rgba(27,58,107,0.13);
-    transform: translateY(-2px);
-    border-color: var(--azul-claro);
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .card-tag {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gris-suave);
-  }
-  .card-title {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--azul-oscuro);
-    line-height: 1.3;
-  }
-  .card-subtitle {
-    font-size: 0.8rem;
-    color: var(--gris-pizarra);
-    line-height: 1.4;
-  }
-  .card-arrow {
-    margin-top: auto;
-    padding-top: 0.6rem;
-    font-size: 0.8rem;
-    color: var(--azul-claro);
-    font-weight: 600;
-  }
-
-  /* ── Upcoming badge ─────────────────────────────────── */
-  .card.upcoming { opacity: 0.5; pointer-events: none; }
-  .card.upcoming .card-arrow { color: var(--gris-suave); }
-
-  /* ── Evaluación card ─────────────────────────────────── */
-  .card.evaluacion::before { background: var(--tierra-oscuro); }
-  .card.evaluacion { background: #fdf6f0; border-color: #e8c9a8; pointer-events: none; }
-  .card.evaluacion .card-tag { color: var(--tierra-oscuro); }
-  .card.evaluacion .card-title { color: var(--tierra-oscuro); }
-  .card.evaluacion .card-arrow { color: var(--tierra); }
-
-  /* ── Lab card ─────────────────────────────────────────── */
-  .card.lab::before { background: var(--verde-lab); }
-  .card.lab { background: #f0faf4; border-color: #b2dfca; }
-  .card.lab .card-tag { color: var(--verde-lab); }
-  .card.lab .card-title { color: #1a4d30; }
-  .card.lab .card-arrow { color: var(--verde-claro); }
-</style>
-
-<div class="hero">
-  <img class="hero-logo" src="img/logo-horizontal-on-light.svg" alt="Universidad San Sebastián">
-  <div class="hero-divider"></div>
-  <div class="hero-text">
-    <div class="hero-title">Big Data y Analytics</div>
-    <p>Ingeniería Comercial · Facultad de Economía, Negocios y Gobierno · 2026</p>
-  </div>
-  <div class="hero-badge">
-    <span class="badge-code">ICOM E015</span>
-    <span class="badge-label">5to Semestre · 5 créditos SCT</span>
-  </div>
+<section id="contexto" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="contexto"><span class="header-section-number">1</span> Contexto</h2>
+<p>María González, Gerente de Marketing de <strong>TechStyle</strong>, tiene un presupuesto de <strong>$15.000.000 CLP</strong> para la campaña del próximo mes. Necesita decidir en qué categoría de productos invertir para maximizar las ventas.</p>
+<p>El equipo de TI te entregó el archivo <code>techstyle_orders.csv</code> con los datos de ventas del año 2023. Tienes <strong>30 minutos</strong> para responder la pregunta de María.</p>
+<hr>
+</section>
+<section id="instrucciones-generales" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="instrucciones-generales"><span class="header-section-number">2</span> Instrucciones generales</h2>
+<ul>
+<li>Trabajarás <strong>individualmente</strong> en Excel.</li>
+<li>Sigue los pasos en orden. Cada paso construye sobre el anterior.</li>
+<li>Al finalizar, compararás tus resultados con tus compañeros.</li>
+</ul>
+<p><strong>Archivo de datos</strong>: <code>labs/data/techstyle_orders.csv</code></p>
+<hr>
+</section>
+<section id="parte-1-explorar-los-datos-brutos-5-min" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="parte-1-explorar-los-datos-brutos-5-min"><span class="header-section-number">3</span> Parte 1 — Explorar los datos brutos (5 min)</h2>
+<section id="paso-1-abrir-el-archivo" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="paso-1-abrir-el-archivo"><span class="header-section-number">3.1</span> Paso 1: Abrir el archivo</h3>
+<ol type="1">
+<li>Abre Excel y carga el archivo <code>techstyle_orders.csv</code>
+<ul>
+<li>Menú: <em>Datos → Desde texto/CSV</em></li>
+</ul></li>
+<li>Observa la estructura: ¿Cuántas columnas hay? ¿Cuántas filas?</li>
+<li>Identifica las columnas disponibles y comprende qué representa cada una.</li>
+</ol>
+</section>
+<section id="paso-2-reflexión-inicial" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="paso-2-reflexión-inicial"><span class="header-section-number">3.2</span> Paso 2: Reflexión inicial</h3>
+<p>Antes de hacer cualquier cálculo, responde en una hoja aparte:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 43%">
+<col style="width: 56%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pregunta</th>
+<th>Tu respuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¿Cuántos registros (filas) tiene el archivo?</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>¿Qué período de tiempo cubre?</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>¿Qué categorías de productos existen?</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>¿Puedes responder la pregunta de María con solo mirar los datos?</td>
+<td>Sí / No / Por qué</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-
-<div class="content">
-
-  <!-- ── Presentaciones generales ───────────────────── -->
-  <div class="section-label">
-    <div class="line"></div>
-    <span>Presentaciones del Curso</span>
-    <div class="line"></div>
-  </div>
-
-  <div class="card-grid">
-    <a class="card" href="clases/presentacion_docente.html">
-      <span class="card-tag">Sesión 0</span>
-      <span class="card-title">Conociendo a tu Profesor</span>
-      <span class="card-subtitle">Ciencia de Datos Espaciales · Recursos Hídricos · Investigación de Impacto</span>
-      <span class="card-arrow">Ver presentación →</span>
-    </a>
-    <a class="card tierra" href="clases/programa_curso.html">
-      <span class="card-tag">Sesión 0</span>
-      <span class="card-title">Programa del Curso</span>
-      <span class="card-subtitle">Unidades, contenidos, evaluaciones y requisitos de aprobación</span>
-      <span class="card-arrow">Ver presentación →</span>
-    </a>
-  </div>
-
-  <!-- ── Unidad 1 ─────────────────────────────────────── -->
-  <div class="section-label">
-    <div class="line"></div>
-    <span>Unidad 1 · Sistemas de Información en el Contexto Empresarial</span>
-    <div class="line"></div>
-  </div>
-
-  <div class="card-grid">
-    <a class="card semana" href="clases/class_week_1.html">
-      <span class="card-tag">Semana 1 · Presentación</span>
-      <span class="card-title">Sistemas de Información en el Contexto Empresarial</span>
-      <span class="card-subtitle">Datos · Información · Conocimiento · Decisión · Introducción a los SI</span>
-      <span class="card-arrow">Ver presentación →</span>
-    </a>
-    <a class="card lab" href="labs/instrucciones/lab_semana_1.html">
-      <span class="card-tag">Semana 1 · Laboratorio</span>
-      <span class="card-title">De Dato Crudo a Decisión</span>
-      <span class="card-subtitle">Excel · Tablas dinámicas · Análisis de ventas TechStyle · Límites del volumen</span>
-      <span class="card-arrow">Ver laboratorio →</span>
-    </a>
-    <a class="card semana" href="clases/class_week_2.html">
-      <span class="card-tag">Semana 2 · Presentación</span>
-      <span class="card-title">Componentes, Actores y Tipos de Sistemas de Información</span>
-      <span class="card-subtitle">Hardware · Software · Personas · Procesos · TPS · BI · DSS · CRM · EIS</span>
-      <span class="card-arrow">Ver presentación →</span>
-    </a>
-    <a class="card lab" href="labs/instrucciones/lab_semana_2.html">
-      <span class="card-tag">Semana 2 · Laboratorio</span>
-      <span class="card-title">Tres Dashboards, Tres Usuarios</span>
-      <span class="card-subtitle">Power BI · Vista operativa (TPS) · Vista analítica (BI) · Vista ejecutiva (EIS)</span>
-      <span class="card-arrow">Ver laboratorio →</span>
-    </a>
-    <a class="card semana" href="clases/class_week_3.html">
-      <span class="card-tag">Semana 3 · Presentación</span>
-      <span class="card-title">CMI, Calidad de Datos y Ética</span>
-      <span class="card-subtitle">Balanced Scorecard · 4 perspectivas · KPIs · Exactitud · Completitud · Consistencia</span>
-      <span class="card-arrow">Ver presentación →</span>
-    </a>
-    <a class="card lab" href="labs/instrucciones/lab_semana_3.html">
-      <span class="card-tag">Semana 3 · Laboratorio</span>
-      <span class="card-title">Auditoría de Calidad y CMI con Datos Reales</span>
-      <span class="card-subtitle">Power Query · Perfil de datos · KPIs del CMI · El indicador que no puede calcularse</span>
-      <span class="card-arrow">Ver laboratorio →</span>
-    </a>
-    <a class="card semana" href="clases/class_week_4.html">
-      <span class="card-tag">Semana 4 · Presentación</span>
-      <span class="card-title">Big Data y Síntesis de la Unidad 1</span>
-      <span class="card-subtitle">Las 5 V · OLTP vs OLAP · Data Warehouse · ETL · Repaso integrador</span>
-      <span class="card-arrow">Ver presentación →</span>
-    </a>
-    <a class="card lab" href="labs/instrucciones/lab_semana_4.html">
-      <span class="card-tag">Semana 4 · Laboratorio</span>
-      <span class="card-title">Mini-ETL: De Fuentes OLTP al Análisis</span>
-      <span class="card-subtitle">Power Query · 3 fuentes inconsistentes · Modelo estrella · Análisis OLAP</span>
-      <span class="card-arrow">Ver laboratorio →</span>
-    </a>
-    <div class="card evaluacion">
-      <span class="card-tag">Semana 5</span>
-      <span class="card-title">Solemne 1</span>
-      <span class="card-subtitle">Evaluación Unidad 1 · Prueba escrita individual (20%) + controles parciales (10%)</span>
-      <span class="card-arrow">30% de la nota final</span>
-    </div>
-  </div>
-
-  <!-- ── Unidad 2 ─────────────────────────────────────── -->
-  <div class="section-label">
-    <div class="line"></div>
-    <span>Unidad 2 · Fundamentos de Bases de Datos</span>
-    <div class="line"></div>
-  </div>
-
-  <div class="card-grid">
-    <a class="card semana upcoming" href="#">
-      <span class="card-tag">Semana 6</span>
-      <span class="card-title">Próximamente</span>
-      <span class="card-subtitle">Contenido en preparación</span>
-      <span class="card-arrow">Próximamente</span>
-    </a>
-    <a class="card semana upcoming" href="#">
-      <span class="card-tag">Semana 7</span>
-      <span class="card-title">Próximamente</span>
-      <span class="card-subtitle">Contenido en preparación</span>
-      <span class="card-arrow">Próximamente</span>
-    </a>
-    <a class="card semana upcoming" href="#">
-      <span class="card-tag">Semana 8</span>
-      <span class="card-title">Próximamente</span>
-      <span class="card-subtitle">Contenido en preparación</span>
-      <span class="card-arrow">Próximamente</span>
-    </a>
-    <a class="card semana upcoming" href="#">
-      <span class="card-tag">Semana 9</span>
-      <span class="card-title">Próximamente</span>
-      <span class="card-subtitle">Contenido en preparación</span>
-      <span class="card-arrow">Próximamente</span>
-    </a>
-    <div class="card evaluacion">
-      <span class="card-tag">Semana 10</span>
-      <span class="card-title">Solemne 2</span>
-      <span class="card-subtitle">Evaluación Unidad 2 · Analítica de base de datos (25%) + controles parciales (10%)</span>
-      <span class="card-arrow">35% de la nota final</span>
-    </div>
-  </div>
-
-  <!-- ── Unidad 3 ─────────────────────────────────────── -->
-  <div class="section-label">
-    <div class="line"></div>
-    <span>Unidad 3 · Modelamiento y Gestión de Base de Datos</span>
-    <div class="line"></div>
-  </div>
-
-  <div class="card-grid">
-    <a class="card semana upcoming" href="#">
-      <span class="card-tag">Semana 11</span>
-      <span class="card-title">Próximamente</span>
-      <span class="card-subtitle">Contenido en preparación</span>
-      <span class="card-arrow">Próximamente</span>
-    </a>
-    <a class="card semana upcoming" href="#">
-      <span class="card-tag">Semana 12</span>
-      <span class="card-title">Próximamente</span>
-      <span class="card-subtitle">Contenido en preparación</span>
-      <span class="card-arrow">Próximamente</span>
-    </a>
-    <a class="card semana upcoming" href="#">
-      <span class="card-tag">Semana 13</span>
-      <span class="card-title">Próximamente</span>
-      <span class="card-subtitle">Contenido en preparación</span>
-      <span class="card-arrow">Próximamente</span>
-    </a>
-    <a class="card semana upcoming" href="#">
-      <span class="card-tag">Semana 14</span>
-      <span class="card-title">Próximamente</span>
-      <span class="card-subtitle">Contenido en preparación</span>
-      <span class="card-arrow">Próximamente</span>
-    </a>
-    <a class="card semana upcoming" href="#">
-      <span class="card-tag">Semana 15</span>
-      <span class="card-title">Próximamente</span>
-      <span class="card-subtitle">Contenido en preparación</span>
-      <span class="card-arrow">Próximamente</span>
-    </a>
-    <div class="card evaluacion">
-      <span class="card-tag">Semana 16</span>
-      <span class="card-title">Solemne 3</span>
-      <span class="card-subtitle">Evaluación Unidad 3 · Creación de BD relacional y análisis (25%) + controles parciales (10%)</span>
-      <span class="card-arrow">35% de la nota final</span>
-    </div>
-  </div>
-
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Reflexiona</strong>: A esto nos referimos cuando decimos que los datos crudos, por sí solos, no son útiles.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="parte-2-transformar-datos-en-información-15-min" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="parte-2-transformar-datos-en-información-15-min"><span class="header-section-number">4</span> Parte 2 — Transformar datos en información (15 min)</h2>
+<section id="paso-3-crear-una-tabla-dinámica" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="paso-3-crear-una-tabla-dinámica"><span class="header-section-number">4.1</span> Paso 3: Crear una Tabla Dinámica</h3>
+<ol type="1">
+<li>Selecciona todos los datos (Ctrl+A)</li>
+<li>Inserta una <strong>Tabla Dinámica</strong> en una hoja nueva</li>
+<li>Configura la tabla así:</li>
+</ol>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Área</th>
+<th>Campo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Filas</strong></td>
+<td><code>categoria</code></td>
+</tr>
+<tr class="even">
+<td><strong>Valores</strong></td>
+<td><code>venta_neta</code> (suma)</td>
+</tr>
+<tr class="odd">
+<td><strong>Valores</strong></td>
+<td><code>cantidad</code> (suma)</td>
+</tr>
+<tr class="even">
+<td><strong>Valores</strong></td>
+<td><code>margen_pct</code> (promedio)</td>
+</tr>
+</tbody>
+</table>
+<ol start="4" type="1">
+<li>Ordena por <code>venta_neta</code> de mayor a menor.</li>
+</ol>
+</section>
+<section id="paso-4-analizar-tendencias-por-trimestre" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="paso-4-analizar-tendencias-por-trimestre"><span class="header-section-number">4.2</span> Paso 4: Analizar tendencias por trimestre</h3>
+<p>En una segunda Tabla Dinámica:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Área</th>
+<th>Campo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Filas</strong></td>
+<td><code>categoria</code></td>
+</tr>
+<tr class="even">
+<td><strong>Columnas</strong></td>
+<td><code>trimestre</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Valores</strong></td>
+<td><code>venta_neta</code> (suma)</td>
+</tr>
+</tbody>
+</table>
+<p>Esto te mostrará cómo evolucionaron las ventas de cada categoría durante el año.</p>
+</section>
+<section id="paso-5-analizar-por-región" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="paso-5-analizar-por-región"><span class="header-section-number">4.3</span> Paso 5: Analizar por región</h3>
+<p>En una tercera Tabla Dinámica:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Área</th>
+<th>Campo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Filas</strong></td>
+<td><code>region</code></td>
+</tr>
+<tr class="even">
+<td><strong>Columnas</strong></td>
+<td><code>categoria</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Valores</strong></td>
+<td><code>venta_neta</code> (suma)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="parte-3-de-información-a-decisión-10-min" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="parte-3-de-información-a-decisión-10-min"><span class="header-section-number">5</span> Parte 3 — De información a decisión (10 min)</h2>
+<section id="paso-6-completar-la-tabla-de-análisis" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="paso-6-completar-la-tabla-de-análisis"><span class="header-section-number">5.1</span> Paso 6: Completar la tabla de análisis</h3>
+<p>Con los resultados de tus tablas dinámicas, completa esta tabla resumen:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 18%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Categoría</th>
+<th>Ventas Totales (CLP)</th>
+<th>Margen Promedio (%)</th>
+<th>Tendencia T3→T4</th>
+<th>¿Es buena inversión?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Electrónica</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Ropa</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Hogar</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Accesorios</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="paso-7-tu-recomendación" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="paso-7-tu-recomendación"><span class="header-section-number">5.2</span> Paso 7: Tu recomendación</h3>
+<p>Escribe en no más de 3 líneas tu recomendación para María:</p>
+<blockquote class="blockquote">
+<p><em>“Recomiendo invertir los $15.000.000 en la categoría ________ porque…”</em></p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="parte-4-reflexión-final-5-min" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="parte-4-reflexión-final-5-min"><span class="header-section-number">6</span> Parte 4 — Reflexión final (5 min)</h2>
+<p>Responde estas preguntas:</p>
+<ol type="1">
+<li><p><strong>¿Podrías haber respondido la pregunta de María sin procesar los datos?</strong> ¿Por qué no?</p></li>
+<li><p><strong>¿Qué transformaste?</strong> Completa la frase:</p>
+<ul>
+<li>Los datos crudos eran: <code>_______</code></li>
+<li>La información que generé fue: <code>_______</code></li>
+<li>El conocimiento que apliqué fue: <code>_______</code></li>
+</ul></li>
+<li><p><strong>Límite de Excel</strong>: El archivo tiene ~1.250 filas. TechStyle real tiene <strong>8.750.000</strong> registros de ventas.</p>
+<ul>
+<li>Intenta cargar el mismo archivo pero duplicado 3 veces (pégalo en la misma hoja).</li>
+<li>¿Qué pasa con la velocidad de Excel?</li>
+<li>¿Qué implicaría trabajar con 10x más datos?</li>
+</ul></li>
+</ol>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Punto clave del curso</strong>: Excel es una herramienta poderosa para datos pequeños, pero las organizaciones reales tienen millones de registros que requieren arquitecturas diferentes. Eso es lo que estudiaremos en este curso.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="entrega-y-discusión" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="entrega-y-discusión"><span class="header-section-number">7</span> Entrega y discusión</h2>
+<p>Al finalizar el tiempo, el docente pedirá a grupos al azar que compartan:</p>
+<ul>
+<li>Su recomendación para María</li>
+<li>La <strong>categoría más interesante</strong> que encontraron y por qué</li>
+<li>Cualquier hallazgo <strong>inesperado</strong> en los datos</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>No hay una sola respuesta correcta.</strong> Diferentes análisis pueden llevar a diferentes recomendaciones válidas — lo importante es que estén basadas en evidencia.</p>
+</div>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -1,5 +1,131 @@
 [
   {
+    "objectID": "labs/instrucciones/lab_semana_4.html",
+    "href": "labs/instrucciones/lab_semana_4.html",
+    "title": "Laboratorio 4: Mini-ETL — De Fuentes OLTP al Análisis",
+    "section": "",
+    "text": "TechStyle tiene sus datos distribuidos en tres sistemas OLTP separados, cada uno mantenido por un área diferente de la empresa:\n\n\n\nSistema\nÁrea responsable\nArchivo\n\n\n\n\nSistema de ventas\nComercial\noltp_ventas.csv\n\n\nSistema de clientes\nMarketing\noltp_clientes.csv\n\n\nSistema de productos\nBodega\noltp_productos.csv\n\n\n\nEl problema: cada sistema fue construido por equipos distintos, en momentos distintos, sin coordinación. Los formatos no son compatibles entre sí.\nTu tarea es construir un mini proceso ETL con Power Query para integrar estas tres fuentes en un modelo analítico unificado que permita responder preguntas de negocio."
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_4.html#contexto",
+    "href": "labs/instrucciones/lab_semana_4.html#contexto",
+    "title": "Laboratorio 4: Mini-ETL — De Fuentes OLTP al Análisis",
+    "section": "",
+    "text": "TechStyle tiene sus datos distribuidos en tres sistemas OLTP separados, cada uno mantenido por un área diferente de la empresa:\n\n\n\nSistema\nÁrea responsable\nArchivo\n\n\n\n\nSistema de ventas\nComercial\noltp_ventas.csv\n\n\nSistema de clientes\nMarketing\noltp_clientes.csv\n\n\nSistema de productos\nBodega\noltp_productos.csv\n\n\n\nEl problema: cada sistema fue construido por equipos distintos, en momentos distintos, sin coordinación. Los formatos no son compatibles entre sí.\nTu tarea es construir un mini proceso ETL con Power Query para integrar estas tres fuentes en un modelo analítico unificado que permita responder preguntas de negocio."
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_4.html#instrucciones-generales",
+    "href": "labs/instrucciones/lab_semana_4.html#instrucciones-generales",
+    "title": "Laboratorio 4: Mini-ETL — De Fuentes OLTP al Análisis",
+    "section": "2 Instrucciones generales",
+    "text": "2 Instrucciones generales\n\nTrabajarás en parejas.\nTodo el trabajo se realiza en Power BI Desktop usando Power Query.\nDuración: 35 minutos\n\nArchivos de datos:\n\nlabs/data/oltp_ventas.csv\nlabs/data/oltp_clientes.csv\nlabs/data/oltp_productos.csv"
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_4.html#parte-1-extraer-conocer-las-fuentes-5-min",
+    "href": "labs/instrucciones/lab_semana_4.html#parte-1-extraer-conocer-las-fuentes-5-min",
+    "title": "Laboratorio 4: Mini-ETL — De Fuentes OLTP al Análisis",
+    "section": "3 Parte 1 — Extraer: conocer las fuentes (5 min)",
+    "text": "3 Parte 1 — Extraer: conocer las fuentes (5 min)\n\n3.1 Paso 1: Cargar las tres fuentes\n\nAbre Power BI Desktop\nCarga los tres archivos CSV (uno por uno, desde Obtener datos → Texto/CSV)\nEn cada caso, haz clic en Transformar datos para abrir Power Query Editor\n\n\n\n3.2 Paso 2: Identificar las inconsistencias\nAntes de transformar nada, examina las tres tablas y completa esta tabla de diagnóstico:\n\n\n\n\n\n\n\n\n\nProblema\nTabla afectada\nColumna\nDetalle\n\n\n\n\nNombre de columna inconsistente\n\n\nEj: Cant vs cantidad\n\n\nFormato de fecha distinto\n\n\nEj: DD/MM/YYYY vs YYYY/MM/DD\n\n\nColumna de texto que debería ser número\n\n\n\n\n\nCampo que une dos tablas con nombres distintos\n\n\nEj: ID_Cliente vs CustomerID\n\n\nCategoría con nombre diferente\n\n\nEj: Linea vs categoria\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nEste es exactamente el problema real de integración de datos en empresas. Cada área nombra sus columnas como le parece conveniente. El proceso ETL existe para resolver esto."
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_4.html#parte-2-transformar-limpiar-y-estandarizar-20-min",
+    "href": "labs/instrucciones/lab_semana_4.html#parte-2-transformar-limpiar-y-estandarizar-20-min",
+    "title": "Laboratorio 4: Mini-ETL — De Fuentes OLTP al Análisis",
+    "section": "4 Parte 2 — Transformar: limpiar y estandarizar (20 min)",
+    "text": "4 Parte 2 — Transformar: limpiar y estandarizar (20 min)\n\n4.1 Paso 3: Estandarizar oltp_ventas\nEn Power Query, con la tabla oltp_ventas seleccionada:\n3.1 Renombrar columnas para estandarizar:\n\n\n\nNombre original\nNuevo nombre\n\n\n\n\nID_Venta\nventa_id\n\n\nFecha_Venta\nfecha\n\n\nID_Cliente\ncliente_id\n\n\nCod_Prod\nproducto_id\n\n\nCant\ncantidad\n\n\nPrecio_Unit\nprecio_unitario\n\n\nDesc_Pct\ndescuento_pct\n\n\nTotal_Venta\nventa_total\n\n\n\nPara renombrar: doble clic sobre el encabezado de la columna.\n3.2 Corregir el formato de fecha:\nLa columna fecha tiene formato YYYY/MM/DD (con barras, no guiones).\n\nSelecciona la columna fecha\nInicio → Tipo de datos → Fecha\nSi falla, usa: Transformar → Columna de texto → Reemplazar valores (cambia / por -)\nLuego cambia el tipo a Fecha\n\n3.3 Verificar tipos de datos:\n\n\n\nColumna\nTipo correcto\n\n\n\n\nfecha\nFecha\n\n\ncantidad, descuento_pct\nNúmero entero\n\n\nprecio_unitario, venta_total\nNúmero decimal fijo\n\n\n\n\n\n4.2 Paso 4: Estandarizar oltp_clientes\n4.1 Renombrar columnas:\n\n\n\nNombre original\nNuevo nombre\n\n\n\n\nCustomerID\ncliente_id\n\n\nNombreCompleto\nnombre_completo\n\n\nCorreo\nemail\n\n\nCiudad\nregion\n\n\nFechaRegistro\nfecha_registro\n\n\nTipoCliente\nsegmento\n\n\n\n4.2 Separar nombre y apellido (columna nombre_completo):\n\nSelecciona nombre_completo\nTransformar → Dividir columna → Por delimitador → Espacio → En la primera aparición\nRenombra las columnas resultantes: nombre y apellido\n\n4.3 Corregir el formato de fecha:\nLa columna fecha_registro tiene formato DD/MM/YYYY.\n\nSelecciona la columna\nInicio → Tipo de datos → Usando configuración regional…\nSelecciona tipo Fecha y configuración regional Español (Chile)\n\n\n\n4.3 Paso 5: Estandarizar oltp_productos\n5.1 Renombrar columnas:\n\n\n\nNombre original\nNuevo nombre\n\n\n\n\nCod_Producto\nproducto_id\n\n\nDescripcion\nnombre_producto\n\n\nLinea\ncategoria\n\n\nCosto_CLP\ncosto\n\n\nPrecioVenta\nprecio_venta\n\n\nStock_Actual\nstock\n\n\nActivo\nactivo\n\n\n\n5.2 Agregar columna calculada — Margen:\n\nAgregar columna → Columna personalizada\nNombre: margen_pct\nFórmula:\n\n= ([precio_venta] - [costo]) / [precio_venta] * 100\n\n\n4.4 Paso 6: Aplicar y cerrar\n\nRevisa que las tres tablas estén limpias y con tipos correctos\nInicio → Cerrar y aplicar\nLas tres tablas ahora están en Power BI con nombres y formatos consistentes"
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_4.html#parte-3-cargar-construir-el-modelo-estrella-5-min",
+    "href": "labs/instrucciones/lab_semana_4.html#parte-3-cargar-construir-el-modelo-estrella-5-min",
+    "title": "Laboratorio 4: Mini-ETL — De Fuentes OLTP al Análisis",
+    "section": "5 Parte 3 — Cargar: construir el modelo estrella (5 min)",
+    "text": "5 Parte 3 — Cargar: construir el modelo estrella (5 min)\n\n5.1 Paso 7: Crear relaciones\nEn Power BI, ve a la Vista de Modelo (ícono del centro en la barra izquierda).\nDeberías ver las tres tablas. Crea las relaciones:\n\noltp_ventas[cliente_id] → oltp_clientes[cliente_id] (muchos a uno)\noltp_ventas[producto_id] → oltp_productos[producto_id] (muchos a uno)\n\n\n\n\n\n\n\nTip\n\n\n\nReconoces este esquema. Es el modelo estrella que ya conoces de Power BI: una tabla de hechos (ventas) rodeada de tablas de dimensiones (clientes, productos). Acabas de construirlo desde cero a partir de 3 fuentes OLTP separadas."
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_4.html#parte-4-analizar-responder-preguntas-de-negocio-5-min",
+    "href": "labs/instrucciones/lab_semana_4.html#parte-4-analizar-responder-preguntas-de-negocio-5-min",
+    "title": "Laboratorio 4: Mini-ETL — De Fuentes OLTP al Análisis",
+    "section": "6 Parte 4 — Analizar: responder preguntas de negocio (5 min)",
+    "text": "6 Parte 4 — Analizar: responder preguntas de negocio (5 min)\n\n6.1 Paso 8: Construir visualizaciones analíticas\nAhora que tienes el modelo integrado, el análisis OLAP es posible. Crea una página llamada \"Análisis OLAP\" con:\n\nGráfico de barras: Ventas totales por categoria (de oltp_productos)\nGráfico de líneas: Evolución de ventas por mes (usa la columna fecha de ventas)\nTabla: Top 5 productos más vendidos con su margen\nSegmentador: por segmento de cliente (Premium / Estándar / Básico)"
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_4.html#reflexión-final",
+    "href": "labs/instrucciones/lab_semana_4.html#reflexión-final",
+    "title": "Laboratorio 4: Mini-ETL — De Fuentes OLTP al Análisis",
+    "section": "7 Reflexión final",
+    "text": "7 Reflexión final\n\n7.1 Conecta con los conceptos de la clase\nResponde con tu compañero:\n\n\n\n\n\n\n\nPregunta\nRespuesta\n\n\n\n\n¿Qué paso del proceso ETL fue el más largo? ¿Por qué?\n\n\n\n¿Cuál de las 3 fuentes tenía peores inconsistencias?\n\n\n\n¿Qué problemas del Lab 3 (calidad de datos) volviste a ver aquí?\n\n\n\nEl modelo estrella que construiste: ¿es OLTP u OLAP? ¿Por qué?\n\n\n\nSi TechStyle corriera este proceso ETL cada noche, ¿cómo se llama esa arquitectura?\n\n\n\n\n\n\n7.2 El proceso que hiciste tiene nombre\nLo que acabas de hacer en Power Query es exactamente el proceso ETL:\n[oltp_ventas.csv]    ─┐\n[oltp_clientes.csv]  ─┼─ EXTRACT → TRANSFORM → LOAD → Modelo estrella → OLAP\n[oltp_productos.csv] ─┘\nEn empresas grandes, este proceso: - Se ejecuta automáticamente cada noche - Procesa millones de registros - Usa herramientas especializadas (Apache Spark, dbt, Talend…) - Alimenta un Data Warehouse que soporta los dashboards de BI y el CMI\nPero el principio es exactamente el mismo que lo que hiciste hoy."
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_4.html#entrega",
+    "href": "labs/instrucciones/lab_semana_4.html#entrega",
+    "title": "Laboratorio 4: Mini-ETL — De Fuentes OLTP al Análisis",
+    "section": "8 Entrega",
+    "text": "8 Entrega\nGuarda el archivo como lab_semana4_[apellido1]_[apellido2].pbix.\nEl docente preguntará: “¿Qué inconsistencia entre tablas les resultó más difícil de resolver?”"
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_2.html",
+    "href": "labs/instrucciones/lab_semana_2.html",
+    "title": "Laboratorio 2: Tres Dashboards, Tres Usuarios",
+    "section": "",
+    "text": "Ya conoces los 5 componentes de un SI y los tipos de sistemas (TPS, BI, DSS, CRM, EIS). Ahora vas a construir y comparar tres vistas del mismo conjunto de datos para tres usuarios distintos de TechStyle:\n\n\n\nUsuario\nNivel\nTipo de SI\n\n\n\n\nSofía (repartidora)\nOperativo\nTPS\n\n\nJuan (analista de datos)\nTáctico\nBI\n\n\nRoberto (CEO)\nEstratégico\nEIS\n\n\n\nEl mismo dato sirve a los tres — pero cada uno necesita una presentación completamente diferente."
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_2.html#contexto",
+    "href": "labs/instrucciones/lab_semana_2.html#contexto",
+    "title": "Laboratorio 2: Tres Dashboards, Tres Usuarios",
+    "section": "",
+    "text": "Ya conoces los 5 componentes de un SI y los tipos de sistemas (TPS, BI, DSS, CRM, EIS). Ahora vas a construir y comparar tres vistas del mismo conjunto de datos para tres usuarios distintos de TechStyle:\n\n\n\nUsuario\nNivel\nTipo de SI\n\n\n\n\nSofía (repartidora)\nOperativo\nTPS\n\n\nJuan (analista de datos)\nTáctico\nBI\n\n\nRoberto (CEO)\nEstratégico\nEIS\n\n\n\nEl mismo dato sirve a los tres — pero cada uno necesita una presentación completamente diferente."
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_2.html#instrucciones-generales",
+    "href": "labs/instrucciones/lab_semana_2.html#instrucciones-generales",
+    "title": "Laboratorio 2: Tres Dashboards, Tres Usuarios",
+    "section": "2 Instrucciones generales",
+    "text": "2 Instrucciones generales\n\nTrabajarás en parejas en Power BI Desktop.\nUsarás el archivo techstyle_orders.csv del laboratorio anterior.\nCada pareja construirá las 3 páginas (vistas) de un mismo informe Power BI.\n\nDuración: 35 minutos"
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_2.html#parte-1-cargar-y-preparar-los-datos-5-min",
+    "href": "labs/instrucciones/lab_semana_2.html#parte-1-cargar-y-preparar-los-datos-5-min",
+    "title": "Laboratorio 2: Tres Dashboards, Tres Usuarios",
+    "section": "3 Parte 1 — Cargar y preparar los datos (5 min)",
+    "text": "3 Parte 1 — Cargar y preparar los datos (5 min)\n\n3.1 Paso 1: Importar datos\n\nAbre Power BI Desktop\nInicio → Obtener datos → Texto/CSV\nSelecciona techstyle_orders.csv\nEn la vista previa: verifica que las columnas tienen el tipo correcto\n\nfecha → Fecha\nventa_neta, precio_unitario → Número decimal fijo\ncantidad, mes, año → Número entero\n\nHaz clic en Cargar\n\n\n\n3.2 Paso 2: Crear una medida básica\nEn el panel de Datos, crea estas medidas (botón derecho → Nueva medida):\nTotal Ventas = SUM(techstyle_orders[venta_neta])\nCantidad Pedidos = DISTINCTCOUNT(techstyle_orders[order_id])\nMargen Promedio = AVERAGE(techstyle_orders[margen_pct])"
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_2.html#parte-2-página-1-vista-operativa-tps-para-sofía-8-min",
+    "href": "labs/instrucciones/lab_semana_2.html#parte-2-página-1-vista-operativa-tps-para-sofía-8-min",
+    "title": "Laboratorio 2: Tres Dashboards, Tres Usuarios",
+    "section": "4 Parte 2 — Página 1: Vista Operativa (TPS) para Sofía (8 min)",
+    "text": "4 Parte 2 — Página 1: Vista Operativa (TPS) para Sofía (8 min)\nSofía es repartidora. Solo necesita ver sus pedidos del día, sin análisis ni histórico.\n\n4.1 Configuración de la página\n\nRenombra la página como \"Vista Operativa (TPS)\"\nConstruye una tabla simple con estas columnas:\n\norder_id, fecha, region, nombre_producto, categoria, cantidad, precio_unitario\n\nAgrega un filtro de segmentación (slicer) por fecha\nAgrega un filtro de segmentación por region\n\n\n\n4.2 Criterio de diseño\n\nSin gráficos complejos\nSin KPIs ni tendencias\nDatos actuales, no históricos\nTabla que permita encontrar un pedido específico rápidamente\n\n\n\n\n\n\n\nNote\n\n\n\nPregunta de diseño: ¿Necesita Sofía ver el margen de ganancia? ¿Por qué no?"
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_2.html#parte-3-página-2-vista-analítica-bi-para-juan-12-min",
+    "href": "labs/instrucciones/lab_semana_2.html#parte-3-página-2-vista-analítica-bi-para-juan-12-min",
+    "title": "Laboratorio 2: Tres Dashboards, Tres Usuarios",
+    "section": "5 Parte 3 — Página 2: Vista Analítica (BI) para Juan (12 min)",
+    "text": "5 Parte 3 — Página 2: Vista Analítica (BI) para Juan (12 min)\nJuan es analista de datos. Necesita entender tendencias, comparaciones y patrones para apoyar decisiones de marketing.\n\n5.1 Configuración de la página\n\nRenombra la página como \"Vista Analítica (BI)\"\nConstruye los siguientes visuales:\n\n\n\n\n\n\n\n\n\nVisual\nTipo\nConfiguración\n\n\n\n\nVentas por categoría\nGráfico de barras\nEje X: categoria, Eje Y: Total Ventas\n\n\nEvolución mensual\nGráfico de líneas\nEje X: mes, Eje Y: Total Ventas, Leyenda: categoria\n\n\nVentas por región\nMapa o gráfico de barras\nPor region\n\n\nTabla de detalle\nTabla\ncategoria, Total Ventas, Margen Promedio, Cantidad Pedidos\n\n\n\n\nAgrega segmentadores por trimestre y canal_venta\n\n\n\n5.2 Criterio de diseño\n\nPermite comparar categorías entre sí\nMuestra tendencias en el tiempo\nIncluye métricas de negocio (margen, no solo ventas)\n\n\n\n\n\n\n\nNote\n\n\n\nPregunta de diseño: ¿Necesita Juan ver el detalle de cada pedido individual? ¿Por qué no?"
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_2.html#parte-4-página-3-vista-ejecutiva-eis-para-roberto-10-min",
+    "href": "labs/instrucciones/lab_semana_2.html#parte-4-página-3-vista-ejecutiva-eis-para-roberto-10-min",
+    "title": "Laboratorio 2: Tres Dashboards, Tres Usuarios",
+    "section": "6 Parte 4 — Página 3: Vista Ejecutiva (EIS) para Roberto (10 min)",
+    "text": "6 Parte 4 — Página 3: Vista Ejecutiva (EIS) para Roberto (10 min)\nRoberto es el CEO. Tiene 5 minutos para revisar el negocio cada mañana. Necesita ver si todo va bien o si algo requiere su atención inmediata.\n\n6.1 Configuración de la página\n\nRenombra la página como \"Vista Ejecutiva (EIS)\"\nConstruye solamente estos 4 elementos:\n\n\n\n\n\n\n\n\n\nVisual\nTipo\nMétrica\n\n\n\n\nTotal ventas del período\nTarjeta (KPI)\nTotal Ventas\n\n\nMargen promedio\nTarjeta (KPI)\nMargen Promedio\n\n\nCantidad de pedidos\nTarjeta (KPI)\nCantidad Pedidos\n\n\nVentas por categoría\nGráfico de dona\nProporciones por categoria\n\n\n\n\nDiseño: usa colores claros, números grandes, sin tablas de detalle\n\n\n\n6.2 Criterio de diseño\n\nResponde “¿cómo va el negocio?” en menos de 10 segundos\nSin tablas detalladas\nSin jerga técnica\nFácil de leer en una tablet o pantalla grande\n\n\n\n\n\n\n\nImportant\n\n\n\nRestricción de diseño: No puedes usar más de 4 visuales en esta página. El CEO no tiene tiempo para más."
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_2.html#parte-5-comparación-y-reflexión-5-min",
+    "href": "labs/instrucciones/lab_semana_2.html#parte-5-comparación-y-reflexión-5-min",
+    "title": "Laboratorio 2: Tres Dashboards, Tres Usuarios",
+    "section": "7 Parte 5 — Comparación y reflexión (5 min)",
+    "text": "7 Parte 5 — Comparación y reflexión (5 min)\n\n7.1 Responde con tu compañero:\n\nMismo dato, tres vistas: los tres usuarios ven datos del mismo archivo CSV. ¿En qué es diferente lo que cada uno necesita?\nDiseño y propósito:\n\n¿Qué visual pusiste en la vista de Juan que NO pondrías en la de Roberto? ¿Por qué?\n¿Qué información ocultarías a Sofía que sí mostraría a Roberto?\n\nConecta con los tipos de SI:\n\nLa Página 1 simula un _____ (tipo de SI)\nLa Página 2 simula un _____ (tipo de SI)\nLa Página 3 simula un _____ (tipo de SI)\n\nReflexión final: Si TechStyle implementara estos tres reportes para sus usuarios reales, ¿estaría usando 1 sistema o 3 sistemas diferentes? ¿Por qué?"
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_2.html#entrega",
+    "href": "labs/instrucciones/lab_semana_2.html#entrega",
+    "title": "Laboratorio 2: Tres Dashboards, Tres Usuarios",
+    "section": "8 Entrega",
+    "text": "8 Entrega\nGuarda el archivo Power BI como lab_semana2_[apellido1]_[apellido2].pbix.\nEl docente pedirá a 2-3 parejas que muestren su Vista Ejecutiva (EIS) y expliquen sus decisiones de diseño."
+  },
+  {
     "objectID": "clases/programa_curso.html#una-decisión-que-necesita-datos",
     "href": "clases/programa_curso.html#una-decisión-que-necesita-datos",
     "title": "Big Data y Analytics",
@@ -424,7 +550,7 @@
     "href": "index.html",
     "title": "Big Data & Analytics",
     "section": "",
-    "text": "Big Data y Analytics\n    Ingeniería Comercial · Facultad de Economía, Negocios y Gobierno · 2026\n  \n  \n    ICOM E015\n    5to Semestre · 5 créditos SCT\n  \n\n\n\n\n  \n  \n    \n    Presentaciones del Curso\n    \n  \n\n  \n    \n      Sesión 0\n      Conociendo a tu Profesor\n      Ciencia de Datos Espaciales · Recursos Hídricos · Investigación de Impacto\n      Ver presentación →\n    \n    \n      Sesión 0\n      Programa del Curso\n      Unidades, contenidos, evaluaciones y requisitos de aprobación\n      Ver presentación →\n    \n  \n\n  \n  \n    \n    Unidad 1 · Sistemas de Información en el Contexto Empresarial\n    \n  \n\n  \n    \n      Semana 1\n      Sistemas de Información en el Contexto Empresarial\n      Datos · Información · Conocimiento · Decisión · Introducción a los SI\n      Ver presentación →\n    \n    \n      Semana 2\n      Componentes, Actores y Tipos de Sistemas de Información\n      Hardware · Software · Personas · Procesos · TPS · BI · DSS · CRM · EIS\n      Ver presentación →\n    \n    \n      Semana 3\n      CMI, Calidad de Datos y Ética\n      Balanced Scorecard · 4 perspectivas · KPIs · Exactitud · Completitud · Consistencia\n      Ver presentación →\n    \n    \n      Semana 4\n      Big Data y Síntesis de la Unidad 1\n      Las 5 V · OLTP vs OLAP · Data Warehouse · ETL · Repaso integrador\n      Ver presentación →\n    \n    \n      Semana 5\n      Solemne 1\n      Evaluación Unidad 1 · Prueba escrita individual (20%) + controles parciales (10%)\n      30% de la nota final\n    \n  \n\n  \n  \n    \n    Unidad 2 · Fundamentos de Bases de Datos\n    \n  \n\n  \n    \n      Semana 6\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 7\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 8\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 9\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 10\n      Solemne 2\n      Evaluación Unidad 2 · Analítica de base de datos (25%) + controles parciales (10%)\n      35% de la nota final\n    \n  \n\n  \n  \n    \n    Unidad 3 · Modelamiento y Gestión de Base de Datos\n    \n  \n\n  \n    \n      Semana 11\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 12\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 13\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 14\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 15\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 16\n      Solemne 3\n      Evaluación Unidad 3 · Creación de BD relacional y análisis (25%) + controles parciales (10%)\n      35% de la nota final"
+    "text": "Big Data y Analytics\n    Ingeniería Comercial · Facultad de Economía, Negocios y Gobierno · 2026\n  \n  \n    ICOM E015\n    5to Semestre · 5 créditos SCT\n  \n\n\n\n\n  \n  \n    \n    Presentaciones del Curso\n    \n  \n\n  \n    \n      Sesión 0\n      Conociendo a tu Profesor\n      Ciencia de Datos Espaciales · Recursos Hídricos · Investigación de Impacto\n      Ver presentación →\n    \n    \n      Sesión 0\n      Programa del Curso\n      Unidades, contenidos, evaluaciones y requisitos de aprobación\n      Ver presentación →\n    \n  \n\n  \n  \n    \n    Unidad 1 · Sistemas de Información en el Contexto Empresarial\n    \n  \n\n  \n    \n      Semana 1 · Presentación\n      Sistemas de Información en el Contexto Empresarial\n      Datos · Información · Conocimiento · Decisión · Introducción a los SI\n      Ver presentación →\n    \n    \n      Semana 1 · Laboratorio\n      De Dato Crudo a Decisión\n      Excel · Tablas dinámicas · Análisis de ventas TechStyle · Límites del volumen\n      Ver laboratorio →\n    \n    \n      Semana 2 · Presentación\n      Componentes, Actores y Tipos de Sistemas de Información\n      Hardware · Software · Personas · Procesos · TPS · BI · DSS · CRM · EIS\n      Ver presentación →\n    \n    \n      Semana 2 · Laboratorio\n      Tres Dashboards, Tres Usuarios\n      Power BI · Vista operativa (TPS) · Vista analítica (BI) · Vista ejecutiva (EIS)\n      Ver laboratorio →\n    \n    \n      Semana 3 · Presentación\n      CMI, Calidad de Datos y Ética\n      Balanced Scorecard · 4 perspectivas · KPIs · Exactitud · Completitud · Consistencia\n      Ver presentación →\n    \n    \n      Semana 3 · Laboratorio\n      Auditoría de Calidad y CMI con Datos Reales\n      Power Query · Perfil de datos · KPIs del CMI · El indicador que no puede calcularse\n      Ver laboratorio →\n    \n    \n      Semana 4 · Presentación\n      Big Data y Síntesis de la Unidad 1\n      Las 5 V · OLTP vs OLAP · Data Warehouse · ETL · Repaso integrador\n      Ver presentación →\n    \n    \n      Semana 4 · Laboratorio\n      Mini-ETL: De Fuentes OLTP al Análisis\n      Power Query · 3 fuentes inconsistentes · Modelo estrella · Análisis OLAP\n      Ver laboratorio →\n    \n    \n      Semana 5\n      Solemne 1\n      Evaluación Unidad 1 · Prueba escrita individual (20%) + controles parciales (10%)\n      30% de la nota final\n    \n  \n\n  \n  \n    \n    Unidad 2 · Fundamentos de Bases de Datos\n    \n  \n\n  \n    \n      Semana 6\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 7\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 8\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 9\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 10\n      Solemne 2\n      Evaluación Unidad 2 · Analítica de base de datos (25%) + controles parciales (10%)\n      35% de la nota final\n    \n  \n\n  \n  \n    \n    Unidad 3 · Modelamiento y Gestión de Base de Datos\n    \n  \n\n  \n    \n      Semana 11\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 12\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 13\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 14\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 15\n      Próximamente\n      Contenido en preparación\n      Próximamente\n    \n    \n      Semana 16\n      Solemne 3\n      Evaluación Unidad 3 · Creación de BD relacional y análisis (25%) + controles parciales (10%)\n      35% de la nota final"
   },
   {
     "objectID": "clases/class_week_1.html#bienvenidos",
@@ -831,5 +957,110 @@
     "title": "Conociendo a tu Profesor",
     "section": "Preguntas · Conversación · Contacto",
     "text": "Preguntas · Conversación · Contacto\n\n¿Tienen preguntas?\nSobre el curso, la investigación, la carrera, el running… cualquier cosa.\n\n\n\n\nContacto:\n\nEmail: francisco.zambrano@uss.cl\nOficina: El Condor 796 / Piso 4\nAtención: Viernes 8:30 – 16:00\n\n\n\nRecursos adicionales:\n\nGitHub: github.com/frzambra\nGoogle Scholar: link\nProyecto ODES: odes-chile.org\n\n\n\n\n“Los grandes análisis comienzan con una buena pregunta. Empecemos a hacer preguntas juntos.”\n\n\nCierre cálido y apertura al diálogo (2–3 min) No terminar con “¿Alguna pregunta?” de manera pasiva. Generar la conversación activamente. Sugerencias de preguntas para romper el silencio inicial: - “¿Alguien sabe qué es la megasequía chilena?” - “¿Cuántos han trabajado con datos geográficos antes?” - “¿Qué esperan llevarse de este curso?”\nSi el tiempo lo permite, pedir a dos o tres estudiantes que se presenten brevemente. Terminar con energía: “Me alegra estar aquí. Vamos a hacer trabajo que vale la pena.”"
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_1.html",
+    "href": "labs/instrucciones/lab_semana_1.html",
+    "title": "Laboratorio 1: De Dato Crudo a Decisión",
+    "section": "",
+    "text": "María González, Gerente de Marketing de TechStyle, tiene un presupuesto de $15.000.000 CLP para la campaña del próximo mes. Necesita decidir en qué categoría de productos invertir para maximizar las ventas.\nEl equipo de TI te entregó el archivo techstyle_orders.csv con los datos de ventas del año 2023. Tienes 30 minutos para responder la pregunta de María."
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_1.html#contexto",
+    "href": "labs/instrucciones/lab_semana_1.html#contexto",
+    "title": "Laboratorio 1: De Dato Crudo a Decisión",
+    "section": "",
+    "text": "María González, Gerente de Marketing de TechStyle, tiene un presupuesto de $15.000.000 CLP para la campaña del próximo mes. Necesita decidir en qué categoría de productos invertir para maximizar las ventas.\nEl equipo de TI te entregó el archivo techstyle_orders.csv con los datos de ventas del año 2023. Tienes 30 minutos para responder la pregunta de María."
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_1.html#instrucciones-generales",
+    "href": "labs/instrucciones/lab_semana_1.html#instrucciones-generales",
+    "title": "Laboratorio 1: De Dato Crudo a Decisión",
+    "section": "2 Instrucciones generales",
+    "text": "2 Instrucciones generales\n\nTrabajarás individualmente en Excel.\nSigue los pasos en orden. Cada paso construye sobre el anterior.\nAl finalizar, compararás tus resultados con tus compañeros.\n\nArchivo de datos: labs/data/techstyle_orders.csv"
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_1.html#parte-1-explorar-los-datos-brutos-5-min",
+    "href": "labs/instrucciones/lab_semana_1.html#parte-1-explorar-los-datos-brutos-5-min",
+    "title": "Laboratorio 1: De Dato Crudo a Decisión",
+    "section": "3 Parte 1 — Explorar los datos brutos (5 min)",
+    "text": "3 Parte 1 — Explorar los datos brutos (5 min)\n\n3.1 Paso 1: Abrir el archivo\n\nAbre Excel y carga el archivo techstyle_orders.csv\n\nMenú: Datos → Desde texto/CSV\n\nObserva la estructura: ¿Cuántas columnas hay? ¿Cuántas filas?\nIdentifica las columnas disponibles y comprende qué representa cada una.\n\n\n\n3.2 Paso 2: Reflexión inicial\nAntes de hacer cualquier cálculo, responde en una hoja aparte:\n\n\n\n\n\n\n\nPregunta\nTu respuesta\n\n\n\n\n¿Cuántos registros (filas) tiene el archivo?\n\n\n\n¿Qué período de tiempo cubre?\n\n\n\n¿Qué categorías de productos existen?\n\n\n\n¿Puedes responder la pregunta de María con solo mirar los datos?\nSí / No / Por qué\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nReflexiona: A esto nos referimos cuando decimos que los datos crudos, por sí solos, no son útiles."
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_1.html#parte-2-transformar-datos-en-información-15-min",
+    "href": "labs/instrucciones/lab_semana_1.html#parte-2-transformar-datos-en-información-15-min",
+    "title": "Laboratorio 1: De Dato Crudo a Decisión",
+    "section": "4 Parte 2 — Transformar datos en información (15 min)",
+    "text": "4 Parte 2 — Transformar datos en información (15 min)\n\n4.1 Paso 3: Crear una Tabla Dinámica\n\nSelecciona todos los datos (Ctrl+A)\nInserta una Tabla Dinámica en una hoja nueva\nConfigura la tabla así:\n\n\n\n\nÁrea\nCampo\n\n\n\n\nFilas\ncategoria\n\n\nValores\nventa_neta (suma)\n\n\nValores\ncantidad (suma)\n\n\nValores\nmargen_pct (promedio)\n\n\n\n\nOrdena por venta_neta de mayor a menor.\n\n\n\n4.2 Paso 4: Analizar tendencias por trimestre\nEn una segunda Tabla Dinámica:\n\n\n\nÁrea\nCampo\n\n\n\n\nFilas\ncategoria\n\n\nColumnas\ntrimestre\n\n\nValores\nventa_neta (suma)\n\n\n\nEsto te mostrará cómo evolucionaron las ventas de cada categoría durante el año.\n\n\n4.3 Paso 5: Analizar por región\nEn una tercera Tabla Dinámica:\n\n\n\nÁrea\nCampo\n\n\n\n\nFilas\nregion\n\n\nColumnas\ncategoria\n\n\nValores\nventa_neta (suma)"
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_1.html#parte-3-de-información-a-decisión-10-min",
+    "href": "labs/instrucciones/lab_semana_1.html#parte-3-de-información-a-decisión-10-min",
+    "title": "Laboratorio 1: De Dato Crudo a Decisión",
+    "section": "5 Parte 3 — De información a decisión (10 min)",
+    "text": "5 Parte 3 — De información a decisión (10 min)\n\n5.1 Paso 6: Completar la tabla de análisis\nCon los resultados de tus tablas dinámicas, completa esta tabla resumen:\n\n\n\n\n\n\n\n\n\n\nCategoría\nVentas Totales (CLP)\nMargen Promedio (%)\nTendencia T3→T4\n¿Es buena inversión?\n\n\n\n\nElectrónica\n\n\n\n\n\n\nRopa\n\n\n\n\n\n\nHogar\n\n\n\n\n\n\nAccesorios\n\n\n\n\n\n\n\n\n\n5.2 Paso 7: Tu recomendación\nEscribe en no más de 3 líneas tu recomendación para María:\n\n“Recomiendo invertir los $15.000.000 en la categoría ________ porque…”"
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_1.html#parte-4-reflexión-final-5-min",
+    "href": "labs/instrucciones/lab_semana_1.html#parte-4-reflexión-final-5-min",
+    "title": "Laboratorio 1: De Dato Crudo a Decisión",
+    "section": "6 Parte 4 — Reflexión final (5 min)",
+    "text": "6 Parte 4 — Reflexión final (5 min)\nResponde estas preguntas:\n\n¿Podrías haber respondido la pregunta de María sin procesar los datos? ¿Por qué no?\n¿Qué transformaste? Completa la frase:\n\nLos datos crudos eran: _______\nLa información que generé fue: _______\nEl conocimiento que apliqué fue: _______\n\nLímite de Excel: El archivo tiene ~1.250 filas. TechStyle real tiene 8.750.000 registros de ventas.\n\nIntenta cargar el mismo archivo pero duplicado 3 veces (pégalo en la misma hoja).\n¿Qué pasa con la velocidad de Excel?\n¿Qué implicaría trabajar con 10x más datos?\n\n\n\n\n\n\n\n\nImportant\n\n\n\nPunto clave del curso: Excel es una herramienta poderosa para datos pequeños, pero las organizaciones reales tienen millones de registros que requieren arquitecturas diferentes. Eso es lo que estudiaremos en este curso."
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_1.html#entrega-y-discusión",
+    "href": "labs/instrucciones/lab_semana_1.html#entrega-y-discusión",
+    "title": "Laboratorio 1: De Dato Crudo a Decisión",
+    "section": "7 Entrega y discusión",
+    "text": "7 Entrega y discusión\nAl finalizar el tiempo, el docente pedirá a grupos al azar que compartan:\n\nSu recomendación para María\nLa categoría más interesante que encontraron y por qué\nCualquier hallazgo inesperado en los datos\n\n\n\n\n\n\n\nTip\n\n\n\nNo hay una sola respuesta correcta. Diferentes análisis pueden llevar a diferentes recomendaciones válidas — lo importante es que estén basadas en evidencia."
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_3.html",
+    "href": "labs/instrucciones/lab_semana_3.html",
+    "title": "Laboratorio 3: Auditoría de Calidad y CMI con Datos Reales",
+    "section": "",
+    "text": "TechStyle detectó que su CMI muestra métricas inconsistentes. El CEO Roberto no confía en los datos del dashboard. El equipo sospecha que hay problemas de calidad en la tabla de clientes.\nTu tarea tiene dos partes:\n\nAuditar la tabla de clientes e identificar los problemas de calidad\nConstruir el CMI de TechStyle en Power BI usando los datos de ventas\n\nAl finalizar, descubrirás que un KPI del CMI no puede calcularse correctamente debido a los problemas de datos encontrados."
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_3.html#contexto",
+    "href": "labs/instrucciones/lab_semana_3.html#contexto",
+    "title": "Laboratorio 3: Auditoría de Calidad y CMI con Datos Reales",
+    "section": "",
+    "text": "TechStyle detectó que su CMI muestra métricas inconsistentes. El CEO Roberto no confía en los datos del dashboard. El equipo sospecha que hay problemas de calidad en la tabla de clientes.\nTu tarea tiene dos partes:\n\nAuditar la tabla de clientes e identificar los problemas de calidad\nConstruir el CMI de TechStyle en Power BI usando los datos de ventas\n\nAl finalizar, descubrirás que un KPI del CMI no puede calcularse correctamente debido a los problemas de datos encontrados."
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_3.html#instrucciones-generales",
+    "href": "labs/instrucciones/lab_semana_3.html#instrucciones-generales",
+    "title": "Laboratorio 3: Auditoría de Calidad y CMI con Datos Reales",
+    "section": "2 Instrucciones generales",
+    "text": "2 Instrucciones generales\n\nTrabajarás individualmente.\nParte A: Power Query (auditoría de clientes)\nParte B: Power BI (construcción del CMI)\nDuración total: 35 minutos\n\nArchivos de datos:\n\nlabs/data/techstyle_customers_dirty.csv → Parte A\nlabs/data/techstyle_orders.csv → Parte B"
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_3.html#parte-a-auditoría-de-calidad-de-datos-18-min",
+    "href": "labs/instrucciones/lab_semana_3.html#parte-a-auditoría-de-calidad-de-datos-18-min",
+    "title": "Laboratorio 3: Auditoría de Calidad y CMI con Datos Reales",
+    "section": "3 Parte A — Auditoría de Calidad de Datos (18 min)",
+    "text": "3 Parte A — Auditoría de Calidad de Datos (18 min)\n\n3.1 Paso 1: Cargar los datos de clientes\n\nAbre Power BI Desktop (o Excel con Power Query)\nInicio → Obtener datos → Texto/CSV\nCarga techstyle_customers_dirty.csv\nHaz clic en Transformar datos (no en “Cargar”) — esto abre Power Query Editor\n\n\n\n3.2 Paso 2: Exploración inicial\nEn Power Query Editor, usa las herramientas de perfilado de datos:\n\nActiva: Vista → Calidad de columna\nActiva: Vista → Distribución de columna\nActiva: Vista → Perfil de columna\n\nEsto te mostrará automáticamente cuántos valores válidos, errores y vacíos tiene cada columna.\n\n\n3.3 Paso 3: Completar la Tabla de Auditoría\nPara cada columna, registra lo que encuentres:\n\n\n\n\n\n\n\n\n\n\nColumna\n% Vacíos\nProblemas encontrados\nDimensión de calidad\nDecisión de negocio afectada\n\n\n\n\nemail\n\n\n\n\n\n\napellido\n\n\n\n\n\n\nregion\n\n\n\n\n\n\nfecha_nacimiento\n\n\n\n\n\n\nfecha_registro\n\n\n\n\n\n\ntelefono\n\n\n\n\n\n\n\nDimensiones de calidad: Exactitud · Completitud · Consistencia · Oportunidad\n\n\n\n\n\n\nTip\n\n\n\nPista para emails inválidos: Usa Inicio → Filtrar filas → No contiene con el texto @ para encontrar emails sin arroba. Luego prueba con .com para encontrar dominios incompletos.\n\n\n\n\n3.4 Paso 4: Identificar duplicados\n\nSelecciona la columna email\nInicio → Quitar filas → Quitar duplicados\nCompara el número de filas antes y después.\n\nFilas originales: ______\nFilas tras eliminar duplicados de email: ______\nDuplicados encontrados: ______\n\n\n\n\n3.5 Paso 5: Reglas de validación\nPara cada problema encontrado, propón una regla de validación que debería tener el sistema al momento de registrar un nuevo cliente:\n\n\n\nProblema\nRegla de validación propuesta\n\n\n\n\nEmail inválido\n\n\n\nEmail duplicado\n\n\n\nRegión vacía\n\n\n\nFecha de nacimiento vacía\n\n\n\n\n\n\n3.6 Paso 6: Reflexión de calidad\nResponde:\n\nSi TechStyle quisiera hacer una campaña de email marketing a todos sus clientes, ¿qué porcentaje del total podría recibir el correo? (considera emails vacíos + inválidos)\nSi quisiera segmentar clientes por grupo etario (jóvenes, adultos, adultos mayores), ¿podría hacerlo con este dataset? ¿Por qué?\n¿Qué área de la empresa es responsable de estos problemas? ¿Solo el área de TI?"
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_3.html#parte-b-construyendo-el-cmi-en-power-bi-17-min",
+    "href": "labs/instrucciones/lab_semana_3.html#parte-b-construyendo-el-cmi-en-power-bi-17-min",
+    "title": "Laboratorio 3: Auditoría de Calidad y CMI con Datos Reales",
+    "section": "4 Parte B — Construyendo el CMI en Power BI (17 min)",
+    "text": "4 Parte B — Construyendo el CMI en Power BI (17 min)\n\n4.1 Paso 7: Cargar los datos de ventas\n\nEn Power BI, carga también techstyle_orders.csv\nAhora tienes dos tablas: techstyle_customers_dirty y techstyle_orders\n\n\n\n4.2 Paso 8: Crear medidas para los KPIs del CMI\nCrea las siguientes medidas DAX (botón derecho sobre la tabla → Nueva medida):\nPerspectiva Financiera:\nTotal Ventas = SUM(techstyle_orders[venta_neta])\nMargen Promedio = AVERAGE(techstyle_orders[margen_pct])\nPerspectiva Cliente:\nTotal Clientes con Email =\nCOUNTROWS(\n    FILTER(techstyle_customers_dirty,\n           techstyle_customers_dirty[email] &lt;&gt; \"\")\n)\nPerspectiva Procesos:\nPedidos por Canal Web =\nCALCULATE(\n    DISTINCTCOUNT(techstyle_orders[order_id]),\n    techstyle_orders[canal_venta] = \"Web\"\n)\n\n\n4.3 Paso 9: Construir las 4 perspectivas del CMI\nCrea una página llamada \"CMI TechStyle\" con esta estructura:\nFila 1 — Perspectiva Financiera (color verde):\n\nTarjeta: Total Ventas\nTarjeta: Margen Promedio\nMeta referencial: ventas &gt; $50.000.000 CLP / margen &gt; 25%\n\nFila 2 — Perspectiva Cliente (color azul):\n\nTarjeta: Total Clientes registrados (COUNT de id)\nTarjeta: Clientes con email válido\nGráfico de barras: clientes por region\n\nFila 3 — Perspectiva Procesos (color naranja):\n\nGráfico de dona: ventas por canal_venta\nTabla: ventas por categoria con margen\n\nFila 4 — Perspectiva Aprendizaje (color morado):\n\nTarjeta con texto: “KPI: % clientes con perfil completo”\nNota: este KPI no puede calcularse correctamente (¿por qué?)\n\n\n\n4.4 Paso 10: El KPI que falla\n\n\n\n\n\n\nImportant\n\n\n\nEl KPI de Aprendizaje que Roberto quería medir era: “¿Qué porcentaje de nuestros clientes tiene perfil completo (con edad, región y email válido)?”\nEste indicador es clave porque permite medir la calidad del registro de clientes como proceso interno.\nPero no puedes calcularlo correctamente. ¿Por qué?\n\n\nResponde:\n\n¿Qué datos te faltan o están mal para calcular este KPI?\n¿Qué decisiones de negocio no puede tomar Roberto porque este KPI está dañado?\n¿Qué proceso operativo deberían cambiar para que este KPI sea confiable en el futuro?"
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_3.html#reflexión-final",
+    "href": "labs/instrucciones/lab_semana_3.html#reflexión-final",
+    "title": "Laboratorio 3: Auditoría de Calidad y CMI con Datos Reales",
+    "section": "5 Reflexión final",
+    "text": "5 Reflexión final\nConecta ambas partes:\n\nEl CMI de TechStyle es una herramienta estratégica poderosa. Pero su confiabilidad depende completamente de la calidad de los datos que lo alimentan.\n\nCompleta la frase:\n“Si TechStyle no corrige los problemas de calidad en la tabla de clientes, el CEO Roberto tomará decisiones incorrectas sobre _______ porque el dato de _______ está _______ (vacío / incorrecto / duplicado).”"
+  },
+  {
+    "objectID": "labs/instrucciones/lab_semana_3.html#entrega",
+    "href": "labs/instrucciones/lab_semana_3.html#entrega",
+    "title": "Laboratorio 3: Auditoría de Calidad y CMI con Datos Reales",
+    "section": "6 Entrega",
+    "text": "6 Entrega\nGuarda el archivo Power BI como lab_semana3_[apellido].pbix.\nEl docente preguntará: “¿Quién encontró el mayor número de problemas de calidad? ¿Cuántos eran?”"
   }
 ]

@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Laboratorio 4: Mini-ETL — De Fuentes OLTP al Análisis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-538d5bc5c147f17fcaa17a1866cecc2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#contexto" id="toc-contexto" class="nav-link active" data-scroll-target="#contexto"><span class="header-section-number">1</span> Contexto</a></li>
+  <li><a href="#instrucciones-generales" id="toc-instrucciones-generales" class="nav-link" data-scroll-target="#instrucciones-generales"><span class="header-section-number">2</span> Instrucciones generales</a></li>
+  <li><a href="#parte-1-extraer-conocer-las-fuentes-5-min" id="toc-parte-1-extraer-conocer-las-fuentes-5-min" class="nav-link" data-scroll-target="#parte-1-extraer-conocer-las-fuentes-5-min"><span class="header-section-number">3</span> Parte 1 — Extraer: conocer las fuentes (5 min)</a>
+  <ul class="collapse">
+  <li><a href="#paso-1-cargar-las-tres-fuentes" id="toc-paso-1-cargar-las-tres-fuentes" class="nav-link" data-scroll-target="#paso-1-cargar-las-tres-fuentes"><span class="header-section-number">3.1</span> Paso 1: Cargar las tres fuentes</a></li>
+  <li><a href="#paso-2-identificar-las-inconsistencias" id="toc-paso-2-identificar-las-inconsistencias" class="nav-link" data-scroll-target="#paso-2-identificar-las-inconsistencias"><span class="header-section-number">3.2</span> Paso 2: Identificar las inconsistencias</a></li>
+  </ul></li>
+  <li><a href="#parte-2-transformar-limpiar-y-estandarizar-20-min" id="toc-parte-2-transformar-limpiar-y-estandarizar-20-min" class="nav-link" data-scroll-target="#parte-2-transformar-limpiar-y-estandarizar-20-min"><span class="header-section-number">4</span> Parte 2 — Transformar: limpiar y estandarizar (20 min)</a>
+  <ul class="collapse">
+  <li><a href="#paso-3-estandarizar-oltp_ventas" id="toc-paso-3-estandarizar-oltp_ventas" class="nav-link" data-scroll-target="#paso-3-estandarizar-oltp_ventas"><span class="header-section-number">4.1</span> Paso 3: Estandarizar <code>oltp_ventas</code></a></li>
+  <li><a href="#paso-4-estandarizar-oltp_clientes" id="toc-paso-4-estandarizar-oltp_clientes" class="nav-link" data-scroll-target="#paso-4-estandarizar-oltp_clientes"><span class="header-section-number">4.2</span> Paso 4: Estandarizar <code>oltp_clientes</code></a></li>
+  <li><a href="#paso-5-estandarizar-oltp_productos" id="toc-paso-5-estandarizar-oltp_productos" class="nav-link" data-scroll-target="#paso-5-estandarizar-oltp_productos"><span class="header-section-number">4.3</span> Paso 5: Estandarizar <code>oltp_productos</code></a></li>
+  <li><a href="#paso-6-aplicar-y-cerrar" id="toc-paso-6-aplicar-y-cerrar" class="nav-link" data-scroll-target="#paso-6-aplicar-y-cerrar"><span class="header-section-number">4.4</span> Paso 6: Aplicar y cerrar</a></li>
+  </ul></li>
+  <li><a href="#parte-3-cargar-construir-el-modelo-estrella-5-min" id="toc-parte-3-cargar-construir-el-modelo-estrella-5-min" class="nav-link" data-scroll-target="#parte-3-cargar-construir-el-modelo-estrella-5-min"><span class="header-section-number">5</span> Parte 3 — Cargar: construir el modelo estrella (5 min)</a>
+  <ul class="collapse">
+  <li><a href="#paso-7-crear-relaciones" id="toc-paso-7-crear-relaciones" class="nav-link" data-scroll-target="#paso-7-crear-relaciones"><span class="header-section-number">5.1</span> Paso 7: Crear relaciones</a></li>
+  </ul></li>
+  <li><a href="#parte-4-analizar-responder-preguntas-de-negocio-5-min" id="toc-parte-4-analizar-responder-preguntas-de-negocio-5-min" class="nav-link" data-scroll-target="#parte-4-analizar-responder-preguntas-de-negocio-5-min"><span class="header-section-number">6</span> Parte 4 — Analizar: responder preguntas de negocio (5 min)</a>
+  <ul class="collapse">
+  <li><a href="#paso-8-construir-visualizaciones-analíticas" id="toc-paso-8-construir-visualizaciones-analíticas" class="nav-link" data-scroll-target="#paso-8-construir-visualizaciones-analíticas"><span class="header-section-number">6.1</span> Paso 8: Construir visualizaciones analíticas</a></li>
+  </ul></li>
+  <li><a href="#reflexión-final" id="toc-reflexión-final" class="nav-link" data-scroll-target="#reflexión-final"><span class="header-section-number">7</span> Reflexión final</a>
+  <ul class="collapse">
+  <li><a href="#conecta-con-los-conceptos-de-la-clase" id="toc-conecta-con-los-conceptos-de-la-clase" class="nav-link" data-scroll-target="#conecta-con-los-conceptos-de-la-clase"><span class="header-section-number">7.1</span> Conecta con los conceptos de la clase</a></li>
+  <li><a href="#el-proceso-que-hiciste-tiene-nombre" id="toc-el-proceso-que-hiciste-tiene-nombre" class="nav-link" data-scroll-target="#el-proceso-que-hiciste-tiene-nombre"><span class="header-section-number">7.2</span> El proceso que hiciste tiene nombre</a></li>
+  </ul></li>
+  <li><a href="#entrega" id="toc-entrega" class="nav-link" data-scroll-target="#entrega"><span class="header-section-number">8</span> Entrega</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Laboratorio 4: Mini-ETL — De Fuentes OLTP al Análisis</h1>
+<p class="subtitle lead">Semana 4 · Big Data y Analytics · Universidad San Sebastián</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="contexto" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="contexto"><span class="header-section-number">1</span> Contexto</h2>
+<p>TechStyle tiene sus datos distribuidos en <strong>tres sistemas OLTP separados</strong>, cada uno mantenido por un área diferente de la empresa:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Sistema</th>
+<th>Área responsable</th>
+<th>Archivo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sistema de ventas</td>
+<td>Comercial</td>
+<td><code>oltp_ventas.csv</code></td>
+</tr>
+<tr class="even">
+<td>Sistema de clientes</td>
+<td>Marketing</td>
+<td><code>oltp_clientes.csv</code></td>
+</tr>
+<tr class="odd">
+<td>Sistema de productos</td>
+<td>Bodega</td>
+<td><code>oltp_productos.csv</code></td>
+</tr>
+</tbody>
+</table>
+<p>El problema: <strong>cada sistema fue construido por equipos distintos</strong>, en momentos distintos, sin coordinación. Los formatos no son compatibles entre sí.</p>
+<p>Tu tarea es construir un <strong>mini proceso ETL</strong> con Power Query para integrar estas tres fuentes en un modelo analítico unificado que permita responder preguntas de negocio.</p>
+<hr>
+</section>
+<section id="instrucciones-generales" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="instrucciones-generales"><span class="header-section-number">2</span> Instrucciones generales</h2>
+<ul>
+<li>Trabajarás <strong>en parejas</strong>.</li>
+<li>Todo el trabajo se realiza en <strong>Power BI Desktop</strong> usando Power Query.</li>
+<li><strong>Duración</strong>: 35 minutos</li>
+</ul>
+<p><strong>Archivos de datos</strong>:</p>
+<ul>
+<li><code>labs/data/oltp_ventas.csv</code></li>
+<li><code>labs/data/oltp_clientes.csv</code></li>
+<li><code>labs/data/oltp_productos.csv</code></li>
+</ul>
+<hr>
+</section>
+<section id="parte-1-extraer-conocer-las-fuentes-5-min" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="parte-1-extraer-conocer-las-fuentes-5-min"><span class="header-section-number">3</span> Parte 1 — Extraer: conocer las fuentes (5 min)</h2>
+<section id="paso-1-cargar-las-tres-fuentes" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="paso-1-cargar-las-tres-fuentes"><span class="header-section-number">3.1</span> Paso 1: Cargar las tres fuentes</h3>
+<ol type="1">
+<li>Abre Power BI Desktop</li>
+<li>Carga los tres archivos CSV (uno por uno, desde <em>Obtener datos → Texto/CSV</em>)</li>
+<li>En cada caso, haz clic en <strong>Transformar datos</strong> para abrir Power Query Editor</li>
+</ol>
+</section>
+<section id="paso-2-identificar-las-inconsistencias" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="paso-2-identificar-las-inconsistencias"><span class="header-section-number">3.2</span> Paso 2: Identificar las inconsistencias</h3>
+<p>Antes de transformar nada, examina las tres tablas y completa esta tabla de diagnóstico:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 34%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Problema</th>
+<th>Tabla afectada</th>
+<th>Columna</th>
+<th>Detalle</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Nombre de columna inconsistente</td>
+<td></td>
+<td></td>
+<td>Ej: <code>Cant</code> vs <code>cantidad</code></td>
+</tr>
+<tr class="even">
+<td>Formato de fecha distinto</td>
+<td></td>
+<td></td>
+<td>Ej: DD/MM/YYYY vs YYYY/MM/DD</td>
+</tr>
+<tr class="odd">
+<td>Columna de texto que debería ser número</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Campo que une dos tablas con nombres distintos</td>
+<td></td>
+<td></td>
+<td>Ej: <code>ID_Cliente</code> vs <code>CustomerID</code></td>
+</tr>
+<tr class="odd">
+<td>Categoría con nombre diferente</td>
+<td></td>
+<td></td>
+<td>Ej: <code>Linea</code> vs <code>categoria</code></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Este es exactamente el problema real de integración de datos en empresas.</strong> Cada área nombra sus columnas como le parece conveniente. El proceso ETL existe para resolver esto.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="parte-2-transformar-limpiar-y-estandarizar-20-min" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="parte-2-transformar-limpiar-y-estandarizar-20-min"><span class="header-section-number">4</span> Parte 2 — Transformar: limpiar y estandarizar (20 min)</h2>
+<section id="paso-3-estandarizar-oltp_ventas" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="paso-3-estandarizar-oltp_ventas"><span class="header-section-number">4.1</span> Paso 3: Estandarizar <code>oltp_ventas</code></h3>
+<p>En Power Query, con la tabla <code>oltp_ventas</code> seleccionada:</p>
+<p><strong>3.1 Renombrar columnas</strong> para estandarizar:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Nombre original</th>
+<th>Nuevo nombre</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ID_Venta</code></td>
+<td><code>venta_id</code></td>
+</tr>
+<tr class="even">
+<td><code>Fecha_Venta</code></td>
+<td><code>fecha</code></td>
+</tr>
+<tr class="odd">
+<td><code>ID_Cliente</code></td>
+<td><code>cliente_id</code></td>
+</tr>
+<tr class="even">
+<td><code>Cod_Prod</code></td>
+<td><code>producto_id</code></td>
+</tr>
+<tr class="odd">
+<td><code>Cant</code></td>
+<td><code>cantidad</code></td>
+</tr>
+<tr class="even">
+<td><code>Precio_Unit</code></td>
+<td><code>precio_unitario</code></td>
+</tr>
+<tr class="odd">
+<td><code>Desc_Pct</code></td>
+<td><code>descuento_pct</code></td>
+</tr>
+<tr class="even">
+<td><code>Total_Venta</code></td>
+<td><code>venta_total</code></td>
+</tr>
+</tbody>
+</table>
+<p>Para renombrar: doble clic sobre el encabezado de la columna.</p>
+<p><strong>3.2 Corregir el formato de fecha:</strong></p>
+<p>La columna <code>fecha</code> tiene formato <code>YYYY/MM/DD</code> (con barras, no guiones).</p>
+<ol type="1">
+<li>Selecciona la columna <code>fecha</code></li>
+<li><em>Inicio → Tipo de datos → Fecha</em></li>
+<li>Si falla, usa: <em>Transformar → Columna de texto → Reemplazar valores</em> (cambia <code>/</code> por <code>-</code>)</li>
+<li>Luego cambia el tipo a Fecha</li>
+</ol>
+<p><strong>3.3 Verificar tipos de datos:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Columna</th>
+<th>Tipo correcto</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>fecha</code></td>
+<td>Fecha</td>
+</tr>
+<tr class="even">
+<td><code>cantidad</code>, <code>descuento_pct</code></td>
+<td>Número entero</td>
+</tr>
+<tr class="odd">
+<td><code>precio_unitario</code>, <code>venta_total</code></td>
+<td>Número decimal fijo</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="paso-4-estandarizar-oltp_clientes" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="paso-4-estandarizar-oltp_clientes"><span class="header-section-number">4.2</span> Paso 4: Estandarizar <code>oltp_clientes</code></h3>
+<p><strong>4.1 Renombrar columnas:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Nombre original</th>
+<th>Nuevo nombre</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>CustomerID</code></td>
+<td><code>cliente_id</code></td>
+</tr>
+<tr class="even">
+<td><code>NombreCompleto</code></td>
+<td><code>nombre_completo</code></td>
+</tr>
+<tr class="odd">
+<td><code>Correo</code></td>
+<td><code>email</code></td>
+</tr>
+<tr class="even">
+<td><code>Ciudad</code></td>
+<td><code>region</code></td>
+</tr>
+<tr class="odd">
+<td><code>FechaRegistro</code></td>
+<td><code>fecha_registro</code></td>
+</tr>
+<tr class="even">
+<td><code>TipoCliente</code></td>
+<td><code>segmento</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>4.2 Separar nombre y apellido</strong> (columna <code>nombre_completo</code>):</p>
+<ol type="1">
+<li>Selecciona <code>nombre_completo</code></li>
+<li><em>Transformar → Dividir columna → Por delimitador → Espacio → En la primera aparición</em></li>
+<li>Renombra las columnas resultantes: <code>nombre</code> y <code>apellido</code></li>
+</ol>
+<p><strong>4.3 Corregir el formato de fecha:</strong></p>
+<p>La columna <code>fecha_registro</code> tiene formato <code>DD/MM/YYYY</code>.</p>
+<ol type="1">
+<li>Selecciona la columna</li>
+<li><em>Inicio → Tipo de datos → Usando configuración regional…</em></li>
+<li>Selecciona tipo <strong>Fecha</strong> y configuración regional <strong>Español (Chile)</strong></li>
+</ol>
+</section>
+<section id="paso-5-estandarizar-oltp_productos" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="paso-5-estandarizar-oltp_productos"><span class="header-section-number">4.3</span> Paso 5: Estandarizar <code>oltp_productos</code></h3>
+<p><strong>5.1 Renombrar columnas:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Nombre original</th>
+<th>Nuevo nombre</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Cod_Producto</code></td>
+<td><code>producto_id</code></td>
+</tr>
+<tr class="even">
+<td><code>Descripcion</code></td>
+<td><code>nombre_producto</code></td>
+</tr>
+<tr class="odd">
+<td><code>Linea</code></td>
+<td><code>categoria</code></td>
+</tr>
+<tr class="even">
+<td><code>Costo_CLP</code></td>
+<td><code>costo</code></td>
+</tr>
+<tr class="odd">
+<td><code>PrecioVenta</code></td>
+<td><code>precio_venta</code></td>
+</tr>
+<tr class="even">
+<td><code>Stock_Actual</code></td>
+<td><code>stock</code></td>
+</tr>
+<tr class="odd">
+<td><code>Activo</code></td>
+<td><code>activo</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>5.2 Agregar columna calculada — Margen:</strong></p>
+<ol type="1">
+<li><em>Agregar columna → Columna personalizada</em></li>
+<li>Nombre: <code>margen_pct</code></li>
+<li>Fórmula:</li>
+</ol>
+<pre><code>= ([precio_venta] - [costo]) / [precio_venta] * 100</code></pre>
+</section>
+<section id="paso-6-aplicar-y-cerrar" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="paso-6-aplicar-y-cerrar"><span class="header-section-number">4.4</span> Paso 6: Aplicar y cerrar</h3>
+<ol type="1">
+<li>Revisa que las tres tablas estén limpias y con tipos correctos</li>
+<li><em>Inicio → Cerrar y aplicar</em></li>
+<li>Las tres tablas ahora están en Power BI con nombres y formatos consistentes</li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="parte-3-cargar-construir-el-modelo-estrella-5-min" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="parte-3-cargar-construir-el-modelo-estrella-5-min"><span class="header-section-number">5</span> Parte 3 — Cargar: construir el modelo estrella (5 min)</h2>
+<section id="paso-7-crear-relaciones" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="paso-7-crear-relaciones"><span class="header-section-number">5.1</span> Paso 7: Crear relaciones</h3>
+<p>En Power BI, ve a la <strong>Vista de Modelo</strong> (ícono del centro en la barra izquierda).</p>
+<p>Deberías ver las tres tablas. Crea las relaciones:</p>
+<ul>
+<li><code>oltp_ventas[cliente_id]</code> → <code>oltp_clientes[cliente_id]</code> (muchos a uno)</li>
+<li><code>oltp_ventas[producto_id]</code> → <code>oltp_productos[producto_id]</code> (muchos a uno)</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Reconoces este esquema.</strong> Es el <strong>modelo estrella</strong> que ya conoces de Power BI: una tabla de hechos (ventas) rodeada de tablas de dimensiones (clientes, productos). Acabas de construirlo desde cero a partir de 3 fuentes OLTP separadas.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="parte-4-analizar-responder-preguntas-de-negocio-5-min" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="parte-4-analizar-responder-preguntas-de-negocio-5-min"><span class="header-section-number">6</span> Parte 4 — Analizar: responder preguntas de negocio (5 min)</h2>
+<section id="paso-8-construir-visualizaciones-analíticas" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="paso-8-construir-visualizaciones-analíticas"><span class="header-section-number">6.1</span> Paso 8: Construir visualizaciones analíticas</h3>
+<p>Ahora que tienes el modelo integrado, el análisis OLAP es posible. Crea una página llamada <code>"Análisis OLAP"</code> con:</p>
+<ol type="1">
+<li><strong>Gráfico de barras</strong>: Ventas totales por <code>categoria</code> (de <code>oltp_productos</code>)</li>
+<li><strong>Gráfico de líneas</strong>: Evolución de ventas por mes (usa la columna <code>fecha</code> de ventas)</li>
+<li><strong>Tabla</strong>: Top 5 productos más vendidos con su margen</li>
+<li><strong>Segmentador</strong>: por <code>segmento</code> de cliente (Premium / Estándar / Básico)</li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="reflexión-final" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="reflexión-final"><span class="header-section-number">7</span> Reflexión final</h2>
+<section id="conecta-con-los-conceptos-de-la-clase" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="conecta-con-los-conceptos-de-la-clase"><span class="header-section-number">7.1</span> Conecta con los conceptos de la clase</h3>
+<p>Responde con tu compañero:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pregunta</th>
+<th>Respuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¿Qué paso del proceso ETL fue el más largo? ¿Por qué?</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>¿Cuál de las 3 fuentes tenía peores inconsistencias?</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>¿Qué problemas del Lab 3 (calidad de datos) volviste a ver aquí?</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>El modelo estrella que construiste: ¿es OLTP u OLAP? ¿Por qué?</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Si TechStyle corriera este proceso ETL cada noche, ¿cómo se llama esa arquitectura?</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="el-proceso-que-hiciste-tiene-nombre" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="el-proceso-que-hiciste-tiene-nombre"><span class="header-section-number">7.2</span> El proceso que hiciste tiene nombre</h3>
+<p>Lo que acabas de hacer en Power Query <strong>es exactamente el proceso ETL</strong>:</p>
+<pre><code>[oltp_ventas.csv]    ─┐
+[oltp_clientes.csv]  ─┼─ EXTRACT → TRANSFORM → LOAD → Modelo estrella → OLAP
+[oltp_productos.csv] ─┘</code></pre>
+<p>En empresas grandes, este proceso: - Se ejecuta automáticamente cada noche - Procesa millones de registros - Usa herramientas especializadas (Apache Spark, dbt, Talend…) - Alimenta un <strong>Data Warehouse</strong> que soporta los dashboards de BI y el CMI</p>
+<p>Pero el <strong>principio es exactamente el mismo</strong> que lo que hiciste hoy.</p>
+<hr>
+</section>
+</section>
+<section id="entrega" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="entrega"><span class="header-section-number">8</span> Entrega</h2>
+<p>Guarda el archivo como <code>lab_semana4_[apellido1]_[apellido2].pbix</code>.</p>
+<p>El docente preguntará: <em>“¿Qué inconsistencia entre tablas les resultó más difícil de resolver?”</em></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

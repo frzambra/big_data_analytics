@@ -1,0 +1,33 @@
+Cod_Producto,Descripcion,Linea,Costo_CLP,PrecioVenta,Stock_Actual,Activo
+1001,Audífonos Bluetooth,Electrónica,18000,44990,41,SI
+1002,Cargador Rápido USB-C,Electrónica,6000,15990,73,SI
+1003,Parlante Portátil,Electrónica,25000,59990,196,SI
+1004,Mouse Inalámbrico,Electrónica,9000,24990,58,SI
+1005,Teclado Mecánico,Electrónica,32000,79990,196,SI
+1006,"Monitor 24""",Electrónica,68000,139990,106,SI
+1007,Webcam HD,Electrónica,16000,39990,183,SI
+1008,Disco Duro Externo 1TB,Electrónica,22000,54990,83,SI
+2001,Polera Básica,Ropa,4000,12990,6,SI
+2002,Jeans Slim,Ropa,11000,29990,48,SI
+2003,Parka Impermeable,Ropa,23000,59990,130,SI
+2004,Zapatillas Running,Ropa,19000,49990,5,SI
+2005,Poleron Algodón,Ropa,8500,24990,29,SI
+2006,Pantalón de Buzo,Ropa,6000,19990,22,SI
+2007,Calcetines Pack 3,Ropa,1800,5990,183,SI
+2008,Gorra,Ropa,3500,11990,111,SI
+3001,Sartén Antiadherente,Hogar,7000,19990,139,SI
+3002,Juego de Camas 2P,Hogar,11000,29990,111,SI
+3003,Organizador Cajones,Hogar,5000,14990,172,SI
+3004,Lámpara LED Escritorio,Hogar,9000,24990,78,SI
+3005,Cojín Decorativo,Hogar,3500,11990,192,SI
+3006,Set Toallas x3,Hogar,6500,18990,115,SI
+3007,Jarra Filtro Agua,Hogar,13000,34990,48,SI
+3008,Alfombra 120x80,Hogar,18000,44990,50,SI
+4001,Mochila Urban,Accesorios,14000,39990,100,SI
+4002,Billetera Cuero,Accesorios,6000,19990,52,SI
+4003,Gafas de Sol,Accesorios,9000,29990,185,SI
+4004,Reloj Digital,Accesorios,16000,49990,39,SI
+4005,Pulsera Silicona,Accesorios,1500,7990,55,SI
+4006,Porta Notebook,Accesorios,8000,24990,129,SI
+4007,Paraguas Compacto,Accesorios,4500,14990,51,SI
+4008,Lentes de Lectura,Accesorios,3500,12990,133,SI

@@ -21,6 +21,8 @@ format:
     --fondo-claro:  #EEF2F7;
     --gris-pizarra: #4A5568;
     --gris-suave:   #A0AEC0;
+    --verde-lab:    #2E7D52;
+    --verde-claro:  #4CAF73;
   }
 
   body { margin: 0; font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; background: var(--fondo-claro); color: var(--azul-oscuro); }
@@ -142,6 +144,13 @@ format:
   .card.evaluacion .card-tag { color: var(--tierra-oscuro); }
   .card.evaluacion .card-title { color: var(--tierra-oscuro); }
   .card.evaluacion .card-arrow { color: var(--tierra); }
+
+  /* ── Lab card ─────────────────────────────────────────── */
+  .card.lab::before { background: var(--verde-lab); }
+  .card.lab { background: #f0faf4; border-color: #b2dfca; }
+  .card.lab .card-tag { color: var(--verde-lab); }
+  .card.lab .card-title { color: #1a4d30; }
+  .card.lab .card-arrow { color: var(--verde-claro); }
 </style>
 
 <div class="hero">
@@ -190,28 +199,52 @@ format:
 
   <div class="card-grid">
     <a class="card semana" href="clases/class_week_1.html">
-      <span class="card-tag">Semana 1</span>
+      <span class="card-tag">Semana 1 · Presentación</span>
       <span class="card-title">Sistemas de Información en el Contexto Empresarial</span>
       <span class="card-subtitle">Datos · Información · Conocimiento · Decisión · Introducción a los SI</span>
       <span class="card-arrow">Ver presentación →</span>
     </a>
+    <a class="card lab" href="labs/instrucciones/lab_semana_1.html">
+      <span class="card-tag">Semana 1 · Laboratorio</span>
+      <span class="card-title">De Dato Crudo a Decisión</span>
+      <span class="card-subtitle">Excel · Tablas dinámicas · Análisis de ventas TechStyle · Límites del volumen</span>
+      <span class="card-arrow">Ver laboratorio →</span>
+    </a>
     <a class="card semana" href="clases/class_week_2.html">
-      <span class="card-tag">Semana 2</span>
+      <span class="card-tag">Semana 2 · Presentación</span>
       <span class="card-title">Componentes, Actores y Tipos de Sistemas de Información</span>
       <span class="card-subtitle">Hardware · Software · Personas · Procesos · TPS · BI · DSS · CRM · EIS</span>
       <span class="card-arrow">Ver presentación →</span>
     </a>
+    <a class="card lab" href="labs/instrucciones/lab_semana_2.html">
+      <span class="card-tag">Semana 2 · Laboratorio</span>
+      <span class="card-title">Tres Dashboards, Tres Usuarios</span>
+      <span class="card-subtitle">Power BI · Vista operativa (TPS) · Vista analítica (BI) · Vista ejecutiva (EIS)</span>
+      <span class="card-arrow">Ver laboratorio →</span>
+    </a>
     <a class="card semana" href="clases/class_week_3.html">
-      <span class="card-tag">Semana 3</span>
+      <span class="card-tag">Semana 3 · Presentación</span>
       <span class="card-title">CMI, Calidad de Datos y Ética</span>
       <span class="card-subtitle">Balanced Scorecard · 4 perspectivas · KPIs · Exactitud · Completitud · Consistencia</span>
       <span class="card-arrow">Ver presentación →</span>
     </a>
+    <a class="card lab" href="labs/instrucciones/lab_semana_3.html">
+      <span class="card-tag">Semana 3 · Laboratorio</span>
+      <span class="card-title">Auditoría de Calidad y CMI con Datos Reales</span>
+      <span class="card-subtitle">Power Query · Perfil de datos · KPIs del CMI · El indicador que no puede calcularse</span>
+      <span class="card-arrow">Ver laboratorio →</span>
+    </a>
     <a class="card semana" href="clases/class_week_4.html">
-      <span class="card-tag">Semana 4</span>
+      <span class="card-tag">Semana 4 · Presentación</span>
       <span class="card-title">Big Data y Síntesis de la Unidad 1</span>
       <span class="card-subtitle">Las 5 V · OLTP vs OLAP · Data Warehouse · ETL · Repaso integrador</span>
       <span class="card-arrow">Ver presentación →</span>
+    </a>
+    <a class="card lab" href="labs/instrucciones/lab_semana_4.html">
+      <span class="card-tag">Semana 4 · Laboratorio</span>
+      <span class="card-title">Mini-ETL: De Fuentes OLTP al Análisis</span>
+      <span class="card-subtitle">Power Query · 3 fuentes inconsistentes · Modelo estrella · Análisis OLAP</span>
+      <span class="card-arrow">Ver laboratorio →</span>
     </a>
     <div class="card evaluacion">
       <span class="card-tag">Semana 5</span>

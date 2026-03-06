@@ -1,0 +1,150 @@
+---
+title: "Laboratorio 1: De Dato Crudo a Decisión"
+subtitle: "Semana 1 · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+## Contexto
+
+María González, Gerente de Marketing de **TechStyle**, tiene un presupuesto de **$15.000.000 CLP** para la campaña del próximo mes. Necesita decidir en qué categoría de productos invertir para maximizar las ventas.
+
+El equipo de TI te entregó el archivo `techstyle_orders.csv` con los datos de ventas del año 2023. Tienes **30 minutos** para responder la pregunta de María.
+
+---
+
+## Instrucciones generales
+
+- Trabajarás **individualmente** en Excel.
+- Sigue los pasos en orden. Cada paso construye sobre el anterior.
+- Al finalizar, compararás tus resultados con tus compañeros.
+
+**Archivo de datos**: `labs/data/techstyle_orders.csv`
+
+---
+
+## Parte 1 — Explorar los datos brutos (5 min)
+
+### Paso 1: Abrir el archivo
+
+1. Abre Excel y carga el archivo `techstyle_orders.csv`
+   - Menú: *Datos → Desde texto/CSV*
+2. Observa la estructura: ¿Cuántas columnas hay? ¿Cuántas filas?
+3. Identifica las columnas disponibles y comprende qué representa cada una.
+
+### Paso 2: Reflexión inicial
+
+Antes de hacer cualquier cálculo, responde en una hoja aparte:
+
+| Pregunta | Tu respuesta |
+|----------|-------------|
+| ¿Cuántos registros (filas) tiene el archivo? | |
+| ¿Qué período de tiempo cubre? | |
+| ¿Qué categorías de productos existen? | |
+| ¿Puedes responder la pregunta de María con solo mirar los datos? | Sí / No / Por qué |
+
+::: {.callout-note}
+**Reflexiona**: A esto nos referimos cuando decimos que los datos crudos, por sí solos, no son útiles.
+:::
+
+---
+
+## Parte 2 — Transformar datos en información (15 min)
+
+### Paso 3: Crear una Tabla Dinámica
+
+1. Selecciona todos los datos (Ctrl+A)
+2. Inserta una **Tabla Dinámica** en una hoja nueva
+3. Configura la tabla así:
+
+| Área | Campo |
+|------|-------|
+| **Filas** | `categoria` |
+| **Valores** | `venta_neta` (suma) |
+| **Valores** | `cantidad` (suma) |
+| **Valores** | `margen_pct` (promedio) |
+
+4. Ordena por `venta_neta` de mayor a menor.
+
+### Paso 4: Analizar tendencias por trimestre
+
+En una segunda Tabla Dinámica:
+
+| Área | Campo |
+|------|-------|
+| **Filas** | `categoria` |
+| **Columnas** | `trimestre` |
+| **Valores** | `venta_neta` (suma) |
+
+Esto te mostrará cómo evolucionaron las ventas de cada categoría durante el año.
+
+### Paso 5: Analizar por región
+
+En una tercera Tabla Dinámica:
+
+| Área | Campo |
+|------|-------|
+| **Filas** | `region` |
+| **Columnas** | `categoria` |
+| **Valores** | `venta_neta` (suma) |
+
+---
+
+## Parte 3 — De información a decisión (10 min)
+
+### Paso 6: Completar la tabla de análisis
+
+Con los resultados de tus tablas dinámicas, completa esta tabla resumen:
+
+| Categoría | Ventas Totales (CLP) | Margen Promedio (%) | Tendencia T3→T4 | ¿Es buena inversión? |
+|-----------|---------------------|---------------------|-----------------|---------------------|
+| Electrónica | | | | |
+| Ropa | | | | |
+| Hogar | | | | |
+| Accesorios | | | | |
+
+### Paso 7: Tu recomendación
+
+Escribe en no más de 3 líneas tu recomendación para María:
+
+> *"Recomiendo invertir los $15.000.000 en la categoría ________ porque..."*
+
+---
+
+## Parte 4 — Reflexión final (5 min)
+
+Responde estas preguntas:
+
+1. **¿Podrías haber respondido la pregunta de María sin procesar los datos?** ¿Por qué no?
+
+2. **¿Qué transformaste?** Completa la frase:
+   - Los datos crudos eran: `_______`
+   - La información que generé fue: `_______`
+   - El conocimiento que apliqué fue: `_______`
+
+3. **Límite de Excel**: El archivo tiene ~1.250 filas. TechStyle real tiene **8.750.000** registros de ventas.
+   - Intenta cargar el mismo archivo pero duplicado 3 veces (pégalo en la misma hoja).
+   - ¿Qué pasa con la velocidad de Excel?
+   - ¿Qué implicaría trabajar con 10x más datos?
+
+::: {.callout-important}
+**Punto clave del curso**: Excel es una herramienta poderosa para datos pequeños, pero las organizaciones reales tienen millones de registros que requieren arquitecturas diferentes. Eso es lo que estudiaremos en este curso.
+:::
+
+---
+
+## Entrega y discusión
+
+Al finalizar el tiempo, el docente pedirá a grupos al azar que compartan:
+
+- Su recomendación para María
+- La **categoría más interesante** que encontraron y por qué
+- Cualquier hallazgo **inesperado** en los datos
+
+::: {.callout-tip}
+**No hay una sola respuesta correcta.** Diferentes análisis pueden llevar a diferentes recomendaciones válidas — lo importante es que estén basadas en evidencia.
+:::

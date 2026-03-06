@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Laboratorio 3: Auditoría de Calidad y CMI con Datos Reales</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-538d5bc5c147f17fcaa17a1866cecc2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#contexto" id="toc-contexto" class="nav-link active" data-scroll-target="#contexto"><span class="header-section-number">1</span> Contexto</a></li>
+  <li><a href="#instrucciones-generales" id="toc-instrucciones-generales" class="nav-link" data-scroll-target="#instrucciones-generales"><span class="header-section-number">2</span> Instrucciones generales</a></li>
+  <li><a href="#parte-a-auditoría-de-calidad-de-datos-18-min" id="toc-parte-a-auditoría-de-calidad-de-datos-18-min" class="nav-link" data-scroll-target="#parte-a-auditoría-de-calidad-de-datos-18-min"><span class="header-section-number">3</span> Parte A — Auditoría de Calidad de Datos (18 min)</a>
+  <ul class="collapse">
+  <li><a href="#paso-1-cargar-los-datos-de-clientes" id="toc-paso-1-cargar-los-datos-de-clientes" class="nav-link" data-scroll-target="#paso-1-cargar-los-datos-de-clientes"><span class="header-section-number">3.1</span> Paso 1: Cargar los datos de clientes</a></li>
+  <li><a href="#paso-2-exploración-inicial" id="toc-paso-2-exploración-inicial" class="nav-link" data-scroll-target="#paso-2-exploración-inicial"><span class="header-section-number">3.2</span> Paso 2: Exploración inicial</a></li>
+  <li><a href="#paso-3-completar-la-tabla-de-auditoría" id="toc-paso-3-completar-la-tabla-de-auditoría" class="nav-link" data-scroll-target="#paso-3-completar-la-tabla-de-auditoría"><span class="header-section-number">3.3</span> Paso 3: Completar la Tabla de Auditoría</a></li>
+  <li><a href="#paso-4-identificar-duplicados" id="toc-paso-4-identificar-duplicados" class="nav-link" data-scroll-target="#paso-4-identificar-duplicados"><span class="header-section-number">3.4</span> Paso 4: Identificar duplicados</a></li>
+  <li><a href="#paso-5-reglas-de-validación" id="toc-paso-5-reglas-de-validación" class="nav-link" data-scroll-target="#paso-5-reglas-de-validación"><span class="header-section-number">3.5</span> Paso 5: Reglas de validación</a></li>
+  <li><a href="#paso-6-reflexión-de-calidad" id="toc-paso-6-reflexión-de-calidad" class="nav-link" data-scroll-target="#paso-6-reflexión-de-calidad"><span class="header-section-number">3.6</span> Paso 6: Reflexión de calidad</a></li>
+  </ul></li>
+  <li><a href="#parte-b-construyendo-el-cmi-en-power-bi-17-min" id="toc-parte-b-construyendo-el-cmi-en-power-bi-17-min" class="nav-link" data-scroll-target="#parte-b-construyendo-el-cmi-en-power-bi-17-min"><span class="header-section-number">4</span> Parte B — Construyendo el CMI en Power BI (17 min)</a>
+  <ul class="collapse">
+  <li><a href="#paso-7-cargar-los-datos-de-ventas" id="toc-paso-7-cargar-los-datos-de-ventas" class="nav-link" data-scroll-target="#paso-7-cargar-los-datos-de-ventas"><span class="header-section-number">4.1</span> Paso 7: Cargar los datos de ventas</a></li>
+  <li><a href="#paso-8-crear-medidas-para-los-kpis-del-cmi" id="toc-paso-8-crear-medidas-para-los-kpis-del-cmi" class="nav-link" data-scroll-target="#paso-8-crear-medidas-para-los-kpis-del-cmi"><span class="header-section-number">4.2</span> Paso 8: Crear medidas para los KPIs del CMI</a></li>
+  <li><a href="#paso-9-construir-las-4-perspectivas-del-cmi" id="toc-paso-9-construir-las-4-perspectivas-del-cmi" class="nav-link" data-scroll-target="#paso-9-construir-las-4-perspectivas-del-cmi"><span class="header-section-number">4.3</span> Paso 9: Construir las 4 perspectivas del CMI</a></li>
+  <li><a href="#paso-10-el-kpi-que-falla" id="toc-paso-10-el-kpi-que-falla" class="nav-link" data-scroll-target="#paso-10-el-kpi-que-falla"><span class="header-section-number">4.4</span> Paso 10: El KPI que falla</a></li>
+  </ul></li>
+  <li><a href="#reflexión-final" id="toc-reflexión-final" class="nav-link" data-scroll-target="#reflexión-final"><span class="header-section-number">5</span> Reflexión final</a></li>
+  <li><a href="#entrega" id="toc-entrega" class="nav-link" data-scroll-target="#entrega"><span class="header-section-number">6</span> Entrega</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Laboratorio 3: Auditoría de Calidad y CMI con Datos Reales</h1>
+<p class="subtitle lead">Semana 3 · Big Data y Analytics · Universidad San Sebastián</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="contexto" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="contexto"><span class="header-section-number">1</span> Contexto</h2>
+<p>TechStyle detectó que su CMI muestra métricas inconsistentes. El CEO Roberto no confía en los datos del dashboard. El equipo sospecha que hay problemas de calidad en la tabla de clientes.</p>
+<p>Tu tarea tiene dos partes:</p>
+<ol type="1">
+<li><strong>Auditar</strong> la tabla de clientes e identificar los problemas de calidad</li>
+<li><strong>Construir</strong> el CMI de TechStyle en Power BI usando los datos de ventas</li>
+</ol>
+<p>Al finalizar, descubrirás que <strong>un KPI del CMI no puede calcularse correctamente</strong> debido a los problemas de datos encontrados.</p>
+<hr>
+</section>
+<section id="instrucciones-generales" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="instrucciones-generales"><span class="header-section-number">2</span> Instrucciones generales</h2>
+<ul>
+<li>Trabajarás <strong>individualmente</strong>.</li>
+<li>Parte A: Power Query (auditoría de clientes)</li>
+<li>Parte B: Power BI (construcción del CMI)</li>
+<li><strong>Duración total</strong>: 35 minutos</li>
+</ul>
+<p><strong>Archivos de datos</strong>:</p>
+<ul>
+<li><code>labs/data/techstyle_customers_dirty.csv</code> → Parte A</li>
+<li><code>labs/data/techstyle_orders.csv</code> → Parte B</li>
+</ul>
+<hr>
+</section>
+<section id="parte-a-auditoría-de-calidad-de-datos-18-min" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="parte-a-auditoría-de-calidad-de-datos-18-min"><span class="header-section-number">3</span> Parte A — Auditoría de Calidad de Datos (18 min)</h2>
+<section id="paso-1-cargar-los-datos-de-clientes" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="paso-1-cargar-los-datos-de-clientes"><span class="header-section-number">3.1</span> Paso 1: Cargar los datos de clientes</h3>
+<ol type="1">
+<li>Abre <strong>Power BI Desktop</strong> (o Excel con Power Query)</li>
+<li><em>Inicio → Obtener datos → Texto/CSV</em></li>
+<li>Carga <code>techstyle_customers_dirty.csv</code></li>
+<li>Haz clic en <strong>Transformar datos</strong> (no en “Cargar”) — esto abre Power Query Editor</li>
+</ol>
+</section>
+<section id="paso-2-exploración-inicial" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="paso-2-exploración-inicial"><span class="header-section-number">3.2</span> Paso 2: Exploración inicial</h3>
+<p>En Power Query Editor, usa las herramientas de perfilado de datos:</p>
+<ol type="1">
+<li>Activa: <em>Vista → Calidad de columna</em></li>
+<li>Activa: <em>Vista → Distribución de columna</em></li>
+<li>Activa: <em>Vista → Perfil de columna</em></li>
+</ol>
+<p>Esto te mostrará automáticamente cuántos valores válidos, errores y vacíos tiene cada columna.</p>
+</section>
+<section id="paso-3-completar-la-tabla-de-auditoría" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="paso-3-completar-la-tabla-de-auditoría"><span class="header-section-number">3.3</span> Paso 3: Completar la Tabla de Auditoría</h3>
+<p>Para cada columna, registra lo que encuentres:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 23%">
+<col style="width: 22%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Columna</th>
+<th>% Vacíos</th>
+<th>Problemas encontrados</th>
+<th>Dimensión de calidad</th>
+<th>Decisión de negocio afectada</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>email</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>apellido</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>region</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>fecha_nacimiento</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>fecha_registro</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>telefono</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Dimensiones de calidad</strong>: Exactitud · Completitud · Consistencia · Oportunidad</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Pista para emails inválidos</strong>: Usa <em>Inicio → Filtrar filas → No contiene</em> con el texto <code>@</code> para encontrar emails sin arroba. Luego prueba con <code>.com</code> para encontrar dominios incompletos.</p>
+</div>
+</div>
+</section>
+<section id="paso-4-identificar-duplicados" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="paso-4-identificar-duplicados"><span class="header-section-number">3.4</span> Paso 4: Identificar duplicados</h3>
+<ol type="1">
+<li>Selecciona la columna <code>email</code></li>
+<li><em>Inicio → Quitar filas → Quitar duplicados</em></li>
+<li>Compara el número de filas antes y después.
+<ul>
+<li>Filas originales: ______</li>
+<li>Filas tras eliminar duplicados de email: ______</li>
+<li>Duplicados encontrados: ______</li>
+</ul></li>
+</ol>
+</section>
+<section id="paso-5-reglas-de-validación" class="level3" data-number="3.5">
+<h3 data-number="3.5" class="anchored" data-anchor-id="paso-5-reglas-de-validación"><span class="header-section-number">3.5</span> Paso 5: Reglas de validación</h3>
+<p>Para cada problema encontrado, propón una <strong>regla de validación</strong> que debería tener el sistema al momento de registrar un nuevo cliente:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Problema</th>
+<th>Regla de validación propuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Email inválido</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Email duplicado</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Región vacía</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Fecha de nacimiento vacía</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="paso-6-reflexión-de-calidad" class="level3" data-number="3.6">
+<h3 data-number="3.6" class="anchored" data-anchor-id="paso-6-reflexión-de-calidad"><span class="header-section-number">3.6</span> Paso 6: Reflexión de calidad</h3>
+<p>Responde:</p>
+<ol type="1">
+<li><p>Si TechStyle quisiera hacer una campaña de email marketing a todos sus clientes, ¿qué porcentaje del total podría recibir el correo? (considera emails vacíos + inválidos)</p></li>
+<li><p>Si quisiera segmentar clientes por grupo etario (jóvenes, adultos, adultos mayores), ¿podría hacerlo con este dataset? ¿Por qué?</p></li>
+<li><p>¿Qué área de la empresa es responsable de estos problemas? ¿Solo el área de TI?</p></li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="parte-b-construyendo-el-cmi-en-power-bi-17-min" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="parte-b-construyendo-el-cmi-en-power-bi-17-min"><span class="header-section-number">4</span> Parte B — Construyendo el CMI en Power BI (17 min)</h2>
+<section id="paso-7-cargar-los-datos-de-ventas" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="paso-7-cargar-los-datos-de-ventas"><span class="header-section-number">4.1</span> Paso 7: Cargar los datos de ventas</h3>
+<ol type="1">
+<li>En Power BI, carga también <code>techstyle_orders.csv</code></li>
+<li>Ahora tienes dos tablas: <code>techstyle_customers_dirty</code> y <code>techstyle_orders</code></li>
+</ol>
+</section>
+<section id="paso-8-crear-medidas-para-los-kpis-del-cmi" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="paso-8-crear-medidas-para-los-kpis-del-cmi"><span class="header-section-number">4.2</span> Paso 8: Crear medidas para los KPIs del CMI</h3>
+<p>Crea las siguientes medidas DAX (botón derecho sobre la tabla → Nueva medida):</p>
+<p><strong>Perspectiva Financiera:</strong></p>
+<pre><code>Total Ventas = SUM(techstyle_orders[venta_neta])
+Margen Promedio = AVERAGE(techstyle_orders[margen_pct])</code></pre>
+<p><strong>Perspectiva Cliente:</strong></p>
+<pre><code>Total Clientes con Email =
+COUNTROWS(
+    FILTER(techstyle_customers_dirty,
+           techstyle_customers_dirty[email] &lt;&gt; "")
+)</code></pre>
+<p><strong>Perspectiva Procesos:</strong></p>
+<pre><code>Pedidos por Canal Web =
+CALCULATE(
+    DISTINCTCOUNT(techstyle_orders[order_id]),
+    techstyle_orders[canal_venta] = "Web"
+)</code></pre>
+</section>
+<section id="paso-9-construir-las-4-perspectivas-del-cmi" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="paso-9-construir-las-4-perspectivas-del-cmi"><span class="header-section-number">4.3</span> Paso 9: Construir las 4 perspectivas del CMI</h3>
+<p>Crea una página llamada <code>"CMI TechStyle"</code> con esta estructura:</p>
+<p><strong>Fila 1 — Perspectiva Financiera</strong> (color verde):</p>
+<ul>
+<li>Tarjeta: Total Ventas</li>
+<li>Tarjeta: Margen Promedio</li>
+<li>Meta referencial: ventas &gt; $50.000.000 CLP / margen &gt; 25%</li>
+</ul>
+<p><strong>Fila 2 — Perspectiva Cliente</strong> (color azul):</p>
+<ul>
+<li>Tarjeta: Total Clientes registrados (COUNT de id)</li>
+<li>Tarjeta: Clientes con email válido</li>
+<li>Gráfico de barras: clientes por <code>region</code></li>
+</ul>
+<p><strong>Fila 3 — Perspectiva Procesos</strong> (color naranja):</p>
+<ul>
+<li>Gráfico de dona: ventas por <code>canal_venta</code></li>
+<li>Tabla: ventas por <code>categoria</code> con margen</li>
+</ul>
+<p><strong>Fila 4 — Perspectiva Aprendizaje</strong> (color morado):</p>
+<ul>
+<li>Tarjeta con texto: <em>“KPI: % clientes con perfil completo”</em></li>
+<li>Nota: este KPI no puede calcularse correctamente (¿por qué?)</li>
+</ul>
+</section>
+<section id="paso-10-el-kpi-que-falla" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="paso-10-el-kpi-que-falla"><span class="header-section-number">4.4</span> Paso 10: El KPI que falla</h3>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>El KPI de Aprendizaje</strong> que Roberto quería medir era: <em>“¿Qué porcentaje de nuestros clientes tiene perfil completo (con edad, región y email válido)?”</em></p>
+<p>Este indicador es clave porque permite medir la calidad del registro de clientes como proceso interno.</p>
+<p><strong>Pero no puedes calcularlo correctamente.</strong> ¿Por qué?</p>
+</div>
+</div>
+<p>Responde:</p>
+<ol type="1">
+<li>¿Qué datos te faltan o están mal para calcular este KPI?</li>
+<li>¿Qué decisiones de negocio no puede tomar Roberto porque este KPI está dañado?</li>
+<li>¿Qué proceso operativo deberían cambiar para que este KPI sea confiable en el futuro?</li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="reflexión-final" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="reflexión-final"><span class="header-section-number">5</span> Reflexión final</h2>
+<p><strong>Conecta ambas partes</strong>:</p>
+<blockquote class="blockquote">
+<p>El CMI de TechStyle es una herramienta estratégica poderosa. Pero su confiabilidad depende completamente de la calidad de los datos que lo alimentan.</p>
+</blockquote>
+<p>Completa la frase:</p>
+<p><em>“Si TechStyle no corrige los problemas de calidad en la tabla de clientes, el CEO Roberto tomará decisiones incorrectas sobre _______ porque el dato de _______ está _______ (vacío / incorrecto / duplicado).”</em></p>
+<hr>
+</section>
+<section id="entrega" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="entrega"><span class="header-section-number">6</span> Entrega</h2>
+<p>Guarda el archivo Power BI como <code>lab_semana3_[apellido].pbix</code>.</p>
+<p>El docente preguntará: <em>“¿Quién encontró el mayor número de problemas de calidad? ¿Cuántos eran?”</em></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

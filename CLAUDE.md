@@ -48,6 +48,14 @@ Each class presentation must follow this structure:
 - Include at least one practical activity
 - Clearly connect theory to managerial decision-making
 
+## Students background
+
+- This is a third year course, fifth semester.
+- The students had a course about using Excel.
+- Then, the students had a course about advanced Excel use, using Power Pivot.
+- Before they have taken this course, they had a course about using Power Bi using Power Query, Sta and snowflacke scheme. Also, they know how to make dashboard in Power Bi.
+- In all of the course they have taken they have worked on computer solving practical problems.
+
 ## Course Structure and File Organization
 
 ### Unit 1 Structure

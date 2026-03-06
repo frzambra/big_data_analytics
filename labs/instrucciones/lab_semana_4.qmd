@@ -1,0 +1,232 @@
+---
+title: "Laboratorio 4: Mini-ETL — De Fuentes OLTP al Análisis"
+subtitle: "Semana 4 · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+## Contexto
+
+TechStyle tiene sus datos distribuidos en **tres sistemas OLTP separados**, cada uno mantenido por un área diferente de la empresa:
+
+| Sistema | Área responsable | Archivo |
+|---------|-----------------|---------|
+| Sistema de ventas | Comercial | `oltp_ventas.csv` |
+| Sistema de clientes | Marketing | `oltp_clientes.csv` |
+| Sistema de productos | Bodega | `oltp_productos.csv` |
+
+El problema: **cada sistema fue construido por equipos distintos**, en momentos distintos, sin coordinación. Los formatos no son compatibles entre sí.
+
+Tu tarea es construir un **mini proceso ETL** con Power Query para integrar estas tres fuentes en un modelo analítico unificado que permita responder preguntas de negocio.
+
+---
+
+## Instrucciones generales
+
+- Trabajarás **en parejas**.
+- Todo el trabajo se realiza en **Power BI Desktop** usando Power Query.
+- **Duración**: 35 minutos
+
+**Archivos de datos**:
+
+- `labs/data/oltp_ventas.csv`
+- `labs/data/oltp_clientes.csv`
+- `labs/data/oltp_productos.csv`
+
+---
+
+## Parte 1 — Extraer: conocer las fuentes (5 min)
+
+### Paso 1: Cargar las tres fuentes
+
+1. Abre Power BI Desktop
+2. Carga los tres archivos CSV (uno por uno, desde *Obtener datos → Texto/CSV*)
+3. En cada caso, haz clic en **Transformar datos** para abrir Power Query Editor
+
+### Paso 2: Identificar las inconsistencias
+
+Antes de transformar nada, examina las tres tablas y completa esta tabla de diagnóstico:
+
+| Problema | Tabla afectada | Columna | Detalle |
+|----------|---------------|---------|---------|
+| Nombre de columna inconsistente | | | Ej: `Cant` vs `cantidad` |
+| Formato de fecha distinto | | | Ej: DD/MM/YYYY vs YYYY/MM/DD |
+| Columna de texto que debería ser número | | | |
+| Campo que une dos tablas con nombres distintos | | | Ej: `ID_Cliente` vs `CustomerID` |
+| Categoría con nombre diferente | | | Ej: `Linea` vs `categoria` |
+
+::: {.callout-note}
+**Este es exactamente el problema real de integración de datos en empresas.** Cada área nombra sus columnas como le parece conveniente. El proceso ETL existe para resolver esto.
+:::
+
+---
+
+## Parte 2 — Transformar: limpiar y estandarizar (20 min)
+
+### Paso 3: Estandarizar `oltp_ventas`
+
+En Power Query, con la tabla `oltp_ventas` seleccionada:
+
+**3.1 Renombrar columnas** para estandarizar:
+
+| Nombre original | Nuevo nombre |
+|----------------|-------------|
+| `ID_Venta` | `venta_id` |
+| `Fecha_Venta` | `fecha` |
+| `ID_Cliente` | `cliente_id` |
+| `Cod_Prod` | `producto_id` |
+| `Cant` | `cantidad` |
+| `Precio_Unit` | `precio_unitario` |
+| `Desc_Pct` | `descuento_pct` |
+| `Total_Venta` | `venta_total` |
+
+Para renombrar: doble clic sobre el encabezado de la columna.
+
+**3.2 Corregir el formato de fecha:**
+
+La columna `fecha` tiene formato `YYYY/MM/DD` (con barras, no guiones).
+
+1. Selecciona la columna `fecha`
+2. *Inicio → Tipo de datos → Fecha*
+3. Si falla, usa: *Transformar → Columna de texto → Reemplazar valores* (cambia `/` por `-`)
+4. Luego cambia el tipo a Fecha
+
+**3.3 Verificar tipos de datos:**
+
+| Columna | Tipo correcto |
+|---------|--------------|
+| `fecha` | Fecha |
+| `cantidad`, `descuento_pct` | Número entero |
+| `precio_unitario`, `venta_total` | Número decimal fijo |
+
+### Paso 4: Estandarizar `oltp_clientes`
+
+**4.1 Renombrar columnas:**
+
+| Nombre original | Nuevo nombre |
+|----------------|-------------|
+| `CustomerID` | `cliente_id` |
+| `NombreCompleto` | `nombre_completo` |
+| `Correo` | `email` |
+| `Ciudad` | `region` |
+| `FechaRegistro` | `fecha_registro` |
+| `TipoCliente` | `segmento` |
+
+**4.2 Separar nombre y apellido** (columna `nombre_completo`):
+
+1. Selecciona `nombre_completo`
+2. *Transformar → Dividir columna → Por delimitador → Espacio → En la primera aparición*
+3. Renombra las columnas resultantes: `nombre` y `apellido`
+
+**4.3 Corregir el formato de fecha:**
+
+La columna `fecha_registro` tiene formato `DD/MM/YYYY`.
+
+1. Selecciona la columna
+2. *Inicio → Tipo de datos → Usando configuración regional...*
+3. Selecciona tipo **Fecha** y configuración regional **Español (Chile)**
+
+### Paso 5: Estandarizar `oltp_productos`
+
+**5.1 Renombrar columnas:**
+
+| Nombre original | Nuevo nombre |
+|----------------|-------------|
+| `Cod_Producto` | `producto_id` |
+| `Descripcion` | `nombre_producto` |
+| `Linea` | `categoria` |
+| `Costo_CLP` | `costo` |
+| `PrecioVenta` | `precio_venta` |
+| `Stock_Actual` | `stock` |
+| `Activo` | `activo` |
+
+**5.2 Agregar columna calculada — Margen:**
+
+1. *Agregar columna → Columna personalizada*
+2. Nombre: `margen_pct`
+3. Fórmula:
+```
+= ([precio_venta] - [costo]) / [precio_venta] * 100
+```
+
+### Paso 6: Aplicar y cerrar
+
+1. Revisa que las tres tablas estén limpias y con tipos correctos
+2. *Inicio → Cerrar y aplicar*
+3. Las tres tablas ahora están en Power BI con nombres y formatos consistentes
+
+---
+
+## Parte 3 — Cargar: construir el modelo estrella (5 min)
+
+### Paso 7: Crear relaciones
+
+En Power BI, ve a la **Vista de Modelo** (ícono del centro en la barra izquierda).
+
+Deberías ver las tres tablas. Crea las relaciones:
+
+- `oltp_ventas[cliente_id]` → `oltp_clientes[cliente_id]` (muchos a uno)
+- `oltp_ventas[producto_id]` → `oltp_productos[producto_id]` (muchos a uno)
+
+::: {.callout-tip}
+**Reconoces este esquema.** Es el **modelo estrella** que ya conoces de Power BI: una tabla de hechos (ventas) rodeada de tablas de dimensiones (clientes, productos). Acabas de construirlo desde cero a partir de 3 fuentes OLTP separadas.
+:::
+
+---
+
+## Parte 4 — Analizar: responder preguntas de negocio (5 min)
+
+### Paso 8: Construir visualizaciones analíticas
+
+Ahora que tienes el modelo integrado, el análisis OLAP es posible. Crea una página llamada `"Análisis OLAP"` con:
+
+1. **Gráfico de barras**: Ventas totales por `categoria` (de `oltp_productos`)
+2. **Gráfico de líneas**: Evolución de ventas por mes (usa la columna `fecha` de ventas)
+3. **Tabla**: Top 5 productos más vendidos con su margen
+4. **Segmentador**: por `segmento` de cliente (Premium / Estándar / Básico)
+
+---
+
+## Reflexión final
+
+### Conecta con los conceptos de la clase
+
+Responde con tu compañero:
+
+| Pregunta | Respuesta |
+|----------|----------|
+| ¿Qué paso del proceso ETL fue el más largo? ¿Por qué? | |
+| ¿Cuál de las 3 fuentes tenía peores inconsistencias? | |
+| ¿Qué problemas del Lab 3 (calidad de datos) volviste a ver aquí? | |
+| El modelo estrella que construiste: ¿es OLTP u OLAP? ¿Por qué? | |
+| Si TechStyle corriera este proceso ETL cada noche, ¿cómo se llama esa arquitectura? | |
+
+### El proceso que hiciste tiene nombre
+
+Lo que acabas de hacer en Power Query **es exactamente el proceso ETL**:
+
+```
+[oltp_ventas.csv]    ─┐
+[oltp_clientes.csv]  ─┼─ EXTRACT → TRANSFORM → LOAD → Modelo estrella → OLAP
+[oltp_productos.csv] ─┘
+```
+
+En empresas grandes, este proceso:
+- Se ejecuta automáticamente cada noche
+- Procesa millones de registros
+- Usa herramientas especializadas (Apache Spark, dbt, Talend...)
+- Alimenta un **Data Warehouse** que soporta los dashboards de BI y el CMI
+
+Pero el **principio es exactamente el mismo** que lo que hiciste hoy.
+
+---
+
+## Entrega
+
+Guarda el archivo como `lab_semana4_[apellido1]_[apellido2].pbix`.
+
+El docente preguntará: *"¿Qué inconsistencia entre tablas les resultó más difícil de resolver?"*

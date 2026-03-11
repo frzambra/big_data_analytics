@@ -205,10 +205,91 @@ Universidad San Sebastián
 </tbody>
 </table>
 </section>
+<section id="erp-el-sistema-que-integra-todo" class="slide level2">
+<h2>ERP: El Sistema que Integra Todo</h2>
+<p><strong>¿Qué pasa cuando todos los SI deben hablar entre sí?</strong></p>
+<ul>
+<li class="fragment">Un <strong>ERP</strong> (Enterprise Resource Planning) unifica TPS, CRM, logística y finanzas en una sola plataforma.</li>
+<li class="fragment">En lugar de 5 sistemas desconectados, el ERP tiene <strong>módulos integrados</strong>: ventas, inventario, RRHH, contabilidad.</li>
+<li class="fragment">Ejemplos: <strong>SAP</strong>, Oracle ERP, Microsoft Dynamics.</li>
+<li class="fragment">TechStyle podría usar el módulo de ventas para el TPS y el módulo de clientes para el CRM, todos compartiendo la <strong>misma base de datos</strong>.</li>
+</ul>
+<div class="fragment">
+<p><strong>Ventaja clave</strong>: un pedido registrado en ventas actualiza automáticamente el inventario y las cuentas por cobrar.</p>
+</div>
+</section>
+<section id="dss-en-acción-simulación-de-escenarios" class="slide level2">
+<h2>DSS en Acción: Simulación de Escenarios</h2>
+<p><strong>¿Cómo apoya el DSS decisiones complejas?</strong></p>
+<ul>
+<li class="fragment">Roberto debe decidir si abrir 2 nuevos centros de distribución en el norte del país.</li>
+<li class="fragment">El <strong>DSS</strong> le permite simular escenarios con datos históricos:
+<ul>
+<li class="fragment">Escenario A: apertura en La Serena → reducción de 18h en tiempo de entrega, aumento de 12% en ventas proyectadas.</li>
+<li class="fragment">Escenario B: apertura en Antofagasta → reducción de 24h, aumento de 8% en ventas proyectadas.</li>
+</ul></li>
+<li class="fragment">A diferencia del BI (que analiza el pasado), el DSS <strong>proyecta hacia el futuro</strong> usando modelos de datos.</li>
+</ul>
+<div class="fragment">
+<p><strong>El DSS no decide: apoya la decisión.</strong> Roberto elige, pero con información cuantificada.</p>
+</div>
+</section>
+<section id="tps-vs-bi-las-dos-caras-del-dato" class="slide level2">
+<h2>TPS vs BI: Las Dos Caras del Dato</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Característica</th>
+<th>TPS</th>
+<th>BI</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Tiempo</strong></td>
+<td>Tiempo real</td>
+<td>Histórico (días, meses, años)</td>
+</tr>
+<tr class="even">
+<td><strong>Operación</strong></td>
+<td>Lectura/escritura constante</td>
+<td>Solo lectura (consultas)</td>
+</tr>
+<tr class="odd">
+<td><strong>Volumen por consulta</strong></td>
+<td>Pocas filas (1 pedido)</td>
+<td>Millones de filas (todos los pedidos)</td>
+</tr>
+<tr class="even">
+<td><strong>Usuario</strong></td>
+<td>Sofía (operativo)</td>
+<td>Juan (táctico)</td>
+</tr>
+<tr class="odd">
+<td><strong>Pregunta tipo</strong></td>
+<td>“¿Se registró el pedido #4821?”</td>
+<td>“¿Cuánto vendimos en el Q3 por región?”</td>
+</tr>
+<tr class="even">
+<td><strong>Base de datos</strong></td>
+<td>BD transaccional</td>
+<td>Data Warehouse</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p><strong>No son competidores</strong>: el TPS genera los datos que el BI analiza. Son parte de la misma cadena.</p>
+</div>
+</section>
 <section id="la-pirámide-de-los-tipos-de-si" class="slide level2">
 <h2>La Pirámide de los Tipos de SI</h2>
 
-<img data-src="../img/piramide_sistemas_informacion.jpg" class="r-stretch"><div class="fragment">
+<img data-src="../img/piramide_organizacional_techstyle.jpg" class="r-stretch"><div class="fragment">
 <p><em>El TPS genera los datos crudos. El BI los transforma en información. El EIS presenta los KPIs estratégicos. La cadena es completa solo si cada eslabón funciona.</em></p>
 </div>
 </section>
@@ -236,6 +317,20 @@ Universidad San Sebastián
 </ul>
 <div class="fragment">
 <p><strong>Pregunta</strong>: ¿Podrían Sofía y Roberto usar el mismo sistema? ¿Por qué no?</p>
+</div>
+</section>
+<section id="ecosistema-digital-techstyle-integrado" class="slide level2">
+<h2>Ecosistema Digital: TechStyle Integrado</h2>
+<p><strong>Todos los sistemas comparten datos, pero cada uno tiene su rol:</strong></p>
+<ul>
+<li class="fragment"><strong>Capa operativa</strong>: TPS registra transacciones → datos crudos en BD transaccional.</li>
+<li class="fragment"><strong>Capa de integración</strong>: ETL extrae, transforma y carga datos al <strong>Data Warehouse</strong> cada noche.</li>
+<li class="fragment"><strong>Capa analítica</strong>: BI y DSS consultan el DW → reportes y simulaciones.</li>
+<li class="fragment"><strong>Capa de relación</strong>: CRM accede a datos del cliente desde el DW y el TPS.</li>
+<li class="fragment"><strong>Capa estratégica</strong>: EIS consume KPIs precalculados del DW → dashboard para Roberto.</li>
+</ul>
+<div class="fragment">
+<p><strong>Problema de integración</strong>: si cada sistema usa un formato diferente para “región”, los reportes generan duplicados. → esto es un problema de <strong>calidad de datos</strong> (lo veremos en breve).</p>
 </div>
 </section>
 <section id="verificación-qué-si-necesita-cada-situación" class="slide level2">
@@ -300,8 +395,60 @@ Universidad San Sebastián
 <section id="mapa-estratégico-de-techstyle" class="slide level2">
 <h2>Mapa Estratégico de TechStyle</h2>
 
-<img data-src="../img/mapa_estrategico_cadena_casual.jpg" class="r-stretch"><div class="fragment">
+<img data-src="../img/diagrama_flujo_informacion_techStyle.jpg" class="r-stretch"><div class="fragment">
 <p><em>El mapa estratégico muestra que la rentabilidad de TechStyle depende de la satisfacción del cliente, que depende de los procesos, que dependen de las capacidades del equipo.</em></p>
+</div>
+</section>
+<section id="perspectiva-financiera-cuánto-generamos" class="slide level2">
+<h2>Perspectiva Financiera: ¿Cuánto Generamos?</h2>
+<p><strong>Responde la pregunta</strong>: ¿Estamos creando valor económico sostenible?</p>
+<ul>
+<li class="fragment">Mide los <strong>resultados finales</strong> de la estrategia en términos monetarios.</li>
+<li class="fragment">KPIs típicos: ingresos totales, margen bruto, retorno sobre activos (ROA), crecimiento de ventas.</li>
+<li class="fragment"><strong>En TechStyle</strong>: Roberto quiere saber si la expansión al norte fue rentable → KPI: “margen neto por zona geográfica”.</li>
+<li class="fragment"><strong>Limitación</strong>: los KPIs financieros son <strong>lagging indicators</strong> (indicadores rezagados): miden lo que ya ocurrió, no lo que está por ocurrir.</li>
+</ul>
+<div class="fragment">
+<p>Por eso el CMI agrega las otras 3 perspectivas: para anticipar el resultado financiero futuro.</p>
+</div>
+</section>
+<section id="perspectiva-cliente-nos-prefieren" class="slide level2">
+<h2>Perspectiva Cliente: ¿Nos Prefieren?</h2>
+<p><strong>Responde la pregunta</strong>: ¿Estamos satisfaciendo a quienes nos compran?</p>
+<ul>
+<li class="fragment">Mide la percepción y comportamiento del cliente hacia la empresa.</li>
+<li class="fragment">KPIs típicos: NPS, tasa de retención, tasa de devoluciones, tiempo de respuesta a reclamos.</li>
+<li class="fragment"><strong>En TechStyle</strong>: María quiere saber si los clientes del norte vuelven a comprar → KPI: “tasa de recompra por zona en 90 días”.</li>
+<li class="fragment"><strong>Conexión con financiera</strong>: clientes satisfechos recompran → más ingresos → mejora la perspectiva financiera.</li>
+</ul>
+<div class="fragment">
+<p><strong>Dato del sector</strong>: aumentar la retención de clientes en un 5% puede incrementar las ganancias entre 25% y 95% (Bain &amp; Company).</p>
+</div>
+</section>
+<section id="perspectiva-procesos-internos-somos-eficientes" class="slide level2">
+<h2>Perspectiva Procesos Internos: ¿Somos Eficientes?</h2>
+<p><strong>Responde la pregunta</strong>: ¿Nuestros procesos operativos crean valor para el cliente?</p>
+<ul>
+<li class="fragment">Mide la eficiencia y calidad de los procesos que impactan directamente al cliente.</li>
+<li class="fragment">KPIs típicos: tiempo de ciclo de pedido, tasa de error en picking, % de entregas en tiempo.</li>
+<li class="fragment"><strong>En TechStyle</strong>: Sofía sabe que el proceso de despacho en zona sur tiene un cuello de botella → KPI: “tiempo promedio entre confirmación y despacho por bodega”.</li>
+<li class="fragment"><strong>Conexión con cliente</strong>: procesos eficientes → entregas a tiempo → clientes satisfechos.</li>
+</ul>
+<div class="fragment">
+<p>Este es el nivel donde <strong>la calidad de los datos del TPS</strong> tiene mayor impacto. Un campo mal registrado distorsiona el KPI.</p>
+</div>
+</section>
+<section id="perspectiva-aprendizaje-y-crecimiento-evolucionamos" class="slide level2">
+<h2>Perspectiva Aprendizaje y Crecimiento: ¿Evolucionamos?</h2>
+<p><strong>Responde la pregunta</strong>: ¿Tenemos las capacidades para mejorar continuamente?</p>
+<ul>
+<li class="fragment">Mide el desarrollo del capital humano, tecnológico y organizacional.</li>
+<li class="fragment">KPIs típicos: % empleados con capacitación certificada, índice de satisfacción del equipo, adopción de nuevas tecnologías.</li>
+<li class="fragment"><strong>En TechStyle</strong>: el equipo de repartidores no sabe usar la nueva app de tracking → KPI: “% repartidores certificados en la app logística”.</li>
+<li class="fragment"><strong>Conexión con procesos</strong>: personas capacitadas → mejores procesos → clientes satisfechos → resultados financieros.</li>
+</ul>
+<div class="fragment">
+<p><strong>Esta perspectiva es la base de la pirámide</strong>: sin aprendizaje, los procesos no mejoran y la estrategia se estanca.</p>
 </div>
 </section>
 <section id="cmi-de-techstyle-kpis-por-perspectiva" class="slide level2">
@@ -339,6 +486,20 @@ Universidad San Sebastián
 </table>
 <div class="fragment">
 <p><strong>Conexión clave</strong>: Los KPIs del CMI dependen de que los datos del TPS sean correctos.</p>
+</div>
+</section>
+<section id="cómo-definir-un-buen-kpi-criterios-smart" class="slide level2">
+<h2>¿Cómo Definir un Buen KPI? Criterios SMART</h2>
+<p><strong>Un KPI mal definido produce conclusiones erróneas aunque los datos sean perfectos.</strong></p>
+<ul>
+<li class="fragment"><strong>S</strong>pecific (Específico): “tiempo de entrega” es vago → “tiempo promedio entre confirmación y firma del cliente, en días hábiles” es específico.</li>
+<li class="fragment"><strong>M</strong>easurable (Medible): debe poder calcularse desde datos reales del TPS o CRM.</li>
+<li class="fragment"><strong>A</strong>chievable (Alcanzable): una meta de 0% devoluciones no es alcanzable; 3% sí lo es.</li>
+<li class="fragment"><strong>R</strong>elevant (Relevante): debe conectarse a una decisión real que alguien tomará.</li>
+<li class="fragment"><strong>T</strong>ime-bound (Acotado en tiempo): “ventas del Q3 2026”, no solo “ventas”.</li>
+</ul>
+<div class="fragment">
+<p><strong>Ejercicio rápido</strong>: ¿Es SMART el KPI “mejorar la satisfacción del cliente”? ¿Cómo lo mejorarían?</p>
 </div>
 </section>
 <section id="verificación-a-qué-perspectiva-del-cmi-pertenece-cada-kpi" class="slide level2">
@@ -415,6 +576,24 @@ Universidad San Sebastián
 </tbody>
 </table>
 </section>
+<section id="más-allá-de-las-4-dimensiones-unicidad-y-validez" class="slide level2">
+<h2>Más Allá de las 4 Dimensiones: Unicidad y Validez</h2>
+<p><strong>La calidad de datos tiene más facetas:</strong></p>
+<ul>
+<li class="fragment"><strong>Unicidad</strong>: ¿Existe el dato más de una vez sin deber existir?
+<ul>
+<li class="fragment">TechStyle tiene el cliente “Ana González” duplicada con dos <code>cliente_id</code> distintos → el CRM la contacta dos veces → mala experiencia.</li>
+</ul></li>
+<li class="fragment"><strong>Validez</strong>: ¿El dato sigue las reglas de negocio definidas?
+<ul>
+<li class="fragment">Un pedido con <code>cantidad = -3</code> pasa la validación técnica, pero viola la regla de negocio “cantidad debe ser ≥ 1”.</li>
+<li class="fragment">Un <code>rut = 12345678-9</code> puede ser técnicamente válido pero no corresponder a ningún cliente real.</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<p><strong>Para recordar</strong>: un dato puede ser técnicamente correcto (no vacío, bien formateado) y aun así ser incorrecto para el negocio.</p>
+</div>
+</section>
 <section id="aplicación-auditoría-de-calidad-en-el-dataset-de-techstyle" class="slide level2">
 <h2>Aplicación: Auditoría de Calidad en el Dataset de TechStyle</h2>
 <p><strong>Hallazgos reales en <code>techstyle_orders.csv</code>:</strong></p>
@@ -444,6 +623,32 @@ Universidad San Sebastián
 <li class="fragment"><strong>Oportunidad</strong>: Reporte tardío → María toma decisiones con información de hace 3 días.</li>
 </ul>
 </section>
+<section id="el-costo-real-de-la-mala-calidad-de-datos" class="slide level2">
+<h2>El Costo Real de la Mala Calidad de Datos</h2>
+<p><strong>No es un problema menor:</strong></p>
+<ul>
+<li class="fragment"><strong>Gartner</strong> estima que la mala calidad de datos cuesta a las organizaciones un promedio de <strong>$12,9 millones al año</strong>.</li>
+<li class="fragment">En TechStyle: $2,3M en bonos mal pagados fue solo un incidente en un trimestre.</li>
+<li class="fragment">Los costos son múltiples: tiempo de corrección, decisiones equivocadas, pérdida de confianza en los datos, riesgo legal.</li>
+<li class="fragment"><strong>El efecto invisible</strong>: los analistas de TechStyle pasan el 40% de su tiempo limpiando datos en lugar de analizarlos.</li>
+</ul>
+<div class="fragment">
+<p><strong>Inversión preventiva</strong>: implementar controles de calidad desde el TPS es más barato que corregir los errores semanas después.</p>
+</div>
+</section>
+<section id="gobierno-de-datos-la-solución-organizacional" class="slide level2">
+<h2>Gobierno de Datos: La Solución Organizacional</h2>
+<p><strong>¿Quién es responsable de la calidad de los datos?</strong></p>
+<ul>
+<li class="fragment">El <strong>gobierno de datos</strong> es el conjunto de políticas, procesos y roles que garantizan la calidad y el uso adecuado de los datos.</li>
+<li class="fragment"><strong>Data Owner</strong>: el área de negocio responsable de un conjunto de datos (ej: logística es dueña de <code>fecha_entrega</code>).</li>
+<li class="fragment"><strong>Data Steward</strong>: el responsable operativo de mantener la calidad (ej: Sofía valida los datos de entrega antes de cerrar el turno).</li>
+<li class="fragment"><strong>Catálogo de datos</strong>: diccionario oficial que define qué significa cada campo, quién lo gestiona y cómo se mide su calidad.</li>
+</ul>
+<div class="fragment">
+<p><strong>Regla de oro</strong>: sin gobierno de datos, la calidad depende de la buena voluntad individual → no es escalable.</p>
+</div>
+</section>
 <section id="ética-en-el-manejo-de-datos" class="slide level2">
 <h2>Ética en el Manejo de Datos</h2>
 <p><strong>Tres principios fundamentales</strong>:</p>
@@ -469,6 +674,32 @@ Universidad San Sebastián
 <p><strong>Implicación para el analista</strong>: antes de usar un campo de datos, preguntarse si el cliente consintió ese uso específico.</p>
 </div>
 </section>
+<section id="dilema-ético-el-caso-de-geolocalización" class="slide level2">
+<h2>Dilema Ético: El Caso de Geolocalización</h2>
+<p><strong>TechStyle analiza implementar rastreo GPS continuo de clientes:</strong></p>
+<ul>
+<li class="fragment"><strong>Argumento a favor</strong>: conocer dónde está el cliente permite enviar notificaciones de “tu pedido está a 10 minutos” → mejor experiencia.</li>
+<li class="fragment"><strong>Argumento en contra</strong>: recopilar ubicación continua excede el propósito declarado de la compra → viola proporcionalidad.</li>
+<li class="fragment"><strong>Riesgo legal</strong>: si ese dato se filtra, TechStyle enfrenta multas y pérdida de confianza masiva.</li>
+<li class="fragment"><strong>Pregunta de diseño</strong>: ¿Se puede lograr la misma experiencia rastreando la ubicación del repartidor en lugar de la del cliente?</li>
+</ul>
+<div class="fragment">
+<p><strong>Principio de privacidad por diseño</strong>: la solución menos invasiva que logra el mismo objetivo siempre es la preferida.</p>
+</div>
+</section>
+<section id="el-analista-de-datos-como-guardián-de-la-información" class="slide level2">
+<h2>El Analista de Datos como Guardián de la Información</h2>
+<p><strong>El rol del analista va más allá de consultar tablas:</strong></p>
+<ul>
+<li class="fragment"><strong>Antes de usar un dato</strong>, preguntarse: ¿para qué fue recopilado? ¿quién autorizó este uso?</li>
+<li class="fragment"><strong>Antes de publicar un reporte</strong>, preguntarse: ¿podría este análisis identificar a una persona específica aunque no muestre nombres?</li>
+<li class="fragment"><strong>Ante un hallazgo de calidad</strong>, reportarlo al Data Owner aunque nadie lo pida.</li>
+<li class="fragment"><strong>Ante presión para mostrar “mejores números”</strong>, negarse a alterar metodologías para producir resultados convenientes.</li>
+</ul>
+<div class="fragment">
+<p><strong>Integridad analítica</strong>: la credibilidad de un analista se construye en años y se destruye en minutos. Los datos no mienten, pero los analistas pueden elegir cómo presentarlos.</p>
+</div>
+</section>
 <section id="actividad-dashboard-para-tres-usuarios" class="slide level2">
 <h2>Actividad: Dashboard para Tres Usuarios</h2>
 <p><strong>Power BI – Tres vistas del mismo dataset</strong>:</p>
@@ -491,6 +722,17 @@ Universidad San Sebastián
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+</section>
+<section id="discusión-grupal-diagnóstico-de-techstyle" class="slide level2">
+<h2>Discusión Grupal: Diagnóstico de TechStyle</h2>
+<p><strong>Aplicando todo lo visto hoy:</strong></p>
+<p>En grupos de 3, respondan las siguientes preguntas sobre TechStyle:</p>
+<ol type="1">
+<li class="fragment">¿Qué tipo de SI debería registrar automáticamente la firma digital del cliente al recibir el pedido?</li>
+<li class="fragment">Si el KPI “NPS = 72” proviene de encuestas solo enviadas a clientes con compras &gt; $50.000, ¿qué dimensión de calidad está vulnerada?</li>
+<li class="fragment">TechStyle quiere lanzar campañas de remarketing usando datos de navegación web de los clientes. ¿Qué consideraciones éticas y legales deben revisarse?</li>
+<li class="fragment">Diseña un KPI SMART para la perspectiva “Procesos Internos” del CMI de TechStyle.</li>
+</ol>
 </section>
 <section id="objetivos-de-aprendizaje-semana-2" class="slide level2">
 <h2>Objetivos de Aprendizaje – Semana 2</h2>

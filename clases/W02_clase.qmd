@@ -37,6 +37,58 @@ format:
 
 ---
 
+## ERP: El Sistema que Integra Todo
+
+**¿Qué pasa cuando todos los SI deben hablar entre sí?**
+
+::: {.incremental}
+- Un **ERP** (Enterprise Resource Planning) unifica TPS, CRM, logística y finanzas en una sola plataforma.
+- En lugar de 5 sistemas desconectados, el ERP tiene **módulos integrados**: ventas, inventario, RRHH, contabilidad.
+- Ejemplos: **SAP**, Oracle ERP, Microsoft Dynamics.
+- TechStyle podría usar el módulo de ventas para el TPS y el módulo de clientes para el CRM, todos compartiendo la **misma base de datos**.
+:::
+
+::: {.fragment}
+**Ventaja clave**: un pedido registrado en ventas actualiza automáticamente el inventario y las cuentas por cobrar.
+:::
+
+---
+
+## DSS en Acción: Simulación de Escenarios
+
+**¿Cómo apoya el DSS decisiones complejas?**
+
+::: {.incremental}
+- Roberto debe decidir si abrir 2 nuevos centros de distribución en el norte del país.
+- El **DSS** le permite simular escenarios con datos históricos:
+  - Escenario A: apertura en La Serena → reducción de 18h en tiempo de entrega, aumento de 12% en ventas proyectadas.
+  - Escenario B: apertura en Antofagasta → reducción de 24h, aumento de 8% en ventas proyectadas.
+- A diferencia del BI (que analiza el pasado), el DSS **proyecta hacia el futuro** usando modelos de datos.
+:::
+
+::: {.fragment}
+**El DSS no decide: apoya la decisión.** Roberto elige, pero con información cuantificada.
+:::
+
+---
+
+## TPS vs BI: Las Dos Caras del Dato
+
+| Característica | TPS | BI |
+|---|---|---|
+| **Tiempo** | Tiempo real | Histórico (días, meses, años) |
+| **Operación** | Lectura/escritura constante | Solo lectura (consultas) |
+| **Volumen por consulta** | Pocas filas (1 pedido) | Millones de filas (todos los pedidos) |
+| **Usuario** | Sofía (operativo) | Juan (táctico) |
+| **Pregunta tipo** | "¿Se registró el pedido #4821?" | "¿Cuánto vendimos en el Q3 por región?" |
+| **Base de datos** | BD transaccional | Data Warehouse |
+
+::: {.fragment}
+**No son competidores**: el TPS genera los datos que el BI analiza. Son parte de la misma cadena.
+:::
+
+---
+
 ## La Pirámide de los Tipos de SI
 
 ![](../img/piramide_sistemas_informacion.jpg)
@@ -76,6 +128,24 @@ format:
 
 ::: {.fragment}
 **Pregunta**: ¿Podrían Sofía y Roberto usar el mismo sistema? ¿Por qué no?
+:::
+
+---
+
+## Ecosistema Digital: TechStyle Integrado
+
+**Todos los sistemas comparten datos, pero cada uno tiene su rol:**
+
+::: {.incremental}
+- **Capa operativa**: TPS registra transacciones → datos crudos en BD transaccional.
+- **Capa de integración**: ETL extrae, transforma y carga datos al **Data Warehouse** cada noche.
+- **Capa analítica**: BI y DSS consultan el DW → reportes y simulaciones.
+- **Capa de relación**: CRM accede a datos del cliente desde el DW y el TPS.
+- **Capa estratégica**: EIS consume KPIs precalculados del DW → dashboard para Roberto.
+:::
+
+::: {.fragment}
+**Problema de integración**: si cada sistema usa un formato diferente para "región", los reportes generan duplicados. → esto es un problema de **calidad de datos** (lo veremos en breve).
 :::
 
 ---
@@ -136,6 +206,74 @@ El **CMI** (Balanced Scorecard) traduce la estrategia en **4 perspectivas** con 
 
 ---
 
+## Perspectiva Financiera: ¿Cuánto Generamos?
+
+**Responde la pregunta**: ¿Estamos creando valor económico sostenible?
+
+::: {.incremental}
+- Mide los **resultados finales** de la estrategia en términos monetarios.
+- KPIs típicos: ingresos totales, margen bruto, retorno sobre activos (ROA), crecimiento de ventas.
+- **En TechStyle**: Roberto quiere saber si la expansión al norte fue rentable → KPI: "margen neto por zona geográfica".
+- **Limitación**: los KPIs financieros son **lagging indicators** (indicadores rezagados): miden lo que ya ocurrió, no lo que está por ocurrir.
+:::
+
+::: {.fragment}
+Por eso el CMI agrega las otras 3 perspectivas: para anticipar el resultado financiero futuro.
+:::
+
+---
+
+## Perspectiva Cliente: ¿Nos Prefieren?
+
+**Responde la pregunta**: ¿Estamos satisfaciendo a quienes nos compran?
+
+::: {.incremental}
+- Mide la percepción y comportamiento del cliente hacia la empresa.
+- KPIs típicos: NPS, tasa de retención, tasa de devoluciones, tiempo de respuesta a reclamos.
+- **En TechStyle**: María quiere saber si los clientes del norte vuelven a comprar → KPI: "tasa de recompra por zona en 90 días".
+- **Conexión con financiera**: clientes satisfechos recompran → más ingresos → mejora la perspectiva financiera.
+:::
+
+::: {.fragment}
+**Dato del sector**: aumentar la retención de clientes en un 5% puede incrementar las ganancias entre 25% y 95% (Bain & Company).
+:::
+
+---
+
+## Perspectiva Procesos Internos: ¿Somos Eficientes?
+
+**Responde la pregunta**: ¿Nuestros procesos operativos crean valor para el cliente?
+
+::: {.incremental}
+- Mide la eficiencia y calidad de los procesos que impactan directamente al cliente.
+- KPIs típicos: tiempo de ciclo de pedido, tasa de error en picking, % de entregas en tiempo.
+- **En TechStyle**: Sofía sabe que el proceso de despacho en zona sur tiene un cuello de botella → KPI: "tiempo promedio entre confirmación y despacho por bodega".
+- **Conexión con cliente**: procesos eficientes → entregas a tiempo → clientes satisfechos.
+:::
+
+::: {.fragment}
+Este es el nivel donde **la calidad de los datos del TPS** tiene mayor impacto. Un campo mal registrado distorsiona el KPI.
+:::
+
+---
+
+## Perspectiva Aprendizaje y Crecimiento: ¿Evolucionamos?
+
+**Responde la pregunta**: ¿Tenemos las capacidades para mejorar continuamente?
+
+::: {.incremental}
+- Mide el desarrollo del capital humano, tecnológico y organizacional.
+- KPIs típicos: % empleados con capacitación certificada, índice de satisfacción del equipo, adopción de nuevas tecnologías.
+- **En TechStyle**: el equipo de repartidores no sabe usar la nueva app de tracking → KPI: "% repartidores certificados en la app logística".
+- **Conexión con procesos**: personas capacitadas → mejores procesos → clientes satisfechos → resultados financieros.
+:::
+
+::: {.fragment}
+**Esta perspectiva es la base de la pirámide**: sin aprendizaje, los procesos no mejoran y la estrategia se estanca.
+:::
+
+---
+
 ## CMI de TechStyle: KPIs por Perspectiva
 
 | Perspectiva | KPI | Fuente de datos |
@@ -147,6 +285,24 @@ El **CMI** (Balanced Scorecard) traduce la estrategia en **4 perspectivas** con 
 
 ::: {.fragment}
 **Conexión clave**: Los KPIs del CMI dependen de que los datos del TPS sean correctos.
+:::
+
+---
+
+## ¿Cómo Definir un Buen KPI? Criterios SMART
+
+**Un KPI mal definido produce conclusiones erróneas aunque los datos sean perfectos.**
+
+::: {.incremental}
+- **S**pecific (Específico): "tiempo de entrega" es vago → "tiempo promedio entre confirmación y firma del cliente, en días hábiles" es específico.
+- **M**easurable (Medible): debe poder calcularse desde datos reales del TPS o CRM.
+- **A**chievable (Alcanzable): una meta de 0% devoluciones no es alcanzable; 3% sí lo es.
+- **R**elevant (Relevante): debe conectarse a una decisión real que alguien tomará.
+- **T**ime-bound (Acotado en tiempo): "ventas del Q3 2026", no solo "ventas".
+:::
+
+::: {.fragment}
+**Ejercicio rápido**: ¿Es SMART el KPI "mejorar la satisfacción del cliente"? ¿Cómo lo mejorarían?
 :::
 
 ---
@@ -208,6 +364,24 @@ Roberto aprobó bonos para el equipo de ventas basados en el KPI "tiempo de entr
 
 ---
 
+## Más Allá de las 4 Dimensiones: Unicidad y Validez
+
+**La calidad de datos tiene más facetas:**
+
+::: {.incremental}
+- **Unicidad**: ¿Existe el dato más de una vez sin deber existir?
+  - TechStyle tiene el cliente "Ana González" duplicada con dos `cliente_id` distintos → el CRM la contacta dos veces → mala experiencia.
+- **Validez**: ¿El dato sigue las reglas de negocio definidas?
+  - Un pedido con `cantidad = -3` pasa la validación técnica, pero viola la regla de negocio "cantidad debe ser ≥ 1".
+  - Un `rut = 12345678-9` puede ser técnicamente válido pero no corresponder a ningún cliente real.
+:::
+
+::: {.fragment}
+**Para recordar**: un dato puede ser técnicamente correcto (no vacío, bien formateado) y aun así ser incorrecto para el negocio.
+:::
+
+---
+
 ## Aplicación: Auditoría de Calidad en el Dataset de TechStyle
 
 **Hallazgos reales en `techstyle_orders.csv`:**
@@ -245,6 +419,40 @@ Roberto aprobó bonos para el equipo de ventas basados en el KPI "tiempo de entr
 
 ---
 
+## El Costo Real de la Mala Calidad de Datos
+
+**No es un problema menor:**
+
+::: {.incremental}
+- **Gartner** estima que la mala calidad de datos cuesta a las organizaciones un promedio de **$12,9 millones al año**.
+- En TechStyle: $2,3M en bonos mal pagados fue solo un incidente en un trimestre.
+- Los costos son múltiples: tiempo de corrección, decisiones equivocadas, pérdida de confianza en los datos, riesgo legal.
+- **El efecto invisible**: los analistas de TechStyle pasan el 40% de su tiempo limpiando datos en lugar de analizarlos.
+:::
+
+::: {.fragment}
+**Inversión preventiva**: implementar controles de calidad desde el TPS es más barato que corregir los errores semanas después.
+:::
+
+---
+
+## Gobierno de Datos: La Solución Organizacional
+
+**¿Quién es responsable de la calidad de los datos?**
+
+::: {.incremental}
+- El **gobierno de datos** es el conjunto de políticas, procesos y roles que garantizan la calidad y el uso adecuado de los datos.
+- **Data Owner**: el área de negocio responsable de un conjunto de datos (ej: logística es dueña de `fecha_entrega`).
+- **Data Steward**: el responsable operativo de mantener la calidad (ej: Sofía valida los datos de entrega antes de cerrar el turno).
+- **Catálogo de datos**: diccionario oficial que define qué significa cada campo, quién lo gestiona y cómo se mide su calidad.
+:::
+
+::: {.fragment}
+**Regla de oro**: sin gobierno de datos, la calidad depende de la buena voluntad individual → no es escalable.
+:::
+
+---
+
 ## Ética en el Manejo de Datos
 
 **Tres principios fundamentales**:
@@ -278,6 +486,40 @@ Roberto aprobó bonos para el equipo de ventas basados en el KPI "tiempo de entr
 
 ---
 
+## Dilema Ético: El Caso de Geolocalización
+
+**TechStyle analiza implementar rastreo GPS continuo de clientes:**
+
+::: {.incremental}
+- **Argumento a favor**: conocer dónde está el cliente permite enviar notificaciones de "tu pedido está a 10 minutos" → mejor experiencia.
+- **Argumento en contra**: recopilar ubicación continua excede el propósito declarado de la compra → viola proporcionalidad.
+- **Riesgo legal**: si ese dato se filtra, TechStyle enfrenta multas y pérdida de confianza masiva.
+- **Pregunta de diseño**: ¿Se puede lograr la misma experiencia rastreando la ubicación del repartidor en lugar de la del cliente?
+:::
+
+::: {.fragment}
+**Principio de privacidad por diseño**: la solución menos invasiva que logra el mismo objetivo siempre es la preferida.
+:::
+
+---
+
+## El Analista de Datos como Guardián de la Información
+
+**El rol del analista va más allá de consultar tablas:**
+
+::: {.incremental}
+- **Antes de usar un dato**, preguntarse: ¿para qué fue recopilado? ¿quién autorizó este uso?
+- **Antes de publicar un reporte**, preguntarse: ¿podría este análisis identificar a una persona específica aunque no muestre nombres?
+- **Ante un hallazgo de calidad**, reportarlo al Data Owner aunque nadie lo pida.
+- **Ante presión para mostrar "mejores números"**, negarse a alterar metodologías para producir resultados convenientes.
+:::
+
+::: {.fragment}
+**Integridad analítica**: la credibilidad de un analista se construye en años y se destruye en minutos. Los datos no mienten, pero los analistas pueden elegir cómo presentarlos.
+:::
+
+---
+
 ## Actividad: Dashboard para Tres Usuarios
 
 **Power BI – Tres vistas del mismo dataset**:
@@ -292,6 +534,21 @@ En parejas, construyen en Power BI Desktop tres vistas del `techstyle_orders.csv
 
 ::: {.notes}
 Este es el Lab 2. En clase solo presentar el concepto; el trabajo práctico es en laboratorio.
+:::
+
+---
+
+## Discusión Grupal: Diagnóstico de TechStyle
+
+**Aplicando todo lo visto hoy:**
+
+En grupos de 3, respondan las siguientes preguntas sobre TechStyle:
+
+::: {.incremental}
+1. ¿Qué tipo de SI debería registrar automáticamente la firma digital del cliente al recibir el pedido?
+2. Si el KPI "NPS = 72" proviene de encuestas solo enviadas a clientes con compras > $50.000, ¿qué dimensión de calidad está vulnerada?
+3. TechStyle quiere lanzar campañas de remarketing usando datos de navegación web de los clientes. ¿Qué consideraciones éticas y legales deben revisarse?
+4. Diseña un KPI SMART para la perspectiva "Procesos Internos" del CMI de TechStyle.
 :::
 
 ---

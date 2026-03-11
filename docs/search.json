@@ -389,7 +389,7 @@
     "href": "labs/instrucciones/W02_lab.html#parte-a-tres-dashboards-tres-usuarios-45-min",
     "title": "Laboratorio 2: Dashboards por Nivel Organizacional y Auditoría de Calidad",
     "section": "2 Parte A: Tres Dashboards, Tres Usuarios (45 min)",
-    "text": "2 Parte A: Tres Dashboards, Tres Usuarios (45 min)\n\n2.1 Contexto de Parte A\nEl mismo dataset de TechStyle debe presentarse de forma radicalmente distinta según quién lo consume:\n\nSofía (repartidora): necesita saber sus pedidos del día, la dirección y el estado.\nJuan (analista): necesita ver tendencias semanales de ventas por categoría y zona.\nRoberto (CEO): necesita los KPIs financieros del mes de un vistazo.\n\n\n\n2.2 Instrucciones\n\nAbrir Power BI Desktop.\nCargar techstyle_orders.csv y techstyle_customers_dirty.csv.\nConstruir 3 páginas en el mismo archivo .pbix, una por usuario:\n\nPágina 1 — Vista de Sofía (Operativa): - Tabla con columnas: id_pedido, fecha, producto, estado, dirección. - Filtro de fecha = hoy (o semana actual). - Mapa con las entregas del día.\nPágina 2 — Vista de Juan (Táctica): - Gráfico de barras: ventas por categoría, semana a semana. - Tabla de top 10 productos más vendidos de la semana. - KPI de pedidos entregados vs. pendientes.\nPágina 3 — Vista de Roberto (Estratégica): - Tarjetas: ventas totales del mes, ticket promedio, tasa de devoluciones. - Gráfico de líneas: evolución de ventas mes a mes. - Tabla: ventas por región.\n\n\n2.3 Preguntas de reflexión\n\n¿Qué columnas de techstyle_orders.csv son relevantes para Sofía pero irrelevantes para Roberto?\n¿Por qué el mismo dato “total de ventas” se muestra de forma distinta en cada vista?\n¿Qué tipo de SI (TPS, BI, EIS) corresponde a cada vista?"
+    "text": "2 Parte A: Tres Dashboards, Tres Usuarios (45 min)\n\n2.1 Contexto de Parte A\nEl mismo dataset de TechStyle debe presentarse de forma radicalmente distinta según quién lo consume:\n\nSofía (repartidora): necesita saber sus pedidos del día, la dirección y el estado.\nJuan (analista): necesita ver tendencias semanales de ventas por categoría y zona.\nRoberto (CEO): necesita los KPIs financieros del mes de un vistazo.\n\n\n\n2.2 Instrucciones\n\nAbrir Power BI Desktop.\nCargar techstyle_orders.csv y techstyle_customers_dirty.csv.\nConstruir 3 páginas en el mismo archivo .pbix, una por usuario:\n\nPágina 1 — Vista de Sofía (Operativa):\n- Tabla con columnas: id_pedido, fecha, producto, estado, dirección.\n- Filtro de fecha = hoy (o semana actual).\n- Mapa con las entregas del día.\nPágina 2 — Vista de Juan (Táctica): - Gráfico de barras: ventas por categoría, semana a semana.\n- Tabla de top 10 productos más vendidos de la semana.\n- KPI de pedidos entregados vs. pendientes.\nPágina 3 — Vista de Roberto (Estratégica): - Tarjetas: ventas totales del mes, ticket promedio, tasa de devoluciones.\n- Gráfico de líneas: evolución de ventas mes a mes.\n- Tabla: ventas por región.\n\n\n2.3 Preguntas de reflexión\n\n¿Qué columnas de techstyle_orders.csv son relevantes para Sofía pero irrelevantes para Roberto?\n¿Por qué el mismo dato “total de ventas” se muestra de forma distinta en cada vista?\n¿Qué tipo de SI (TPS, BI, EIS) corresponde a cada vista?"
   },
   {
     "objectID": "labs/instrucciones/W02_lab.html#parte-b-auditoría-de-calidad-y-cmi-con-datos-reales-75-min",
@@ -1484,6 +1484,27 @@
     "text": "Tipos de Sistemas de Información\n\n\n\n\n\n\n\n\n\nSistema\nSigla\nNivel\nPropósito\n\n\n\n\nTransaction Processing System\nTPS\nOperativo\nRegistrar operaciones diarias\n\n\nBusiness Intelligence\nBI\nTáctico\nAnalizar datos históricos\n\n\nDecision Support System\nDSS\nTáctico/Estratégico\nApoyar decisiones no estructuradas\n\n\nCustomer Relationship Mgmt\nCRM\nTáctico\nGestionar relación con clientes\n\n\nExecutive Information System\nEIS\nEstratégico\nVisión global del negocio"
   },
   {
+    "objectID": "clases/W02_clase.html#erp-el-sistema-que-integra-todo",
+    "href": "clases/W02_clase.html#erp-el-sistema-que-integra-todo",
+    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
+    "section": "ERP: El Sistema que Integra Todo",
+    "text": "ERP: El Sistema que Integra Todo\n¿Qué pasa cuando todos los SI deben hablar entre sí?\n\nUn ERP (Enterprise Resource Planning) unifica TPS, CRM, logística y finanzas en una sola plataforma.\nEn lugar de 5 sistemas desconectados, el ERP tiene módulos integrados: ventas, inventario, RRHH, contabilidad.\nEjemplos: SAP, Oracle ERP, Microsoft Dynamics.\nTechStyle podría usar el módulo de ventas para el TPS y el módulo de clientes para el CRM, todos compartiendo la misma base de datos.\n\n\nVentaja clave: un pedido registrado en ventas actualiza automáticamente el inventario y las cuentas por cobrar."
+  },
+  {
+    "objectID": "clases/W02_clase.html#dss-en-acción-simulación-de-escenarios",
+    "href": "clases/W02_clase.html#dss-en-acción-simulación-de-escenarios",
+    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
+    "section": "DSS en Acción: Simulación de Escenarios",
+    "text": "DSS en Acción: Simulación de Escenarios\n¿Cómo apoya el DSS decisiones complejas?\n\nRoberto debe decidir si abrir 2 nuevos centros de distribución en el norte del país.\nEl DSS le permite simular escenarios con datos históricos:\n\nEscenario A: apertura en La Serena → reducción de 18h en tiempo de entrega, aumento de 12% en ventas proyectadas.\nEscenario B: apertura en Antofagasta → reducción de 24h, aumento de 8% en ventas proyectadas.\n\nA diferencia del BI (que analiza el pasado), el DSS proyecta hacia el futuro usando modelos de datos.\n\n\nEl DSS no decide: apoya la decisión. Roberto elige, pero con información cuantificada."
+  },
+  {
+    "objectID": "clases/W02_clase.html#tps-vs-bi-las-dos-caras-del-dato",
+    "href": "clases/W02_clase.html#tps-vs-bi-las-dos-caras-del-dato",
+    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
+    "section": "TPS vs BI: Las Dos Caras del Dato",
+    "text": "TPS vs BI: Las Dos Caras del Dato\n\n\n\n\n\n\n\n\nCaracterística\nTPS\nBI\n\n\n\n\nTiempo\nTiempo real\nHistórico (días, meses, años)\n\n\nOperación\nLectura/escritura constante\nSolo lectura (consultas)\n\n\nVolumen por consulta\nPocas filas (1 pedido)\nMillones de filas (todos los pedidos)\n\n\nUsuario\nSofía (operativo)\nJuan (táctico)\n\n\nPregunta tipo\n“¿Se registró el pedido #4821?”\n“¿Cuánto vendimos en el Q3 por región?”\n\n\nBase de datos\nBD transaccional\nData Warehouse\n\n\n\n\nNo son competidores: el TPS genera los datos que el BI analiza. Son parte de la misma cadena."
+  },
+  {
     "objectID": "clases/W02_clase.html#la-pirámide-de-los-tipos-de-si",
     "href": "clases/W02_clase.html#la-pirámide-de-los-tipos-de-si",
     "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
@@ -1503,6 +1524,13 @@
     "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
     "section": "Tipos de SI en TechStyle",
     "text": "Tipos de SI en TechStyle\n\nSofía usa un TPS: registra cada entrega con el estado del pedido en tiempo real.\nJuan usa BI: genera dashboards semanales de ventas por categoría y zona.\nMaría usa un CRM: ve el historial de compras de cada cliente para segmentar la campaña.\nRoberto usa un EIS: ve en una pantalla la situación global de TechStyle (ventas, NPS, rentabilidad).\n\n\nPregunta: ¿Podrían Sofía y Roberto usar el mismo sistema? ¿Por qué no?"
+  },
+  {
+    "objectID": "clases/W02_clase.html#ecosistema-digital-techstyle-integrado",
+    "href": "clases/W02_clase.html#ecosistema-digital-techstyle-integrado",
+    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
+    "section": "Ecosistema Digital: TechStyle Integrado",
+    "text": "Ecosistema Digital: TechStyle Integrado\nTodos los sistemas comparten datos, pero cada uno tiene su rol:\n\nCapa operativa: TPS registra transacciones → datos crudos en BD transaccional.\nCapa de integración: ETL extrae, transforma y carga datos al Data Warehouse cada noche.\nCapa analítica: BI y DSS consultan el DW → reportes y simulaciones.\nCapa de relación: CRM accede a datos del cliente desde el DW y el TPS.\nCapa estratégica: EIS consume KPIs precalculados del DW → dashboard para Roberto.\n\n\nProblema de integración: si cada sistema usa un formato diferente para “región”, los reportes generan duplicados. → esto es un problema de calidad de datos (lo veremos en breve)."
   },
   {
     "objectID": "clases/W02_clase.html#verificación-qué-si-necesita-cada-situación",
@@ -1533,11 +1561,46 @@
     "text": "Mapa Estratégico de TechStyle\n\n\nEl mapa estratégico muestra que la rentabilidad de TechStyle depende de la satisfacción del cliente, que depende de los procesos, que dependen de las capacidades del equipo."
   },
   {
+    "objectID": "clases/W02_clase.html#perspectiva-financiera-cuánto-generamos",
+    "href": "clases/W02_clase.html#perspectiva-financiera-cuánto-generamos",
+    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
+    "section": "Perspectiva Financiera: ¿Cuánto Generamos?",
+    "text": "Perspectiva Financiera: ¿Cuánto Generamos?\nResponde la pregunta: ¿Estamos creando valor económico sostenible?\n\nMide los resultados finales de la estrategia en términos monetarios.\nKPIs típicos: ingresos totales, margen bruto, retorno sobre activos (ROA), crecimiento de ventas.\nEn TechStyle: Roberto quiere saber si la expansión al norte fue rentable → KPI: “margen neto por zona geográfica”.\nLimitación: los KPIs financieros son lagging indicators (indicadores rezagados): miden lo que ya ocurrió, no lo que está por ocurrir.\n\n\nPor eso el CMI agrega las otras 3 perspectivas: para anticipar el resultado financiero futuro."
+  },
+  {
+    "objectID": "clases/W02_clase.html#perspectiva-cliente-nos-prefieren",
+    "href": "clases/W02_clase.html#perspectiva-cliente-nos-prefieren",
+    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
+    "section": "Perspectiva Cliente: ¿Nos Prefieren?",
+    "text": "Perspectiva Cliente: ¿Nos Prefieren?\nResponde la pregunta: ¿Estamos satisfaciendo a quienes nos compran?\n\nMide la percepción y comportamiento del cliente hacia la empresa.\nKPIs típicos: NPS, tasa de retención, tasa de devoluciones, tiempo de respuesta a reclamos.\nEn TechStyle: María quiere saber si los clientes del norte vuelven a comprar → KPI: “tasa de recompra por zona en 90 días”.\nConexión con financiera: clientes satisfechos recompran → más ingresos → mejora la perspectiva financiera.\n\n\nDato del sector: aumentar la retención de clientes en un 5% puede incrementar las ganancias entre 25% y 95% (Bain & Company)."
+  },
+  {
+    "objectID": "clases/W02_clase.html#perspectiva-procesos-internos-somos-eficientes",
+    "href": "clases/W02_clase.html#perspectiva-procesos-internos-somos-eficientes",
+    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
+    "section": "Perspectiva Procesos Internos: ¿Somos Eficientes?",
+    "text": "Perspectiva Procesos Internos: ¿Somos Eficientes?\nResponde la pregunta: ¿Nuestros procesos operativos crean valor para el cliente?\n\nMide la eficiencia y calidad de los procesos que impactan directamente al cliente.\nKPIs típicos: tiempo de ciclo de pedido, tasa de error en picking, % de entregas en tiempo.\nEn TechStyle: Sofía sabe que el proceso de despacho en zona sur tiene un cuello de botella → KPI: “tiempo promedio entre confirmación y despacho por bodega”.\nConexión con cliente: procesos eficientes → entregas a tiempo → clientes satisfechos.\n\n\nEste es el nivel donde la calidad de los datos del TPS tiene mayor impacto. Un campo mal registrado distorsiona el KPI."
+  },
+  {
+    "objectID": "clases/W02_clase.html#perspectiva-aprendizaje-y-crecimiento-evolucionamos",
+    "href": "clases/W02_clase.html#perspectiva-aprendizaje-y-crecimiento-evolucionamos",
+    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
+    "section": "Perspectiva Aprendizaje y Crecimiento: ¿Evolucionamos?",
+    "text": "Perspectiva Aprendizaje y Crecimiento: ¿Evolucionamos?\nResponde la pregunta: ¿Tenemos las capacidades para mejorar continuamente?\n\nMide el desarrollo del capital humano, tecnológico y organizacional.\nKPIs típicos: % empleados con capacitación certificada, índice de satisfacción del equipo, adopción de nuevas tecnologías.\nEn TechStyle: el equipo de repartidores no sabe usar la nueva app de tracking → KPI: “% repartidores certificados en la app logística”.\nConexión con procesos: personas capacitadas → mejores procesos → clientes satisfechos → resultados financieros.\n\n\nEsta perspectiva es la base de la pirámide: sin aprendizaje, los procesos no mejoran y la estrategia se estanca."
+  },
+  {
     "objectID": "clases/W02_clase.html#cmi-de-techstyle-kpis-por-perspectiva",
     "href": "clases/W02_clase.html#cmi-de-techstyle-kpis-por-perspectiva",
     "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
     "section": "CMI de TechStyle: KPIs por Perspectiva",
     "text": "CMI de TechStyle: KPIs por Perspectiva\n\n\n\nPerspectiva\nKPI\nFuente de datos\n\n\n\n\nFinanciera\nMargen de contribución por categoría\nTPS + BI\n\n\nCliente\nNPS (Net Promoter Score)\nCRM\n\n\nProcesos\nTiempo promedio de entrega por zona\nTPS\n\n\nAprendizaje\n% reclamos resueltos en primera instancia\nCRM + DSS\n\n\n\n\nConexión clave: Los KPIs del CMI dependen de que los datos del TPS sean correctos."
+  },
+  {
+    "objectID": "clases/W02_clase.html#cómo-definir-un-buen-kpi-criterios-smart",
+    "href": "clases/W02_clase.html#cómo-definir-un-buen-kpi-criterios-smart",
+    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
+    "section": "¿Cómo Definir un Buen KPI? Criterios SMART",
+    "text": "¿Cómo Definir un Buen KPI? Criterios SMART\nUn KPI mal definido produce conclusiones erróneas aunque los datos sean perfectos.\n\nSpecific (Específico): “tiempo de entrega” es vago → “tiempo promedio entre confirmación y firma del cliente, en días hábiles” es específico.\nMeasurable (Medible): debe poder calcularse desde datos reales del TPS o CRM.\nAchievable (Alcanzable): una meta de 0% devoluciones no es alcanzable; 3% sí lo es.\nRelevant (Relevante): debe conectarse a una decisión real que alguien tomará.\nTime-bound (Acotado en tiempo): “ventas del Q3 2026”, no solo “ventas”.\n\n\nEjercicio rápido: ¿Es SMART el KPI “mejorar la satisfacción del cliente”? ¿Cómo lo mejorarían?"
   },
   {
     "objectID": "clases/W02_clase.html#verificación-a-qué-perspectiva-del-cmi-pertenece-cada-kpi",
@@ -1568,6 +1631,13 @@
     "text": "Calidad de Datos: Las 4 Dimensiones\n\n\n\n\n\n\n\n\nDimensión\nPregunta\nProblema TechStyle\n\n\n\n\nExactitud\n¿El dato refleja la realidad?\nFecha de entrega ≠ fecha real\n\n\nCompletitud\n¿Hay campos vacíos?\n12% de clientes sin región\n\n\nConsistencia\n¿El mismo dato dice lo mismo?\n“Santiago” vs “Stgo.” vs “RM”\n\n\nOportunidad\n¿Está disponible cuando se necesita?\nReporte de ventas disponible 3 días después"
   },
   {
+    "objectID": "clases/W02_clase.html#más-allá-de-las-4-dimensiones-unicidad-y-validez",
+    "href": "clases/W02_clase.html#más-allá-de-las-4-dimensiones-unicidad-y-validez",
+    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
+    "section": "Más Allá de las 4 Dimensiones: Unicidad y Validez",
+    "text": "Más Allá de las 4 Dimensiones: Unicidad y Validez\nLa calidad de datos tiene más facetas:\n\nUnicidad: ¿Existe el dato más de una vez sin deber existir?\n\nTechStyle tiene el cliente “Ana González” duplicada con dos cliente_id distintos → el CRM la contacta dos veces → mala experiencia.\n\nValidez: ¿El dato sigue las reglas de negocio definidas?\n\nUn pedido con cantidad = -3 pasa la validación técnica, pero viola la regla de negocio “cantidad debe ser ≥ 1”.\nUn rut = 12345678-9 puede ser técnicamente válido pero no corresponder a ningún cliente real.\n\n\n\nPara recordar: un dato puede ser técnicamente correcto (no vacío, bien formateado) y aun así ser incorrecto para el negocio."
+  },
+  {
     "objectID": "clases/W02_clase.html#aplicación-auditoría-de-calidad-en-el-dataset-de-techstyle",
     "href": "clases/W02_clase.html#aplicación-auditoría-de-calidad-en-el-dataset-de-techstyle",
     "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
@@ -1589,6 +1659,20 @@
     "text": "Impacto de la Mala Calidad de Datos en el CMI\n\nExactitud: KPI de tiempo de entrega incorrecto → bonos mal pagados.\nCompletitud: 12% clientes sin región → campaña regional incompleta.\nConsistencia: “Santiago” vs “RM” → duplicación en reportes de ventas.\nOportunidad: Reporte tardío → María toma decisiones con información de hace 3 días."
   },
   {
+    "objectID": "clases/W02_clase.html#el-costo-real-de-la-mala-calidad-de-datos",
+    "href": "clases/W02_clase.html#el-costo-real-de-la-mala-calidad-de-datos",
+    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
+    "section": "El Costo Real de la Mala Calidad de Datos",
+    "text": "El Costo Real de la Mala Calidad de Datos\nNo es un problema menor:\n\nGartner estima que la mala calidad de datos cuesta a las organizaciones un promedio de $12,9 millones al año.\nEn TechStyle: $2,3M en bonos mal pagados fue solo un incidente en un trimestre.\nLos costos son múltiples: tiempo de corrección, decisiones equivocadas, pérdida de confianza en los datos, riesgo legal.\nEl efecto invisible: los analistas de TechStyle pasan el 40% de su tiempo limpiando datos en lugar de analizarlos.\n\n\nInversión preventiva: implementar controles de calidad desde el TPS es más barato que corregir los errores semanas después."
+  },
+  {
+    "objectID": "clases/W02_clase.html#gobierno-de-datos-la-solución-organizacional",
+    "href": "clases/W02_clase.html#gobierno-de-datos-la-solución-organizacional",
+    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
+    "section": "Gobierno de Datos: La Solución Organizacional",
+    "text": "Gobierno de Datos: La Solución Organizacional\n¿Quién es responsable de la calidad de los datos?\n\nEl gobierno de datos es el conjunto de políticas, procesos y roles que garantizan la calidad y el uso adecuado de los datos.\nData Owner: el área de negocio responsable de un conjunto de datos (ej: logística es dueña de fecha_entrega).\nData Steward: el responsable operativo de mantener la calidad (ej: Sofía valida los datos de entrega antes de cerrar el turno).\nCatálogo de datos: diccionario oficial que define qué significa cada campo, quién lo gestiona y cómo se mide su calidad.\n\n\nRegla de oro: sin gobierno de datos, la calidad depende de la buena voluntad individual → no es escalable."
+  },
+  {
     "objectID": "clases/W02_clase.html#ética-en-el-manejo-de-datos",
     "href": "clases/W02_clase.html#ética-en-el-manejo-de-datos",
     "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
@@ -1603,11 +1687,32 @@
     "text": "Marco Legal: Ley 19.628 de Protección de Datos en Chile\nLo que TechStyle debe cumplir:\n\nLos datos personales de clientes solo pueden usarse para el fin declarado al momento de la recopilación.\nEl cliente tiene derecho a acceder, modificar y eliminar sus datos.\nDatos sensibles (salud, situación financiera) requieren consentimiento explícito.\nChile se encuentra en proceso de actualizar esta ley para alinearse con el GDPR europeo.\n\n\nImplicación para el analista: antes de usar un campo de datos, preguntarse si el cliente consintió ese uso específico."
   },
   {
+    "objectID": "clases/W02_clase.html#dilema-ético-el-caso-de-geolocalización",
+    "href": "clases/W02_clase.html#dilema-ético-el-caso-de-geolocalización",
+    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
+    "section": "Dilema Ético: El Caso de Geolocalización",
+    "text": "Dilema Ético: El Caso de Geolocalización\nTechStyle analiza implementar rastreo GPS continuo de clientes:\n\nArgumento a favor: conocer dónde está el cliente permite enviar notificaciones de “tu pedido está a 10 minutos” → mejor experiencia.\nArgumento en contra: recopilar ubicación continua excede el propósito declarado de la compra → viola proporcionalidad.\nRiesgo legal: si ese dato se filtra, TechStyle enfrenta multas y pérdida de confianza masiva.\nPregunta de diseño: ¿Se puede lograr la misma experiencia rastreando la ubicación del repartidor en lugar de la del cliente?\n\n\nPrincipio de privacidad por diseño: la solución menos invasiva que logra el mismo objetivo siempre es la preferida."
+  },
+  {
+    "objectID": "clases/W02_clase.html#el-analista-de-datos-como-guardián-de-la-información",
+    "href": "clases/W02_clase.html#el-analista-de-datos-como-guardián-de-la-información",
+    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
+    "section": "El Analista de Datos como Guardián de la Información",
+    "text": "El Analista de Datos como Guardián de la Información\nEl rol del analista va más allá de consultar tablas:\n\nAntes de usar un dato, preguntarse: ¿para qué fue recopilado? ¿quién autorizó este uso?\nAntes de publicar un reporte, preguntarse: ¿podría este análisis identificar a una persona específica aunque no muestre nombres?\nAnte un hallazgo de calidad, reportarlo al Data Owner aunque nadie lo pida.\nAnte presión para mostrar “mejores números”, negarse a alterar metodologías para producir resultados convenientes.\n\n\nIntegridad analítica: la credibilidad de un analista se construye en años y se destruye en minutos. Los datos no mienten, pero los analistas pueden elegir cómo presentarlos."
+  },
+  {
     "objectID": "clases/W02_clase.html#actividad-dashboard-para-tres-usuarios",
     "href": "clases/W02_clase.html#actividad-dashboard-para-tres-usuarios",
     "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
     "section": "Actividad: Dashboard para Tres Usuarios",
     "text": "Actividad: Dashboard para Tres Usuarios\nPower BI – Tres vistas del mismo dataset:\nEn parejas, construyen en Power BI Desktop tres vistas del techstyle_orders.csv:\n\nVista de Sofía (operativa): Mis pedidos del día, estado, dirección.\nVista de Juan (táctica): Ventas semanales por categoría y zona, gráfico de barras.\nVista de Roberto (estratégica): KPIs financieros del mes (total ventas, ticket promedio, NPS).\n\n\nEste es el Lab 2. En clase solo presentar el concepto; el trabajo práctico es en laboratorio."
+  },
+  {
+    "objectID": "clases/W02_clase.html#discusión-grupal-diagnóstico-de-techstyle",
+    "href": "clases/W02_clase.html#discusión-grupal-diagnóstico-de-techstyle",
+    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
+    "section": "Discusión Grupal: Diagnóstico de TechStyle",
+    "text": "Discusión Grupal: Diagnóstico de TechStyle\nAplicando todo lo visto hoy:\nEn grupos de 3, respondan las siguientes preguntas sobre TechStyle:\n\n¿Qué tipo de SI debería registrar automáticamente la firma digital del cliente al recibir el pedido?\nSi el KPI “NPS = 72” proviene de encuestas solo enviadas a clientes con compras &gt; $50.000, ¿qué dimensión de calidad está vulnerada?\nTechStyle quiere lanzar campañas de remarketing usando datos de navegación web de los clientes. ¿Qué consideraciones éticas y legales deben revisarse?\nDiseña un KPI SMART para la perspectiva “Procesos Internos” del CMI de TechStyle."
   },
   {
     "objectID": "clases/W02_clase.html#objetivos-de-aprendizaje-semana-2",
@@ -3323,110 +3428,5 @@
     "title": "Laboratorio 15: Transacciones ACID en MySQL",
     "section": "6 Criterios de evaluación",
     "text": "6 Criterios de evaluación\n\n\n\nCriterio\nPuntaje\n\n\n\n\nTransacción 1 con COMMIT y simulación de ROLLBACK\n30 pts\n\n\nTransacción 2 con UPDATE condicional\n20 pts\n\n\nTransacción 3 con SAVEPOINT\n25 pts\n\n\nAnálisis escrito (4 preguntas)\n25 pts\n\n\nTotal\n100 pts"
-  },
-  {
-    "objectID": "clases/W02_clase.html#erp-el-sistema-que-integra-todo",
-    "href": "clases/W02_clase.html#erp-el-sistema-que-integra-todo",
-    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
-    "section": "ERP: El Sistema que Integra Todo",
-    "text": "ERP: El Sistema que Integra Todo\n¿Qué pasa cuando todos los SI deben hablar entre sí?\n\nUn ERP (Enterprise Resource Planning) unifica TPS, CRM, logística y finanzas en una sola plataforma.\nEn lugar de 5 sistemas desconectados, el ERP tiene módulos integrados: ventas, inventario, RRHH, contabilidad.\nEjemplos: SAP, Oracle ERP, Microsoft Dynamics.\nTechStyle podría usar el módulo de ventas para el TPS y el módulo de clientes para el CRM, todos compartiendo la misma base de datos.\n\n\nVentaja clave: un pedido registrado en ventas actualiza automáticamente el inventario y las cuentas por cobrar."
-  },
-  {
-    "objectID": "clases/W02_clase.html#dss-en-acción-simulación-de-escenarios",
-    "href": "clases/W02_clase.html#dss-en-acción-simulación-de-escenarios",
-    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
-    "section": "DSS en Acción: Simulación de Escenarios",
-    "text": "DSS en Acción: Simulación de Escenarios\n¿Cómo apoya el DSS decisiones complejas?\n\nRoberto debe decidir si abrir 2 nuevos centros de distribución en el norte del país.\nEl DSS le permite simular escenarios con datos históricos:\n\nEscenario A: apertura en La Serena → reducción de 18h en tiempo de entrega, aumento de 12% en ventas proyectadas.\nEscenario B: apertura en Antofagasta → reducción de 24h, aumento de 8% en ventas proyectadas.\n\nA diferencia del BI (que analiza el pasado), el DSS proyecta hacia el futuro usando modelos de datos.\n\n\nEl DSS no decide: apoya la decisión. Roberto elige, pero con información cuantificada."
-  },
-  {
-    "objectID": "clases/W02_clase.html#tps-vs-bi-las-dos-caras-del-dato",
-    "href": "clases/W02_clase.html#tps-vs-bi-las-dos-caras-del-dato",
-    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
-    "section": "TPS vs BI: Las Dos Caras del Dato",
-    "text": "TPS vs BI: Las Dos Caras del Dato\n\n\n\n\n\n\n\n\nCaracterística\nTPS\nBI\n\n\n\n\nTiempo\nTiempo real\nHistórico (días, meses, años)\n\n\nOperación\nLectura/escritura constante\nSolo lectura (consultas)\n\n\nVolumen por consulta\nPocas filas (1 pedido)\nMillones de filas (todos los pedidos)\n\n\nUsuario\nSofía (operativo)\nJuan (táctico)\n\n\nPregunta tipo\n“¿Se registró el pedido #4821?”\n“¿Cuánto vendimos en el Q3 por región?”\n\n\nBase de datos\nBD transaccional\nData Warehouse\n\n\n\n\nNo son competidores: el TPS genera los datos que el BI analiza. Son parte de la misma cadena."
-  },
-  {
-    "objectID": "clases/W02_clase.html#ecosistema-digital-techstyle-integrado",
-    "href": "clases/W02_clase.html#ecosistema-digital-techstyle-integrado",
-    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
-    "section": "Ecosistema Digital: TechStyle Integrado",
-    "text": "Ecosistema Digital: TechStyle Integrado\nTodos los sistemas comparten datos, pero cada uno tiene su rol:\n\nCapa operativa: TPS registra transacciones → datos crudos en BD transaccional.\nCapa de integración: ETL extrae, transforma y carga datos al Data Warehouse cada noche.\nCapa analítica: BI y DSS consultan el DW → reportes y simulaciones.\nCapa de relación: CRM accede a datos del cliente desde el DW y el TPS.\nCapa estratégica: EIS consume KPIs precalculados del DW → dashboard para Roberto.\n\n\nProblema de integración: si cada sistema usa un formato diferente para “región”, los reportes generan duplicados. → esto es un problema de calidad de datos (lo veremos en breve)."
-  },
-  {
-    "objectID": "clases/W02_clase.html#perspectiva-financiera-cuánto-generamos",
-    "href": "clases/W02_clase.html#perspectiva-financiera-cuánto-generamos",
-    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
-    "section": "Perspectiva Financiera: ¿Cuánto Generamos?",
-    "text": "Perspectiva Financiera: ¿Cuánto Generamos?\nResponde la pregunta: ¿Estamos creando valor económico sostenible?\n\nMide los resultados finales de la estrategia en términos monetarios.\nKPIs típicos: ingresos totales, margen bruto, retorno sobre activos (ROA), crecimiento de ventas.\nEn TechStyle: Roberto quiere saber si la expansión al norte fue rentable → KPI: “margen neto por zona geográfica”.\nLimitación: los KPIs financieros son lagging indicators (indicadores rezagados): miden lo que ya ocurrió, no lo que está por ocurrir.\n\n\nPor eso el CMI agrega las otras 3 perspectivas: para anticipar el resultado financiero futuro."
-  },
-  {
-    "objectID": "clases/W02_clase.html#perspectiva-cliente-nos-prefieren",
-    "href": "clases/W02_clase.html#perspectiva-cliente-nos-prefieren",
-    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
-    "section": "Perspectiva Cliente: ¿Nos Prefieren?",
-    "text": "Perspectiva Cliente: ¿Nos Prefieren?\nResponde la pregunta: ¿Estamos satisfaciendo a quienes nos compran?\n\nMide la percepción y comportamiento del cliente hacia la empresa.\nKPIs típicos: NPS, tasa de retención, tasa de devoluciones, tiempo de respuesta a reclamos.\nEn TechStyle: María quiere saber si los clientes del norte vuelven a comprar → KPI: “tasa de recompra por zona en 90 días”.\nConexión con financiera: clientes satisfechos recompran → más ingresos → mejora la perspectiva financiera.\n\n\nDato del sector: aumentar la retención de clientes en un 5% puede incrementar las ganancias entre 25% y 95% (Bain & Company)."
-  },
-  {
-    "objectID": "clases/W02_clase.html#perspectiva-procesos-internos-somos-eficientes",
-    "href": "clases/W02_clase.html#perspectiva-procesos-internos-somos-eficientes",
-    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
-    "section": "Perspectiva Procesos Internos: ¿Somos Eficientes?",
-    "text": "Perspectiva Procesos Internos: ¿Somos Eficientes?\nResponde la pregunta: ¿Nuestros procesos operativos crean valor para el cliente?\n\nMide la eficiencia y calidad de los procesos que impactan directamente al cliente.\nKPIs típicos: tiempo de ciclo de pedido, tasa de error en picking, % de entregas en tiempo.\nEn TechStyle: Sofía sabe que el proceso de despacho en zona sur tiene un cuello de botella → KPI: “tiempo promedio entre confirmación y despacho por bodega”.\nConexión con cliente: procesos eficientes → entregas a tiempo → clientes satisfechos.\n\n\nEste es el nivel donde la calidad de los datos del TPS tiene mayor impacto. Un campo mal registrado distorsiona el KPI."
-  },
-  {
-    "objectID": "clases/W02_clase.html#perspectiva-aprendizaje-y-crecimiento-evolucionamos",
-    "href": "clases/W02_clase.html#perspectiva-aprendizaje-y-crecimiento-evolucionamos",
-    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
-    "section": "Perspectiva Aprendizaje y Crecimiento: ¿Evolucionamos?",
-    "text": "Perspectiva Aprendizaje y Crecimiento: ¿Evolucionamos?\nResponde la pregunta: ¿Tenemos las capacidades para mejorar continuamente?\n\nMide el desarrollo del capital humano, tecnológico y organizacional.\nKPIs típicos: % empleados con capacitación certificada, índice de satisfacción del equipo, adopción de nuevas tecnologías.\nEn TechStyle: el equipo de repartidores no sabe usar la nueva app de tracking → KPI: “% repartidores certificados en la app logística”.\nConexión con procesos: personas capacitadas → mejores procesos → clientes satisfechos → resultados financieros.\n\n\nEsta perspectiva es la base de la pirámide: sin aprendizaje, los procesos no mejoran y la estrategia se estanca."
-  },
-  {
-    "objectID": "clases/W02_clase.html#cómo-definir-un-buen-kpi-criterios-smart",
-    "href": "clases/W02_clase.html#cómo-definir-un-buen-kpi-criterios-smart",
-    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
-    "section": "¿Cómo Definir un Buen KPI? Criterios SMART",
-    "text": "¿Cómo Definir un Buen KPI? Criterios SMART\nUn KPI mal definido produce conclusiones erróneas aunque los datos sean perfectos.\n\nSpecific (Específico): “tiempo de entrega” es vago → “tiempo promedio entre confirmación y firma del cliente, en días hábiles” es específico.\nMeasurable (Medible): debe poder calcularse desde datos reales del TPS o CRM.\nAchievable (Alcanzable): una meta de 0% devoluciones no es alcanzable; 3% sí lo es.\nRelevant (Relevante): debe conectarse a una decisión real que alguien tomará.\nTime-bound (Acotado en tiempo): “ventas del Q3 2026”, no solo “ventas”.\n\n\nEjercicio rápido: ¿Es SMART el KPI “mejorar la satisfacción del cliente”? ¿Cómo lo mejorarían?"
-  },
-  {
-    "objectID": "clases/W02_clase.html#más-allá-de-las-4-dimensiones-unicidad-y-validez",
-    "href": "clases/W02_clase.html#más-allá-de-las-4-dimensiones-unicidad-y-validez",
-    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
-    "section": "Más Allá de las 4 Dimensiones: Unicidad y Validez",
-    "text": "Más Allá de las 4 Dimensiones: Unicidad y Validez\nLa calidad de datos tiene más facetas:\n\nUnicidad: ¿Existe el dato más de una vez sin deber existir?\n\nTechStyle tiene el cliente “Ana González” duplicada con dos cliente_id distintos → el CRM la contacta dos veces → mala experiencia.\n\nValidez: ¿El dato sigue las reglas de negocio definidas?\n\nUn pedido con cantidad = -3 pasa la validación técnica, pero viola la regla de negocio “cantidad debe ser ≥ 1”.\nUn rut = 12345678-9 puede ser técnicamente válido pero no corresponder a ningún cliente real.\n\n\n\nPara recordar: un dato puede ser técnicamente correcto (no vacío, bien formateado) y aun así ser incorrecto para el negocio."
-  },
-  {
-    "objectID": "clases/W02_clase.html#el-costo-real-de-la-mala-calidad-de-datos",
-    "href": "clases/W02_clase.html#el-costo-real-de-la-mala-calidad-de-datos",
-    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
-    "section": "El Costo Real de la Mala Calidad de Datos",
-    "text": "El Costo Real de la Mala Calidad de Datos\nNo es un problema menor:\n\nGartner estima que la mala calidad de datos cuesta a las organizaciones un promedio de $12,9 millones al año.\nEn TechStyle: $2,3M en bonos mal pagados fue solo un incidente en un trimestre.\nLos costos son múltiples: tiempo de corrección, decisiones equivocadas, pérdida de confianza en los datos, riesgo legal.\nEl efecto invisible: los analistas de TechStyle pasan el 40% de su tiempo limpiando datos en lugar de analizarlos.\n\n\nInversión preventiva: implementar controles de calidad desde el TPS es más barato que corregir los errores semanas después."
-  },
-  {
-    "objectID": "clases/W02_clase.html#gobierno-de-datos-la-solución-organizacional",
-    "href": "clases/W02_clase.html#gobierno-de-datos-la-solución-organizacional",
-    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
-    "section": "Gobierno de Datos: La Solución Organizacional",
-    "text": "Gobierno de Datos: La Solución Organizacional\n¿Quién es responsable de la calidad de los datos?\n\nEl gobierno de datos es el conjunto de políticas, procesos y roles que garantizan la calidad y el uso adecuado de los datos.\nData Owner: el área de negocio responsable de un conjunto de datos (ej: logística es dueña de fecha_entrega).\nData Steward: el responsable operativo de mantener la calidad (ej: Sofía valida los datos de entrega antes de cerrar el turno).\nCatálogo de datos: diccionario oficial que define qué significa cada campo, quién lo gestiona y cómo se mide su calidad.\n\n\nRegla de oro: sin gobierno de datos, la calidad depende de la buena voluntad individual → no es escalable."
-  },
-  {
-    "objectID": "clases/W02_clase.html#dilema-ético-el-caso-de-geolocalización",
-    "href": "clases/W02_clase.html#dilema-ético-el-caso-de-geolocalización",
-    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
-    "section": "Dilema Ético: El Caso de Geolocalización",
-    "text": "Dilema Ético: El Caso de Geolocalización\nTechStyle analiza implementar rastreo GPS continuo de clientes:\n\nArgumento a favor: conocer dónde está el cliente permite enviar notificaciones de “tu pedido está a 10 minutos” → mejor experiencia.\nArgumento en contra: recopilar ubicación continua excede el propósito declarado de la compra → viola proporcionalidad.\nRiesgo legal: si ese dato se filtra, TechStyle enfrenta multas y pérdida de confianza masiva.\nPregunta de diseño: ¿Se puede lograr la misma experiencia rastreando la ubicación del repartidor en lugar de la del cliente?\n\n\nPrincipio de privacidad por diseño: la solución menos invasiva que logra el mismo objetivo siempre es la preferida."
-  },
-  {
-    "objectID": "clases/W02_clase.html#el-analista-de-datos-como-guardián-de-la-información",
-    "href": "clases/W02_clase.html#el-analista-de-datos-como-guardián-de-la-información",
-    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
-    "section": "El Analista de Datos como Guardián de la Información",
-    "text": "El Analista de Datos como Guardián de la Información\nEl rol del analista va más allá de consultar tablas:\n\nAntes de usar un dato, preguntarse: ¿para qué fue recopilado? ¿quién autorizó este uso?\nAntes de publicar un reporte, preguntarse: ¿podría este análisis identificar a una persona específica aunque no muestre nombres?\nAnte un hallazgo de calidad, reportarlo al Data Owner aunque nadie lo pida.\nAnte presión para mostrar “mejores números”, negarse a alterar metodologías para producir resultados convenientes.\n\n\nIntegridad analítica: la credibilidad de un analista se construye en años y se destruye en minutos. Los datos no mienten, pero los analistas pueden elegir cómo presentarlos."
-  },
-  {
-    "objectID": "clases/W02_clase.html#discusión-grupal-diagnóstico-de-techstyle",
-    "href": "clases/W02_clase.html#discusión-grupal-diagnóstico-de-techstyle",
-    "title": "Tipos de SI, CMI, Calidad de Datos y Ética",
-    "section": "Discusión Grupal: Diagnóstico de TechStyle",
-    "text": "Discusión Grupal: Diagnóstico de TechStyle\nAplicando todo lo visto hoy:\nEn grupos de 3, respondan las siguientes preguntas sobre TechStyle:\n\n¿Qué tipo de SI debería registrar automáticamente la firma digital del cliente al recibir el pedido?\nSi el KPI “NPS = 72” proviene de encuestas solo enviadas a clientes con compras &gt; $50.000, ¿qué dimensión de calidad está vulnerada?\nTechStyle quiere lanzar campañas de remarketing usando datos de navegación web de los clientes. ¿Qué consideraciones éticas y legales deben revisarse?\nDiseña un KPI SMART para la perspectiva “Procesos Internos” del CMI de TechStyle."
   }
 ]

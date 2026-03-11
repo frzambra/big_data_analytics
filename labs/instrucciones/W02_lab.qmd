@@ -38,20 +38,20 @@ El mismo dataset de TechStyle debe presentarse de forma radicalmente distinta se
 2. Cargar `techstyle_orders.csv` y `techstyle_customers_dirty.csv`.
 3. Construir **3 páginas** en el mismo archivo `.pbix`, una por usuario:
 
-**Página 1 — Vista de Sofía (Operativa)**:
-- Tabla con columnas: `id_pedido`, `fecha`, `producto`, `estado`, `dirección`.
-- Filtro de fecha = hoy (o semana actual).
-- Mapa con las entregas del día.
+**Página 1 — Vista de Sofía (Operativa)**:  
+- Tabla con columnas: `id_pedido`, `fecha`, `producto`, `estado`, `dirección`.  
+- Filtro de fecha = hoy (o semana actual).  
+- Mapa con las entregas del día.  
 
 **Página 2 — Vista de Juan (Táctica)**:
-- Gráfico de barras: ventas por categoría, semana a semana.
-- Tabla de top 10 productos más vendidos de la semana.
-- KPI de pedidos entregados vs. pendientes.
+- Gráfico de barras: ventas por categoría, semana a semana.  
+- Tabla de top 10 productos más vendidos de la semana.  
+- KPI de pedidos entregados vs. pendientes.  
 
 **Página 3 — Vista de Roberto (Estratégica)**:
-- Tarjetas: ventas totales del mes, ticket promedio, tasa de devoluciones.
-- Gráfico de líneas: evolución de ventas mes a mes.
-- Tabla: ventas por región.
+- Tarjetas: ventas totales del mes, ticket promedio, tasa de devoluciones.  
+- Gráfico de líneas: evolución de ventas mes a mes.  
+- Tabla: ventas por región.  
 
 ### Preguntas de reflexión
 

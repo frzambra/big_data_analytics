@@ -27,6 +27,21 @@ format:
 
 ---
 
+## El Problema: María Necesita un Resumen
+
+**Pregunta de la Gerente María**:
+
+> Necesito el reporte semanal de ventas. No quiero ver los 8.500 pedidos uno por uno. Quiero totales por categoría.
+
+::: {.incremental}
+- El SELECT básico devuelve filas individuales.
+- María necesita **grupos** de datos agregados.
+- `GROUP BY` agrupa filas con el mismo valor en una o más columnas.
+- Las **funciones de agregación** calculan un resumen por grupo.
+:::
+
+---
+
 ## Funciones de Agregación
 
 | Función | Descripción | Ejemplo |
@@ -47,6 +62,42 @@ FROM pedidos WHERE estado = 'entregado';
 
 ---
 
+## Aplicación: Funciones de Agregación en TechStyle
+
+```sql
+-- Resumen global de pedidos entregados
+SELECT
+    COUNT(*)                AS total_pedidos,
+    SUM(total)              AS ingresos_totales,
+    AVG(total)              AS ticket_promedio,
+    MAX(total)              AS pedido_mas_grande,
+    MIN(total)              AS pedido_mas_pequeno,
+    COUNT(DISTINCT id_cliente) AS clientes_unicos
+FROM pedidos
+WHERE estado = 'entregado'
+  AND YEAR(fecha_pedido) = 2026;
+```
+
+::: {.fragment}
+**Interpretación ejecutiva**: Roberto puede leer este resumen en su EIS sin necesidad de ver filas individuales.
+:::
+
+---
+
+## Verificación: ¿Qué Función de Agregación Usar?
+
+**Elige la función correcta para cada KPI del CMI:**
+
+::: {.incremental}
+1. "¿Cuántos pedidos se hicieron este mes?" → **COUNT(*)**
+2. "¿Cuál es el total de ingresos del trimestre?" → **SUM(total)**
+3. "¿Cuál es el precio promedio del ticket?" → **AVG(total)**
+4. "¿Cuántos clientes distintos compraron esta semana?" → **COUNT(DISTINCT id_cliente)**
+5. "¿Cuál es el producto más caro del catálogo?" → **MAX(precio)** en `productos`
+:::
+
+---
+
 ## GROUP BY: Agregar por Categoría
 
 ```sql
@@ -61,6 +112,8 @@ ORDER BY ventas_totales DESC;
 
 ::: {.fragment}
 **Regla de oro**: Toda columna en el `SELECT` que **no sea una función de agregación** debe estar en el `GROUP BY`.
+
+Si `estado` está en el SELECT pero no en GROUP BY → ERROR.
 :::
 
 ---
@@ -71,7 +124,8 @@ ORDER BY ventas_totales DESC;
 -- Ingresos totales por zona geográfica del cliente
 SELECT z.nombre          AS zona,
        COUNT(p.id_pedido) AS num_pedidos,
-       SUM(p.total)       AS ingresos
+       SUM(p.total)       AS ingresos,
+       AVG(p.total)       AS ticket_promedio
 FROM pedidos p
 INNER JOIN repartidores r ON p.id_repartidor = r.id_repartidor
 INNER JOIN zonas        z ON r.id_zona       = z.id_zona
@@ -79,6 +133,27 @@ WHERE p.estado = 'entregado'
 GROUP BY z.id_zona, z.nombre
 ORDER BY ingresos DESC;
 ```
+
+::: {.fragment}
+**KPI del CMI alimentado**: "Ingresos por zona" → perspectiva Financiera.
+:::
+
+---
+
+## Aplicación: GROUP BY para el CMI de TechStyle
+
+**Los 4 KPIs del CMI que requieren GROUP BY**:
+
+::: {.incremental}
+- **Financiera**: Ventas por categoría → `GROUP BY pr.categoria`
+- **Cliente**: Ticket promedio por región → `GROUP BY c.region`
+- **Procesos**: Tiempo promedio de entrega por repartidor → `GROUP BY r.id_repartidor`
+- **Aprendizaje**: Tasa de devolución por zona → `GROUP BY z.nombre`
+:::
+
+::: {.fragment}
+Cada KPI del CMI tiene ahora una consulta SQL que lo alimenta automáticamente desde la base de datos.
+:::
 
 ---
 
@@ -104,6 +179,44 @@ ORDER BY ventas DESC;
 
 ---
 
+## Aplicación: WHERE vs HAVING en TechStyle
+
+**Pregunta**: ¿Qué repartidores entregaron más de 100 pedidos este mes?
+
+```sql
+-- Incorrecto (WHERE no puede usar funciones de agregación)
+SELECT r.nombre, COUNT(*) AS pedidos
+FROM pedidos p
+INNER JOIN repartidores r ON p.id_repartidor = r.id_repartidor
+WHERE p.estado = 'entregado'       -- ← Filtra filas (OK)
+  AND COUNT(*) > 100               -- ← ERROR: no se puede aquí
+GROUP BY r.id_repartidor;
+
+-- Correcto
+SELECT r.nombre, COUNT(*) AS pedidos
+FROM pedidos p
+INNER JOIN repartidores r ON p.id_repartidor = r.id_repartidor
+WHERE p.estado = 'entregado'       -- ← Filtra filas antes de agrupar
+GROUP BY r.id_repartidor
+HAVING COUNT(*) > 100;             -- ← Filtra grupos después de agrupar
+```
+
+---
+
+## Verificación: ¿WHERE o HAVING?
+
+**Elige dónde colocar cada condición:**
+
+::: {.incremental}
+1. "Solo pedidos del mes de junio" → **WHERE** (filtra filas antes de agrupar)
+2. "Solo categorías que vendieron más de $1M" → **HAVING** (filtra grupos)
+3. "Solo clientes de la región Metropolitana" → **WHERE**
+4. "Solo zonas con más de 5 repartidores" → **HAVING COUNT(r.id_repartidor) > 5**
+5. "Solo pedidos en estado 'entregado'" → **WHERE**
+:::
+
+---
+
 ## Subconsultas: Consultas Dentro de Consultas
 
 Una **subconsulta** es un `SELECT` anidado dentro de otro.
@@ -123,7 +236,7 @@ WHERE id_cliente NOT IN (
 ```
 
 ::: {.fragment}
-**Interpretación de negocio**: Lista de clientes para una campaña de reactivación.
+**Interpretación de negocio**: Lista de clientes para una campaña de reactivación de María.
 :::
 
 ---
@@ -132,7 +245,7 @@ WHERE id_cliente NOT IN (
 
 ```sql
 -- Ticket promedio solo de los clientes con más de 2 pedidos
-SELECT AVG(cliente_total.total_pedidos) AS ticket_alto
+SELECT AVG(cliente_total.total_pedidos) AS ticket_clientes_frecuentes
 FROM (
     SELECT c.id_cliente,
            SUM(p.total) AS total_pedidos
@@ -145,7 +258,32 @@ FROM (
 ```
 
 ::: {.fragment}
-La subconsulta actúa como una **tabla virtual** que la consulta exterior puede consultar.
+La subconsulta actúa como una **tabla virtual** que la consulta exterior puede consultar. Muy útil para cálculos en dos pasos.
+:::
+
+---
+
+## Aplicación: Subconsulta para Productos Estrella
+
+```sql
+-- Productos cuyas ventas superan el promedio de ventas por producto
+SELECT pr.nombre, SUM(oi.cantidad) AS unidades_vendidas
+FROM order_items oi
+INNER JOIN productos pr ON oi.id_producto = pr.id_producto
+GROUP BY pr.id_producto, pr.nombre
+HAVING SUM(oi.cantidad) > (
+    SELECT AVG(ventas_por_producto)
+    FROM (
+        SELECT SUM(cantidad) AS ventas_por_producto
+        FROM order_items
+        GROUP BY id_producto
+    ) AS promedios
+)
+ORDER BY unidades_vendidas DESC;
+```
+
+::: {.fragment}
+**Resultado**: La lista de "productos estrella" que María debería priorizar en su campaña.
 :::
 
 ---
@@ -168,6 +306,7 @@ La subconsulta actúa como una **tabla virtual** que la consulta exterior puede 
 
 ::: {.incremental}
 - Escribir consultas con `JOIN` y `GROUP BY` para responder preguntas de negocio.
+- Usar `HAVING` para filtrar los grupos que cumplen cierta condición.
 - Interpretar los resultados como un analista que reporta a la gerencia.
 :::
 
@@ -199,6 +338,31 @@ La subconsulta actúa como una **tabla virtual** que la consulta exterior puede 
 - **La diferencia entre un analista junior y uno senior no es cuántas funciones conoce, sino qué preguntas sabe hacer.**
 :::
 
+---
+
+## Puntos Clave
+
+::: {.incremental}
+- Las **funciones de agregación** resumen datos: `COUNT`, `SUM`, `AVG`, `MAX`, `MIN`.
+- **GROUP BY** agrupa filas por el valor de una o más columnas — toda columna en SELECT que no sea función de agregación debe estar en GROUP BY.
+- **WHERE** filtra filas antes de agrupar. **HAVING** filtra grupos después de agrupar.
+- Las **subconsultas** permiten cálculos en dos pasos: una consulta interior que alimenta a la exterior.
+- Cada KPI del CMI tiene ahora una consulta SQL directa desde la base de datos.
+:::
+
+---
+
+## Preview del Laboratorio W14
+
+**Lab W14: Consultas analíticas con GROUP BY y subconsultas**
+
+::: {.incremental}
+- Resolver 10 consultas analíticas usando GROUP BY, HAVING y funciones de agregación.
+- Al menos 2 consultas deben usar subconsultas (en WHERE o en FROM).
+- Cada consulta debe interpretarse como un reporte ejecutivo para la gerencia de TechStyle.
+- Documentar el resultado de cada consulta con una conclusión de negocio (1 oración).
+:::
+
 ::: {.fragment}
-**Próxima semana (W15)**: ¿Cómo protegemos la integridad de los datos cuando múltiples operaciones deben ejecutarse como una unidad? → Transacciones ACID.
+**Para la próxima semana (W15)**: ¿Cómo protegemos la integridad cuando múltiples operaciones deben ejecutarse juntas? → **Transacciones ACID**.
 :::

@@ -163,7 +163,7 @@ Universidad San Sebastián
 <li class="fragment">Las <strong>llaves</strong> garantizan la integridad de los datos.</li>
 </ul>
 <div class="fragment">
-<p><strong>Inventado por Edgar Codd (IBM, 1970)</strong> — fundamento de toda base de datos relacional moderna.</p>
+<p><strong>Inventado por Edgar Codd (IBM, 1970)</strong> — fundamento de toda base de datos relacional moderna. Antes de Codd, los datos se almacenaban en estructuras jerárquicas o de red, mucho más difíciles de consultar.</p>
 </div>
 </section>
 <section id="conceptos-del-modelo-relacional" class="slide level2">
@@ -203,11 +203,71 @@ Universidad San Sebastián
 </tbody>
 </table>
 </section>
+<section id="aplicación-conceptos-del-modelo-relacional-en-techstyle" class="slide level2">
+<h2>Aplicación: Conceptos del Modelo Relacional en TechStyle</h2>
+<p><strong>Identificando cada concepto en la tabla <code>pedidos</code></strong>:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Concepto</th>
+<th>En <code>pedidos</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Tabla</td>
+<td>La tabla <code>pedidos</code></td>
+</tr>
+<tr class="even">
+<td>Fila</td>
+<td><code>(1, 2026-03-10, 85000, 'entregado', 3, 2)</code></td>
+</tr>
+<tr class="odd">
+<td>Columna</td>
+<td><code>fecha_pedido</code>, <code>total</code>, <code>estado</code></td>
+</tr>
+<tr class="even">
+<td>Dominio de <code>estado</code></td>
+<td>Solo acepta: ‘pendiente’, ‘en camino’, ‘entregado’, ‘cancelado’</td>
+</tr>
+<tr class="odd">
+<td>PK</td>
+<td><code>id_pedido</code> — identifica cada pedido de forma única</td>
+</tr>
+<tr class="even">
+<td>FK</td>
+<td><code>id_cliente</code> → referencia a <code>clientes.id_cliente</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="verificación-pk-o-fk" class="slide level2">
+<h2>Verificación: ¿PK o FK?</h2>
+<p><strong>Clasifica cada elemento como PK o FK:</strong></p>
+<ol type="1">
+<li class="fragment"><code>id_producto</code> en la tabla <code>productos</code> → <strong>PK</strong> (identifica cada producto)</li>
+<li class="fragment"><code>id_producto</code> en la tabla <code>order_items</code> → <strong>FK</strong> (referencia a <code>productos</code>)</li>
+<li class="fragment"><code>id_pedido</code> en la tabla <code>pedidos</code> → <strong>PK</strong></li>
+<li class="fragment"><code>id_pedido</code> en la tabla <code>devoluciones</code> → <strong>FK</strong> (referencia a <code>pedidos</code>)</li>
+<li class="fragment"><code>id_zona</code> en la tabla <code>repartidores</code> → <strong>FK</strong> (referencia a <code>zonas</code>)</li>
+</ol>
+</section>
 <section id="reglas-de-transformación-er-relacional" class="slide level2">
 <h2>Reglas de Transformación ER → Relacional</h2>
 <p><strong>Regla 1: Entidad → Tabla</strong> - Cada entidad del ER se convierte en una tabla. - Los atributos de la entidad se convierten en columnas. - El identificador único se convierte en la PK.</p>
 <p><strong>Regla 2: Relación 1:N → Llave Foránea</strong> - La FK se agrega en la tabla del lado N. - Ejemplo: <code>id_cliente</code> (FK) en la tabla <code>Pedidos</code>.</p>
 <p><strong>Regla 3: Relación N:M → Tabla Intermedia</strong> - Se crea una tabla nueva con las PK de ambas entidades como FK. - Puede agregar atributos propios de la relación.</p>
+</section>
+<section id="aplicación-las-3-reglas-en-techstyle" class="slide level2">
+<h2>Aplicación: Las 3 Reglas en TechStyle</h2>
+<p><code>[IMAGE/DIAGRAM PLACEHOLDER: Diagrama de transformación ER → Relacional en 3 pasos — Paso 1: entidad "Cliente" con óvalo → tabla "clientes" con columnas; Paso 2: relación "1 Cliente ──── N Pedidos" → FK id_cliente en tabla pedidos; Paso 3: relación N:M "Pedido ←→ Producto" → tabla intermedia "order_items" con id_pedido + id_producto + cantidad + precio_unitario. Flechas de transformación entre cada paso.]</code></p>
+<div class="fragment">
+<p><em>Cada regla de transformación tiene una justificación matemática en la teoría relacional de Codd: garantizar que cada dato tenga un lugar único y bien definido.</em></p>
+</div>
 </section>
 <section id="transformación-techstyle-paso-a-paso" class="slide level2">
 <h2>Transformación TechStyle: Paso a Paso</h2>
@@ -218,7 +278,8 @@ Universidad San Sebastián
 <p><strong>Entidad <code>Producto</code></strong>:</p>
 <pre><code>productos(id_producto PK, nombre, categoria, precio, stock)</code></pre>
 <p><strong>Tabla Intermedia <code>OrderItem</code></strong> (N:M entre Pedido y Producto):</p>
-<pre><code>order_items(id_item PK, id_pedido FK→pedidos, id_producto FK→productos, cantidad, precio_unitario)</code></pre>
+<pre><code>order_items(id_item PK, id_pedido FK→pedidos, id_producto FK→productos,
+            cantidad, precio_unitario)</code></pre>
 </section>
 <section id="continuación-repartidor-zona-y-devolución" class="slide level2">
 <h2>Continuación: Repartidor, Zona y Devolución</h2>
@@ -241,8 +302,27 @@ Universidad San Sebastián
 <li class="fragment">Esto se llama <strong>restricción de integridad referencial</strong> y la base de datos la hace cumplir automáticamente.</li>
 </ul>
 <div class="fragment">
-<p><strong>¿Por qué importa?</strong>: Sin integridad referencial, el CMI puede mostrar ventas de “clientes fantasma”.</p>
+<p><strong>¿Por qué importa?</strong>: Sin integridad referencial, el CMI puede mostrar ventas de “clientes fantasma” con <code>id_cliente = 999</code> que nunca existió.</p>
 </div>
+</section>
+<section id="aplicación-integridad-referencial-en-techstyle" class="slide level2">
+<h2>Aplicación: Integridad Referencial en TechStyle</h2>
+<p><strong>¿Qué pasa si TechStyle viola la integridad referencial?</strong></p>
+<ul>
+<li class="fragment"><strong>Escenario 1</strong>: Se elimina el cliente Ana pero sus pedidos quedan en la base de datos → 15.000 pedidos “huérfanos” sin cliente → el CMI muestra ventas sin región → imposible calcular ventas por zona.</li>
+<li class="fragment"><strong>Escenario 2</strong>: Se inserta un repartidor con <code>id_zona = 99</code> que no existe → el repartidor no tiene zona → imposible calcular métricas de entrega por zona.</li>
+<li class="fragment"><strong>Escenario 3</strong>: Se elimina un producto que ya está en pedidos históricos → se pierden registros de ventas → el CMI pierde datos históricos.</li>
+</ul>
+</section>
+<section id="verificación-viola-la-integridad-referencial" class="slide level2">
+<h2>Verificación: ¿Viola la Integridad Referencial?</h2>
+<p><strong>¿Cuáles de estas operaciones violan la integridad referencial?</strong></p>
+<ol type="1">
+<li class="fragment">Insertar un pedido con <code>id_cliente = 5</code> cuando el cliente 5 existe → <strong>No viola</strong></li>
+<li class="fragment">Insertar un <code>order_item</code> con <code>id_pedido = 999</code> cuando el pedido 999 no existe → <strong>Viola</strong> (FK inválida)</li>
+<li class="fragment">Eliminar la zona <code>id_zona = 3</code> cuando hay repartidores que la referencian → <strong>Viola</strong> (eliminaría referencias)</li>
+<li class="fragment">Actualizar el <code>id_cliente</code> de 2 a 7 en <code>clientes</code> cuando hay pedidos referenciando el 2 → <strong>Viola</strong> (FK quedaría apuntando a una PK que cambió)</li>
+</ol>
 </section>
 <section id="ética-en-el-diseño-relacional" class="slide level2">
 <h2>Ética en el Diseño Relacional</h2>
@@ -253,7 +333,7 @@ Universidad San Sebastián
 <li class="fragment"><strong>Principio de mínimo privilegio</strong>: Cada actor accede solo a los datos que necesita para su función.</li>
 </ul>
 <div class="fragment">
-<p><strong>Responsabilidad del diseñador</strong>: El modelo relacional define qué datos se guardan y cómo se protegen.</p>
+<p><strong>Responsabilidad del diseñador</strong>: El modelo relacional define qué datos se guardan y cómo se protegen. El diseño es una decisión ética, no solo técnica.</p>
 </div>
 </section>
 <section id="verificación-mi-modelo-relacional-es-correcto" class="slide level2">
@@ -262,11 +342,29 @@ Universidad San Sebastián
 <ul class="task-list">
 <li class="fragment"><label><input type="checkbox">Cada entidad del ER tiene su tabla correspondiente.</label></li>
 <li class="fragment"><label><input type="checkbox">Cada tabla tiene una PK definida.</label></li>
-<li class="fragment"><label><input type="checkbox">Cada relación 1:N tiene una FK en la tabla correcta.</label></li>
+<li class="fragment"><label><input type="checkbox">Cada relación 1:N tiene una FK en la tabla correcta (lado N).</label></li>
 <li class="fragment"><label><input type="checkbox">Cada relación N:M tiene su tabla intermedia.</label></li>
 <li class="fragment"><label><input type="checkbox">No hay datos repetidos en columnas múltiples (ejemplo: <code>producto1</code>, <code>producto2</code>).</label></li>
 <li class="fragment"><label><input type="checkbox">Ninguna columna tiene valores compuestos (ejemplo: <code>"nombre apellido"</code> en un solo campo).</label></li>
+<li class="fragment"><label><input type="checkbox">Todas las FK apuntan a PK existentes.</label></li>
 </ul>
+</section>
+<section id="el-modelo-relacional-completo-de-techstyle" class="slide level2">
+<h2>El Modelo Relacional Completo de TechStyle</h2>
+<p><code>[IMAGE/DIAGRAM PLACEHOLDER: Diagrama de modelo relacional completo de TechStyle con notación de tabla (rectángulos con columnas) — tablas: zonas, clientes, repartidores, productos, pedidos, order_items, devoluciones. Flechas de FK mostrando las relaciones entre tablas. PK resaltada en negrita o con ícono de llave. FK con ícono de llave diferente o en cursiva. Tablas ordenadas de izquierda a derecha respetando dependencias: zonas → repartidores → pedidos → order_items → devoluciones; clientes → pedidos; productos → order_items.]</code></p>
+</section>
+<section id="conexión-con-la-toma-de-decisiones" class="slide level2">
+<h2>Conexión con la Toma de Decisiones</h2>
+<ul>
+<li class="fragment">El modelo relacional completo de TechStyle permite responder: ¿Cuánto vendió cada repartidor por zona en el último trimestre?</li>
+<li class="fragment">Sin la FK correcta entre <code>pedidos</code> y <code>repartidores</code>, esa consulta es imposible.</li>
+<li class="fragment"><strong>La calidad del modelo relacional determina la calidad de las decisiones que se pueden tomar</strong>.</li>
+</ul>
+<div class="fragment">
+<blockquote>
+<p>“Roberto no puede preguntarle al sistema lo que el sistema no fue diseñado para guardar.”</p>
+</blockquote>
+</div>
 </section>
 <section id="actividad-control-parcial-2" class="slide level2">
 <h2>Actividad: Control Parcial 2</h2>
@@ -283,24 +381,28 @@ Universidad San Sebastián
 <p><strong>Ponderación</strong>: Parte de controles parciales (10% de Solemne 2).</p>
 </div>
 </section>
-<section id="conexión-con-la-toma-de-decisiones" class="slide level2">
-<h2>Conexión con la Toma de Decisiones</h2>
+<section id="puntos-clave" class="slide level2">
+<h2>Puntos Clave</h2>
 <ul>
-<li class="fragment">El modelo relacional completo de TechStyle permite responder: ¿Cuánto vendió cada repartidor por zona en el último trimestre?</li>
-<li class="fragment">Sin la FK correcta entre <code>pedidos</code> y <code>repartidores</code>, esa consulta es imposible.</li>
-<li class="fragment"><strong>La calidad del modelo relacional determina la calidad de las decisiones que se pueden tomar</strong>.</li>
+<li class="fragment">El <strong>Modelo Relacional</strong> transforma el diagrama ER en tablas con PK, FK y restricciones de integridad.</li>
+<li class="fragment">Las 3 reglas de transformación: <strong>entidad → tabla</strong>, <strong>1:N → FK en lado N</strong>, <strong>N:M → tabla intermedia</strong>.</li>
+<li class="fragment">La <strong>integridad referencial</strong> garantiza que las FK siempre apunten a PK válidas — la base de datos lo hace cumplir automáticamente.</li>
+<li class="fragment">El <strong>dominio</strong> de cada atributo restringe los valores aceptables (un estado solo puede ser ‘pendiente’, ‘entregado’, etc.).</li>
+<li class="fragment">Un modelo relacional bien diseñado es la base de todas las consultas analíticas que alimentarán el CMI.</li>
 </ul>
 </section>
-<section id="para-el-laboratorio-de-hoy" class="slide level2">
-<h2>Para el Laboratorio de Hoy</h2>
-<p><strong>Lab 8</strong>: Modelo relacional completo de TechStyle en draw.io o Excel.</p>
+<section id="preview-del-laboratorio-w07" class="slide level2">
+<h2>Preview del Laboratorio W07</h2>
+<p><strong>Lab W07: Modelo Relacional completo de TechStyle en draw.io</strong></p>
 <ul>
-<li>Transformar el ER de la semana 7 al modelo relacional.</li>
-<li>Definir PK y FK para cada tabla.</li>
-<li>Documentar el dominio de cada atributo principal.</li>
+<li class="fragment">Transformar el diagrama ER de la semana 6 al modelo relacional.</li>
+<li class="fragment">Definir PK y FK para cada tabla con notación formal.</li>
+<li class="fragment">Documentar el dominio de cada atributo principal.</li>
+<li class="fragment">Verificar integridad referencial: ¿hay alguna FK que apunte a una PK que podría no existir?</li>
+<li class="fragment">Entregable: Diagrama del modelo relacional + tabla de atributos con dominio.</li>
 </ul>
 <div class="fragment">
-<p><strong>Para la próxima semana</strong>: Preparar y defender el diseño completo (Caso de Uso + UML + ER + Relacional) para la Solemne 2.</p>
+<p><strong>Para la próxima semana (W08)</strong>: Presentar y defender el diseño completo (Caso de Uso + UML + ER + Relacional) → <strong>Solemne 2</strong>.</p>
 </div>
 
 

@@ -1,5 +1,5 @@
 ---
-title: "Laboratorio 6: Diagrama de Caso de Uso en draw.io"
+title: "Laboratorio 4: Diagrama de Caso de Uso en draw.io"
 subtitle: "Semana 4 · W04 · Unidad 2 · Big Data y Analytics · Universidad San Sebastián"
 format:
   html:

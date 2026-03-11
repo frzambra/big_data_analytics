@@ -236,6 +236,19 @@ Universidad San Sebastián
 <p>→ El pedido existe, pero el stock no fue descontado. El mismo producto puede venderse dos veces.</p>
 </div>
 </section>
+<section id="aplicación-consecuencias-del-fallo-en-techstyle" class="slide level2">
+<h2>Aplicación: Consecuencias del Fallo en TechStyle</h2>
+<p><strong>Impacto en cadena de un fallo a mitad de operación</strong>:</p>
+<ul>
+<li class="fragment"><strong>Operativo</strong>: El mismo par de zapatillas (stock = 1) aparece como disponible para 2 clientes.</li>
+<li class="fragment"><strong>Logístico</strong>: Sofía recibe 2 órdenes de entrega para el mismo producto en stock 0.</li>
+<li class="fragment"><strong>Financiero</strong>: TechStyle debe compensar a un cliente → pérdida directa + daño reputacional.</li>
+<li class="fragment"><strong>CMI</strong>: El KPI “stock disponible” muestra datos incorrectos → Roberto no puede tomar decisiones de reabastecimiento.</li>
+</ul>
+<div class="fragment">
+<p><strong>La solución</strong>: Transacciones que garantizan que todo ocurre o nada ocurre.</p>
+</div>
+</section>
 <section id="qué-es-una-transacción" class="slide level2">
 <h2>¿Qué es una Transacción?</h2>
 <ul>
@@ -282,6 +295,26 @@ Universidad San Sebastián
 <div class="fragment">
 <p><strong>ACID = la garantía de que los datos de TechStyle siempre son confiables.</strong></p>
 </div>
+</section>
+<section id="aplicación-acid-en-techstyle" class="slide level2">
+<h2>Aplicación: ACID en TechStyle</h2>
+<p><strong>¿Qué garantiza cada propiedad en el registro de un pedido?</strong></p>
+<ul>
+<li class="fragment"><strong>Atomicidad</strong>: Si el descuento de stock falla, el pedido tampoco se registra. Todo o nada.</li>
+<li class="fragment"><strong>Consistencia</strong>: Antes y después de la transacción, <code>stock &gt;= 0</code> y el total del pedido = suma de ítems.</li>
+<li class="fragment"><strong>Aislamiento</strong>: Si dos clientes compran el último producto simultáneamente, solo uno tiene éxito.</li>
+<li class="fragment"><strong>Durabilidad</strong>: Una vez que la transacción hace COMMIT, el pedido persiste aunque el servidor se caiga en los próximos 5 segundos.</li>
+</ul>
+</section>
+<section id="verificación-qué-propiedad-acid-garantiza-esto" class="slide level2">
+<h2>Verificación: ¿Qué Propiedad ACID Garantiza Esto?</h2>
+<p><strong>Clasifica cada garantía:</strong></p>
+<ol type="1">
+<li class="fragment">“Si el servidor se reinicia después de un COMMIT, los datos no se pierden” → <strong>Durabilidad</strong></li>
+<li class="fragment">“Dos repartidores no pueden tomar el mismo pedido al mismo tiempo” → <strong>Aislamiento</strong></li>
+<li class="fragment">“Si falla el descuento de stock, el pedido tampoco se guarda” → <strong>Atomicidad</strong></li>
+<li class="fragment">“Después de cualquier transacción, todas las FK siguen siendo válidas” → <strong>Consistencia</strong></li>
+</ol>
 </section>
 <section id="comandos-de-gestión-de-transacciones" class="slide level2">
 <h2>Comandos de Gestión de Transacciones</h2>
@@ -342,65 +375,98 @@ Universidad San Sebastián
 <span id="cb1-18"><a></a><span class="co">-- Si todo salió bien, confirmar</span></span>
 <span id="cb1-19"><a></a><span class="kw">COMMIT</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="transacción-con-rollback-simulando-un-fallo" class="slide level2">
-<h2>Transacción con ROLLBACK: Simulando un Fallo</h2>
+<section id="aplicación-transacción-con-verificación-de-stock" class="slide level2">
+<h2>Aplicación: Transacción con Verificación de Stock</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a></a><span class="kw">START</span> <span class="kw">TRANSACTION</span>;</span>
 <span id="cb2-2"><a></a></span>
-<span id="cb2-3"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> pedidos (fecha_pedido, total, estado, id_cliente)</span>
-<span id="cb2-4"><a></a><span class="kw">VALUES</span> (CURDATE(), <span class="fl">45000.00</span>, <span class="st">'pendiente'</span>, <span class="dv">1</span>);</span>
-<span id="cb2-5"><a></a></span>
-<span id="cb2-6"><a></a><span class="kw">SET</span> @id_pedido <span class="op">=</span> LAST_INSERT_ID();</span>
-<span id="cb2-7"><a></a></span>
-<span id="cb2-8"><a></a><span class="co">-- Verificar que el producto tiene stock suficiente</span></span>
-<span id="cb2-9"><a></a><span class="kw">SELECT</span> stock <span class="kw">INTO</span> @stock_actual <span class="kw">FROM</span> productos <span class="kw">WHERE</span> id_producto <span class="op">=</span> <span class="dv">1</span>;</span>
-<span id="cb2-10"><a></a></span>
-<span id="cb2-11"><a></a><span class="co">-- Si no hay stock, cancelar toda la operación</span></span>
-<span id="cb2-12"><a></a><span class="co">-- (en una aplicación real, esto lo maneja el lenguaje de programación)</span></span>
-<span id="cb2-13"><a></a><span class="co">-- Para demostración, hacemos ROLLBACK manual:</span></span>
-<span id="cb2-14"><a></a><span class="kw">ROLLBACK</span>;</span>
-<span id="cb2-15"><a></a></span>
-<span id="cb2-16"><a></a><span class="co">-- Verificar: el pedido NO debe haberse registrado</span></span>
-<span id="cb2-17"><a></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> pedidos <span class="kw">WHERE</span> id_pedido <span class="op">=</span> @id_pedido;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-3"><a></a><span class="co">-- Verificar stock antes de registrar</span></span>
+<span id="cb2-4"><a></a><span class="kw">SELECT</span> stock <span class="kw">INTO</span> @stock_actual</span>
+<span id="cb2-5"><a></a><span class="kw">FROM</span> productos <span class="kw">WHERE</span> id_producto <span class="op">=</span> <span class="dv">1</span>;</span>
+<span id="cb2-6"><a></a></span>
+<span id="cb2-7"><a></a><span class="co">-- Si hay stock insuficiente, cancelar</span></span>
+<span id="cb2-8"><a></a><span class="co">-- (En una aplicación real, la lógica de IF/ELSE la maneja el código de la app)</span></span>
+<span id="cb2-9"><a></a><span class="co">-- Para demostración con stock suficiente:</span></span>
+<span id="cb2-10"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> pedidos (fecha_pedido, total, estado, id_cliente)</span>
+<span id="cb2-11"><a></a><span class="kw">VALUES</span> (CURDATE(), <span class="fl">45000.00</span>, <span class="st">'pendiente'</span>, <span class="dv">1</span>);</span>
+<span id="cb2-12"><a></a></span>
+<span id="cb2-13"><a></a><span class="kw">SET</span> @id_pedido <span class="op">=</span> LAST_INSERT_ID();</span>
+<span id="cb2-14"><a></a></span>
+<span id="cb2-15"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> order_items (id_pedido, id_producto, cantidad, precio_unitario)</span>
+<span id="cb2-16"><a></a><span class="kw">VALUES</span> (@id_pedido, <span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">45000.00</span>);</span>
+<span id="cb2-17"><a></a></span>
+<span id="cb2-18"><a></a><span class="kw">UPDATE</span> productos <span class="kw">SET</span> stock <span class="op">=</span> stock <span class="op">-</span> <span class="dv">1</span> <span class="kw">WHERE</span> id_producto <span class="op">=</span> <span class="dv">1</span>;</span>
+<span id="cb2-19"><a></a></span>
+<span id="cb2-20"><a></a><span class="kw">COMMIT</span>; <span class="co">-- Todo exitoso</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="transacción-con-rollback-simulando-un-fallo" class="slide level2">
+<h2>Transacción con ROLLBACK: Simulando un Fallo</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a></a><span class="kw">START</span> <span class="kw">TRANSACTION</span>;</span>
+<span id="cb3-2"><a></a></span>
+<span id="cb3-3"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> pedidos (fecha_pedido, total, estado, id_cliente)</span>
+<span id="cb3-4"><a></a><span class="kw">VALUES</span> (CURDATE(), <span class="fl">45000.00</span>, <span class="st">'pendiente'</span>, <span class="dv">1</span>);</span>
+<span id="cb3-5"><a></a></span>
+<span id="cb3-6"><a></a><span class="kw">SET</span> @id_pedido <span class="op">=</span> LAST_INSERT_ID();</span>
+<span id="cb3-7"><a></a></span>
+<span id="cb3-8"><a></a><span class="co">-- Simular que el pago falla → deshacer todo</span></span>
+<span id="cb3-9"><a></a><span class="kw">ROLLBACK</span>;</span>
+<span id="cb3-10"><a></a></span>
+<span id="cb3-11"><a></a><span class="co">-- Verificar: el pedido NO debe haberse registrado</span></span>
+<span id="cb3-12"><a></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> pedidos <span class="kw">ORDER</span> <span class="kw">BY</span> id_pedido <span class="kw">DESC</span> <span class="kw">LIMIT</span> <span class="dv">1</span>;</span>
+<span id="cb3-13"><a></a><span class="co">-- El último pedido en la tabla NO es el que acabamos de intentar insertar</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><strong>El ROLLBACK restaura la base de datos exactamente al estado anterior al START TRANSACTION.</strong></p>
+</div>
 </section>
 <section id="transacción-2-cancelación-de-pedido-con-reembolso-de-stock" class="slide level2">
 <h2>Transacción 2: Cancelación de Pedido con Reembolso de Stock</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a></a><span class="kw">START</span> <span class="kw">TRANSACTION</span>;</span>
-<span id="cb3-2"><a></a></span>
-<span id="cb3-3"><a></a><span class="co">-- Cambiar estado del pedido a 'cancelado'</span></span>
-<span id="cb3-4"><a></a><span class="kw">UPDATE</span> pedidos</span>
-<span id="cb3-5"><a></a><span class="kw">SET</span> estado <span class="op">=</span> <span class="st">'cancelado'</span></span>
-<span id="cb3-6"><a></a><span class="kw">WHERE</span> id_pedido <span class="op">=</span> <span class="dv">5</span>;</span>
-<span id="cb3-7"><a></a></span>
-<span id="cb3-8"><a></a><span class="co">-- Devolver el stock de todos los ítems del pedido</span></span>
-<span id="cb3-9"><a></a><span class="kw">UPDATE</span> productos pr</span>
-<span id="cb3-10"><a></a><span class="kw">INNER</span> <span class="kw">JOIN</span> order_items oi <span class="kw">ON</span> pr.id_producto <span class="op">=</span> oi.id_producto</span>
-<span id="cb3-11"><a></a><span class="kw">SET</span> pr.stock <span class="op">=</span> pr.stock <span class="op">+</span> oi.cantidad</span>
-<span id="cb3-12"><a></a><span class="kw">WHERE</span> oi.id_pedido <span class="op">=</span> <span class="dv">5</span>;</span>
-<span id="cb3-13"><a></a></span>
-<span id="cb3-14"><a></a><span class="co">-- Registrar la devolución</span></span>
-<span id="cb3-15"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> devoluciones (fecha, motivo, monto, id_pedido)</span>
-<span id="cb3-16"><a></a><span class="kw">VALUES</span> (CURDATE(), <span class="st">'Cancelación solicitada por cliente'</span>, <span class="fl">85000.00</span>, <span class="dv">5</span>);</span>
-<span id="cb3-17"><a></a></span>
-<span id="cb3-18"><a></a><span class="kw">COMMIT</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a></a><span class="kw">START</span> <span class="kw">TRANSACTION</span>;</span>
+<span id="cb4-2"><a></a></span>
+<span id="cb4-3"><a></a><span class="co">-- Cambiar estado del pedido a 'cancelado'</span></span>
+<span id="cb4-4"><a></a><span class="kw">UPDATE</span> pedidos</span>
+<span id="cb4-5"><a></a><span class="kw">SET</span> estado <span class="op">=</span> <span class="st">'cancelado'</span></span>
+<span id="cb4-6"><a></a><span class="kw">WHERE</span> id_pedido <span class="op">=</span> <span class="dv">5</span>;</span>
+<span id="cb4-7"><a></a></span>
+<span id="cb4-8"><a></a><span class="co">-- Devolver el stock de todos los ítems del pedido</span></span>
+<span id="cb4-9"><a></a><span class="kw">UPDATE</span> productos pr</span>
+<span id="cb4-10"><a></a><span class="kw">INNER</span> <span class="kw">JOIN</span> order_items oi <span class="kw">ON</span> pr.id_producto <span class="op">=</span> oi.id_producto</span>
+<span id="cb4-11"><a></a><span class="kw">SET</span> pr.stock <span class="op">=</span> pr.stock <span class="op">+</span> oi.cantidad</span>
+<span id="cb4-12"><a></a><span class="kw">WHERE</span> oi.id_pedido <span class="op">=</span> <span class="dv">5</span>;</span>
+<span id="cb4-13"><a></a></span>
+<span id="cb4-14"><a></a><span class="co">-- Registrar la devolución</span></span>
+<span id="cb4-15"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> devoluciones (fecha, motivo, monto, id_pedido)</span>
+<span id="cb4-16"><a></a><span class="kw">VALUES</span> (CURDATE(), <span class="st">'Cancelación solicitada por cliente'</span>, <span class="fl">85000.00</span>, <span class="dv">5</span>);</span>
+<span id="cb4-17"><a></a></span>
+<span id="cb4-18"><a></a><span class="kw">COMMIT</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="savepoint-puntos-de-control-intermedios" class="slide level2">
 <h2>SAVEPOINT: Puntos de Control Intermedios</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a></a><span class="kw">START</span> <span class="kw">TRANSACTION</span>;</span>
-<span id="cb4-2"><a></a></span>
-<span id="cb4-3"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> pedidos (<span class="op">..</span>.) <span class="kw">VALUES</span> (<span class="op">..</span>.);</span>
-<span id="cb4-4"><a></a><span class="kw">SAVEPOINT</span> despues_de_pedido;</span>
-<span id="cb4-5"><a></a></span>
-<span id="cb4-6"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> order_items (<span class="op">..</span>.) <span class="kw">VALUES</span> (<span class="op">..</span>.);</span>
-<span id="cb4-7"><a></a><span class="kw">SAVEPOINT</span> despues_de_items;</span>
-<span id="cb4-8"><a></a></span>
-<span id="cb4-9"><a></a><span class="co">-- Si falla el descuento de stock, volver solo a este punto</span></span>
-<span id="cb4-10"><a></a><span class="kw">UPDATE</span> productos <span class="kw">SET</span> stock <span class="op">=</span> stock <span class="op">-</span> <span class="dv">1</span> <span class="kw">WHERE</span> id_producto <span class="op">=</span> <span class="dv">1</span>;</span>
-<span id="cb4-11"><a></a></span>
-<span id="cb4-12"><a></a><span class="co">-- Si detectamos un problema aquí:</span></span>
-<span id="cb4-13"><a></a><span class="kw">ROLLBACK</span> <span class="kw">TO</span> <span class="kw">SAVEPOINT</span> despues_de_items;</span>
-<span id="cb4-14"><a></a><span class="co">-- Solo se deshace lo que vino después de ese savepoint</span></span>
-<span id="cb4-15"><a></a></span>
-<span id="cb4-16"><a></a><span class="kw">COMMIT</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a></a><span class="kw">START</span> <span class="kw">TRANSACTION</span>;</span>
+<span id="cb5-2"><a></a></span>
+<span id="cb5-3"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> pedidos (<span class="op">..</span>.) <span class="kw">VALUES</span> (<span class="op">..</span>.);</span>
+<span id="cb5-4"><a></a><span class="kw">SAVEPOINT</span> despues_de_pedido;</span>
+<span id="cb5-5"><a></a></span>
+<span id="cb5-6"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> order_items (<span class="op">..</span>.) <span class="kw">VALUES</span> (<span class="op">..</span>.);</span>
+<span id="cb5-7"><a></a><span class="kw">SAVEPOINT</span> despues_de_items;</span>
+<span id="cb5-8"><a></a></span>
+<span id="cb5-9"><a></a><span class="co">-- Si falla el descuento de stock, volver solo al segundo savepoint</span></span>
+<span id="cb5-10"><a></a><span class="kw">UPDATE</span> productos <span class="kw">SET</span> stock <span class="op">=</span> stock <span class="op">-</span> <span class="dv">1</span> <span class="kw">WHERE</span> id_producto <span class="op">=</span> <span class="dv">1</span>;</span>
+<span id="cb5-11"><a></a></span>
+<span id="cb5-12"><a></a><span class="co">-- Si detectamos un problema en el stock:</span></span>
+<span id="cb5-13"><a></a><span class="kw">ROLLBACK</span> <span class="kw">TO</span> <span class="kw">SAVEPOINT</span> despues_de_items;</span>
+<span id="cb5-14"><a></a><span class="co">-- Solo se deshace lo que vino después de ese savepoint</span></span>
+<span id="cb5-15"><a></a></span>
+<span id="cb5-16"><a></a><span class="co">-- Si todo está bien al final:</span></span>
+<span id="cb5-17"><a></a><span class="kw">COMMIT</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="verificación-cuándo-hacer-commit-o-rollback" class="slide level2">
+<h2>Verificación: ¿Cuándo Hacer COMMIT o ROLLBACK?</h2>
+<p><strong>Para cada escenario, ¿COMMIT o ROLLBACK?</strong></p>
+<ol type="1">
+<li class="fragment">Se registró el pedido, se descontó el stock, el pago fue aprobado → <strong>COMMIT</strong></li>
+<li class="fragment">Se registró el pedido, pero la actualización de stock falló por stock insuficiente → <strong>ROLLBACK</strong></li>
+<li class="fragment">Todos los pasos del pedido exitosos, pero la notificación al cliente falló (función externa) → <strong>COMMIT</strong> (la notificación es externa, no parte de la transacción BD)</li>
+<li class="fragment">A mitad del proceso, el servidor MySQL se reinicia → <strong>ROLLBACK automático</strong> (transacción incompleta se deshace al reiniciar)</li>
+</ol>
 </section>
 <section id="por-qué-las-transacciones-son-críticas-para-techstyle" class="slide level2">
 <h2>¿Por Qué las Transacciones son Críticas para TechStyle?</h2>
@@ -409,6 +475,11 @@ Universidad San Sebastián
 <li class="fragment"><strong>Con transacciones ACID</strong>: Si algo falla, la base de datos vuelve al estado anterior automáticamente.</li>
 <li class="fragment"><strong>Impacto en el CMI</strong>: Los datos del CMI son confiables porque cada operación es atómica.</li>
 </ul>
+<div class="fragment">
+<blockquote>
+<p>“Las transacciones no son una característica avanzada — son la fundación de la confiabilidad de cualquier sistema que maneja dinero.”</p>
+</blockquote>
+</div>
 </section>
 <section id="actividad-implementar-transacciones-para-techstyle" class="slide level2">
 <h2>Actividad: Implementar Transacciones para TechStyle</h2>
@@ -420,12 +491,12 @@ Universidad San Sebastián
 <li class="fragment">Simular un fallo en cada una y verificar el ROLLBACK.</li>
 </ol>
 </section>
-<section id="evaluación-formativa" class="slide level2">
-<h2>Evaluación Formativa</h2>
-<p><strong>Preguntas de reflexión</strong> (discutir en parejas):</p>
+<section id="preguntas-de-reflexión" class="slide level2">
+<h2>Preguntas de Reflexión</h2>
+<p><strong>Discutir en parejas</strong>:</p>
 <ul>
 <li class="fragment">¿En qué operaciones de TechStyle es indispensable usar transacciones?</li>
-<li class="fragment">¿Qué podría ocurrir si dos repartidores intentan tomar el mismo pedido simultáneamente? ¿Cómo lo resolvería una transacción?</li>
+<li class="fragment">¿Qué podría ocurrir si dos repartidores intentan tomar el mismo pedido simultáneamente? ¿Cómo lo resolvería una transacción? (Propiedad: <strong>Aislamiento</strong>)</li>
 <li class="fragment">¿Por qué la propiedad de <strong>Durabilidad</strong> es especialmente importante en un e-commerce que opera 24/7?</li>
 </ul>
 </section>
@@ -437,16 +508,29 @@ Universidad San Sebastián
 <li class="fragment"><strong>La integridad de datos no es un tema técnico: es un tema de confianza en la información.</strong></li>
 </ul>
 </section>
-<section id="para-el-laboratorio-de-hoy" class="slide level2">
-<h2>Para el Laboratorio de Hoy</h2>
-<p><strong>Lab 15</strong>: Implementar transacciones ACID en MySQL Workbench.</p>
+<section id="puntos-clave" class="slide level2">
+<h2>Puntos Clave</h2>
 <ul>
-<li>3 transacciones completas para procesos críticos de TechStyle.</li>
-<li>Simulación de fallos y verificación del ROLLBACK.</li>
-<li>Redactar un análisis breve: ¿por qué las transacciones son críticas para TechStyle?</li>
+<li class="fragment">Una <strong>transacción</strong> es un conjunto de operaciones que se ejecutan como unidad indivisible: todo o nada.</li>
+<li class="fragment"><strong>ACID</strong>: Atomicidad (todo o nada), Consistencia (estado válido), Aislamiento (sin interferencias), Durabilidad (persiste tras COMMIT).</li>
+<li class="fragment"><code>START TRANSACTION</code> → operaciones → <code>COMMIT</code> (éxito) o <code>ROLLBACK</code> (fallo).</li>
+<li class="fragment"><code>SAVEPOINT</code> permite deshacer solo parte de una transacción.</li>
+<li class="fragment">Sin transacciones, los fallos a mitad de operación dejan la base de datos en estado inconsistente.</li>
+</ul>
+</section>
+<section id="preview-del-laboratorio-w15" class="slide level2">
+<h2>Preview del Laboratorio W15</h2>
+<p><strong>Lab W15: Implementar transacciones ACID en MySQL Workbench</strong></p>
+<ul>
+<li class="fragment">Implementar 3 transacciones completas para procesos críticos de TechStyle.</li>
+<li class="fragment">Transacción A: Registro de pedido con verificación de stock + descuento.</li>
+<li class="fragment">Transacción B: Actualización de estado de entrega + registro de fecha real.</li>
+<li class="fragment">Transacción C: Cancelación de pedido con reembolso de stock + registro de devolución.</li>
+<li class="fragment">Simular fallos en cada transacción y verificar que el ROLLBACK funciona.</li>
+<li class="fragment">Redactar un análisis breve (1 párrafo): ¿por qué las transacciones son críticas para la integridad del CMI de TechStyle?</li>
 </ul>
 <div class="fragment">
-<p><strong>Para la próxima semana</strong>: Vistas SQL y cierre del semestre — integrar la base de datos con el CMI diseñado en la Unidad 1.</p>
+<p><strong>Para la próxima semana (W16)</strong>: Vistas SQL — encapsular consultas complejas para alimentar el CMI directamente desde la base de datos.</p>
 </div>
 
 

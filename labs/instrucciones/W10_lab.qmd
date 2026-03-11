@@ -1,5 +1,5 @@
 ---
-title: "Laboratorio 11: Diccionario de Datos y Configuración de MySQL Workbench"
+title: "Laboratorio 10: Diccionario de Datos y Configuración de MySQL Workbench"
 subtitle: "Semana 10 · W10 · Unidad 3 · Big Data y Analytics · Universidad San Sebastián"
 format:
   html:

@@ -211,6 +211,19 @@ Universidad San Sebastián
 <p><strong>Problemas visibles</strong>: datos repetidos, columnas vacías, estructura rígida.</p>
 </div>
 </section>
+<section id="aplicación-cuántos-problemas-tiene-esta-tabla" class="slide level2">
+<h2>Aplicación: ¿Cuántos Problemas Tiene Esta Tabla?</h2>
+<p><strong>Identificando los problemas de la tabla desnormalizada de TechStyle</strong>:</p>
+<ul>
+<li class="fragment"><strong>Repetición de datos</strong>: El email de Ana aparece en cada pedido → si cambia, debo actualizar muchas filas.</li>
+<li class="fragment"><strong>Columnas vacías</strong>: <code>producto2</code>, <code>cat2</code>, <code>precio2</code> están vacías en el pedido 002 → desperdicio y diseño frágil.</li>
+<li class="fragment"><strong>Límite artificial</strong>: ¿Qué pasa cuando un pedido tiene 5 productos? ¿Agrego <code>producto5</code>, <code>cat5</code>, <code>precio5</code>?</li>
+<li class="fragment"><strong>Imposible consultar</strong>: ¿Cuántos pedidos incluyen el producto “Zapatillas”? La consulta es compleja y lenta.</li>
+</ul>
+<div class="fragment">
+<p>→ Este diseño viola las 3 primeras Formas Normales. Hoy aprenderemos a corregirlo.</p>
+</div>
+</section>
 <section id="qué-es-la-normalización" class="slide level2">
 <h2>¿Qué es la Normalización?</h2>
 <ul>
@@ -232,6 +245,51 @@ Universidad San Sebastián
 <p><strong>La normalización elimina estas anomalías sistemáticamente.</strong></p>
 </div>
 </section>
+<section id="aplicación-las-3-anomalías-en-techstyle" class="slide level2">
+<h2>Aplicación: Las 3 Anomalías en TechStyle</h2>
+<p><strong>Escenarios reales con la tabla desnormalizada</strong>:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Anomalía</th>
+<th>Escenario en TechStyle</th>
+<th>Consecuencia</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Inserción</strong></td>
+<td>Quiero agregar “Camiseta Runner” al catálogo sin venderla aún</td>
+<td>Imposible sin asociarla a un pedido ficticio</td>
+</tr>
+<tr class="even">
+<td><strong>Actualización</strong></td>
+<td>Ana cambia su email de <code>ana@mail</code> a <code>ana.gonzalez@gmail.com</code></td>
+<td>Debo actualizar 47 filas (una por pedido) → riesgo de inconsistencia</td>
+</tr>
+<tr class="odd">
+<td><strong>Eliminación</strong></td>
+<td>Se cancela el único pedido de Pedro</td>
+<td>Se pierden todos los datos de Pedro como cliente</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="verificación-qué-anomalía-es-esta" class="slide level2">
+<h2>Verificación: ¿Qué Anomalía es Esta?</h2>
+<p><strong>Clasifica cada problema:</strong></p>
+<ol type="1">
+<li class="fragment">“No puedo registrar un nuevo repartidor hasta que tenga asignado al menos un pedido” → <strong>Anomalía de inserción</strong></li>
+<li class="fragment">“Si cambio la categoría de ‘Calzado’ a ‘Zapatos’, debo modificar miles de filas en la tabla de pedidos” → <strong>Anomalía de actualización</strong></li>
+<li class="fragment">“Al borrar el último pedido de un cliente, pierdo toda su información de contacto” → <strong>Anomalía de eliminación</strong></li>
+<li class="fragment">“Un producto nuevo no puede aparecer en el catálogo hasta tener al menos una venta” → <strong>Anomalía de inserción</strong></li>
+</ol>
+</section>
 <section id="primera-forma-normal-1fn" class="slide level2">
 <h2>Primera Forma Normal (1FN)</h2>
 <p><strong>Regla</strong>: Cada celda debe contener un valor <strong>atómico</strong> (indivisible). No hay grupos repetitivos.</p>
@@ -242,6 +300,63 @@ Universidad San Sebastián
 </ul>
 <div class="fragment">
 <p><strong>Tabla en 1FN</strong>: <code>pedido_items(id_pedido, id_producto, nombre_prod, categoria, precio, cantidad)</code></p>
+<p>→ Una fila por cada ítem de cada pedido. Sin columnas repetidas.</p>
+</div>
+</section>
+<section id="aplicación-de-desnormalizado-a-1fn" class="slide level2">
+<h2>Aplicación: De Desnormalizado a 1FN</h2>
+<p><strong>Antes</strong> (desnormalizado):</p>
+<pre><code>pedidos: id_pedido, cliente, email, producto1, cat1, precio1, producto2, cat2, precio2</code></pre>
+<p><strong>Después</strong> (1FN):</p>
+<pre><code>pedido_items: id_pedido, id_producto, nombre_prod, categoria, precio_prod, cantidad</code></pre>
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>id_pedido</th>
+<th>id_producto</th>
+<th>nombre_prod</th>
+<th>categoria</th>
+<th>precio_prod</th>
+<th>cantidad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>001</td>
+<td>10</td>
+<td>Zapatillas</td>
+<td>Calzado</td>
+<td>45.000</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>001</td>
+<td>20</td>
+<td>Polera</td>
+<td>Ropa</td>
+<td>12.000</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>002</td>
+<td>30</td>
+<td>Jeans</td>
+<td>Ropa</td>
+<td>35.000</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p><strong>Problema que queda</strong>: <code>nombre_prod</code>, <code>categoria</code> y <code>precio_prod</code> dependen solo de <code>id_producto</code>, no de la PK completa.</p>
 </div>
 </section>
 <section id="segunda-forma-normal-2fn" class="slide level2">
@@ -259,6 +374,20 @@ Universidad San Sebastián
 <p><strong>Solución</strong>: Separar en dos tablas: - <code>order_items(id_pedido FK, id_producto FK, cantidad)</code> - <code>productos(id_producto PK, nombre, categoria, precio)</code></p>
 </div>
 </section>
+<section id="aplicación-dependencias-parciales-en-techstyle" class="slide level2">
+<h2>Aplicación: Dependencias Parciales en TechStyle</h2>
+<p><strong>Identificando dependencias parciales en la tabla de TechStyle</strong>:</p>
+<ul>
+<li class="fragment"><code>precio_prod</code> → depende solo de <code>id_producto</code> (el precio es del producto, no del ítem del pedido) ✗</li>
+<li class="fragment"><code>categoria</code> → depende solo de <code>id_producto</code> ✗</li>
+<li class="fragment"><code>nombre_prod</code> → depende solo de <code>id_producto</code> ✗</li>
+<li class="fragment"><code>cantidad</code> → depende de (id_pedido + id_producto): la cantidad vendida es específica del pedido ✓</li>
+</ul>
+<div class="fragment">
+<p><strong>Resultado</strong>: Mover <code>precio_prod</code>, <code>categoria</code> y <code>nombre_prod</code> a la tabla <code>productos</code>.</p>
+<p><strong>¡Ojo!</strong>: <code>precio_unitario</code> en <code>order_items</code> NO es lo mismo que <code>precio</code> en <code>productos</code>. El primero es el precio al momento de la compra.</p>
+</div>
+</section>
 <section id="tercera-forma-normal-3fn" class="slide level2">
 <h2>Tercera Forma Normal (3FN)</h2>
 <p><strong>Regla</strong>: Debe estar en 2FN + ningún atributo no-clave depende de otro atributo no-clave.</p>
@@ -273,15 +402,30 @@ Universidad San Sebastián
 <p><strong>Solución</strong>: Mover <code>nombre_cliente</code> y <code>region_cliente</code> a la tabla <code>clientes</code>. - <code>pedidos(id_pedido PK, id_cliente FK, total, estado, fecha)</code> - <code>clientes(id_cliente PK, nombre, email, region)</code></p>
 </div>
 </section>
+<section id="aplicación-dependencias-transitivas-en-techstyle" class="slide level2">
+<h2>Aplicación: Dependencias Transitivas en TechStyle</h2>
+<p><strong>Identificando dependencias transitivas en <code>pedidos</code></strong>:</p>
+<ul>
+<li class="fragment"><code>id_pedido</code> → <code>id_cliente</code> → <code>nombre_cliente</code> → <strong>transitiva</strong> (nombre depende del cliente, no del pedido)</li>
+<li class="fragment"><code>id_pedido</code> → <code>id_cliente</code> → <code>email_cliente</code> → <strong>transitiva</strong></li>
+<li class="fragment"><code>id_pedido</code> → <code>id_repartidor</code> → <code>nombre_repartidor</code> → <strong>transitiva</strong> (si guardáramos el nombre del repartidor en pedidos)</li>
+</ul>
+<div class="fragment">
+<p><strong>Regla</strong>: Si X → Y → Z, pero Z no depende directamente de X, entonces Z tiene dependencia transitiva y debe moverse a otra tabla.</p>
+</div>
+</section>
+<section id="verificación-dependencia-parcial-o-transitiva" class="slide level2">
+<h2>Verificación: ¿Dependencia Parcial o Transitiva?</h2>
+<p><strong>Clasifica el tipo de dependencia:</strong></p>
+<ol type="1">
+<li class="fragment">En <code>inscripciones(id_alumno, id_curso, nota, nombre_alumno)</code>: <code>nombre_alumno</code> depende solo de <code>id_alumno</code> → <strong>Dependencia parcial</strong> (violación de 2FN)</li>
+<li class="fragment">En <code>ventas(id_venta, id_vendedor, ciudad_vendedor, monto)</code>: <code>ciudad_vendedor</code> depende de <code>id_vendedor</code>, no de <code>id_venta</code> → <strong>Dependencia transitiva</strong> (violación de 3FN)</li>
+<li class="fragment">En <code>pedidos(id_pedido, id_zona, nombre_zona)</code>: <code>nombre_zona</code> depende de <code>id_zona</code>, no del pedido → <strong>Dependencia transitiva</strong></li>
+</ol>
+</section>
 <section id="resumen-del-proceso-de-normalización" class="slide level2">
 <h2>Resumen del Proceso de Normalización</h2>
-<pre><code>Tabla desnormalizada
-       ↓ Eliminar grupos repetitivos y asegurar atomicidad
-    1FN: cada celda tiene un valor atómico
-       ↓ Eliminar dependencias parciales
-    2FN: todos los atributos dependen de la PK completa
-       ↓ Eliminar dependencias transitivas
-    3FN: los atributos no-clave no dependen entre sí</code></pre>
+<p><code>[IMAGE/DIAGRAM PLACEHOLDER: Diagrama de flujo vertical de 4 pasos — (1) Tabla desnormalizada con ícono de "problema" (cruz roja) mostrando columnas repetidas; (2) 1FN: ícono verde, texto "valores atómicos, sin columnas repetidas"; (3) 2FN: ícono verde, texto "todos los atributos dependen de la PK completa"; (4) 3FN: ícono verde, texto "sin dependencias transitivas entre atributos no-clave". Flechas entre cada paso indicando qué se elimina en cada transformación.]</code></p>
 </section>
 <section id="techstyle-antes-y-después-de-la-normalización" class="slide level2">
 <h2>TechStyle: Antes y Después de la Normalización</h2>
@@ -298,6 +442,9 @@ Universidad San Sebastián
 <li class="fragment">En bases de datos <strong>operativas</strong> (OLTP), la normalización hasta 3FN es el estándar.</li>
 <li class="fragment"><strong>Regla práctica</strong>: Normalizar primero, desnormalizar solo si hay evidencia de que el rendimiento lo requiere.</li>
 </ul>
+<div class="fragment">
+<p><strong>TechStyle</strong>: La base de datos operativa (pedidos en tiempo real) debe estar en 3FN. El Data Warehouse (para el CMI) puede usar un esquema en estrella parcialmente desnormalizado.</p>
+</div>
 </section>
 <section id="actividad-identificar-anomalías" class="slide level2">
 <h2>Actividad: Identificar Anomalías</h2>
@@ -316,21 +463,34 @@ Universidad San Sebastián
 <h2>Conexión con la Toma de Decisiones</h2>
 <ul>
 <li class="fragment">Una base de datos normalizada garantiza que las consultas del CMI devuelven datos <strong>correctos y consistentes</strong>.</li>
-<li class="fragment">Sin normalización: actualizar el precio de un producto requiere modificar miles de filas → riesgo de inconsistencia.</li>
+<li class="fragment">Sin normalización: actualizar el precio de un producto requiere modificar miles de filas → riesgo de inconsistencia → CMI incorrecto → decisiones equivocadas.</li>
 <li class="fragment"><strong>La normalización es la garantía técnica de la calidad de los datos.</strong></li>
 </ul>
 </section>
-<section id="para-el-laboratorio-de-hoy" class="slide level2">
-<h2>Para el Laboratorio de Hoy</h2>
-<p><strong>Lab 10</strong>: Normalización en Excel.</p>
+<section id="puntos-clave" class="slide level2">
+<h2>Puntos Clave</h2>
 <ul>
-<li>Abrir la tabla desnormalizada de TechStyle.</li>
-<li>Aplicar 1FN, 2FN y 3FN paso a paso.</li>
-<li>Documentar cada anomalía detectada y su corrección.</li>
-<li>Resultado: modelo relacional normalizado listo para implementar en MySQL.</li>
+<li class="fragment">La <strong>normalización</strong> es el proceso para eliminar redundancias y anomalías de las tablas.</li>
+<li class="fragment"><strong>1FN</strong>: Valores atómicos en cada celda, sin grupos repetitivos ni columnas duplicadas.</li>
+<li class="fragment"><strong>2FN</strong>: Todos los atributos dependen de la <strong>PK completa</strong> (elimina dependencias parciales).</li>
+<li class="fragment"><strong>3FN</strong>: Ningún atributo no-clave depende de otro atributo no-clave (elimina dependencias transitivas).</li>
+<li class="fragment">Las <strong>3 anomalías</strong> (inserción, actualización, eliminación) desaparecen con la normalización correcta.</li>
+<li class="fragment">Normalizar hasta 3FN es el estándar para bases de datos operativas (OLTP).</li>
+</ul>
+</section>
+<section id="preview-del-laboratorio-w09" class="slide level2">
+<h2>Preview del Laboratorio W09</h2>
+<p><strong>Lab W09: Normalización en Excel</strong></p>
+<ul>
+<li class="fragment">Abrir la tabla desnormalizada de TechStyle en Excel.</li>
+<li class="fragment">Aplicar 1FN: eliminar grupos repetitivos, asegurar atomicidad.</li>
+<li class="fragment">Aplicar 2FN: identificar y resolver dependencias parciales.</li>
+<li class="fragment">Aplicar 3FN: identificar y resolver dependencias transitivas.</li>
+<li class="fragment">Documentar cada anomalía detectada y la tabla resultante de su corrección.</li>
+<li class="fragment">Resultado final: modelo relacional normalizado listo para implementar en MySQL.</li>
 </ul>
 <div class="fragment">
-<p><strong>Para la próxima semana</strong>: Elaborar el diccionario de datos para el modelo normalizado e instalar MySQL Workbench.</p>
+<p><strong>Para la próxima semana (W10)</strong>: Documentar el modelo normalizado con el <strong>diccionario de datos</strong> + instalación de MySQL Workbench.</p>
 </div>
 
 

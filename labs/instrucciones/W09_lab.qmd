@@ -1,5 +1,5 @@
 ---
-title: "Laboratorio 10: Normalización hasta 3FN en Excel"
+title: "Laboratorio 9: Normalización hasta 3FN en Excel"
 subtitle: "Semana 9 · W09 · Unidad 3 · Big Data y Analytics · Universidad San Sebastián"
 format:
   html:

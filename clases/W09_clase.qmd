@@ -40,6 +40,23 @@ format:
 
 ---
 
+## Aplicación: ¿Cuántos Problemas Tiene Esta Tabla?
+
+**Identificando los problemas de la tabla desnormalizada de TechStyle**:
+
+::: {.incremental}
+- **Repetición de datos**: El email de Ana aparece en cada pedido → si cambia, debo actualizar muchas filas.
+- **Columnas vacías**: `producto2`, `cat2`, `precio2` están vacías en el pedido 002 → desperdicio y diseño frágil.
+- **Límite artificial**: ¿Qué pasa cuando un pedido tiene 5 productos? ¿Agrego `producto5`, `cat5`, `precio5`?
+- **Imposible consultar**: ¿Cuántos pedidos incluyen el producto "Zapatillas"? La consulta es compleja y lenta.
+:::
+
+::: {.fragment}
+→ Este diseño viola las 3 primeras Formas Normales. Hoy aprenderemos a corregirlo.
+:::
+
+---
+
 ## ¿Qué es la Normalización?
 
 ::: {.incremental}
@@ -69,6 +86,31 @@ format:
 
 ---
 
+## Aplicación: Las 3 Anomalías en TechStyle
+
+**Escenarios reales con la tabla desnormalizada**:
+
+| Anomalía | Escenario en TechStyle | Consecuencia |
+|---|---|---|
+| **Inserción** | Quiero agregar "Camiseta Runner" al catálogo sin venderla aún | Imposible sin asociarla a un pedido ficticio |
+| **Actualización** | Ana cambia su email de `ana@mail` a `ana.gonzalez@gmail.com` | Debo actualizar 47 filas (una por pedido) → riesgo de inconsistencia |
+| **Eliminación** | Se cancela el único pedido de Pedro | Se pierden todos los datos de Pedro como cliente |
+
+---
+
+## Verificación: ¿Qué Anomalía es Esta?
+
+**Clasifica cada problema:**
+
+::: {.incremental}
+1. "No puedo registrar un nuevo repartidor hasta que tenga asignado al menos un pedido" → **Anomalía de inserción**
+2. "Si cambio la categoría de 'Calzado' a 'Zapatos', debo modificar miles de filas en la tabla de pedidos" → **Anomalía de actualización**
+3. "Al borrar el último pedido de un cliente, pierdo toda su información de contacto" → **Anomalía de eliminación**
+4. "Un producto nuevo no puede aparecer en el catálogo hasta tener al menos una venta" → **Anomalía de inserción**
+:::
+
+---
+
 ## Primera Forma Normal (1FN)
 
 **Regla**: Cada celda debe contener un valor **atómico** (indivisible). No hay grupos repetitivos.
@@ -81,6 +123,32 @@ format:
 
 ::: {.fragment}
 **Tabla en 1FN**: `pedido_items(id_pedido, id_producto, nombre_prod, categoria, precio, cantidad)`
+
+→ Una fila por cada ítem de cada pedido. Sin columnas repetidas.
+:::
+
+---
+
+## Aplicación: De Desnormalizado a 1FN
+
+**Antes** (desnormalizado):
+```
+pedidos: id_pedido, cliente, email, producto1, cat1, precio1, producto2, cat2, precio2
+```
+
+**Después** (1FN):
+```
+pedido_items: id_pedido, id_producto, nombre_prod, categoria, precio_prod, cantidad
+```
+
+| id_pedido | id_producto | nombre_prod | categoria | precio_prod | cantidad |
+|---|---|---|---|---|---|
+| 001 | 10 | Zapatillas | Calzado | 45.000 | 1 |
+| 001 | 20 | Polera | Ropa | 12.000 | 2 |
+| 002 | 30 | Jeans | Ropa | 35.000 | 1 |
+
+::: {.fragment}
+**Problema que queda**: `nombre_prod`, `categoria` y `precio_prod` dependen solo de `id_producto`, no de la PK completa.
 :::
 
 ---
@@ -105,6 +173,25 @@ format:
 
 ---
 
+## Aplicación: Dependencias Parciales en TechStyle
+
+**Identificando dependencias parciales en la tabla de TechStyle**:
+
+::: {.incremental}
+- `precio_prod` → depende solo de `id_producto` (el precio es del producto, no del ítem del pedido) ✗
+- `categoria` → depende solo de `id_producto` ✗
+- `nombre_prod` → depende solo de `id_producto` ✗
+- `cantidad` → depende de (id_pedido + id_producto): la cantidad vendida es específica del pedido ✓
+:::
+
+::: {.fragment}
+**Resultado**: Mover `precio_prod`, `categoria` y `nombre_prod` a la tabla `productos`.
+
+**¡Ojo!**: `precio_unitario` en `order_items` NO es lo mismo que `precio` en `productos`. El primero es el precio al momento de la compra.
+:::
+
+---
+
 ## Tercera Forma Normal (3FN)
 
 **Regla**: Debe estar en 2FN + ningún atributo no-clave depende de otro atributo no-clave.
@@ -124,17 +211,37 @@ format:
 
 ---
 
+## Aplicación: Dependencias Transitivas en TechStyle
+
+**Identificando dependencias transitivas en `pedidos`**:
+
+::: {.incremental}
+- `id_pedido` → `id_cliente` → `nombre_cliente` → **transitiva** (nombre depende del cliente, no del pedido)
+- `id_pedido` → `id_cliente` → `email_cliente` → **transitiva**
+- `id_pedido` → `id_repartidor` → `nombre_repartidor` → **transitiva** (si guardáramos el nombre del repartidor en pedidos)
+:::
+
+::: {.fragment}
+**Regla**: Si X → Y → Z, pero Z no depende directamente de X, entonces Z tiene dependencia transitiva y debe moverse a otra tabla.
+:::
+
+---
+
+## Verificación: ¿Dependencia Parcial o Transitiva?
+
+**Clasifica el tipo de dependencia:**
+
+::: {.incremental}
+1. En `inscripciones(id_alumno, id_curso, nota, nombre_alumno)`: `nombre_alumno` depende solo de `id_alumno` → **Dependencia parcial** (violación de 2FN)
+2. En `ventas(id_venta, id_vendedor, ciudad_vendedor, monto)`: `ciudad_vendedor` depende de `id_vendedor`, no de `id_venta` → **Dependencia transitiva** (violación de 3FN)
+3. En `pedidos(id_pedido, id_zona, nombre_zona)`: `nombre_zona` depende de `id_zona`, no del pedido → **Dependencia transitiva**
+:::
+
+---
+
 ## Resumen del Proceso de Normalización
 
-```
-Tabla desnormalizada
-       ↓ Eliminar grupos repetitivos y asegurar atomicidad
-    1FN: cada celda tiene un valor atómico
-       ↓ Eliminar dependencias parciales
-    2FN: todos los atributos dependen de la PK completa
-       ↓ Eliminar dependencias transitivas
-    3FN: los atributos no-clave no dependen entre sí
-```
+`[IMAGE/DIAGRAM PLACEHOLDER: Diagrama de flujo vertical de 4 pasos — (1) Tabla desnormalizada con ícono de "problema" (cruz roja) mostrando columnas repetidas; (2) 1FN: ícono verde, texto "valores atómicos, sin columnas repetidas"; (3) 2FN: ícono verde, texto "todos los atributos dependen de la PK completa"; (4) 3FN: ícono verde, texto "sin dependencias transitivas entre atributos no-clave". Flechas entre cada paso indicando qué se elimina en cada transformación.]`
 
 ---
 
@@ -161,6 +268,10 @@ Tabla desnormalizada
 - **Regla práctica**: Normalizar primero, desnormalizar solo si hay evidencia de que el rendimiento lo requiere.
 :::
 
+::: {.fragment}
+**TechStyle**: La base de datos operativa (pedidos en tiempo real) debe estar en 3FN. El Data Warehouse (para el CMI) puede usar un esquema en estrella parcialmente desnormalizado.
+:::
+
 ---
 
 ## Actividad: Identificar Anomalías
@@ -184,21 +295,38 @@ Tabla desnormalizada
 
 ::: {.incremental}
 - Una base de datos normalizada garantiza que las consultas del CMI devuelven datos **correctos y consistentes**.
-- Sin normalización: actualizar el precio de un producto requiere modificar miles de filas → riesgo de inconsistencia.
+- Sin normalización: actualizar el precio de un producto requiere modificar miles de filas → riesgo de inconsistencia → CMI incorrecto → decisiones equivocadas.
 - **La normalización es la garantía técnica de la calidad de los datos.**
 :::
 
 ---
 
-## Para el Laboratorio de Hoy
+## Puntos Clave
 
-**Lab 10**: Normalización en Excel.
+::: {.incremental}
+- La **normalización** es el proceso para eliminar redundancias y anomalías de las tablas.
+- **1FN**: Valores atómicos en cada celda, sin grupos repetitivos ni columnas duplicadas.
+- **2FN**: Todos los atributos dependen de la **PK completa** (elimina dependencias parciales).
+- **3FN**: Ningún atributo no-clave depende de otro atributo no-clave (elimina dependencias transitivas).
+- Las **3 anomalías** (inserción, actualización, eliminación) desaparecen con la normalización correcta.
+- Normalizar hasta 3FN es el estándar para bases de datos operativas (OLTP).
+:::
 
-- Abrir la tabla desnormalizada de TechStyle.
-- Aplicar 1FN, 2FN y 3FN paso a paso.
-- Documentar cada anomalía detectada y su corrección.
-- Resultado: modelo relacional normalizado listo para implementar en MySQL.
+---
+
+## Preview del Laboratorio W09
+
+**Lab W09: Normalización en Excel**
+
+::: {.incremental}
+- Abrir la tabla desnormalizada de TechStyle en Excel.
+- Aplicar 1FN: eliminar grupos repetitivos, asegurar atomicidad.
+- Aplicar 2FN: identificar y resolver dependencias parciales.
+- Aplicar 3FN: identificar y resolver dependencias transitivas.
+- Documentar cada anomalía detectada y la tabla resultante de su corrección.
+- Resultado final: modelo relacional normalizado listo para implementar en MySQL.
+:::
 
 ::: {.fragment}
-**Para la próxima semana**: Elaborar el diccionario de datos para el modelo normalizado e instalar MySQL Workbench.
+**Para la próxima semana (W10)**: Documentar el modelo normalizado con el **diccionario de datos** + instalación de MySQL Workbench.
 :::

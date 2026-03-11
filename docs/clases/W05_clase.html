@@ -170,6 +170,13 @@ Universidad San Sebastián
 </ul>
 </div>
 </section>
+<section id="posición-del-uml-en-la-secuencia-de-modelamiento" class="slide level2">
+<h2>Posición del UML en la Secuencia de Modelamiento</h2>
+<p><code>[IMAGE/DIAGRAM PLACEHOLDER: Diagrama de flujo horizontal — (1) Levantamiento de Requerimientos con ícono de entrevista → (2) Caso de Uso con ícono de elipse → (3) UML de Clases resaltado en color con ícono de rectángulo con compartimentos → (4) Modelo ER → (5) Modelo Relacional. Flecha resaltada apuntando al paso 3. Texto debajo de cada paso indicando qué pregunta responde.]</code></p>
+<div class="fragment">
+<p><em>El UML de clases es el “plano arquitectónico” del sistema: más detallado que el Caso de Uso, más abstracto que el modelo ER.</em></p>
+</div>
+</section>
 <section id="anatomía-de-una-clase-uml" class="slide level2">
 <h2>Anatomía de una Clase UML</h2>
 <pre><code>┌──────────────────────┐
@@ -185,6 +192,45 @@ Universidad San Sebastián
 │ + actualizarEmail()  │
 │ + getHistorial()     │
 └──────────────────────┘</code></pre>
+<div class="fragment">
+<p><strong>Regla de visibilidad</strong>: <code>-</code> (privado) = solo la clase lo usa · <code>+</code> (público) = cualquiera lo puede llamar.</p>
+</div>
+</section>
+<section id="aplicación-clase-pedido-en-techstyle" class="slide level2">
+<h2>Aplicación: Clase <code>Pedido</code> en TechStyle</h2>
+<p><strong>Derivando la clase Pedido de los requerimientos de María y Roberto</strong>:</p>
+<ul>
+<li class="fragment"><em>María necesita</em>: fecha del pedido, categoría de productos, zona → atributos <code>fecha_pedido</code>, <code>estado</code>, <code>total</code>.</li>
+<li class="fragment"><em>Roberto necesita</em>: KPI de tiempo de entrega → atributo <code>fecha_entrega</code>.</li>
+<li class="fragment"><em>El repartidor necesita</em>: dirección y estado → atributos <code>direccion</code>, <code>estado</code>.</li>
+<li class="fragment"><em>El sistema necesita</em>: identificar cada pedido → atributo <code>id_pedido</code>.</li>
+</ul>
+<div class="fragment">
+<pre><code>┌──────────────────────────┐
+│          Pedido          │
+├──────────────────────────┤
+│ - id_pedido: int         │
+│ - fecha_pedido: Date     │
+│ - fecha_entrega: Date    │
+│ - total: Decimal         │
+│ - estado: String         │
+│ - direccion: String      │
+├──────────────────────────┤
+│ + calcularTotal(): Decimal│
+│ + cambiarEstado(): void  │
+└──────────────────────────┘</code></pre>
+</div>
+</section>
+<section id="verificación-qué-compartimento-corresponde" class="slide level2">
+<h2>Verificación: ¿Qué Compartimento Corresponde?</h2>
+<p><strong>Clasifica cada elemento en el compartimento correcto de la clase UML:</strong></p>
+<ol type="1">
+<li class="fragment"><code>email: String</code> → <strong>Atributo</strong> (compartimento medio)</li>
+<li class="fragment"><code>getHistorial(): List</code> → <strong>Método</strong> (compartimento inferior)</li>
+<li class="fragment"><code>Repartidor</code> → <strong>Nombre de la clase</strong> (compartimento superior)</li>
+<li class="fragment"><code>confirmarEntrega(): void</code> → <strong>Método</strong> (compartimento inferior)</li>
+<li class="fragment"><code>id_repartidor: int</code> → <strong>Atributo</strong> (compartimento medio)</li>
+</ol>
 </section>
 <section id="clases-del-sistema-techstyle" class="slide level2">
 <h2>Clases del Sistema TechStyle</h2>
@@ -243,6 +289,30 @@ Universidad San Sebastián
 </tbody>
 </table>
 </section>
+<section id="aplicación-qué-relación-usa-techstyle" class="slide level2">
+<h2>Aplicación: ¿Qué Relación Usa TechStyle?</h2>
+<p><strong>Analizando las relaciones entre las clases del sistema</strong>:</p>
+<ul>
+<li class="fragment"><code>Pedido</code> ◆ <code>OrderItem</code> → <strong>Composición</strong>: Un ítem no puede existir sin el pedido al que pertenece.</li>
+<li class="fragment"><code>Repartidor</code> ◇ <code>Zona</code> → <strong>Agregación</strong>: La zona existe aunque no haya repartidores asignados.</li>
+<li class="fragment"><code>Cliente</code> ─── <code>Pedido</code> → <strong>Asociación 1:N</strong>: Un cliente se asocia a muchos pedidos.</li>
+<li class="fragment"><code>Pedido</code> ─── <code>Devolución</code> → <strong>Asociación 0..1</strong>: Un pedido puede tener cero o una devolución.</li>
+</ul>
+<div class="fragment">
+<p><strong>Regla clave</strong>: Composición = sin el “todo” la “parte” no tiene sentido. ¿Existe un OrderItem sin Pedido? No.</p>
+</div>
+</section>
+<section id="verificación-composición-agregación-o-asociación" class="slide level2">
+<h2>Verificación: ¿Composición, Agregación o Asociación?</h2>
+<p><strong>Clasifica la relación entre cada par de clases:</strong></p>
+<ol type="1">
+<li class="fragment"><code>Empresa</code> ◆ <code>Departamento</code>: Si la empresa se disuelve, los departamentos también → <strong>Composición</strong></li>
+<li class="fragment"><code>Universidad</code> ◇ <code>Estudiante</code>: Un estudiante puede existir sin la universidad → <strong>Agregación</strong></li>
+<li class="fragment"><code>Cliente</code> ─── <code>Repartidor</code>: Se conocen a través del pedido, pero son independientes → <strong>Asociación</strong></li>
+<li class="fragment"><code>Pedido</code> ◆ <code>OrderItem</code>: Un ítem no tiene sentido sin el pedido → <strong>Composición</strong></li>
+<li class="fragment"><code>Repartidor</code> ─── <code>Zona</code>: Varios repartidores comparten zonas que existen independientemente → <strong>Agregación</strong></li>
+</ol>
+</section>
 <section id="cardinalidades-en-uml" class="slide level2">
 <h2>Cardinalidades en UML</h2>
 <ul>
@@ -255,6 +325,54 @@ Universidad San Sebastián
 <p><strong>Ejemplo</strong>: Un <code>Cliente</code> puede tener <code>0..*</code> <code>Pedido</code>s. Un <code>Pedido</code> pertenece a exactamente <code>1</code> <code>Cliente</code>.</p>
 </div>
 </section>
+<section id="aplicación-cardinalidades-en-techstyle" class="slide level2">
+<h2>Aplicación: Cardinalidades en TechStyle</h2>
+<p><strong>Traduciendo reglas de negocio a cardinalidades UML</strong>:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Regla de negocio</th>
+<th>Cardinalidad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Un cliente puede tener muchos pedidos</td>
+<td><code>Cliente 1 ──── 0..* Pedido</code></td>
+</tr>
+<tr class="even">
+<td>Un pedido tiene al menos un ítem</td>
+<td><code>Pedido 1 ──── 1..* OrderItem</code></td>
+</tr>
+<tr class="odd">
+<td>Un ítem es de exactamente un producto</td>
+<td><code>OrderItem 0..* ──── 1 Producto</code></td>
+</tr>
+<tr class="even">
+<td>Un repartidor cubre una zona</td>
+<td><code>Repartidor 1..* ──── 1 Zona</code></td>
+</tr>
+<tr class="odd">
+<td>Un pedido puede no tener devolución</td>
+<td><code>Pedido 1 ──── 0..1 Devolución</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="verificación-cuál-es-la-cardinalidad-correcta" class="slide level2">
+<h2>Verificación: ¿Cuál es la Cardinalidad Correcta?</h2>
+<p><strong>Elige la cardinalidad que mejor representa cada situación:</strong></p>
+<ol type="1">
+<li class="fragment">Un médico puede tener muchos pacientes, un paciente puede tener muchos médicos → <strong>N:M (ambos <code>*</code>)</strong></li>
+<li class="fragment">Una factura tiene al menos un ítem → <code>Factura 1 ──── 1..* ÍtemFactura</code> → <strong>1 a 1..*</strong></li>
+<li class="fragment">Una persona puede o no tener pasaporte → <code>Persona 1 ──── 0..1 Pasaporte</code> → <strong>1 a 0..1</strong></li>
+<li class="fragment">Un departamento tiene al menos un empleado como jefe → <code>Departamento 1 ──── 1 Empleado (jefe)</code> → <strong>1 a 1</strong></li>
+</ol>
+</section>
 <section id="diagrama-uml-de-techstyle-demo-parcial" class="slide level2">
 <h2>Diagrama UML de TechStyle (Demo Parcial)</h2>
 <pre><code>┌──────────────────┐  1    0..* ┌──────────────────────┐
@@ -266,8 +384,8 @@ Universidad San Sebastián
 │ - region: String │            │ - estado: String     │
 └──────────────────┘            └──────────────────────┘
                                          │ 1
-                                         │
-                                     0..* │
+                                         │ ◆
+                                     1..* │
                                ┌──────────────────┐
                                │   OrderItem      │
                                ├──────────────────┤
@@ -308,6 +426,17 @@ Universidad San Sebastián
 <p><strong>Para el estudio autónomo</strong>: Agregar los <strong>métodos</strong> de cada clase (<code>Pedido.calcularTotal()</code>, <code>Repartidor.confirmarEntrega()</code>, etc.).</p>
 </div>
 </section>
+<section id="errores-comunes-en-diagramas-uml" class="slide level2">
+<h2>Errores Comunes en Diagramas UML</h2>
+<p><strong>Los 5 errores más frecuentes (y cómo evitarlos):</strong></p>
+<ol type="1">
+<li class="fragment"><strong>Poner métodos como atributos</strong>: <code>confirmarEntrega</code> no es un atributo, es un método (tiene paréntesis).</li>
+<li class="fragment"><strong>Olvidar los tipos de dato</strong>: <code>id</code> sin especificar <code>:int</code> → ambigüedad en la implementación.</li>
+<li class="fragment"><strong>Cardinalidades incorrectas</strong>: <code>1:1</code> entre Cliente y Pedido olvidando que un cliente puede tener muchos.</li>
+<li class="fragment"><strong>Demasiadas clases</strong>: “ÍtemCarrito” y “ÍtemPedido” que son la misma entidad → simplificar.</li>
+<li class="fragment"><strong>Confundir composición con asociación</strong>: si la “parte” puede existir sola, es agregación o asociación.</li>
+</ol>
+</section>
 <section id="del-uml-al-modelo-er" class="slide level2">
 <h2>Del UML al Modelo ER</h2>
 <p><strong>Correspondencia directa</strong>:</p>
@@ -345,6 +474,19 @@ Universidad San Sebastián
 <p><strong>La semana que viene (W06)</strong> haremos exactamente esta transformación.</p>
 </div>
 </section>
+<section id="conexión-con-la-toma-de-decisiones" class="slide level2">
+<h2>Conexión con la Toma de Decisiones</h2>
+<ul>
+<li class="fragment">Cada atributo del UML se convierte en una columna de la base de datos.</li>
+<li class="fragment">Si omitimos <code>region</code> de la clase <code>Cliente</code>, <strong>nunca podremos calcular ventas por zona</strong>.</li>
+<li class="fragment">Si omitimos <code>fecha_entrega</code> de <code>Pedido</code>, <strong>el KPI de tiempo de entrega del CMI será imposible</strong>.</li>
+</ul>
+<div class="fragment">
+<blockquote>
+<p>“El diagrama UML no es burocracia: es la garantía de que la base de datos tendrá los campos que las decisiones necesitan.”</p>
+</blockquote>
+</div>
+</section>
 <section id="actividad-completar-el-uml-de-techstyle" class="slide level2">
 <h2>Actividad: Completar el UML de TechStyle</h2>
 <p><strong>En grupos de 3 – 20 minutos</strong>:</p>
@@ -357,16 +499,28 @@ Universidad San Sebastián
 <p>→ Continuarán y entregarán el diagrama completo en el <strong>Lab W05</strong>.</p>
 </div>
 </section>
-<section id="para-el-laboratorio-de-hoy" class="slide level2">
-<h2>Para el Laboratorio de Hoy</h2>
-<p><strong>Lab W05</strong>: Diagrama UML completo en draw.io.</p>
+<section id="puntos-clave" class="slide level2">
+<h2>Puntos Clave</h2>
 <ul>
-<li>7 clases con atributos y métodos.</li>
-<li>Relaciones y cardinalidades correctas.</li>
-<li>Entregable: PNG + tabla de clases con descripción de negocio de cada atributo.</li>
+<li class="fragment">El <strong>Diagrama UML de Clases</strong> modela la estructura interna del sistema: clases, atributos, métodos y relaciones.</li>
+<li class="fragment">Cada clase tiene 3 compartimentos: <strong>nombre</strong>, <strong>atributos</strong> (con tipo y visibilidad) y <strong>métodos</strong>.</li>
+<li class="fragment">Las relaciones se clasifican en: <strong>asociación</strong>, <strong>agregación</strong>, <strong>composición</strong>, <strong>dependencia</strong> y <strong>herencia</strong>.</li>
+<li class="fragment">La <strong>cardinalidad</strong> traduce las reglas de negocio al modelo: <code>1</code>, <code>0..1</code>, <code>*</code>, <code>1..*</code>.</li>
+<li class="fragment">El UML es el puente directo al Modelo ER: cada clase → entidad, cada atributo → columna, cada relación → FK o tabla intermedia.</li>
+<li class="fragment">Un atributo omitido en el UML es un dato que <strong>nunca podrá almacenarse</strong> ni analizarse.</li>
+</ul>
+</section>
+<section id="preview-del-laboratorio-w05" class="slide level2">
+<h2>Preview del Laboratorio W05</h2>
+<p><strong>Lab W05: Diagrama UML completo en draw.io</strong></p>
+<ul>
+<li class="fragment">Herramienta: draw.io (online, sin instalación, gratis).</li>
+<li class="fragment">Construir las 7 clases del sistema TechStyle con atributos tipificados y métodos.</li>
+<li class="fragment">Definir relaciones con tipo correcto (composición, agregación, asociación) y cardinalidades.</li>
+<li class="fragment">Entregable: PNG del diagrama + tabla de clases con descripción de negocio de cada atributo.</li>
 </ul>
 <div class="fragment">
-<p><strong>Para la próxima semana (W06)</strong>: Transformar el UML en un Modelo Entidad-Relación.</p>
+<p><strong>Para la próxima semana (W06)</strong>: ¿Cómo transformamos el UML en un Modelo Entidad-Relación formal?</p>
 </div>
 
 

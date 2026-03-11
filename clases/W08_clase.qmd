@@ -14,13 +14,36 @@ format:
 ## Síntesis de la Unidad 2
 
 ::: {.incremental}
-- **Semana 6**: Diagrama de Caso de Uso y esquema UML. Levantamiento de requerimientos.
-- **Semana 7**: Modelo Entidad-Relación. Entidades, atributos, relaciones y cardinalidades.
-- **Semana 8**: Modelo Relacional. Transformación ER → tablas con PK y FK. Integridad referencial.
+- **Semana 4**: Levantamiento de requerimientos + Diagrama de Caso de Uso.
+- **Semana 5**: Diagrama UML de Clases. Estructura del sistema.
+- **Semana 6**: Modelo Entidad-Relación. Entidades, atributos, relaciones y cardinalidades.
+- **Semana 7**: Modelo Relacional. Transformación ER → tablas con PK y FK. Integridad referencial.
 :::
 
 ::: {.fragment}
-**Hoy**: Presentación grupal y entrega de la Solemne 2.
+**Hoy**: Presentación grupal, defensa y entrega de la Solemne 2.
+:::
+
+---
+
+## El Camino Recorrido en la Unidad 2
+
+```
+Realidad del negocio (TechStyle)
+         ↓  Levantamiento de requerimientos
+Caso de Uso  (¿qué hace el sistema?)
+         ↓
+Diagrama UML (¿cómo está estructurado?)
+         ↓
+Modelo ER    (¿qué datos almacena?)
+         ↓
+Modelo Relacional (¿cómo se organizan las tablas?)
+         ↓
+Semana 11+  → Implementación en MySQL
+```
+
+::: {.fragment}
+*Hoy cerramos el diseño. A partir de la semana 10 lo construiremos.*
 :::
 
 ---
@@ -31,7 +54,7 @@ format:
 
 ::: {.incremental}
 1. **Diagrama de Caso de Uso**: Actores y casos de uso del módulo de pedidos.
-2. **Esquema UML**: Clases, atributos y relaciones.
+2. **Esquema UML**: Clases, atributos, métodos y relaciones.
 3. **Modelo Entidad-Relación**: Diagrama completo con cardinalidades justificadas.
 4. **Modelo Relacional**: Tablas con PK, FK y restricciones de dominio.
 5. **Informe**: Justificación de decisiones de diseño + consideraciones éticas.
@@ -55,6 +78,19 @@ format:
 
 ---
 
+## Rúbrica Detallada: Modelo ER (25%)
+
+**¿Qué distingue un modelo excelente de uno suficiente?**
+
+| Nivel | Descripción |
+|---|---|
+| **Excelente (5/5)** | Todas las entidades del negocio incluidas. Cardinalidades correctas con justificación escrita. Entidades asociativas bien identificadas. Atributos tipificados. |
+| **Bueno (4/5)** | Entidades principales correctas. Alguna cardinalidad con error menor. Justificaciones incompletas. |
+| **Suficiente (3/5)** | Entidades básicas presentes. Errores en cardinalidades secundarias. Sin justificación de algunas relaciones. |
+| **Insuficiente (<3/5)** | Falta entidad central (Pedido, Producto). Cardinalidades incorrectas en relaciones fundamentales. |
+
+---
+
 ## Dinámica de la Presentación
 
 **Formato por grupo** (10 minutos):
@@ -68,6 +104,21 @@ format:
 
 ---
 
+## Preparación: Checklist Final Antes de Presentar
+
+**Verificar antes de subir el entregable**:
+
+::: {.incremental}
+- [ ] El diagrama de Caso de Uso tiene al menos 3 actores y 8 casos de uso.
+- [ ] El UML tiene 7 clases con atributos tipificados y al menos 2 métodos por clase.
+- [ ] El ER tiene todas las entidades con sus atributos y cardinalidades justificadas.
+- [ ] Las relaciones N:M tienen tabla intermedia con atributos propios.
+- [ ] El modelo relacional tiene PK y FK definidas en todas las tablas.
+- [ ] El informe explica al menos una consideración ética del diseño.
+:::
+
+---
+
 ## Preguntas de Defensa Posibles
 
 ::: {.incremental}
@@ -75,10 +126,24 @@ format:
 - ¿Qué pasa si se elimina un cliente que tiene pedidos activos?
 - ¿Cómo garantiza su modelo que no se puede registrar un pedido con un producto que no existe?
 - ¿Qué entidad nueva agregarían si TechStyle quisiera implementar cupones de descuento?
+- ¿Por qué `precio_unitario` está en `OrderItem` y no en `Producto`?
 :::
 
 ::: {.notes}
 Elegir 1–2 preguntas por grupo según el diseño que presenten. El objetivo es evaluar el razonamiento, no la memorización.
+:::
+
+---
+
+## Respuestas Tipo a las Preguntas de Defensa
+
+**"¿Por qué `precio_unitario` está en `OrderItem` y no en `Producto`?"**
+
+::: {.incremental}
+- El precio de un producto **puede cambiar** a lo largo del tiempo.
+- Si guardamos solo el precio actual en `Producto`, perdemos el historial de precios.
+- Al guardar `precio_unitario` en `OrderItem`, registramos el precio **en el momento de la compra**.
+- Esto es crítico para los reportes financieros del CMI: las ventas del año pasado deben calcularse con los precios de ese momento.
 :::
 
 ---
@@ -94,7 +159,40 @@ Mientras cada grupo presenta, los demás evalúan con esta guía:
 :::
 
 ::: {.fragment}
-**Anotar 1 fortaleza y 1 sugerencia** para compartir al final.
+**Anotar 1 fortaleza y 1 sugerencia** para compartir al final de la sesión.
+:::
+
+---
+
+## Errores Más Comunes (para aprender de otros grupos)
+
+**Patrones de error observados en entregas anteriores**:
+
+::: {.incremental}
+1. **Relación N:M sin entidad asociativa**: Pedido ←→ Producto sin OrderItem.
+2. **FK en el lado equivocado**: `id_pedido` en `clientes` en vez de en `pedidos`.
+3. **PK redundante en tabla intermedia**: `order_items` con PK compuesta + PK autonumérica innecesaria.
+4. **Cardinalidad 1:1 donde debería ser 1:N**: Asumir que un cliente tiene solo un pedido.
+5. **Omitir la entidad `Zona`**: Sin Zona, no se puede calcular el KPI de tiempo de entrega por zona del CMI.
+:::
+
+---
+
+## Conexión con la Unidad 3
+
+**¿Qué haremos con este diseño?**
+
+::: {.incremental}
+- **Semana 9-10**: Normalizar el modelo relacional hasta 3FN.
+- **Semana 11**: Crear el diccionario de datos + instalar MySQL Workbench.
+- **Semana 12**: Implementar el DDL — crear las tablas en MySQL.
+- **Semana 13**: Poblar la base de datos con datos reales.
+- **Semanas 14-15**: Consultas avanzadas para alimentar el CMI.
+- **Semana 16**: Vistas SQL que integran la BD con el CMI.
+:::
+
+::: {.fragment}
+**El diseño que entreguen hoy es el plano de construcción de todo lo que viene.**
 :::
 
 ---
@@ -110,7 +208,7 @@ Mientras cada grupo presenta, los demás evalúan con esta guía:
 ::: {.fragment}
 **Próxima semana**: Unidad 3 — ¿Cómo construimos y optimizamos una base de datos real en MySQL?
 
-→ Teoría de Normalización: primer paso.
+→ Retroalimentación de la Solemne 2 + Teoría de Normalización: el primer paso.
 :::
 
 ---
@@ -125,4 +223,33 @@ Un modelo bien diseñado permite:
 - Actualizar sin inconsistencias.
 - Escalar cuando el negocio crece.
 - **Responder las preguntas del CMI que la gerencia necesita**.
+:::
+
+---
+
+## Puntos Clave
+
+::: {.incremental}
+- La Unidad 2 completó la secuencia de modelamiento: **Caso de Uso → UML → ER → Relacional**.
+- Cada paso agrega un nivel de detalle técnico, acercándose a la implementación real.
+- La **justificación de cardinalidades** con reglas de negocio es el corazón del diseño.
+- Un modelo relacional sin integridad referencial no protege los datos del negocio.
+- El **diseño tiene implicaciones éticas**: qué datos se guardan, cómo se protegen, quién puede acceder.
+:::
+
+---
+
+## Preview de la Unidad 3
+
+**Lo que viene a partir de la Semana 9**:
+
+::: {.incremental}
+- **W09 (lab W10)**: Teoría de Normalización — optimizar el modelo relacional.
+- **W10 (lab W11)**: Diccionario de datos + MySQL Workbench.
+- **W11 (lab W12)**: DDL — crear tablas en MySQL.
+- **W12 (lab W13)**: DML — insertar, actualizar, eliminar y consultar datos.
+- **W13 (lab W14)**: JOINs — combinar tablas para consultas complejas.
+- **W14 (lab W15)**: Subconsultas y GROUP BY — análisis avanzado.
+- **W15 (lab W16)**: Transacciones ACID — garantizar integridad.
+- **W16**: Vistas SQL — integrar la base de datos con el CMI.
 :::

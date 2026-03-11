@@ -17,6 +17,7 @@ format:
 - El **diccionario de datos** documenta formalmente cada tabla y atributo.
 - **MySQL** es el sistema gestor de base de datos relacional que usaremos.
 - **MySQL Workbench** es la interfaz gráfica para escribir y ejecutar SQL.
+- Los **tipos de datos** son decisiones de negocio: `DECIMAL` para dinero, `VARCHAR` para texto, `DATE` para fechas.
 :::
 
 ::: {.fragment}
@@ -36,8 +37,22 @@ format:
 ::: {.fragment}
 **Esta semana**: DDL — definir la estructura de la base de datos.
 
-**Semana 13**: DML — manipular los datos dentro de esa estructura.
+**Semana 12**: DML — manipular los datos dentro de esa estructura.
 :::
+
+---
+
+## Aplicación: DDL como Traducción del Diccionario
+
+**El DDL traduce el diccionario de datos a código ejecutable**:
+
+| Diccionario de datos | DDL en MySQL |
+|---|---|
+| Tabla `clientes` | `CREATE TABLE clientes (...)` |
+| `id_cliente: INT, No NULL, AUTO` | `id_cliente INT NOT NULL AUTO_INCREMENT` |
+| `email: VARCHAR(150), No NULL, UNIQUE` | `email VARCHAR(150) NOT NULL, UNIQUE KEY uq_email (email)` |
+| `PK: id_cliente` | `PRIMARY KEY (id_cliente)` |
+| `FK: id_cliente → clientes` | `FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente)` |
 
 ---
 
@@ -54,8 +69,25 @@ USE techstyle_db;
 ```
 
 ::: {.fragment}
-- `utf8mb4`: soporte completo para caracteres españoles (tildes, ñ).
-- `COLLATE spanish_ci`: ordenamiento insensible a mayúsculas en español.
+- `utf8mb4`: soporte completo para caracteres españoles (tildes, ñ) y emojis.
+- `COLLATE spanish_ci`: ordenamiento insensible a mayúsculas en español (`a` = `A`, `á` ≠ `a`).
+:::
+
+---
+
+## Verificación: Antes de Crear Tablas
+
+**Orden correcto de creación** (respetando dependencias de FK):
+
+::: {.incremental}
+1. Primero las tablas **sin FK** (sin dependencias): `zonas`, `clientes`, `productos`
+2. Luego las tablas que **dependen de las anteriores**: `repartidores` (FK → zonas)
+3. Después las tablas con **más dependencias**: `pedidos` (FK → clientes + repartidores)
+4. Finalmente las tablas **hoja**: `order_items` (FK → pedidos + productos), `devoluciones` (FK → pedidos)
+:::
+
+::: {.fragment}
+**Si creas tablas en el orden incorrecto** → error de FK al intentar referenciar una tabla que no existe aún.
 :::
 
 ---
@@ -95,6 +127,7 @@ CREATE TABLE clientes (
 ::: {.fragment}
 - `AUTO_INCREMENT`: MySQL genera automáticamente el ID.
 - `UNIQUE KEY`: garantiza que no haya dos clientes con el mismo email.
+- `DEFAULT (CURDATE())`: si no se especifica fecha, usa la fecha actual.
 :::
 
 ---
@@ -114,7 +147,7 @@ CREATE TABLE repartidores (
 ```
 
 ::: {.fragment}
-- `CONSTRAINT`: nombre explícito para la restricción de FK (facilita el diagnóstico de errores).
+- `CONSTRAINT fk_rep_zona`: nombre explícito para la restricción de FK (facilita el diagnóstico de errores).
 - La FK `id_zona` debe existir en `zonas` antes de insertar un repartidor.
 :::
 
@@ -197,11 +230,16 @@ SHOW CREATE TABLE pedidos\G
 ## Modificar Tablas: `ALTER TABLE`
 
 ```sql
--- Agregar una columna
+-- Agregar una columna nueva
 ALTER TABLE clientes ADD COLUMN activo BOOLEAN NOT NULL DEFAULT TRUE;
 
--- Modificar el tipo de una columna
+-- Modificar el tipo de una columna existente
 ALTER TABLE productos MODIFY COLUMN categoria VARCHAR(80) NOT NULL;
+
+-- Agregar una restricción FK después de crear la tabla
+ALTER TABLE pedidos
+ADD CONSTRAINT fk_ped_zona
+FOREIGN KEY (id_zona) REFERENCES zonas(id_zona);
 
 -- Eliminar una columna
 ALTER TABLE clientes DROP COLUMN activo;
@@ -213,20 +251,36 @@ ALTER TABLE clientes DROP COLUMN activo;
 
 ---
 
-## ¿Qué pasa si violo una restricción de FK?
+## Aplicación: ¿Qué pasa si violo una restricción de FK?
 
 ```sql
 -- Intentar insertar un pedido con un cliente que no existe
 INSERT INTO pedidos (fecha_pedido, total, estado, id_cliente)
 VALUES ('2026-06-01', 55000, 'pendiente', 9999);
 -- ERROR 1452: Cannot add or update a child row:
--- a foreign key constraint fails
+-- a foreign key constraint fails (`techstyle_db`.`pedidos`,
+-- CONSTRAINT `fk_ped_cli` FOREIGN KEY (`id_cliente`)
+-- REFERENCES `clientes` (`id_cliente`))
 ```
 
 ::: {.fragment}
 **MySQL protege la integridad referencial automáticamente.**
 
 → Esto garantiza que no existan pedidos de "clientes fantasma" en el CMI.
+:::
+
+---
+
+## Verificación: ¿Qué Restricción Corresponde?
+
+**Elige la restricción SQL correcta para cada requerimiento de negocio:**
+
+::: {.incremental}
+1. "El email de un cliente debe ser único en el sistema" → **UNIQUE KEY**
+2. "El precio de un producto no puede ser negativo" → **CHECK (precio >= 0)**
+3. "Si no se especifica estado del pedido, debe ser 'pendiente'" → **DEFAULT 'pendiente'**
+4. "Todo pedido debe tener un cliente asociado" → **FOREIGN KEY NOT NULL**
+5. "El id_pedido debe incrementarse automáticamente" → **AUTO_INCREMENT**
 :::
 
 ---
@@ -253,17 +307,36 @@ VALUES ('2026-06-01', 55000, 'pendiente', 9999);
 - **La base de datos hace cumplir las reglas del negocio de forma automática.**
 :::
 
+::: {.fragment}
+> "Sin restricciones de integridad, la base de datos es solo un archivo de texto glorificado. Las restricciones son lo que hace que la base de datos proteja el negocio."
+:::
+
 ---
 
-## Para el Laboratorio de Hoy
+## Puntos Clave
 
-**Lab 12**: Crear `techstyle_db` con DDL completo en MySQL Workbench.
+::: {.incremental}
+- **DDL** (Data Definition Language) define la estructura de la base de datos: `CREATE`, `ALTER`, `DROP`.
+- El orden de creación de tablas importa: primero las tablas sin FK, luego las que dependen.
+- Las restricciones traducen reglas de negocio a código: `PRIMARY KEY`, `FOREIGN KEY`, `NOT NULL`, `UNIQUE`, `DEFAULT`.
+- `CONSTRAINT nombre_fk` permite identificar la restricción de FK con un nombre descriptivo.
+- `DECIMAL(10,2)` para precios: exacto. `INT` para IDs. `VARCHAR(n)` para texto variable.
+:::
 
-- Implementar las 7 tablas del modelo normalizado.
-- Incluir todas las PK, FK y restricciones del diccionario de datos.
-- Verificar la estructura con `DESCRIBE` y `SHOW TABLES`.
-- Script SQL guardado como `create_techstyle.sql`.
+---
+
+## Preview del Laboratorio W11
+
+**Lab W11: Crear `techstyle_db` con DDL completo en MySQL Workbench**
+
+::: {.incremental}
+1. Crear la base de datos `techstyle_db` con charset correcto.
+2. Implementar las 7 tablas del modelo normalizado en el orden correcto de dependencias.
+3. Incluir todas las PK, FK y restricciones del diccionario de datos.
+4. Verificar la estructura con `DESCRIBE` y `SHOW TABLES`.
+5. Guardar el script completo como `create_techstyle.sql`.
+:::
 
 ::: {.fragment}
-**Para la próxima semana**: Poblar la base de datos con datos reales usando `INSERT INTO` y consultar con `SELECT`.
+**Para la próxima semana (W12)**: Poblar la base de datos con datos reales usando `INSERT INTO` y hacer las primeras consultas con `SELECT`.
 :::

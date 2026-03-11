@@ -1,5 +1,5 @@
 ---
-title: "Laboratorio 8: Modelo Relacional Completo de TechStyle"
+title: "Laboratorio 7: Modelo Relacional Completo de TechStyle"
 subtitle: "Semana 7 · W07 · Unidad 2 · Big Data y Analytics · Universidad San Sebastián"
 format:
   html:

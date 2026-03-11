@@ -243,6 +243,14 @@ total                 email
 estado                region</code></pre>
 <div class="fragment">
 <p><code>pedidos JOIN clientes ON pedidos.id_cliente = clientes.id_cliente</code></p>
+<p>→ Cada fila de pedidos se “enriquece” con los datos del cliente que la referencia.</p>
+</div>
+</section>
+<section id="aplicación-visualizando-el-join" class="slide level2">
+<h2>Aplicación: Visualizando el JOIN</h2>
+<p><code>[IMAGE/DIAGRAM PLACEHOLDER: Diagrama de Venn de JOIN — dos círculos solapados, uno etiquetado "pedidos" (con columnas: id_pedido, total, estado, id_cliente), otro etiquetado "clientes" (con columnas: id_cliente, nombre, email, region). La zona de intersección está resaltada con etiqueta "INNER JOIN: solo filas que coinciden en id_cliente". A la izquierda del diagrama, tabla ejemplo de pedidos; a la derecha, tabla ejemplo de clientes; debajo, el resultado del JOIN mostrando columnas combinadas.]</code></p>
+<div class="fragment">
+<p><em>El JOIN “conecta” las tablas usando la misma llave: la FK de pedidos y la PK de clientes.</em></p>
 </div>
 </section>
 <section id="aliases-de-tabla-código-más-limpio" class="slide level2">
@@ -277,73 +285,120 @@ estado                region</code></pre>
 </ul>
 </div>
 </section>
+<section id="aplicación-inner-join-en-el-cmi" class="slide level2">
+<h2>Aplicación: INNER JOIN en el CMI</h2>
+<p><strong>KPI del CMI “Ventas por categoría del mes”</strong> requiere combinar 3 tablas:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a></a><span class="co">-- ¿Cuánto se vendió por categoría en junio 2026?</span></span>
+<span id="cb4-2"><a></a><span class="kw">SELECT</span> pr.categoria,</span>
+<span id="cb4-3"><a></a>       <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> p.id_pedido)           <span class="kw">AS</span> num_pedidos,</span>
+<span id="cb4-4"><a></a>       <span class="fu">SUM</span>(oi.cantidad <span class="op">*</span> oi.precio_unitario) <span class="kw">AS</span> ventas_totales</span>
+<span id="cb4-5"><a></a><span class="kw">FROM</span> order_items  oi</span>
+<span id="cb4-6"><a></a><span class="kw">INNER</span> <span class="kw">JOIN</span> pedidos   p  <span class="kw">ON</span> oi.id_pedido   <span class="op">=</span> p.id_pedido</span>
+<span id="cb4-7"><a></a><span class="kw">INNER</span> <span class="kw">JOIN</span> productos pr <span class="kw">ON</span> oi.id_producto <span class="op">=</span> pr.id_producto</span>
+<span id="cb4-8"><a></a><span class="kw">WHERE</span> p.estado <span class="op">=</span> <span class="st">'entregado'</span></span>
+<span id="cb4-9"><a></a>  <span class="kw">AND</span> p.fecha_pedido <span class="kw">BETWEEN</span> <span class="st">'2026-06-01'</span> <span class="kw">AND</span> <span class="st">'2026-06-30'</span></span>
+<span id="cb4-10"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> pr.categoria</span>
+<span id="cb4-11"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> ventas_totales <span class="kw">DESC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="verificación-cuándo-usar-inner-join" class="slide level2">
+<h2>Verificación: ¿Cuándo Usar INNER JOIN?</h2>
+<p><strong>Para cada pregunta, ¿es apropiado usar INNER JOIN?</strong></p>
+<ol type="1">
+<li class="fragment">“Listar todos los clientes con sus pedidos entregados” → <strong>Sí, pero clientes sin pedidos no aparecerán</strong></li>
+<li class="fragment">“Ver TODOS los clientes, tengan o no pedidos” → <strong>No — usar LEFT JOIN</strong></li>
+<li class="fragment">“Ver categorías de los productos que se han vendido al menos una vez” → <strong>Sí — INNER JOIN order_items + productos</strong></li>
+<li class="fragment">“Listar los repartidores y sus zonas asignadas” → <strong>Sí — todo repartidor tiene zona (FK NOT NULL)</strong></li>
+</ol>
+</section>
 <section id="left-join-todos-de-la-tabla-izquierda" class="slide level2">
 <h2>LEFT JOIN: Todos de la Tabla Izquierda</h2>
 <p>Devuelve <strong>todas las filas</strong> de la tabla izquierda, con NULL en las columnas de la derecha cuando no hay coincidencia.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a></a><span class="co">-- Todos los clientes, aunque no tengan pedidos</span></span>
-<span id="cb4-2"><a></a><span class="kw">SELECT</span> c.nombre, c.email,</span>
-<span id="cb4-3"><a></a>       <span class="fu">COUNT</span>(p.id_pedido) <span class="kw">AS</span> total_pedidos</span>
-<span id="cb4-4"><a></a><span class="kw">FROM</span> clientes c</span>
-<span id="cb4-5"><a></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> pedidos p <span class="kw">ON</span> c.id_cliente <span class="op">=</span> p.id_cliente</span>
-<span id="cb4-6"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> c.id_cliente, c.nombre, c.email;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a></a><span class="co">-- Todos los clientes, aunque no tengan pedidos</span></span>
+<span id="cb5-2"><a></a><span class="kw">SELECT</span> c.nombre, c.email,</span>
+<span id="cb5-3"><a></a>       <span class="fu">COUNT</span>(p.id_pedido) <span class="kw">AS</span> total_pedidos</span>
+<span id="cb5-4"><a></a><span class="kw">FROM</span> clientes c</span>
+<span id="cb5-5"><a></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> pedidos p <span class="kw">ON</span> c.id_cliente <span class="op">=</span> p.id_cliente</span>
+<span id="cb5-6"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> c.id_cliente, c.nombre, c.email;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><strong>Caso de uso</strong>: Identificar clientes inactivos (total_pedidos = 0).</p>
-<p>→ TechStyle puede lanzar una campaña de reactivación.</p>
+<p>→ TechStyle puede lanzar una campaña de reactivación dirigida exactamente a estos clientes.</p>
+</div>
+</section>
+<section id="aplicación-clientes-inactivos-con-left-join" class="slide level2">
+<h2>Aplicación: Clientes Inactivos con LEFT JOIN</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a></a><span class="co">-- Clientes que NUNCA han comprado</span></span>
+<span id="cb6-2"><a></a><span class="kw">SELECT</span> c.nombre, c.email, c.fecha_registro</span>
+<span id="cb6-3"><a></a><span class="kw">FROM</span> clientes c</span>
+<span id="cb6-4"><a></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> pedidos p <span class="kw">ON</span> c.id_cliente <span class="op">=</span> p.id_cliente</span>
+<span id="cb6-5"><a></a><span class="kw">WHERE</span> p.id_pedido <span class="kw">IS</span> <span class="kw">NULL</span></span>
+<span id="cb6-6"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> c.fecha_registro <span class="kw">DESC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><strong>Interpretación de negocio</strong>: Esta lista es el segmento objetivo para la campaña “Primera compra con 15% de descuento” de María González.</p>
 </div>
 </section>
 <section id="right-join-todos-de-la-tabla-derecha" class="slide level2">
 <h2>RIGHT JOIN: Todos de la Tabla Derecha</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a></a><span class="co">-- Todos los repartidores, aunque no tengan pedidos asignados</span></span>
-<span id="cb5-2"><a></a><span class="kw">SELECT</span> r.nombre <span class="kw">AS</span> repartidor, <span class="fu">COUNT</span>(p.id_pedido) <span class="kw">AS</span> pedidos</span>
-<span id="cb5-3"><a></a><span class="kw">FROM</span> pedidos p</span>
-<span id="cb5-4"><a></a><span class="kw">RIGHT</span> <span class="kw">JOIN</span> repartidores r <span class="kw">ON</span> p.id_repartidor <span class="op">=</span> r.id_repartidor</span>
-<span id="cb5-5"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> r.id_repartidor, r.nombre;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a></a><span class="co">-- Todos los repartidores, aunque no tengan pedidos asignados</span></span>
+<span id="cb7-2"><a></a><span class="kw">SELECT</span> r.nombre <span class="kw">AS</span> repartidor, <span class="fu">COUNT</span>(p.id_pedido) <span class="kw">AS</span> pedidos</span>
+<span id="cb7-3"><a></a><span class="kw">FROM</span> pedidos p</span>
+<span id="cb7-4"><a></a><span class="kw">RIGHT</span> <span class="kw">JOIN</span> repartidores r <span class="kw">ON</span> p.id_repartidor <span class="op">=</span> r.id_repartidor</span>
+<span id="cb7-5"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> r.id_repartidor, r.nombre;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
-<p><strong>Práctica</strong>: En MySQL se prefiere <code>LEFT JOIN</code> invertiendo el orden de las tablas. <code>RIGHT JOIN</code> es menos común.</p>
+<p><strong>Práctica</strong>: En MySQL se prefiere <code>LEFT JOIN</code> invirtiendo el orden de las tablas. <code>RIGHT JOIN</code> es menos común pero equivalente.</p>
 </div>
 </section>
 <section id="join-de-tres-tablas-la-consulta-real-del-cmi" class="slide level2">
 <h2>JOIN de Tres Tablas: La Consulta Real del CMI</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a></a><span class="co">-- Ventas totales por categoría (último mes)</span></span>
-<span id="cb6-2"><a></a><span class="kw">SELECT</span> pr.categoria,</span>
-<span id="cb6-3"><a></a>       <span class="fu">SUM</span>(oi.cantidad <span class="op">*</span> oi.precio_unitario) <span class="kw">AS</span> ventas_totales,</span>
-<span id="cb6-4"><a></a>       <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> p.id_pedido)           <span class="kw">AS</span> num_pedidos</span>
-<span id="cb6-5"><a></a><span class="kw">FROM</span> order_items  oi</span>
-<span id="cb6-6"><a></a><span class="kw">INNER</span> <span class="kw">JOIN</span> pedidos   p  <span class="kw">ON</span> oi.id_pedido   <span class="op">=</span> p.id_pedido</span>
-<span id="cb6-7"><a></a><span class="kw">INNER</span> <span class="kw">JOIN</span> productos pr <span class="kw">ON</span> oi.id_producto <span class="op">=</span> pr.id_producto</span>
-<span id="cb6-8"><a></a><span class="kw">WHERE</span> p.estado <span class="op">=</span> <span class="st">'entregado'</span></span>
-<span id="cb6-9"><a></a>  <span class="kw">AND</span> p.fecha_pedido <span class="op">&gt;=</span> DATE_SUB(CURDATE(), <span class="dt">INTERVAL</span> <span class="dv">30</span> <span class="dt">DAY</span>)</span>
-<span id="cb6-10"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> pr.categoria</span>
-<span id="cb6-11"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> ventas_totales <span class="kw">DESC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a></a><span class="co">-- Ventas totales por categoría (último mes)</span></span>
+<span id="cb8-2"><a></a><span class="kw">SELECT</span> pr.categoria,</span>
+<span id="cb8-3"><a></a>       <span class="fu">SUM</span>(oi.cantidad <span class="op">*</span> oi.precio_unitario) <span class="kw">AS</span> ventas_totales,</span>
+<span id="cb8-4"><a></a>       <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> p.id_pedido)           <span class="kw">AS</span> num_pedidos</span>
+<span id="cb8-5"><a></a><span class="kw">FROM</span> order_items  oi</span>
+<span id="cb8-6"><a></a><span class="kw">INNER</span> <span class="kw">JOIN</span> pedidos   p  <span class="kw">ON</span> oi.id_pedido   <span class="op">=</span> p.id_pedido</span>
+<span id="cb8-7"><a></a><span class="kw">INNER</span> <span class="kw">JOIN</span> productos pr <span class="kw">ON</span> oi.id_producto <span class="op">=</span> pr.id_producto</span>
+<span id="cb8-8"><a></a><span class="kw">WHERE</span> p.estado <span class="op">=</span> <span class="st">'entregado'</span></span>
+<span id="cb8-9"><a></a>  <span class="kw">AND</span> p.fecha_pedido <span class="op">&gt;=</span> DATE_SUB(CURDATE(), <span class="dt">INTERVAL</span> <span class="dv">30</span> <span class="dt">DAY</span>)</span>
+<span id="cb8-10"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> pr.categoria</span>
+<span id="cb8-11"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> ventas_totales <span class="kw">DESC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p>Esta consulta responde el KPI “ventas por categoría” del CMI <strong>directamente desde la base de datos</strong>.</p>
 </div>
 </section>
+<section id="verificación-qué-tipo-de-join-usar" class="slide level2">
+<h2>Verificación: ¿Qué Tipo de JOIN Usar?</h2>
+<p><strong>Para cada situación, elige el JOIN correcto:</strong></p>
+<ol type="1">
+<li class="fragment">“Ver solo los pedidos que tienen una devolución asociada” → <strong>INNER JOIN pedidos + devoluciones</strong></li>
+<li class="fragment">“Ver todos los pedidos, y si tienen devolución, mostrarla” → <strong>LEFT JOIN pedidos → devoluciones</strong></li>
+<li class="fragment">“Ver todas las zonas, tengan o no repartidores asignados” → <strong>LEFT JOIN zonas → repartidores</strong></li>
+<li class="fragment">“Ver los repartidores y su zona (todos tienen zona)” → <strong>INNER JOIN repartidores + zonas</strong></li>
+</ol>
+</section>
 <section id="explain-leer-el-plan-de-consulta" class="slide level2">
 <h2>EXPLAIN: Leer el Plan de Consulta</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a></a><span class="kw">EXPLAIN</span></span>
-<span id="cb7-2"><a></a><span class="kw">SELECT</span> pr.categoria, <span class="fu">SUM</span>(oi.cantidad <span class="op">*</span> oi.precio_unitario)</span>
-<span id="cb7-3"><a></a><span class="kw">FROM</span> order_items oi</span>
-<span id="cb7-4"><a></a><span class="kw">INNER</span> <span class="kw">JOIN</span> productos pr <span class="kw">ON</span> oi.id_producto <span class="op">=</span> pr.id_producto</span>
-<span id="cb7-5"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> pr.categoria;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a></a><span class="kw">EXPLAIN</span></span>
+<span id="cb9-2"><a></a><span class="kw">SELECT</span> pr.categoria, <span class="fu">SUM</span>(oi.cantidad <span class="op">*</span> oi.precio_unitario)</span>
+<span id="cb9-3"><a></a><span class="kw">FROM</span> order_items oi</span>
+<span id="cb9-4"><a></a><span class="kw">INNER</span> <span class="kw">JOIN</span> productos pr <span class="kw">ON</span> oi.id_producto <span class="op">=</span> pr.id_producto</span>
+<span id="cb9-5"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> pr.categoria;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li class="fragment"><code>type</code>: cómo MySQL accede a la tabla (ideal: <code>ref</code> o <code>eq_ref</code>, evitar: <code>ALL</code>).</li>
 <li class="fragment"><code>rows</code>: estimación de filas examinadas.</li>
 <li class="fragment"><code>key</code>: índice utilizado (NULL = escaneo completo de tabla).</li>
 </ul>
 <div class="fragment">
-<p><strong>Por qué importa</strong>: En TechStyle con 8,5M pedidos, una consulta sin índice puede tardar minutos.</p>
+<p><strong>Por qué importa</strong>: En TechStyle con 8,5M pedidos, una consulta sin índice puede tardar minutos en vez de milisegundos.</p>
 </div>
 </section>
 <section id="índices-básicos-acelerar-los-joins" class="slide level2">
 <h2>Índices Básicos: Acelerar los JOINs</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a></a><span class="co">-- Crear un índice en la columna FK (si no existe ya)</span></span>
-<span id="cb8-2"><a></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_pedidos_cliente    <span class="kw">ON</span> pedidos(id_cliente);</span>
-<span id="cb8-3"><a></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_pedidos_repartidor <span class="kw">ON</span> pedidos(id_repartidor);</span>
-<span id="cb8-4"><a></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_items_pedido       <span class="kw">ON</span> order_items(id_pedido);</span>
-<span id="cb8-5"><a></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_items_producto     <span class="kw">ON</span> order_items(id_producto);</span>
-<span id="cb8-6"><a></a></span>
-<span id="cb8-7"><a></a><span class="co">-- Los índices en PK se crean automáticamente con PRIMARY KEY</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a></a><span class="co">-- Crear un índice en la columna FK (si no existe ya)</span></span>
+<span id="cb10-2"><a></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_pedidos_cliente    <span class="kw">ON</span> pedidos(id_cliente);</span>
+<span id="cb10-3"><a></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_pedidos_repartidor <span class="kw">ON</span> pedidos(id_repartidor);</span>
+<span id="cb10-4"><a></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_items_pedido       <span class="kw">ON</span> order_items(id_pedido);</span>
+<span id="cb10-5"><a></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_items_producto     <span class="kw">ON</span> order_items(id_producto);</span>
+<span id="cb10-6"><a></a></span>
+<span id="cb10-7"><a></a><span class="co">-- Los índices en PK se crean automáticamente con PRIMARY KEY</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><strong>Regla práctica</strong>: Toda columna usada en <code>ON ... = ...</code> de un JOIN debería tener índice.</p>
 <p>Las FK suelen necesitar índice explícito en MySQL.</p>
@@ -403,6 +458,30 @@ estado                region</code></pre>
 <li class="fragment">Sin JOINs, el CMI no puede calcular el “ticket promedio por zona” (requiere pedidos + clientes + zonas).</li>
 <li class="fragment"><strong>El JOIN es el instrumento que une la realidad del negocio (múltiples tablas) con la pregunta que necesita responder la gerencia.</strong></li>
 </ul>
+</section>
+<section id="puntos-clave" class="slide level2">
+<h2>Puntos Clave</h2>
+<ul>
+<li class="fragment">Un <strong>JOIN</strong> combina filas de dos o más tablas usando la condición <code>FK = PK</code>.</li>
+<li class="fragment"><strong>INNER JOIN</strong>: solo filas con coincidencia en ambas tablas.</li>
+<li class="fragment"><strong>LEFT JOIN</strong>: todas las filas de la tabla izquierda, NULL donde no hay coincidencia.</li>
+<li class="fragment">Los <strong>aliases</strong> (<code>p</code>, <code>c</code>, <code>pr</code>) hacen el código más limpio y legible.</li>
+<li class="fragment">Para JOINs de 3+ tablas: encadenar condiciones <code>ON</code> adicionales.</li>
+<li class="fragment">Los <strong>índices</strong> en columnas FK aceleran dramáticamente los JOINs en tablas grandes.</li>
+</ul>
+</section>
+<section id="preview-del-laboratorio-w13" class="slide level2">
+<h2>Preview del Laboratorio W13</h2>
+<p><strong>Lab W13: Consultas con JOIN</strong></p>
+<ul>
+<li class="fragment">Resolver 10 consultas analíticas sobre <code>techstyle_db</code> usando INNER JOIN y LEFT JOIN.</li>
+<li class="fragment">Al menos 3 consultas deben combinar 3 o más tablas.</li>
+<li class="fragment">Cada consulta debe ir acompañada de la pregunta de negocio que responde y una interpretación del resultado.</li>
+<li class="fragment">Identificar con <code>EXPLAIN</code> si alguna consulta usa escaneo completo y crear el índice correspondiente.</li>
+</ul>
+<div class="fragment">
+<p><strong>Para la próxima semana (W14)</strong>: Funciones de agregación, <code>GROUP BY</code>, <code>HAVING</code> y subconsultas.</p>
+</div>
 
 
 </section>

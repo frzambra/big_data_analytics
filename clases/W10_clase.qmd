@@ -36,10 +36,29 @@ El analista Juan diseñó el modelo relacional. Ahora está de vacaciones. Un nu
 - ¿Qué tipo de dato tiene la columna `total` en `pedidos`? ¿INT o DECIMAL?
 - ¿Puede ser NULL la columna `telefono` en `clientes`?
 - ¿Cuál es el valor por defecto del campo `estado` en `pedidos`?
+- ¿Qué significa un `estado = 'cancelado'`? ¿Es diferente a `'rechazado'`?
 :::
 
 ::: {.fragment}
 **Sin documentación formal → errores de implementación → datos incorrectos → decisiones erróneas.**
+:::
+
+---
+
+## Aplicación: El Costo de No Documentar
+
+**Caso real en TechStyle**:
+
+::: {.incremental}
+- El desarrollador implementó `total` como `INT` (sin decimales).
+- TechStyle cobra $12.990 por algunas poleras.
+- El sistema guardaba $12.990 como $12 (truncado) → pérdida de centavos.
+- En 8 meses, el CMI mostraba ingresos 0,1% menores a los reales.
+- Roberto tomó decisiones de inversión con datos incorrectos.
+:::
+
+::: {.fragment}
+**Un tipo de dato mal elegido por falta de documentación → decisiones incorrectas en la cima de la organización.**
 :::
 
 ---
@@ -74,6 +93,39 @@ Nombre · Tipo de dato · Longitud · Permite NULL · Valor por defecto · Descr
 
 ---
 
+## Aplicación: Diccionario de `pedidos`
+
+**Tabla: `pedidos`**
+
+| Atributo | Tipo | Long. | NULL | Default | Descripción |
+|---|---|---|---|---|---|
+| id_pedido | INT | — | No | AUTO | PK autonumérica |
+| fecha_pedido | DATE | — | No | CURDATE() | Fecha en que se realizó el pedido |
+| total | DECIMAL | (10,2) | No | — | Suma de todos los ítems del pedido |
+| estado | VARCHAR | 30 | No | 'pendiente' | Estado actual: pendiente/en camino/entregado/cancelado |
+| id_cliente | INT | — | No | — | FK → clientes.id_cliente |
+| id_repartidor | INT | — | Sí | NULL | FK → repartidores. NULL hasta asignación |
+
+---
+
+## Verificación: ¿Está Completo el Diccionario?
+
+**¿Qué información falta en esta definición de atributo?**
+
+```
+nombre: texto que identifica al cliente
+```
+
+::: {.incremental}
+- Falta: **tipo de dato** (¿VARCHAR o TEXT?)
+- Falta: **longitud** (¿50, 100 o 200 caracteres?)
+- Falta: **si permite NULL** (¿puede un cliente no tener nombre?)
+- Falta: **restricciones** (¿debe ser único? ¿mínimo de caracteres?)
+- Falta: **descripción precisa** (¿nombre completo? ¿solo el primer nombre?)
+:::
+
+---
+
 ## Tipos de Datos en MySQL: Vista Previa
 
 | Tipo | Uso típico | Ejemplo |
@@ -91,6 +143,36 @@ Explicar por qué DECIMAL y no FLOAT para precios: DECIMAL es exacto, FLOAT tien
 
 ---
 
+## Aplicación: Elegir el Tipo de Dato Correcto
+
+**¿Por qué DECIMAL y no FLOAT para precios?**
+
+::: {.incremental}
+- `FLOAT` usa representación binaria → puede almacenar $12.990 como $12.989999999998.
+- `DECIMAL(10,2)` almacena exactamente $12.99 → sin errores de redondeo.
+- En un sistema con millones de transacciones, los errores de FLOAT se acumulan.
+:::
+
+::: {.fragment}
+**Regla**: Todo valor monetario → `DECIMAL`. Todo ID o contador → `INT`. Todo texto de longitud variable → `VARCHAR`. Todo texto libre sin límite → `TEXT`.
+:::
+
+---
+
+## Verificación: ¿Qué Tipo de Dato Usarías?
+
+**Elige el tipo de dato más apropiado para cada atributo:**
+
+::: {.incremental}
+1. Número de RUT del cliente (ej: "12345678-9") → **VARCHAR(12)** (tiene guión, no es número)
+2. Precio de un producto (ej: 45.000,00) → **DECIMAL(10,2)**
+3. Si un repartidor está activo o de baja → **BOOLEAN** (o TINYINT(1))
+4. Descripción larga de un producto (párrafo) → **TEXT**
+5. Mes de registro de un cliente (solo el mes, 1-12) → **TINYINT** (entero pequeño)
+:::
+
+---
+
 ## ¿Por qué MySQL?
 
 ::: {.incremental}
@@ -104,20 +186,26 @@ Explicar por qué DECIMAL y no FLOAT para precios: DECIMAL es exacto, FLOAT tien
 
 ---
 
+## Aplicación: ¿Qué Herramienta Para Cada Tarea?
+
+**La evolución de las herramientas a lo largo del semestre:**
+
+| Tarea | Herramienta | ¿Por qué? |
+|---|---|---|
+| Análisis exploratorio (4 columnas) | Excel | Rápido, visual, conocido |
+| Dashboard ejecutivo | Power BI | Visualización profesional |
+| ETL de múltiples fuentes | Power Query | Integración de datos |
+| Almacenamiento de millones de filas | MySQL | Motor relacional eficiente |
+| Análisis ad-hoc de la BD | MySQL Workbench | SQL es el estándar universal |
+
+---
+
 ## Arquitectura Cliente–Servidor de MySQL
 
-```
-┌─────────────────────┐        ┌──────────────────────┐
-│   MySQL Workbench   │ ─────> │    MySQL Server      │
-│  (Cliente gráfico)  │  SQL   │  (Motor de base de   │
-│                     │ <───── │     datos)           │
-└─────────────────────┘        └──────────────────────┘
-         ↑
-    Tu computador
-```
+`[IMAGE/DIAGRAM PLACEHOLDER: Diagrama de arquitectura cliente-servidor — (1) ícono de computador con "MySQL Workbench (Cliente)" y flecha con etiqueta "SQL Query →"; (2) ícono de servidor con "MySQL Server (Motor)" y flecha de respuesta "← Resultados"; debajo del servidor, cilindros de base de datos representando "techstyle_db". Texto adicional: "El servidor puede estar en tu computador (local) o en la nube (AWS, Google Cloud)"]`
 
 ::: {.fragment}
-**MySQL Workbench** = interfaz gráfica para escribir y ejecutar consultas SQL.
+**MySQL Workbench** = interfaz gráfica para escribir y ejecutar consultas SQL. El servidor MySQL es el motor que procesa las consultas y gestiona los archivos de datos.
 :::
 
 ---
@@ -144,13 +232,6 @@ Explicar por qué DECIMAL y no FLOAT para precios: DECIMAL es exacto, FLOAT tien
 
 MySQL incluye la base de datos `sakila` como ejemplo. La exploraremos para entender la estructura:
 
-::: {.incremental}
-- ¿Qué tablas tiene `sakila`?
-- ¿Cómo se relacionan entre sí?
-- ¿Cómo se ve un modelo relacional real en MySQL Workbench?
-:::
-
-::: {.fragment}
 ```sql
 -- Ver todas las bases de datos disponibles
 SHOW DATABASES;
@@ -160,8 +241,13 @@ USE sakila;
 
 -- Ver todas las tablas
 SHOW TABLES;
+
+-- Ver la estructura de una tabla específica
+DESCRIBE film;
+
+-- Ver las primeras 5 filas
+SELECT * FROM film LIMIT 5;
 ```
-:::
 
 ---
 
@@ -194,7 +280,7 @@ Usando la plantilla Excel proporcionada, completen el diccionario de datos para 
 :::
 
 ::: {.fragment}
-**Conclusión**: Elegir el tipo de dato incorrecto genera errores contables reales.
+**Conclusión**: Elegir el tipo de dato incorrecto genera errores contables reales. Un analista que no entiende tipos de datos puede comprometer la integridad financiera de la organización.
 :::
 
 ---
@@ -209,15 +295,30 @@ Usando la plantilla Excel proporcionada, completen el diccionario de datos para 
 
 ---
 
-## Para el Laboratorio de Hoy
+## Puntos Clave
 
-**Lab 11**: Diccionario de datos + configuración de MySQL Workbench.
+::: {.incremental}
+- El **diccionario de datos** es el documento formal que describe cada tabla y atributo del modelo relacional.
+- Cada atributo debe tener: tipo de dato, longitud, NULL permitido, valor por defecto, descripción y restricciones.
+- **MySQL** es el motor de base de datos relacional que usaremos: open source, estándar industrial.
+- **MySQL Workbench** es la interfaz gráfica para escribir SQL y administrar la base de datos.
+- Los **tipos de datos** son decisiones de negocio: elegir `FLOAT` en vez de `DECIMAL` para precios genera errores financieros reales.
+:::
 
-1. Completar el diccionario de datos de TechStyle (todas las tablas).
-2. Instalar y configurar MySQL Workbench.
-3. Conectarse al servidor MySQL local.
+---
+
+## Preview del Laboratorio W10
+
+**Lab W10: Diccionario de datos + configuración de MySQL Workbench**
+
+::: {.incremental}
+1. Completar el diccionario de datos de TechStyle para todas las 7 tablas del modelo normalizado.
+2. Instalar y configurar MySQL Workbench en el computador del laboratorio.
+3. Conectarse al servidor MySQL local (localhost, puerto 3306).
 4. Explorar la base de datos `sakila` con `SHOW TABLES` y `DESCRIBE tabla`.
+5. Ejecutar las primeras consultas SQL básicas.
+:::
 
 ::: {.fragment}
-**Para la próxima semana**: Crear la base de datos `techstyle_db` usando comandos DDL en MySQL Workbench.
+**Para la próxima semana (W11)**: Crear la base de datos `techstyle_db` usando comandos DDL en MySQL Workbench.
 :::

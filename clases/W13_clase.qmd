@@ -59,6 +59,18 @@ estado                region
 
 ::: {.fragment}
 `pedidos JOIN clientes ON pedidos.id_cliente = clientes.id_cliente`
+
+→ Cada fila de pedidos se "enriquece" con los datos del cliente que la referencia.
+:::
+
+---
+
+## Aplicación: Visualizando el JOIN
+
+`[IMAGE/DIAGRAM PLACEHOLDER: Diagrama de Venn de JOIN — dos círculos solapados, uno etiquetado "pedidos" (con columnas: id_pedido, total, estado, id_cliente), otro etiquetado "clientes" (con columnas: id_cliente, nombre, email, region). La zona de intersección está resaltada con etiqueta "INNER JOIN: solo filas que coinciden en id_cliente". A la izquierda del diagrama, tabla ejemplo de pedidos; a la derecha, tabla ejemplo de clientes; debajo, el resultado del JOIN mostrando columnas combinadas.]`
+
+::: {.fragment}
+*El JOIN "conecta" las tablas usando la misma llave: la FK de pedidos y la PK de clientes.*
 :::
 
 ---
@@ -105,6 +117,39 @@ ORDER BY p.total DESC;
 
 ---
 
+## Aplicación: INNER JOIN en el CMI
+
+**KPI del CMI "Ventas por categoría del mes"** requiere combinar 3 tablas:
+
+```sql
+-- ¿Cuánto se vendió por categoría en junio 2026?
+SELECT pr.categoria,
+       COUNT(DISTINCT p.id_pedido)           AS num_pedidos,
+       SUM(oi.cantidad * oi.precio_unitario) AS ventas_totales
+FROM order_items  oi
+INNER JOIN pedidos   p  ON oi.id_pedido   = p.id_pedido
+INNER JOIN productos pr ON oi.id_producto = pr.id_producto
+WHERE p.estado = 'entregado'
+  AND p.fecha_pedido BETWEEN '2026-06-01' AND '2026-06-30'
+GROUP BY pr.categoria
+ORDER BY ventas_totales DESC;
+```
+
+---
+
+## Verificación: ¿Cuándo Usar INNER JOIN?
+
+**Para cada pregunta, ¿es apropiado usar INNER JOIN?**
+
+::: {.incremental}
+1. "Listar todos los clientes con sus pedidos entregados" → **Sí, pero clientes sin pedidos no aparecerán**
+2. "Ver TODOS los clientes, tengan o no pedidos" → **No — usar LEFT JOIN**
+3. "Ver categorías de los productos que se han vendido al menos una vez" → **Sí — INNER JOIN order_items + productos**
+4. "Listar los repartidores y sus zonas asignadas" → **Sí — todo repartidor tiene zona (FK NOT NULL)**
+:::
+
+---
+
 ## LEFT JOIN: Todos de la Tabla Izquierda
 
 Devuelve **todas las filas** de la tabla izquierda, con NULL en las columnas de la derecha cuando no hay coincidencia.
@@ -121,7 +166,24 @@ GROUP BY c.id_cliente, c.nombre, c.email;
 ::: {.fragment}
 **Caso de uso**: Identificar clientes inactivos (total_pedidos = 0).
 
-→ TechStyle puede lanzar una campaña de reactivación.
+→ TechStyle puede lanzar una campaña de reactivación dirigida exactamente a estos clientes.
+:::
+
+---
+
+## Aplicación: Clientes Inactivos con LEFT JOIN
+
+```sql
+-- Clientes que NUNCA han comprado
+SELECT c.nombre, c.email, c.fecha_registro
+FROM clientes c
+LEFT JOIN pedidos p ON c.id_cliente = p.id_cliente
+WHERE p.id_pedido IS NULL
+ORDER BY c.fecha_registro DESC;
+```
+
+::: {.fragment}
+**Interpretación de negocio**: Esta lista es el segmento objetivo para la campaña "Primera compra con 15% de descuento" de María González.
 :::
 
 ---
@@ -137,7 +199,7 @@ GROUP BY r.id_repartidor, r.nombre;
 ```
 
 ::: {.fragment}
-**Práctica**: En MySQL se prefiere `LEFT JOIN` invertiendo el orden de las tablas. `RIGHT JOIN` es menos común.
+**Práctica**: En MySQL se prefiere `LEFT JOIN` invirtiendo el orden de las tablas. `RIGHT JOIN` es menos común pero equivalente.
 :::
 
 ---
@@ -164,6 +226,19 @@ Esta consulta responde el KPI "ventas por categoría" del CMI **directamente des
 
 ---
 
+## Verificación: ¿Qué Tipo de JOIN Usar?
+
+**Para cada situación, elige el JOIN correcto:**
+
+::: {.incremental}
+1. "Ver solo los pedidos que tienen una devolución asociada" → **INNER JOIN pedidos + devoluciones**
+2. "Ver todos los pedidos, y si tienen devolución, mostrarla" → **LEFT JOIN pedidos → devoluciones**
+3. "Ver todas las zonas, tengan o no repartidores asignados" → **LEFT JOIN zonas → repartidores**
+4. "Ver los repartidores y su zona (todos tienen zona)" → **INNER JOIN repartidores + zonas**
+:::
+
+---
+
 ## EXPLAIN: Leer el Plan de Consulta
 
 ```sql
@@ -181,7 +256,7 @@ GROUP BY pr.categoria;
 :::
 
 ::: {.fragment}
-**Por qué importa**: En TechStyle con 8,5M pedidos, una consulta sin índice puede tardar minutos.
+**Por qué importa**: En TechStyle con 8,5M pedidos, una consulta sin índice puede tardar minutos en vez de milisegundos.
 :::
 
 ---
@@ -241,4 +316,34 @@ Las FK suelen necesitar índice explícito en MySQL.
 - Sin JOINs, un analista no puede cruzar la información de clientes con la de pedidos para segmentar campañas.
 - Sin JOINs, el CMI no puede calcular el "ticket promedio por zona" (requiere pedidos + clientes + zonas).
 - **El JOIN es el instrumento que une la realidad del negocio (múltiples tablas) con la pregunta que necesita responder la gerencia.**
+:::
+
+---
+
+## Puntos Clave
+
+::: {.incremental}
+- Un **JOIN** combina filas de dos o más tablas usando la condición `FK = PK`.
+- **INNER JOIN**: solo filas con coincidencia en ambas tablas.
+- **LEFT JOIN**: todas las filas de la tabla izquierda, NULL donde no hay coincidencia.
+- Los **aliases** (`p`, `c`, `pr`) hacen el código más limpio y legible.
+- Para JOINs de 3+ tablas: encadenar condiciones `ON` adicionales.
+- Los **índices** en columnas FK aceleran dramáticamente los JOINs en tablas grandes.
+:::
+
+---
+
+## Preview del Laboratorio W13
+
+**Lab W13: Consultas con JOIN**
+
+::: {.incremental}
+- Resolver 10 consultas analíticas sobre `techstyle_db` usando INNER JOIN y LEFT JOIN.
+- Al menos 3 consultas deben combinar 3 o más tablas.
+- Cada consulta debe ir acompañada de la pregunta de negocio que responde y una interpretación del resultado.
+- Identificar con `EXPLAIN` si alguna consulta usa escaneo completo y crear el índice correspondiente.
+:::
+
+::: {.fragment}
+**Para la próxima semana (W14)**: Funciones de agregación, `GROUP BY`, `HAVING` y subconsultas.
 :::

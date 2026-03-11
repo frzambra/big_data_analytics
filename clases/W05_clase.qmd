@@ -43,6 +43,16 @@ format:
 
 ---
 
+## Posición del UML en la Secuencia de Modelamiento
+
+`[IMAGE/DIAGRAM PLACEHOLDER: Diagrama de flujo horizontal — (1) Levantamiento de Requerimientos con ícono de entrevista → (2) Caso de Uso con ícono de elipse → (3) UML de Clases resaltado en color con ícono de rectángulo con compartimentos → (4) Modelo ER → (5) Modelo Relacional. Flecha resaltada apuntando al paso 3. Texto debajo de cada paso indicando qué pregunta responde.]`
+
+::: {.fragment}
+*El UML de clases es el "plano arquitectónico" del sistema: más detallado que el Caso de Uso, más abstracto que el modelo ER.*
+:::
+
+---
+
 ## Anatomía de una Clase UML
 
 ```
@@ -60,6 +70,55 @@ format:
 │ + getHistorial()     │
 └──────────────────────┘
 ```
+
+::: {.fragment}
+**Regla de visibilidad**: `-` (privado) = solo la clase lo usa · `+` (público) = cualquiera lo puede llamar.
+:::
+
+---
+
+## Aplicación: Clase `Pedido` en TechStyle
+
+**Derivando la clase Pedido de los requerimientos de María y Roberto**:
+
+::: {.incremental}
+- *María necesita*: fecha del pedido, categoría de productos, zona → atributos `fecha_pedido`, `estado`, `total`.
+- *Roberto necesita*: KPI de tiempo de entrega → atributo `fecha_entrega`.
+- *El repartidor necesita*: dirección y estado → atributos `direccion`, `estado`.
+- *El sistema necesita*: identificar cada pedido → atributo `id_pedido`.
+:::
+
+::: {.fragment}
+```
+┌──────────────────────────┐
+│          Pedido          │
+├──────────────────────────┤
+│ - id_pedido: int         │
+│ - fecha_pedido: Date     │
+│ - fecha_entrega: Date    │
+│ - total: Decimal         │
+│ - estado: String         │
+│ - direccion: String      │
+├──────────────────────────┤
+│ + calcularTotal(): Decimal│
+│ + cambiarEstado(): void  │
+└──────────────────────────┘
+```
+:::
+
+---
+
+## Verificación: ¿Qué Compartimento Corresponde?
+
+**Clasifica cada elemento en el compartimento correcto de la clase UML:**
+
+::: {.incremental}
+1. `email: String` → **Atributo** (compartimento medio)
+2. `getHistorial(): List` → **Método** (compartimento inferior)
+3. `Repartidor` → **Nombre de la clase** (compartimento superior)
+4. `confirmarEntrega(): void` → **Método** (compartimento inferior)
+5. `id_repartidor: int` → **Atributo** (compartimento medio)
+:::
 
 ---
 
@@ -91,6 +150,37 @@ format:
 
 ---
 
+## Aplicación: ¿Qué Relación Usa TechStyle?
+
+**Analizando las relaciones entre las clases del sistema**:
+
+::: {.incremental}
+- `Pedido` ◆ `OrderItem` → **Composición**: Un ítem no puede existir sin el pedido al que pertenece.
+- `Repartidor` ◇ `Zona` → **Agregación**: La zona existe aunque no haya repartidores asignados.
+- `Cliente` ─── `Pedido` → **Asociación 1:N**: Un cliente se asocia a muchos pedidos.
+- `Pedido` ─── `Devolución` → **Asociación 0..1**: Un pedido puede tener cero o una devolución.
+:::
+
+::: {.fragment}
+**Regla clave**: Composición = sin el "todo" la "parte" no tiene sentido. ¿Existe un OrderItem sin Pedido? No.
+:::
+
+---
+
+## Verificación: ¿Composición, Agregación o Asociación?
+
+**Clasifica la relación entre cada par de clases:**
+
+::: {.incremental}
+1. `Empresa` ◆ `Departamento`: Si la empresa se disuelve, los departamentos también → **Composición**
+2. `Universidad` ◇ `Estudiante`: Un estudiante puede existir sin la universidad → **Agregación**
+3. `Cliente` ─── `Repartidor`: Se conocen a través del pedido, pero son independientes → **Asociación**
+4. `Pedido` ◆ `OrderItem`: Un ítem no tiene sentido sin el pedido → **Composición**
+5. `Repartidor` ─── `Zona`: Varios repartidores comparten zonas que existen independientemente → **Agregación**
+:::
+
+---
+
 ## Cardinalidades en UML
 
 ::: {.incremental}
@@ -102,6 +192,33 @@ format:
 
 ::: {.fragment}
 **Ejemplo**: Un `Cliente` puede tener `0..*` `Pedido`s. Un `Pedido` pertenece a exactamente `1` `Cliente`.
+:::
+
+---
+
+## Aplicación: Cardinalidades en TechStyle
+
+**Traduciendo reglas de negocio a cardinalidades UML**:
+
+| Regla de negocio | Cardinalidad |
+|---|---|
+| Un cliente puede tener muchos pedidos | `Cliente 1 ──── 0..* Pedido` |
+| Un pedido tiene al menos un ítem | `Pedido 1 ──── 1..* OrderItem` |
+| Un ítem es de exactamente un producto | `OrderItem 0..* ──── 1 Producto` |
+| Un repartidor cubre una zona | `Repartidor 1..* ──── 1 Zona` |
+| Un pedido puede no tener devolución | `Pedido 1 ──── 0..1 Devolución` |
+
+---
+
+## Verificación: ¿Cuál es la Cardinalidad Correcta?
+
+**Elige la cardinalidad que mejor representa cada situación:**
+
+::: {.incremental}
+1. Un médico puede tener muchos pacientes, un paciente puede tener muchos médicos → **N:M (ambos `*`)**
+2. Una factura tiene al menos un ítem → `Factura 1 ──── 1..* ÍtemFactura` → **1 a 1..\***
+3. Una persona puede o no tener pasaporte → `Persona 1 ──── 0..1 Pasaporte` → **1 a 0..1**
+4. Un departamento tiene al menos un empleado como jefe → `Departamento 1 ──── 1 Empleado (jefe)` → **1 a 1**
 :::
 
 ---
@@ -118,8 +235,8 @@ format:
 │ - region: String │            │ - estado: String     │
 └──────────────────┘            └──────────────────────┘
                                          │ 1
-                                         │
-                                     0..* │
+                                         │ ◆
+                                     1..* │
                                ┌──────────────────┐
                                │   OrderItem      │
                                ├──────────────────┤
@@ -158,6 +275,20 @@ Mostrar en draw.io cómo se construye paso a paso. Los estudiantes replicarán e
 
 ---
 
+## Errores Comunes en Diagramas UML
+
+**Los 5 errores más frecuentes (y cómo evitarlos):**
+
+::: {.incremental}
+1. **Poner métodos como atributos**: `confirmarEntrega` no es un atributo, es un método (tiene paréntesis).
+2. **Olvidar los tipos de dato**: `id` sin especificar `:int` → ambigüedad en la implementación.
+3. **Cardinalidades incorrectas**: `1:1` entre Cliente y Pedido olvidando que un cliente puede tener muchos.
+4. **Demasiadas clases**: "ÍtemCarrito" y "ÍtemPedido" que son la misma entidad → simplificar.
+5. **Confundir composición con asociación**: si la "parte" puede existir sola, es agregación o asociación.
+:::
+
+---
+
 ## Del UML al Modelo ER
 
 **Correspondencia directa**:
@@ -176,6 +307,20 @@ Mostrar en draw.io cómo se construye paso a paso. Los estudiantes replicarán e
 
 ---
 
+## Conexión con la Toma de Decisiones
+
+::: {.incremental}
+- Cada atributo del UML se convierte en una columna de la base de datos.
+- Si omitimos `region` de la clase `Cliente`, **nunca podremos calcular ventas por zona**.
+- Si omitimos `fecha_entrega` de `Pedido`, **el KPI de tiempo de entrega del CMI será imposible**.
+:::
+
+::: {.fragment}
+> "El diagrama UML no es burocracia: es la garantía de que la base de datos tendrá los campos que las decisiones necesitan."
+:::
+
+---
+
 ## Actividad: Completar el UML de TechStyle
 
 **En grupos de 3 – 20 minutos**:
@@ -190,14 +335,30 @@ Mostrar en draw.io cómo se construye paso a paso. Los estudiantes replicarán e
 
 ---
 
-## Para el Laboratorio de Hoy
+## Puntos Clave
 
-**Lab W05**: Diagrama UML completo en draw.io.
+::: {.incremental}
+- El **Diagrama UML de Clases** modela la estructura interna del sistema: clases, atributos, métodos y relaciones.
+- Cada clase tiene 3 compartimentos: **nombre**, **atributos** (con tipo y visibilidad) y **métodos**.
+- Las relaciones se clasifican en: **asociación**, **agregación**, **composición**, **dependencia** y **herencia**.
+- La **cardinalidad** traduce las reglas de negocio al modelo: `1`, `0..1`, `*`, `1..*`.
+- El UML es el puente directo al Modelo ER: cada clase → entidad, cada atributo → columna, cada relación → FK o tabla intermedia.
+- Un atributo omitido en el UML es un dato que **nunca podrá almacenarse** ni analizarse.
+:::
 
-- 7 clases con atributos y métodos.
-- Relaciones y cardinalidades correctas.
-- Entregable: PNG + tabla de clases con descripción de negocio de cada atributo.
+---
+
+## Preview del Laboratorio W05
+
+**Lab W05: Diagrama UML completo en draw.io**
+
+::: {.incremental}
+- Herramienta: draw.io (online, sin instalación, gratis).
+- Construir las 7 clases del sistema TechStyle con atributos tipificados y métodos.
+- Definir relaciones con tipo correcto (composición, agregación, asociación) y cardinalidades.
+- Entregable: PNG del diagrama + tabla de clases con descripción de negocio de cada atributo.
+:::
 
 ::: {.fragment}
-**Para la próxima semana (W06)**: Transformar el UML en un Modelo Entidad-Relación.
+**Para la próxima semana (W06)**: ¿Cómo transformamos el UML en un Modelo Entidad-Relación formal?
 :::

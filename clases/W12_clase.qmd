@@ -37,7 +37,7 @@ format:
 ::: {.fragment}
 **Hoy cubriremos**: `INSERT`, `UPDATE`, `DELETE` y `SELECT` básico.
 
-**Semana 14**: `SELECT` avanzado (JOINs, GROUP BY, funciones de agregación).
+**Semana 13**: `SELECT` avanzado (JOINs, GROUP BY, funciones de agregación).
 :::
 
 ---
@@ -81,6 +81,45 @@ INSERT INTO productos (nombre, categoria, precio, stock) VALUES
 
 ---
 
+## Aplicación: Insertar un Pedido Completo
+
+```sql
+-- 1. Insertar el pedido de Ana
+INSERT INTO pedidos (fecha_pedido, total, estado, id_cliente)
+VALUES ('2026-06-01', 57000.00, 'entregado', 1);
+
+-- 2. Obtener el ID del pedido recién insertado
+SELECT LAST_INSERT_ID(); -- Resultado: 1
+
+-- 3. Insertar los ítems del pedido
+INSERT INTO order_items (id_pedido, id_producto, cantidad, precio_unitario) VALUES
+    (1, 1, 1, 45000.00),  -- 1 Zapatilla Runner Pro
+    (1, 2, 1, 12000.00);  -- 1 Polera Dry-Fit
+```
+
+::: {.fragment}
+**¿Por qué `LAST_INSERT_ID()`?** — El `id_pedido` es AUTO_INCREMENT: MySQL lo genera y lo podemos recuperar para usarlo en la FK de `order_items`.
+:::
+
+---
+
+## Verificación: ¿Qué Pasa con Este INSERT?
+
+```sql
+-- Intentar insertar un pedido para el cliente 999
+INSERT INTO pedidos (fecha_pedido, total, estado, id_cliente)
+VALUES ('2026-06-01', 45000.00, 'pendiente', 999);
+```
+
+::: {.incremental}
+- **¿Qué sucede?** → ERROR 1452: a foreign key constraint fails.
+- **¿Por qué?** → El cliente 999 no existe en `clientes`.
+- **¿Qué hacer?** → Primero insertar el cliente, luego el pedido.
+- **¿Por qué es bueno que falle?** → Evita datos inconsistentes ("pedidos fantasma").
+:::
+
+---
+
 ## UPDATE: Modificar Datos
 
 ```sql
@@ -102,6 +141,28 @@ WHERE id_cliente = 1;
 
 ::: {.fragment}
 **¡Siempre usar `WHERE`!** — Sin `WHERE`, se actualizan *todos* los registros de la tabla.
+:::
+
+---
+
+## Aplicación: El UPDATE Peligroso
+
+**¿Qué pasa si olvidas el WHERE?**
+
+```sql
+-- SIN WHERE (¡NO hacer esto!)
+UPDATE clientes SET region = 'Metropolitana';
+-- → Actualiza TODOS los clientes a la misma región
+-- → Se pierden los datos reales de región de todos los clientes
+
+-- CON WHERE (correcto)
+UPDATE clientes SET region = 'Metropolitana'
+WHERE id_cliente = 1;
+-- → Solo actualiza a Ana
+```
+
+::: {.fragment}
+**Buena práctica**: Antes de ejecutar un `UPDATE`, primero ejecutarlo como `SELECT` con el mismo `WHERE` para verificar qué filas serán afectadas.
 :::
 
 ---
@@ -168,11 +229,11 @@ LIMIT 5;
 
 ---
 
-## Respondiendo Preguntas de Negocio con SELECT
+## Aplicación: SELECT Responde Preguntas de Negocio
 
-**Pregunta de la Gerente de Marketing**:
+**Pregunta de Juan (analista)**:
 
-> ¿Cuáles son los productos actualmente con stock bajo (menos de 50 unidades)?
+> ¿Cuáles son los productos con stock bajo (menos de 50 unidades)?
 
 ```sql
 SELECT nombre, categoria, precio, stock
@@ -181,10 +242,9 @@ WHERE stock < 50
 ORDER BY stock ASC;
 ```
 
-::: {.fragment}
 **Pregunta del equipo de logística**:
 
-> ¿Qué pedidos están en estado 'pendiente' desde hace más de 3 días?
+> ¿Qué pedidos están pendientes desde hace más de 3 días?
 
 ```sql
 SELECT id_pedido, fecha_pedido, total
@@ -192,6 +252,19 @@ FROM pedidos
 WHERE estado = 'pendiente'
   AND fecha_pedido < DATE_SUB(CURDATE(), INTERVAL 3 DAY);
 ```
+
+---
+
+## Verificación: ¿Qué Consulta Responde Cada Pregunta?
+
+**Une cada pregunta con la cláusula SQL correcta:**
+
+::: {.incremental}
+1. "Mostrar los 10 productos más caros" → **ORDER BY precio DESC LIMIT 10**
+2. "Listar clientes cuyo nombre empieza con 'A'" → **WHERE nombre LIKE 'A%'**
+3. "Mostrar pedidos entre el 1 y el 30 de junio" → **WHERE fecha_pedido BETWEEN '2026-06-01' AND '2026-06-30'**
+4. "Listar clientes sin teléfono registrado" → **WHERE telefono IS NULL**
+5. "Mostrar productos de categoría Ropa o Calzado" → **WHERE categoria IN ('Ropa', 'Calzado')**
 :::
 
 ---
@@ -235,16 +308,37 @@ WHERE estado = 'pendiente'
 - **La consulta correcta es la diferencia entre una decisión informada y una decisión basada en suposiciones.**
 :::
 
+::: {.fragment}
+> "El valor de la base de datos no está en los datos que almacena, sino en las preguntas que permite responder."
+:::
+
 ---
 
-## Para el Laboratorio de Hoy
+## Puntos Clave
 
-**Lab 13**: Poblar `techstyle_db` y resolver consultas básicas.
+::: {.incremental}
+- **DML** permite manipular datos: `INSERT INTO`, `UPDATE`, `DELETE`, `SELECT`.
+- El orden de inserción importa: respetar las dependencias de FK.
+- `LAST_INSERT_ID()` recupera el ID generado por AUTO_INCREMENT en el último INSERT.
+- **Siempre usar `WHERE`** en `UPDATE` y `DELETE` — sin `WHERE` afecta TODOS los registros.
+- `SELECT` con `WHERE`, `ORDER BY` y `LIMIT` permite responder preguntas de negocio simples.
+- Ejecutar un `SELECT` equivalente antes de un `UPDATE`/`DELETE` es una buena práctica de seguridad.
+:::
 
-1. Insertar al menos 20 registros por tabla usando scripts `INSERT`.
-2. Resolver el set de 8 consultas SELECT de negocio.
-3. Documentar cada consulta con la pregunta de negocio que responde.
+---
+
+## Preview del Laboratorio W12
+
+**Lab W12: Poblar `techstyle_db` y resolver consultas básicas**
+
+::: {.incremental}
+1. Insertar al menos 20 registros por tabla usando scripts `INSERT` en el orden correcto de FK.
+2. Usar `LAST_INSERT_ID()` para encadenar inserciones relacionadas (pedido → ítems).
+3. Resolver el set de 8 consultas SELECT de negocio.
+4. Documentar cada consulta con la pregunta de negocio que responde.
+5. Script guardado como `populate_techstyle.sql`.
+:::
 
 ::: {.fragment}
-**Para la próxima semana**: Consultas avanzadas con `JOIN`, `GROUP BY` y funciones de agregación.
+**Para la próxima semana (W13)**: Consultas avanzadas con `JOIN` — combinar múltiples tablas para preguntas más complejas.
 :::

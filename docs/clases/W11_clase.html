@@ -215,6 +215,7 @@ Universidad San Sebastián
 <li class="fragment">El <strong>diccionario de datos</strong> documenta formalmente cada tabla y atributo.</li>
 <li class="fragment"><strong>MySQL</strong> es el sistema gestor de base de datos relacional que usaremos.</li>
 <li class="fragment"><strong>MySQL Workbench</strong> es la interfaz gráfica para escribir y ejecutar SQL.</li>
+<li class="fragment">Los <strong>tipos de datos</strong> son decisiones de negocio: <code>DECIMAL</code> para dinero, <code>VARCHAR</code> para texto, <code>DATE</code> para fechas.</li>
 </ul>
 <div class="fragment">
 <p><strong>Hoy</strong>: Construiremos la base de datos <code>techstyle_db</code> usando <strong>DDL</strong> (Data Definition Language).</p>
@@ -255,8 +256,46 @@ Universidad San Sebastián
 </table>
 <div class="fragment">
 <p><strong>Esta semana</strong>: DDL — definir la estructura de la base de datos.</p>
-<p><strong>Semana 13</strong>: DML — manipular los datos dentro de esa estructura.</p>
+<p><strong>Semana 12</strong>: DML — manipular los datos dentro de esa estructura.</p>
 </div>
+</section>
+<section id="aplicación-ddl-como-traducción-del-diccionario" class="slide level2">
+<h2>Aplicación: DDL como Traducción del Diccionario</h2>
+<p><strong>El DDL traduce el diccionario de datos a código ejecutable</strong>:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Diccionario de datos</th>
+<th>DDL en MySQL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Tabla <code>clientes</code></td>
+<td><code>CREATE TABLE clientes (...)</code></td>
+</tr>
+<tr class="even">
+<td><code>id_cliente: INT, No NULL, AUTO</code></td>
+<td><code>id_cliente INT NOT NULL AUTO_INCREMENT</code></td>
+</tr>
+<tr class="odd">
+<td><code>email: VARCHAR(150), No NULL, UNIQUE</code></td>
+<td><code>email VARCHAR(150) NOT NULL, UNIQUE KEY uq_email (email)</code></td>
+</tr>
+<tr class="even">
+<td><code>PK: id_cliente</code></td>
+<td><code>PRIMARY KEY (id_cliente)</code></td>
+</tr>
+<tr class="odd">
+<td><code>FK: id_cliente → clientes</code></td>
+<td><code>FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente)</code></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="crear-la-base-de-datos" class="slide level2">
 <h2>Crear la Base de Datos</h2>
@@ -269,9 +308,22 @@ Universidad San Sebastián
 <span id="cb1-7"><a></a><span class="kw">USE</span> techstyle_db;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <ul>
-<li><code>utf8mb4</code>: soporte completo para caracteres españoles (tildes, ñ).</li>
-<li><code>COLLATE spanish_ci</code>: ordenamiento insensible a mayúsculas en español.</li>
+<li><code>utf8mb4</code>: soporte completo para caracteres españoles (tildes, ñ) y emojis.</li>
+<li><code>COLLATE spanish_ci</code>: ordenamiento insensible a mayúsculas en español (<code>a</code> = <code>A</code>, <code>á</code> ≠ <code>a</code>).</li>
 </ul>
+</div>
+</section>
+<section id="verificación-antes-de-crear-tablas" class="slide level2">
+<h2>Verificación: Antes de Crear Tablas</h2>
+<p><strong>Orden correcto de creación</strong> (respetando dependencias de FK):</p>
+<ol type="1">
+<li class="fragment">Primero las tablas <strong>sin FK</strong> (sin dependencias): <code>zonas</code>, <code>clientes</code>, <code>productos</code></li>
+<li class="fragment">Luego las tablas que <strong>dependen de las anteriores</strong>: <code>repartidores</code> (FK → zonas)</li>
+<li class="fragment">Después las tablas con <strong>más dependencias</strong>: <code>pedidos</code> (FK → clientes + repartidores)</li>
+<li class="fragment">Finalmente las tablas <strong>hoja</strong>: <code>order_items</code> (FK → pedidos + productos), <code>devoluciones</code> (FK → pedidos)</li>
+</ol>
+<div class="fragment">
+<p><strong>Si creas tablas en el orden incorrecto</strong> → error de FK al intentar referenciar una tabla que no existe aún.</p>
 </div>
 </section>
 <section id="crear-la-primera-tabla-zonas" class="slide level2">
@@ -312,6 +364,7 @@ Universidad San Sebastián
 <ul>
 <li><code>AUTO_INCREMENT</code>: MySQL genera automáticamente el ID.</li>
 <li><code>UNIQUE KEY</code>: garantiza que no haya dos clientes con el mismo email.</li>
+<li><code>DEFAULT (CURDATE())</code>: si no se especifica fecha, usa la fecha actual.</li>
 </ul>
 </div>
 </section>
@@ -328,7 +381,7 @@ Universidad San Sebastián
 <span id="cb4-9"><a></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <ul>
-<li><code>CONSTRAINT</code>: nombre explícito para la restricción de FK (facilita el diagnóstico de errores).</li>
+<li><code>CONSTRAINT fk_rep_zona</code>: nombre explícito para la restricción de FK (facilita el diagnóstico de errores).</li>
 <li>La FK <code>id_zona</code> debe existir en <code>zonas</code> antes de insertar un repartidor.</li>
 </ul>
 </div>
@@ -395,29 +448,47 @@ Universidad San Sebastián
 </section>
 <section id="modificar-tablas-alter-table" class="slide level2">
 <h2>Modificar Tablas: <code>ALTER TABLE</code></h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a></a><span class="co">-- Agregar una columna</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a></a><span class="co">-- Agregar una columna nueva</span></span>
 <span id="cb8-2"><a></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> clientes <span class="kw">ADD</span> <span class="kw">COLUMN</span> activo <span class="dt">BOOLEAN</span> <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">DEFAULT</span> <span class="kw">TRUE</span>;</span>
 <span id="cb8-3"><a></a></span>
-<span id="cb8-4"><a></a><span class="co">-- Modificar el tipo de una columna</span></span>
+<span id="cb8-4"><a></a><span class="co">-- Modificar el tipo de una columna existente</span></span>
 <span id="cb8-5"><a></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> productos <span class="kw">MODIFY</span> <span class="kw">COLUMN</span> categoria <span class="dt">VARCHAR</span>(<span class="dv">80</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>;</span>
 <span id="cb8-6"><a></a></span>
-<span id="cb8-7"><a></a><span class="co">-- Eliminar una columna</span></span>
-<span id="cb8-8"><a></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> clientes <span class="kw">DROP</span> <span class="kw">COLUMN</span> activo;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-7"><a></a><span class="co">-- Agregar una restricción FK después de crear la tabla</span></span>
+<span id="cb8-8"><a></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> pedidos</span>
+<span id="cb8-9"><a></a><span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> fk_ped_zona</span>
+<span id="cb8-10"><a></a><span class="kw">FOREIGN</span> <span class="kw">KEY</span> (id_zona) <span class="kw">REFERENCES</span> zonas(id_zona);</span>
+<span id="cb8-11"><a></a></span>
+<span id="cb8-12"><a></a><span class="co">-- Eliminar una columna</span></span>
+<span id="cb8-13"><a></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> clientes <span class="kw">DROP</span> <span class="kw">COLUMN</span> activo;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><strong>Advertencia</strong>: <code>DROP COLUMN</code> elimina la columna y todos sus datos permanentemente.</p>
 </div>
 </section>
-<section id="qué-pasa-si-violo-una-restricción-de-fk" class="slide level2">
-<h2>¿Qué pasa si violo una restricción de FK?</h2>
+<section id="aplicación-qué-pasa-si-violo-una-restricción-de-fk" class="slide level2">
+<h2>Aplicación: ¿Qué pasa si violo una restricción de FK?</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a></a><span class="co">-- Intentar insertar un pedido con un cliente que no existe</span></span>
 <span id="cb9-2"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> pedidos (fecha_pedido, total, estado, id_cliente)</span>
 <span id="cb9-3"><a></a><span class="kw">VALUES</span> (<span class="st">'2026-06-01'</span>, <span class="dv">55000</span>, <span class="st">'pendiente'</span>, <span class="dv">9999</span>);</span>
 <span id="cb9-4"><a></a><span class="co">-- ERROR 1452: Cannot add or update a child row:</span></span>
-<span id="cb9-5"><a></a><span class="co">-- a foreign key constraint fails</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-5"><a></a><span class="co">-- a foreign key constraint fails (`techstyle_db`.`pedidos`,</span></span>
+<span id="cb9-6"><a></a><span class="co">-- CONSTRAINT `fk_ped_cli` FOREIGN KEY (`id_cliente`)</span></span>
+<span id="cb9-7"><a></a><span class="co">-- REFERENCES `clientes` (`id_cliente`))</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><strong>MySQL protege la integridad referencial automáticamente.</strong></p>
 <p>→ Esto garantiza que no existan pedidos de “clientes fantasma” en el CMI.</p>
 </div>
+</section>
+<section id="verificación-qué-restricción-corresponde" class="slide level2">
+<h2>Verificación: ¿Qué Restricción Corresponde?</h2>
+<p><strong>Elige la restricción SQL correcta para cada requerimiento de negocio:</strong></p>
+<ol type="1">
+<li class="fragment">“El email de un cliente debe ser único en el sistema” → <strong>UNIQUE KEY</strong></li>
+<li class="fragment">“El precio de un producto no puede ser negativo” → <strong>CHECK (precio &gt;= 0)</strong></li>
+<li class="fragment">“Si no se especifica estado del pedido, debe ser ‘pendiente’” → <strong>DEFAULT ‘pendiente’</strong></li>
+<li class="fragment">“Todo pedido debe tener un cliente asociado” → <strong>FOREIGN KEY NOT NULL</strong></li>
+<li class="fragment">“El id_pedido debe incrementarse automáticamente” → <strong>AUTO_INCREMENT</strong></li>
+</ol>
 </section>
 <section id="control-parcial-3" class="slide level2">
 <h2>Control Parcial 3</h2>
@@ -438,18 +509,34 @@ Universidad San Sebastián
 <li class="fragment">Si un analista dice “cada pedido debe tener un cliente”, eso se traduce en <code>FOREIGN KEY NOT NULL</code>.</li>
 <li class="fragment"><strong>La base de datos hace cumplir las reglas del negocio de forma automática.</strong></li>
 </ul>
-</section>
-<section id="para-el-laboratorio-de-hoy" class="slide level2">
-<h2>Para el Laboratorio de Hoy</h2>
-<p><strong>Lab 12</strong>: Crear <code>techstyle_db</code> con DDL completo en MySQL Workbench.</p>
-<ul>
-<li>Implementar las 7 tablas del modelo normalizado.</li>
-<li>Incluir todas las PK, FK y restricciones del diccionario de datos.</li>
-<li>Verificar la estructura con <code>DESCRIBE</code> y <code>SHOW TABLES</code>.</li>
-<li>Script SQL guardado como <code>create_techstyle.sql</code>.</li>
-</ul>
 <div class="fragment">
-<p><strong>Para la próxima semana</strong>: Poblar la base de datos con datos reales usando <code>INSERT INTO</code> y consultar con <code>SELECT</code>.</p>
+<blockquote>
+<p>“Sin restricciones de integridad, la base de datos es solo un archivo de texto glorificado. Las restricciones son lo que hace que la base de datos proteja el negocio.”</p>
+</blockquote>
+</div>
+</section>
+<section id="puntos-clave" class="slide level2">
+<h2>Puntos Clave</h2>
+<ul>
+<li class="fragment"><strong>DDL</strong> (Data Definition Language) define la estructura de la base de datos: <code>CREATE</code>, <code>ALTER</code>, <code>DROP</code>.</li>
+<li class="fragment">El orden de creación de tablas importa: primero las tablas sin FK, luego las que dependen.</li>
+<li class="fragment">Las restricciones traducen reglas de negocio a código: <code>PRIMARY KEY</code>, <code>FOREIGN KEY</code>, <code>NOT NULL</code>, <code>UNIQUE</code>, <code>DEFAULT</code>.</li>
+<li class="fragment"><code>CONSTRAINT nombre_fk</code> permite identificar la restricción de FK con un nombre descriptivo.</li>
+<li class="fragment"><code>DECIMAL(10,2)</code> para precios: exacto. <code>INT</code> para IDs. <code>VARCHAR(n)</code> para texto variable.</li>
+</ul>
+</section>
+<section id="preview-del-laboratorio-w11" class="slide level2">
+<h2>Preview del Laboratorio W11</h2>
+<p><strong>Lab W11: Crear <code>techstyle_db</code> con DDL completo en MySQL Workbench</strong></p>
+<ol type="1">
+<li class="fragment">Crear la base de datos <code>techstyle_db</code> con charset correcto.</li>
+<li class="fragment">Implementar las 7 tablas del modelo normalizado en el orden correcto de dependencias.</li>
+<li class="fragment">Incluir todas las PK, FK y restricciones del diccionario de datos.</li>
+<li class="fragment">Verificar la estructura con <code>DESCRIBE</code> y <code>SHOW TABLES</code>.</li>
+<li class="fragment">Guardar el script completo como <code>create_techstyle.sql</code>.</li>
+</ol>
+<div class="fragment">
+<p><strong>Para la próxima semana (W12)</strong>: Poblar la base de datos con datos reales usando <code>INSERT INTO</code> y hacer las primeras consultas con <code>SELECT</code>.</p>
 </div>
 
 

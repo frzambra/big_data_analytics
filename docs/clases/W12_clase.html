@@ -250,7 +250,7 @@ Universidad San Sebastián
 </table>
 <div class="fragment">
 <p><strong>Hoy cubriremos</strong>: <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> y <code>SELECT</code> básico.</p>
-<p><strong>Semana 14</strong>: <code>SELECT</code> avanzado (JOINs, GROUP BY, funciones de agregación).</p>
+<p><strong>Semana 13</strong>: <code>SELECT</code> avanzado (JOINs, GROUP BY, funciones de agregación).</p>
 </div>
 </section>
 <section id="insert-into-agregar-datos" class="slide level2">
@@ -282,36 +282,81 @@ Universidad San Sebastián
 <span id="cb2-9"><a></a>    (<span class="st">'Jeans Slim'</span>,            <span class="st">'Ropa'</span>,       <span class="fl">35000.00</span>, <span class="dv">200</span>),</span>
 <span id="cb2-10"><a></a>    (<span class="st">'Mochila Urban 30L'</span>,     <span class="st">'Accesorios'</span>, <span class="fl">28000.00</span>,  <span class="dv">80</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
+<section id="aplicación-insertar-un-pedido-completo" class="slide level2">
+<h2>Aplicación: Insertar un Pedido Completo</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a></a><span class="co">-- 1. Insertar el pedido de Ana</span></span>
+<span id="cb3-2"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> pedidos (fecha_pedido, total, estado, id_cliente)</span>
+<span id="cb3-3"><a></a><span class="kw">VALUES</span> (<span class="st">'2026-06-01'</span>, <span class="fl">57000.00</span>, <span class="st">'entregado'</span>, <span class="dv">1</span>);</span>
+<span id="cb3-4"><a></a></span>
+<span id="cb3-5"><a></a><span class="co">-- 2. Obtener el ID del pedido recién insertado</span></span>
+<span id="cb3-6"><a></a><span class="kw">SELECT</span> LAST_INSERT_ID(); <span class="co">-- Resultado: 1</span></span>
+<span id="cb3-7"><a></a></span>
+<span id="cb3-8"><a></a><span class="co">-- 3. Insertar los ítems del pedido</span></span>
+<span id="cb3-9"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> order_items (id_pedido, id_producto, cantidad, precio_unitario) <span class="kw">VALUES</span></span>
+<span id="cb3-10"><a></a>    (<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">45000.00</span>),  <span class="co">-- 1 Zapatilla Runner Pro</span></span>
+<span id="cb3-11"><a></a>    (<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="fl">12000.00</span>);  <span class="co">-- 1 Polera Dry-Fit</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><strong>¿Por qué <code>LAST_INSERT_ID()</code>?</strong> — El <code>id_pedido</code> es AUTO_INCREMENT: MySQL lo genera y lo podemos recuperar para usarlo en la FK de <code>order_items</code>.</p>
+</div>
+</section>
+<section id="verificación-qué-pasa-con-este-insert" class="slide level2">
+<h2>Verificación: ¿Qué Pasa con Este INSERT?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a></a><span class="co">-- Intentar insertar un pedido para el cliente 999</span></span>
+<span id="cb4-2"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> pedidos (fecha_pedido, total, estado, id_cliente)</span>
+<span id="cb4-3"><a></a><span class="kw">VALUES</span> (<span class="st">'2026-06-01'</span>, <span class="fl">45000.00</span>, <span class="st">'pendiente'</span>, <span class="dv">999</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li class="fragment"><strong>¿Qué sucede?</strong> → ERROR 1452: a foreign key constraint fails.</li>
+<li class="fragment"><strong>¿Por qué?</strong> → El cliente 999 no existe en <code>clientes</code>.</li>
+<li class="fragment"><strong>¿Qué hacer?</strong> → Primero insertar el cliente, luego el pedido.</li>
+<li class="fragment"><strong>¿Por qué es bueno que falle?</strong> → Evita datos inconsistentes (“pedidos fantasma”).</li>
+</ul>
+</section>
 <section id="update-modificar-datos" class="slide level2">
 <h2>UPDATE: Modificar Datos</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a></a><span class="co">-- Actualizar el stock de un producto</span></span>
-<span id="cb3-2"><a></a><span class="kw">UPDATE</span> productos</span>
-<span id="cb3-3"><a></a><span class="kw">SET</span> stock <span class="op">=</span> stock <span class="op">-</span> <span class="dv">5</span></span>
-<span id="cb3-4"><a></a><span class="kw">WHERE</span> id_producto <span class="op">=</span> <span class="dv">1</span>;</span>
-<span id="cb3-5"><a></a></span>
-<span id="cb3-6"><a></a><span class="co">-- Cambiar el estado de un pedido</span></span>
-<span id="cb3-7"><a></a><span class="kw">UPDATE</span> pedidos</span>
-<span id="cb3-8"><a></a><span class="kw">SET</span> estado <span class="op">=</span> <span class="st">'entregado'</span></span>
-<span id="cb3-9"><a></a><span class="kw">WHERE</span> id_pedido <span class="op">=</span> <span class="dv">3</span>;</span>
-<span id="cb3-10"><a></a></span>
-<span id="cb3-11"><a></a><span class="co">-- Actualizar el email de un cliente</span></span>
-<span id="cb3-12"><a></a><span class="kw">UPDATE</span> clientes</span>
-<span id="cb3-13"><a></a><span class="kw">SET</span> email <span class="op">=</span> <span class="st">'ana.gonzalez@techstyle.cl'</span></span>
-<span id="cb3-14"><a></a><span class="kw">WHERE</span> id_cliente <span class="op">=</span> <span class="dv">1</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a></a><span class="co">-- Actualizar el stock de un producto</span></span>
+<span id="cb5-2"><a></a><span class="kw">UPDATE</span> productos</span>
+<span id="cb5-3"><a></a><span class="kw">SET</span> stock <span class="op">=</span> stock <span class="op">-</span> <span class="dv">5</span></span>
+<span id="cb5-4"><a></a><span class="kw">WHERE</span> id_producto <span class="op">=</span> <span class="dv">1</span>;</span>
+<span id="cb5-5"><a></a></span>
+<span id="cb5-6"><a></a><span class="co">-- Cambiar el estado de un pedido</span></span>
+<span id="cb5-7"><a></a><span class="kw">UPDATE</span> pedidos</span>
+<span id="cb5-8"><a></a><span class="kw">SET</span> estado <span class="op">=</span> <span class="st">'entregado'</span></span>
+<span id="cb5-9"><a></a><span class="kw">WHERE</span> id_pedido <span class="op">=</span> <span class="dv">3</span>;</span>
+<span id="cb5-10"><a></a></span>
+<span id="cb5-11"><a></a><span class="co">-- Actualizar el email de un cliente</span></span>
+<span id="cb5-12"><a></a><span class="kw">UPDATE</span> clientes</span>
+<span id="cb5-13"><a></a><span class="kw">SET</span> email <span class="op">=</span> <span class="st">'ana.gonzalez@techstyle.cl'</span></span>
+<span id="cb5-14"><a></a><span class="kw">WHERE</span> id_cliente <span class="op">=</span> <span class="dv">1</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><strong>¡Siempre usar <code>WHERE</code>!</strong> — Sin <code>WHERE</code>, se actualizan <em>todos</em> los registros de la tabla.</p>
 </div>
 </section>
+<section id="aplicación-el-update-peligroso" class="slide level2">
+<h2>Aplicación: El UPDATE Peligroso</h2>
+<p><strong>¿Qué pasa si olvidas el WHERE?</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a></a><span class="co">-- SIN WHERE (¡NO hacer esto!)</span></span>
+<span id="cb6-2"><a></a><span class="kw">UPDATE</span> clientes <span class="kw">SET</span> region <span class="op">=</span> <span class="st">'Metropolitana'</span>;</span>
+<span id="cb6-3"><a></a><span class="co">-- → Actualiza TODOS los clientes a la misma región</span></span>
+<span id="cb6-4"><a></a><span class="co">-- → Se pierden los datos reales de región de todos los clientes</span></span>
+<span id="cb6-5"><a></a></span>
+<span id="cb6-6"><a></a><span class="co">-- CON WHERE (correcto)</span></span>
+<span id="cb6-7"><a></a><span class="kw">UPDATE</span> clientes <span class="kw">SET</span> region <span class="op">=</span> <span class="st">'Metropolitana'</span></span>
+<span id="cb6-8"><a></a><span class="kw">WHERE</span> id_cliente <span class="op">=</span> <span class="dv">1</span>;</span>
+<span id="cb6-9"><a></a><span class="co">-- → Solo actualiza a Ana</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><strong>Buena práctica</strong>: Antes de ejecutar un <code>UPDATE</code>, primero ejecutarlo como <code>SELECT</code> con el mismo <code>WHERE</code> para verificar qué filas serán afectadas.</p>
+</div>
+</section>
 <section id="delete-eliminar-datos" class="slide level2">
 <h2>DELETE: Eliminar Datos</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a></a><span class="co">-- Eliminar una devolución específica</span></span>
-<span id="cb4-2"><a></a><span class="kw">DELETE</span> <span class="kw">FROM</span> devoluciones</span>
-<span id="cb4-3"><a></a><span class="kw">WHERE</span> id_devolucion <span class="op">=</span> <span class="dv">5</span>;</span>
-<span id="cb4-4"><a></a></span>
-<span id="cb4-5"><a></a><span class="co">-- ¿Puedo eliminar un cliente que tiene pedidos?</span></span>
-<span id="cb4-6"><a></a><span class="kw">DELETE</span> <span class="kw">FROM</span> clientes <span class="kw">WHERE</span> id_cliente <span class="op">=</span> <span class="dv">1</span>;</span>
-<span id="cb4-7"><a></a><span class="co">-- ERROR 1451: Cannot delete or update a parent row:</span></span>
-<span id="cb4-8"><a></a><span class="co">-- a foreign key constraint fails</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a></a><span class="co">-- Eliminar una devolución específica</span></span>
+<span id="cb7-2"><a></a><span class="kw">DELETE</span> <span class="kw">FROM</span> devoluciones</span>
+<span id="cb7-3"><a></a><span class="kw">WHERE</span> id_devolucion <span class="op">=</span> <span class="dv">5</span>;</span>
+<span id="cb7-4"><a></a></span>
+<span id="cb7-5"><a></a><span class="co">-- ¿Puedo eliminar un cliente que tiene pedidos?</span></span>
+<span id="cb7-6"><a></a><span class="kw">DELETE</span> <span class="kw">FROM</span> clientes <span class="kw">WHERE</span> id_cliente <span class="op">=</span> <span class="dv">1</span>;</span>
+<span id="cb7-7"><a></a><span class="co">-- ERROR 1451: Cannot delete or update a parent row:</span></span>
+<span id="cb7-8"><a></a><span class="co">-- a foreign key constraint fails</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><strong>La FK protege contra eliminaciones accidentales.</strong></p>
 <p>Para eliminar Ana, primero debo eliminar (o reasignar) todos sus pedidos.</p>
@@ -319,26 +364,26 @@ Universidad San Sebastián
 </section>
 <section id="select-básico-consultar-la-base-de-datos" class="slide level2">
 <h2>SELECT Básico: Consultar la Base de Datos</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a></a><span class="co">-- Todos los clientes</span></span>
-<span id="cb5-2"><a></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> clientes;</span>
-<span id="cb5-3"><a></a></span>
-<span id="cb5-4"><a></a><span class="co">-- Solo nombre y email</span></span>
-<span id="cb5-5"><a></a><span class="kw">SELECT</span> nombre, email <span class="kw">FROM</span> clientes;</span>
-<span id="cb5-6"><a></a></span>
-<span id="cb5-7"><a></a><span class="co">-- Clientes de la Región Metropolitana</span></span>
-<span id="cb5-8"><a></a><span class="kw">SELECT</span> nombre, email <span class="kw">FROM</span> clientes</span>
-<span id="cb5-9"><a></a><span class="kw">WHERE</span> region <span class="op">=</span> <span class="st">'Metropolitana'</span>;</span>
-<span id="cb5-10"><a></a></span>
-<span id="cb5-11"><a></a><span class="co">-- Productos con precio mayor a $20.000</span></span>
-<span id="cb5-12"><a></a><span class="kw">SELECT</span> nombre, categoria, precio <span class="kw">FROM</span> productos</span>
-<span id="cb5-13"><a></a><span class="kw">WHERE</span> precio <span class="op">&gt;</span> <span class="dv">20000</span></span>
-<span id="cb5-14"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> precio <span class="kw">DESC</span>;</span>
-<span id="cb5-15"><a></a></span>
-<span id="cb5-16"><a></a><span class="co">-- Los 5 pedidos más recientes</span></span>
-<span id="cb5-17"><a></a><span class="kw">SELECT</span> id_pedido, fecha_pedido, total, estado</span>
-<span id="cb5-18"><a></a><span class="kw">FROM</span> pedidos</span>
-<span id="cb5-19"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> fecha_pedido <span class="kw">DESC</span></span>
-<span id="cb5-20"><a></a><span class="kw">LIMIT</span> <span class="dv">5</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a></a><span class="co">-- Todos los clientes</span></span>
+<span id="cb8-2"><a></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> clientes;</span>
+<span id="cb8-3"><a></a></span>
+<span id="cb8-4"><a></a><span class="co">-- Solo nombre y email</span></span>
+<span id="cb8-5"><a></a><span class="kw">SELECT</span> nombre, email <span class="kw">FROM</span> clientes;</span>
+<span id="cb8-6"><a></a></span>
+<span id="cb8-7"><a></a><span class="co">-- Clientes de la Región Metropolitana</span></span>
+<span id="cb8-8"><a></a><span class="kw">SELECT</span> nombre, email <span class="kw">FROM</span> clientes</span>
+<span id="cb8-9"><a></a><span class="kw">WHERE</span> region <span class="op">=</span> <span class="st">'Metropolitana'</span>;</span>
+<span id="cb8-10"><a></a></span>
+<span id="cb8-11"><a></a><span class="co">-- Productos con precio mayor a $20.000</span></span>
+<span id="cb8-12"><a></a><span class="kw">SELECT</span> nombre, categoria, precio <span class="kw">FROM</span> productos</span>
+<span id="cb8-13"><a></a><span class="kw">WHERE</span> precio <span class="op">&gt;</span> <span class="dv">20000</span></span>
+<span id="cb8-14"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> precio <span class="kw">DESC</span>;</span>
+<span id="cb8-15"><a></a></span>
+<span id="cb8-16"><a></a><span class="co">-- Los 5 pedidos más recientes</span></span>
+<span id="cb8-17"><a></a><span class="kw">SELECT</span> id_pedido, fecha_pedido, total, estado</span>
+<span id="cb8-18"><a></a><span class="kw">FROM</span> pedidos</span>
+<span id="cb8-19"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> fecha_pedido <span class="kw">DESC</span></span>
+<span id="cb8-20"><a></a><span class="kw">LIMIT</span> <span class="dv">5</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="operadores-en-where" class="slide level2">
 <h2>Operadores en WHERE</h2>
@@ -381,26 +426,35 @@ Universidad San Sebastián
 </tbody>
 </table>
 </section>
-<section id="respondiendo-preguntas-de-negocio-con-select" class="slide level2">
-<h2>Respondiendo Preguntas de Negocio con SELECT</h2>
-<p><strong>Pregunta de la Gerente de Marketing</strong>:</p>
+<section id="aplicación-select-responde-preguntas-de-negocio" class="slide level2">
+<h2>Aplicación: SELECT Responde Preguntas de Negocio</h2>
+<p><strong>Pregunta de Juan (analista)</strong>:</p>
 <blockquote>
-<p>¿Cuáles son los productos actualmente con stock bajo (menos de 50 unidades)?</p>
+<p>¿Cuáles son los productos con stock bajo (menos de 50 unidades)?</p>
 </blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a></a><span class="kw">SELECT</span> nombre, categoria, precio, stock</span>
-<span id="cb6-2"><a></a><span class="kw">FROM</span> productos</span>
-<span id="cb6-3"><a></a><span class="kw">WHERE</span> stock <span class="op">&lt;</span> <span class="dv">50</span></span>
-<span id="cb6-4"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> stock <span class="kw">ASC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="fragment">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a></a><span class="kw">SELECT</span> nombre, categoria, precio, stock</span>
+<span id="cb9-2"><a></a><span class="kw">FROM</span> productos</span>
+<span id="cb9-3"><a></a><span class="kw">WHERE</span> stock <span class="op">&lt;</span> <span class="dv">50</span></span>
+<span id="cb9-4"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> stock <span class="kw">ASC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Pregunta del equipo de logística</strong>:</p>
 <blockquote>
-<p>¿Qué pedidos están en estado ‘pendiente’ desde hace más de 3 días?</p>
+<p>¿Qué pedidos están pendientes desde hace más de 3 días?</p>
 </blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a></a><span class="kw">SELECT</span> id_pedido, fecha_pedido, total</span>
-<span id="cb7-2"><a></a><span class="kw">FROM</span> pedidos</span>
-<span id="cb7-3"><a></a><span class="kw">WHERE</span> estado <span class="op">=</span> <span class="st">'pendiente'</span></span>
-<span id="cb7-4"><a></a>  <span class="kw">AND</span> fecha_pedido <span class="op">&lt;</span> DATE_SUB(CURDATE(), <span class="dt">INTERVAL</span> <span class="dv">3</span> <span class="dt">DAY</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a></a><span class="kw">SELECT</span> id_pedido, fecha_pedido, total</span>
+<span id="cb10-2"><a></a><span class="kw">FROM</span> pedidos</span>
+<span id="cb10-3"><a></a><span class="kw">WHERE</span> estado <span class="op">=</span> <span class="st">'pendiente'</span></span>
+<span id="cb10-4"><a></a>  <span class="kw">AND</span> fecha_pedido <span class="op">&lt;</span> DATE_SUB(CURDATE(), <span class="dt">INTERVAL</span> <span class="dv">3</span> <span class="dt">DAY</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="verificación-qué-consulta-responde-cada-pregunta" class="slide level2">
+<h2>Verificación: ¿Qué Consulta Responde Cada Pregunta?</h2>
+<p><strong>Une cada pregunta con la cláusula SQL correcta:</strong></p>
+<ol type="1">
+<li class="fragment">“Mostrar los 10 productos más caros” → <strong>ORDER BY precio DESC LIMIT 10</strong></li>
+<li class="fragment">“Listar clientes cuyo nombre empieza con ‘A’” → <strong>WHERE nombre LIKE ‘A%’</strong></li>
+<li class="fragment">“Mostrar pedidos entre el 1 y el 30 de junio” → <strong>WHERE fecha_pedido BETWEEN ‘2026-06-01’ AND ‘2026-06-30’</strong></li>
+<li class="fragment">“Listar clientes sin teléfono registrado” → <strong>WHERE telefono IS NULL</strong></li>
+<li class="fragment">“Mostrar productos de categoría Ropa o Calzado” → <strong>WHERE categoria IN (‘Ropa’, ‘Calzado’)</strong></li>
+</ol>
 </section>
 <section id="integridad-al-insertar-y-actualizar" class="slide level2">
 <h2>Integridad al Insertar y Actualizar</h2>
@@ -434,17 +488,35 @@ Universidad San Sebastián
 <li class="fragment">El analista de TechStyle no “busca datos” → formula una <strong>pregunta de negocio</strong> y la traduce a SQL.</li>
 <li class="fragment"><strong>La consulta correcta es la diferencia entre una decisión informada y una decisión basada en suposiciones.</strong></li>
 </ul>
+<div class="fragment">
+<blockquote>
+<p>“El valor de la base de datos no está en los datos que almacena, sino en las preguntas que permite responder.”</p>
+</blockquote>
+</div>
 </section>
-<section id="para-el-laboratorio-de-hoy" class="slide level2">
-<h2>Para el Laboratorio de Hoy</h2>
-<p><strong>Lab 13</strong>: Poblar <code>techstyle_db</code> y resolver consultas básicas.</p>
+<section id="puntos-clave" class="slide level2">
+<h2>Puntos Clave</h2>
+<ul>
+<li class="fragment"><strong>DML</strong> permite manipular datos: <code>INSERT INTO</code>, <code>UPDATE</code>, <code>DELETE</code>, <code>SELECT</code>.</li>
+<li class="fragment">El orden de inserción importa: respetar las dependencias de FK.</li>
+<li class="fragment"><code>LAST_INSERT_ID()</code> recupera el ID generado por AUTO_INCREMENT en el último INSERT.</li>
+<li class="fragment"><strong>Siempre usar <code>WHERE</code></strong> en <code>UPDATE</code> y <code>DELETE</code> — sin <code>WHERE</code> afecta TODOS los registros.</li>
+<li class="fragment"><code>SELECT</code> con <code>WHERE</code>, <code>ORDER BY</code> y <code>LIMIT</code> permite responder preguntas de negocio simples.</li>
+<li class="fragment">Ejecutar un <code>SELECT</code> equivalente antes de un <code>UPDATE</code>/<code>DELETE</code> es una buena práctica de seguridad.</li>
+</ul>
+</section>
+<section id="preview-del-laboratorio-w12" class="slide level2">
+<h2>Preview del Laboratorio W12</h2>
+<p><strong>Lab W12: Poblar <code>techstyle_db</code> y resolver consultas básicas</strong></p>
 <ol type="1">
-<li>Insertar al menos 20 registros por tabla usando scripts <code>INSERT</code>.</li>
-<li>Resolver el set de 8 consultas SELECT de negocio.</li>
-<li>Documentar cada consulta con la pregunta de negocio que responde.</li>
+<li class="fragment">Insertar al menos 20 registros por tabla usando scripts <code>INSERT</code> en el orden correcto de FK.</li>
+<li class="fragment">Usar <code>LAST_INSERT_ID()</code> para encadenar inserciones relacionadas (pedido → ítems).</li>
+<li class="fragment">Resolver el set de 8 consultas SELECT de negocio.</li>
+<li class="fragment">Documentar cada consulta con la pregunta de negocio que responde.</li>
+<li class="fragment">Script guardado como <code>populate_techstyle.sql</code>.</li>
 </ol>
 <div class="fragment">
-<p><strong>Para la próxima semana</strong>: Consultas avanzadas con <code>JOIN</code>, <code>GROUP BY</code> y funciones de agregación.</p>
+<p><strong>Para la próxima semana (W13)</strong>: Consultas avanzadas con <code>JOIN</code> — combinar múltiples tablas para preguntas más complejas.</p>
 </div>
 
 

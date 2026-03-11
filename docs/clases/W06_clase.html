@@ -147,11 +147,11 @@ Universidad San Sebastián
 <h2>¿Qué Vimos la Semana Pasada?</h2>
 <ul>
 <li class="fragment">El <strong>Diagrama de Caso de Uso</strong> describe qué hace el sistema y quién lo usa.</li>
-<li class="fragment">El <strong>Esquema UML</strong> muestra la estructura de clases y sus relaciones.</li>
+<li class="fragment">El <strong>Esquema UML</strong> muestra la estructura de clases, atributos y relaciones.</li>
 <li class="fragment">El modelamiento previo evita errores costosos en la construcción de la base de datos.</li>
 </ul>
 <div class="fragment">
-<p><strong>Hoy</strong>: ¿Cómo representamos la <em>realidad del negocio</em> como entidades y relaciones?</p>
+<p><strong>Hoy</strong>: ¿Cómo representamos la <em>realidad del negocio</em> como entidades y relaciones formales para diseñar la base de datos?</p>
 </div>
 </section>
 <section id="el-principio-fundamental" class="slide level2">
@@ -163,7 +163,7 @@ Universidad San Sebastián
 <ul>
 <li>TechStyle tiene clientes, productos, pedidos, repartidores y zonas.</li>
 <li>Todo eso existe en el mundo real.</li>
-<li>El <strong>Modelo Entidad-Relación</strong> captura esa realidad en un diagrama formal.</li>
+<li>El <strong>Modelo Entidad-Relación</strong> captura esa realidad en un diagrama formal antes de escribir una sola línea de SQL.</li>
 </ul>
 </div>
 <aside class="notes">
@@ -189,6 +189,13 @@ Universidad San Sebastián
 </ul>
 <div class="fragment">
 <p><strong>Notaciones más usadas</strong>: - Chen (clásica, con rombos y elipses) - <strong>Pata de Gallo</strong> (Crow’s Foot — usada en draw.io y herramientas modernas)</p>
+</div>
+</section>
+<section id="simbología-notación-pata-de-gallo" class="slide level2">
+<h2>Simbología: Notación Pata de Gallo</h2>
+<p><code>[IMAGE/DIAGRAM PLACEHOLDER: Tabla comparativa de la notación Crow's Foot — (1) símbolo de "uno exactamente": línea vertical simple; (2) "cero o uno": línea vertical + círculo; (3) "uno o muchos": línea vertical + pata de gallo; (4) "cero o muchos": círculo + pata de gallo. Cada símbolo con etiqueta y ejemplo de relación TechStyle: "Un cliente tiene uno o muchos pedidos", "Un pedido puede tener cero o una devolución".]</code></p>
+<div class="fragment">
+<p><em>draw.io usa esta notación por defecto. Es el estándar industrial en diseño de bases de datos.</em></p>
 </div>
 </section>
 <section id="conceptos-del-modelo-er" class="slide level2">
@@ -230,6 +237,29 @@ Universidad San Sebastián
 </tbody>
 </table>
 </section>
+<section id="aplicación-identificar-entidades-de-techstyle" class="slide level2">
+<h2>Aplicación: Identificar Entidades de TechStyle</h2>
+<p><strong>Regla práctica</strong>: Una entidad es un objeto que:</p>
+<ol type="1">
+<li class="fragment">Tiene existencia propia (independiente de otros objetos).</li>
+<li class="fragment">Tiene atributos propios que nos interesa registrar.</li>
+<li class="fragment">Puede tener múltiples instancias (Ana, Pedro, María = múltiples clientes).</li>
+</ol>
+<div class="fragment">
+<p><strong>Entidades confirmadas</strong>: - <code>Cliente</code> ✓ — existe por sí mismo, tiene nombre, email, región. - <code>Pedido</code> ✓ — tiene fecha, total, estado. - <code>Producto</code> ✓ — tiene nombre, categoría, precio. - <code>Repartidor</code> ✓ — tiene nombre, teléfono, zona asignada. - <code>Zona</code> ✓ — tiene nombre y región. - <code>Devolución</code> ✓ — tiene fecha, motivo, monto.</p>
+</div>
+</section>
+<section id="verificación-es-una-entidad-o-un-atributo" class="slide level2">
+<h2>Verificación: ¿Es una Entidad o un Atributo?</h2>
+<p><strong>Clasifica cada elemento como entidad o atributo:</strong></p>
+<ol type="1">
+<li class="fragment"><code>región</code> del cliente → <strong>Atributo</strong> (propiedad de <code>Cliente</code>)</li>
+<li class="fragment"><code>Proveedor</code> (empresa que abastece los productos) → <strong>Entidad</strong> (tiene nombre, RUT, dirección)</li>
+<li class="fragment"><code>estado</code> del pedido → <strong>Atributo</strong> (propiedad de <code>Pedido</code>)</li>
+<li class="fragment"><code>Categoría</code> (Calzado, Ropa, Accesorios, con descripción propia) → <strong>Entidad</strong> si tiene atributos propios; <strong>Atributo</strong> si es solo un texto en <code>Producto</code></li>
+<li class="fragment"><code>precio_unitario</code> en un ítem de pedido → <strong>Atributo</strong> (propiedad de <code>OrderItem</code>)</li>
+</ol>
+</section>
 <section id="cardinalidades-las-reglas-del-negocio" class="slide level2">
 <h2>Cardinalidades: Las Reglas del Negocio</h2>
 <ul>
@@ -246,6 +276,57 @@ Universidad San Sebastián
 <li class="fragment">Ejemplo: Un pedido puede incluir muchos productos, y un producto puede estar en muchos pedidos.</li>
 </ul></li>
 </ul>
+</section>
+<section id="aplicación-cardinalidades-con-reglas-de-negocio-de-techstyle" class="slide level2">
+<h2>Aplicación: Cardinalidades con Reglas de Negocio de TechStyle</h2>
+<p><strong>Derivando cardinalidades directamente de las reglas del negocio</strong>:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Relación</th>
+<th>Regla de negocio</th>
+<th>Cardinalidad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cliente → Pedido</td>
+<td>Un cliente puede hacer muchos pedidos</td>
+<td>1:N</td>
+</tr>
+<tr class="even">
+<td>Pedido → OrderItem</td>
+<td>Un pedido tiene al menos un ítem</td>
+<td>1:N</td>
+</tr>
+<tr class="odd">
+<td>OrderItem → Producto</td>
+<td>Un ítem corresponde a un producto</td>
+<td>N:1</td>
+</tr>
+<tr class="even">
+<td>Repartidor → Zona</td>
+<td>Varios repartidores cubren la misma zona</td>
+<td>N:1</td>
+</tr>
+<tr class="odd">
+<td>Pedido → Devolución</td>
+<td>No todo pedido tiene devolución</td>
+<td>1:0..1</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="verificación-cuál-es-la-cardinalidad-correcta" class="slide level2">
+<h2>Verificación: ¿Cuál es la Cardinalidad Correcta?</h2>
+<p><strong>Para cada situación, elige la cardinalidad:</strong></p>
+<ol type="1">
+<li class="fragment">Un banco puede tener muchas cuentas; una cuenta pertenece a un solo banco → <strong>1:N</strong></li>
+<li class="fragment">Un estudiante puede estar en muchos cursos; un curso tiene muchos estudiantes → <strong>N:M</strong></li>
+<li class="fragment">Una empresa tiene un solo RUT; un RUT identifica a una empresa → <strong>1:1</strong></li>
+<li class="fragment">Un vuelo puede transportar muchos pasajeros; un pasajero puede tener muchos vuelos → <strong>N:M</strong></li>
+<li class="fragment">Una devolución corresponde a un único pedido; un pedido puede tener cero o una devolución → <strong>1:0..1</strong></li>
+</ol>
 </section>
 <section id="entidades-de-techstyle-identificación-paso-a-paso" class="slide level2">
 <h2>Entidades de TechStyle: Identificación Paso a Paso</h2>
@@ -265,11 +346,11 @@ Universidad San Sebastián
 <h2>Diagrama ER de TechStyle (Versión Base)</h2>
 <pre><code>[Cliente] ──1:N──&gt; [Pedido] ──1:N──&gt; [OrderItem] &lt;──N:1── [Producto]
                       │
-                     1:1
+                     N:1
                       ↓
                  [Repartidor] ──N:1──&gt; [Zona]
                       │
-                    0:1 (opcional)
+                    0..1 (opcional)
                       ↓
                  [Devolución]</code></pre>
 <aside class="notes">
@@ -286,13 +367,6 @@ Universidad San Sebastián
           display:block!important;
       }</style></aside>
 </section>
-<section id="atributos-de-las-entidades-principales" class="slide level2">
-<h2>Atributos de las Entidades Principales</h2>
-<p><strong>Cliente</strong>: <code>id_cliente</code> (PK), <code>nombre</code>, <code>email</code>, <code>telefono</code>, <code>fecha_registro</code>, <code>region</code></p>
-<p><strong>Pedido</strong>: <code>id_pedido</code> (PK), <code>fecha_pedido</code>, <code>total</code>, <code>estado</code>, <code>id_cliente</code> (FK)</p>
-<p><strong>Producto</strong>: <code>id_producto</code> (PK), <code>nombre</code>, <code>categoria</code>, <code>precio</code>, <code>stock</code></p>
-<p><strong>OrderItem</strong>: <code>id_item</code> (PK), <code>id_pedido</code> (FK), <code>id_producto</code> (FK), <code>cantidad</code>, <code>precio_unitario</code></p>
-</section>
 <section id="por-qué-existe-la-entidad-orderitem" class="slide level2">
 <h2>¿Por qué Existe la Entidad OrderItem?</h2>
 <p><strong>Problema</strong>: Un pedido tiene muchos productos. ¿Cómo representamos eso?</p>
@@ -303,7 +377,28 @@ Universidad San Sebastián
 </ul>
 <div class="fragment">
 <p><strong>Regla</strong>: Las relaciones N:M siempre generan una <strong>entidad asociativa</strong>.</p>
+<p>→ Además de los IDs, <code>OrderItem</code> agrega atributos propios de la relación: <code>cantidad</code> y <code>precio_unitario</code>.</p>
 </div>
+</section>
+<section id="aplicación-atributos-de-las-entidades-principales" class="slide level2">
+<h2>Aplicación: Atributos de las Entidades Principales</h2>
+<p><strong>Cliente</strong>: <code>id_cliente</code> (PK), <code>nombre</code>, <code>email</code>, <code>telefono</code>, <code>fecha_registro</code>, <code>region</code></p>
+<p><strong>Pedido</strong>: <code>id_pedido</code> (PK), <code>fecha_pedido</code>, <code>total</code>, <code>estado</code>, <code>id_cliente</code> (FK)</p>
+<p><strong>Producto</strong>: <code>id_producto</code> (PK), <code>nombre</code>, <code>categoria</code>, <code>precio</code>, <code>stock</code></p>
+<p><strong>OrderItem</strong>: <code>id_item</code> (PK), <code>id_pedido</code> (FK), <code>id_producto</code> (FK), <code>cantidad</code>, <code>precio_unitario</code></p>
+<p><strong>Repartidor</strong>: <code>id_repartidor</code> (PK), <code>nombre</code>, <code>telefono</code>, <code>id_zona</code> (FK)</p>
+<p><strong>Zona</strong>: <code>id_zona</code> (PK), <code>nombre_zona</code>, <code>region</code></p>
+<p><strong>Devolución</strong>: <code>id_devolucion</code> (PK), <code>fecha</code>, <code>motivo</code>, <code>monto_devuelto</code>, <code>id_pedido</code> (FK)</p>
+</section>
+<section id="verificación-dónde-va-la-fk" class="slide level2">
+<h2>Verificación: ¿Dónde va la FK?</h2>
+<p><strong>En una relación 1:N, la FK siempre va en la tabla del lado N:</strong></p>
+<ol type="1">
+<li class="fragment"><code>Cliente (1) ──── Pedido (N)</code> → ¿Dónde va <code>id_cliente</code>? → <strong>En <code>Pedido</code></strong></li>
+<li class="fragment"><code>Pedido (1) ──── OrderItem (N)</code> → ¿Dónde va <code>id_pedido</code>? → <strong>En <code>OrderItem</code></strong></li>
+<li class="fragment"><code>Zona (1) ──── Repartidor (N)</code> → ¿Dónde va <code>id_zona</code>? → <strong>En <code>Repartidor</code></strong></li>
+<li class="fragment"><code>Pedido (1) ──── Devolución (0..1)</code> → ¿Dónde va <code>id_pedido</code>? → <strong>En <code>Devolución</code></strong></li>
+</ol>
 </section>
 <section id="justificación-de-cardinalidades-con-reglas-de-negocio" class="slide level2">
 <h2>Justificación de Cardinalidades con Reglas de Negocio</h2>
@@ -349,6 +444,17 @@ Universidad San Sebastián
 </tbody>
 </table>
 </section>
+<section id="errores-frecuentes-en-el-modelo-er" class="slide level2">
+<h2>Errores Frecuentes en el Modelo ER</h2>
+<p><strong>Los errores más comunes y cómo evitarlos:</strong></p>
+<ol type="1">
+<li class="fragment"><strong>Relación N:M sin entidad asociativa</strong>: “Pedido ←→ Producto” directamente → ¿dónde guardo cantidad y precio?</li>
+<li class="fragment"><strong>Atributos compuestos</strong>: guardar <code>nombre completo</code> en un solo campo en vez de <code>nombre</code> + <code>apellido</code>.</li>
+<li class="fragment"><strong>PK mal elegida</strong>: usar <code>email</code> como PK de <code>Cliente</code> → ¿qué pasa si el cliente cambia de email?</li>
+<li class="fragment"><strong>Olvidar relaciones opcionales</strong>: asumir que todo pedido tiene devolución (0..1 ≠ 1..1).</li>
+<li class="fragment"><strong>Entidades sin atributos</strong>: una entidad que solo tiene <code>id</code> probablemente es solo un atributo de otra.</li>
+</ol>
+</section>
 <section id="discusión-ética-en-el-diseño-del-er" class="slide level2">
 <h2>Discusión: Ética en el Diseño del ER</h2>
 <p><strong>Pregunta para reflexionar</strong>:</p>
@@ -358,8 +464,22 @@ Universidad San Sebastián
 <ul>
 <li class="fragment">¿Es proporcional al objetivo (entrega) guardar localización continua?</li>
 <li class="fragment">¿Cómo se protegen esos datos contra acceso no autorizado?</li>
-<li class="fragment">¿El cliente fue informado y dio su consentimiento?</li>
+<li class="fragment">¿El cliente fue informado y dio su consentimiento explícito?</li>
+<li class="fragment">¿Cumple con la Ley 19.628 de Protección de Datos de Chile?</li>
 </ul>
+</section>
+<section id="conexión-con-la-toma-de-decisiones" class="slide level2">
+<h2>Conexión con la Toma de Decisiones</h2>
+<ul>
+<li class="fragment">Un buen modelo ER permite responder: ¿Qué repartidor tiene mayor tasa de devoluciones por zona?</li>
+<li class="fragment">Un modelo incompleto hace que ciertas preguntas sean <strong>imposibles de responder</strong>.</li>
+<li class="fragment"><strong>El diseño del ER determina qué decisiones podrá tomar la organización en el futuro.</strong></li>
+</ul>
+<div class="fragment">
+<blockquote>
+<p>“Si no modelamos la entidad Devolución, nunca podremos analizar por qué los clientes devuelven productos, y el KPI del CMI quedará vacío para siempre.”</p>
+</blockquote>
+</div>
 </section>
 <section id="actividad-en-grupos" class="slide level2">
 <h2>Actividad en Grupos</h2>
@@ -368,35 +488,34 @@ Universidad San Sebastián
 <ol type="1">
 <li class="fragment">Definan los atributos de cada entidad nueva.</li>
 <li class="fragment">Establezcan las cardinalidades con justificación de negocio.</li>
-<li class="fragment">Usen draw.io para diagramar.</li>
+<li class="fragment">Usen draw.io para diagramar con notación Pata de Gallo.</li>
 </ol>
 <div class="fragment">
 <p>→ Continuarán y completarán este diagrama en el laboratorio.</p>
 </div>
 </section>
-<section id="conexión-con-la-toma-de-decisiones" class="slide level2">
-<h2>Conexión con la Toma de Decisiones</h2>
+<section id="puntos-clave" class="slide level2">
+<h2>Puntos Clave</h2>
 <ul>
-<li class="fragment">Un buen modelo ER permite responder preguntas como: ¿Qué repartidor tiene mayor tasa de devoluciones?</li>
-<li class="fragment">Un modelo incompleto hace que ciertas preguntas sean <strong>imposibles de responder</strong>.</li>
-<li class="fragment"><strong>El diseño del ER determina qué decisiones podrá tomar la organización en el futuro.</strong></li>
+<li class="fragment">El <strong>Modelo ER</strong> es la representación gráfica formal de la realidad de la organización.</li>
+<li class="fragment">Sus elementos son: <strong>entidades</strong> (objetos), <strong>atributos</strong> (propiedades) y <strong>relaciones</strong> (vínculos).</li>
+<li class="fragment">La <strong>cardinalidad</strong> (1:1, 1:N, N:M) es una traducción directa de las reglas de negocio.</li>
+<li class="fragment">Las relaciones <strong>N:M siempre generan una entidad asociativa</strong> (tabla intermedia) con atributos propios.</li>
+<li class="fragment">En una relación 1:N, la <strong>FK siempre va en la tabla del lado N</strong>.</li>
+<li class="fragment">Cada entidad omitida en el ER es un dato que nunca podrá almacenarse ni consultar.</li>
 </ul>
-<div class="fragment">
-<blockquote>
-<p>“Si no modelamos la entidad Devolución, nunca podremos analizar por qué los clientes devuelven productos.”</p>
-</blockquote>
-</div>
 </section>
-<section id="para-el-laboratorio-de-hoy" class="slide level2">
-<h2>Para el Laboratorio de Hoy</h2>
-<p><strong>Lab 7</strong>: Modelo Entidad-Relación en draw.io.</p>
+<section id="preview-del-laboratorio-w06" class="slide level2">
+<h2>Preview del Laboratorio W06</h2>
+<p><strong>Lab W06: Modelo Entidad-Relación completo en draw.io</strong></p>
 <ul>
-<li>Diseñar el ER completo de TechStyle (con Repartidor, Zona y Devolución).</li>
-<li>Justificar cada cardinalidad con reglas de negocio escritas.</li>
-<li>Entregable: Diagrama exportado como PNG + tabla de justificación.</li>
+<li class="fragment">Diseñar el ER completo de TechStyle usando notación Pata de Gallo.</li>
+<li class="fragment">Incluir las 7 entidades: <code>Cliente</code>, <code>Pedido</code>, <code>Producto</code>, <code>OrderItem</code>, <code>Repartidor</code>, <code>Zona</code>, <code>Devolución</code>.</li>
+<li class="fragment">Justificar cada cardinalidad con una regla de negocio escrita.</li>
+<li class="fragment">Entregable: Diagrama exportado como PNG + tabla de justificación de cardinalidades.</li>
 </ul>
 <div class="fragment">
-<p><strong>Para la próxima semana</strong>: Transformar el modelo ER al modelo relacional (tablas con PK y FK).</p>
+<p><strong>Para la próxima semana (W07)</strong>: ¿Cómo transformamos el modelo ER en tablas reales con PK y FK? → Modelo Relacional.</p>
 </div>
 
 

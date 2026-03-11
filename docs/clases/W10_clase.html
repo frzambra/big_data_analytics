@@ -229,9 +229,24 @@ Universidad San Sebastián
 <li class="fragment">¿Qué tipo de dato tiene la columna <code>total</code> en <code>pedidos</code>? ¿INT o DECIMAL?</li>
 <li class="fragment">¿Puede ser NULL la columna <code>telefono</code> en <code>clientes</code>?</li>
 <li class="fragment">¿Cuál es el valor por defecto del campo <code>estado</code> en <code>pedidos</code>?</li>
+<li class="fragment">¿Qué significa un <code>estado = 'cancelado'</code>? ¿Es diferente a <code>'rechazado'</code>?</li>
 </ul>
 <div class="fragment">
 <p><strong>Sin documentación formal → errores de implementación → datos incorrectos → decisiones erróneas.</strong></p>
+</div>
+</section>
+<section id="aplicación-el-costo-de-no-documentar" class="slide level2">
+<h2>Aplicación: El Costo de No Documentar</h2>
+<p><strong>Caso real en TechStyle</strong>:</p>
+<ul>
+<li class="fragment">El desarrollador implementó <code>total</code> como <code>INT</code> (sin decimales).</li>
+<li class="fragment">TechStyle cobra $12.990 por algunas poleras.</li>
+<li class="fragment">El sistema guardaba $12.990 como $12 (truncado) → pérdida de centavos.</li>
+<li class="fragment">En 8 meses, el CMI mostraba ingresos 0,1% menores a los reales.</li>
+<li class="fragment">Roberto tomó decisiones de inversión con datos incorrectos.</li>
+</ul>
+<div class="fragment">
+<p><strong>Un tipo de dato mal elegido por falta de documentación → decisiones incorrectas en la cima de la organización.</strong></p>
 </div>
 </section>
 <section id="qué-es-el-diccionario-de-datos" class="slide level2">
@@ -319,6 +334,92 @@ Universidad San Sebastián
 </tbody>
 </table>
 </section>
+<section id="aplicación-diccionario-de-pedidos" class="slide level2">
+<h2>Aplicación: Diccionario de <code>pedidos</code></h2>
+<p><strong>Tabla: <code>pedidos</code></strong></p>
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Atributo</th>
+<th>Tipo</th>
+<th>Long.</th>
+<th>NULL</th>
+<th>Default</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>id_pedido</td>
+<td>INT</td>
+<td>—</td>
+<td>No</td>
+<td>AUTO</td>
+<td>PK autonumérica</td>
+</tr>
+<tr class="even">
+<td>fecha_pedido</td>
+<td>DATE</td>
+<td>—</td>
+<td>No</td>
+<td>CURDATE()</td>
+<td>Fecha en que se realizó el pedido</td>
+</tr>
+<tr class="odd">
+<td>total</td>
+<td>DECIMAL</td>
+<td>(10,2)</td>
+<td>No</td>
+<td>—</td>
+<td>Suma de todos los ítems del pedido</td>
+</tr>
+<tr class="even">
+<td>estado</td>
+<td>VARCHAR</td>
+<td>30</td>
+<td>No</td>
+<td>‘pendiente’</td>
+<td>Estado actual: pendiente/en camino/entregado/cancelado</td>
+</tr>
+<tr class="odd">
+<td>id_cliente</td>
+<td>INT</td>
+<td>—</td>
+<td>No</td>
+<td>—</td>
+<td>FK → clientes.id_cliente</td>
+</tr>
+<tr class="even">
+<td>id_repartidor</td>
+<td>INT</td>
+<td>—</td>
+<td>Sí</td>
+<td>NULL</td>
+<td>FK → repartidores. NULL hasta asignación</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="verificación-está-completo-el-diccionario" class="slide level2">
+<h2>Verificación: ¿Está Completo el Diccionario?</h2>
+<p><strong>¿Qué información falta en esta definición de atributo?</strong></p>
+<pre><code>nombre: texto que identifica al cliente</code></pre>
+<ul>
+<li class="fragment">Falta: <strong>tipo de dato</strong> (¿VARCHAR o TEXT?)</li>
+<li class="fragment">Falta: <strong>longitud</strong> (¿50, 100 o 200 caracteres?)</li>
+<li class="fragment">Falta: <strong>si permite NULL</strong> (¿puede un cliente no tener nombre?)</li>
+<li class="fragment">Falta: <strong>restricciones</strong> (¿debe ser único? ¿mínimo de caracteres?)</li>
+<li class="fragment">Falta: <strong>descripción precisa</strong> (¿nombre completo? ¿solo el primer nombre?)</li>
+</ul>
+</section>
 <section id="tipos-de-datos-en-mysql-vista-previa" class="slide level2">
 <h2>Tipos de Datos en MySQL: Vista Previa</h2>
 <table class="caption-top">
@@ -376,6 +477,29 @@ Universidad San Sebastián
           display:block!important;
       }</style></aside>
 </section>
+<section id="aplicación-elegir-el-tipo-de-dato-correcto" class="slide level2">
+<h2>Aplicación: Elegir el Tipo de Dato Correcto</h2>
+<p><strong>¿Por qué DECIMAL y no FLOAT para precios?</strong></p>
+<ul>
+<li class="fragment"><code>FLOAT</code> usa representación binaria → puede almacenar $12.990 como $12.989999999998.</li>
+<li class="fragment"><code>DECIMAL(10,2)</code> almacena exactamente $12.99 → sin errores de redondeo.</li>
+<li class="fragment">En un sistema con millones de transacciones, los errores de FLOAT se acumulan.</li>
+</ul>
+<div class="fragment">
+<p><strong>Regla</strong>: Todo valor monetario → <code>DECIMAL</code>. Todo ID o contador → <code>INT</code>. Todo texto de longitud variable → <code>VARCHAR</code>. Todo texto libre sin límite → <code>TEXT</code>.</p>
+</div>
+</section>
+<section id="verificación-qué-tipo-de-dato-usarías" class="slide level2">
+<h2>Verificación: ¿Qué Tipo de Dato Usarías?</h2>
+<p><strong>Elige el tipo de dato más apropiado para cada atributo:</strong></p>
+<ol type="1">
+<li class="fragment">Número de RUT del cliente (ej: “12345678-9”) → <strong>VARCHAR(12)</strong> (tiene guión, no es número)</li>
+<li class="fragment">Precio de un producto (ej: 45.000,00) → <strong>DECIMAL(10,2)</strong></li>
+<li class="fragment">Si un repartidor está activo o de baja → <strong>BOOLEAN</strong> (o TINYINT(1))</li>
+<li class="fragment">Descripción larga de un producto (párrafo) → <strong>TEXT</strong></li>
+<li class="fragment">Mes de registro de un cliente (solo el mes, 1-12) → <strong>TINYINT</strong> (entero pequeño)</li>
+</ol>
+</section>
 <section id="por-qué-mysql" class="slide level2">
 <h2>¿Por qué MySQL?</h2>
 <ul>
@@ -389,17 +513,56 @@ Universidad San Sebastián
 </ul></li>
 </ul>
 </section>
+<section id="aplicación-qué-herramienta-para-cada-tarea" class="slide level2">
+<h2>Aplicación: ¿Qué Herramienta Para Cada Tarea?</h2>
+<p><strong>La evolución de las herramientas a lo largo del semestre:</strong></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tarea</th>
+<th>Herramienta</th>
+<th>¿Por qué?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Análisis exploratorio (4 columnas)</td>
+<td>Excel</td>
+<td>Rápido, visual, conocido</td>
+</tr>
+<tr class="even">
+<td>Dashboard ejecutivo</td>
+<td>Power BI</td>
+<td>Visualización profesional</td>
+</tr>
+<tr class="odd">
+<td>ETL de múltiples fuentes</td>
+<td>Power Query</td>
+<td>Integración de datos</td>
+</tr>
+<tr class="even">
+<td>Almacenamiento de millones de filas</td>
+<td>MySQL</td>
+<td>Motor relacional eficiente</td>
+</tr>
+<tr class="odd">
+<td>Análisis ad-hoc de la BD</td>
+<td>MySQL Workbench</td>
+<td>SQL es el estándar universal</td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="arquitectura-clienteservidor-de-mysql" class="slide level2">
 <h2>Arquitectura Cliente–Servidor de MySQL</h2>
-<pre><code>┌─────────────────────┐        ┌──────────────────────┐
-│   MySQL Workbench   │ ─────&gt; │    MySQL Server      │
-│  (Cliente gráfico)  │  SQL   │  (Motor de base de   │
-│                     │ &lt;───── │     datos)           │
-└─────────────────────┘        └──────────────────────┘
-         ↑
-    Tu computador</code></pre>
+<p><code>[IMAGE/DIAGRAM PLACEHOLDER: Diagrama de arquitectura cliente-servidor — (1) ícono de computador con "MySQL Workbench (Cliente)" y flecha con etiqueta "SQL Query →"; (2) ícono de servidor con "MySQL Server (Motor)" y flecha de respuesta "← Resultados"; debajo del servidor, cilindros de base de datos representando "techstyle_db". Texto adicional: "El servidor puede estar en tu computador (local) o en la nube (AWS, Google Cloud)"]</code></p>
 <div class="fragment">
-<p><strong>MySQL Workbench</strong> = interfaz gráfica para escribir y ejecutar consultas SQL.</p>
+<p><strong>MySQL Workbench</strong> = interfaz gráfica para escribir y ejecutar consultas SQL. El servidor MySQL es el motor que procesa las consultas y gestiona los archivos de datos.</p>
 </div>
 </section>
 <section id="primera-conexión-a-mysql-workbench" class="slide level2">
@@ -419,12 +582,6 @@ Universidad San Sebastián
 <section id="exploración-inicial-base-de-datos-de-ejemplo" class="slide level2">
 <h2>Exploración Inicial: Base de Datos de Ejemplo</h2>
 <p>MySQL incluye la base de datos <code>sakila</code> como ejemplo. La exploraremos para entender la estructura:</p>
-<ul>
-<li class="fragment">¿Qué tablas tiene <code>sakila</code>?</li>
-<li class="fragment">¿Cómo se relacionan entre sí?</li>
-<li class="fragment">¿Cómo se ve un modelo relacional real en MySQL Workbench?</li>
-</ul>
-<div class="fragment">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a></a><span class="co">-- Ver todas las bases de datos disponibles</span></span>
 <span id="cb2-2"><a></a>SHOW DATABASES;</span>
 <span id="cb2-3"><a></a></span>
@@ -432,8 +589,13 @@ Universidad San Sebastián
 <span id="cb2-5"><a></a><span class="kw">USE</span> sakila;</span>
 <span id="cb2-6"><a></a></span>
 <span id="cb2-7"><a></a><span class="co">-- Ver todas las tablas</span></span>
-<span id="cb2-8"><a></a>SHOW <span class="kw">TABLES</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<span id="cb2-8"><a></a>SHOW <span class="kw">TABLES</span>;</span>
+<span id="cb2-9"><a></a></span>
+<span id="cb2-10"><a></a><span class="co">-- Ver la estructura de una tabla específica</span></span>
+<span id="cb2-11"><a></a>DESCRIBE film;</span>
+<span id="cb2-12"><a></a></span>
+<span id="cb2-13"><a></a><span class="co">-- Ver las primeras 5 filas</span></span>
+<span id="cb2-14"><a></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> film <span class="kw">LIMIT</span> <span class="dv">5</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="actividad-construir-el-diccionario-de-techstyle" class="slide level2">
 <h2>Actividad: Construir el Diccionario de TechStyle</h2>
@@ -455,7 +617,7 @@ Universidad San Sebastián
 <li class="fragment"><code>DECIMAL(10,2)</code>: Exacto hasta 2 decimales → correcto para valores monetarios.</li>
 </ul>
 <div class="fragment">
-<p><strong>Conclusión</strong>: Elegir el tipo de dato incorrecto genera errores contables reales.</p>
+<p><strong>Conclusión</strong>: Elegir el tipo de dato incorrecto genera errores contables reales. Un analista que no entiende tipos de datos puede comprometer la integridad financiera de la organización.</p>
 </div>
 </section>
 <section id="conexión-con-la-toma-de-decisiones" class="slide level2">
@@ -466,17 +628,28 @@ Universidad San Sebastián
 <li class="fragment"><strong>La documentación es parte integral del diseño, no un trámite opcional.</strong></li>
 </ul>
 </section>
-<section id="para-el-laboratorio-de-hoy" class="slide level2">
-<h2>Para el Laboratorio de Hoy</h2>
-<p><strong>Lab 11</strong>: Diccionario de datos + configuración de MySQL Workbench.</p>
+<section id="puntos-clave" class="slide level2">
+<h2>Puntos Clave</h2>
+<ul>
+<li class="fragment">El <strong>diccionario de datos</strong> es el documento formal que describe cada tabla y atributo del modelo relacional.</li>
+<li class="fragment">Cada atributo debe tener: tipo de dato, longitud, NULL permitido, valor por defecto, descripción y restricciones.</li>
+<li class="fragment"><strong>MySQL</strong> es el motor de base de datos relacional que usaremos: open source, estándar industrial.</li>
+<li class="fragment"><strong>MySQL Workbench</strong> es la interfaz gráfica para escribir SQL y administrar la base de datos.</li>
+<li class="fragment">Los <strong>tipos de datos</strong> son decisiones de negocio: elegir <code>FLOAT</code> en vez de <code>DECIMAL</code> para precios genera errores financieros reales.</li>
+</ul>
+</section>
+<section id="preview-del-laboratorio-w10" class="slide level2">
+<h2>Preview del Laboratorio W10</h2>
+<p><strong>Lab W10: Diccionario de datos + configuración de MySQL Workbench</strong></p>
 <ol type="1">
-<li>Completar el diccionario de datos de TechStyle (todas las tablas).</li>
-<li>Instalar y configurar MySQL Workbench.</li>
-<li>Conectarse al servidor MySQL local.</li>
-<li>Explorar la base de datos <code>sakila</code> con <code>SHOW TABLES</code> y <code>DESCRIBE tabla</code>.</li>
+<li class="fragment">Completar el diccionario de datos de TechStyle para todas las 7 tablas del modelo normalizado.</li>
+<li class="fragment">Instalar y configurar MySQL Workbench en el computador del laboratorio.</li>
+<li class="fragment">Conectarse al servidor MySQL local (localhost, puerto 3306).</li>
+<li class="fragment">Explorar la base de datos <code>sakila</code> con <code>SHOW TABLES</code> y <code>DESCRIBE tabla</code>.</li>
+<li class="fragment">Ejecutar las primeras consultas SQL básicas.</li>
 </ol>
 <div class="fragment">
-<p><strong>Para la próxima semana</strong>: Crear la base de datos <code>techstyle_db</code> usando comandos DDL en MySQL Workbench.</p>
+<p><strong>Para la próxima semana (W11)</strong>: Crear la base de datos <code>techstyle_db</code> usando comandos DDL en MySQL Workbench.</p>
 </div>
 
 

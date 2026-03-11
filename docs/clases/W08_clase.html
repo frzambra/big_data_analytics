@@ -146,12 +146,30 @@ Universidad San Sebastián
 <section id="síntesis-de-la-unidad-2" class="slide level2">
 <h2>Síntesis de la Unidad 2</h2>
 <ul>
-<li class="fragment"><strong>Semana 6</strong>: Diagrama de Caso de Uso y esquema UML. Levantamiento de requerimientos.</li>
-<li class="fragment"><strong>Semana 7</strong>: Modelo Entidad-Relación. Entidades, atributos, relaciones y cardinalidades.</li>
-<li class="fragment"><strong>Semana 8</strong>: Modelo Relacional. Transformación ER → tablas con PK y FK. Integridad referencial.</li>
+<li class="fragment"><strong>Semana 4</strong>: Levantamiento de requerimientos + Diagrama de Caso de Uso.</li>
+<li class="fragment"><strong>Semana 5</strong>: Diagrama UML de Clases. Estructura del sistema.</li>
+<li class="fragment"><strong>Semana 6</strong>: Modelo Entidad-Relación. Entidades, atributos, relaciones y cardinalidades.</li>
+<li class="fragment"><strong>Semana 7</strong>: Modelo Relacional. Transformación ER → tablas con PK y FK. Integridad referencial.</li>
 </ul>
 <div class="fragment">
-<p><strong>Hoy</strong>: Presentación grupal y entrega de la Solemne 2.</p>
+<p><strong>Hoy</strong>: Presentación grupal, defensa y entrega de la Solemne 2.</p>
+</div>
+</section>
+<section id="el-camino-recorrido-en-la-unidad-2" class="slide level2">
+<h2>El Camino Recorrido en la Unidad 2</h2>
+<pre><code>Realidad del negocio (TechStyle)
+         ↓  Levantamiento de requerimientos
+Caso de Uso  (¿qué hace el sistema?)
+         ↓
+Diagrama UML (¿cómo está estructurado?)
+         ↓
+Modelo ER    (¿qué datos almacena?)
+         ↓
+Modelo Relacional (¿cómo se organizan las tablas?)
+         ↓
+Semana 11+  → Implementación en MySQL</code></pre>
+<div class="fragment">
+<p><em>Hoy cerramos el diseño. A partir de la semana 10 lo construiremos.</em></p>
 </div>
 </section>
 <section id="estructura-del-entregable-solemne-2" class="slide level2">
@@ -159,7 +177,7 @@ Universidad San Sebastián
 <p><strong>Informe de Analítica de Base de Datos para TechStyle</strong>:</p>
 <ol type="1">
 <li class="fragment"><strong>Diagrama de Caso de Uso</strong>: Actores y casos de uso del módulo de pedidos.</li>
-<li class="fragment"><strong>Esquema UML</strong>: Clases, atributos y relaciones.</li>
+<li class="fragment"><strong>Esquema UML</strong>: Clases, atributos, métodos y relaciones.</li>
 <li class="fragment"><strong>Modelo Entidad-Relación</strong>: Diagrama completo con cardinalidades justificadas.</li>
 <li class="fragment"><strong>Modelo Relacional</strong>: Tablas con PK, FK y restricciones de dominio.</li>
 <li class="fragment"><strong>Informe</strong>: Justificación de decisiones de diseño + consideraciones éticas.</li>
@@ -201,6 +219,40 @@ Universidad San Sebastián
 <p><strong>Ponderación Solemne 2</strong>: Control parcial 2 (10%) + Analítica de base de datos (25%) = <strong>35% total</strong>.</p>
 </div>
 </section>
+<section id="rúbrica-detallada-modelo-er-25" class="slide level2">
+<h2>Rúbrica Detallada: Modelo ER (25%)</h2>
+<p><strong>¿Qué distingue un modelo excelente de uno suficiente?</strong></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Nivel</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Excelente (5/5)</strong></td>
+<td>Todas las entidades del negocio incluidas. Cardinalidades correctas con justificación escrita. Entidades asociativas bien identificadas. Atributos tipificados.</td>
+</tr>
+<tr class="even">
+<td><strong>Bueno (4/5)</strong></td>
+<td>Entidades principales correctas. Alguna cardinalidad con error menor. Justificaciones incompletas.</td>
+</tr>
+<tr class="odd">
+<td><strong>Suficiente (3/5)</strong></td>
+<td>Entidades básicas presentes. Errores en cardinalidades secundarias. Sin justificación de algunas relaciones.</td>
+</tr>
+<tr class="even">
+<td><strong>Insuficiente (&lt;3/5)</strong></td>
+<td>Falta entidad central (Pedido, Producto). Cardinalidades incorrectas en relaciones fundamentales.</td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="dinámica-de-la-presentación" class="slide level2">
 <h2>Dinámica de la Presentación</h2>
 <p><strong>Formato por grupo</strong> (10 minutos):</p>
@@ -211,6 +263,18 @@ Universidad San Sebastián
 <li class="fragment"><strong>2 min</strong>: Preguntas del docente y retroalimentación entre pares.</li>
 </ol>
 </section>
+<section id="preparación-checklist-final-antes-de-presentar" class="slide level2">
+<h2>Preparación: Checklist Final Antes de Presentar</h2>
+<p><strong>Verificar antes de subir el entregable</strong>:</p>
+<ul class="task-list">
+<li class="fragment"><label><input type="checkbox">El diagrama de Caso de Uso tiene al menos 3 actores y 8 casos de uso.</label></li>
+<li class="fragment"><label><input type="checkbox">El UML tiene 7 clases con atributos tipificados y al menos 2 métodos por clase.</label></li>
+<li class="fragment"><label><input type="checkbox">El ER tiene todas las entidades con sus atributos y cardinalidades justificadas.</label></li>
+<li class="fragment"><label><input type="checkbox">Las relaciones N:M tienen tabla intermedia con atributos propios.</label></li>
+<li class="fragment"><label><input type="checkbox">El modelo relacional tiene PK y FK definidas en todas las tablas.</label></li>
+<li class="fragment"><label><input type="checkbox">El informe explica al menos una consideración ética del diseño.</label></li>
+</ul>
+</section>
 <section id="preguntas-de-defensa-posibles" class="slide level2">
 <h2>Preguntas de Defensa Posibles</h2>
 <ul>
@@ -218,6 +282,7 @@ Universidad San Sebastián
 <li class="fragment">¿Qué pasa si se elimina un cliente que tiene pedidos activos?</li>
 <li class="fragment">¿Cómo garantiza su modelo que no se puede registrar un pedido con un producto que no existe?</li>
 <li class="fragment">¿Qué entidad nueva agregarían si TechStyle quisiera implementar cupones de descuento?</li>
+<li class="fragment">¿Por qué <code>precio_unitario</code> está en <code>OrderItem</code> y no en <code>Producto</code>?</li>
 </ul>
 <aside class="notes">
 <p>Elegir 1–2 preguntas por grupo según el diseño que presenten. El objetivo es evaluar el razonamiento, no la memorización.</p>
@@ -233,6 +298,16 @@ Universidad San Sebastián
           display:block!important;
       }</style></aside>
 </section>
+<section id="respuestas-tipo-a-las-preguntas-de-defensa" class="slide level2">
+<h2>Respuestas Tipo a las Preguntas de Defensa</h2>
+<p><strong>“¿Por qué <code>precio_unitario</code> está en <code>OrderItem</code> y no en <code>Producto</code>?”</strong></p>
+<ul>
+<li class="fragment">El precio de un producto <strong>puede cambiar</strong> a lo largo del tiempo.</li>
+<li class="fragment">Si guardamos solo el precio actual en <code>Producto</code>, perdemos el historial de precios.</li>
+<li class="fragment">Al guardar <code>precio_unitario</code> en <code>OrderItem</code>, registramos el precio <strong>en el momento de la compra</strong>.</li>
+<li class="fragment">Esto es crítico para los reportes financieros del CMI: las ventas del año pasado deben calcularse con los precios de ese momento.</li>
+</ul>
+</section>
 <section id="retroalimentación-entre-pares" class="slide level2">
 <h2>Retroalimentación entre Pares</h2>
 <p>Mientras cada grupo presenta, los demás evalúan con esta guía:</p>
@@ -242,7 +317,33 @@ Universidad San Sebastián
 <li class="fragment">¿Las cardinalidades están bien definidas y justificadas?</li>
 </ul>
 <div class="fragment">
-<p><strong>Anotar 1 fortaleza y 1 sugerencia</strong> para compartir al final.</p>
+<p><strong>Anotar 1 fortaleza y 1 sugerencia</strong> para compartir al final de la sesión.</p>
+</div>
+</section>
+<section id="errores-más-comunes-para-aprender-de-otros-grupos" class="slide level2">
+<h2>Errores Más Comunes (para aprender de otros grupos)</h2>
+<p><strong>Patrones de error observados en entregas anteriores</strong>:</p>
+<ol type="1">
+<li class="fragment"><strong>Relación N:M sin entidad asociativa</strong>: Pedido ←→ Producto sin OrderItem.</li>
+<li class="fragment"><strong>FK en el lado equivocado</strong>: <code>id_pedido</code> en <code>clientes</code> en vez de en <code>pedidos</code>.</li>
+<li class="fragment"><strong>PK redundante en tabla intermedia</strong>: <code>order_items</code> con PK compuesta + PK autonumérica innecesaria.</li>
+<li class="fragment"><strong>Cardinalidad 1:1 donde debería ser 1:N</strong>: Asumir que un cliente tiene solo un pedido.</li>
+<li class="fragment"><strong>Omitir la entidad <code>Zona</code></strong>: Sin Zona, no se puede calcular el KPI de tiempo de entrega por zona del CMI.</li>
+</ol>
+</section>
+<section id="conexión-con-la-unidad-3" class="slide level2">
+<h2>Conexión con la Unidad 3</h2>
+<p><strong>¿Qué haremos con este diseño?</strong></p>
+<ul>
+<li class="fragment"><strong>Semana 9-10</strong>: Normalizar el modelo relacional hasta 3FN.</li>
+<li class="fragment"><strong>Semana 11</strong>: Crear el diccionario de datos + instalar MySQL Workbench.</li>
+<li class="fragment"><strong>Semana 12</strong>: Implementar el DDL — crear las tablas en MySQL.</li>
+<li class="fragment"><strong>Semana 13</strong>: Poblar la base de datos con datos reales.</li>
+<li class="fragment"><strong>Semanas 14-15</strong>: Consultas avanzadas para alimentar el CMI.</li>
+<li class="fragment"><strong>Semana 16</strong>: Vistas SQL que integran la BD con el CMI.</li>
+</ul>
+<div class="fragment">
+<p><strong>El diseño que entreguen hoy es el plano de construcción de todo lo que viene.</strong></p>
 </div>
 </section>
 <section id="cierre-de-la-unidad-2" class="slide level2">
@@ -254,7 +355,7 @@ Universidad San Sebastián
 </ul>
 <div class="fragment">
 <p><strong>Próxima semana</strong>: Unidad 3 — ¿Cómo construimos y optimizamos una base de datos real en MySQL?</p>
-<p>→ Teoría de Normalización: primer paso.</p>
+<p>→ Retroalimentación de la Solemne 2 + Teoría de Normalización: el primer paso.</p>
 </div>
 </section>
 <section id="conexión-con-la-toma-de-decisiones" class="slide level2">
@@ -265,6 +366,30 @@ Universidad San Sebastián
 <div class="fragment">
 <p>Un modelo bien diseñado permite: - Consultar datos de forma eficiente. - Actualizar sin inconsistencias. - Escalar cuando el negocio crece. - <strong>Responder las preguntas del CMI que la gerencia necesita</strong>.</p>
 </div>
+</section>
+<section id="puntos-clave" class="slide level2">
+<h2>Puntos Clave</h2>
+<ul>
+<li class="fragment">La Unidad 2 completó la secuencia de modelamiento: <strong>Caso de Uso → UML → ER → Relacional</strong>.</li>
+<li class="fragment">Cada paso agrega un nivel de detalle técnico, acercándose a la implementación real.</li>
+<li class="fragment">La <strong>justificación de cardinalidades</strong> con reglas de negocio es el corazón del diseño.</li>
+<li class="fragment">Un modelo relacional sin integridad referencial no protege los datos del negocio.</li>
+<li class="fragment">El <strong>diseño tiene implicaciones éticas</strong>: qué datos se guardan, cómo se protegen, quién puede acceder.</li>
+</ul>
+</section>
+<section id="preview-de-la-unidad-3" class="slide level2">
+<h2>Preview de la Unidad 3</h2>
+<p><strong>Lo que viene a partir de la Semana 9</strong>:</p>
+<ul>
+<li class="fragment"><strong>W09 (lab W10)</strong>: Teoría de Normalización — optimizar el modelo relacional.</li>
+<li class="fragment"><strong>W10 (lab W11)</strong>: Diccionario de datos + MySQL Workbench.</li>
+<li class="fragment"><strong>W11 (lab W12)</strong>: DDL — crear tablas en MySQL.</li>
+<li class="fragment"><strong>W12 (lab W13)</strong>: DML — insertar, actualizar, eliminar y consultar datos.</li>
+<li class="fragment"><strong>W13 (lab W14)</strong>: JOINs — combinar tablas para consultas complejas.</li>
+<li class="fragment"><strong>W14 (lab W15)</strong>: Subconsultas y GROUP BY — análisis avanzado.</li>
+<li class="fragment"><strong>W15 (lab W16)</strong>: Transacciones ACID — garantizar integridad.</li>
+<li class="fragment"><strong>W16</strong>: Vistas SQL — integrar la base de datos con el CMI.</li>
+</ul>
 
 
 </section>

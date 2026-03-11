@@ -1,5 +1,5 @@
 ---
-title: "Laboratorio 13: DML — Poblar techstyle_db y Consultas Básicas"
+title: "Laboratorio 12: DML — Poblar techstyle_db y Consultas Básicas"
 subtitle: "Semana 12 · W12 · Unidad 3 · Big Data y Analytics · Universidad San Sebastián"
 format:
   html:

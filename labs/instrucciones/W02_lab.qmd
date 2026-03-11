@@ -13,16 +13,16 @@ format:
 
 Este laboratorio integra dos actividades de la Semana 2:
 
-1. **Parte A** (Lab original Semana 2): Construir tres dashboards en Power BI para distintos niveles organizacionales de TechStyle.
-2. **Parte B** (Lab original Semana 3): Auditar la calidad de datos con Power Query y construir el CMI de TechStyle.
+1. **Parte A**: Construir tres dashboards en Power BI para distintos niveles organizacionales de TechStyle.
+2. **Parte B**: Auditar la calidad de datos con Power Query y construir el CMI de TechStyle.
 
 Ambas actividades usan los mismos archivos de datos: `techstyle_orders.csv` y `techstyle_customers_dirty.csv`.
 
-**Tiempo total**: 2 horas 30 minutos.
+**Tiempo total**: 2 horas 00 minutos.
 
 ---
 
-## Parte A: Tres Dashboards, Tres Usuarios (60 min)
+## Parte A: Tres Dashboards, Tres Usuarios (45 min)
 
 ### Contexto de Parte A
 
@@ -61,7 +61,7 @@ El mismo dataset de TechStyle debe presentarse de forma radicalmente distinta se
 
 ---
 
-## Parte B: Auditoría de Calidad y CMI con Datos Reales (90 min)
+## Parte B: Auditoría de Calidad y CMI con Datos Reales (75 min)
 
 ### Contexto de Parte B
 

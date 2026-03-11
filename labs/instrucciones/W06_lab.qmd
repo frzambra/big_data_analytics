@@ -1,5 +1,5 @@
 ---
-title: "Laboratorio 7: Modelo Entidad-Relación en draw.io"
+title: "Laboratorio 6: Modelo Entidad-Relación en draw.io"
 subtitle: "Semana 6 · W06 · Unidad 2 · Big Data y Analytics · Universidad San Sebastián"
 format:
   html:

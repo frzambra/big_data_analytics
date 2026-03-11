@@ -1,5 +1,5 @@
 ---
-title: "Laboratorio 12: DDL — Crear techstyle_db en MySQL"
+title: "Laboratorio 11: DDL — Crear techstyle_db en MySQL"
 subtitle: "Semana 11 · W11 · Unidad 3 · Big Data y Analytics · Universidad San Sebastián"
 format:
   html:

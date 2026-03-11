@@ -20,7 +20,7 @@ format:
 :::
 
 ::: {.fragment}
-**Hoy**: Cerramos el círculo del semestre. Crearemos **vistas SQL** que alimentan directamente el CMI que diseñamos en la Semana 3.
+**Hoy**: Cerramos el círculo del semestre. Crearemos **vistas SQL** que alimentan directamente el CMI que diseñamos en la Semana 2.
 :::
 
 ---
@@ -38,6 +38,16 @@ Hoy: Vistas SQL → Puente entre la BD y el CMI
     ↓
 CMI de TechStyle alimentado con datos reales
 ```
+
+::: {.fragment}
+*Roberto puede ver sus KPIs en tiempo real porque la base de datos que construyeron los alimenta.*
+:::
+
+---
+
+## Aplicación: De la Decisión al Dato y de Vuelta
+
+`[IMAGE/DIAGRAM PLACEHOLDER: Diagrama circular del semestre — (1) Roberto necesita un KPI (ícono de gerente con signo de interrogación); (2) Diseño: el analista modela el CMI con KPI definidos (ícono de diagrama); (3) Implementación: se construye la BD con las tablas que guardan esos datos (ícono de MySQL); (4) Consulta: una vista SQL encapsula la consulta del KPI (ícono de pantalla con código SQL); (5) Dashboard: Power BI consume la vista y muestra el KPI a Roberto (ícono de gráfico de barras). Flechas conectando los 5 pasos en ciclo.]`
 
 ---
 
@@ -57,6 +67,9 @@ CREATE VIEW nombre_vista AS
 
 -- Consultar la vista (igual que una tabla)
 SELECT * FROM nombre_vista;
+
+-- Filtrar sobre la vista
+SELECT * FROM nombre_vista WHERE mes = 6;
 ```
 :::
 
@@ -70,6 +83,22 @@ SELECT * FROM nombre_vista;
 | **Seguridad** | Se puede dar acceso a la vista pero no a las tablas originales |
 | **Reutilización** | La misma consulta compleja usada por múltiples sistemas |
 | **Abstracción** | Cambios en la BD se reflejan automáticamente en la vista |
+
+---
+
+## Aplicación: ¿Por qué Vistas y no Consultas Guardadas?
+
+**Escenario**: María en Power BI necesita el KPI de ventas por categoría.
+
+::: {.incremental}
+- **Sin vista**: Cada vez que María actualiza el dashboard, Power BI ejecuta el JOIN complejo de 4 tablas.
+- **Con vista**: Power BI consulta `SELECT * FROM vw_kpi_ventas_categoria WHERE anio = 2026`. Simple.
+- **Ventaja de seguridad**: María tiene acceso a `vw_kpi_ventas_categoria`, pero NO a las tablas `pedidos`, `clientes` ni `order_items` con datos sensibles.
+:::
+
+::: {.fragment}
+**Principio de mínimo privilegio aplicado al acceso a datos.**
+:::
 
 ---
 
@@ -90,6 +119,10 @@ WHERE p.estado = 'entregado'
 GROUP BY pr.categoria, YEAR(p.fecha_pedido), MONTH(p.fecha_pedido);
 ```
 
+::: {.fragment}
+**Consulta de uso**: `SELECT * FROM vw_kpi_ventas_categoria WHERE anio = 2026 AND mes = 6;`
+:::
+
 ---
 
 ## Vista 2: KPI — Ticket Promedio por Región (Perspectiva Cliente)
@@ -108,6 +141,10 @@ GROUP BY c.region
 ORDER BY ingresos_totales DESC;
 ```
 
+::: {.fragment}
+**KPI del CMI alimentado**: "Ticket promedio por región" → perspectiva Cliente del Balanced Scorecard.
+:::
+
 ---
 
 ## Vista 3: KPI — Tasa de Devolución (Perspectiva Procesos)
@@ -125,6 +162,10 @@ FROM pedidos p
 LEFT JOIN devoluciones d ON p.id_pedido = d.id_pedido
 WHERE p.estado IN ('entregado', 'cancelado');
 ```
+
+::: {.fragment}
+**`NULLIF(..., 0)`**: evita división por cero si no hay pedidos registrados.
+:::
 
 ---
 
@@ -147,6 +188,23 @@ HAVING dias_sin_comprar > 60
 ORDER BY dias_sin_comprar DESC;
 ```
 
+::: {.fragment}
+**Caso de uso**: María consulta esta vista para diseñar la campaña de reactivación de clientes inactivos.
+:::
+
+---
+
+## Verificación: ¿Qué Vista Responde Cada KPI?
+
+**Asigna cada KPI del CMI a la vista correspondiente:**
+
+::: {.incremental}
+1. "¿Cuánto vendimos en Calzado en junio?" → **vw_kpi_ventas_categoria**
+2. "¿Qué porcentaje de pedidos terminó en devolución?" → **vw_kpi_tasa_devolucion**
+3. "¿Cuántos clientes no compran hace más de 2 meses?" → **vw_kpi_clientes_inactivos**
+4. "¿En qué región es mayor el ticket promedio?" → **vw_kpi_ticket_por_region**
+:::
+
 ---
 
 ## Consumir las Vistas desde Power BI
@@ -157,11 +215,13 @@ Las vistas de MySQL se conectan directamente a Power BI Desktop:
 1. Power BI → "Obtener datos" → "MySQL Database".
 2. Servidor: `127.0.0.1`, Base de datos: `techstyle_db`.
 3. Seleccionar las vistas `vw_kpi_*`.
-4. Construir el CMI con las mismas vistas definidas en la Semana 3.
+4. Construir el CMI con las mismas perspectivas definidas en la Semana 2.
 :::
 
 ::: {.fragment}
 **El CMI ahora está alimentado por datos reales de la base de datos que construyeron.**
+
+→ Este es el cierre del ciclo completo del semestre.
 :::
 
 ---
@@ -169,16 +229,39 @@ Las vistas de MySQL se conectan directamente a Power BI Desktop:
 ## Modificar y Eliminar Vistas
 
 ```sql
--- Modificar una vista existente
+-- Modificar una vista existente (sin borrar y recrear)
 CREATE OR REPLACE VIEW vw_kpi_ventas_categoria AS
-    SELECT ... ; -- nueva definición
+    SELECT ... ; -- nueva definición actualizada
 
 -- Eliminar una vista
 DROP VIEW IF EXISTS vw_kpi_ventas_categoria;
 
 -- Ver todas las vistas de la base de datos
 SHOW FULL TABLES WHERE TABLE_TYPE = 'VIEW';
+
+-- Ver la definición de una vista
+SHOW CREATE VIEW vw_kpi_ticket_por_region\G
 ```
+
+---
+
+## Aplicación: Seguridad con Vistas
+
+**Problema**: El equipo de marketing necesita acceso a datos de ventas para campañas, pero no debe ver datos sensibles de clientes.
+
+```sql
+-- Crear usuario de solo lectura para marketing
+CREATE USER 'marketing_user'@'localhost' IDENTIFIED BY 'password123';
+
+-- Dar acceso SOLO a las vistas del CMI, no a las tablas base
+GRANT SELECT ON techstyle_db.vw_kpi_ventas_categoria TO 'marketing_user'@'localhost';
+GRANT SELECT ON techstyle_db.vw_kpi_ticket_por_region TO 'marketing_user'@'localhost';
+GRANT SELECT ON techstyle_db.vw_kpi_clientes_inactivos TO 'marketing_user'@'localhost';
+```
+
+::: {.fragment}
+**El equipo de marketing ve los KPIs pero no puede consultar emails ni datos personales de clientes directamente.**
+:::
 
 ---
 
@@ -204,49 +287,59 @@ SHOW FULL TABLES WHERE TABLE_TYPE = 'VIEW';
 
 | Semana | Hito |
 |---|---|
-| 1–4 | Sistemas de Información y toma de decisiones |
-| 5 | Solemne 1 |
-| 6–8 | Diseño: Caso de Uso, UML, ER, Modelo Relacional |
-| 9 | Solemne 2 |
-| 10 | Normalización |
-| 11 | Diccionario de datos + MySQL |
-| 12–13 | DDL + DML |
-| 14 | Consultas avanzadas |
-| 15 | Transacciones |
-| **16** | **Vistas + integración CMI** |
-| 16 | Vistas SQL + CMI + **Solemne 3** |
+| W01–W03 | Sistemas de Información y toma de decisiones |
+| W04 | Big Data, OLTP/OLAP, Data Warehouse, ETL |
+| W05 | **Solemne 1** |
+| W06–W08 | Diseño: Caso de Uso, UML, ER, Modelo Relacional |
+| W09 | **Solemne 2** |
+| W10–W11 | Normalización + Diccionario de datos + MySQL |
+| W12–W13 | DDL + DML |
+| W14–W15 | JOINs + GROUP BY + Subconsultas |
+| W16 | Transacciones ACID |
+| **W17** | **Vistas SQL + integración CMI + Solemne 3** |
 
 ---
 
-## Para el Laboratorio de Hoy
-
-**Lab 16**: Crear las vistas del CMI y avanzar en el proyecto final.
-
-1. Implementar las 4 vistas `vw_kpi_*` en `techstyle_db`.
-2. Verificar los resultados de cada vista.
-3. (Optativo) Conectar una vista a Power BI para visualizar el CMI.
-4. Avanzar en el informe escrito.
-
-::: {.fragment}
-**Próxima semana**: Defensa oral del proyecto final.
-
-Revisar la rúbrica y asegurarse de que todos los entregables están completos.
-:::
-
----
-
-## Solemne 3 — Evaluación Final del Semestre
-
-**Esta sesión cierra con la evaluación Solemne 3.**
+## Conexión con la Toma de Decisiones
 
 ::: {.incremental}
-- **Ponderación**: 35% de la nota final.
-  - Control parcial acumulado (semanas 11–15): 10%
-  - **Proyecto grupal `techstyle_db` + defensa oral**: 25%
-- **Formato**: Presentación y defensa en MySQL Workbench (15 min por grupo).
-- **Entregables**: Modelo ER, DDL completo, datos cargados, consultas analíticas, vistas CMI, informe escrito.
+- Las **vistas** son el último eslabón que conecta la base de datos operativa con el sistema de decisiones de la gerencia.
+- Roberto no necesita saber SQL: solo ve su dashboard en Power BI, alimentado por las vistas.
+- **La vista es el punto donde el trabajo técnico se convierte en valor de negocio**.
 :::
 
 ::: {.fragment}
-**Éxito depende de**: Demostrar que los datos que construyeron permiten tomar mejores decisiones para TechStyle.
+> "Al inicio del semestre, María tenía 450.000 filas de datos brutos y tomaba decisiones con intuición. Al final, tiene una base de datos relacional en 3FN, con transacciones ACID y vistas que alimentan su CMI en tiempo real."
+:::
+
+---
+
+## Puntos Clave
+
+::: {.incremental}
+- Una **vista SQL** es una consulta guardada que se comporta como tabla virtual — no almacena datos, los calcula al consultarse.
+- Las vistas simplifican el acceso a consultas complejas, mejoran la seguridad y permiten la reutilización.
+- `CREATE VIEW` · `CREATE OR REPLACE VIEW` · `DROP VIEW IF EXISTS`.
+- Las vistas se conectan directamente a Power BI para alimentar el CMI.
+- Las **4 vistas del CMI de TechStyle** cubren las 4 perspectivas: Financiera, Cliente, Procesos, Aprendizaje.
+:::
+
+---
+
+## Preview del Laboratorio W16 y Proyecto Final
+
+**Lab W16 / Proyecto Final: Vistas del CMI y avance del informe**
+
+::: {.incremental}
+- Implementar las 4 vistas `vw_kpi_*` en `techstyle_db`.
+- Verificar que cada vista devuelve resultados coherentes.
+- (Optativo avanzado) Conectar una vista a Power BI y visualizar el KPI.
+- Avanzar en el informe escrito del proyecto.
+:::
+
+::: {.fragment}
+**Próxima semana (W17)**: Defensa oral del proyecto final.
+
+Revisar la rúbrica y asegurarse de que todos los entregables estén completos:
+1. Modelo ER normalizado · 2. DDL completo · 3. Datos cargados · 4. Consultas analíticas · 5. Vistas CMI · 6. Informe + defensa oral.
 :::

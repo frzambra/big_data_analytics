@@ -1,6 +1,6 @@
 ---
-title: "Laboratorio 4: Mini-ETL — De Fuentes OLTP al Análisis"
-subtitle: "Semana 4 · Big Data y Analytics · Universidad San Sebastián"
+title: "Laboratorio 3: Mini-ETL — De Fuentes OLTP al Análisis"
+subtitle: "Semana 3 · W03 · Unidad 1 · Big Data y Analytics · Universidad San Sebastián"
 format:
   html:
     toc: true
@@ -19,59 +19,104 @@ TechStyle tiene sus datos distribuidos en **tres sistemas OLTP separados**, cada
 | Sistema de clientes | Marketing | `oltp_clientes.csv` |
 | Sistema de productos | Bodega | `oltp_productos.csv` |
 
-El problema: **cada sistema fue construido por equipos distintos**, en momentos distintos, sin coordinación. Los formatos no son compatibles entre sí.
+El problema: **cada sistema fue construido por equipos distintos**, en momentos distintos, sin coordinación. Los formatos no son compatibles entre sí, la calidad de los datos es heterogénea y no existe una llave común estandarizada.
 
-Tu tarea es construir un **mini proceso ETL** con Power Query para integrar estas tres fuentes en un modelo analítico unificado que permita responder preguntas de negocio.
+**Tu tarea**: construir un **mini proceso ETL** con Power Query para integrar estas tres fuentes en un modelo analítico unificado, medir la calidad de los datos, y producir el dashboard del CMI de TechStyle que Roberto necesita para la reunión del lunes.
 
 ---
 
 ## Instrucciones generales
 
 - Trabajarás **en parejas**.
-- Todo el trabajo se realiza en **Power BI Desktop** usando Power Query.
-- **Duración**: 35 minutos
+- Todo el trabajo se realiza en **Power BI Desktop** usando Power Query y la Vista de Informe.
+- **Duración total**: 2 horas (120 minutos)
+- Guarda el archivo frecuentemente como `W03_lab_[apellido1]_[apellido2].pbix`.
 
-**Archivos de datos**:
+**Archivos de datos:**
 
 - `labs/data/oltp_ventas.csv`
 - `labs/data/oltp_clientes.csv`
 - `labs/data/oltp_productos.csv`
 
+**Estructura del laboratorio:**
+
+| Parte | Actividad | Tiempo |
+|-------|-----------|--------|
+| 1 | Extraer y auditar la calidad de las fuentes | 20 min |
+| 2 | Transformar: limpiar, estandarizar y enriquecer | 40 min |
+| 3 | Cargar: construir el modelo estrella y medidas DAX | 20 min |
+| 4 | Analizar: construir el dashboard CMI de TechStyle | 25 min |
+| 5 | Síntesis: reporte ejecutivo y reflexión | 15 min |
+
 ---
 
-## Parte 1 — Extraer: conocer las fuentes (5 min)
+## Parte 1 — Extraer: conocer y auditar las fuentes {#sec-extraer}
 
-### Paso 1: Cargar las tres fuentes
+**Duración: 20 minutos**
 
-1. Abre Power BI Desktop
-2. Carga los tres archivos CSV (uno por uno, desde *Obtener datos → Texto/CSV*)
-3. En cada caso, haz clic en **Transformar datos** para abrir Power Query Editor
+### Paso 1: Cargar las tres fuentes en Power Query
 
-### Paso 2: Identificar las inconsistencias
+1. Abre **Power BI Desktop**.
+2. Carga `oltp_ventas.csv` (*Obtener datos → Texto/CSV → Transformar datos*).
+3. Repite el proceso para `oltp_clientes.csv` y `oltp_productos.csv`.
+4. Deberías tener **tres consultas** abiertas en Power Query Editor.
 
-Antes de transformar nada, examina las tres tablas y completa esta tabla de diagnóstico:
+::: {.callout-tip}
+**No cierres Power Query aún.** Todo el trabajo de limpieza ocurre aquí antes de cargar al modelo.
+:::
 
-| Problema | Tabla afectada | Columna | Detalle |
-|----------|---------------|---------|---------|
+### Paso 2: Diagnóstico de inconsistencias estructurales
+
+Antes de transformar nada, examina las tres tablas y completa esta tabla de diagnóstico. Es el **informe de auditoría inicial** del proceso ETL.
+
+| Problema detectado | Tabla afectada | Columna | Detalle del problema |
+|-------------------|---------------|---------|----------------------|
 | Nombre de columna inconsistente | | | Ej: `Cant` vs `cantidad` |
 | Formato de fecha distinto | | | Ej: DD/MM/YYYY vs YYYY/MM/DD |
 | Columna de texto que debería ser número | | | |
-| Campo que une dos tablas con nombres distintos | | | Ej: `ID_Cliente` vs `CustomerID` |
-| Categoría con nombre diferente | | | Ej: `Linea` vs `categoria` |
+| Llave de unión con nombres distintos | | | Ej: `ID_Cliente` vs `CustomerID` |
+| Categoría con nombre inconsistente | | | Ej: `Linea` vs `categoria` |
+| Columna con valores nulos o vacíos | | | |
+| Valor fuera de rango | | | Ej: precio negativo, descuento > 100% |
 
-::: {.callout-note}
-**Este es exactamente el problema real de integración de datos en empresas.** Cada área nombra sus columnas como le parece conveniente. El proceso ETL existe para resolver esto.
+### Paso 3: Auditoría de calidad de datos — las 4 dimensiones
+
+Aplica las cuatro dimensiones de calidad de datos vistas en clase (W02) a cada fuente. Completa la tabla:
+
+| Dimensión | `oltp_ventas` | `oltp_clientes` | `oltp_productos` |
+|-----------|--------------|----------------|-----------------|
+| **Exactitud** (¿el valor refleja la realidad?) | | | |
+| **Completitud** (% de campos con valor) | | | |
+| **Consistencia** (¿formatos uniformes?) | | | |
+| **Oportunidad** (¿los datos están actualizados?) | | | |
+
+Para medir **completitud**, usa Power Query: en cada columna, ve a *Transformar → Estadísticas → Contar valores nulos*. Calcula el porcentaje de nulos sobre el total de filas.
+
+::: {.callout-important}
+**Documenta todo lo que encuentras.** Este informe de auditoría es parte del entregable y demuestra que aplicaste rigor analítico antes de transformar.
 :::
+
+### Paso 4: Identificar las llaves de unión
+
+Antes de transformar, identifica cómo se relacionan las tres tablas:
+
+- ¿Qué columna de `oltp_ventas` se une con `oltp_clientes`?
+- ¿Qué columna de `oltp_ventas` se une con `oltp_productos`?
+- ¿Los valores de esas columnas son compatibles (mismo formato, mismos valores)?
+
+Anota los hallazgos antes de continuar.
 
 ---
 
-## Parte 2 — Transformar: limpiar y estandarizar (20 min)
+## Parte 2 — Transformar: limpiar, estandarizar y enriquecer {#sec-transformar}
 
-### Paso 3: Estandarizar `oltp_ventas`
+**Duración: 40 minutos**
 
-En Power Query, con la tabla `oltp_ventas` seleccionada:
+### Paso 5: Estandarizar `oltp_ventas`
 
-**3.1 Renombrar columnas** para estandarizar:
+Con la tabla `oltp_ventas` seleccionada en Power Query:
+
+**5.1 Renombrar columnas** para estandarizar los nombres:
 
 | Nombre original | Nuevo nombre |
 |----------------|-------------|
@@ -86,26 +131,56 @@ En Power Query, con la tabla `oltp_ventas` seleccionada:
 
 Para renombrar: doble clic sobre el encabezado de la columna.
 
-**3.2 Corregir el formato de fecha:**
+**5.2 Corregir el formato de fecha:**
 
-La columna `fecha` tiene formato `YYYY/MM/DD` (con barras, no guiones).
+La columna `fecha` tiene formato `YYYY/MM/DD` (con barras `/`, no guiones `-`).
 
-1. Selecciona la columna `fecha`
-2. *Inicio → Tipo de datos → Fecha*
-3. Si falla, usa: *Transformar → Columna de texto → Reemplazar valores* (cambia `/` por `-`)
-4. Luego cambia el tipo a Fecha
+1. Selecciona la columna `fecha`.
+2. *Inicio → Tipo de datos → Fecha*.
+3. Si falla: *Transformar → Columna de texto → Reemplazar valores* (cambia `/` por `-`), luego cambia el tipo a Fecha.
 
-**3.3 Verificar tipos de datos:**
+**5.3 Verificar y corregir tipos de datos:**
 
-| Columna | Tipo correcto |
-|---------|--------------|
-| `fecha` | Fecha |
-| `cantidad`, `descuento_pct` | Número entero |
-| `precio_unitario`, `venta_total` | Número decimal fijo |
+| Columna | Tipo correcto | Acción si es incorrecto |
+|---------|--------------|------------------------|
+| `fecha` | Fecha | Ver paso 5.2 |
+| `cantidad` | Número entero | *Inicio → Tipo de datos → Número entero* |
+| `descuento_pct` | Número entero | Ídem |
+| `precio_unitario` | Número decimal fijo | *Inicio → Tipo de datos → Número decimal fijo* |
+| `venta_total` | Número decimal fijo | Ídem |
 
-### Paso 4: Estandarizar `oltp_clientes`
+**5.4 Filtrar ventas inválidas:**
 
-**4.1 Renombrar columnas:**
+Algunas filas pueden tener `venta_total` negativo o `cantidad` igual a cero, lo que indica errores de registro.
+
+1. Haz clic en la flecha desplegable de la columna `venta_total`.
+2. Filtra para mostrar solo valores **mayores que 0**.
+3. Repite para `cantidad` (solo valores **mayores que 0**).
+4. Anota cuántas filas se eliminaron y documenta en tu auditoría.
+
+**5.5 Agregar columna calculada — Venta neta con descuento:**
+
+1. *Agregar columna → Columna personalizada*.
+2. Nombre: `venta_neta`.
+3. Fórmula:
+```
+= [precio_unitario] * [cantidad] * (1 - [descuento_pct] / 100)
+```
+4. Cambia el tipo de la nueva columna a **Número decimal fijo**.
+
+::: {.callout-note}
+`venta_neta` representa el ingreso real descontado. Compara con `venta_total` — si hay diferencias significativas, puede indicar errores en el sistema de origen.
+:::
+
+**5.6 Agregar columna de mes y año** (necesaria para análisis temporal):
+
+1. Selecciona la columna `fecha`.
+2. *Agregar columna → Fecha → Mes → Nombre del mes* → columna `mes`.
+3. *Agregar columna → Fecha → Año* → columna `anio`.
+
+### Paso 6: Estandarizar `oltp_clientes`
+
+**6.1 Renombrar columnas:**
 
 | Nombre original | Nuevo nombre |
 |----------------|-------------|
@@ -116,23 +191,63 @@ La columna `fecha` tiene formato `YYYY/MM/DD` (con barras, no guiones).
 | `FechaRegistro` | `fecha_registro` |
 | `TipoCliente` | `segmento` |
 
-**4.2 Separar nombre y apellido** (columna `nombre_completo`):
+**6.2 Separar nombre y apellido** (columna `nombre_completo`):
 
-1. Selecciona `nombre_completo`
-2. *Transformar → Dividir columna → Por delimitador → Espacio → En la primera aparición*
-3. Renombra las columnas resultantes: `nombre` y `apellido`
+1. Selecciona `nombre_completo`.
+2. *Transformar → Dividir columna → Por delimitador → Espacio → En la primera aparición*.
+3. Renombra las columnas resultantes: `nombre` y `apellido`.
 
-**4.3 Corregir el formato de fecha:**
+**6.3 Estandarizar la columna `region`:**
 
-La columna `fecha_registro` tiene formato `DD/MM/YYYY`.
+Probablemente encontrarás valores inconsistentes: "Santiago", "SANTIAGO", "Stgo.", "RM", "Región Metropolitana" representando la misma región.
 
-1. Selecciona la columna
+1. Selecciona la columna `region`.
+2. *Transformar → Formato → Mayúsculas* (para normalizar la capitalización).
+3. *Transformar → Reemplazar valores*. Reemplaza cada variante:
+   - "SANTIAGO" → "Metropolitana"
+   - "STGO." → "Metropolitana"
+   - "RM" → "Metropolitana"
+   - "REGION METROPOLITANA" → "Metropolitana"
+   - (aplica la misma lógica para otras regiones que encuentres)
+4. Devuelve el formato a capitalización normal con *Transformar → Formato → Poner en mayúsculas cada palabra*.
+
+::: {.callout-important}
+**Este paso es crítico.** Si no estandarizas `region`, el análisis de ventas por zona de TechStyle mostrará la misma región como si fueran múltiples regiones distintas. Esto fue exactamente el problema de calidad identificado en el caso de los bonos de W02.
+:::
+
+**6.4 Corregir el formato de `fecha_registro`:**
+
+La columna tiene formato `DD/MM/YYYY`.
+
+1. Selecciona la columna.
 2. *Inicio → Tipo de datos → Usando configuración regional...*
-3. Selecciona tipo **Fecha** y configuración regional **Español (Chile)**
+3. Tipo: **Fecha**, Configuración regional: **Español (Chile)**.
 
-### Paso 5: Estandarizar `oltp_productos`
+**6.5 Validar emails:**
 
-**5.1 Renombrar columnas:**
+1. *Agregar columna → Columna personalizada*.
+2. Nombre: `email_valido`.
+3. Fórmula (verifica presencia de `@` y `.`):
+```
+= Text.Contains([email], "@") and Text.Contains([email], ".")
+```
+4. Filtra la columna para ver cuántos emails son inválidos (`false`). Anota el número en tu auditoría de calidad.
+
+**6.6 Agregar columna — Antigüedad del cliente (en meses):**
+
+1. *Agregar columna → Columna personalizada*.
+2. Nombre: `meses_cliente`.
+3. Fórmula:
+```
+= Duration.TotalDays(DateTime.LocalNow() - [fecha_registro]) / 30
+```
+4. Cambia el tipo a **Número entero**.
+
+Esta columna permite segmentar a los clientes por antigüedad para análisis de retención.
+
+### Paso 7: Estandarizar `oltp_productos`
+
+**7.1 Renombrar columnas:**
 
 | Nombre original | Nuevo nombre |
 |----------------|-------------|
@@ -144,89 +259,317 @@ La columna `fecha_registro` tiene formato `DD/MM/YYYY`.
 | `Stock_Actual` | `stock` |
 | `Activo` | `activo` |
 
-**5.2 Agregar columna calculada — Margen:**
+**7.2 Estandarizar la columna `categoria`:**
 
-1. *Agregar columna → Columna personalizada*
-2. Nombre: `margen_pct`
+Busca variantes como "Calzado" / "CALZADO" / "calzado" y unifica con capitalización consistente.
+
+1. *Transformar → Formato → Poner en mayúsculas cada palabra*.
+
+**7.3 Filtrar productos inactivos:**
+
+1. Filtra `activo` para mostrar solo `TRUE` (o `1` si está como número).
+2. Anota cuántos productos inactivos se excluyeron del análisis.
+
+**7.4 Agregar columna calculada — Margen bruto:**
+
+1. *Agregar columna → Columna personalizada*.
+2. Nombre: `margen_pct`.
 3. Fórmula:
 ```
 = ([precio_venta] - [costo]) / [precio_venta] * 100
 ```
+4. Tipo: **Número decimal fijo**.
 
-### Paso 6: Aplicar y cerrar
+**7.5 Agregar columna — Clasificación de margen:**
 
-1. Revisa que las tres tablas estén limpias y con tipos correctos
-2. *Inicio → Cerrar y aplicar*
-3. Las tres tablas ahora están en Power BI con nombres y formatos consistentes
+1. *Agregar columna → Columna condicional*.
+2. Nombre: `clasificacion_margen`.
+3. Condiciones:
+   - Si `margen_pct` >= 40 → `"Alto"`
+   - Si `margen_pct` >= 20 → `"Medio"`
+   - De lo contrario → `"Bajo"`
+
+**7.6 Agregar columna — Alerta de stock:**
+
+1. *Agregar columna → Columna condicional*.
+2. Nombre: `alerta_stock`.
+3. Condiciones:
+   - Si `stock` = 0 → `"Sin stock"`
+   - Si `stock` < 20 → `"Stock crítico"`
+   - Si `stock` < 50 → `"Stock bajo"`
+   - De lo contrario → `"Stock normal"`
+
+### Paso 8: Aplicar y cerrar
+
+1. Revisa que las tres tablas estén limpias, con tipos correctos y columnas calculadas.
+2. Verifica en el panel derecho (*Pasos aplicados*) que el historial de transformaciones es coherente.
+3. *Inicio → Cerrar y aplicar*.
+4. Power BI cargará las tres tablas transformadas al modelo.
 
 ---
 
-## Parte 3 — Cargar: construir el modelo estrella (5 min)
+## Parte 3 — Cargar: construir el modelo estrella y medidas DAX {#sec-cargar}
 
-### Paso 7: Crear relaciones
+**Duración: 20 minutos**
 
-En Power BI, ve a la **Vista de Modelo** (ícono del centro en la barra izquierda).
+### Paso 9: Crear relaciones en el modelo estrella
 
-Deberías ver las tres tablas. Crea las relaciones:
+En Power BI, ve a la **Vista de Modelo** (ícono central en la barra izquierda).
 
-- `oltp_ventas[cliente_id]` → `oltp_clientes[cliente_id]` (muchos a uno)
-- `oltp_ventas[producto_id]` → `oltp_productos[producto_id]` (muchos a uno)
+Deberías ver las tres tablas. Crea las relaciones arrastrando columnas:
+
+- `oltp_ventas[cliente_id]` → `oltp_clientes[cliente_id]` (muchos a uno: ∞ → 1)
+- `oltp_ventas[producto_id]` → `oltp_productos[producto_id]` (muchos a uno: ∞ → 1)
 
 ::: {.callout-tip}
-**Reconoces este esquema.** Es el **modelo estrella** que ya conoces de Power BI: una tabla de hechos (ventas) rodeada de tablas de dimensiones (clientes, productos). Acabas de construirlo desde cero a partir de 3 fuentes OLTP separadas.
+**Reconoces este esquema.** Es el **modelo estrella** que ya conoces de Power BI: una tabla de hechos (`oltp_ventas`) rodeada de tablas de dimensiones (`oltp_clientes`, `oltp_productos`). Lo que cambia es que ahora lo construiste desde cero a partir de tres fuentes OLTP separadas, aplicando un proceso ETL real.
+:::
+
+**Verifica la cardinalidad de cada relación:**
+
+- Haz doble clic en la línea de relación.
+- La cardinalidad debe ser **Varios a uno (∗:1)**.
+- La dirección del filtro cruzado: **Único** (desde la dimensión hacia los hechos).
+
+### Paso 10: Crear medidas DAX esenciales
+
+Las **medidas DAX** son los KPIs calculados del modelo. Estas medidas son las que alimentan el CMI.
+
+En la **Vista de Informe**, selecciona la tabla `oltp_ventas` en el panel de campos. Luego *Modelado → Nueva medida*.
+
+**Medida 1 — Total de ventas:**
+```dax
+Total Ventas = SUM(oltp_ventas[venta_neta])
+```
+
+**Medida 2 — Número de pedidos:**
+```dax
+Num Pedidos = COUNTROWS(oltp_ventas)
+```
+
+**Medida 3 — Ticket promedio:**
+```dax
+Ticket Promedio = DIVIDE([Total Ventas], [Num Pedidos], 0)
+```
+
+**Medida 4 — Clientes únicos:**
+```dax
+Clientes Unicos = DISTINCTCOUNT(oltp_ventas[cliente_id])
+```
+
+**Medida 5 — Ventas del mes actual:**
+```dax
+Ventas Mes Actual =
+CALCULATE(
+    [Total Ventas],
+    MONTH(oltp_ventas[fecha]) = MONTH(TODAY()),
+    YEAR(oltp_ventas[fecha]) = YEAR(TODAY())
+)
+```
+
+**Medida 6 — Margen promedio de productos vendidos:**
+```dax
+Margen Promedio =
+AVERAGE(oltp_productos[margen_pct])
+```
+
+::: {.callout-note}
+Estas 6 medidas corresponden directamente a KPIs del CMI diseñado en la Semana 2. `Total Ventas` → perspectiva Financiera. `Ticket Promedio` y `Clientes Unicos` → perspectiva Cliente. `Margen Promedio` → perspectiva Procesos.
+:::
+
+### Paso 11: Validar el modelo
+
+Antes de construir el dashboard, verifica que el modelo funciona correctamente:
+
+1. Ve a la Vista de Informe.
+2. Inserta una tabla simple con `categoria` (de productos) y `Total Ventas`.
+3. ¿Muestra valores para cada categoría? ✓
+4. Inserta otra tabla con `region` (de clientes) y `Num Pedidos`.
+5. ¿Muestra valores por región? ✓
+
+Si las tablas muestran datos correctos, el modelo estrella está funcionando. Si ves errores o valores en blanco, revisa las relaciones en la Vista de Modelo.
+
+---
+
+## Parte 4 — Analizar: construir el dashboard CMI de TechStyle {#sec-analizar}
+
+**Duración: 25 minutos**
+
+Construirás un dashboard de **dos páginas** que Roberto puede usar en su reunión del lunes. El diseño debe conectar directamente con las **4 perspectivas del CMI** diseñadas en W02.
+
+### Página 1: "Resumen Ejecutivo" (CMI)
+
+Esta página presenta los KPIs estratégicos de TechStyle en formato ejecutivo.
+
+**11.1 Tarjetas de KPI (4 tarjetas en la parte superior):**
+
+Inserta 4 visualizaciones de tipo **Tarjeta** con:
+
+| Tarjeta | Medida | Perspectiva CMI |
+|---------|--------|----------------|
+| Total de Ventas | `Total Ventas` | Financiera |
+| Ticket Promedio | `Ticket Promedio` | Cliente |
+| Nº de Clientes Activos | `Clientes Unicos` | Cliente |
+| Margen Promedio | `Margen Promedio` | Procesos |
+
+Formatea los números: ventas en pesos chilenos (CLP), ticket promedio en CLP, margen en %.
+
+**11.2 Gráfico de líneas — Evolución temporal de ventas:**
+
+- Tipo: Gráfico de líneas.
+- Eje X: `anio` y `mes` (de `oltp_ventas`).
+- Valores: `Total Ventas`.
+- Título: "Evolución de Ventas Mensuales".
+
+**11.3 Gráfico de barras — Ventas por categoría:**
+
+- Tipo: Gráfico de barras agrupadas.
+- Eje: `categoria` (de `oltp_productos`).
+- Valores: `Total Ventas`.
+- Ordena de mayor a menor.
+- Título: "Ventas por Categoría de Producto".
+
+**11.4 Mapa o gráfico de barras — Ventas por región:**
+
+- Tipo: Gráfico de barras horizontales.
+- Eje: `region` (de `oltp_clientes`).
+- Valores: `Total Ventas`.
+- Título: "Distribución de Ventas por Región".
+
+**11.5 Segmentadores (filtros interactivos):**
+
+Agrega dos segmentadores que permitan a Roberto filtrar el dashboard:
+
+- `segmento` de clientes (Premium / Estándar / Básico).
+- `anio` de la venta.
+
+### Página 2: "Análisis de Productos" (Perspectiva de Procesos)
+
+Esta página da a María la información que necesita para su decisión de campaña.
+
+**12.1 Tabla — Top 10 productos por ventas:**
+
+| Campo | Fuente |
+|-------|--------|
+| `nombre_producto` | oltp_productos |
+| `categoria` | oltp_productos |
+| `Total Ventas` | Medida |
+| `Num Pedidos` | Medida |
+| `margen_pct` | oltp_productos |
+| `clasificacion_margen` | oltp_productos |
+
+Ordena la tabla por `Total Ventas` de mayor a menor.
+
+**12.2 Gráfico de dispersión — Ventas vs. Margen:**
+
+- Eje X: `margen_pct` (margen del producto).
+- Eje Y: `Total Ventas`.
+- Detalles: `nombre_producto`.
+- Leyenda: `clasificacion_margen`.
+
+Este gráfico identifica los productos con **alto margen Y altas ventas** — los más valiosos para TechStyle.
+
+**12.3 Gráfico de barras apiladas — Ventas por categoría y segmento de cliente:**
+
+- Eje: `categoria`.
+- Valores: `Total Ventas`.
+- Leyenda: `segmento` (de clientes).
+
+¿Los clientes Premium compran más en Calzado o en Ropa?
+
+**12.4 Tarjeta de alerta — Productos con stock crítico:**
+
+- Inserta una tabla con `nombre_producto`, `stock`, `alerta_stock`.
+- Filtra para mostrar solo productos con `alerta_stock` = "Sin stock" o "Stock crítico".
+- Formatea el fondo de las filas en rojo usando *Formato condicional*.
+
+::: {.callout-important}
+**Conexión con el CMI**: Los productos sin stock pero con alta demanda representan ventas perdidas — impactan directamente el KPI Financiero y el KPI de Procesos (tasa de quiebre de stock).
 :::
 
 ---
 
-## Parte 4 — Analizar: responder preguntas de negocio (5 min)
+## Parte 5 — Síntesis: reporte ejecutivo y reflexión {#sec-sintesis}
 
-### Paso 8: Construir visualizaciones analíticas
+**Duración: 15 minutos**
 
-Ahora que tienes el modelo integrado, el análisis OLAP es posible. Crea una página llamada `"Análisis OLAP"` con:
+### Paso 13: Reporte ejecutivo para Roberto
 
-1. **Gráfico de barras**: Ventas totales por `categoria` (de `oltp_productos`)
-2. **Gráfico de líneas**: Evolución de ventas por mes (usa la columna `fecha` de ventas)
-3. **Tabla**: Top 5 productos más vendidos con su margen
-4. **Segmentador**: por `segmento` de cliente (Premium / Estándar / Básico)
+Basándote en los resultados del dashboard, redacta un **mini-reporte ejecutivo** de 10–12 líneas como si fueras Juan (analista) presentando a Roberto (CEO) en la reunión del lunes.
 
----
+Usa esta estructura:
 
-## Reflexión final
+> **Titular**: "Análisis de Performance TechStyle — [Período analizado]"
+>
+> **KPI Financiero**: [Valor de Total Ventas] — [interpretación: ¿crece, cae, está en línea con la meta?]
+>
+> **Hallazgo 1** (Perspectiva Cliente): [Observación sobre ticket promedio o segmentos. Ej: "Los clientes Premium representan el X% de los ingresos con un ticket promedio Y% más alto que la media"]
+>
+> **Hallazgo 2** (Perspectiva Procesos): [Observación sobre margen o stock. Ej: "La categoría Calzado lidera ventas pero tiene el margen más bajo — riesgo de rentabilidad"]
+>
+> **Alerta** (Perspectiva Procesos): [Productos en quiebre de stock que representan ventas perdidas]
+>
+> **Recomendación para María**: [Dónde invertir los $15M de campaña y por qué — basado en datos]
 
-### Conecta con los conceptos de la clase
+### Paso 14: Reflexión sobre el proceso ETL
 
-Responde con tu compañero:
+Responde con tu compañero. Anota las respuestas en el documento de entrega:
 
 | Pregunta | Respuesta |
 |----------|----------|
-| ¿Qué paso del proceso ETL fue el más largo? ¿Por qué? | |
-| ¿Cuál de las 3 fuentes tenía peores inconsistencias? | |
-| ¿Qué problemas del Lab 3 (calidad de datos) volviste a ver aquí? | |
-| El modelo estrella que construiste: ¿es OLTP u OLAP? ¿Por qué? | |
-| Si TechStyle corriera este proceso ETL cada noche, ¿cómo se llama esa arquitectura? | |
+| ¿Qué paso del proceso ETL fue el más largo y por qué? | |
+| ¿Cuál de las 4 dimensiones de calidad fue la más problemática en este dataset? | |
+| Si TechStyle ejecutara este ETL automáticamente cada noche, ¿qué arquitectura sería esa? | |
+| ¿Qué haría diferente si el dataset tuviera 8,5 millones de filas en vez de unas pocas miles? | |
+| El modelo estrella que construiste: ¿es más OLTP u OLAP? Justifica. | |
+| ¿Qué KPI del CMI no pudiste calcular con estas 3 fuentes? ¿Qué datos te faltaron? | |
 
-### El proceso que hiciste tiene nombre
+### Paso 15: Conexión con los conceptos del semestre
 
-Lo que acabas de hacer en Power Query **es exactamente el proceso ETL**:
+Lo que hiciste hoy tiene un nombre y una arquitectura:
 
 ```
 [oltp_ventas.csv]    ─┐
 [oltp_clientes.csv]  ─┼─ EXTRACT → TRANSFORM → LOAD → Modelo estrella → OLAP
 [oltp_productos.csv] ─┘
+                                                              ↓
+                                                     Dashboard CMI en Power BI
+                                                              ↓
+                                                     Decisión de Roberto y María
 ```
 
 En empresas grandes, este proceso:
-- Se ejecuta automáticamente cada noche
-- Procesa millones de registros
-- Usa herramientas especializadas (Apache Spark, dbt, Talend...)
-- Alimenta un **Data Warehouse** que soporta los dashboards de BI y el CMI
 
-Pero el **principio es exactamente el mismo** que lo que hiciste hoy.
+- Se ejecuta **automáticamente cada noche** (batch ETL).
+- Procesa **millones de registros** usando herramientas como Apache Spark, dbt, Talend o Azure Data Factory.
+- Alimenta un **Data Warehouse** en la nube (Snowflake, BigQuery, Redshift) que soporta el BI y el CMI.
+
+**El principio es exactamente el mismo** que lo que hiciste hoy: extraer, limpiar, unificar, modelar, analizar.
 
 ---
 
-## Entrega
+## Entregable
 
-Guarda el archivo como `lab_semana4_[apellido1]_[apellido2].pbix`.
+Guarda el archivo como `W03_lab_[apellido1]_[apellido2].pbix`.
 
-El docente preguntará: *"¿Qué inconsistencia entre tablas les resultó más difícil de resolver?"*
+Sube también un documento PDF `W03_lab_[apellido1]_[apellido2].pdf` con:
+
+1. **Tabla de auditoría de calidad** completada (Pasos 2 y 3).
+2. **Capturas de pantalla** de las dos páginas del dashboard.
+3. **Mini-reporte ejecutivo** para Roberto (Paso 13).
+4. **Reflexión** respondida (Paso 14).
+
+---
+
+## Criterios de evaluación
+
+| Criterio | Puntaje |
+|---|---|
+| Auditoría de calidad de datos (4 dimensiones) | 15 pts |
+| Transformaciones completas y correctas (3 tablas) | 25 pts |
+| Modelo estrella con relaciones correctas | 10 pts |
+| Medidas DAX implementadas correctamente | 15 pts |
+| Dashboard CMI — Página 1 (Resumen Ejecutivo) | 15 pts |
+| Dashboard CMI — Página 2 (Análisis de Productos) | 10 pts |
+| Mini-reporte ejecutivo | 10 pts |
+| **Total** | **100 pts** |

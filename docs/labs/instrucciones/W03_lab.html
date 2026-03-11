@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Laboratorio 4: Mini-ETL — De Fuentes OLTP al Análisis</title>
+<title>Laboratorio 3: Mini-ETL — De Fuentes OLTP al Análisis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,32 +85,39 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#contexto" id="toc-contexto" class="nav-link active" data-scroll-target="#contexto"><span class="header-section-number">1</span> Contexto</a></li>
   <li><a href="#instrucciones-generales" id="toc-instrucciones-generales" class="nav-link" data-scroll-target="#instrucciones-generales"><span class="header-section-number">2</span> Instrucciones generales</a></li>
-  <li><a href="#parte-1-extraer-conocer-las-fuentes-5-min" id="toc-parte-1-extraer-conocer-las-fuentes-5-min" class="nav-link" data-scroll-target="#parte-1-extraer-conocer-las-fuentes-5-min"><span class="header-section-number">3</span> Parte 1 — Extraer: conocer las fuentes (5 min)</a>
+  <li><a href="#sec-extraer" id="toc-sec-extraer" class="nav-link" data-scroll-target="#sec-extraer"><span class="header-section-number">3</span> Parte 1 — Extraer: conocer y auditar las fuentes</a>
   <ul class="collapse">
-  <li><a href="#paso-1-cargar-las-tres-fuentes" id="toc-paso-1-cargar-las-tres-fuentes" class="nav-link" data-scroll-target="#paso-1-cargar-las-tres-fuentes"><span class="header-section-number">3.1</span> Paso 1: Cargar las tres fuentes</a></li>
-  <li><a href="#paso-2-identificar-las-inconsistencias" id="toc-paso-2-identificar-las-inconsistencias" class="nav-link" data-scroll-target="#paso-2-identificar-las-inconsistencias"><span class="header-section-number">3.2</span> Paso 2: Identificar las inconsistencias</a></li>
+  <li><a href="#paso-1-cargar-las-tres-fuentes-en-power-query" id="toc-paso-1-cargar-las-tres-fuentes-en-power-query" class="nav-link" data-scroll-target="#paso-1-cargar-las-tres-fuentes-en-power-query"><span class="header-section-number">3.1</span> Paso 1: Cargar las tres fuentes en Power Query</a></li>
+  <li><a href="#paso-2-diagnóstico-de-inconsistencias-estructurales" id="toc-paso-2-diagnóstico-de-inconsistencias-estructurales" class="nav-link" data-scroll-target="#paso-2-diagnóstico-de-inconsistencias-estructurales"><span class="header-section-number">3.2</span> Paso 2: Diagnóstico de inconsistencias estructurales</a></li>
+  <li><a href="#paso-3-auditoría-de-calidad-de-datos-las-4-dimensiones" id="toc-paso-3-auditoría-de-calidad-de-datos-las-4-dimensiones" class="nav-link" data-scroll-target="#paso-3-auditoría-de-calidad-de-datos-las-4-dimensiones"><span class="header-section-number">3.3</span> Paso 3: Auditoría de calidad de datos — las 4 dimensiones</a></li>
+  <li><a href="#paso-4-identificar-las-llaves-de-unión" id="toc-paso-4-identificar-las-llaves-de-unión" class="nav-link" data-scroll-target="#paso-4-identificar-las-llaves-de-unión"><span class="header-section-number">3.4</span> Paso 4: Identificar las llaves de unión</a></li>
   </ul></li>
-  <li><a href="#parte-2-transformar-limpiar-y-estandarizar-20-min" id="toc-parte-2-transformar-limpiar-y-estandarizar-20-min" class="nav-link" data-scroll-target="#parte-2-transformar-limpiar-y-estandarizar-20-min"><span class="header-section-number">4</span> Parte 2 — Transformar: limpiar y estandarizar (20 min)</a>
+  <li><a href="#sec-transformar" id="toc-sec-transformar" class="nav-link" data-scroll-target="#sec-transformar"><span class="header-section-number">4</span> Parte 2 — Transformar: limpiar, estandarizar y enriquecer</a>
   <ul class="collapse">
-  <li><a href="#paso-3-estandarizar-oltp_ventas" id="toc-paso-3-estandarizar-oltp_ventas" class="nav-link" data-scroll-target="#paso-3-estandarizar-oltp_ventas"><span class="header-section-number">4.1</span> Paso 3: Estandarizar <code>oltp_ventas</code></a></li>
-  <li><a href="#paso-4-estandarizar-oltp_clientes" id="toc-paso-4-estandarizar-oltp_clientes" class="nav-link" data-scroll-target="#paso-4-estandarizar-oltp_clientes"><span class="header-section-number">4.2</span> Paso 4: Estandarizar <code>oltp_clientes</code></a></li>
-  <li><a href="#paso-5-estandarizar-oltp_productos" id="toc-paso-5-estandarizar-oltp_productos" class="nav-link" data-scroll-target="#paso-5-estandarizar-oltp_productos"><span class="header-section-number">4.3</span> Paso 5: Estandarizar <code>oltp_productos</code></a></li>
-  <li><a href="#paso-6-aplicar-y-cerrar" id="toc-paso-6-aplicar-y-cerrar" class="nav-link" data-scroll-target="#paso-6-aplicar-y-cerrar"><span class="header-section-number">4.4</span> Paso 6: Aplicar y cerrar</a></li>
+  <li><a href="#paso-5-estandarizar-oltp_ventas" id="toc-paso-5-estandarizar-oltp_ventas" class="nav-link" data-scroll-target="#paso-5-estandarizar-oltp_ventas"><span class="header-section-number">4.1</span> Paso 5: Estandarizar <code>oltp_ventas</code></a></li>
+  <li><a href="#paso-6-estandarizar-oltp_clientes" id="toc-paso-6-estandarizar-oltp_clientes" class="nav-link" data-scroll-target="#paso-6-estandarizar-oltp_clientes"><span class="header-section-number">4.2</span> Paso 6: Estandarizar <code>oltp_clientes</code></a></li>
+  <li><a href="#paso-7-estandarizar-oltp_productos" id="toc-paso-7-estandarizar-oltp_productos" class="nav-link" data-scroll-target="#paso-7-estandarizar-oltp_productos"><span class="header-section-number">4.3</span> Paso 7: Estandarizar <code>oltp_productos</code></a></li>
+  <li><a href="#paso-8-aplicar-y-cerrar" id="toc-paso-8-aplicar-y-cerrar" class="nav-link" data-scroll-target="#paso-8-aplicar-y-cerrar"><span class="header-section-number">4.4</span> Paso 8: Aplicar y cerrar</a></li>
   </ul></li>
-  <li><a href="#parte-3-cargar-construir-el-modelo-estrella-5-min" id="toc-parte-3-cargar-construir-el-modelo-estrella-5-min" class="nav-link" data-scroll-target="#parte-3-cargar-construir-el-modelo-estrella-5-min"><span class="header-section-number">5</span> Parte 3 — Cargar: construir el modelo estrella (5 min)</a>
+  <li><a href="#sec-cargar" id="toc-sec-cargar" class="nav-link" data-scroll-target="#sec-cargar"><span class="header-section-number">5</span> Parte 3 — Cargar: construir el modelo estrella y medidas DAX</a>
   <ul class="collapse">
-  <li><a href="#paso-7-crear-relaciones" id="toc-paso-7-crear-relaciones" class="nav-link" data-scroll-target="#paso-7-crear-relaciones"><span class="header-section-number">5.1</span> Paso 7: Crear relaciones</a></li>
+  <li><a href="#paso-9-crear-relaciones-en-el-modelo-estrella" id="toc-paso-9-crear-relaciones-en-el-modelo-estrella" class="nav-link" data-scroll-target="#paso-9-crear-relaciones-en-el-modelo-estrella"><span class="header-section-number">5.1</span> Paso 9: Crear relaciones en el modelo estrella</a></li>
+  <li><a href="#paso-10-crear-medidas-dax-esenciales" id="toc-paso-10-crear-medidas-dax-esenciales" class="nav-link" data-scroll-target="#paso-10-crear-medidas-dax-esenciales"><span class="header-section-number">5.2</span> Paso 10: Crear medidas DAX esenciales</a></li>
+  <li><a href="#paso-11-validar-el-modelo" id="toc-paso-11-validar-el-modelo" class="nav-link" data-scroll-target="#paso-11-validar-el-modelo"><span class="header-section-number">5.3</span> Paso 11: Validar el modelo</a></li>
   </ul></li>
-  <li><a href="#parte-4-analizar-responder-preguntas-de-negocio-5-min" id="toc-parte-4-analizar-responder-preguntas-de-negocio-5-min" class="nav-link" data-scroll-target="#parte-4-analizar-responder-preguntas-de-negocio-5-min"><span class="header-section-number">6</span> Parte 4 — Analizar: responder preguntas de negocio (5 min)</a>
+  <li><a href="#sec-analizar" id="toc-sec-analizar" class="nav-link" data-scroll-target="#sec-analizar"><span class="header-section-number">6</span> Parte 4 — Analizar: construir el dashboard CMI de TechStyle</a>
   <ul class="collapse">
-  <li><a href="#paso-8-construir-visualizaciones-analíticas" id="toc-paso-8-construir-visualizaciones-analíticas" class="nav-link" data-scroll-target="#paso-8-construir-visualizaciones-analíticas"><span class="header-section-number">6.1</span> Paso 8: Construir visualizaciones analíticas</a></li>
+  <li><a href="#página-1-resumen-ejecutivo-cmi" id="toc-página-1-resumen-ejecutivo-cmi" class="nav-link" data-scroll-target="#página-1-resumen-ejecutivo-cmi"><span class="header-section-number">6.1</span> Página 1: “Resumen Ejecutivo” (CMI)</a></li>
+  <li><a href="#página-2-análisis-de-productos-perspectiva-de-procesos" id="toc-página-2-análisis-de-productos-perspectiva-de-procesos" class="nav-link" data-scroll-target="#página-2-análisis-de-productos-perspectiva-de-procesos"><span class="header-section-number">6.2</span> Página 2: “Análisis de Productos” (Perspectiva de Procesos)</a></li>
   </ul></li>
-  <li><a href="#reflexión-final" id="toc-reflexión-final" class="nav-link" data-scroll-target="#reflexión-final"><span class="header-section-number">7</span> Reflexión final</a>
+  <li><a href="#sec-sintesis" id="toc-sec-sintesis" class="nav-link" data-scroll-target="#sec-sintesis"><span class="header-section-number">7</span> Parte 5 — Síntesis: reporte ejecutivo y reflexión</a>
   <ul class="collapse">
-  <li><a href="#conecta-con-los-conceptos-de-la-clase" id="toc-conecta-con-los-conceptos-de-la-clase" class="nav-link" data-scroll-target="#conecta-con-los-conceptos-de-la-clase"><span class="header-section-number">7.1</span> Conecta con los conceptos de la clase</a></li>
-  <li><a href="#el-proceso-que-hiciste-tiene-nombre" id="toc-el-proceso-que-hiciste-tiene-nombre" class="nav-link" data-scroll-target="#el-proceso-que-hiciste-tiene-nombre"><span class="header-section-number">7.2</span> El proceso que hiciste tiene nombre</a></li>
+  <li><a href="#paso-13-reporte-ejecutivo-para-roberto" id="toc-paso-13-reporte-ejecutivo-para-roberto" class="nav-link" data-scroll-target="#paso-13-reporte-ejecutivo-para-roberto"><span class="header-section-number">7.1</span> Paso 13: Reporte ejecutivo para Roberto</a></li>
+  <li><a href="#paso-14-reflexión-sobre-el-proceso-etl" id="toc-paso-14-reflexión-sobre-el-proceso-etl" class="nav-link" data-scroll-target="#paso-14-reflexión-sobre-el-proceso-etl"><span class="header-section-number">7.2</span> Paso 14: Reflexión sobre el proceso ETL</a></li>
+  <li><a href="#paso-15-conexión-con-los-conceptos-del-semestre" id="toc-paso-15-conexión-con-los-conceptos-del-semestre" class="nav-link" data-scroll-target="#paso-15-conexión-con-los-conceptos-del-semestre"><span class="header-section-number">7.3</span> Paso 15: Conexión con los conceptos del semestre</a></li>
   </ul></li>
-  <li><a href="#entrega" id="toc-entrega" class="nav-link" data-scroll-target="#entrega"><span class="header-section-number">8</span> Entrega</a></li>
+  <li><a href="#entregable" id="toc-entregable" class="nav-link" data-scroll-target="#entregable"><span class="header-section-number">8</span> Entregable</a></li>
+  <li><a href="#criterios-de-evaluación" id="toc-criterios-de-evaluación" class="nav-link" data-scroll-target="#criterios-de-evaluación"><span class="header-section-number">9</span> Criterios de evaluación</a></li>
   </ul>
 </nav>
     </div>
@@ -119,8 +126,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Laboratorio 4: Mini-ETL — De Fuentes OLTP al Análisis</h1>
-<p class="subtitle lead">Semana 4 · Big Data y Analytics · Universidad San Sebastián</p>
+<h1 class="title">Laboratorio 3: Mini-ETL — De Fuentes OLTP al Análisis</h1>
+<p class="subtitle lead">Semana 3 · W03 · Unidad 1 · Big Data y Analytics · Universidad San Sebastián</p>
 </div>
 
 
@@ -166,51 +173,104 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-<p>El problema: <strong>cada sistema fue construido por equipos distintos</strong>, en momentos distintos, sin coordinación. Los formatos no son compatibles entre sí.</p>
-<p>Tu tarea es construir un <strong>mini proceso ETL</strong> con Power Query para integrar estas tres fuentes en un modelo analítico unificado que permita responder preguntas de negocio.</p>
+<p>El problema: <strong>cada sistema fue construido por equipos distintos</strong>, en momentos distintos, sin coordinación. Los formatos no son compatibles entre sí, la calidad de los datos es heterogénea y no existe una llave común estandarizada.</p>
+<p><strong>Tu tarea</strong>: construir un <strong>mini proceso ETL</strong> con Power Query para integrar estas tres fuentes en un modelo analítico unificado, medir la calidad de los datos, y producir el dashboard del CMI de TechStyle que Roberto necesita para la reunión del lunes.</p>
 <hr>
 </section>
 <section id="instrucciones-generales" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="instrucciones-generales"><span class="header-section-number">2</span> Instrucciones generales</h2>
 <ul>
 <li>Trabajarás <strong>en parejas</strong>.</li>
-<li>Todo el trabajo se realiza en <strong>Power BI Desktop</strong> usando Power Query.</li>
-<li><strong>Duración</strong>: 35 minutos</li>
+<li>Todo el trabajo se realiza en <strong>Power BI Desktop</strong> usando Power Query y la Vista de Informe.</li>
+<li><strong>Duración total</strong>: 2 horas (120 minutos)</li>
+<li>Guarda el archivo frecuentemente como <code>W03_lab_[apellido1]_[apellido2].pbix</code>.</li>
 </ul>
-<p><strong>Archivos de datos</strong>:</p>
+<p><strong>Archivos de datos:</strong></p>
 <ul>
 <li><code>labs/data/oltp_ventas.csv</code></li>
 <li><code>labs/data/oltp_clientes.csv</code></li>
 <li><code>labs/data/oltp_productos.csv</code></li>
 </ul>
+<p><strong>Estructura del laboratorio:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parte</th>
+<th>Actividad</th>
+<th>Tiempo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Extraer y auditar la calidad de las fuentes</td>
+<td>20 min</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Transformar: limpiar, estandarizar y enriquecer</td>
+<td>40 min</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Cargar: construir el modelo estrella y medidas DAX</td>
+<td>20 min</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Analizar: construir el dashboard CMI de TechStyle</td>
+<td>25 min</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Síntesis: reporte ejecutivo y reflexión</td>
+<td>15 min</td>
+</tr>
+</tbody>
+</table>
 <hr>
 </section>
-<section id="parte-1-extraer-conocer-las-fuentes-5-min" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="parte-1-extraer-conocer-las-fuentes-5-min"><span class="header-section-number">3</span> Parte 1 — Extraer: conocer las fuentes (5 min)</h2>
-<section id="paso-1-cargar-las-tres-fuentes" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="paso-1-cargar-las-tres-fuentes"><span class="header-section-number">3.1</span> Paso 1: Cargar las tres fuentes</h3>
+<section id="sec-extraer" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="sec-extraer"><span class="header-section-number">3</span> Parte 1 — Extraer: conocer y auditar las fuentes</h2>
+<p><strong>Duración: 20 minutos</strong></p>
+<section id="paso-1-cargar-las-tres-fuentes-en-power-query" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="paso-1-cargar-las-tres-fuentes-en-power-query"><span class="header-section-number">3.1</span> Paso 1: Cargar las tres fuentes en Power Query</h3>
 <ol type="1">
-<li>Abre Power BI Desktop</li>
-<li>Carga los tres archivos CSV (uno por uno, desde <em>Obtener datos → Texto/CSV</em>)</li>
-<li>En cada caso, haz clic en <strong>Transformar datos</strong> para abrir Power Query Editor</li>
+<li>Abre <strong>Power BI Desktop</strong>.</li>
+<li>Carga <code>oltp_ventas.csv</code> (<em>Obtener datos → Texto/CSV → Transformar datos</em>).</li>
+<li>Repite el proceso para <code>oltp_clientes.csv</code> y <code>oltp_productos.csv</code>.</li>
+<li>Deberías tener <strong>tres consultas</strong> abiertas en Power Query Editor.</li>
 </ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>No cierres Power Query aún.</strong> Todo el trabajo de limpieza ocurre aquí antes de cargar al modelo.</p>
+</div>
+</div>
 </section>
-<section id="paso-2-identificar-las-inconsistencias" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="paso-2-identificar-las-inconsistencias"><span class="header-section-number">3.2</span> Paso 2: Identificar las inconsistencias</h3>
-<p>Antes de transformar nada, examina las tres tablas y completa esta tabla de diagnóstico:</p>
+<section id="paso-2-diagnóstico-de-inconsistencias-estructurales" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="paso-2-diagnóstico-de-inconsistencias-estructurales"><span class="header-section-number">3.2</span> Paso 2: Diagnóstico de inconsistencias estructurales</h3>
+<p>Antes de transformar nada, examina las tres tablas y completa esta tabla de diagnóstico. Es el <strong>informe de auditoría inicial</strong> del proceso ETL.</p>
 <table class="caption-top table">
 <colgroup>
+<col style="width: 29%">
 <col style="width: 23%">
-<col style="width: 34%">
-<col style="width: 20%">
-<col style="width: 20%">
+<col style="width: 13%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Problema</th>
+<th>Problema detectado</th>
 <th>Tabla afectada</th>
 <th>Columna</th>
-<th>Detalle</th>
+<th>Detalle del problema</th>
 </tr>
 </thead>
 <tbody>
@@ -233,41 +293,105 @@ ul.task-list li input[type="checkbox"] {
 <td></td>
 </tr>
 <tr class="even">
-<td>Campo que une dos tablas con nombres distintos</td>
+<td>Llave de unión con nombres distintos</td>
 <td></td>
 <td></td>
 <td>Ej: <code>ID_Cliente</code> vs <code>CustomerID</code></td>
 </tr>
 <tr class="odd">
-<td>Categoría con nombre diferente</td>
+<td>Categoría con nombre inconsistente</td>
 <td></td>
 <td></td>
 <td>Ej: <code>Linea</code> vs <code>categoria</code></td>
 </tr>
+<tr class="even">
+<td>Columna con valores nulos o vacíos</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Valor fuera de rango</td>
+<td></td>
+<td></td>
+<td>Ej: precio negativo, descuento &gt; 100%</td>
+</tr>
 </tbody>
 </table>
-<div class="callout callout-style-default callout-note callout-titled">
+</section>
+<section id="paso-3-auditoría-de-calidad-de-datos-las-4-dimensiones" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="paso-3-auditoría-de-calidad-de-datos-las-4-dimensiones"><span class="header-section-number">3.3</span> Paso 3: Auditoría de calidad de datos — las 4 dimensiones</h3>
+<p>Aplica las cuatro dimensiones de calidad de datos vistas en clase (W02) a cada fuente. Completa la tabla:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Dimensión</th>
+<th><code>oltp_ventas</code></th>
+<th><code>oltp_clientes</code></th>
+<th><code>oltp_productos</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Exactitud</strong> (¿el valor refleja la realidad?)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Completitud</strong> (% de campos con valor)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>Consistencia</strong> (¿formatos uniformes?)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Oportunidad</strong> (¿los datos están actualizados?)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Para medir <strong>completitud</strong>, usa Power Query: en cada columna, ve a <em>Transformar → Estadísticas → Contar valores nulos</em>. Calcula el porcentaje de nulos sobre el total de filas.</p>
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Este es exactamente el problema real de integración de datos en empresas.</strong> Cada área nombra sus columnas como le parece conveniente. El proceso ETL existe para resolver esto.</p>
+<p><strong>Documenta todo lo que encuentras.</strong> Este informe de auditoría es parte del entregable y demuestra que aplicaste rigor analítico antes de transformar.</p>
 </div>
 </div>
+</section>
+<section id="paso-4-identificar-las-llaves-de-unión" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="paso-4-identificar-las-llaves-de-unión"><span class="header-section-number">3.4</span> Paso 4: Identificar las llaves de unión</h3>
+<p>Antes de transformar, identifica cómo se relacionan las tres tablas:</p>
+<ul>
+<li>¿Qué columna de <code>oltp_ventas</code> se une con <code>oltp_clientes</code>?</li>
+<li>¿Qué columna de <code>oltp_ventas</code> se une con <code>oltp_productos</code>?</li>
+<li>¿Los valores de esas columnas son compatibles (mismo formato, mismos valores)?</li>
+</ul>
+<p>Anota los hallazgos antes de continuar.</p>
 <hr>
 </section>
 </section>
-<section id="parte-2-transformar-limpiar-y-estandarizar-20-min" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="parte-2-transformar-limpiar-y-estandarizar-20-min"><span class="header-section-number">4</span> Parte 2 — Transformar: limpiar y estandarizar (20 min)</h2>
-<section id="paso-3-estandarizar-oltp_ventas" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="paso-3-estandarizar-oltp_ventas"><span class="header-section-number">4.1</span> Paso 3: Estandarizar <code>oltp_ventas</code></h3>
-<p>En Power Query, con la tabla <code>oltp_ventas</code> seleccionada:</p>
-<p><strong>3.1 Renombrar columnas</strong> para estandarizar:</p>
+<section id="sec-transformar" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="sec-transformar"><span class="header-section-number">4</span> Parte 2 — Transformar: limpiar, estandarizar y enriquecer</h2>
+<p><strong>Duración: 40 minutos</strong></p>
+<section id="paso-5-estandarizar-oltp_ventas" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="paso-5-estandarizar-oltp_ventas"><span class="header-section-number">4.1</span> Paso 5: Estandarizar <code>oltp_ventas</code></h3>
+<p>Con la tabla <code>oltp_ventas</code> seleccionada en Power Query:</p>
+<p><strong>5.1 Renombrar columnas</strong> para estandarizar los nombres:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -311,41 +435,96 @@ Note
 </tbody>
 </table>
 <p>Para renombrar: doble clic sobre el encabezado de la columna.</p>
-<p><strong>3.2 Corregir el formato de fecha:</strong></p>
-<p>La columna <code>fecha</code> tiene formato <code>YYYY/MM/DD</code> (con barras, no guiones).</p>
+<p><strong>5.2 Corregir el formato de fecha:</strong></p>
+<p>La columna <code>fecha</code> tiene formato <code>YYYY/MM/DD</code> (con barras <code>/</code>, no guiones <code>-</code>).</p>
 <ol type="1">
-<li>Selecciona la columna <code>fecha</code></li>
-<li><em>Inicio → Tipo de datos → Fecha</em></li>
-<li>Si falla, usa: <em>Transformar → Columna de texto → Reemplazar valores</em> (cambia <code>/</code> por <code>-</code>)</li>
-<li>Luego cambia el tipo a Fecha</li>
+<li>Selecciona la columna <code>fecha</code>.</li>
+<li><em>Inicio → Tipo de datos → Fecha</em>.</li>
+<li>Si falla: <em>Transformar → Columna de texto → Reemplazar valores</em> (cambia <code>/</code> por <code>-</code>), luego cambia el tipo a Fecha.</li>
 </ol>
-<p><strong>3.3 Verificar tipos de datos:</strong></p>
+<p><strong>5.3 Verificar y corregir tipos de datos:</strong></p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 29%">
+<col style="width: 51%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Columna</th>
 <th>Tipo correcto</th>
+<th>Acción si es incorrecto</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><code>fecha</code></td>
 <td>Fecha</td>
+<td>Ver paso 5.2</td>
 </tr>
 <tr class="even">
-<td><code>cantidad</code>, <code>descuento_pct</code></td>
+<td><code>cantidad</code></td>
 <td>Número entero</td>
+<td><em>Inicio → Tipo de datos → Número entero</em></td>
 </tr>
 <tr class="odd">
-<td><code>precio_unitario</code>, <code>venta_total</code></td>
+<td><code>descuento_pct</code></td>
+<td>Número entero</td>
+<td>Ídem</td>
+</tr>
+<tr class="even">
+<td><code>precio_unitario</code></td>
 <td>Número decimal fijo</td>
+<td><em>Inicio → Tipo de datos → Número decimal fijo</em></td>
+</tr>
+<tr class="odd">
+<td><code>venta_total</code></td>
+<td>Número decimal fijo</td>
+<td>Ídem</td>
 </tr>
 </tbody>
 </table>
+<p><strong>5.4 Filtrar ventas inválidas:</strong></p>
+<p>Algunas filas pueden tener <code>venta_total</code> negativo o <code>cantidad</code> igual a cero, lo que indica errores de registro.</p>
+<ol type="1">
+<li>Haz clic en la flecha desplegable de la columna <code>venta_total</code>.</li>
+<li>Filtra para mostrar solo valores <strong>mayores que 0</strong>.</li>
+<li>Repite para <code>cantidad</code> (solo valores <strong>mayores que 0</strong>).</li>
+<li>Anota cuántas filas se eliminaron y documenta en tu auditoría.</li>
+</ol>
+<p><strong>5.5 Agregar columna calculada — Venta neta con descuento:</strong></p>
+<ol type="1">
+<li><em>Agregar columna → Columna personalizada</em>.</li>
+<li>Nombre: <code>venta_neta</code>.</li>
+<li>Fórmula:</li>
+</ol>
+<pre><code>= [precio_unitario] * [cantidad] * (1 - [descuento_pct] / 100)</code></pre>
+<ol start="4" type="1">
+<li>Cambia el tipo de la nueva columna a <strong>Número decimal fijo</strong>.</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>venta_neta</code> representa el ingreso real descontado. Compara con <code>venta_total</code> — si hay diferencias significativas, puede indicar errores en el sistema de origen.</p>
+</div>
+</div>
+<p><strong>5.6 Agregar columna de mes y año</strong> (necesaria para análisis temporal):</p>
+<ol type="1">
+<li>Selecciona la columna <code>fecha</code>.</li>
+<li><em>Agregar columna → Fecha → Mes → Nombre del mes</em> → columna <code>mes</code>.</li>
+<li><em>Agregar columna → Fecha → Año</em> → columna <code>anio</code>.</li>
+</ol>
 </section>
-<section id="paso-4-estandarizar-oltp_clientes" class="level3" data-number="4.2">
-<h3 data-number="4.2" class="anchored" data-anchor-id="paso-4-estandarizar-oltp_clientes"><span class="header-section-number">4.2</span> Paso 4: Estandarizar <code>oltp_clientes</code></h3>
-<p><strong>4.1 Renombrar columnas:</strong></p>
+<section id="paso-6-estandarizar-oltp_clientes" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="paso-6-estandarizar-oltp_clientes"><span class="header-section-number">4.2</span> Paso 6: Estandarizar <code>oltp_clientes</code></h3>
+<p><strong>6.1 Renombrar columnas:</strong></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -380,23 +559,72 @@ Note
 </tr>
 </tbody>
 </table>
-<p><strong>4.2 Separar nombre y apellido</strong> (columna <code>nombre_completo</code>):</p>
+<p><strong>6.2 Separar nombre y apellido</strong> (columna <code>nombre_completo</code>):</p>
 <ol type="1">
-<li>Selecciona <code>nombre_completo</code></li>
-<li><em>Transformar → Dividir columna → Por delimitador → Espacio → En la primera aparición</em></li>
-<li>Renombra las columnas resultantes: <code>nombre</code> y <code>apellido</code></li>
+<li>Selecciona <code>nombre_completo</code>.</li>
+<li><em>Transformar → Dividir columna → Por delimitador → Espacio → En la primera aparición</em>.</li>
+<li>Renombra las columnas resultantes: <code>nombre</code> y <code>apellido</code>.</li>
 </ol>
-<p><strong>4.3 Corregir el formato de fecha:</strong></p>
-<p>La columna <code>fecha_registro</code> tiene formato <code>DD/MM/YYYY</code>.</p>
+<p><strong>6.3 Estandarizar la columna <code>region</code>:</strong></p>
+<p>Probablemente encontrarás valores inconsistentes: “Santiago”, “SANTIAGO”, “Stgo.”, “RM”, “Región Metropolitana” representando la misma región.</p>
 <ol type="1">
-<li>Selecciona la columna</li>
+<li>Selecciona la columna <code>region</code>.</li>
+<li><em>Transformar → Formato → Mayúsculas</em> (para normalizar la capitalización).</li>
+<li><em>Transformar → Reemplazar valores</em>. Reemplaza cada variante:
+<ul>
+<li>“SANTIAGO” → “Metropolitana”</li>
+<li>“STGO.” → “Metropolitana”</li>
+<li>“RM” → “Metropolitana”</li>
+<li>“REGION METROPOLITANA” → “Metropolitana”</li>
+<li>(aplica la misma lógica para otras regiones que encuentres)</li>
+</ul></li>
+<li>Devuelve el formato a capitalización normal con <em>Transformar → Formato → Poner en mayúsculas cada palabra</em>.</li>
+</ol>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Este paso es crítico.</strong> Si no estandarizas <code>region</code>, el análisis de ventas por zona de TechStyle mostrará la misma región como si fueran múltiples regiones distintas. Esto fue exactamente el problema de calidad identificado en el caso de los bonos de W02.</p>
+</div>
+</div>
+<p><strong>6.4 Corregir el formato de <code>fecha_registro</code>:</strong></p>
+<p>La columna tiene formato <code>DD/MM/YYYY</code>.</p>
+<ol type="1">
+<li>Selecciona la columna.</li>
 <li><em>Inicio → Tipo de datos → Usando configuración regional…</em></li>
-<li>Selecciona tipo <strong>Fecha</strong> y configuración regional <strong>Español (Chile)</strong></li>
+<li>Tipo: <strong>Fecha</strong>, Configuración regional: <strong>Español (Chile)</strong>.</li>
 </ol>
+<p><strong>6.5 Validar emails:</strong></p>
+<ol type="1">
+<li><em>Agregar columna → Columna personalizada</em>.</li>
+<li>Nombre: <code>email_valido</code>.</li>
+<li>Fórmula (verifica presencia de <code>@</code> y <code>.</code>):</li>
+</ol>
+<pre><code>= Text.Contains([email], "@") and Text.Contains([email], ".")</code></pre>
+<ol start="4" type="1">
+<li>Filtra la columna para ver cuántos emails son inválidos (<code>false</code>). Anota el número en tu auditoría de calidad.</li>
+</ol>
+<p><strong>6.6 Agregar columna — Antigüedad del cliente (en meses):</strong></p>
+<ol type="1">
+<li><em>Agregar columna → Columna personalizada</em>.</li>
+<li>Nombre: <code>meses_cliente</code>.</li>
+<li>Fórmula:</li>
+</ol>
+<pre><code>= Duration.TotalDays(DateTime.LocalNow() - [fecha_registro]) / 30</code></pre>
+<ol start="4" type="1">
+<li>Cambia el tipo a <strong>Número entero</strong>.</li>
+</ol>
+<p>Esta columna permite segmentar a los clientes por antigüedad para análisis de retención.</p>
 </section>
-<section id="paso-5-estandarizar-oltp_productos" class="level3" data-number="4.3">
-<h3 data-number="4.3" class="anchored" data-anchor-id="paso-5-estandarizar-oltp_productos"><span class="header-section-number">4.3</span> Paso 5: Estandarizar <code>oltp_productos</code></h3>
-<p><strong>5.1 Renombrar columnas:</strong></p>
+<section id="paso-7-estandarizar-oltp_productos" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="paso-7-estandarizar-oltp_productos"><span class="header-section-number">4.3</span> Paso 7: Estandarizar <code>oltp_productos</code></h3>
+<p><strong>7.1 Renombrar columnas:</strong></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -435,33 +663,71 @@ Note
 </tr>
 </tbody>
 </table>
-<p><strong>5.2 Agregar columna calculada — Margen:</strong></p>
+<p><strong>7.2 Estandarizar la columna <code>categoria</code>:</strong></p>
+<p>Busca variantes como “Calzado” / “CALZADO” / “calzado” y unifica con capitalización consistente.</p>
 <ol type="1">
-<li><em>Agregar columna → Columna personalizada</em></li>
-<li>Nombre: <code>margen_pct</code></li>
+<li><em>Transformar → Formato → Poner en mayúsculas cada palabra</em>.</li>
+</ol>
+<p><strong>7.3 Filtrar productos inactivos:</strong></p>
+<ol type="1">
+<li>Filtra <code>activo</code> para mostrar solo <code>TRUE</code> (o <code>1</code> si está como número).</li>
+<li>Anota cuántos productos inactivos se excluyeron del análisis.</li>
+</ol>
+<p><strong>7.4 Agregar columna calculada — Margen bruto:</strong></p>
+<ol type="1">
+<li><em>Agregar columna → Columna personalizada</em>.</li>
+<li>Nombre: <code>margen_pct</code>.</li>
 <li>Fórmula:</li>
 </ol>
 <pre><code>= ([precio_venta] - [costo]) / [precio_venta] * 100</code></pre>
-</section>
-<section id="paso-6-aplicar-y-cerrar" class="level3" data-number="4.4">
-<h3 data-number="4.4" class="anchored" data-anchor-id="paso-6-aplicar-y-cerrar"><span class="header-section-number">4.4</span> Paso 6: Aplicar y cerrar</h3>
+<ol start="4" type="1">
+<li>Tipo: <strong>Número decimal fijo</strong>.</li>
+</ol>
+<p><strong>7.5 Agregar columna — Clasificación de margen:</strong></p>
 <ol type="1">
-<li>Revisa que las tres tablas estén limpias y con tipos correctos</li>
-<li><em>Inicio → Cerrar y aplicar</em></li>
-<li>Las tres tablas ahora están en Power BI con nombres y formatos consistentes</li>
+<li><em>Agregar columna → Columna condicional</em>.</li>
+<li>Nombre: <code>clasificacion_margen</code>.</li>
+<li>Condiciones:
+<ul>
+<li>Si <code>margen_pct</code> &gt;= 40 → <code>"Alto"</code></li>
+<li>Si <code>margen_pct</code> &gt;= 20 → <code>"Medio"</code></li>
+<li>De lo contrario → <code>"Bajo"</code></li>
+</ul></li>
+</ol>
+<p><strong>7.6 Agregar columna — Alerta de stock:</strong></p>
+<ol type="1">
+<li><em>Agregar columna → Columna condicional</em>.</li>
+<li>Nombre: <code>alerta_stock</code>.</li>
+<li>Condiciones:
+<ul>
+<li>Si <code>stock</code> = 0 → <code>"Sin stock"</code></li>
+<li>Si <code>stock</code> &lt; 20 → <code>"Stock crítico"</code></li>
+<li>Si <code>stock</code> &lt; 50 → <code>"Stock bajo"</code></li>
+<li>De lo contrario → <code>"Stock normal"</code></li>
+</ul></li>
+</ol>
+</section>
+<section id="paso-8-aplicar-y-cerrar" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="paso-8-aplicar-y-cerrar"><span class="header-section-number">4.4</span> Paso 8: Aplicar y cerrar</h3>
+<ol type="1">
+<li>Revisa que las tres tablas estén limpias, con tipos correctos y columnas calculadas.</li>
+<li>Verifica en el panel derecho (<em>Pasos aplicados</em>) que el historial de transformaciones es coherente.</li>
+<li><em>Inicio → Cerrar y aplicar</em>.</li>
+<li>Power BI cargará las tres tablas transformadas al modelo.</li>
 </ol>
 <hr>
 </section>
 </section>
-<section id="parte-3-cargar-construir-el-modelo-estrella-5-min" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="parte-3-cargar-construir-el-modelo-estrella-5-min"><span class="header-section-number">5</span> Parte 3 — Cargar: construir el modelo estrella (5 min)</h2>
-<section id="paso-7-crear-relaciones" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="paso-7-crear-relaciones"><span class="header-section-number">5.1</span> Paso 7: Crear relaciones</h3>
-<p>En Power BI, ve a la <strong>Vista de Modelo</strong> (ícono del centro en la barra izquierda).</p>
-<p>Deberías ver las tres tablas. Crea las relaciones:</p>
+<section id="sec-cargar" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="sec-cargar"><span class="header-section-number">5</span> Parte 3 — Cargar: construir el modelo estrella y medidas DAX</h2>
+<p><strong>Duración: 20 minutos</strong></p>
+<section id="paso-9-crear-relaciones-en-el-modelo-estrella" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="paso-9-crear-relaciones-en-el-modelo-estrella"><span class="header-section-number">5.1</span> Paso 9: Crear relaciones en el modelo estrella</h3>
+<p>En Power BI, ve a la <strong>Vista de Modelo</strong> (ícono central en la barra izquierda).</p>
+<p>Deberías ver las tres tablas. Crea las relaciones arrastrando columnas:</p>
 <ul>
-<li><code>oltp_ventas[cliente_id]</code> → <code>oltp_clientes[cliente_id]</code> (muchos a uno)</li>
-<li><code>oltp_ventas[producto_id]</code> → <code>oltp_productos[producto_id]</code> (muchos a uno)</li>
+<li><code>oltp_ventas[cliente_id]</code> → <code>oltp_clientes[cliente_id]</code> (muchos a uno: ∞ → 1)</li>
+<li><code>oltp_ventas[producto_id]</code> → <code>oltp_productos[producto_id]</code> (muchos a uno: ∞ → 1)</li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -473,31 +739,231 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Reconoces este esquema.</strong> Es el <strong>modelo estrella</strong> que ya conoces de Power BI: una tabla de hechos (ventas) rodeada de tablas de dimensiones (clientes, productos). Acabas de construirlo desde cero a partir de 3 fuentes OLTP separadas.</p>
+<p><strong>Reconoces este esquema.</strong> Es el <strong>modelo estrella</strong> que ya conoces de Power BI: una tabla de hechos (<code>oltp_ventas</code>) rodeada de tablas de dimensiones (<code>oltp_clientes</code>, <code>oltp_productos</code>). Lo que cambia es que ahora lo construiste desde cero a partir de tres fuentes OLTP separadas, aplicando un proceso ETL real.</p>
 </div>
 </div>
-<hr>
+<p><strong>Verifica la cardinalidad de cada relación:</strong></p>
+<ul>
+<li>Haz doble clic en la línea de relación.</li>
+<li>La cardinalidad debe ser <strong>Varios a uno (∗:1)</strong>.</li>
+<li>La dirección del filtro cruzado: <strong>Único</strong> (desde la dimensión hacia los hechos).</li>
+</ul>
 </section>
+<section id="paso-10-crear-medidas-dax-esenciales" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="paso-10-crear-medidas-dax-esenciales"><span class="header-section-number">5.2</span> Paso 10: Crear medidas DAX esenciales</h3>
+<p>Las <strong>medidas DAX</strong> son los KPIs calculados del modelo. Estas medidas son las que alimentan el CMI.</p>
+<p>En la <strong>Vista de Informe</strong>, selecciona la tabla <code>oltp_ventas</code> en el panel de campos. Luego <em>Modelado → Nueva medida</em>.</p>
+<p><strong>Medida 1 — Total de ventas:</strong></p>
+<pre class="dax"><code>Total Ventas = SUM(oltp_ventas[venta_neta])</code></pre>
+<p><strong>Medida 2 — Número de pedidos:</strong></p>
+<pre class="dax"><code>Num Pedidos = COUNTROWS(oltp_ventas)</code></pre>
+<p><strong>Medida 3 — Ticket promedio:</strong></p>
+<pre class="dax"><code>Ticket Promedio = DIVIDE([Total Ventas], [Num Pedidos], 0)</code></pre>
+<p><strong>Medida 4 — Clientes únicos:</strong></p>
+<pre class="dax"><code>Clientes Unicos = DISTINCTCOUNT(oltp_ventas[cliente_id])</code></pre>
+<p><strong>Medida 5 — Ventas del mes actual:</strong></p>
+<pre class="dax"><code>Ventas Mes Actual =
+CALCULATE(
+    [Total Ventas],
+    MONTH(oltp_ventas[fecha]) = MONTH(TODAY()),
+    YEAR(oltp_ventas[fecha]) = YEAR(TODAY())
+)</code></pre>
+<p><strong>Medida 6 — Margen promedio de productos vendidos:</strong></p>
+<pre class="dax"><code>Margen Promedio =
+AVERAGE(oltp_productos[margen_pct])</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Estas 6 medidas corresponden directamente a KPIs del CMI diseñado en la Semana 2. <code>Total Ventas</code> → perspectiva Financiera. <code>Ticket Promedio</code> y <code>Clientes Unicos</code> → perspectiva Cliente. <code>Margen Promedio</code> → perspectiva Procesos.</p>
+</div>
+</div>
 </section>
-<section id="parte-4-analizar-responder-preguntas-de-negocio-5-min" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="parte-4-analizar-responder-preguntas-de-negocio-5-min"><span class="header-section-number">6</span> Parte 4 — Analizar: responder preguntas de negocio (5 min)</h2>
-<section id="paso-8-construir-visualizaciones-analíticas" class="level3" data-number="6.1">
-<h3 data-number="6.1" class="anchored" data-anchor-id="paso-8-construir-visualizaciones-analíticas"><span class="header-section-number">6.1</span> Paso 8: Construir visualizaciones analíticas</h3>
-<p>Ahora que tienes el modelo integrado, el análisis OLAP es posible. Crea una página llamada <code>"Análisis OLAP"</code> con:</p>
+<section id="paso-11-validar-el-modelo" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="paso-11-validar-el-modelo"><span class="header-section-number">5.3</span> Paso 11: Validar el modelo</h3>
+<p>Antes de construir el dashboard, verifica que el modelo funciona correctamente:</p>
 <ol type="1">
-<li><strong>Gráfico de barras</strong>: Ventas totales por <code>categoria</code> (de <code>oltp_productos</code>)</li>
-<li><strong>Gráfico de líneas</strong>: Evolución de ventas por mes (usa la columna <code>fecha</code> de ventas)</li>
-<li><strong>Tabla</strong>: Top 5 productos más vendidos con su margen</li>
-<li><strong>Segmentador</strong>: por <code>segmento</code> de cliente (Premium / Estándar / Básico)</li>
+<li>Ve a la Vista de Informe.</li>
+<li>Inserta una tabla simple con <code>categoria</code> (de productos) y <code>Total Ventas</code>.</li>
+<li>¿Muestra valores para cada categoría? ✓</li>
+<li>Inserta otra tabla con <code>region</code> (de clientes) y <code>Num Pedidos</code>.</li>
+<li>¿Muestra valores por región? ✓</li>
 </ol>
+<p>Si las tablas muestran datos correctos, el modelo estrella está funcionando. Si ves errores o valores en blanco, revisa las relaciones en la Vista de Modelo.</p>
 <hr>
 </section>
 </section>
-<section id="reflexión-final" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="reflexión-final"><span class="header-section-number">7</span> Reflexión final</h2>
-<section id="conecta-con-los-conceptos-de-la-clase" class="level3" data-number="7.1">
-<h3 data-number="7.1" class="anchored" data-anchor-id="conecta-con-los-conceptos-de-la-clase"><span class="header-section-number">7.1</span> Conecta con los conceptos de la clase</h3>
-<p>Responde con tu compañero:</p>
+<section id="sec-analizar" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="sec-analizar"><span class="header-section-number">6</span> Parte 4 — Analizar: construir el dashboard CMI de TechStyle</h2>
+<p><strong>Duración: 25 minutos</strong></p>
+<p>Construirás un dashboard de <strong>dos páginas</strong> que Roberto puede usar en su reunión del lunes. El diseño debe conectar directamente con las <strong>4 perspectivas del CMI</strong> diseñadas en W02.</p>
+<section id="página-1-resumen-ejecutivo-cmi" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="página-1-resumen-ejecutivo-cmi"><span class="header-section-number">6.1</span> Página 1: “Resumen Ejecutivo” (CMI)</h3>
+<p>Esta página presenta los KPIs estratégicos de TechStyle en formato ejecutivo.</p>
+<p><strong>11.1 Tarjetas de KPI (4 tarjetas en la parte superior):</strong></p>
+<p>Inserta 4 visualizaciones de tipo <strong>Tarjeta</strong> con:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tarjeta</th>
+<th>Medida</th>
+<th>Perspectiva CMI</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Total de Ventas</td>
+<td><code>Total Ventas</code></td>
+<td>Financiera</td>
+</tr>
+<tr class="even">
+<td>Ticket Promedio</td>
+<td><code>Ticket Promedio</code></td>
+<td>Cliente</td>
+</tr>
+<tr class="odd">
+<td>Nº de Clientes Activos</td>
+<td><code>Clientes Unicos</code></td>
+<td>Cliente</td>
+</tr>
+<tr class="even">
+<td>Margen Promedio</td>
+<td><code>Margen Promedio</code></td>
+<td>Procesos</td>
+</tr>
+</tbody>
+</table>
+<p>Formatea los números: ventas en pesos chilenos (CLP), ticket promedio en CLP, margen en %.</p>
+<p><strong>11.2 Gráfico de líneas — Evolución temporal de ventas:</strong></p>
+<ul>
+<li>Tipo: Gráfico de líneas.</li>
+<li>Eje X: <code>anio</code> y <code>mes</code> (de <code>oltp_ventas</code>).</li>
+<li>Valores: <code>Total Ventas</code>.</li>
+<li>Título: “Evolución de Ventas Mensuales”.</li>
+</ul>
+<p><strong>11.3 Gráfico de barras — Ventas por categoría:</strong></p>
+<ul>
+<li>Tipo: Gráfico de barras agrupadas.</li>
+<li>Eje: <code>categoria</code> (de <code>oltp_productos</code>).</li>
+<li>Valores: <code>Total Ventas</code>.</li>
+<li>Ordena de mayor a menor.</li>
+<li>Título: “Ventas por Categoría de Producto”.</li>
+</ul>
+<p><strong>11.4 Mapa o gráfico de barras — Ventas por región:</strong></p>
+<ul>
+<li>Tipo: Gráfico de barras horizontales.</li>
+<li>Eje: <code>region</code> (de <code>oltp_clientes</code>).</li>
+<li>Valores: <code>Total Ventas</code>.</li>
+<li>Título: “Distribución de Ventas por Región”.</li>
+</ul>
+<p><strong>11.5 Segmentadores (filtros interactivos):</strong></p>
+<p>Agrega dos segmentadores que permitan a Roberto filtrar el dashboard:</p>
+<ul>
+<li><code>segmento</code> de clientes (Premium / Estándar / Básico).</li>
+<li><code>anio</code> de la venta.</li>
+</ul>
+</section>
+<section id="página-2-análisis-de-productos-perspectiva-de-procesos" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="página-2-análisis-de-productos-perspectiva-de-procesos"><span class="header-section-number">6.2</span> Página 2: “Análisis de Productos” (Perspectiva de Procesos)</h3>
+<p>Esta página da a María la información que necesita para su decisión de campaña.</p>
+<p><strong>12.1 Tabla — Top 10 productos por ventas:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Campo</th>
+<th>Fuente</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>nombre_producto</code></td>
+<td>oltp_productos</td>
+</tr>
+<tr class="even">
+<td><code>categoria</code></td>
+<td>oltp_productos</td>
+</tr>
+<tr class="odd">
+<td><code>Total Ventas</code></td>
+<td>Medida</td>
+</tr>
+<tr class="even">
+<td><code>Num Pedidos</code></td>
+<td>Medida</td>
+</tr>
+<tr class="odd">
+<td><code>margen_pct</code></td>
+<td>oltp_productos</td>
+</tr>
+<tr class="even">
+<td><code>clasificacion_margen</code></td>
+<td>oltp_productos</td>
+</tr>
+</tbody>
+</table>
+<p>Ordena la tabla por <code>Total Ventas</code> de mayor a menor.</p>
+<p><strong>12.2 Gráfico de dispersión — Ventas vs.&nbsp;Margen:</strong></p>
+<ul>
+<li>Eje X: <code>margen_pct</code> (margen del producto).</li>
+<li>Eje Y: <code>Total Ventas</code>.</li>
+<li>Detalles: <code>nombre_producto</code>.</li>
+<li>Leyenda: <code>clasificacion_margen</code>.</li>
+</ul>
+<p>Este gráfico identifica los productos con <strong>alto margen Y altas ventas</strong> — los más valiosos para TechStyle.</p>
+<p><strong>12.3 Gráfico de barras apiladas — Ventas por categoría y segmento de cliente:</strong></p>
+<ul>
+<li>Eje: <code>categoria</code>.</li>
+<li>Valores: <code>Total Ventas</code>.</li>
+<li>Leyenda: <code>segmento</code> (de clientes).</li>
+</ul>
+<p>¿Los clientes Premium compran más en Calzado o en Ropa?</p>
+<p><strong>12.4 Tarjeta de alerta — Productos con stock crítico:</strong></p>
+<ul>
+<li>Inserta una tabla con <code>nombre_producto</code>, <code>stock</code>, <code>alerta_stock</code>.</li>
+<li>Filtra para mostrar solo productos con <code>alerta_stock</code> = “Sin stock” o “Stock crítico”.</li>
+<li>Formatea el fondo de las filas en rojo usando <em>Formato condicional</em>.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Conexión con el CMI</strong>: Los productos sin stock pero con alta demanda representan ventas perdidas — impactan directamente el KPI Financiero y el KPI de Procesos (tasa de quiebre de stock).</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="sec-sintesis" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="sec-sintesis"><span class="header-section-number">7</span> Parte 5 — Síntesis: reporte ejecutivo y reflexión</h2>
+<p><strong>Duración: 15 minutos</strong></p>
+<section id="paso-13-reporte-ejecutivo-para-roberto" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="paso-13-reporte-ejecutivo-para-roberto"><span class="header-section-number">7.1</span> Paso 13: Reporte ejecutivo para Roberto</h3>
+<p>Basándote en los resultados del dashboard, redacta un <strong>mini-reporte ejecutivo</strong> de 10–12 líneas como si fueras Juan (analista) presentando a Roberto (CEO) en la reunión del lunes.</p>
+<p>Usa esta estructura:</p>
+<blockquote class="blockquote">
+<p><strong>Titular</strong>: “Análisis de Performance TechStyle — [Período analizado]”</p>
+<p><strong>KPI Financiero</strong>: [Valor de Total Ventas] — [interpretación: ¿crece, cae, está en línea con la meta?]</p>
+<p><strong>Hallazgo 1</strong> (Perspectiva Cliente): [Observación sobre ticket promedio o segmentos. Ej: “Los clientes Premium representan el X% de los ingresos con un ticket promedio Y% más alto que la media”]</p>
+<p><strong>Hallazgo 2</strong> (Perspectiva Procesos): [Observación sobre margen o stock. Ej: “La categoría Calzado lidera ventas pero tiene el margen más bajo — riesgo de rentabilidad”]</p>
+<p><strong>Alerta</strong> (Perspectiva Procesos): [Productos en quiebre de stock que representan ventas perdidas]</p>
+<p><strong>Recomendación para María</strong>: [Dónde invertir los $15M de campaña y por qué — basado en datos]</p>
+</blockquote>
+</section>
+<section id="paso-14-reflexión-sobre-el-proceso-etl" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="paso-14-reflexión-sobre-el-proceso-etl"><span class="header-section-number">7.2</span> Paso 14: Reflexión sobre el proceso ETL</h3>
+<p>Responde con tu compañero. Anota las respuestas en el documento de entrega:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -511,43 +977,108 @@ Tip
 </thead>
 <tbody>
 <tr class="odd">
-<td>¿Qué paso del proceso ETL fue el más largo? ¿Por qué?</td>
+<td>¿Qué paso del proceso ETL fue el más largo y por qué?</td>
 <td></td>
 </tr>
 <tr class="even">
-<td>¿Cuál de las 3 fuentes tenía peores inconsistencias?</td>
+<td>¿Cuál de las 4 dimensiones de calidad fue la más problemática en este dataset?</td>
 <td></td>
 </tr>
 <tr class="odd">
-<td>¿Qué problemas del Lab 3 (calidad de datos) volviste a ver aquí?</td>
+<td>Si TechStyle ejecutara este ETL automáticamente cada noche, ¿qué arquitectura sería esa?</td>
 <td></td>
 </tr>
 <tr class="even">
-<td>El modelo estrella que construiste: ¿es OLTP u OLAP? ¿Por qué?</td>
+<td>¿Qué haría diferente si el dataset tuviera 8,5 millones de filas en vez de unas pocas miles?</td>
 <td></td>
 </tr>
 <tr class="odd">
-<td>Si TechStyle corriera este proceso ETL cada noche, ¿cómo se llama esa arquitectura?</td>
+<td>El modelo estrella que construiste: ¿es más OLTP u OLAP? Justifica.</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>¿Qué KPI del CMI no pudiste calcular con estas 3 fuentes? ¿Qué datos te faltaron?</td>
 <td></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="el-proceso-que-hiciste-tiene-nombre" class="level3" data-number="7.2">
-<h3 data-number="7.2" class="anchored" data-anchor-id="el-proceso-que-hiciste-tiene-nombre"><span class="header-section-number">7.2</span> El proceso que hiciste tiene nombre</h3>
-<p>Lo que acabas de hacer en Power Query <strong>es exactamente el proceso ETL</strong>:</p>
+<section id="paso-15-conexión-con-los-conceptos-del-semestre" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="paso-15-conexión-con-los-conceptos-del-semestre"><span class="header-section-number">7.3</span> Paso 15: Conexión con los conceptos del semestre</h3>
+<p>Lo que hiciste hoy tiene un nombre y una arquitectura:</p>
 <pre><code>[oltp_ventas.csv]    ─┐
 [oltp_clientes.csv]  ─┼─ EXTRACT → TRANSFORM → LOAD → Modelo estrella → OLAP
-[oltp_productos.csv] ─┘</code></pre>
-<p>En empresas grandes, este proceso: - Se ejecuta automáticamente cada noche - Procesa millones de registros - Usa herramientas especializadas (Apache Spark, dbt, Talend…) - Alimenta un <strong>Data Warehouse</strong> que soporta los dashboards de BI y el CMI</p>
-<p>Pero el <strong>principio es exactamente el mismo</strong> que lo que hiciste hoy.</p>
+[oltp_productos.csv] ─┘
+                                                              ↓
+                                                     Dashboard CMI en Power BI
+                                                              ↓
+                                                     Decisión de Roberto y María</code></pre>
+<p>En empresas grandes, este proceso:</p>
+<ul>
+<li>Se ejecuta <strong>automáticamente cada noche</strong> (batch ETL).</li>
+<li>Procesa <strong>millones de registros</strong> usando herramientas como Apache Spark, dbt, Talend o Azure Data Factory.</li>
+<li>Alimenta un <strong>Data Warehouse</strong> en la nube (Snowflake, BigQuery, Redshift) que soporta el BI y el CMI.</li>
+</ul>
+<p><strong>El principio es exactamente el mismo</strong> que lo que hiciste hoy: extraer, limpiar, unificar, modelar, analizar.</p>
 <hr>
 </section>
 </section>
-<section id="entrega" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="entrega"><span class="header-section-number">8</span> Entrega</h2>
-<p>Guarda el archivo como <code>lab_semana4_[apellido1]_[apellido2].pbix</code>.</p>
-<p>El docente preguntará: <em>“¿Qué inconsistencia entre tablas les resultó más difícil de resolver?”</em></p>
+<section id="entregable" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="entregable"><span class="header-section-number">8</span> Entregable</h2>
+<p>Guarda el archivo como <code>W03_lab_[apellido1]_[apellido2].pbix</code>.</p>
+<p>Sube también un documento PDF <code>W03_lab_[apellido1]_[apellido2].pdf</code> con:</p>
+<ol type="1">
+<li><strong>Tabla de auditoría de calidad</strong> completada (Pasos 2 y 3).</li>
+<li><strong>Capturas de pantalla</strong> de las dos páginas del dashboard.</li>
+<li><strong>Mini-reporte ejecutivo</strong> para Roberto (Paso 13).</li>
+<li><strong>Reflexión</strong> respondida (Paso 14).</li>
+</ol>
+<hr>
+</section>
+<section id="criterios-de-evaluación" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="criterios-de-evaluación"><span class="header-section-number">9</span> Criterios de evaluación</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Criterio</th>
+<th>Puntaje</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Auditoría de calidad de datos (4 dimensiones)</td>
+<td>15 pts</td>
+</tr>
+<tr class="even">
+<td>Transformaciones completas y correctas (3 tablas)</td>
+<td>25 pts</td>
+</tr>
+<tr class="odd">
+<td>Modelo estrella con relaciones correctas</td>
+<td>10 pts</td>
+</tr>
+<tr class="even">
+<td>Medidas DAX implementadas correctamente</td>
+<td>15 pts</td>
+</tr>
+<tr class="odd">
+<td>Dashboard CMI — Página 1 (Resumen Ejecutivo)</td>
+<td>15 pts</td>
+</tr>
+<tr class="even">
+<td>Dashboard CMI — Página 2 (Análisis de Productos)</td>
+<td>10 pts</td>
+</tr>
+<tr class="odd">
+<td>Mini-reporte ejecutivo</td>
+<td>10 pts</td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td><strong>100 pts</strong></td>
+</tr>
+</tbody>
+</table>
 
 
 </section>

@@ -222,6 +222,19 @@ Universidad San Sebastián
 <p><strong>Hoy</strong>: ¿Cómo <em>agrupamos</em> y <em>resumimos</em> los datos para responder “¿cuánto?”, “¿cuál es el mejor?” y “¿cuáles cumplen cierta condición?”</p>
 </div>
 </section>
+<section id="el-problema-maría-necesita-un-resumen" class="slide level2">
+<h2>El Problema: María Necesita un Resumen</h2>
+<p><strong>Pregunta de la Gerente María</strong>:</p>
+<blockquote>
+<p>Necesito el reporte semanal de ventas. No quiero ver los 8.500 pedidos uno por uno. Quiero totales por categoría.</p>
+</blockquote>
+<ul>
+<li class="fragment">El SELECT básico devuelve filas individuales.</li>
+<li class="fragment">María necesita <strong>grupos</strong> de datos agregados.</li>
+<li class="fragment"><code>GROUP BY</code> agrupa filas con el mismo valor en una o más columnas.</li>
+<li class="fragment">Las <strong>funciones de agregación</strong> calculan un resumen por grupo.</li>
+</ul>
+</section>
 <section id="funciones-de-agregación" class="slide level2">
 <h2>Funciones de Agregación</h2>
 <table class="caption-top">
@@ -270,31 +283,77 @@ Universidad San Sebastián
 <span id="cb1-2"><a></a><span class="kw">FROM</span> pedidos <span class="kw">WHERE</span> estado <span class="op">=</span> <span class="st">'entregado'</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
+<section id="aplicación-funciones-de-agregación-en-techstyle" class="slide level2">
+<h2>Aplicación: Funciones de Agregación en TechStyle</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a></a><span class="co">-- Resumen global de pedidos entregados</span></span>
+<span id="cb2-2"><a></a><span class="kw">SELECT</span></span>
+<span id="cb2-3"><a></a>    <span class="fu">COUNT</span>(<span class="op">*</span>)                <span class="kw">AS</span> total_pedidos,</span>
+<span id="cb2-4"><a></a>    <span class="fu">SUM</span>(total)              <span class="kw">AS</span> ingresos_totales,</span>
+<span id="cb2-5"><a></a>    <span class="fu">AVG</span>(total)              <span class="kw">AS</span> ticket_promedio,</span>
+<span id="cb2-6"><a></a>    <span class="fu">MAX</span>(total)              <span class="kw">AS</span> pedido_mas_grande,</span>
+<span id="cb2-7"><a></a>    <span class="fu">MIN</span>(total)              <span class="kw">AS</span> pedido_mas_pequeno,</span>
+<span id="cb2-8"><a></a>    <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> id_cliente) <span class="kw">AS</span> clientes_unicos</span>
+<span id="cb2-9"><a></a><span class="kw">FROM</span> pedidos</span>
+<span id="cb2-10"><a></a><span class="kw">WHERE</span> estado <span class="op">=</span> <span class="st">'entregado'</span></span>
+<span id="cb2-11"><a></a>  <span class="kw">AND</span> <span class="dt">YEAR</span>(fecha_pedido) <span class="op">=</span> <span class="dv">2026</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><strong>Interpretación ejecutiva</strong>: Roberto puede leer este resumen en su EIS sin necesidad de ver filas individuales.</p>
+</div>
+</section>
+<section id="verificación-qué-función-de-agregación-usar" class="slide level2">
+<h2>Verificación: ¿Qué Función de Agregación Usar?</h2>
+<p><strong>Elige la función correcta para cada KPI del CMI:</strong></p>
+<ol type="1">
+<li class="fragment">“¿Cuántos pedidos se hicieron este mes?” → **COUNT(*)**</li>
+<li class="fragment">“¿Cuál es el total de ingresos del trimestre?” → <strong>SUM(total)</strong></li>
+<li class="fragment">“¿Cuál es el precio promedio del ticket?” → <strong>AVG(total)</strong></li>
+<li class="fragment">“¿Cuántos clientes distintos compraron esta semana?” → <strong>COUNT(DISTINCT id_cliente)</strong></li>
+<li class="fragment">“¿Cuál es el producto más caro del catálogo?” → <strong>MAX(precio)</strong> en <code>productos</code></li>
+</ol>
+</section>
 <section id="group-by-agregar-por-categoría" class="slide level2">
 <h2>GROUP BY: Agregar por Categoría</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a></a><span class="co">-- Número de pedidos y ventas totales por estado</span></span>
-<span id="cb2-2"><a></a><span class="kw">SELECT</span> estado,</span>
-<span id="cb2-3"><a></a>       <span class="fu">COUNT</span>(<span class="op">*</span>)    <span class="kw">AS</span> cantidad_pedidos,</span>
-<span id="cb2-4"><a></a>       <span class="fu">SUM</span>(total)  <span class="kw">AS</span> ventas_totales</span>
-<span id="cb2-5"><a></a><span class="kw">FROM</span> pedidos</span>
-<span id="cb2-6"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> estado</span>
-<span id="cb2-7"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> ventas_totales <span class="kw">DESC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a></a><span class="co">-- Número de pedidos y ventas totales por estado</span></span>
+<span id="cb3-2"><a></a><span class="kw">SELECT</span> estado,</span>
+<span id="cb3-3"><a></a>       <span class="fu">COUNT</span>(<span class="op">*</span>)    <span class="kw">AS</span> cantidad_pedidos,</span>
+<span id="cb3-4"><a></a>       <span class="fu">SUM</span>(total)  <span class="kw">AS</span> ventas_totales</span>
+<span id="cb3-5"><a></a><span class="kw">FROM</span> pedidos</span>
+<span id="cb3-6"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> estado</span>
+<span id="cb3-7"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> ventas_totales <span class="kw">DESC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><strong>Regla de oro</strong>: Toda columna en el <code>SELECT</code> que <strong>no sea una función de agregación</strong> debe estar en el <code>GROUP BY</code>.</p>
+<p>Si <code>estado</code> está en el SELECT pero no en GROUP BY → ERROR.</p>
 </div>
 </section>
 <section id="group-by-con-join-ventas-por-zona" class="slide level2">
 <h2>GROUP BY con JOIN: Ventas por Zona</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a></a><span class="co">-- Ingresos totales por zona geográfica del cliente</span></span>
-<span id="cb3-2"><a></a><span class="kw">SELECT</span> z.nombre          <span class="kw">AS</span> zona,</span>
-<span id="cb3-3"><a></a>       <span class="fu">COUNT</span>(p.id_pedido) <span class="kw">AS</span> num_pedidos,</span>
-<span id="cb3-4"><a></a>       <span class="fu">SUM</span>(p.total)       <span class="kw">AS</span> ingresos</span>
-<span id="cb3-5"><a></a><span class="kw">FROM</span> pedidos p</span>
-<span id="cb3-6"><a></a><span class="kw">INNER</span> <span class="kw">JOIN</span> repartidores r <span class="kw">ON</span> p.id_repartidor <span class="op">=</span> r.id_repartidor</span>
-<span id="cb3-7"><a></a><span class="kw">INNER</span> <span class="kw">JOIN</span> zonas        z <span class="kw">ON</span> r.id_zona       <span class="op">=</span> z.id_zona</span>
-<span id="cb3-8"><a></a><span class="kw">WHERE</span> p.estado <span class="op">=</span> <span class="st">'entregado'</span></span>
-<span id="cb3-9"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> z.id_zona, z.nombre</span>
-<span id="cb3-10"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> ingresos <span class="kw">DESC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a></a><span class="co">-- Ingresos totales por zona geográfica del cliente</span></span>
+<span id="cb4-2"><a></a><span class="kw">SELECT</span> z.nombre          <span class="kw">AS</span> zona,</span>
+<span id="cb4-3"><a></a>       <span class="fu">COUNT</span>(p.id_pedido) <span class="kw">AS</span> num_pedidos,</span>
+<span id="cb4-4"><a></a>       <span class="fu">SUM</span>(p.total)       <span class="kw">AS</span> ingresos,</span>
+<span id="cb4-5"><a></a>       <span class="fu">AVG</span>(p.total)       <span class="kw">AS</span> ticket_promedio</span>
+<span id="cb4-6"><a></a><span class="kw">FROM</span> pedidos p</span>
+<span id="cb4-7"><a></a><span class="kw">INNER</span> <span class="kw">JOIN</span> repartidores r <span class="kw">ON</span> p.id_repartidor <span class="op">=</span> r.id_repartidor</span>
+<span id="cb4-8"><a></a><span class="kw">INNER</span> <span class="kw">JOIN</span> zonas        z <span class="kw">ON</span> r.id_zona       <span class="op">=</span> z.id_zona</span>
+<span id="cb4-9"><a></a><span class="kw">WHERE</span> p.estado <span class="op">=</span> <span class="st">'entregado'</span></span>
+<span id="cb4-10"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> z.id_zona, z.nombre</span>
+<span id="cb4-11"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> ingresos <span class="kw">DESC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><strong>KPI del CMI alimentado</strong>: “Ingresos por zona” → perspectiva Financiera.</p>
+</div>
+</section>
+<section id="aplicación-group-by-para-el-cmi-de-techstyle" class="slide level2">
+<h2>Aplicación: GROUP BY para el CMI de TechStyle</h2>
+<p><strong>Los 4 KPIs del CMI que requieren GROUP BY</strong>:</p>
+<ul>
+<li class="fragment"><strong>Financiera</strong>: Ventas por categoría → <code>GROUP BY pr.categoria</code></li>
+<li class="fragment"><strong>Cliente</strong>: Ticket promedio por región → <code>GROUP BY c.region</code></li>
+<li class="fragment"><strong>Procesos</strong>: Tiempo promedio de entrega por repartidor → <code>GROUP BY r.id_repartidor</code></li>
+<li class="fragment"><strong>Aprendizaje</strong>: Tasa de devolución por zona → <code>GROUP BY z.nombre</code></li>
+</ul>
+<div class="fragment">
+<p>Cada KPI del CMI tiene ahora una consulta SQL que lo alimenta automáticamente desde la base de datos.</p>
+</div>
 </section>
 <section id="having-filtrar-grupos" class="slide level2">
 <h2>HAVING: Filtrar Grupos</h2>
@@ -325,47 +384,97 @@ Universidad San Sebastián
 </tr>
 </tbody>
 </table>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a></a><span class="co">-- Solo categorías con más de $500.000 en ventas</span></span>
-<span id="cb4-2"><a></a><span class="kw">SELECT</span> pr.categoria,</span>
-<span id="cb4-3"><a></a>       <span class="fu">SUM</span>(oi.cantidad <span class="op">*</span> oi.precio_unitario) <span class="kw">AS</span> ventas</span>
-<span id="cb4-4"><a></a><span class="kw">FROM</span> order_items oi</span>
-<span id="cb4-5"><a></a><span class="kw">INNER</span> <span class="kw">JOIN</span> productos pr <span class="kw">ON</span> oi.id_producto <span class="op">=</span> pr.id_producto</span>
-<span id="cb4-6"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> pr.categoria</span>
-<span id="cb4-7"><a></a><span class="kw">HAVING</span> ventas <span class="op">&gt;</span> <span class="dv">500000</span></span>
-<span id="cb4-8"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> ventas <span class="kw">DESC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a></a><span class="co">-- Solo categorías con más de $500.000 en ventas</span></span>
+<span id="cb5-2"><a></a><span class="kw">SELECT</span> pr.categoria,</span>
+<span id="cb5-3"><a></a>       <span class="fu">SUM</span>(oi.cantidad <span class="op">*</span> oi.precio_unitario) <span class="kw">AS</span> ventas</span>
+<span id="cb5-4"><a></a><span class="kw">FROM</span> order_items oi</span>
+<span id="cb5-5"><a></a><span class="kw">INNER</span> <span class="kw">JOIN</span> productos pr <span class="kw">ON</span> oi.id_producto <span class="op">=</span> pr.id_producto</span>
+<span id="cb5-6"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> pr.categoria</span>
+<span id="cb5-7"><a></a><span class="kw">HAVING</span> ventas <span class="op">&gt;</span> <span class="dv">500000</span></span>
+<span id="cb5-8"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> ventas <span class="kw">DESC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="aplicación-where-vs-having-en-techstyle" class="slide level2">
+<h2>Aplicación: WHERE vs HAVING en TechStyle</h2>
+<p><strong>Pregunta</strong>: ¿Qué repartidores entregaron más de 100 pedidos este mes?</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a></a><span class="co">-- Incorrecto (WHERE no puede usar funciones de agregación)</span></span>
+<span id="cb6-2"><a></a><span class="kw">SELECT</span> r.nombre, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> pedidos</span>
+<span id="cb6-3"><a></a><span class="kw">FROM</span> pedidos p</span>
+<span id="cb6-4"><a></a><span class="kw">INNER</span> <span class="kw">JOIN</span> repartidores r <span class="kw">ON</span> p.id_repartidor <span class="op">=</span> r.id_repartidor</span>
+<span id="cb6-5"><a></a><span class="kw">WHERE</span> p.estado <span class="op">=</span> <span class="st">'entregado'</span>       <span class="co">-- ← Filtra filas (OK)</span></span>
+<span id="cb6-6"><a></a>  <span class="kw">AND</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">&gt;</span> <span class="dv">100</span>               <span class="co">-- ← ERROR: no se puede aquí</span></span>
+<span id="cb6-7"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> r.id_repartidor;</span>
+<span id="cb6-8"><a></a></span>
+<span id="cb6-9"><a></a><span class="co">-- Correcto</span></span>
+<span id="cb6-10"><a></a><span class="kw">SELECT</span> r.nombre, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> pedidos</span>
+<span id="cb6-11"><a></a><span class="kw">FROM</span> pedidos p</span>
+<span id="cb6-12"><a></a><span class="kw">INNER</span> <span class="kw">JOIN</span> repartidores r <span class="kw">ON</span> p.id_repartidor <span class="op">=</span> r.id_repartidor</span>
+<span id="cb6-13"><a></a><span class="kw">WHERE</span> p.estado <span class="op">=</span> <span class="st">'entregado'</span>       <span class="co">-- ← Filtra filas antes de agrupar</span></span>
+<span id="cb6-14"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> r.id_repartidor</span>
+<span id="cb6-15"><a></a><span class="kw">HAVING</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">&gt;</span> <span class="dv">100</span>;             <span class="co">-- ← Filtra grupos después de agrupar</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="verificación-where-o-having" class="slide level2">
+<h2>Verificación: ¿WHERE o HAVING?</h2>
+<p><strong>Elige dónde colocar cada condición:</strong></p>
+<ol type="1">
+<li class="fragment">“Solo pedidos del mes de junio” → <strong>WHERE</strong> (filtra filas antes de agrupar)</li>
+<li class="fragment">“Solo categorías que vendieron más de $1M” → <strong>HAVING</strong> (filtra grupos)</li>
+<li class="fragment">“Solo clientes de la región Metropolitana” → <strong>WHERE</strong></li>
+<li class="fragment">“Solo zonas con más de 5 repartidores” → <strong>HAVING COUNT(r.id_repartidor) &gt; 5</strong></li>
+<li class="fragment">“Solo pedidos en estado ‘entregado’” → <strong>WHERE</strong></li>
+</ol>
 </section>
 <section id="subconsultas-consultas-dentro-de-consultas" class="slide level2">
 <h2>Subconsultas: Consultas Dentro de Consultas</h2>
 <p>Una <strong>subconsulta</strong> es un <code>SELECT</code> anidado dentro de otro.</p>
 <p><strong>Subconsulta en WHERE</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a></a><span class="co">-- Clientes que NO han comprado en los últimos 60 días</span></span>
-<span id="cb5-2"><a></a><span class="kw">SELECT</span> nombre, email</span>
-<span id="cb5-3"><a></a><span class="kw">FROM</span> clientes</span>
-<span id="cb5-4"><a></a><span class="kw">WHERE</span> id_cliente <span class="kw">NOT</span> <span class="kw">IN</span> (</span>
-<span id="cb5-5"><a></a>    <span class="kw">SELECT</span> <span class="kw">DISTINCT</span> id_cliente</span>
-<span id="cb5-6"><a></a>    <span class="kw">FROM</span> pedidos</span>
-<span id="cb5-7"><a></a>    <span class="kw">WHERE</span> fecha_pedido <span class="op">&gt;=</span> DATE_SUB(CURDATE(), <span class="dt">INTERVAL</span> <span class="dv">60</span> <span class="dt">DAY</span>)</span>
-<span id="cb5-8"><a></a>      <span class="kw">AND</span> estado <span class="op">=</span> <span class="st">'entregado'</span></span>
-<span id="cb5-9"><a></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a></a><span class="co">-- Clientes que NO han comprado en los últimos 60 días</span></span>
+<span id="cb7-2"><a></a><span class="kw">SELECT</span> nombre, email</span>
+<span id="cb7-3"><a></a><span class="kw">FROM</span> clientes</span>
+<span id="cb7-4"><a></a><span class="kw">WHERE</span> id_cliente <span class="kw">NOT</span> <span class="kw">IN</span> (</span>
+<span id="cb7-5"><a></a>    <span class="kw">SELECT</span> <span class="kw">DISTINCT</span> id_cliente</span>
+<span id="cb7-6"><a></a>    <span class="kw">FROM</span> pedidos</span>
+<span id="cb7-7"><a></a>    <span class="kw">WHERE</span> fecha_pedido <span class="op">&gt;=</span> DATE_SUB(CURDATE(), <span class="dt">INTERVAL</span> <span class="dv">60</span> <span class="dt">DAY</span>)</span>
+<span id="cb7-8"><a></a>      <span class="kw">AND</span> estado <span class="op">=</span> <span class="st">'entregado'</span></span>
+<span id="cb7-9"><a></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
-<p><strong>Interpretación de negocio</strong>: Lista de clientes para una campaña de reactivación.</p>
+<p><strong>Interpretación de negocio</strong>: Lista de clientes para una campaña de reactivación de María.</p>
 </div>
 </section>
 <section id="subconsulta-en-from-tabla-derivada" class="slide level2">
 <h2>Subconsulta en FROM (Tabla Derivada)</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a></a><span class="co">-- Ticket promedio solo de los clientes con más de 2 pedidos</span></span>
-<span id="cb6-2"><a></a><span class="kw">SELECT</span> <span class="fu">AVG</span>(cliente_total.total_pedidos) <span class="kw">AS</span> ticket_alto</span>
-<span id="cb6-3"><a></a><span class="kw">FROM</span> (</span>
-<span id="cb6-4"><a></a>    <span class="kw">SELECT</span> c.id_cliente,</span>
-<span id="cb6-5"><a></a>           <span class="fu">SUM</span>(p.total) <span class="kw">AS</span> total_pedidos</span>
-<span id="cb6-6"><a></a>    <span class="kw">FROM</span> clientes c</span>
-<span id="cb6-7"><a></a>    <span class="kw">INNER</span> <span class="kw">JOIN</span> pedidos p <span class="kw">ON</span> c.id_cliente <span class="op">=</span> p.id_cliente</span>
-<span id="cb6-8"><a></a>    <span class="kw">WHERE</span> p.estado <span class="op">=</span> <span class="st">'entregado'</span></span>
-<span id="cb6-9"><a></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> c.id_cliente</span>
-<span id="cb6-10"><a></a>    <span class="kw">HAVING</span> <span class="fu">COUNT</span>(p.id_pedido) <span class="op">&gt;</span> <span class="dv">2</span></span>
-<span id="cb6-11"><a></a>) <span class="kw">AS</span> cliente_total;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a></a><span class="co">-- Ticket promedio solo de los clientes con más de 2 pedidos</span></span>
+<span id="cb8-2"><a></a><span class="kw">SELECT</span> <span class="fu">AVG</span>(cliente_total.total_pedidos) <span class="kw">AS</span> ticket_clientes_frecuentes</span>
+<span id="cb8-3"><a></a><span class="kw">FROM</span> (</span>
+<span id="cb8-4"><a></a>    <span class="kw">SELECT</span> c.id_cliente,</span>
+<span id="cb8-5"><a></a>           <span class="fu">SUM</span>(p.total) <span class="kw">AS</span> total_pedidos</span>
+<span id="cb8-6"><a></a>    <span class="kw">FROM</span> clientes c</span>
+<span id="cb8-7"><a></a>    <span class="kw">INNER</span> <span class="kw">JOIN</span> pedidos p <span class="kw">ON</span> c.id_cliente <span class="op">=</span> p.id_cliente</span>
+<span id="cb8-8"><a></a>    <span class="kw">WHERE</span> p.estado <span class="op">=</span> <span class="st">'entregado'</span></span>
+<span id="cb8-9"><a></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> c.id_cliente</span>
+<span id="cb8-10"><a></a>    <span class="kw">HAVING</span> <span class="fu">COUNT</span>(p.id_pedido) <span class="op">&gt;</span> <span class="dv">2</span></span>
+<span id="cb8-11"><a></a>) <span class="kw">AS</span> cliente_total;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
-<p>La subconsulta actúa como una <strong>tabla virtual</strong> que la consulta exterior puede consultar.</p>
+<p>La subconsulta actúa como una <strong>tabla virtual</strong> que la consulta exterior puede consultar. Muy útil para cálculos en dos pasos.</p>
+</div>
+</section>
+<section id="aplicación-subconsulta-para-productos-estrella" class="slide level2">
+<h2>Aplicación: Subconsulta para Productos Estrella</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a></a><span class="co">-- Productos cuyas ventas superan el promedio de ventas por producto</span></span>
+<span id="cb9-2"><a></a><span class="kw">SELECT</span> pr.nombre, <span class="fu">SUM</span>(oi.cantidad) <span class="kw">AS</span> unidades_vendidas</span>
+<span id="cb9-3"><a></a><span class="kw">FROM</span> order_items oi</span>
+<span id="cb9-4"><a></a><span class="kw">INNER</span> <span class="kw">JOIN</span> productos pr <span class="kw">ON</span> oi.id_producto <span class="op">=</span> pr.id_producto</span>
+<span id="cb9-5"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> pr.id_producto, pr.nombre</span>
+<span id="cb9-6"><a></a><span class="kw">HAVING</span> <span class="fu">SUM</span>(oi.cantidad) <span class="op">&gt;</span> (</span>
+<span id="cb9-7"><a></a>    <span class="kw">SELECT</span> <span class="fu">AVG</span>(ventas_por_producto)</span>
+<span id="cb9-8"><a></a>    <span class="kw">FROM</span> (</span>
+<span id="cb9-9"><a></a>        <span class="kw">SELECT</span> <span class="fu">SUM</span>(cantidad) <span class="kw">AS</span> ventas_por_producto</span>
+<span id="cb9-10"><a></a>        <span class="kw">FROM</span> order_items</span>
+<span id="cb9-11"><a></a>        <span class="kw">GROUP</span> <span class="kw">BY</span> id_producto</span>
+<span id="cb9-12"><a></a>    ) <span class="kw">AS</span> promedios</span>
+<span id="cb9-13"><a></a>)</span>
+<span id="cb9-14"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> unidades_vendidas <span class="kw">DESC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><strong>Resultado</strong>: La lista de “productos estrella” que María debería priorizar en su campaña.</p>
 </div>
 </section>
 <section id="conectando-con-el-cmi-consultas-que-responden-kpis" class="slide level2">
@@ -406,6 +515,7 @@ Universidad San Sebastián
 <p><strong>Evaluación práctica en MySQL Workbench</strong> — caso diferente a TechStyle:</p>
 <ul>
 <li class="fragment">Escribir consultas con <code>JOIN</code> y <code>GROUP BY</code> para responder preguntas de negocio.</li>
+<li class="fragment">Usar <code>HAVING</code> para filtrar los grupos que cumplen cierta condición.</li>
 <li class="fragment">Interpretar los resultados como un analista que reporta a la gerencia.</li>
 </ul>
 <div class="fragment">
@@ -430,8 +540,28 @@ Universidad San Sebastián
 <li class="fragment">Las subconsultas permiten formular preguntas complejas que ninguna tabla sola puede responder.</li>
 <li class="fragment"><strong>La diferencia entre un analista junior y uno senior no es cuántas funciones conoce, sino qué preguntas sabe hacer.</strong></li>
 </ul>
+</section>
+<section id="puntos-clave" class="slide level2">
+<h2>Puntos Clave</h2>
+<ul>
+<li class="fragment">Las <strong>funciones de agregación</strong> resumen datos: <code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MAX</code>, <code>MIN</code>.</li>
+<li class="fragment"><strong>GROUP BY</strong> agrupa filas por el valor de una o más columnas — toda columna en SELECT que no sea función de agregación debe estar en GROUP BY.</li>
+<li class="fragment"><strong>WHERE</strong> filtra filas antes de agrupar. <strong>HAVING</strong> filtra grupos después de agrupar.</li>
+<li class="fragment">Las <strong>subconsultas</strong> permiten cálculos en dos pasos: una consulta interior que alimenta a la exterior.</li>
+<li class="fragment">Cada KPI del CMI tiene ahora una consulta SQL directa desde la base de datos.</li>
+</ul>
+</section>
+<section id="preview-del-laboratorio-w14" class="slide level2">
+<h2>Preview del Laboratorio W14</h2>
+<p><strong>Lab W14: Consultas analíticas con GROUP BY y subconsultas</strong></p>
+<ul>
+<li class="fragment">Resolver 10 consultas analíticas usando GROUP BY, HAVING y funciones de agregación.</li>
+<li class="fragment">Al menos 2 consultas deben usar subconsultas (en WHERE o en FROM).</li>
+<li class="fragment">Cada consulta debe interpretarse como un reporte ejecutivo para la gerencia de TechStyle.</li>
+<li class="fragment">Documentar el resultado de cada consulta con una conclusión de negocio (1 oración).</li>
+</ul>
 <div class="fragment">
-<p><strong>Próxima semana (W15)</strong>: ¿Cómo protegemos la integridad de los datos cuando múltiples operaciones deben ejecutarse como una unidad? → Transacciones ACID.</p>
+<p><strong>Para la próxima semana (W15)</strong>: ¿Cómo protegemos la integridad cuando múltiples operaciones deben ejecutarse juntas? → <strong>Transacciones ACID</strong>.</p>
 </div>
 
 

@@ -217,7 +217,7 @@ Universidad San Sebastián
 <li class="fragment"><code>START TRANSACTION</code>, <code>COMMIT</code>, <code>ROLLBACK</code>, <code>SAVEPOINT</code>.</li>
 </ul>
 <div class="fragment">
-<p><strong>Hoy</strong>: Cerramos el círculo del semestre. Crearemos <strong>vistas SQL</strong> que alimentan directamente el CMI que diseñamos en la Semana 3.</p>
+<p><strong>Hoy</strong>: Cerramos el círculo del semestre. Crearemos <strong>vistas SQL</strong> que alimentan directamente el CMI que diseñamos en la Semana 2.</p>
 </div>
 </section>
 <section id="el-círculo-completo-del-semestre" class="slide level2">
@@ -231,6 +231,13 @@ Unidad 3: Construcción (Normalización → DDL → DML → Transacciones)
 Hoy: Vistas SQL → Puente entre la BD y el CMI
     ↓
 CMI de TechStyle alimentado con datos reales</code></pre>
+<div class="fragment">
+<p><em>Roberto puede ver sus KPIs en tiempo real porque la base de datos que construyeron los alimenta.</em></p>
+</div>
+</section>
+<section id="aplicación-de-la-decisión-al-dato-y-de-vuelta" class="slide level2">
+<h2>Aplicación: De la Decisión al Dato y de Vuelta</h2>
+<p><code>[IMAGE/DIAGRAM PLACEHOLDER: Diagrama circular del semestre — (1) Roberto necesita un KPI (ícono de gerente con signo de interrogación); (2) Diseño: el analista modela el CMI con KPI definidos (ícono de diagrama); (3) Implementación: se construye la BD con las tablas que guardan esos datos (ícono de MySQL); (4) Consulta: una vista SQL encapsula la consulta del KPI (ícono de pantalla con código SQL); (5) Dashboard: Power BI consume la vista y muestra el KPI a Roberto (ícono de gráfico de barras). Flechas conectando los 5 pasos en ciclo.]</code></p>
 </section>
 <section id="qué-es-una-vista-sql" class="slide level2">
 <h2>¿Qué es una Vista SQL?</h2>
@@ -245,7 +252,10 @@ CMI de TechStyle alimentado con datos reales</code></pre>
 <span id="cb2-3"><a></a>    <span class="kw">SELECT</span> <span class="op">..</span>. <span class="kw">FROM</span> <span class="op">..</span>. <span class="kw">JOIN</span> <span class="op">..</span>. <span class="kw">WHERE</span> <span class="op">..</span>.;</span>
 <span id="cb2-4"><a></a></span>
 <span id="cb2-5"><a></a><span class="co">-- Consultar la vista (igual que una tabla)</span></span>
-<span id="cb2-6"><a></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> nombre_vista;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-6"><a></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> nombre_vista;</span>
+<span id="cb2-7"><a></a></span>
+<span id="cb2-8"><a></a><span class="co">-- Filtrar sobre la vista</span></span>
+<span id="cb2-9"><a></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> nombre_vista <span class="kw">WHERE</span> mes <span class="op">=</span> <span class="dv">6</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="ventajas-de-las-vistas" class="slide level2">
@@ -281,6 +291,18 @@ CMI de TechStyle alimentado con datos reales</code></pre>
 </tbody>
 </table>
 </section>
+<section id="aplicación-por-qué-vistas-y-no-consultas-guardadas" class="slide level2">
+<h2>Aplicación: ¿Por qué Vistas y no Consultas Guardadas?</h2>
+<p><strong>Escenario</strong>: María en Power BI necesita el KPI de ventas por categoría.</p>
+<ul>
+<li class="fragment"><strong>Sin vista</strong>: Cada vez que María actualiza el dashboard, Power BI ejecuta el JOIN complejo de 4 tablas.</li>
+<li class="fragment"><strong>Con vista</strong>: Power BI consulta <code>SELECT * FROM vw_kpi_ventas_categoria WHERE anio = 2026</code>. Simple.</li>
+<li class="fragment"><strong>Ventaja de seguridad</strong>: María tiene acceso a <code>vw_kpi_ventas_categoria</code>, pero NO a las tablas <code>pedidos</code>, <code>clientes</code> ni <code>order_items</code> con datos sensibles.</li>
+</ul>
+<div class="fragment">
+<p><strong>Principio de mínimo privilegio aplicado al acceso a datos.</strong></p>
+</div>
+</section>
 <section id="vista-1-kpi-ventas-por-categoría-perspectiva-financiera-del-cmi" class="slide level2">
 <h2>Vista 1: KPI — Ventas por Categoría (Perspectiva Financiera del CMI)</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a></a><span class="kw">CREATE</span> <span class="kw">VIEW</span> vw_kpi_ventas_categoria <span class="kw">AS</span></span>
@@ -295,6 +317,9 @@ CMI de TechStyle alimentado con datos reales</code></pre>
 <span id="cb3-10"><a></a><span class="kw">INNER</span> <span class="kw">JOIN</span> productos pr <span class="kw">ON</span> oi.id_producto <span class="op">=</span> pr.id_producto</span>
 <span id="cb3-11"><a></a><span class="kw">WHERE</span> p.estado <span class="op">=</span> <span class="st">'entregado'</span></span>
 <span id="cb3-12"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> pr.categoria, <span class="dt">YEAR</span>(p.fecha_pedido), <span class="dt">MONTH</span>(p.fecha_pedido);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><strong>Consulta de uso</strong>: <code>SELECT * FROM vw_kpi_ventas_categoria WHERE anio = 2026 AND mes = 6;</code></p>
+</div>
 </section>
 <section id="vista-2-kpi-ticket-promedio-por-región-perspectiva-cliente" class="slide level2">
 <h2>Vista 2: KPI — Ticket Promedio por Región (Perspectiva Cliente)</h2>
@@ -309,6 +334,9 @@ CMI de TechStyle alimentado con datos reales</code></pre>
 <span id="cb4-9"><a></a><span class="kw">WHERE</span> p.estado <span class="op">=</span> <span class="st">'entregado'</span></span>
 <span id="cb4-10"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> c.region</span>
 <span id="cb4-11"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> ingresos_totales <span class="kw">DESC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><strong>KPI del CMI alimentado</strong>: “Ticket promedio por región” → perspectiva Cliente del Balanced Scorecard.</p>
+</div>
 </section>
 <section id="vista-3-kpi-tasa-de-devolución-perspectiva-procesos" class="slide level2">
 <h2>Vista 3: KPI — Tasa de Devolución (Perspectiva Procesos)</h2>
@@ -323,6 +351,9 @@ CMI de TechStyle alimentado con datos reales</code></pre>
 <span id="cb5-9"><a></a><span class="kw">FROM</span> pedidos p</span>
 <span id="cb5-10"><a></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> devoluciones d <span class="kw">ON</span> p.id_pedido <span class="op">=</span> d.id_pedido</span>
 <span id="cb5-11"><a></a><span class="kw">WHERE</span> p.estado <span class="kw">IN</span> (<span class="st">'entregado'</span>, <span class="st">'cancelado'</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><strong><code>NULLIF(..., 0)</code></strong>: evita división por cero si no hay pedidos registrados.</p>
+</div>
 </section>
 <section id="vista-4-kpi-clientes-inactivos-perspectiva-aprendizaje" class="slide level2">
 <h2>Vista 4: KPI — Clientes Inactivos (Perspectiva Aprendizaje)</h2>
@@ -340,6 +371,19 @@ CMI de TechStyle alimentado con datos reales</code></pre>
 <span id="cb6-12"><a></a><span class="kw">HAVING</span> dias_sin_comprar <span class="op">&gt;</span> <span class="dv">60</span></span>
 <span id="cb6-13"><a></a>    <span class="kw">OR</span> <span class="fu">MAX</span>(p.fecha_pedido) <span class="kw">IS</span> <span class="kw">NULL</span></span>
 <span id="cb6-14"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> dias_sin_comprar <span class="kw">DESC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><strong>Caso de uso</strong>: María consulta esta vista para diseñar la campaña de reactivación de clientes inactivos.</p>
+</div>
+</section>
+<section id="verificación-qué-vista-responde-cada-kpi" class="slide level2">
+<h2>Verificación: ¿Qué Vista Responde Cada KPI?</h2>
+<p><strong>Asigna cada KPI del CMI a la vista correspondiente:</strong></p>
+<ol type="1">
+<li class="fragment">“¿Cuánto vendimos en Calzado en junio?” → <strong>vw_kpi_ventas_categoria</strong></li>
+<li class="fragment">“¿Qué porcentaje de pedidos terminó en devolución?” → <strong>vw_kpi_tasa_devolucion</strong></li>
+<li class="fragment">“¿Cuántos clientes no compran hace más de 2 meses?” → <strong>vw_kpi_clientes_inactivos</strong></li>
+<li class="fragment">“¿En qué región es mayor el ticket promedio?” → <strong>vw_kpi_ticket_por_region</strong></li>
+</ol>
 </section>
 <section id="consumir-las-vistas-desde-power-bi" class="slide level2">
 <h2>Consumir las Vistas desde Power BI</h2>
@@ -348,23 +392,41 @@ CMI de TechStyle alimentado con datos reales</code></pre>
 <li class="fragment">Power BI → “Obtener datos” → “MySQL Database”.</li>
 <li class="fragment">Servidor: <code>127.0.0.1</code>, Base de datos: <code>techstyle_db</code>.</li>
 <li class="fragment">Seleccionar las vistas <code>vw_kpi_*</code>.</li>
-<li class="fragment">Construir el CMI con las mismas vistas definidas en la Semana 3.</li>
+<li class="fragment">Construir el CMI con las mismas perspectivas definidas en la Semana 2.</li>
 </ol>
 <div class="fragment">
 <p><strong>El CMI ahora está alimentado por datos reales de la base de datos que construyeron.</strong></p>
+<p>→ Este es el cierre del ciclo completo del semestre.</p>
 </div>
 </section>
 <section id="modificar-y-eliminar-vistas" class="slide level2">
 <h2>Modificar y Eliminar Vistas</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a></a><span class="co">-- Modificar una vista existente</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a></a><span class="co">-- Modificar una vista existente (sin borrar y recrear)</span></span>
 <span id="cb7-2"><a></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">VIEW</span> vw_kpi_ventas_categoria <span class="kw">AS</span></span>
-<span id="cb7-3"><a></a>    <span class="kw">SELECT</span> <span class="op">..</span>. ; <span class="co">-- nueva definición</span></span>
+<span id="cb7-3"><a></a>    <span class="kw">SELECT</span> <span class="op">..</span>. ; <span class="co">-- nueva definición actualizada</span></span>
 <span id="cb7-4"><a></a></span>
 <span id="cb7-5"><a></a><span class="co">-- Eliminar una vista</span></span>
 <span id="cb7-6"><a></a><span class="kw">DROP</span> <span class="kw">VIEW</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> vw_kpi_ventas_categoria;</span>
 <span id="cb7-7"><a></a></span>
 <span id="cb7-8"><a></a><span class="co">-- Ver todas las vistas de la base de datos</span></span>
-<span id="cb7-9"><a></a>SHOW <span class="kw">FULL</span> <span class="kw">TABLES</span> <span class="kw">WHERE</span> TABLE_TYPE <span class="op">=</span> <span class="st">'VIEW'</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-9"><a></a>SHOW <span class="kw">FULL</span> <span class="kw">TABLES</span> <span class="kw">WHERE</span> TABLE_TYPE <span class="op">=</span> <span class="st">'VIEW'</span>;</span>
+<span id="cb7-10"><a></a></span>
+<span id="cb7-11"><a></a><span class="co">-- Ver la definición de una vista</span></span>
+<span id="cb7-12"><a></a>SHOW <span class="kw">CREATE</span> <span class="kw">VIEW</span> vw_kpi_ticket_por_region\G</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="aplicación-seguridad-con-vistas" class="slide level2">
+<h2>Aplicación: Seguridad con Vistas</h2>
+<p><strong>Problema</strong>: El equipo de marketing necesita acceso a datos de ventas para campañas, pero no debe ver datos sensibles de clientes.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a></a><span class="co">-- Crear usuario de solo lectura para marketing</span></span>
+<span id="cb8-2"><a></a><span class="kw">CREATE</span> <span class="fu">USER</span> <span class="st">'marketing_user'</span>@<span class="st">'localhost'</span> <span class="kw">IDENTIFIED</span> <span class="kw">BY</span> <span class="st">'password123'</span>;</span>
+<span id="cb8-3"><a></a></span>
+<span id="cb8-4"><a></a><span class="co">-- Dar acceso SOLO a las vistas del CMI, no a las tablas base</span></span>
+<span id="cb8-5"><a></a><span class="kw">GRANT</span> <span class="kw">SELECT</span> <span class="kw">ON</span> techstyle_db.vw_kpi_ventas_categoria <span class="kw">TO</span> <span class="st">'marketing_user'</span>@<span class="st">'localhost'</span>;</span>
+<span id="cb8-6"><a></a><span class="kw">GRANT</span> <span class="kw">SELECT</span> <span class="kw">ON</span> techstyle_db.vw_kpi_ticket_por_region <span class="kw">TO</span> <span class="st">'marketing_user'</span>@<span class="st">'localhost'</span>;</span>
+<span id="cb8-7"><a></a><span class="kw">GRANT</span> <span class="kw">SELECT</span> <span class="kw">ON</span> techstyle_db.vw_kpi_clientes_inactivos <span class="kw">TO</span> <span class="st">'marketing_user'</span>@<span class="st">'localhost'</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><strong>El equipo de marketing ve los KPIs pero no puede consultar emails ni datos personales de clientes directamente.</strong></p>
+</div>
 </section>
 <section id="sesión-de-trabajo-proyecto-final" class="slide level2">
 <h2>Sesión de Trabajo: Proyecto Final</h2>
@@ -390,80 +452,83 @@ CMI de TechStyle alimentado con datos reales</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td>1–4</td>
+<td>W01–W03</td>
 <td>Sistemas de Información y toma de decisiones</td>
 </tr>
 <tr class="even">
-<td>5</td>
-<td>Solemne 1</td>
+<td>W04</td>
+<td>Big Data, OLTP/OLAP, Data Warehouse, ETL</td>
 </tr>
 <tr class="odd">
-<td>6–8</td>
+<td>W05</td>
+<td><strong>Solemne 1</strong></td>
+</tr>
+<tr class="even">
+<td>W06–W08</td>
 <td>Diseño: Caso de Uso, UML, ER, Modelo Relacional</td>
 </tr>
-<tr class="even">
-<td>9</td>
-<td>Solemne 2</td>
-</tr>
 <tr class="odd">
-<td>10</td>
-<td>Normalización</td>
+<td>W09</td>
+<td><strong>Solemne 2</strong></td>
 </tr>
 <tr class="even">
-<td>11</td>
-<td>Diccionario de datos + MySQL</td>
+<td>W10–W11</td>
+<td>Normalización + Diccionario de datos + MySQL</td>
 </tr>
 <tr class="odd">
-<td>12–13</td>
+<td>W12–W13</td>
 <td>DDL + DML</td>
 </tr>
 <tr class="even">
-<td>14</td>
-<td>Consultas avanzadas</td>
+<td>W14–W15</td>
+<td>JOINs + GROUP BY + Subconsultas</td>
 </tr>
 <tr class="odd">
-<td>15</td>
-<td>Transacciones</td>
+<td>W16</td>
+<td>Transacciones ACID</td>
 </tr>
 <tr class="even">
-<td><strong>16</strong></td>
-<td><strong>Vistas + integración CMI</strong></td>
-</tr>
-<tr class="odd">
-<td>16</td>
-<td>Vistas SQL + CMI + <strong>Solemne 3</strong></td>
+<td><strong>W17</strong></td>
+<td><strong>Vistas SQL + integración CMI + Solemne 3</strong></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="para-el-laboratorio-de-hoy" class="slide level2">
-<h2>Para el Laboratorio de Hoy</h2>
-<p><strong>Lab 16</strong>: Crear las vistas del CMI y avanzar en el proyecto final.</p>
-<ol type="1">
-<li>Implementar las 4 vistas <code>vw_kpi_*</code> en <code>techstyle_db</code>.</li>
-<li>Verificar los resultados de cada vista.</li>
-<li>(Optativo) Conectar una vista a Power BI para visualizar el CMI.</li>
-<li>Avanzar en el informe escrito.</li>
-</ol>
-<div class="fragment">
-<p><strong>Próxima semana</strong>: Defensa oral del proyecto final.</p>
-<p>Revisar la rúbrica y asegurarse de que todos los entregables están completos.</p>
-</div>
-</section>
-<section id="solemne-3-evaluación-final-del-semestre" class="slide level2">
-<h2>Solemne 3 — Evaluación Final del Semestre</h2>
-<p><strong>Esta sesión cierra con la evaluación Solemne 3.</strong></p>
+<section id="conexión-con-la-toma-de-decisiones" class="slide level2">
+<h2>Conexión con la Toma de Decisiones</h2>
 <ul>
-<li class="fragment"><strong>Ponderación</strong>: 35% de la nota final.
-<ul>
-<li class="fragment">Control parcial acumulado (semanas 11–15): 10%</li>
-<li class="fragment"><strong>Proyecto grupal <code>techstyle_db</code> + defensa oral</strong>: 25%</li>
-</ul></li>
-<li class="fragment"><strong>Formato</strong>: Presentación y defensa en MySQL Workbench (15 min por grupo).</li>
-<li class="fragment"><strong>Entregables</strong>: Modelo ER, DDL completo, datos cargados, consultas analíticas, vistas CMI, informe escrito.</li>
+<li class="fragment">Las <strong>vistas</strong> son el último eslabón que conecta la base de datos operativa con el sistema de decisiones de la gerencia.</li>
+<li class="fragment">Roberto no necesita saber SQL: solo ve su dashboard en Power BI, alimentado por las vistas.</li>
+<li class="fragment"><strong>La vista es el punto donde el trabajo técnico se convierte en valor de negocio</strong>.</li>
 </ul>
 <div class="fragment">
-<p><strong>Éxito depende de</strong>: Demostrar que los datos que construyeron permiten tomar mejores decisiones para TechStyle.</p>
+<blockquote>
+<p>“Al inicio del semestre, María tenía 450.000 filas de datos brutos y tomaba decisiones con intuición. Al final, tiene una base de datos relacional en 3FN, con transacciones ACID y vistas que alimentan su CMI en tiempo real.”</p>
+</blockquote>
+</div>
+</section>
+<section id="puntos-clave" class="slide level2">
+<h2>Puntos Clave</h2>
+<ul>
+<li class="fragment">Una <strong>vista SQL</strong> es una consulta guardada que se comporta como tabla virtual — no almacena datos, los calcula al consultarse.</li>
+<li class="fragment">Las vistas simplifican el acceso a consultas complejas, mejoran la seguridad y permiten la reutilización.</li>
+<li class="fragment"><code>CREATE VIEW</code> · <code>CREATE OR REPLACE VIEW</code> · <code>DROP VIEW IF EXISTS</code>.</li>
+<li class="fragment">Las vistas se conectan directamente a Power BI para alimentar el CMI.</li>
+<li class="fragment">Las <strong>4 vistas del CMI de TechStyle</strong> cubren las 4 perspectivas: Financiera, Cliente, Procesos, Aprendizaje.</li>
+</ul>
+</section>
+<section id="preview-del-laboratorio-w16-y-proyecto-final" class="slide level2">
+<h2>Preview del Laboratorio W16 y Proyecto Final</h2>
+<p><strong>Lab W16 / Proyecto Final: Vistas del CMI y avance del informe</strong></p>
+<ul>
+<li class="fragment">Implementar las 4 vistas <code>vw_kpi_*</code> en <code>techstyle_db</code>.</li>
+<li class="fragment">Verificar que cada vista devuelve resultados coherentes.</li>
+<li class="fragment">(Optativo avanzado) Conectar una vista a Power BI y visualizar el KPI.</li>
+<li class="fragment">Avanzar en el informe escrito del proyecto.</li>
+</ul>
+<div class="fragment">
+<p><strong>Próxima semana (W17)</strong>: Defensa oral del proyecto final.</p>
+<p>Revisar la rúbrica y asegurarse de que todos los entregables estén completos: 1. Modelo ER normalizado · 2. DDL completo · 3. Datos cargados · 4. Consultas analíticas · 5. Vistas CMI · 6. Informe + defensa oral.</p>
 </div>
 
 

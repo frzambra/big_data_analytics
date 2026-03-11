@@ -15,12 +15,12 @@ format:
 
 ::: {.incremental}
 - El **Diagrama de Caso de Uso** describe qué hace el sistema y quién lo usa.
-- El **Esquema UML** muestra la estructura de clases y sus relaciones.
+- El **Esquema UML** muestra la estructura de clases, atributos y relaciones.
 - El modelamiento previo evita errores costosos en la construcción de la base de datos.
 :::
 
 ::: {.fragment}
-**Hoy**: ¿Cómo representamos la *realidad del negocio* como entidades y relaciones?
+**Hoy**: ¿Cómo representamos la *realidad del negocio* como entidades y relaciones formales para diseñar la base de datos?
 :::
 
 ---
@@ -32,7 +32,7 @@ format:
 ::: {.fragment}
 - TechStyle tiene clientes, productos, pedidos, repartidores y zonas.
 - Todo eso existe en el mundo real.
-- El **Modelo Entidad-Relación** captura esa realidad en un diagrama formal.
+- El **Modelo Entidad-Relación** captura esa realidad en un diagrama formal antes de escribir una sola línea de SQL.
 :::
 
 ::: {.notes}
@@ -57,6 +57,16 @@ Este es el concepto clave del curso. Repetirlo explícitamente y conectar con el
 
 ---
 
+## Simbología: Notación Pata de Gallo
+
+`[IMAGE/DIAGRAM PLACEHOLDER: Tabla comparativa de la notación Crow's Foot — (1) símbolo de "uno exactamente": línea vertical simple; (2) "cero o uno": línea vertical + círculo; (3) "uno o muchos": línea vertical + pata de gallo; (4) "cero o muchos": círculo + pata de gallo. Cada símbolo con etiqueta y ejemplo de relación TechStyle: "Un cliente tiene uno o muchos pedidos", "Un pedido puede tener cero o una devolución".]`
+
+::: {.fragment}
+*draw.io usa esta notación por defecto. Es el estándar industrial en diseño de bases de datos.*
+:::
+
+---
+
 ## Conceptos del Modelo ER
 
 | Concepto | Descripción | Ejemplo TechStyle |
@@ -65,6 +75,42 @@ Este es el concepto clave del curso. Repetirlo explícitamente y conectar con el
 | **Atributo** | Propiedad de la entidad | `nombre`, `fecha_pedido` |
 | **Relación** | Vínculo entre entidades | `Cliente REALIZA Pedido` |
 | **Cardinalidad** | Cuántos de cada lado | Un cliente realiza muchos pedidos |
+
+---
+
+## Aplicación: Identificar Entidades de TechStyle
+
+**Regla práctica**: Una entidad es un objeto que:
+
+::: {.incremental}
+1. Tiene existencia propia (independiente de otros objetos).
+2. Tiene atributos propios que nos interesa registrar.
+3. Puede tener múltiples instancias (Ana, Pedro, María = múltiples clientes).
+:::
+
+::: {.fragment}
+**Entidades confirmadas**:
+- `Cliente` ✓ — existe por sí mismo, tiene nombre, email, región.
+- `Pedido` ✓ — tiene fecha, total, estado.
+- `Producto` ✓ — tiene nombre, categoría, precio.
+- `Repartidor` ✓ — tiene nombre, teléfono, zona asignada.
+- `Zona` ✓ — tiene nombre y región.
+- `Devolución` ✓ — tiene fecha, motivo, monto.
+:::
+
+---
+
+## Verificación: ¿Es una Entidad o un Atributo?
+
+**Clasifica cada elemento como entidad o atributo:**
+
+::: {.incremental}
+1. `región` del cliente → **Atributo** (propiedad de `Cliente`)
+2. `Proveedor` (empresa que abastece los productos) → **Entidad** (tiene nombre, RUT, dirección)
+3. `estado` del pedido → **Atributo** (propiedad de `Pedido`)
+4. `Categoría` (Calzado, Ropa, Accesorios, con descripción propia) → **Entidad** si tiene atributos propios; **Atributo** si es solo un texto en `Producto`
+5. `precio_unitario` en un ítem de pedido → **Atributo** (propiedad de `OrderItem`)
+:::
 
 ---
 
@@ -77,6 +123,34 @@ Este es el concepto clave del curso. Repetirlo explícitamente y conectar con el
   - Ejemplo: Un cliente puede tener muchos pedidos.
 - **N:M** — Muchas de una con muchas de otra.
   - Ejemplo: Un pedido puede incluir muchos productos, y un producto puede estar en muchos pedidos.
+:::
+
+---
+
+## Aplicación: Cardinalidades con Reglas de Negocio de TechStyle
+
+**Derivando cardinalidades directamente de las reglas del negocio**:
+
+| Relación | Regla de negocio | Cardinalidad |
+|---|---|---|
+| Cliente → Pedido | Un cliente puede hacer muchos pedidos | 1:N |
+| Pedido → OrderItem | Un pedido tiene al menos un ítem | 1:N |
+| OrderItem → Producto | Un ítem corresponde a un producto | N:1 |
+| Repartidor → Zona | Varios repartidores cubren la misma zona | N:1 |
+| Pedido → Devolución | No todo pedido tiene devolución | 1:0..1 |
+
+---
+
+## Verificación: ¿Cuál es la Cardinalidad Correcta?
+
+**Para cada situación, elige la cardinalidad:**
+
+::: {.incremental}
+1. Un banco puede tener muchas cuentas; una cuenta pertenece a un solo banco → **1:N**
+2. Un estudiante puede estar en muchos cursos; un curso tiene muchos estudiantes → **N:M**
+3. Una empresa tiene un solo RUT; un RUT identifica a una empresa → **1:1**
+4. Un vuelo puede transportar muchos pasajeros; un pasajero puede tener muchos vuelos → **N:M**
+5. Una devolución corresponde a un único pedido; un pedido puede tener cero o una devolución → **1:0..1**
 :::
 
 ---
@@ -104,11 +178,11 @@ Este es el concepto clave del curso. Repetirlo explícitamente y conectar con el
 ```
 [Cliente] ──1:N──> [Pedido] ──1:N──> [OrderItem] <──N:1── [Producto]
                       │
-                     1:1
+                     N:1
                       ↓
                  [Repartidor] ──N:1──> [Zona]
                       │
-                    0:1 (opcional)
+                    0..1 (opcional)
                       ↓
                  [Devolución]
 ```
@@ -116,18 +190,6 @@ Este es el concepto clave del curso. Repetirlo explícitamente y conectar con el
 ::: {.notes}
 Mostrar en draw.io. Construir progresivamente, empezando por Cliente-Pedido, luego agregar Producto y OrderItem, luego Repartidor y Zona, finalmente Devolución.
 :::
-
----
-
-## Atributos de las Entidades Principales
-
-**Cliente**: `id_cliente` (PK), `nombre`, `email`, `telefono`, `fecha_registro`, `region`
-
-**Pedido**: `id_pedido` (PK), `fecha_pedido`, `total`, `estado`, `id_cliente` (FK)
-
-**Producto**: `id_producto` (PK), `nombre`, `categoria`, `precio`, `stock`
-
-**OrderItem**: `id_item` (PK), `id_pedido` (FK), `id_producto` (FK), `cantidad`, `precio_unitario`
 
 ---
 
@@ -143,6 +205,39 @@ Mostrar en draw.io. Construir progresivamente, empezando por Cliente-Pedido, lue
 
 ::: {.fragment}
 **Regla**: Las relaciones N:M siempre generan una **entidad asociativa**.
+
+→ Además de los IDs, `OrderItem` agrega atributos propios de la relación: `cantidad` y `precio_unitario`.
+:::
+
+---
+
+## Aplicación: Atributos de las Entidades Principales
+
+**Cliente**: `id_cliente` (PK), `nombre`, `email`, `telefono`, `fecha_registro`, `region`
+
+**Pedido**: `id_pedido` (PK), `fecha_pedido`, `total`, `estado`, `id_cliente` (FK)
+
+**Producto**: `id_producto` (PK), `nombre`, `categoria`, `precio`, `stock`
+
+**OrderItem**: `id_item` (PK), `id_pedido` (FK), `id_producto` (FK), `cantidad`, `precio_unitario`
+
+**Repartidor**: `id_repartidor` (PK), `nombre`, `telefono`, `id_zona` (FK)
+
+**Zona**: `id_zona` (PK), `nombre_zona`, `region`
+
+**Devolución**: `id_devolucion` (PK), `fecha`, `motivo`, `monto_devuelto`, `id_pedido` (FK)
+
+---
+
+## Verificación: ¿Dónde va la FK?
+
+**En una relación 1:N, la FK siempre va en la tabla del lado N:**
+
+::: {.incremental}
+1. `Cliente (1) ──── Pedido (N)` → ¿Dónde va `id_cliente`? → **En `Pedido`**
+2. `Pedido (1) ──── OrderItem (N)` → ¿Dónde va `id_pedido`? → **En `OrderItem`**
+3. `Zona (1) ──── Repartidor (N)` → ¿Dónde va `id_zona`? → **En `Repartidor`**
+4. `Pedido (1) ──── Devolución (0..1)` → ¿Dónde va `id_pedido`? → **En `Devolución`**
 :::
 
 ---
@@ -159,6 +254,20 @@ Mostrar en draw.io. Construir progresivamente, empezando por Cliente-Pedido, lue
 
 ---
 
+## Errores Frecuentes en el Modelo ER
+
+**Los errores más comunes y cómo evitarlos:**
+
+::: {.incremental}
+1. **Relación N:M sin entidad asociativa**: "Pedido ←→ Producto" directamente → ¿dónde guardo cantidad y precio?
+2. **Atributos compuestos**: guardar `nombre completo` en un solo campo en vez de `nombre` + `apellido`.
+3. **PK mal elegida**: usar `email` como PK de `Cliente` → ¿qué pasa si el cliente cambia de email?
+4. **Olvidar relaciones opcionales**: asumir que todo pedido tiene devolución (0..1 ≠ 1..1).
+5. **Entidades sin atributos**: una entidad que solo tiene `id` probablemente es solo un atributo de otra.
+:::
+
+---
+
 ## Discusión: Ética en el Diseño del ER
 
 **Pregunta para reflexionar**:
@@ -168,7 +277,22 @@ Mostrar en draw.io. Construir progresivamente, empezando por Cliente-Pedido, lue
 ::: {.incremental}
 - ¿Es proporcional al objetivo (entrega) guardar localización continua?
 - ¿Cómo se protegen esos datos contra acceso no autorizado?
-- ¿El cliente fue informado y dio su consentimiento?
+- ¿El cliente fue informado y dio su consentimiento explícito?
+- ¿Cumple con la Ley 19.628 de Protección de Datos de Chile?
+:::
+
+---
+
+## Conexión con la Toma de Decisiones
+
+::: {.incremental}
+- Un buen modelo ER permite responder: ¿Qué repartidor tiene mayor tasa de devoluciones por zona?
+- Un modelo incompleto hace que ciertas preguntas sean **imposibles de responder**.
+- **El diseño del ER determina qué decisiones podrá tomar la organización en el futuro.**
+:::
+
+::: {.fragment}
+> "Si no modelamos la entidad Devolución, nunca podremos analizar por qué los clientes devuelven productos, y el KPI del CMI quedará vacío para siempre."
 :::
 
 ---
@@ -183,7 +307,7 @@ Diseñen el modelo ER para TechStyle **ampliado**, incluyendo las entidades:
 ::: {.incremental}
 1. Definan los atributos de cada entidad nueva.
 2. Establezcan las cardinalidades con justificación de negocio.
-3. Usen draw.io para diagramar.
+3. Usen draw.io para diagramar con notación Pata de Gallo.
 :::
 
 ::: {.fragment}
@@ -192,28 +316,30 @@ Diseñen el modelo ER para TechStyle **ampliado**, incluyendo las entidades:
 
 ---
 
-## Conexión con la Toma de Decisiones
+## Puntos Clave
 
 ::: {.incremental}
-- Un buen modelo ER permite responder preguntas como: ¿Qué repartidor tiene mayor tasa de devoluciones?
-- Un modelo incompleto hace que ciertas preguntas sean **imposibles de responder**.
-- **El diseño del ER determina qué decisiones podrá tomar la organización en el futuro.**
-:::
-
-::: {.fragment}
-> "Si no modelamos la entidad Devolución, nunca podremos analizar por qué los clientes devuelven productos."
+- El **Modelo ER** es la representación gráfica formal de la realidad de la organización.
+- Sus elementos son: **entidades** (objetos), **atributos** (propiedades) y **relaciones** (vínculos).
+- La **cardinalidad** (1:1, 1:N, N:M) es una traducción directa de las reglas de negocio.
+- Las relaciones **N:M siempre generan una entidad asociativa** (tabla intermedia) con atributos propios.
+- En una relación 1:N, la **FK siempre va en la tabla del lado N**.
+- Cada entidad omitida en el ER es un dato que nunca podrá almacenarse ni consultar.
 :::
 
 ---
 
-## Para el Laboratorio de Hoy
+## Preview del Laboratorio W06
 
-**Lab 7**: Modelo Entidad-Relación en draw.io.
+**Lab W06: Modelo Entidad-Relación completo en draw.io**
 
-- Diseñar el ER completo de TechStyle (con Repartidor, Zona y Devolución).
-- Justificar cada cardinalidad con reglas de negocio escritas.
-- Entregable: Diagrama exportado como PNG + tabla de justificación.
+::: {.incremental}
+- Diseñar el ER completo de TechStyle usando notación Pata de Gallo.
+- Incluir las 7 entidades: `Cliente`, `Pedido`, `Producto`, `OrderItem`, `Repartidor`, `Zona`, `Devolución`.
+- Justificar cada cardinalidad con una regla de negocio escrita.
+- Entregable: Diagrama exportado como PNG + tabla de justificación de cardinalidades.
+:::
 
 ::: {.fragment}
-**Para la próxima semana**: Transformar el modelo ER al modelo relacional (tablas con PK y FK).
+**Para la próxima semana (W07)**: ¿Cómo transformamos el modelo ER en tablas reales con PK y FK? → Modelo Relacional.
 :::

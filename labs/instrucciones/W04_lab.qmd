@@ -1,0 +1,112 @@
+---
+title: "Laboratorio 6: Diagrama de Caso de Uso en draw.io"
+subtitle: "Semana 4 · W04 · Unidad 2 · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+## Contexto
+
+TechStyle ha decidido modernizar su módulo de ventas. El equipo de TI necesita un **Diagrama de Caso de Uso** que describa qué debe hacer el sistema y quién interactúa con él, antes de diseñar la base de datos.
+
+Tú eres el analista de sistemas asignado a este proyecto.
+
+**Herramienta**: [draw.io](https://draw.io) — sin instalación, funciona en el navegador.
+
+**Tiempo disponible**: 2 horas 30 minutos.
+
+---
+
+## Descripción del Sistema: Módulo de Ventas de TechStyle
+
+**Requerimientos del cliente (TechStyle)**:
+
+El módulo de ventas debe permitir:
+
+- Los **clientes** pueden registrarse, iniciar sesión, navegar el catálogo de productos, agregar productos al carrito, realizar el pedido y pagar.
+- Al pagar, el sistema puede requerir validación de pago (siempre ocurre).
+- Los **clientes** pueden también consultar el estado de su pedido y solicitar una devolución (solo si el pedido fue entregado).
+- Los **repartidores** pueden ver los pedidos asignados a ellos y confirmar la entrega.
+- Los **administradores** pueden gestionar el catálogo de productos (agregar, editar, eliminar), gestionar usuarios y ver reportes de ventas.
+- Los administradores también pueden procesar devoluciones solicitadas por clientes.
+
+---
+
+## Instrucciones
+
+### Paso 1: Identificar actores y casos de uso (20 min)
+
+Antes de abrir draw.io, completa esta tabla en papel o en un documento:
+
+| Actor | Casos de uso que le corresponden |
+|---|---|
+| Cliente | |
+| Repartidor | |
+| Administrador | |
+
+Identifica también:
+- ¿Qué casos de uso tienen relación `<<include>>`? (siempre ocurren)
+- ¿Qué casos de uso tienen relación `<<extend>>`? (ocurren condicionalmente)
+
+### Paso 2: Crear el diagrama en draw.io (60 min)
+
+1. Ir a [draw.io](https://draw.io) → "Crear nuevo diagrama" → seleccionar "Blank".
+2. En la barra de búsqueda de formas, buscar "use case" para encontrar los elementos correctos.
+3. Construir el diagrama con:
+   - Un **rectángulo** que delimita el sistema (titulado "Sistema TechStyle – Módulo de Ventas").
+   - **Figuras de actor** (palito de hombre) para cada actor fuera del rectángulo.
+   - **Elipses** para cada caso de uso dentro del rectángulo.
+   - **Líneas de asociación** entre actores y casos de uso.
+   - **Flechas punteadas** con etiquetas `<<include>>` o `<<extend>>` donde corresponda.
+
+### Paso 3: Verificación (20 min)
+
+Revisar el diagrama usando esta lista:
+
+- [ ] Los 3 actores están representados correctamente.
+- [ ] Todos los casos de uso están dentro del límite del sistema.
+- [ ] Hay al menos 8 casos de uso distintos.
+- [ ] Al menos 1 relación `<<include>>` correctamente etiquetada.
+- [ ] Al menos 1 relación `<<extend>>` correctamente etiquetada.
+- [ ] El diagrama es legible (sin elementos superpuestos).
+
+### Paso 4: Documentar (30 min)
+
+En un documento aparte (Word o Google Docs), describe:
+
+1. **Tabla de actores**: Para cada actor, explica su rol en el sistema.
+2. **Tabla de casos de uso**: Para cada caso de uso, describe qué hace y por qué es necesario.
+3. **Justificación de relaciones**: Explica por qué elegiste esas relaciones `<<include>>` y `<<extend>>`.
+
+---
+
+## Entregable
+
+1. Diagrama exportado como **PNG** (draw.io → Extras → Exportar → PNG).
+2. Documento Word/PDF con la tabla de actores, casos de uso y justificación de relaciones.
+
+**Subir ambos archivos** con el nombre: `lab6_apellido1_apellido2.png` y `lab6_apellido1_apellido2.pdf`.
+
+---
+
+## Criterios de evaluación
+
+| Criterio | Puntaje |
+|---|---|
+| Actores correctamente identificados y ubicados | 20 pts |
+| Casos de uso completos y dentro del límite | 30 pts |
+| Relaciones `<<include>>` y `<<extend>>` correctas | 25 pts |
+| Documentación de actores y casos de uso | 25 pts |
+| **Total** | **100 pts** |
+
+---
+
+## Recursos de apoyo
+
+- Laudon & Laudon (2016), Cap. 5: Infraestructura de TI y tecnologías emergentes.
+- Oz (2008), Cap. 5: Sistemas de gestión de bases de datos.
+- Descripción de requerimientos del módulo de pedidos TechStyle (entregada en clase).

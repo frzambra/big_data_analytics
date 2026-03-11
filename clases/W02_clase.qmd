@@ -1,0 +1,346 @@
+---
+title: "Tipos de SI, CMI, Calidad de Datos y Ética"
+subtitle: "Semana 2 · W02 · Unidad 1 · Big Data y Analytics"
+author: "Universidad San Sebastián"
+date: "Marzo 2026"
+format:
+  revealjs:
+    theme: default
+    incremental: false
+    slide-number: true
+    footer: "Big Data y Analytics · USS · 2026"
+---
+
+## ¿Qué Vimos la Semana Pasada?
+
+::: {.incremental}
+- Los **datos** por sí solos no son útiles → jerarquía dato–información–conocimiento–decisión.
+- Un SI tiene **5 componentes**: hardware, software, datos, personas, procesos.
+- TechStyle tiene **3 niveles organizacionales**: Sofía (operativo), Juan (táctico), Roberto (estratégico).
+:::
+
+::: {.fragment}
+**Hoy**: ¿Qué tipo de SI sirve a cada nivel? ¿Y cómo alinea la organización sus sistemas hacia la estrategia?
+:::
+
+---
+
+## Tipos de Sistemas de Información
+
+| Sistema | Sigla | Nivel | Propósito |
+|---|---|---|---|
+| Transaction Processing System | **TPS** | Operativo | Registrar operaciones diarias |
+| Business Intelligence | **BI** | Táctico | Analizar datos históricos |
+| Decision Support System | **DSS** | Táctico/Estratégico | Apoyar decisiones no estructuradas |
+| Customer Relationship Mgmt | **CRM** | Táctico | Gestionar relación con clientes |
+| Executive Information System | **EIS** | Estratégico | Visión global del negocio |
+
+---
+
+## La Pirámide de los Tipos de SI
+
+![](../img/piramide_sistemas_informacion.jpg)
+
+::: {.fragment}
+*El TPS genera los datos crudos. El BI los transforma en información. El EIS presenta los KPIs estratégicos. La cadena es completa solo si cada eslabón funciona.*
+:::
+
+---
+
+## Aplicación: Flujo de Datos entre Tipos de SI en TechStyle
+
+**¿Cómo se conectan los tipos de SI en la práctica?**
+
+::: {.incremental}
+- **TPS** (operativo): registra cada pedido, pago, entrega → genera millones de transacciones
+- **ETL** (noche): extrae y limpia los datos del TPS → carga al Data Warehouse
+- **BI** (táctico): Juan consulta el DW → genera reportes de ventas por zona y categoría
+- **CRM** (táctico): María ve el historial de cada cliente → segmenta la campaña
+- **EIS** (estratégico): Roberto ve en su dashboard los 5 KPIs clave del mes
+:::
+
+::: {.fragment}
+**El fallo en el TPS se propaga hacia arriba**: datos incorrectos en la base → KPIs incorrectos en el EIS.
+:::
+
+---
+
+## Tipos de SI en TechStyle
+
+::: {.incremental}
+- **Sofía** usa un **TPS**: registra cada entrega con el estado del pedido en tiempo real.
+- **Juan** usa **BI**: genera dashboards semanales de ventas por categoría y zona.
+- **María** usa un **CRM**: ve el historial de compras de cada cliente para segmentar la campaña.
+- **Roberto** usa un **EIS**: ve en una pantalla la situación global de TechStyle (ventas, NPS, rentabilidad).
+:::
+
+::: {.fragment}
+**Pregunta**: ¿Podrían Sofía y Roberto usar el mismo sistema? ¿Por qué no?
+:::
+
+---
+
+## Verificación: ¿Qué SI Necesita Cada Situación?
+
+**Clasifica qué tipo de SI sería el más adecuado:**
+
+::: {.incremental}
+1. Un banco que necesita registrar cada transacción de cajero automático en tiempo real → **TPS**
+2. El gerente de una cadena de supermercados quiere ver la participación de mercado en una pantalla → **EIS**
+3. Un equipo de ventas necesita ver el historial de contacto con cada cliente potencial → **CRM**
+4. Un analista quiere comparar las ventas de los últimos 24 meses por región y temporada → **BI**
+5. La dirección debe decidir si abrir una nueva sucursal usando datos de demanda proyectada → **DSS**
+:::
+
+---
+
+## El Cuadro de Mando Integral (CMI)
+
+**¿Cómo alinea una organización todos sus SI hacia la estrategia?**
+
+El **CMI** (Balanced Scorecard) traduce la estrategia en **4 perspectivas** con KPIs medibles:
+
+| Perspectiva | Pregunta clave |
+|---|---|
+| **Financiera** | ¿Estamos generando valor para los accionistas? |
+| **Cliente** | ¿Estamos satisfaciendo a nuestros clientes? |
+| **Procesos Internos** | ¿Nuestros procesos son eficientes? |
+| **Aprendizaje y Crecimiento** | ¿Estamos mejorando como organización? |
+
+---
+
+## Historia del CMI: Kaplan y Norton (1992)
+
+**¿Por qué fue revolucionario?**
+
+::: {.incremental}
+- Antes de 1992, las empresas medían su desempeño **solo financieramente** (ganancias, retorno).
+- Robert Kaplan y David Norton (Harvard) publicaron que el desempeño financiero es una consecuencia, no una causa.
+- La causa está en los **procesos**, los **clientes** y el **aprendizaje organizacional**.
+- El CMI fue adoptado por el 70% de las empresas Fortune 500 en los años 2000.
+:::
+
+::: {.fragment}
+**Para TechStyle**: si Roberto solo mira ventas totales, no sabe *por qué* caen ni *cómo* recuperarlas.
+:::
+
+---
+
+## Mapa Estratégico de TechStyle
+
+![](../img/mapa_estrategico_cadena_casual.jpg)
+
+::: {.fragment}
+*El mapa estratégico muestra que la rentabilidad de TechStyle depende de la satisfacción del cliente, que depende de los procesos, que dependen de las capacidades del equipo.*
+:::
+
+---
+
+## CMI de TechStyle: KPIs por Perspectiva
+
+| Perspectiva | KPI | Fuente de datos |
+|---|---|---|
+| Financiera | Margen de contribución por categoría | TPS + BI |
+| Cliente | NPS (Net Promoter Score) | CRM |
+| Procesos | Tiempo promedio de entrega por zona | TPS |
+| Aprendizaje | % reclamos resueltos en primera instancia | CRM + DSS |
+
+::: {.fragment}
+**Conexión clave**: Los KPIs del CMI dependen de que los datos del TPS sean correctos.
+:::
+
+---
+
+## Verificación: ¿A Qué Perspectiva del CMI Pertenece Cada KPI?
+
+**Clasifica cada indicador en su perspectiva:**
+
+::: {.incremental}
+1. "Tasa de devolución por zona geográfica" → **Procesos Internos**
+2. "Crecimiento de ventas año a año" → **Financiera**
+3. "% de empleados con certificación en logística" → **Aprendizaje y Crecimiento**
+4. "NPS promedio de clientes nuevos" → **Cliente**
+5. "Costo de adquisición de cliente (CAC)" → **Financiera** / **Cliente**
+:::
+
+---
+
+## El Problema: Bonos Pagados con Datos Incorrectos
+
+**Caso real en TechStyle**:
+
+Roberto aprobó bonos para el equipo de ventas basados en el KPI "tiempo de entrega promedio = 2,1 días".
+
+::: {.incremental}
+- Al auditar, descubrieron que el TPS registraba "fecha de entrega" cuando el repartidor marcaba "en camino", no cuando el cliente firmaba la recepción.
+- El tiempo real era 3,4 días.
+- Los bonos se pagaron por rendimiento **ficticio**.
+:::
+
+---
+
+## Análisis: ¿Dónde Falló la Calidad?
+
+**Trazando el fallo hacia su origen:**
+
+::: {.incremental}
+- **Problema raíz**: la definición del campo `fecha_entrega` era ambigua en el proceso.
+- **Falla en el TPS**: el software permitía marcar "entregado" sin validar la firma del cliente.
+- **Falla en BI**: nadie auditó la consistencia del dato antes de usarlo en el KPI.
+- **Impacto en el CMI**: el KPI de "procesos internos" era 60% más optimista que la realidad.
+- **Impacto financiero**: $2,3M en bonos pagados por desempeño que no ocurrió.
+:::
+
+::: {.fragment}
+**Este caso ejemplifica las 4 dimensiones de calidad de datos.**
+:::
+
+---
+
+## Calidad de Datos: Las 4 Dimensiones
+
+| Dimensión | Pregunta | Problema TechStyle |
+|---|---|---|
+| **Exactitud** | ¿El dato refleja la realidad? | Fecha de entrega ≠ fecha real |
+| **Completitud** | ¿Hay campos vacíos? | 12% de clientes sin región |
+| **Consistencia** | ¿El mismo dato dice lo mismo? | "Santiago" vs "Stgo." vs "RM" |
+| **Oportunidad** | ¿Está disponible cuando se necesita? | Reporte de ventas disponible 3 días después |
+
+---
+
+## Aplicación: Auditoría de Calidad en el Dataset de TechStyle
+
+**Hallazgos reales en `techstyle_orders.csv`:**
+
+::: {.incremental}
+- **Exactitud**: 847 filas con `fecha_entrega` anterior a `fecha_pedido` → imposible, dato incorrecto.
+- **Completitud**: columna `región` vacía en 53.400 filas (12%) → imposible hacer reportes regionales completos.
+- **Consistencia**: "Santiago", "Stgo.", "RM", "Región Metropolitana" → 4 representaciones del mismo valor.
+- **Oportunidad**: el reporte de ventas diarias se genera a las 03:00 → María lo recibe a las 10:00 → toma decisiones con datos de ayer.
+:::
+
+---
+
+## Verificación: Identifica la Dimensión Vulnerada
+
+**¿Qué dimensión de calidad está en riesgo?**
+
+::: {.incremental}
+1. La columna `email` tiene 3.200 registros con el valor "no_email@test.com" → **Exactitud**
+2. El campo `teléfono` está vacío en el 40% de los registros → **Completitud**
+3. El mismo cliente aparece como "Pedro Muñoz" en ventas y "P. Munoz" en el CRM → **Consistencia**
+4. Los datos de devoluciones del fin de semana no se cargan al BI hasta el lunes a mediodía → **Oportunidad**
+:::
+
+---
+
+## Impacto de la Mala Calidad de Datos en el CMI
+
+::: {.incremental}
+- **Exactitud**: KPI de tiempo de entrega incorrecto → bonos mal pagados.
+- **Completitud**: 12% clientes sin región → campaña regional incompleta.
+- **Consistencia**: "Santiago" vs "RM" → duplicación en reportes de ventas.
+- **Oportunidad**: Reporte tardío → María toma decisiones con información de hace 3 días.
+:::
+
+---
+
+## Ética en el Manejo de Datos
+
+**Tres principios fundamentales**:
+
+::: {.incremental}
+- **Transparencia**: Los clientes de TechStyle saben qué datos se recopilan y por qué.
+- **Proporcionalidad**: Solo se recopilan los datos necesarios para el servicio (no más).
+- **Seguridad**: Los datos personales de los clientes están protegidos contra acceso no autorizado.
+:::
+
+::: {.fragment}
+**Caso de discusión**: TechStyle quiere guardar el historial de ubicación GPS de cada cliente para "personalizar recomendaciones". ¿Es ético? ¿Es proporcional?
+:::
+
+---
+
+## Marco Legal: Ley 19.628 de Protección de Datos en Chile
+
+**Lo que TechStyle debe cumplir:**
+
+::: {.incremental}
+- Los datos personales de clientes solo pueden usarse para el **fin declarado al momento de la recopilación**.
+- El cliente tiene derecho a **acceder, modificar y eliminar** sus datos.
+- Datos sensibles (salud, situación financiera) requieren **consentimiento explícito**.
+- Chile se encuentra en proceso de actualizar esta ley para alinearse con el GDPR europeo.
+:::
+
+::: {.fragment}
+**Implicación para el analista**: antes de usar un campo de datos, preguntarse si el cliente consintió ese uso específico.
+:::
+
+---
+
+## Actividad: Dashboard para Tres Usuarios
+
+**Power BI – Tres vistas del mismo dataset**:
+
+En parejas, construyen en Power BI Desktop tres vistas del `techstyle_orders.csv`:
+
+::: {.incremental}
+1. **Vista de Sofía** (operativa): Mis pedidos del día, estado, dirección.
+2. **Vista de Juan** (táctica): Ventas semanales por categoría y zona, gráfico de barras.
+3. **Vista de Roberto** (estratégica): KPIs financieros del mes (total ventas, ticket promedio, NPS).
+:::
+
+::: {.notes}
+Este es el Lab 2. En clase solo presentar el concepto; el trabajo práctico es en laboratorio.
+:::
+
+---
+
+## Objetivos de Aprendizaje – Semana 2
+
+::: {.incremental}
+- Clasificar los **tipos de SI** (TPS, BI, DSS, CRM, EIS) según nivel organizacional.
+- Diseñar un **CMI** con KPIs para las 4 perspectivas.
+- Evaluar la **calidad de datos** en sus 4 dimensiones.
+- Identificar implicaciones **éticas** del manejo de datos en una organización.
+:::
+
+---
+
+## Puntos Clave
+
+::: {.incremental}
+- Cada nivel organizacional tiene su **tipo de SI** adecuado: TPS para Sofía, BI/CRM para Juan y María, EIS para Roberto.
+- El **CMI** conecta la estrategia con datos medibles a través de 4 perspectivas: Financiera, Cliente, Procesos, Aprendizaje.
+- La **calidad de datos** (exactitud, completitud, consistencia, oportunidad) determina la confiabilidad del CMI.
+- Un dato incorrecto en el TPS corrompe toda la cadena hasta la decisión estratégica de Roberto.
+- La **ética en datos** no es opcional: la Ley 19.628 exige transparencia, proporcionalidad y seguridad.
+:::
+
+---
+
+## Preview del Laboratorio W02
+
+**Lab W02 — Parte A: Dashboards por Nivel Organizacional**
+
+::: {.incremental}
+- En Power BI, crear 3 vistas del dataset de TechStyle para Sofía, Juan y Roberto.
+- Cada vista debe mostrar solo la información relevante para ese nivel.
+:::
+
+**Lab W02 — Parte B: Auditoría de Calidad y CMI**
+
+::: {.incremental}
+- En Power Query, identificar y cuantificar problemas de calidad en el dataset (nulos, inconsistencias, valores imposibles).
+- Diseñar el CMI de TechStyle con 2 KPIs por perspectiva y sus fuentes de datos.
+:::
+
+---
+
+## Reflexión Final
+
+> "No basta con tener el SI correcto. Los datos que alimentan ese SI deben ser exactos, completos, consistentes y oportunos. De lo contrario, el CMI muestra una realidad que no existe."
+
+::: {.fragment}
+**Próxima semana (W03)**: ¿Qué pasa cuando los datos crecen tanto que los sistemas tradicionales no pueden manejarlos? → Big Data, OLTP, Data Warehouse y ETL.
+:::

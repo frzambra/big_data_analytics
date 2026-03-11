@@ -1,0 +1,204 @@
+---
+title: "Teoría de la Normalización"
+subtitle: "Semana 9 · W09 · Unidad 3 · Big Data y Analytics"
+author: "Universidad San Sebastián"
+date: "Mayo 2026"
+format:
+  revealjs:
+    theme: default
+    incremental: false
+    slide-number: true
+    footer: "Big Data y Analytics · USS · 2026"
+---
+
+## Retroalimentación Solemne 2
+
+::: {.incremental}
+- Revisión de resultados y errores frecuentes.
+- **Error más común**: Cardinalidades incorrectas entre Pedido y OrderItem.
+- **Fortaleza**: Diagramas ER con justificación de negocio bien fundamentada.
+:::
+
+::: {.fragment}
+**Hoy iniciamos la Unidad 3**: Construiremos la base de datos real en MySQL. Pero primero debemos **optimizar** el modelo relacional con la teoría de normalización.
+:::
+
+---
+
+## El Problema: Tabla Desnormalizada
+
+**TechStyle tenía originalmente esta tabla de pedidos**:
+
+| id_pedido | cliente | email_cliente | producto1 | cat1 | precio1 | producto2 | cat2 | precio2 |
+|---|---|---|---|---|---|---|---|---|
+| 001 | Ana | ana@mail | Zapatillas | Calzado | 45.000 | Polera | Ropa | 12.000 |
+| 002 | Ana | ana@mail | Jeans | Ropa | 35.000 | | | |
+
+::: {.fragment}
+**Problemas visibles**: datos repetidos, columnas vacías, estructura rígida.
+:::
+
+---
+
+## ¿Qué es la Normalización?
+
+::: {.incremental}
+- Proceso sistemático para **eliminar redundancias** y **anomalías** en tablas.
+- Desarrollado por Edgar Codd junto al modelo relacional.
+- Garantiza que cada dato se almacene **una sola vez**.
+- Previene anomalías de **inserción**, **actualización** y **eliminación**.
+:::
+
+::: {.fragment}
+**Objetivo**: Un modelo relacional donde cada dato tiene un lugar único y bien definido.
+:::
+
+---
+
+## Los Tres Tipos de Anomalías
+
+**Anomalía de inserción**: No puedo agregar un producto nuevo sin asociarlo a un pedido.
+
+**Anomalía de actualización**: Si Ana cambia de email, debo actualizar N filas (riesgo de inconsistencia).
+
+**Anomalía de eliminación**: Si elimino el único pedido de Ana, pierdo los datos de Ana como cliente.
+
+::: {.fragment}
+**La normalización elimina estas anomalías sistemáticamente.**
+:::
+
+---
+
+## Primera Forma Normal (1FN)
+
+**Regla**: Cada celda debe contener un valor **atómico** (indivisible). No hay grupos repetitivos.
+
+::: {.incremental}
+- Eliminar columnas repetidas (`producto1`, `producto2`, etc.).
+- Cada fila es única (definir una PK).
+- Cada atributo tiene un solo valor por celda.
+:::
+
+::: {.fragment}
+**Tabla en 1FN**: `pedido_items(id_pedido, id_producto, nombre_prod, categoria, precio, cantidad)`
+:::
+
+---
+
+## Segunda Forma Normal (2FN)
+
+**Regla**: Debe estar en 1FN + cada atributo no-clave depende de la **PK completa** (no de parte de ella).
+
+*Solo aplica cuando la PK es compuesta.*
+
+::: {.incremental}
+- En `pedido_items(id_pedido, id_producto, nombre_prod, categoria, precio, cantidad)`:
+  - `cantidad` depende de (`id_pedido`, `id_producto`) ✓
+  - `nombre_prod`, `categoria`, `precio` dependen solo de `id_producto` ✗ → **dependencia parcial**
+:::
+
+::: {.fragment}
+**Solución**: Separar en dos tablas:
+- `order_items(id_pedido FK, id_producto FK, cantidad)`
+- `productos(id_producto PK, nombre, categoria, precio)`
+:::
+
+---
+
+## Tercera Forma Normal (3FN)
+
+**Regla**: Debe estar en 2FN + ningún atributo no-clave depende de otro atributo no-clave.
+
+*Elimina dependencias transitivas.*
+
+::: {.incremental}
+- En `pedidos(id_pedido, id_cliente, nombre_cliente, region_cliente, total, estado)`:
+  - `nombre_cliente` y `region_cliente` dependen de `id_cliente`, no de `id_pedido` → **dependencia transitiva**
+:::
+
+::: {.fragment}
+**Solución**: Mover `nombre_cliente` y `region_cliente` a la tabla `clientes`.
+- `pedidos(id_pedido PK, id_cliente FK, total, estado, fecha)`
+- `clientes(id_cliente PK, nombre, email, region)`
+:::
+
+---
+
+## Resumen del Proceso de Normalización
+
+```
+Tabla desnormalizada
+       ↓ Eliminar grupos repetitivos y asegurar atomicidad
+    1FN: cada celda tiene un valor atómico
+       ↓ Eliminar dependencias parciales
+    2FN: todos los atributos dependen de la PK completa
+       ↓ Eliminar dependencias transitivas
+    3FN: los atributos no-clave no dependen entre sí
+```
+
+---
+
+## TechStyle: Antes y Después de la Normalización
+
+**Antes** (tabla desnormalizada):
+- 1 tabla con 12 columnas, datos repetidos, difícil de consultar.
+
+**Después** (3FN):
+- `clientes` · `pedidos` · `productos` · `order_items` · `repartidores` · `zonas` · `devoluciones`
+- 7 tablas bien definidas, sin redundancia, fácil de consultar con JOINs.
+
+::: {.fragment}
+**Beneficio inmediato**: Actualizar el email de Ana → 1 sola fila en `clientes`, no 50 filas en `pedidos`.
+:::
+
+---
+
+## Discusión: ¿Cuándo Desnormalizar?
+
+::: {.incremental}
+- En bases de datos **analíticas** (Data Warehouse), se acepta cierta desnormalización para mejorar el rendimiento de consultas complejas.
+- En bases de datos **operativas** (OLTP), la normalización hasta 3FN es el estándar.
+- **Regla práctica**: Normalizar primero, desnormalizar solo si hay evidencia de que el rendimiento lo requiere.
+:::
+
+---
+
+## Actividad: Identificar Anomalías
+
+**Hoja de trabajo** — tabla `techstyle_pedidos_desnormalizada.xlsx`:
+
+::: {.incremental}
+1. Identifica todas las celdas con valores no atómicos (violación de 1FN).
+2. Identifica las dependencias parciales (violación de 2FN).
+3. Identifica las dependencias transitivas (violación de 3FN).
+4. Propone el conjunto de tablas en 3FN con PK y FK.
+:::
+
+::: {.fragment}
+→ Continuarán en el laboratorio con la hoja de trabajo completa de TechStyle.
+:::
+
+---
+
+## Conexión con la Toma de Decisiones
+
+::: {.incremental}
+- Una base de datos normalizada garantiza que las consultas del CMI devuelven datos **correctos y consistentes**.
+- Sin normalización: actualizar el precio de un producto requiere modificar miles de filas → riesgo de inconsistencia.
+- **La normalización es la garantía técnica de la calidad de los datos.**
+:::
+
+---
+
+## Para el Laboratorio de Hoy
+
+**Lab 10**: Normalización en Excel.
+
+- Abrir la tabla desnormalizada de TechStyle.
+- Aplicar 1FN, 2FN y 3FN paso a paso.
+- Documentar cada anomalía detectada y su corrección.
+- Resultado: modelo relacional normalizado listo para implementar en MySQL.
+
+::: {.fragment}
+**Para la próxima semana**: Elaborar el diccionario de datos para el modelo normalizado e instalar MySQL Workbench.
+:::

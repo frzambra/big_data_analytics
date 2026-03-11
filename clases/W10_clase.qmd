@@ -1,0 +1,223 @@
+---
+title: "Diccionario de Datos e Introducción a MySQL"
+subtitle: "Semana 10 · W10 · Unidad 3 · Big Data y Analytics"
+author: "Universidad San Sebastián"
+date: "Mayo 2026"
+format:
+  revealjs:
+    theme: default
+    incremental: false
+    slide-number: true
+    footer: "Big Data y Analytics · USS · 2026"
+---
+
+## ¿Qué Vimos la Semana Pasada?
+
+::: {.incremental}
+- La **normalización** elimina redundancias y anomalías de las tablas.
+- **1FN**: valores atómicos, sin grupos repetitivos.
+- **2FN**: todos los atributos dependen de la PK completa.
+- **3FN**: no hay dependencias transitivas entre atributos no-clave.
+:::
+
+::: {.fragment}
+**Hoy**: ¿Cómo documentamos formalmente el modelo relacional? Y ¿qué herramienta usaremos para construir la base de datos?
+:::
+
+---
+
+## El Problema de la Documentación
+
+**Situación en TechStyle**:
+
+El analista Juan diseñó el modelo relacional. Ahora está de vacaciones. Un nuevo desarrollador debe implementar la base de datos.
+
+::: {.incremental}
+- ¿Qué tipo de dato tiene la columna `total` en `pedidos`? ¿INT o DECIMAL?
+- ¿Puede ser NULL la columna `telefono` en `clientes`?
+- ¿Cuál es el valor por defecto del campo `estado` en `pedidos`?
+:::
+
+::: {.fragment}
+**Sin documentación formal → errores de implementación → datos incorrectos → decisiones erróneas.**
+:::
+
+---
+
+## ¿Qué es el Diccionario de Datos?
+
+::: {.incremental}
+- Documento formal que describe **cada tabla y cada atributo** del modelo relacional.
+- Es el "manual técnico" de la base de datos.
+- Permite a cualquier desarrollador o analista entender la estructura sin preguntar al diseñador original.
+:::
+
+::: {.fragment}
+**Contenido mínimo por atributo**:
+Nombre · Tipo de dato · Longitud · Permite NULL · Valor por defecto · Descripción · Restricciones
+:::
+
+---
+
+## Estructura del Diccionario de Datos
+
+**Tabla: `clientes`**
+
+| Atributo | Tipo | Long. | NULL | Default | Descripción |
+|---|---|---|---|---|---|
+| id_cliente | INT | — | No | AUTO | PK, identificador único |
+| nombre | VARCHAR | 100 | No | — | Nombre completo del cliente |
+| email | VARCHAR | 150 | No | — | Email único, usado para login |
+| telefono | VARCHAR | 20 | Sí | NULL | Teléfono de contacto |
+| fecha_registro | DATE | — | No | CURDATE() | Fecha de creación del registro |
+| region | VARCHAR | 50 | No | — | Región geográfica del cliente |
+
+---
+
+## Tipos de Datos en MySQL: Vista Previa
+
+| Tipo | Uso típico | Ejemplo |
+|---|---|---|
+| `INT` | Enteros | `id_cliente`, `cantidad` |
+| `DECIMAL(p,s)` | Valores monetarios | `precio DECIMAL(10,2)` |
+| `VARCHAR(n)` | Texto variable | `nombre VARCHAR(100)` |
+| `DATE` | Fechas | `fecha_pedido DATE` |
+| `BOOLEAN` | Verdadero/Falso | `activo BOOLEAN` |
+| `TEXT` | Texto largo | `descripcion TEXT` |
+
+::: {.notes}
+Explicar por qué DECIMAL y no FLOAT para precios: DECIMAL es exacto, FLOAT tiene errores de redondeo que son inaceptables en dinero.
+:::
+
+---
+
+## ¿Por qué MySQL?
+
+::: {.incremental}
+- **Comparación con Excel**: Excel maneja filas, MySQL maneja millones de filas eficientemente.
+- **Comparación con Power BI**: Power BI consume datos, MySQL los almacena y gestiona.
+- **Por qué MySQL específicamente**:
+  - Open source y gratuito.
+  - Estándar en la industria (e-commerce, retail, startups).
+  - Compatible con Power BI, Python, y la mayoría de herramientas de análisis.
+:::
+
+---
+
+## Arquitectura Cliente–Servidor de MySQL
+
+```
+┌─────────────────────┐        ┌──────────────────────┐
+│   MySQL Workbench   │ ─────> │    MySQL Server      │
+│  (Cliente gráfico)  │  SQL   │  (Motor de base de   │
+│                     │ <───── │     datos)           │
+└─────────────────────┘        └──────────────────────┘
+         ↑
+    Tu computador
+```
+
+::: {.fragment}
+**MySQL Workbench** = interfaz gráfica para escribir y ejecutar consultas SQL.
+:::
+
+---
+
+## Primera Conexión a MySQL Workbench
+
+**Pasos para conectarse**:
+
+::: {.incremental}
+1. Abrir MySQL Workbench.
+2. Hacer clic en `+` en "MySQL Connections".
+3. Configurar: hostname `127.0.0.1`, puerto `3306`, usuario `root`.
+4. Ingresar la contraseña definida durante la instalación.
+5. Hacer clic en "Test Connection" → debe aparecer "Successfully made the MySQL connection".
+:::
+
+::: {.fragment}
+**En el laboratorio**: Todos instalarán y configurarán MySQL Workbench hoy.
+:::
+
+---
+
+## Exploración Inicial: Base de Datos de Ejemplo
+
+MySQL incluye la base de datos `sakila` como ejemplo. La exploraremos para entender la estructura:
+
+::: {.incremental}
+- ¿Qué tablas tiene `sakila`?
+- ¿Cómo se relacionan entre sí?
+- ¿Cómo se ve un modelo relacional real en MySQL Workbench?
+:::
+
+::: {.fragment}
+```sql
+-- Ver todas las bases de datos disponibles
+SHOW DATABASES;
+
+-- Seleccionar la base de datos sakila
+USE sakila;
+
+-- Ver todas las tablas
+SHOW TABLES;
+```
+:::
+
+---
+
+## Actividad: Construir el Diccionario de TechStyle
+
+**En parejas** — 20 minutos:
+
+Usando la plantilla Excel proporcionada, completen el diccionario de datos para las tablas:
+- `clientes`
+- `pedidos`
+- `productos`
+
+::: {.incremental}
+1. Definir tipo de dato y longitud para cada atributo.
+2. Especificar si permite NULL.
+3. Definir valores por defecto donde corresponda.
+4. Agregar descripción de negocio.
+:::
+
+---
+
+## Discusión: ¿Por qué los Tipos de Datos son Decisiones de Negocio?
+
+**Caso**: El campo `total` en `pedidos`. ¿`INT`, `FLOAT` o `DECIMAL`?
+
+::: {.incremental}
+- `INT`: No permite centavos → imposible para precios reales.
+- `FLOAT`: Tiene errores de redondeo → $45.000,00 puede guardarse como $44.999,9999.
+- `DECIMAL(10,2)`: Exacto hasta 2 decimales → correcto para valores monetarios.
+:::
+
+::: {.fragment}
+**Conclusión**: Elegir el tipo de dato incorrecto genera errores contables reales.
+:::
+
+---
+
+## Conexión con la Toma de Decisiones
+
+::: {.incremental}
+- El diccionario de datos garantiza que todos los sistemas que consumen la base de datos (Power BI, reportes, APIs) interpretan los datos de la misma forma.
+- Un atributo mal tipificado puede hacer que una consulta del CMI devuelva resultados incorrectos.
+- **La documentación es parte integral del diseño, no un trámite opcional.**
+:::
+
+---
+
+## Para el Laboratorio de Hoy
+
+**Lab 11**: Diccionario de datos + configuración de MySQL Workbench.
+
+1. Completar el diccionario de datos de TechStyle (todas las tablas).
+2. Instalar y configurar MySQL Workbench.
+3. Conectarse al servidor MySQL local.
+4. Explorar la base de datos `sakila` con `SHOW TABLES` y `DESCRIBE tabla`.
+
+::: {.fragment}
+**Para la próxima semana**: Crear la base de datos `techstyle_db` usando comandos DDL en MySQL Workbench.
+:::

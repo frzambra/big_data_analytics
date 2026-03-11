@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Laboratorio 3: Auditoría de Calidad y CMI con Datos Reales</title>
+<title>Laboratorio 11: Diccionario de Datos y Configuración de MySQL Workbench</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -84,25 +119,22 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#contexto" id="toc-contexto" class="nav-link active" data-scroll-target="#contexto"><span class="header-section-number">1</span> Contexto</a></li>
-  <li><a href="#instrucciones-generales" id="toc-instrucciones-generales" class="nav-link" data-scroll-target="#instrucciones-generales"><span class="header-section-number">2</span> Instrucciones generales</a></li>
-  <li><a href="#parte-a-auditoría-de-calidad-de-datos-18-min" id="toc-parte-a-auditoría-de-calidad-de-datos-18-min" class="nav-link" data-scroll-target="#parte-a-auditoría-de-calidad-de-datos-18-min"><span class="header-section-number">3</span> Parte A — Auditoría de Calidad de Datos (18 min)</a>
+  <li><a href="#parte-a-diccionario-de-datos-90-min" id="toc-parte-a-diccionario-de-datos-90-min" class="nav-link" data-scroll-target="#parte-a-diccionario-de-datos-90-min"><span class="header-section-number">2</span> Parte A: Diccionario de Datos (90 min)</a>
   <ul class="collapse">
-  <li><a href="#paso-1-cargar-los-datos-de-clientes" id="toc-paso-1-cargar-los-datos-de-clientes" class="nav-link" data-scroll-target="#paso-1-cargar-los-datos-de-clientes"><span class="header-section-number">3.1</span> Paso 1: Cargar los datos de clientes</a></li>
-  <li><a href="#paso-2-exploración-inicial" id="toc-paso-2-exploración-inicial" class="nav-link" data-scroll-target="#paso-2-exploración-inicial"><span class="header-section-number">3.2</span> Paso 2: Exploración inicial</a></li>
-  <li><a href="#paso-3-completar-la-tabla-de-auditoría" id="toc-paso-3-completar-la-tabla-de-auditoría" class="nav-link" data-scroll-target="#paso-3-completar-la-tabla-de-auditoría"><span class="header-section-number">3.3</span> Paso 3: Completar la Tabla de Auditoría</a></li>
-  <li><a href="#paso-4-identificar-duplicados" id="toc-paso-4-identificar-duplicados" class="nav-link" data-scroll-target="#paso-4-identificar-duplicados"><span class="header-section-number">3.4</span> Paso 4: Identificar duplicados</a></li>
-  <li><a href="#paso-5-reglas-de-validación" id="toc-paso-5-reglas-de-validación" class="nav-link" data-scroll-target="#paso-5-reglas-de-validación"><span class="header-section-number">3.5</span> Paso 5: Reglas de validación</a></li>
-  <li><a href="#paso-6-reflexión-de-calidad" id="toc-paso-6-reflexión-de-calidad" class="nav-link" data-scroll-target="#paso-6-reflexión-de-calidad"><span class="header-section-number">3.6</span> Paso 6: Reflexión de calidad</a></li>
+  <li><a href="#qué-es-el-diccionario-de-datos" id="toc-qué-es-el-diccionario-de-datos" class="nav-link" data-scroll-target="#qué-es-el-diccionario-de-datos"><span class="header-section-number">2.1</span> ¿Qué es el Diccionario de Datos?</a></li>
+  <li><a href="#instrucciones" id="toc-instrucciones" class="nav-link" data-scroll-target="#instrucciones"><span class="header-section-number">2.2</span> Instrucciones</a></li>
+  <li><a href="#referencia-tipos-de-datos-en-mysql" id="toc-referencia-tipos-de-datos-en-mysql" class="nav-link" data-scroll-target="#referencia-tipos-de-datos-en-mysql"><span class="header-section-number">2.3</span> Referencia: Tipos de Datos en MySQL</a></li>
+  <li><a href="#tabla-de-ejemplo-clientes" id="toc-tabla-de-ejemplo-clientes" class="nav-link" data-scroll-target="#tabla-de-ejemplo-clientes"><span class="header-section-number">2.4</span> Tabla de ejemplo: <code>clientes</code></a></li>
   </ul></li>
-  <li><a href="#parte-b-construyendo-el-cmi-en-power-bi-17-min" id="toc-parte-b-construyendo-el-cmi-en-power-bi-17-min" class="nav-link" data-scroll-target="#parte-b-construyendo-el-cmi-en-power-bi-17-min"><span class="header-section-number">4</span> Parte B — Construyendo el CMI en Power BI (17 min)</a>
+  <li><a href="#parte-b-instalación-y-configuración-de-mysql-workbench-60-min" id="toc-parte-b-instalación-y-configuración-de-mysql-workbench-60-min" class="nav-link" data-scroll-target="#parte-b-instalación-y-configuración-de-mysql-workbench-60-min"><span class="header-section-number">3</span> Parte B: Instalación y Configuración de MySQL Workbench (60 min)</a>
   <ul class="collapse">
-  <li><a href="#paso-7-cargar-los-datos-de-ventas" id="toc-paso-7-cargar-los-datos-de-ventas" class="nav-link" data-scroll-target="#paso-7-cargar-los-datos-de-ventas"><span class="header-section-number">4.1</span> Paso 7: Cargar los datos de ventas</a></li>
-  <li><a href="#paso-8-crear-medidas-para-los-kpis-del-cmi" id="toc-paso-8-crear-medidas-para-los-kpis-del-cmi" class="nav-link" data-scroll-target="#paso-8-crear-medidas-para-los-kpis-del-cmi"><span class="header-section-number">4.2</span> Paso 8: Crear medidas para los KPIs del CMI</a></li>
-  <li><a href="#paso-9-construir-las-4-perspectivas-del-cmi" id="toc-paso-9-construir-las-4-perspectivas-del-cmi" class="nav-link" data-scroll-target="#paso-9-construir-las-4-perspectivas-del-cmi"><span class="header-section-number">4.3</span> Paso 9: Construir las 4 perspectivas del CMI</a></li>
-  <li><a href="#paso-10-el-kpi-que-falla" id="toc-paso-10-el-kpi-que-falla" class="nav-link" data-scroll-target="#paso-10-el-kpi-que-falla"><span class="header-section-number">4.4</span> Paso 10: El KPI que falla</a></li>
+  <li><a href="#paso-1-verificar-la-instalación" id="toc-paso-1-verificar-la-instalación" class="nav-link" data-scroll-target="#paso-1-verificar-la-instalación"><span class="header-section-number">3.1</span> Paso 1: Verificar la instalación</a></li>
+  <li><a href="#paso-2-crear-una-conexión-al-servidor-local" id="toc-paso-2-crear-una-conexión-al-servidor-local" class="nav-link" data-scroll-target="#paso-2-crear-una-conexión-al-servidor-local"><span class="header-section-number">3.2</span> Paso 2: Crear una conexión al servidor local</a></li>
+  <li><a href="#paso-3-explorar-la-base-de-datos-de-ejemplo-sakila" id="toc-paso-3-explorar-la-base-de-datos-de-ejemplo-sakila" class="nav-link" data-scroll-target="#paso-3-explorar-la-base-de-datos-de-ejemplo-sakila"><span class="header-section-number">3.3</span> Paso 3: Explorar la base de datos de ejemplo <code>sakila</code></a></li>
+  <li><a href="#paso-4-explorar-las-relaciones-en-sakila" id="toc-paso-4-explorar-las-relaciones-en-sakila" class="nav-link" data-scroll-target="#paso-4-explorar-las-relaciones-en-sakila"><span class="header-section-number">3.4</span> Paso 4: Explorar las relaciones en sakila</a></li>
   </ul></li>
-  <li><a href="#reflexión-final" id="toc-reflexión-final" class="nav-link" data-scroll-target="#reflexión-final"><span class="header-section-number">5</span> Reflexión final</a></li>
-  <li><a href="#entrega" id="toc-entrega" class="nav-link" data-scroll-target="#entrega"><span class="header-section-number">6</span> Entrega</a></li>
+  <li><a href="#entregable" id="toc-entregable" class="nav-link" data-scroll-target="#entregable"><span class="header-section-number">4</span> Entregable</a></li>
+  <li><a href="#criterios-de-evaluación" id="toc-criterios-de-evaluación" class="nav-link" data-scroll-target="#criterios-de-evaluación"><span class="header-section-number">5</span> Criterios de evaluación</a></li>
   </ul>
 </nav>
     </div>
@@ -111,8 +143,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Laboratorio 3: Auditoría de Calidad y CMI con Datos Reales</h1>
-<p class="subtitle lead">Semana 3 · Big Data y Analytics · Universidad San Sebastián</p>
+<h1 class="title">Laboratorio 11: Diccionario de Datos y Configuración de MySQL Workbench</h1>
+<p class="subtitle lead">Semana 10 · W10 · Unidad 3 · Big Data y Analytics · Universidad San Sebastián</p>
 </div>
 
 
@@ -131,279 +163,306 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="contexto" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="contexto"><span class="header-section-number">1</span> Contexto</h2>
-<p>TechStyle detectó que su CMI muestra métricas inconsistentes. El CEO Roberto no confía en los datos del dashboard. El equipo sospecha que hay problemas de calidad en la tabla de clientes.</p>
-<p>Tu tarea tiene dos partes:</p>
+<p>Antes de construir la base de datos en MySQL, necesitas dos cosas:</p>
 <ol type="1">
-<li><strong>Auditar</strong> la tabla de clientes e identificar los problemas de calidad</li>
-<li><strong>Construir</strong> el CMI de TechStyle en Power BI usando los datos de ventas</li>
+<li><strong>Documentar formalmente</strong> el modelo relacional con un diccionario de datos.</li>
+<li><strong>Instalar y configurar</strong> MySQL Workbench para las sesiones de laboratorio del resto del semestre.</li>
 </ol>
-<p>Al finalizar, descubrirás que <strong>un KPI del CMI no puede calcularse correctamente</strong> debido a los problemas de datos encontrados.</p>
 <hr>
 </section>
-<section id="instrucciones-generales" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="instrucciones-generales"><span class="header-section-number">2</span> Instrucciones generales</h2>
-<ul>
-<li>Trabajarás <strong>individualmente</strong>.</li>
-<li>Parte A: Power Query (auditoría de clientes)</li>
-<li>Parte B: Power BI (construcción del CMI)</li>
-<li><strong>Duración total</strong>: 35 minutos</li>
-</ul>
-<p><strong>Archivos de datos</strong>:</p>
-<ul>
-<li><code>labs/data/techstyle_customers_dirty.csv</code> → Parte A</li>
-<li><code>labs/data/techstyle_orders.csv</code> → Parte B</li>
-</ul>
-<hr>
+<section id="parte-a-diccionario-de-datos-90-min" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="parte-a-diccionario-de-datos-90-min"><span class="header-section-number">2</span> Parte A: Diccionario de Datos (90 min)</h2>
+<section id="qué-es-el-diccionario-de-datos" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="qué-es-el-diccionario-de-datos"><span class="header-section-number">2.1</span> ¿Qué es el Diccionario de Datos?</h3>
+<p>Es el documento formal que describe cada tabla y cada atributo del modelo relacional. Permite a cualquier desarrollador implementar la base de datos sin ambigüedades.</p>
 </section>
-<section id="parte-a-auditoría-de-calidad-de-datos-18-min" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="parte-a-auditoría-de-calidad-de-datos-18-min"><span class="header-section-number">3</span> Parte A — Auditoría de Calidad de Datos (18 min)</h2>
-<section id="paso-1-cargar-los-datos-de-clientes" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="paso-1-cargar-los-datos-de-clientes"><span class="header-section-number">3.1</span> Paso 1: Cargar los datos de clientes</h3>
-<ol type="1">
-<li>Abre <strong>Power BI Desktop</strong> (o Excel con Power Query)</li>
-<li><em>Inicio → Obtener datos → Texto/CSV</em></li>
-<li>Carga <code>techstyle_customers_dirty.csv</code></li>
-<li>Haz clic en <strong>Transformar datos</strong> (no en “Cargar”) — esto abre Power Query Editor</li>
-</ol>
-</section>
-<section id="paso-2-exploración-inicial" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="paso-2-exploración-inicial"><span class="header-section-number">3.2</span> Paso 2: Exploración inicial</h3>
-<p>En Power Query Editor, usa las herramientas de perfilado de datos:</p>
-<ol type="1">
-<li>Activa: <em>Vista → Calidad de columna</em></li>
-<li>Activa: <em>Vista → Distribución de columna</em></li>
-<li>Activa: <em>Vista → Perfil de columna</em></li>
-</ol>
-<p>Esto te mostrará automáticamente cuántos valores válidos, errores y vacíos tiene cada columna.</p>
-</section>
-<section id="paso-3-completar-la-tabla-de-auditoría" class="level3" data-number="3.3">
-<h3 data-number="3.3" class="anchored" data-anchor-id="paso-3-completar-la-tabla-de-auditoría"><span class="header-section-number">3.3</span> Paso 3: Completar la Tabla de Auditoría</h3>
-<p>Para cada columna, registra lo que encuentres:</p>
+<section id="instrucciones" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="instrucciones"><span class="header-section-number">2.2</span> Instrucciones</h3>
+<p>Usando la plantilla Excel <code>plantilla_diccionario_datos.xlsx</code> (disponible en la carpeta del laboratorio), completa el diccionario de datos para las <strong>7 tablas</strong> del modelo relacional de TechStyle.</p>
+<p><strong>Para cada atributo, define</strong>:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 9%">
-<col style="width: 10%">
-<col style="width: 23%">
-<col style="width: 22%">
-<col style="width: 32%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Columna</th>
-<th>% Vacíos</th>
-<th>Problemas encontrados</th>
-<th>Dimensión de calidad</th>
-<th>Decisión de negocio afectada</th>
+<th>Campo</th>
+<th>Descripción</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>email</code></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td><strong>Nombre</strong></td>
+<td>Nombre exacto de la columna (en snake_case)</td>
 </tr>
 <tr class="even">
-<td><code>apellido</code></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td><strong>Tipo de dato</strong></td>
+<td>INT, VARCHAR(n), DECIMAL(p,s), DATE, BOOLEAN, TEXT</td>
 </tr>
 <tr class="odd">
-<td><code>region</code></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td><strong>Longitud</strong></td>
+<td>Para VARCHAR y DECIMAL; dejar en blanco para los demás</td>
 </tr>
 <tr class="even">
-<td><code>fecha_nacimiento</code></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td><strong>NULL</strong></td>
+<td>Sí o No</td>
 </tr>
 <tr class="odd">
-<td><code>fecha_registro</code></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td><strong>Default</strong></td>
+<td>Valor por defecto (si aplica)</td>
 </tr>
 <tr class="even">
-<td><code>telefono</code></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td><strong>Restricción</strong></td>
+<td>PRIMARY KEY, FOREIGN KEY, UNIQUE, CHECK</td>
+</tr>
+<tr class="odd">
+<td><strong>Descripción</strong></td>
+<td>Explicación del campo en términos de negocio</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Dimensiones de calidad</strong>: Exactitud · Completitud · Consistencia · Oportunidad</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Pista para emails inválidos</strong>: Usa <em>Inicio → Filtrar filas → No contiene</em> con el texto <code>@</code> para encontrar emails sin arroba. Luego prueba con <code>.com</code> para encontrar dominios incompletos.</p>
-</div>
-</div>
 </section>
-<section id="paso-4-identificar-duplicados" class="level3" data-number="3.4">
-<h3 data-number="3.4" class="anchored" data-anchor-id="paso-4-identificar-duplicados"><span class="header-section-number">3.4</span> Paso 4: Identificar duplicados</h3>
+<section id="referencia-tipos-de-datos-en-mysql" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="referencia-tipos-de-datos-en-mysql"><span class="header-section-number">2.3</span> Referencia: Tipos de Datos en MySQL</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tipo</th>
+<th>Cuándo usarlo</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>INT</code></td>
+<td>Números enteros</td>
+<td><code>id_cliente</code>, <code>stock</code>, <code>cantidad</code></td>
+</tr>
+<tr class="even">
+<td><code>DECIMAL(10,2)</code></td>
+<td>Valores monetarios</td>
+<td><code>precio</code>, <code>total</code>, <code>monto_devolucion</code></td>
+</tr>
+<tr class="odd">
+<td><code>VARCHAR(n)</code></td>
+<td>Texto de longitud variable</td>
+<td><code>nombre VARCHAR(100)</code>, <code>email VARCHAR(150)</code></td>
+</tr>
+<tr class="even">
+<td><code>DATE</code></td>
+<td>Solo fecha (sin hora)</td>
+<td><code>fecha_pedido</code>, <code>fecha_registro</code></td>
+</tr>
+<tr class="odd">
+<td><code>DATETIME</code></td>
+<td>Fecha y hora</td>
+<td>Timestamps de transacciones</td>
+</tr>
+<tr class="even">
+<td><code>BOOLEAN</code></td>
+<td>Verdadero o falso</td>
+<td><code>activo</code>, <code>verificado</code></td>
+</tr>
+<tr class="odd">
+<td><code>TEXT</code></td>
+<td>Texto largo sin límite definido</td>
+<td><code>descripcion</code>, <code>motivo_devolucion</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tabla-de-ejemplo-clientes" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="tabla-de-ejemplo-clientes"><span class="header-section-number">2.4</span> Tabla de ejemplo: <code>clientes</code></h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Atributo</th>
+<th>Tipo</th>
+<th>Long.</th>
+<th>NULL</th>
+<th>Default</th>
+<th>Restricción</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>id_cliente</td>
+<td>INT</td>
+<td>—</td>
+<td>No</td>
+<td>AUTO_INCREMENT</td>
+<td>PRIMARY KEY</td>
+<td>Identificador único del cliente</td>
+</tr>
+<tr class="even">
+<td>nombre</td>
+<td>VARCHAR</td>
+<td>100</td>
+<td>No</td>
+<td>—</td>
+<td>—</td>
+<td>Nombre completo</td>
+</tr>
+<tr class="odd">
+<td>email</td>
+<td>VARCHAR</td>
+<td>150</td>
+<td>No</td>
+<td>—</td>
+<td>UNIQUE</td>
+<td>Email de contacto y login</td>
+</tr>
+<tr class="even">
+<td>telefono</td>
+<td>VARCHAR</td>
+<td>20</td>
+<td>Sí</td>
+<td>NULL</td>
+<td>—</td>
+<td>Teléfono de contacto</td>
+</tr>
+<tr class="odd">
+<td>fecha_registro</td>
+<td>DATE</td>
+<td>—</td>
+<td>No</td>
+<td>CURDATE()</td>
+<td>—</td>
+<td>Fecha de creación del registro</td>
+</tr>
+<tr class="even">
+<td>region</td>
+<td>VARCHAR</td>
+<td>50</td>
+<td>No</td>
+<td>—</td>
+<td>—</td>
+<td>Región geográfica del cliente</td>
+</tr>
+</tbody>
+</table>
+<p>Completa el mismo formato para las tablas: <code>zonas</code>, <code>repartidores</code>, <code>productos</code>, <code>pedidos</code>, <code>order_items</code>, <code>devoluciones</code>.</p>
+<hr>
+</section>
+</section>
+<section id="parte-b-instalación-y-configuración-de-mysql-workbench-60-min" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="parte-b-instalación-y-configuración-de-mysql-workbench-60-min"><span class="header-section-number">3</span> Parte B: Instalación y Configuración de MySQL Workbench (60 min)</h2>
+<section id="paso-1-verificar-la-instalación" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="paso-1-verificar-la-instalación"><span class="header-section-number">3.1</span> Paso 1: Verificar la instalación</h3>
+<p>MySQL Workbench debería estar instalado en los computadores del laboratorio. Si no está: - Windows: Descargar desde el instalador oficial disponible en el servidor del laboratorio. - Abrir MySQL Workbench.</p>
+</section>
+<section id="paso-2-crear-una-conexión-al-servidor-local" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="paso-2-crear-una-conexión-al-servidor-local"><span class="header-section-number">3.2</span> Paso 2: Crear una conexión al servidor local</h3>
 <ol type="1">
-<li>Selecciona la columna <code>email</code></li>
-<li><em>Inicio → Quitar filas → Quitar duplicados</em></li>
-<li>Compara el número de filas antes y después.
+<li>En la pantalla de inicio, hacer clic en <strong><code>+</code></strong> junto a “MySQL Connections”.</li>
+<li>Completar los campos:
 <ul>
-<li>Filas originales: ______</li>
-<li>Filas tras eliminar duplicados de email: ______</li>
-<li>Duplicados encontrados: ______</li>
+<li><strong>Connection Name</strong>: <code>TechStyle_Local</code></li>
+<li><strong>Hostname</strong>: <code>127.0.0.1</code></li>
+<li><strong>Port</strong>: <code>3306</code></li>
+<li><strong>Username</strong>: <code>root</code></li>
 </ul></li>
+<li>Hacer clic en <strong>“Store in Vault”</strong> e ingresar la contraseña.</li>
+<li>Hacer clic en <strong>“Test Connection”</strong> → debe aparecer “Successfully made the MySQL connection”.</li>
+<li>Hacer clic en <strong>OK</strong>.</li>
 </ol>
 </section>
-<section id="paso-5-reglas-de-validación" class="level3" data-number="3.5">
-<h3 data-number="3.5" class="anchored" data-anchor-id="paso-5-reglas-de-validación"><span class="header-section-number">3.5</span> Paso 5: Reglas de validación</h3>
-<p>Para cada problema encontrado, propón una <strong>regla de validación</strong> que debería tener el sistema al momento de registrar un nuevo cliente:</p>
+<section id="paso-3-explorar-la-base-de-datos-de-ejemplo-sakila" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="paso-3-explorar-la-base-de-datos-de-ejemplo-sakila"><span class="header-section-number">3.3</span> Paso 3: Explorar la base de datos de ejemplo <code>sakila</code></h3>
+<p>Conectarse a <code>TechStyle_Local</code> y ejecutar:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Ver todas las bases de datos disponibles</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>SHOW DATABASES;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Seleccionar la base de datos sakila</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">USE</span> sakila;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- Ver todas las tablas</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>SHOW <span class="kw">TABLES</span>;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- Ver la estructura de la tabla 'film'</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>DESCRIBE film;</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">-- Ver las primeras 10 películas</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> film_id, title, description, release_year, rental_rate</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> film</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="paso-4-explorar-las-relaciones-en-sakila" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="paso-4-explorar-las-relaciones-en-sakila"><span class="header-section-number">3.4</span> Paso 4: Explorar las relaciones en sakila</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Ver cuántas tablas tiene sakila</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">FROM</span> information_schema.<span class="kw">tables</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> table_schema <span class="op">=</span> <span class="st">'sakila'</span>;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- Ver las FK de sakila (relaciones entre tablas)</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    TABLE_NAME,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    COLUMN_NAME,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    REFERENCED_TABLE_NAME,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    REFERENCED_COLUMN_NAME</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> information_schema.KEY_COLUMN_USAGE</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> TABLE_SCHEMA <span class="op">=</span> <span class="st">'sakila'</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span> REFERENCED_TABLE_NAME <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Responde en tu informe: 1. ¿Cuántas tablas tiene la base de datos <code>sakila</code>? 2. ¿Qué tabla tiene más relaciones (FK)? ¿Por qué crees que es así? 3. ¿Qué semejanzas encuentras entre el modelo de <code>sakila</code> y el modelo de TechStyle?</p>
+<hr>
+</section>
+</section>
+<section id="entregable" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="entregable"><span class="header-section-number">4</span> Entregable</h2>
+<ol type="1">
+<li>Archivo Excel con el diccionario de datos completo (<code>lab11_diccionario_apellido1_apellido2.xlsx</code>).</li>
+<li>Captura de pantalla de la conexión exitosa a MySQL Workbench.</li>
+<li>Respuestas a las 3 preguntas sobre <code>sakila</code> en Word/PDF (<code>lab11_mysql_apellido1_apellido2.pdf</code>).</li>
+</ol>
+<hr>
+</section>
+<section id="criterios-de-evaluación" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="criterios-de-evaluación"><span class="header-section-number">5</span> Criterios de evaluación</h2>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Problema</th>
-<th>Regla de validación propuesta</th>
+<th>Criterio</th>
+<th>Puntaje</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Email inválido</td>
-<td></td>
+<td>Diccionario de datos completo (7 tablas)</td>
+<td>50 pts</td>
 </tr>
 <tr class="even">
-<td>Email duplicado</td>
-<td></td>
+<td>Tipos de datos correctamente elegidos</td>
+<td>20 pts</td>
 </tr>
 <tr class="odd">
-<td>Región vacía</td>
-<td></td>
+<td>Restricciones correctamente definidas</td>
+<td>15 pts</td>
 </tr>
 <tr class="even">
-<td>Fecha de nacimiento vacía</td>
-<td></td>
+<td>Exploración de sakila respondida</td>
+<td>15 pts</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td><strong>100 pts</strong></td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="paso-6-reflexión-de-calidad" class="level3" data-number="3.6">
-<h3 data-number="3.6" class="anchored" data-anchor-id="paso-6-reflexión-de-calidad"><span class="header-section-number">3.6</span> Paso 6: Reflexión de calidad</h3>
-<p>Responde:</p>
-<ol type="1">
-<li><p>Si TechStyle quisiera hacer una campaña de email marketing a todos sus clientes, ¿qué porcentaje del total podría recibir el correo? (considera emails vacíos + inválidos)</p></li>
-<li><p>Si quisiera segmentar clientes por grupo etario (jóvenes, adultos, adultos mayores), ¿podría hacerlo con este dataset? ¿Por qué?</p></li>
-<li><p>¿Qué área de la empresa es responsable de estos problemas? ¿Solo el área de TI?</p></li>
-</ol>
-<hr>
-</section>
-</section>
-<section id="parte-b-construyendo-el-cmi-en-power-bi-17-min" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="parte-b-construyendo-el-cmi-en-power-bi-17-min"><span class="header-section-number">4</span> Parte B — Construyendo el CMI en Power BI (17 min)</h2>
-<section id="paso-7-cargar-los-datos-de-ventas" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="paso-7-cargar-los-datos-de-ventas"><span class="header-section-number">4.1</span> Paso 7: Cargar los datos de ventas</h3>
-<ol type="1">
-<li>En Power BI, carga también <code>techstyle_orders.csv</code></li>
-<li>Ahora tienes dos tablas: <code>techstyle_customers_dirty</code> y <code>techstyle_orders</code></li>
-</ol>
-</section>
-<section id="paso-8-crear-medidas-para-los-kpis-del-cmi" class="level3" data-number="4.2">
-<h3 data-number="4.2" class="anchored" data-anchor-id="paso-8-crear-medidas-para-los-kpis-del-cmi"><span class="header-section-number">4.2</span> Paso 8: Crear medidas para los KPIs del CMI</h3>
-<p>Crea las siguientes medidas DAX (botón derecho sobre la tabla → Nueva medida):</p>
-<p><strong>Perspectiva Financiera:</strong></p>
-<pre><code>Total Ventas = SUM(techstyle_orders[venta_neta])
-Margen Promedio = AVERAGE(techstyle_orders[margen_pct])</code></pre>
-<p><strong>Perspectiva Cliente:</strong></p>
-<pre><code>Total Clientes con Email =
-COUNTROWS(
-    FILTER(techstyle_customers_dirty,
-           techstyle_customers_dirty[email] &lt;&gt; "")
-)</code></pre>
-<p><strong>Perspectiva Procesos:</strong></p>
-<pre><code>Pedidos por Canal Web =
-CALCULATE(
-    DISTINCTCOUNT(techstyle_orders[order_id]),
-    techstyle_orders[canal_venta] = "Web"
-)</code></pre>
-</section>
-<section id="paso-9-construir-las-4-perspectivas-del-cmi" class="level3" data-number="4.3">
-<h3 data-number="4.3" class="anchored" data-anchor-id="paso-9-construir-las-4-perspectivas-del-cmi"><span class="header-section-number">4.3</span> Paso 9: Construir las 4 perspectivas del CMI</h3>
-<p>Crea una página llamada <code>"CMI TechStyle"</code> con esta estructura:</p>
-<p><strong>Fila 1 — Perspectiva Financiera</strong> (color verde):</p>
-<ul>
-<li>Tarjeta: Total Ventas</li>
-<li>Tarjeta: Margen Promedio</li>
-<li>Meta referencial: ventas &gt; $50.000.000 CLP / margen &gt; 25%</li>
-</ul>
-<p><strong>Fila 2 — Perspectiva Cliente</strong> (color azul):</p>
-<ul>
-<li>Tarjeta: Total Clientes registrados (COUNT de id)</li>
-<li>Tarjeta: Clientes con email válido</li>
-<li>Gráfico de barras: clientes por <code>region</code></li>
-</ul>
-<p><strong>Fila 3 — Perspectiva Procesos</strong> (color naranja):</p>
-<ul>
-<li>Gráfico de dona: ventas por <code>canal_venta</code></li>
-<li>Tabla: ventas por <code>categoria</code> con margen</li>
-</ul>
-<p><strong>Fila 4 — Perspectiva Aprendizaje</strong> (color morado):</p>
-<ul>
-<li>Tarjeta con texto: <em>“KPI: % clientes con perfil completo”</em></li>
-<li>Nota: este KPI no puede calcularse correctamente (¿por qué?)</li>
-</ul>
-</section>
-<section id="paso-10-el-kpi-que-falla" class="level3" data-number="4.4">
-<h3 data-number="4.4" class="anchored" data-anchor-id="paso-10-el-kpi-que-falla"><span class="header-section-number">4.4</span> Paso 10: El KPI que falla</h3>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>El KPI de Aprendizaje</strong> que Roberto quería medir era: <em>“¿Qué porcentaje de nuestros clientes tiene perfil completo (con edad, región y email válido)?”</em></p>
-<p>Este indicador es clave porque permite medir la calidad del registro de clientes como proceso interno.</p>
-<p><strong>Pero no puedes calcularlo correctamente.</strong> ¿Por qué?</p>
-</div>
-</div>
-<p>Responde:</p>
-<ol type="1">
-<li>¿Qué datos te faltan o están mal para calcular este KPI?</li>
-<li>¿Qué decisiones de negocio no puede tomar Roberto porque este KPI está dañado?</li>
-<li>¿Qué proceso operativo deberían cambiar para que este KPI sea confiable en el futuro?</li>
-</ol>
-<hr>
-</section>
-</section>
-<section id="reflexión-final" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="reflexión-final"><span class="header-section-number">5</span> Reflexión final</h2>
-<p><strong>Conecta ambas partes</strong>:</p>
-<blockquote class="blockquote">
-<p>El CMI de TechStyle es una herramienta estratégica poderosa. Pero su confiabilidad depende completamente de la calidad de los datos que lo alimentan.</p>
-</blockquote>
-<p>Completa la frase:</p>
-<p><em>“Si TechStyle no corrige los problemas de calidad en la tabla de clientes, el CEO Roberto tomará decisiones incorrectas sobre _______ porque el dato de _______ está _______ (vacío / incorrecto / duplicado).”</em></p>
-<hr>
-</section>
-<section id="entrega" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="entrega"><span class="header-section-number">6</span> Entrega</h2>
-<p>Guarda el archivo Power BI como <code>lab_semana3_[apellido].pbix</code>.</p>
-<p>El docente preguntará: <em>“¿Quién encontró el mayor número de problemas de calidad? ¿Cuántos eran?”</em></p>
 
 
 </section>

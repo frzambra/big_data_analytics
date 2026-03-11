@@ -10,7 +10,8 @@
   <meta name="generator" content="quarto-1.8.25">
 
   <meta name="author" content="Universidad San Sebastián">
-  <title>CMI, Calidad de Datos y Ética</title>
+  <meta name="dcterms.date" content="2026-06-01">
+  <title>DML: Poblar y Consultar la Base de Datos</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -28,6 +29,72 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-534cd8e3a96973385dffff3f4709048d.css">
   <link rel="stylesheet" href="../styles/custom.css">
@@ -129,8 +196,8 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">CMI, Calidad de Datos y Ética</h1>
-  <p class="subtitle">Clase 3 - Big Data y Analytics</p>
+  <h1 class="title">DML: Poblar y Consultar la Base de Datos</h1>
+  <p class="subtitle">Semana 12 · W12 · Unidad 3 · Big Data y Analytics</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -140,567 +207,245 @@ Universidad San Sebastián
 </div>
 </div>
 
+  <p class="date">2026-06-01</p>
 </section>
 <section id="qué-vimos-la-semana-pasada" class="slide level2">
 <h2>¿Qué Vimos la Semana Pasada?</h2>
 <ul>
-<li class="fragment">Un SI tiene <strong>5 componentes</strong>: hardware, software, datos, personas, procesos</li>
-<li class="fragment">Existen <strong>3 niveles organizacionales</strong>: operativo, táctico, estratégico</li>
-<li class="fragment">Los <strong>tipos de SI</strong> sirven a niveles distintos: TPS, BI, DSS, CRM, EIS</li>
+<li class="fragment"><strong>DDL</strong> (Data Definition Language): <code>CREATE DATABASE</code>, <code>CREATE TABLE</code>, <code>ALTER TABLE</code>.</li>
+<li class="fragment">Creamos la base de datos <code>techstyle_db</code> con 7 tablas normalizadas.</li>
+<li class="fragment">Las restricciones (<code>PRIMARY KEY</code>, <code>FOREIGN KEY</code>, <code>NOT NULL</code>) hacen cumplir las reglas de negocio.</li>
 </ul>
 <div class="fragment">
-<p><strong>Hoy</strong>: ¿Cómo alinea una organización estos sistemas hacia un objetivo? ¿Y qué pasa si los datos son incorrectos?</p>
+<p><strong>Hoy</strong>: Poblaremos la base de datos con datos y haremos nuestras primeras consultas para responder preguntas de negocio.</p>
 </div>
-<aside class="notes">
-<p>Repaso rápido. Preguntar: ¿recuerdan los 3 niveles organizacionales? ¿Qué SI usaba el CEO Roberto?</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
-<section id="situación-el-ceo-de-techstyle-tiene-un-problema" class="slide level2">
-<h2>Situación: El CEO de TechStyle tiene un Problema</h2>
-<p><strong>Roberto recibe el informe de fin de año:</strong></p>
-<ul>
-<li class="fragment">Ventas: +12% ✓</li>
-<li class="fragment">Satisfacción de clientes: -8% ✗</li>
-<li class="fragment">Tiempos de entrega: sin mejora ✗</li>
-<li class="fragment">Rotación de personal: +18% ✗</li>
-</ul>
-<div class="fragment">
-<p><strong>¿Está TechStyle teniendo un buen año o un mal año?</strong></p>
-<p>Mirar solo los datos financieros no es suficiente.</p>
-</div>
-<aside class="notes">
-<p>Motivar la necesidad de una visión balanceada del desempeño. No solo finanzas.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="el-cuadro-de-mando-integral-cmi" class="slide level2">
-<h2>El Cuadro de Mando Integral (CMI)</h2>
-<p>Herramienta que traduce la estrategia de una organización en un <strong>conjunto balanceado de indicadores</strong> medibles.</p>
-<div class="fragment">
-<p><strong>Las 4 Perspectivas:</strong></p>
-<pre><code>            VISIÓN Y ESTRATEGIA
-                    │
-     ┌──────────────┼──────────────┐
-     ▼              ▼              ▼
- FINANCIERA      CLIENTE      APRENDIZAJE
-                    │
-             PROCESOS INTERNOS</code></pre>
-</div>
-<aside class="notes">
-<p>Kaplan y Norton, Harvard, 1992. Lo que no se mide, no se gestiona.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="las-4-perspectivas-del-cmi" class="slide level2">
-<h2>Las 4 Perspectivas del CMI</h2>
+<section id="dml-los-comandos-de-manipulación-de-datos" class="slide level2">
+<h2>DML: Los Comandos de Manipulación de Datos</h2>
 <table class="caption-top">
-<colgroup>
-<col style="width: 26%">
-<col style="width: 33%">
-<col style="width: 40%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Perspectiva</th>
-<th>Pregunta clave</th>
-<th>Ejemplo TechStyle</th>
+<th>Comando</th>
+<th>Acción</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Financiera</strong></td>
-<td>¿Cómo nos ven los accionistas?</td>
-<td>Margen neto por categoría</td>
+<td><code>INSERT INTO</code></td>
+<td>Agregar nuevos registros</td>
 </tr>
 <tr class="even">
-<td><strong>Cliente</strong></td>
-<td>¿Cómo nos ven los clientes?</td>
-<td>Tasa de recompra, NPS</td>
+<td><code>UPDATE</code></td>
+<td>Modificar registros existentes</td>
 </tr>
 <tr class="odd">
-<td><strong>Procesos</strong></td>
-<td>¿En qué procesos debemos ser excelentes?</td>
-<td>% entregas a tiempo</td>
+<td><code>DELETE</code></td>
+<td>Eliminar registros</td>
 </tr>
 <tr class="even">
-<td><strong>Aprendizaje</strong></td>
-<td>¿Podemos seguir mejorando?</td>
-<td>Rotación de personal</td>
+<td><code>SELECT</code></td>
+<td>Consultar registros</td>
 </tr>
 </tbody>
 </table>
 <div class="fragment">
-<p><strong>Cada perspectiva se mide con indicadores clave (KPIs)</strong></p>
+<p><strong>Hoy cubriremos</strong>: <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> y <code>SELECT</code> básico.</p>
+<p><strong>Semana 14</strong>: <code>SELECT</code> avanzado (JOINs, GROUP BY, funciones de agregación).</p>
 </div>
-<aside class="notes">
-<p>KPI = Key Performance Indicator. Conectar: los KPIs se alimentan con datos del SI (TPS, BI, CRM).</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
-<section id="el-cmi-de-techstyle" class="slide level2">
-<h2>El CMI de TechStyle</h2>
+<section id="insert-into-agregar-datos" class="slide level2">
+<h2>INSERT INTO: Agregar Datos</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a></a><span class="co">-- Insertar una zona</span></span>
+<span id="cb1-2"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> zonas (nombre, region)</span>
+<span id="cb1-3"><a></a><span class="kw">VALUES</span> (<span class="st">'Santiago Centro'</span>, <span class="st">'Metropolitana'</span>);</span>
+<span id="cb1-4"><a></a></span>
+<span id="cb1-5"><a></a><span class="co">-- Insertar múltiples zonas</span></span>
+<span id="cb1-6"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> zonas (nombre, region) <span class="kw">VALUES</span></span>
+<span id="cb1-7"><a></a>    (<span class="st">'Las Condes'</span>, <span class="st">'Metropolitana'</span>),</span>
+<span id="cb1-8"><a></a>    (<span class="st">'Providencia'</span>, <span class="st">'Metropolitana'</span>),</span>
+<span id="cb1-9"><a></a>    (<span class="st">'Maipú'</span>, <span class="st">'Metropolitana'</span>),</span>
+<span id="cb1-10"><a></a>    (<span class="st">'Valparaíso'</span>, <span class="st">'Valparaíso'</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><strong>Orden correcto de inserción</strong> (respetando FK): 1. <code>zonas</code> → 2. <code>clientes</code> → 3. <code>repartidores</code> → 4. <code>productos</code> → 5. <code>pedidos</code> → 6. <code>order_items</code></p>
+</div>
+</section>
+<section id="insert-into-datos-de-clientes-y-productos" class="slide level2">
+<h2>INSERT INTO: Datos de Clientes y Productos</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> clientes (nombre, email, telefono, fecha_registro, region) <span class="kw">VALUES</span></span>
+<span id="cb2-2"><a></a>    (<span class="st">'Ana González'</span>, <span class="st">'ana@techstyle.cl'</span>, <span class="st">'+56912345678'</span>, <span class="st">'2024-01-15'</span>, <span class="st">'Metropolitana'</span>),</span>
+<span id="cb2-3"><a></a>    (<span class="st">'Pedro Muñoz'</span>,  <span class="st">'pedro@mail.cl'</span>,    <span class="kw">NULL</span>,           <span class="st">'2024-02-20'</span>, <span class="st">'Valparaíso'</span>),</span>
+<span id="cb2-4"><a></a>    (<span class="st">'María López'</span>,  <span class="st">'mlopez@mail.cl'</span>,   <span class="st">'+56987654321'</span>, <span class="st">'2024-03-10'</span>, <span class="st">'Metropolitana'</span>);</span>
+<span id="cb2-5"><a></a></span>
+<span id="cb2-6"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> productos (nombre, categoria, precio, stock) <span class="kw">VALUES</span></span>
+<span id="cb2-7"><a></a>    (<span class="st">'Zapatillas Runner Pro'</span>, <span class="st">'Calzado'</span>,   <span class="fl">45000.00</span>, <span class="dv">150</span>),</span>
+<span id="cb2-8"><a></a>    (<span class="st">'Polera Dry-Fit'</span>,        <span class="st">'Ropa'</span>,       <span class="fl">12000.00</span>, <span class="dv">300</span>),</span>
+<span id="cb2-9"><a></a>    (<span class="st">'Jeans Slim'</span>,            <span class="st">'Ropa'</span>,       <span class="fl">35000.00</span>, <span class="dv">200</span>),</span>
+<span id="cb2-10"><a></a>    (<span class="st">'Mochila Urban 30L'</span>,     <span class="st">'Accesorios'</span>, <span class="fl">28000.00</span>,  <span class="dv">80</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="update-modificar-datos" class="slide level2">
+<h2>UPDATE: Modificar Datos</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a></a><span class="co">-- Actualizar el stock de un producto</span></span>
+<span id="cb3-2"><a></a><span class="kw">UPDATE</span> productos</span>
+<span id="cb3-3"><a></a><span class="kw">SET</span> stock <span class="op">=</span> stock <span class="op">-</span> <span class="dv">5</span></span>
+<span id="cb3-4"><a></a><span class="kw">WHERE</span> id_producto <span class="op">=</span> <span class="dv">1</span>;</span>
+<span id="cb3-5"><a></a></span>
+<span id="cb3-6"><a></a><span class="co">-- Cambiar el estado de un pedido</span></span>
+<span id="cb3-7"><a></a><span class="kw">UPDATE</span> pedidos</span>
+<span id="cb3-8"><a></a><span class="kw">SET</span> estado <span class="op">=</span> <span class="st">'entregado'</span></span>
+<span id="cb3-9"><a></a><span class="kw">WHERE</span> id_pedido <span class="op">=</span> <span class="dv">3</span>;</span>
+<span id="cb3-10"><a></a></span>
+<span id="cb3-11"><a></a><span class="co">-- Actualizar el email de un cliente</span></span>
+<span id="cb3-12"><a></a><span class="kw">UPDATE</span> clientes</span>
+<span id="cb3-13"><a></a><span class="kw">SET</span> email <span class="op">=</span> <span class="st">'ana.gonzalez@techstyle.cl'</span></span>
+<span id="cb3-14"><a></a><span class="kw">WHERE</span> id_cliente <span class="op">=</span> <span class="dv">1</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><strong>¡Siempre usar <code>WHERE</code>!</strong> — Sin <code>WHERE</code>, se actualizan <em>todos</em> los registros de la tabla.</p>
+</div>
+</section>
+<section id="delete-eliminar-datos" class="slide level2">
+<h2>DELETE: Eliminar Datos</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a></a><span class="co">-- Eliminar una devolución específica</span></span>
+<span id="cb4-2"><a></a><span class="kw">DELETE</span> <span class="kw">FROM</span> devoluciones</span>
+<span id="cb4-3"><a></a><span class="kw">WHERE</span> id_devolucion <span class="op">=</span> <span class="dv">5</span>;</span>
+<span id="cb4-4"><a></a></span>
+<span id="cb4-5"><a></a><span class="co">-- ¿Puedo eliminar un cliente que tiene pedidos?</span></span>
+<span id="cb4-6"><a></a><span class="kw">DELETE</span> <span class="kw">FROM</span> clientes <span class="kw">WHERE</span> id_cliente <span class="op">=</span> <span class="dv">1</span>;</span>
+<span id="cb4-7"><a></a><span class="co">-- ERROR 1451: Cannot delete or update a parent row:</span></span>
+<span id="cb4-8"><a></a><span class="co">-- a foreign key constraint fails</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><strong>La FK protege contra eliminaciones accidentales.</strong></p>
+<p>Para eliminar Ana, primero debo eliminar (o reasignar) todos sus pedidos.</p>
+</div>
+</section>
+<section id="select-básico-consultar-la-base-de-datos" class="slide level2">
+<h2>SELECT Básico: Consultar la Base de Datos</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a></a><span class="co">-- Todos los clientes</span></span>
+<span id="cb5-2"><a></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> clientes;</span>
+<span id="cb5-3"><a></a></span>
+<span id="cb5-4"><a></a><span class="co">-- Solo nombre y email</span></span>
+<span id="cb5-5"><a></a><span class="kw">SELECT</span> nombre, email <span class="kw">FROM</span> clientes;</span>
+<span id="cb5-6"><a></a></span>
+<span id="cb5-7"><a></a><span class="co">-- Clientes de la Región Metropolitana</span></span>
+<span id="cb5-8"><a></a><span class="kw">SELECT</span> nombre, email <span class="kw">FROM</span> clientes</span>
+<span id="cb5-9"><a></a><span class="kw">WHERE</span> region <span class="op">=</span> <span class="st">'Metropolitana'</span>;</span>
+<span id="cb5-10"><a></a></span>
+<span id="cb5-11"><a></a><span class="co">-- Productos con precio mayor a $20.000</span></span>
+<span id="cb5-12"><a></a><span class="kw">SELECT</span> nombre, categoria, precio <span class="kw">FROM</span> productos</span>
+<span id="cb5-13"><a></a><span class="kw">WHERE</span> precio <span class="op">&gt;</span> <span class="dv">20000</span></span>
+<span id="cb5-14"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> precio <span class="kw">DESC</span>;</span>
+<span id="cb5-15"><a></a></span>
+<span id="cb5-16"><a></a><span class="co">-- Los 5 pedidos más recientes</span></span>
+<span id="cb5-17"><a></a><span class="kw">SELECT</span> id_pedido, fecha_pedido, total, estado</span>
+<span id="cb5-18"><a></a><span class="kw">FROM</span> pedidos</span>
+<span id="cb5-19"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> fecha_pedido <span class="kw">DESC</span></span>
+<span id="cb5-20"><a></a><span class="kw">LIMIT</span> <span class="dv">5</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="operadores-en-where" class="slide level2">
+<h2>Operadores en WHERE</h2>
 <table class="caption-top">
 <thead>
 <tr class="header">
-<th>Perspectiva</th>
-<th>Objetivo</th>
-<th>KPI</th>
-<th>Meta</th>
+<th>Operador</th>
+<th>Ejemplo</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Financiera</td>
-<td>Aumentar rentabilidad</td>
-<td>Margen neto</td>
-<td>≥ 15%</td>
+<td><code>=</code></td>
+<td><code>WHERE estado = 'entregado'</code></td>
 </tr>
 <tr class="even">
-<td>Cliente</td>
-<td>Fidelizar clientes</td>
-<td>Tasa de recompra</td>
-<td>≥ 60%</td>
+<td><code>&lt;&gt;</code> o <code>!=</code></td>
+<td><code>WHERE estado &lt;&gt; 'cancelado'</code></td>
 </tr>
 <tr class="odd">
-<td>Procesos</td>
-<td>Mejorar entrega</td>
-<td>% entrega en plazo</td>
-<td>≥ 95%</td>
+<td><code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code></td>
+<td><code>WHERE precio &gt;= 20000</code></td>
 </tr>
 <tr class="even">
-<td>Aprendizaje</td>
-<td>Retener talento</td>
-<td>Rotación anual</td>
-<td>≤ 10%</td>
+<td><code>BETWEEN</code></td>
+<td><code>WHERE precio BETWEEN 10000 AND 50000</code></td>
+</tr>
+<tr class="odd">
+<td><code>LIKE</code></td>
+<td><code>WHERE nombre LIKE '%Runner%'</code></td>
+</tr>
+<tr class="even">
+<td><code>IN</code></td>
+<td><code>WHERE categoria IN ('Ropa', 'Calzado')</code></td>
+</tr>
+<tr class="odd">
+<td><code>IS NULL</code></td>
+<td><code>WHERE telefono IS NULL</code></td>
 </tr>
 </tbody>
 </table>
+</section>
+<section id="respondiendo-preguntas-de-negocio-con-select" class="slide level2">
+<h2>Respondiendo Preguntas de Negocio con SELECT</h2>
+<p><strong>Pregunta de la Gerente de Marketing</strong>:</p>
+<blockquote>
+<p>¿Cuáles son los productos actualmente con stock bajo (menos de 50 unidades)?</p>
+</blockquote>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a></a><span class="kw">SELECT</span> nombre, categoria, precio, stock</span>
+<span id="cb6-2"><a></a><span class="kw">FROM</span> productos</span>
+<span id="cb6-3"><a></a><span class="kw">WHERE</span> stock <span class="op">&lt;</span> <span class="dv">50</span></span>
+<span id="cb6-4"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> stock <span class="kw">ASC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
-<p><strong>El SI alimenta al CMI. El CMI guía al SI.</strong></p>
-<p>Si mejoran los procesos → mejora el cliente → mejoran las finanzas.</p>
+<p><strong>Pregunta del equipo de logística</strong>:</p>
+<blockquote>
+<p>¿Qué pedidos están en estado ‘pendiente’ desde hace más de 3 días?</p>
+</blockquote>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a></a><span class="kw">SELECT</span> id_pedido, fecha_pedido, total</span>
+<span id="cb7-2"><a></a><span class="kw">FROM</span> pedidos</span>
+<span id="cb7-3"><a></a><span class="kw">WHERE</span> estado <span class="op">=</span> <span class="st">'pendiente'</span></span>
+<span id="cb7-4"><a></a>  <span class="kw">AND</span> fecha_pedido <span class="op">&lt;</span> DATE_SUB(CURDATE(), <span class="dt">INTERVAL</span> <span class="dv">3</span> <span class="dt">DAY</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<aside class="notes">
-<p>Todo está interconectado. El CMI obliga a pensar en las consecuencias de cada decisión en todas las perspectivas.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
-<section id="discusión-1" class="slide level2">
-<h2>💬 Discusión 1</h2>
-<p><strong>En grupos de 3 (7 minutos)</strong>:</p>
-<p>FoodRapid (delivery con 200.000 pedidos/día) quiere mejorar su desempeño.</p>
-<p>Para cada perspectiva del CMI, propongan: 1. Un <strong>objetivo</strong> estratégico 2. Un <strong>KPI</strong> concreto y medible 3. ¿De qué <strong>tipo de SI</strong> (TPS, BI, CRM…) viene ese dato?</p>
-<aside class="notes">
-<p>Guiar: ¿qué define el éxito de un delivery? La velocidad, la satisfacción, los márgenes. Conectar KPIs con los tipos de SI de la semana pasada.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="el-cmi-como-puente-estrategia-datos" class="slide level2">
-<h2>El CMI como Puente: Estrategia → Datos</h2>
-<pre><code>   Visión estratégica
-          ↓
-   Objetivos por perspectiva
-          ↓
-   Indicadores (KPIs)
-          ↓
-   Datos en el Sistema de Información
-          ↓
-   Monitoreo y ajuste</code></pre>
-<div class="fragment">
-<p><strong>Sin datos de calidad, el CMI muestra una realidad falsa.</strong></p>
-</div>
-<aside class="notes">
-<p>Esta es la transición perfecta hacia la segunda parte de la clase: si los datos son incorrectos, todos los KPIs del CMI son incorrectos, y las decisiones que toma el CEO serán incorrectas.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="situación-una-decisión-costosa-en-techstyle" class="slide level2">
-<h2>Situación: Una Decisión Costosa en TechStyle</h2>
-<p><strong>El gerente de logística presenta su informe:</strong></p>
-<p><em>“El 92% de los pedidos se entregó en menos de 48h. Cumplimos la meta.”</em></p>
-<p>El CEO aprueba el bono de desempeño del equipo.</p>
-<div class="fragment">
-<p><strong>Un mes después</strong>: llegan 1.200 reclamos de clientes que esperaron más de 5 días.</p>
-<p><strong>¿Qué pasó?</strong></p>
-</div>
-<aside class="notes">
-<p>Presentar el misterio antes de revelar la causa. Dejar que los estudiantes especulen.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="el-problema-de-calidad-de-datos" class="slide level2">
-<h2>El Problema de Calidad de Datos</h2>
+<section id="integridad-al-insertar-y-actualizar" class="slide level2">
+<h2>Integridad al Insertar y Actualizar</h2>
 <ul>
-<li class="fragment">Un error en el sistema contaba como “entregado” cuando el repartidor <strong>salía del almacén</strong></li>
-<li class="fragment">No cuando el pedido llegaba <strong>realmente</strong> al cliente</li>
-<li class="fragment">El 92% medía <strong>salidas del almacén</strong>, no entregas reales</li>
-<li class="fragment">Los datos eran técnicamente registrados, pero <strong>no representaban la realidad</strong></li>
+<li class="fragment"><strong>No insertar datos falsos</strong>: Si el cliente dice que vive en “Santiago” pero la zona es de Valparaíso, el dato es incorrecto desde el origen.</li>
+<li class="fragment"><strong>Validar antes de actualizar</strong>: Cambiar el precio de un producto afecta todos los cálculos futuros del CMI.</li>
+<li class="fragment"><strong>Eliminar con cuidado</strong>: Un <code>DELETE</code> sin <code>WHERE</code> es irreversible.</li>
 </ul>
 <div class="fragment">
-<p><strong>Consecuencia</strong>: Bonos pagados, clientes furiosos, confianza destruida.</p>
-<p>Un KPI del CMI (entregas a tiempo) basado en datos incorrectos → decisión incorrecta.</p>
+<p><strong>Buena práctica</strong>: Antes de ejecutar <code>UPDATE</code> o <code>DELETE</code>, primero ejecutar el equivalente como <code>SELECT</code> para verificar qué registros serán afectados.</p>
 </div>
-<aside class="notes">
-<p>Este es el puente entre las dos partes de la clase. Los datos malos destruyen el CMI y todas las decisiones que se basan en él.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
-<section id="las-4-dimensiones-de-la-calidad-de-datos" class="slide level2">
-<h2>Las 4 Dimensiones de la Calidad de Datos</h2>
-<p>La calidad de datos es el grado en que los datos <strong>representan fielmente la realidad</strong> para el propósito que se necesitan.</p>
-<div class="fragment">
-<table class="caption-top">
-<colgroup>
-<col style="width: 28%">
-<col style="width: 25%">
-<col style="width: 46%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Dimensión</th>
-<th>Pregunta</th>
-<th>Ejemplo TechStyle</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Exactitud</strong></td>
-<td>¿Es correcto el valor?</td>
-<td>Dirección del cliente mal escrita</td>
-</tr>
-<tr class="even">
-<td><strong>Completitud</strong></td>
-<td>¿Están todos los datos?</td>
-<td>23% de clientes sin teléfono</td>
-</tr>
-<tr class="odd">
-<td><strong>Consistencia</strong></td>
-<td>¿Dicen lo mismo todos los sistemas?</td>
-<td>Stock diferente en bodega vs.&nbsp;web</td>
-</tr>
-<tr class="even">
-<td><strong>Oportunidad</strong></td>
-<td>¿Llegan a tiempo?</td>
-<td>Reporte de stock generado semanalmente</td>
-</tr>
-</tbody>
-</table>
-</div>
-<aside class="notes">
-<p>Cada dimensión puede causar decisiones incorrectas de forma diferente. Exactitud = datos incorrectos. Completitud = datos faltantes. Consistencia = contradicciones. Oportunidad = datos que llegan tarde.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="el-costo-de-los-datos-de-mala-calidad" class="slide level2">
-<h2>El Costo de los Datos de Mala Calidad</h2>
-<ul>
-<li class="fragment"><strong>Decisiones incorrectas</strong>: invertir donde no corresponde</li>
-<li class="fragment"><strong>Costos operativos</strong>: retrabajos y correcciones</li>
-<li class="fragment"><strong>Pérdida de confianza</strong>: los usuarios dejan de usar el sistema</li>
-<li class="fragment"><strong>Daño reputacional</strong>: errores visibles para clientes</li>
-</ul>
-<div class="fragment">
-<p><em>Estimación: las empresas pierden entre 15–25% de sus ingresos por mala calidad de datos (Gartner)</em></p>
-<p><strong>¿Quién es responsable?</strong> → Todos: quien ingresa, quien usa, quien diseña.</p>
-</div>
-<aside class="notes">
-<p>No es un problema del área de TI solamente. Conectar con el componente “Personas” del SI: todos deben cuidar la calidad.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="discusión-2" class="slide level2">
-<h2>💬 Discusión 2</h2>
-<p><strong>En parejas (5 minutos)</strong>:</p>
-<p>TechStyle encontró estos problemas en su base de datos:</p>
+<section id="actividad-set-de-8-consultas-de-negocio" class="slide level2">
+<h2>Actividad: Set de 8 Consultas de Negocio</h2>
+<p><strong>Resolver en MySQL Workbench</strong>:</p>
 <ol type="1">
-<li>El 15% de los emails son inválidos (ej. <code>juan@.com</code>)</li>
-<li>La columna <code>fecha_nacimiento</code> está vacía en 40% de los registros</li>
-<li>El precio del mismo producto difiere en la app y en el sitio web</li>
-<li>Los reportes de ventas se generan cada 3 días</li>
+<li class="fragment">Listar todos los productos de la categoría ‘Ropa’ ordenados por precio.</li>
+<li class="fragment">Mostrar clientes sin teléfono registrado.</li>
+<li class="fragment">Listar pedidos con <code>estado = 'pendiente'</code>.</li>
+<li class="fragment">Mostrar los productos con precio entre $15.000 y $40.000.</li>
+<li class="fragment">Listar todos los repartidores de la zona ‘Las Condes’.</li>
+<li class="fragment">Mostrar pedidos realizados en junio 2026.</li>
+<li class="fragment">Listar los 3 productos con menor stock.</li>
+<li class="fragment">Mostrar devoluciones con monto superior a $20.000.</li>
 </ol>
-<p>¿Qué dimensión afecta cada problema? ¿Qué decisión de negocio podría fallar?</p>
-<aside class="notes">
-<p>1=Exactitud (campañas de email fallidas), 2=Completitud (segmentación por edad imposible), 3=Consistencia (cliente paga precio incorrecto), 4=Oportunidad (no se puede reaccionar a tendencias del día).</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
-<section id="ética-en-el-manejo-de-datos" class="slide level2">
-<h2>Ética en el Manejo de Datos</h2>
-<p><strong>Los datos no son solo un recurso técnico: son información sobre personas reales.</strong></p>
+<section id="conexión-con-la-toma-de-decisiones" class="slide level2">
+<h2>Conexión con la Toma de Decisiones</h2>
 <ul>
-<li class="fragment">TechStyle tiene nombres, direcciones y hábitos de compra de <strong>450.000 personas</strong></li>
-<li class="fragment">Los clientes confían en que esa información se usará responsablemente</li>
-<li class="fragment">Mal uso → daño real a personas, sanciones legales, pérdida de reputación</li>
+<li class="fragment">Cada consulta SELECT responde una pregunta de negocio concreta.</li>
+<li class="fragment">El analista de TechStyle no “busca datos” → formula una <strong>pregunta de negocio</strong> y la traduce a SQL.</li>
+<li class="fragment"><strong>La consulta correcta es la diferencia entre una decisión informada y una decisión basada en suposiciones.</strong></li>
 </ul>
-<div class="fragment">
-<p><strong>Principios éticos clave:</strong></p>
-<ul>
-<li><strong>Transparencia</strong>: el cliente sabe qué datos se recolectan y para qué</li>
-<li><strong>Proporcionalidad</strong>: recolectar solo lo necesario</li>
-<li><strong>Seguridad</strong>: proteger los datos de accesos no autorizados</li>
-</ul>
-</div>
-<aside class="notes">
-<p>No profundizar en legislación. El punto es el principio: los futuros profesionales manejarán datos de personas reales y tienen responsabilidades.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
-<section id="actividad-auditoría-de-calidad-de-datos" class="slide level2">
-<h2>Actividad: Auditoría de Calidad de Datos</h2>
-<p><strong>TechStyle entrega este extracto de su tabla <code>customers</code></strong>:</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>id</th>
-<th>nombre</th>
-<th>email</th>
-<th>telefono</th>
-<th>region</th>
-<th>fecha_reg</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>Juan P.</td>
-<td>juan@gmail.com</td>
-<td>98765432</td>
-<td>RM</td>
-<td>2022-03-15</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>María</td>
-<td>NULL</td>
-<td>56912345</td>
-<td>RM</td>
-<td>2022-03-16</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>Carlos R.</td>
-<td>carlos@hotmail</td>
-<td>NULL</td>
-<td>NULL</td>
-<td>2022-03-15</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>Ana M.</td>
-<td>ana@gmail.com</td>
-<td>98765432</td>
-<td>Valpo</td>
-<td>NULL</td>
-</tr>
-<tr class="odd">
-<td>5</td>
-<td>Juan P.</td>
-<td>juan@gmail.com</td>
-<td>98765432</td>
-<td>RM</td>
-<td>2022-03-17</td>
-</tr>
-</tbody>
-</table>
-<p><strong>En grupos de 3 (10 minutos)</strong>:</p>
+<section id="para-el-laboratorio-de-hoy" class="slide level2">
+<h2>Para el Laboratorio de Hoy</h2>
+<p><strong>Lab 13</strong>: Poblar <code>techstyle_db</code> y resolver consultas básicas.</p>
 <ol type="1">
-<li>Identifiquen <strong>todos los problemas</strong> y clasifíquenlos por dimensión de calidad</li>
-<li>¿Qué decisiones de negocio se verían afectadas?</li>
-<li>¿Qué reglas de validación debería tener el sistema?</li>
-</ol>
-<aside class="notes">
-<p>Fila 2: sin apellido, sin email (completitud). Fila 3: email inválido sin dominio completo (exactitud), sin teléfono/región (completitud). Fila 4: sin fecha (completitud), teléfono igual a fila 1 (consistencia/exactitud). Fila 5: duplicado exacto de fila 1 (consistencia). Reglas: email válido obligatorio, teléfono único, región obligatoria.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="lo-que-aprendimos-hoy" class="slide level2">
-<h2>Lo Que Aprendimos Hoy</h2>
-<ol type="1">
-<li class="fragment">El <strong>CMI</strong> traduce la estrategia en 4 perspectivas: Financiera, Cliente, Procesos, Aprendizaje</li>
-<li class="fragment">Los <strong>KPIs</strong> hacen medibles los objetivos estratégicos alimentados por datos del SI</li>
-<li class="fragment">La <strong>calidad de datos</strong> tiene 4 dimensiones: exactitud, completitud, consistencia, oportunidad</li>
-<li class="fragment">Los datos de mala calidad generan <strong>decisiones incorrectas</strong> con costos reales</li>
-<li class="fragment">El manejo de datos de personas implica <strong>responsabilidades éticas</strong></li>
+<li>Insertar al menos 20 registros por tabla usando scripts <code>INSERT</code>.</li>
+<li>Resolver el set de 8 consultas SELECT de negocio.</li>
+<li>Documentar cada consulta con la pregunta de negocio que responde.</li>
 </ol>
 <div class="fragment">
-<p><strong>Sin datos de calidad, el mejor CMI del mundo es inútil.</strong></p>
+<p><strong>Para la próxima semana</strong>: Consultas avanzadas con <code>JOIN</code>, <code>GROUP BY</code> y funciones de agregación.</p>
 </div>
-</section>
-<section id="próxima-clase" class="slide level2">
-<h2>Próxima Clase</h2>
-<p><strong>Tema</strong>: Big Data y Síntesis de la Unidad 1</p>
-<p><strong>Exploraremos</strong>:</p>
-<ul>
-<li>¿Qué hace que los datos sean “Big Data”? Las 5 V</li>
-<li>OLTP vs.&nbsp;OLAP: sistemas transaccionales vs.&nbsp;analíticos</li>
-<li>Data Warehouse y el proceso ETL</li>
-<li>Repaso integrador de toda la Unidad 1</li>
-</ul>
-<div class="fragment">
-<p><strong>Reflexionen</strong>: ¿Cuántos datos genera su smartphone en un día? ¿Quién los usa y para qué?</p>
-</div>
-<aside class="notes">
-<p>La próxima clase cierra la unidad con Big Data y la síntesis. Es clave que lleguen habiendo repasado los conceptos anteriores.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="preguntas" class="slide level2">
-<h2>Preguntas</h2>
-<p>¿Dudas o comentarios?</p>
-<p><strong>Contacto</strong>: [correo del profesor]</p>
-<p><strong>Próxima clase</strong>: [fecha y hora]</p>
-</section>
-<section id="gracias" class="slide level2">
-<h2>¡Gracias!</h2>
-<p><strong>Big Data y Analytics</strong> Universidad San Sebastián</p>
-<aside class="notes">
-<p>Agradecer participación. Recordar que la próxima clase cierra la Unidad 1 antes de la Solemne.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 
 
 </section>
@@ -708,7 +453,7 @@ Universidad San Sebastián
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="../img/logo-horizontal-on-light.svg" class="slide-logo"></p>
 <div class="footer footer-default">
-
+<p>Big Data y Analytics · USS · 2026</p>
 </div>
 </div></div>
 

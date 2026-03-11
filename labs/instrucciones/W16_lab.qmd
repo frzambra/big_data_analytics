@@ -1,0 +1,201 @@
+---
+title: "Laboratorio 16: Vistas SQL para el CMI de TechStyle"
+subtitle: "Semana 16 · W16 · Unidad 3 · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+## Contexto
+
+Es la última sesión de trabajo del semestre. Hoy cerrarás el círculo: crearás las **vistas SQL** que encapsulan los KPIs del CMI diseñado en la Semana 3, conectando la base de datos operativa de TechStyle con el análisis estratégico.
+
+La semana 17 es la defensa del proyecto. Usa este tiempo para dejar `techstyle_db` completamente lista.
+
+---
+
+## Objetivos
+
+- Crear al menos 4 vistas SQL que correspondan a los KPIs del CMI de TechStyle.
+- Verificar que cada vista devuelve resultados coherentes con los datos cargados.
+- Avanzar en el informe escrito del proyecto final.
+- (Optativo) Conectar una vista a Power BI para visualizar el CMI.
+
+---
+
+## Parte A: Crear las Vistas del CMI (90 min)
+
+### Vista 1 — KPI Financiero: Ventas por Categoría
+
+```sql
+CREATE OR REPLACE VIEW vw_kpi_ventas_categoria AS
+SELECT
+    pr.categoria,
+    YEAR(p.fecha_pedido)                            AS anio,
+    MONTH(p.fecha_pedido)                           AS mes,
+    SUM(oi.cantidad * oi.precio_unitario)           AS ventas_totales,
+    COUNT(DISTINCT p.id_pedido)                     AS num_pedidos
+FROM order_items oi
+INNER JOIN pedidos   p  ON oi.id_pedido   = p.id_pedido
+INNER JOIN productos pr ON oi.id_producto = pr.id_producto
+WHERE p.estado = 'entregado'
+GROUP BY pr.categoria, YEAR(p.fecha_pedido), MONTH(p.fecha_pedido)
+ORDER BY anio DESC, mes DESC, ventas_totales DESC;
+```
+
+Verificar:
+```sql
+SELECT * FROM vw_kpi_ventas_categoria;
+```
+
+---
+
+### Vista 2 — KPI Cliente: Ticket Promedio por Región
+
+```sql
+CREATE OR REPLACE VIEW vw_kpi_ticket_region AS
+SELECT
+    c.region,
+    COUNT(p.id_pedido)   AS total_pedidos,
+    ROUND(AVG(p.total), 0) AS ticket_promedio,
+    SUM(p.total)         AS ingresos_totales
+FROM pedidos p
+INNER JOIN clientes c ON p.id_cliente = c.id_cliente
+WHERE p.estado = 'entregado'
+GROUP BY c.region
+ORDER BY ingresos_totales DESC;
+```
+
+---
+
+### Vista 3 — KPI Procesos: Tasa de Devolución por Zona
+
+```sql
+CREATE OR REPLACE VIEW vw_kpi_tasa_devolucion_zona AS
+SELECT
+    z.nombre                                   AS zona,
+    COUNT(DISTINCT p.id_pedido)                AS total_pedidos,
+    COUNT(DISTINCT d.id_devolucion)            AS total_devoluciones,
+    ROUND(
+        COUNT(DISTINCT d.id_devolucion) * 100.0 /
+        NULLIF(COUNT(DISTINCT p.id_pedido), 0),
+        2
+    )                                          AS tasa_devolucion_pct
+FROM zonas z
+LEFT JOIN repartidores r ON z.id_zona    = r.id_zona
+LEFT JOIN pedidos      p ON r.id_repartidor = p.id_repartidor
+LEFT JOIN devoluciones d ON p.id_pedido  = d.id_pedido
+GROUP BY z.id_zona, z.nombre
+ORDER BY tasa_devolucion_pct DESC;
+```
+
+---
+
+### Vista 4 — KPI Aprendizaje: Clientes Inactivos
+
+```sql
+CREATE OR REPLACE VIEW vw_kpi_clientes_inactivos AS
+SELECT
+    c.id_cliente,
+    c.nombre,
+    c.email,
+    c.region,
+    MAX(p.fecha_pedido)                             AS ultimo_pedido,
+    DATEDIFF(CURDATE(), MAX(p.fecha_pedido))        AS dias_sin_comprar
+FROM clientes c
+LEFT JOIN pedidos p ON c.id_cliente = p.id_cliente
+GROUP BY c.id_cliente, c.nombre, c.email, c.region
+HAVING dias_sin_comprar > 60
+    OR MAX(p.fecha_pedido) IS NULL
+ORDER BY dias_sin_comprar DESC;
+```
+
+---
+
+### Vista 5 — KPI Financiero: Producto Más Vendido por Mes
+
+```sql
+CREATE OR REPLACE VIEW vw_kpi_top_productos AS
+SELECT
+    pr.nombre                                    AS producto,
+    pr.categoria,
+    YEAR(p.fecha_pedido)                         AS anio,
+    MONTH(p.fecha_pedido)                        AS mes,
+    SUM(oi.cantidad)                             AS unidades_vendidas,
+    SUM(oi.cantidad * oi.precio_unitario)        AS ingresos
+FROM order_items oi
+INNER JOIN productos pr ON oi.id_producto = pr.id_producto
+INNER JOIN pedidos   p  ON oi.id_pedido   = p.id_pedido
+WHERE p.estado = 'entregado'
+GROUP BY pr.id_producto, pr.nombre, pr.categoria,
+         YEAR(p.fecha_pedido), MONTH(p.fecha_pedido)
+ORDER BY anio DESC, mes DESC, unidades_vendidas DESC;
+```
+
+---
+
+### Verificar todas las vistas creadas
+
+```sql
+-- Ver todas las vistas de techstyle_db
+SHOW FULL TABLES WHERE TABLE_TYPE = 'VIEW';
+
+-- Consultar cada vista
+SELECT * FROM vw_kpi_ventas_categoria LIMIT 10;
+SELECT * FROM vw_kpi_ticket_region;
+SELECT * FROM vw_kpi_tasa_devolucion_zona;
+SELECT * FROM vw_kpi_clientes_inactivos LIMIT 10;
+SELECT * FROM vw_kpi_top_productos LIMIT 10;
+```
+
+---
+
+## Parte B: Conectar a Power BI (optativo, 30 min)
+
+Si el laboratorio tiene Power BI Desktop instalado:
+
+1. Abrir Power BI Desktop.
+2. "Obtener datos" → "Base de datos MySQL".
+3. Servidor: `127.0.0.1`, Base de datos: `techstyle_db`.
+4. Seleccionar las vistas `vw_kpi_*`.
+5. Construir una tarjeta o gráfico de barras para al menos un KPI del CMI.
+
+---
+
+## Parte C: Avance del Informe del Proyecto Final (30 min)
+
+El docente revisará el avance de cada grupo durante esta sesión.
+
+**Checklist del proyecto final**:
+
+- [ ] Modelo ER normalizado (diagrama draw.io).
+- [ ] DDL completo ejecutado en MySQL (script `create_techstyle.sql`).
+- [ ] Mínimo 20 registros por tabla.
+- [ ] 5 consultas analíticas que responden preguntas de negocio del CMI.
+- [ ] Al menos 4 vistas SQL del CMI (`vw_kpi_*`).
+- [ ] Informe escrito con: descripción del negocio, decisiones de diseño, resultados y conclusiones.
+
+---
+
+## Entregable de Hoy
+
+1. Script SQL `lab16_apellido1_apellido2.sql` con la creación de las 5 vistas.
+2. Capturas de pantalla de los resultados de `SELECT * FROM` para cada vista.
+3. (Optativo) Captura del gráfico en Power BI.
+
+---
+
+## Criterios de evaluación
+
+| Criterio | Puntaje |
+|---|---|
+| Vista 1 (Ventas por categoría) correcta | 20 pts |
+| Vista 2 (Ticket por región) correcta | 20 pts |
+| Vista 3 (Tasa de devolución) correcta | 20 pts |
+| Vista 4 (Clientes inactivos) correcta | 20 pts |
+| Vista 5 (Top productos) correcta | 15 pts |
+| Verificación con SELECT de cada vista | 5 pts |
+| **Total** | **100 pts** |

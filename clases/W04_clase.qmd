@@ -1,0 +1,390 @@
+---
+title: "Levantamiento de Requerimientos y Diagrama de Caso de Uso"
+subtitle: "Semana 4 · W04 · Unidad 2 · Big Data y Analytics"
+author: "Universidad San Sebastián"
+date: "Abril 2026"
+format:
+  revealjs:
+    theme: default
+    incremental: false
+    slide-number: true
+    footer: "Big Data y Analytics · USS · 2026"
+---
+
+## Retroalimentación Solemne 1
+
+::: {.incremental}
+- Revisión de resultados y errores frecuentes.
+- **Patrón de error más común**: Confundir el *tipo* de SI con el *nivel* organizacional.
+- **Fortaleza observada**: Aplicación del CMI y calidad de datos al caso TechStyle.
+:::
+
+::: {.fragment}
+**Hoy iniciamos la Unidad 2**: ¿Cómo se modela un sistema de información antes de construir la base de datos?
+:::
+
+---
+
+## Resumen de la Unidad 1 en una Frase
+
+> "Los Sistemas de Información convierten datos crudos en decisiones estratégicas — pero solo funcionan si el modelo de datos que los alimenta refleja fielmente la realidad del negocio."
+
+::: {.fragment}
+**La Unidad 2** se dedica exactamente a eso: modelar la realidad del negocio antes de construir la base de datos.
+
+Secuencia: Caso de Uso → UML → Modelo ER → Modelo Relacional → (Unidad 3) Implementación en MySQL.
+:::
+
+---
+
+## El Problema de TechStyle: Crecen y No Saben Qué Construir
+
+**Situación real**:
+
+TechStyle decide construir un nuevo módulo de pedidos. El equipo de TI necesita entender **qué debe hacer el sistema** antes de escribir una sola línea de código o crear una tabla.
+
+::: {.fragment}
+**Pregunta disparadora**: ¿Cómo le explicamos a un desarrollador qué debe hacer el sistema, usando el lenguaje del negocio?
+:::
+
+::: {.notes}
+Conectar con la experiencia de los estudiantes usando Power BI: ellos ya modelaron datos, ahora aprenderán a modelar sistemas.
+:::
+
+---
+
+## ¿Qué es el Levantamiento de Requerimientos?
+
+::: {.incremental}
+- Proceso de identificar **qué necesita hacer** el sistema.
+- Se realiza **antes** del diseño técnico.
+- Fuentes: entrevistas con usuarios, observación de procesos, documentos actuales.
+:::
+
+::: {.fragment}
+**Salida del levantamiento**: una lista de requerimientos funcionales y no funcionales.
+
+**Requerimiento funcional**: "El sistema debe permitir que el cliente realice un pedido."
+
+**Requerimiento no funcional**: "El sistema debe responder en menos de 2 segundos."
+:::
+
+---
+
+## Técnicas de Levantamiento de Requerimientos
+
+**Cómo obtiene Juan la información que necesita del negocio:**
+
+::: {.incremental}
+- **Entrevistas individuales**: conversar con Sofía, María y Roberto para entender qué necesita cada actor.
+- **Observación directa**: acompañar a Sofía en su ruta para entender cómo usa el sistema hoy.
+- **Talleres facilitados**: reunir a todos los actores y modelar el proceso juntos (story mapping).
+- **Revisión de documentos**: analizar los formularios en papel, hojas Excel y correos actuales.
+- **Prototipado**: mostrar una versión preliminar del sistema y recoger feedback temprano.
+:::
+
+---
+
+## Aplicación: Entrevista con María González
+
+**Juan entrevista a María para levantar requerimientos:**
+
+::: {.incremental}
+- *Juan*: "María, ¿qué necesitas saber sobre los pedidos para tomar decisiones de campaña?"
+- *María*: "Necesito saber qué categorías venden más, en qué zonas y en qué fechas."
+- *Juan*: "¿Con qué frecuencia necesitas esta información?"
+- *María*: "Cada semana, los lunes a primera hora."
+- *Juan*: "¿Qué pasa si la información llega el martes?"
+- *María*: "Ya es tarde — la reunión de presupuesto es el lunes."
+:::
+
+::: {.fragment}
+**Requerimiento extraído**: El sistema debe generar el reporte de ventas por categoría y zona todos los domingos antes de las 23:59. **(Funcional + No funcional de oportunidad)**
+:::
+
+---
+
+## Verificación: ¿Funcional o No Funcional?
+
+**Clasifica cada requerimiento:**
+
+::: {.incremental}
+1. "El sistema debe permitir al repartidor marcar un pedido como entregado desde su app" → **Funcional**
+2. "El sistema debe soportar 10.000 usuarios simultáneos sin degradar el tiempo de respuesta" → **No funcional (rendimiento)**
+3. "El sistema debe enviar una notificación al cliente cuando el pedido está en camino" → **Funcional**
+4. "El sistema debe estar disponible el 99,9% del tiempo" → **No funcional (disponibilidad)**
+5. "El sistema debe permitir al Administrador desactivar un producto del catálogo" → **Funcional**
+:::
+
+---
+
+## Secuencia de Modelamiento
+
+```
+Levantamiento de Requerimientos
+       ↓
+Diagrama de Caso de Uso (¿qué hace el sistema?)
+       ↓ (Semana 5)
+Diagrama UML de Clases (¿cómo está estructurado?)
+       ↓ (Semana 6)
+Modelo Entidad-Relación (¿qué datos almacena?)
+       ↓ (Semana 7)
+Modelo Relacional (¿cómo se organizan las tablas?)
+       ↓ (Semana 8)
+Solemne 2 — Defensa del diseño completo
+```
+
+---
+
+## La Secuencia de Modelamiento: Visualización
+
+`[IMAGE/DIAGRAM PLACEHOLDER: Diagrama de flujo horizontal de 5 pasos de modelamiento — (1) Levantamiento con ícono de entrevista, (2) Caso de Uso con ícono de elipse y actor, (3) UML de Clases con ícono de rectángulo con compartimentos, (4) Modelo ER con ícono de diamante, (5) Modelo Relacional con ícono de tabla. Flechas entre cada paso. Cada paso muestra la pregunta que responde]`
+
+::: {.fragment}
+*Cada paso transforma el conocimiento del negocio en un artefacto más cercano a la implementación técnica.*
+:::
+
+---
+
+## Diagrama de Caso de Uso: Conceptos Clave
+
+| Elemento | Símbolo | Descripción |
+|---|---|---|
+| **Actor** | Figura humana | Quien interactúa con el sistema |
+| **Caso de uso** | Elipse | Acción que el sistema realiza |
+| **Include** | Flecha punteada `<<include>>` | Caso de uso que siempre ocurre |
+| **Extend** | Flecha punteada `<<extend>>` | Caso de uso opcional |
+| **Sistema** | Rectángulo | Límite del sistema |
+
+---
+
+## Elementos del Diagrama de Caso de Uso: Visualización
+
+`[IMAGE/DIAGRAM PLACEHOLDER: Elementos del Diagrama de Caso de Uso — figura humana (actor) con etiqueta "Cliente"; elipse con "Realizar pedido"; rectángulo que enmarca el sistema "Módulo de Pedidos TechStyle"; flecha punteada con <<include>> conectando "Realizar pedido" con "Procesar pago"; flecha punteada con <<extend>> desde "Realizar pedido" hacia "Solicitar devolución"]`
+
+::: {.fragment}
+*El rectángulo delimita claramente qué está dentro del sistema y qué es externo. Nada fuera del rectángulo es responsabilidad del sistema.*
+:::
+
+---
+
+## Aplicación: include vs extend en TechStyle
+
+**Dos relaciones que se confunden frecuentemente:**
+
+::: {.incremental}
+- **`<<include>>`**: "Realizar pedido" **siempre** incluye "Procesar pago" — no existe un pedido sin pago. Es obligatorio, no opcional.
+- **`<<extend>>`**: "Realizar pedido" **puede** extenderse con "Solicitar devolución" — pero no en todos los casos. Solo cuando el pedido fue entregado y el cliente no quedó satisfecho.
+:::
+
+::: {.fragment}
+**Regla mnemotécnica**:
+- `include` = "siempre pasa" → como el IVA en una boleta
+- `extend` = "a veces pasa" → como un seguro de envío opcional
+:::
+
+---
+
+## Verificación: ¿Include o Extend?
+
+**Clasifica la relación entre cada par de casos de uso:**
+
+::: {.incremental}
+1. "Registrar pedido" → "Validar stock" → **`<<include>>`** (siempre se valida el stock)
+2. "Confirmar entrega" → "Enviar encuesta de satisfacción" → **`<<extend>>`** (opcional: solo si el cliente aceptó recibirlas)
+3. "Crear cuenta" → "Verificar email" → **`<<include>>`** (siempre se verifica el email)
+4. "Consultar historial" → "Exportar a PDF" → **`<<extend>>`** (el cliente puede o no querer exportar)
+:::
+
+---
+
+## Actores del Módulo de Pedidos TechStyle
+
+::: {.incremental}
+- **Cliente**: Navega el catálogo, realiza pedidos, paga, consulta estado, solicita devoluciones.
+- **Repartidor**: Ve pedidos asignados, confirma entrega.
+- **Administrador**: Gestiona catálogo de productos, procesa devoluciones, ve reportes.
+:::
+
+::: {.fragment}
+**Regla de oro**: Un actor es **externo** al sistema. No es un módulo del sistema, es quien *usa* el sistema.
+:::
+
+---
+
+## Reglas para Identificar Actores
+
+**Un buen actor cumple estas condiciones:**
+
+::: {.incremental}
+- **Es externo** al sistema (no es un componente de software).
+- **Tiene un rol definido** en relación al sistema (no es solo "una persona").
+- **Inicia o responde** a casos de uso.
+- **No se implementa** — solo interactúa.
+:::
+
+::: {.fragment}
+**Ejemplo de error común**: "Sistema de pago externo (Transbank)" *puede* ser un actor (actor externo de sistema) si el alcance del diagrama lo incluye. "Base de datos" **no** es un actor — es parte del sistema.
+:::
+
+---
+
+## ¿Es un Actor o un Módulo del Sistema?
+
+**Clasifica cada elemento como Actor o como parte interna del sistema:**
+
+::: {.incremental}
+1. "Módulo de facturación" → **Parte del sistema** (es software interno)
+2. "Gerente de logística que aprueba rutas" → **Actor** (externo, tiene rol)
+3. "Scheduler que ejecuta el ETL a las 2am" → **Actor externo de sistema** (si se modela a ese nivel)
+4. "Base de datos MySQL" → **Parte del sistema** (es infraestructura interna)
+5. "Servicio de SMS (Twilio)" → **Actor externo de sistema** (sistema externo que interactúa)
+:::
+
+---
+
+## Casos de Uso Principales
+
+::: {.incremental}
+- `Realizar pedido` ← Cliente
+- `Seleccionar producto` ← Cliente
+- `Procesar pago` ← Cliente (siempre junto a Realizar pedido → **`<<include>>`**)
+- `Consultar estado de pedido` ← Cliente
+- `Solicitar devolución` ← Cliente (solo si pedido entregado → **`<<extend>>`**)
+- `Confirmar entrega` ← Repartidor
+- `Gestionar producto` ← Administrador
+- `Procesar devolución` ← Administrador
+:::
+
+---
+
+## Descripción Narrativa de un Caso de Uso
+
+**Caso de uso: "Realizar pedido"**
+
+| Elemento | Descripción |
+|---|---|
+| **Nombre** | Realizar pedido |
+| **Actor** | Cliente |
+| **Precondición** | El cliente está autenticado en el sistema |
+| **Flujo principal** | 1. Cliente selecciona producto · 2. Agrega al carrito · 3. Ingresa dirección · 4. Procesa pago · 5. Sistema confirma pedido |
+| **Flujo alternativo** | Stock insuficiente → el sistema notifica y sugiere productos similares |
+| **Postcondición** | El pedido queda registrado con estado "pendiente" |
+
+---
+
+## Demo: Construyendo el Diagrama en draw.io
+
+```
+┌──────────────────────────────────────────────────────┐
+│              SISTEMA TECHSTYLE – MÓDULO PEDIDOS       │
+│                                                        │
+│  (Realizar pedido)──<<include>>──(Procesar pago)      │
+│  (Consultar estado pedido)                            │
+│  (Solicitar devolución)──<<extend>> desde Realizar    │
+│  (Confirmar entrega)                                  │
+│  (Gestionar producto)                                 │
+│  (Procesar devolución)                                │
+└──────────────────────────────────────────────────────┘
+   👤 Cliente      👤 Repartidor      👤 Administrador
+```
+
+::: {.notes}
+Mostrar en draw.io en tiempo real. Los estudiantes observan y replican en el laboratorio.
+:::
+
+---
+
+## Errores Comunes en Diagramas de Caso de Uso
+
+**Los 5 errores más frecuentes (y cómo evitarlos):**
+
+::: {.incremental}
+1. **Poner procesos como casos de uso**: "Validar contraseña" no es un CU — es parte del flujo interno de "Iniciar sesión".
+2. **Olvidar el límite del sistema**: sin el rectángulo, no queda claro qué está dentro y qué fuera.
+3. **Confundir include/extend**: usar `<<extend>>` donde siempre ocurre (debería ser `<<include>>`).
+4. **Demasiados actores**: "Gerente de ventas" y "Subgerente de ventas" que hacen exactamente lo mismo → un solo actor "Administrador".
+5. **Casos de uso demasiado detallados**: "Hacer clic en el botón Comprar" no es un caso de uso — es un paso de interfaz.
+:::
+
+---
+
+## ¿Por Qué Modelar Antes de Construir?
+
+**Caso TechStyle**:
+
+> Construyeron el primer módulo de pedidos sin modelamiento. Después de 6 meses, descubrieron que olvidaron registrar la **zona de entrega** de cada pedido.
+
+::: {.incremental}
+- No pueden calcular el KPI "tiempo de entrega por zona" del CMI.
+- Deben rediseñar la base de datos, migrar datos y rehacer reportes.
+- **Costo estimado**: 3 meses de trabajo adicional.
+:::
+
+::: {.fragment}
+**Conclusión**: Un diagrama de 2 horas evita 3 meses de retrabajo.
+:::
+
+---
+
+## Impacto en el CMI: Modelamiento y Decisiones
+
+::: {.incremental}
+- Si "consultar estado de pedido" no está en el Caso de Uso → no se diseña → no hay pantalla para el cliente → el cliente llama al call center → costo operativo innecesario.
+- Si "solicitar devolución" no está en el CU → no hay datos de devolución → el CMI no puede calcular la "tasa de devolución por zona".
+- Si "confirmar entrega" no está en el CU → no hay registro de fecha real de entrega → el KPI "tiempo de entrega" es incalculable.
+:::
+
+::: {.fragment}
+**Cada caso de uso omitido es un KPI que no podrá calcularse.**
+:::
+
+---
+
+## Conexión con la Toma de Decisiones
+
+::: {.incremental}
+- Un Caso de Uso bien hecho garantiza que **ningún proceso crítico del negocio** quede fuera del sistema.
+- Si "solicitar devolución" no está en el Caso de Uso → no se diseña → no hay datos → el CMI no puede calcular la tasa de devolución.
+- **Sin buen modelamiento → sin buenos datos → sin buenas decisiones.**
+:::
+
+---
+
+## Puntos Clave
+
+::: {.incremental}
+- El **levantamiento de requerimientos** identifica qué debe hacer el sistema antes de cualquier decisión técnica.
+- Los requerimientos son **funcionales** (qué hace) o **no funcionales** (cómo lo hace: rendimiento, disponibilidad).
+- El **Diagrama de Caso de Uso** muestra actores, acciones del sistema y sus relaciones en lenguaje del negocio.
+- **`<<include>>`**: el caso de uso base siempre ejecuta el incluido. **`<<extend>>`**: solo en condiciones específicas.
+- Cada caso de uso omitido en el diagrama es un proceso que no se modelará, no se implementará y no generará datos.
+:::
+
+---
+
+## Preview del Laboratorio W04
+
+**Lab W04: Diagrama de Caso de Uso completo en draw.io**
+
+::: {.incremental}
+- Herramienta: draw.io (online, sin instalación, gratis).
+- Caso: Módulo completo de ventas de TechStyle.
+- Identificar y documentar los 3 actores con descripción de su rol.
+- Dibujar al menos 8 casos de uso con las relaciones `<<include>>` y `<<extend>>` justificadas.
+- Entregable: PNG del diagrama + tabla de actores/casos de uso con justificación de negocio.
+:::
+
+---
+
+## Para el Laboratorio de Hoy
+
+**Lab W04**: Diagrama de Caso de Uso completo en draw.io.
+
+- Herramienta: [draw.io](https://draw.io) (online, sin instalación).
+- Caso: Módulo de ventas de TechStyle (descripción entregada en clase).
+- Entregable: PNG del diagrama + tabla de actores y casos de uso con justificación.
+
+::: {.fragment}
+**Para la próxima semana (W05)**: ¿Cómo modelamos la *estructura de clases* del sistema? → Diagrama UML.
+:::

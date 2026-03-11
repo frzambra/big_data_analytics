@@ -1,0 +1,250 @@
+---
+title: "DML: Poblar y Consultar la Base de Datos"
+subtitle: "Semana 12 · W12 · Unidad 3 · Big Data y Analytics"
+author: "Universidad San Sebastián"
+date: "Junio 2026"
+format:
+  revealjs:
+    theme: default
+    incremental: false
+    slide-number: true
+    footer: "Big Data y Analytics · USS · 2026"
+---
+
+## ¿Qué Vimos la Semana Pasada?
+
+::: {.incremental}
+- **DDL** (Data Definition Language): `CREATE DATABASE`, `CREATE TABLE`, `ALTER TABLE`.
+- Creamos la base de datos `techstyle_db` con 7 tablas normalizadas.
+- Las restricciones (`PRIMARY KEY`, `FOREIGN KEY`, `NOT NULL`) hacen cumplir las reglas de negocio.
+:::
+
+::: {.fragment}
+**Hoy**: Poblaremos la base de datos con datos y haremos nuestras primeras consultas para responder preguntas de negocio.
+:::
+
+---
+
+## DML: Los Comandos de Manipulación de Datos
+
+| Comando | Acción |
+|---|---|
+| `INSERT INTO` | Agregar nuevos registros |
+| `UPDATE` | Modificar registros existentes |
+| `DELETE` | Eliminar registros |
+| `SELECT` | Consultar registros |
+
+::: {.fragment}
+**Hoy cubriremos**: `INSERT`, `UPDATE`, `DELETE` y `SELECT` básico.
+
+**Semana 14**: `SELECT` avanzado (JOINs, GROUP BY, funciones de agregación).
+:::
+
+---
+
+## INSERT INTO: Agregar Datos
+
+```sql
+-- Insertar una zona
+INSERT INTO zonas (nombre, region)
+VALUES ('Santiago Centro', 'Metropolitana');
+
+-- Insertar múltiples zonas
+INSERT INTO zonas (nombre, region) VALUES
+    ('Las Condes', 'Metropolitana'),
+    ('Providencia', 'Metropolitana'),
+    ('Maipú', 'Metropolitana'),
+    ('Valparaíso', 'Valparaíso');
+```
+
+::: {.fragment}
+**Orden correcto de inserción** (respetando FK):
+1. `zonas` → 2. `clientes` → 3. `repartidores` → 4. `productos` → 5. `pedidos` → 6. `order_items`
+:::
+
+---
+
+## INSERT INTO: Datos de Clientes y Productos
+
+```sql
+INSERT INTO clientes (nombre, email, telefono, fecha_registro, region) VALUES
+    ('Ana González', 'ana@techstyle.cl', '+56912345678', '2024-01-15', 'Metropolitana'),
+    ('Pedro Muñoz',  'pedro@mail.cl',    NULL,           '2024-02-20', 'Valparaíso'),
+    ('María López',  'mlopez@mail.cl',   '+56987654321', '2024-03-10', 'Metropolitana');
+
+INSERT INTO productos (nombre, categoria, precio, stock) VALUES
+    ('Zapatillas Runner Pro', 'Calzado',   45000.00, 150),
+    ('Polera Dry-Fit',        'Ropa',       12000.00, 300),
+    ('Jeans Slim',            'Ropa',       35000.00, 200),
+    ('Mochila Urban 30L',     'Accesorios', 28000.00,  80);
+```
+
+---
+
+## UPDATE: Modificar Datos
+
+```sql
+-- Actualizar el stock de un producto
+UPDATE productos
+SET stock = stock - 5
+WHERE id_producto = 1;
+
+-- Cambiar el estado de un pedido
+UPDATE pedidos
+SET estado = 'entregado'
+WHERE id_pedido = 3;
+
+-- Actualizar el email de un cliente
+UPDATE clientes
+SET email = 'ana.gonzalez@techstyle.cl'
+WHERE id_cliente = 1;
+```
+
+::: {.fragment}
+**¡Siempre usar `WHERE`!** — Sin `WHERE`, se actualizan *todos* los registros de la tabla.
+:::
+
+---
+
+## DELETE: Eliminar Datos
+
+```sql
+-- Eliminar una devolución específica
+DELETE FROM devoluciones
+WHERE id_devolucion = 5;
+
+-- ¿Puedo eliminar un cliente que tiene pedidos?
+DELETE FROM clientes WHERE id_cliente = 1;
+-- ERROR 1451: Cannot delete or update a parent row:
+-- a foreign key constraint fails
+```
+
+::: {.fragment}
+**La FK protege contra eliminaciones accidentales.**
+
+Para eliminar Ana, primero debo eliminar (o reasignar) todos sus pedidos.
+:::
+
+---
+
+## SELECT Básico: Consultar la Base de Datos
+
+```sql
+-- Todos los clientes
+SELECT * FROM clientes;
+
+-- Solo nombre y email
+SELECT nombre, email FROM clientes;
+
+-- Clientes de la Región Metropolitana
+SELECT nombre, email FROM clientes
+WHERE region = 'Metropolitana';
+
+-- Productos con precio mayor a $20.000
+SELECT nombre, categoria, precio FROM productos
+WHERE precio > 20000
+ORDER BY precio DESC;
+
+-- Los 5 pedidos más recientes
+SELECT id_pedido, fecha_pedido, total, estado
+FROM pedidos
+ORDER BY fecha_pedido DESC
+LIMIT 5;
+```
+
+---
+
+## Operadores en WHERE
+
+| Operador | Ejemplo |
+|---|---|
+| `=` | `WHERE estado = 'entregado'` |
+| `<>` o `!=` | `WHERE estado <> 'cancelado'` |
+| `>`, `<`, `>=`, `<=` | `WHERE precio >= 20000` |
+| `BETWEEN` | `WHERE precio BETWEEN 10000 AND 50000` |
+| `LIKE` | `WHERE nombre LIKE '%Runner%'` |
+| `IN` | `WHERE categoria IN ('Ropa', 'Calzado')` |
+| `IS NULL` | `WHERE telefono IS NULL` |
+
+---
+
+## Respondiendo Preguntas de Negocio con SELECT
+
+**Pregunta de la Gerente de Marketing**:
+
+> ¿Cuáles son los productos actualmente con stock bajo (menos de 50 unidades)?
+
+```sql
+SELECT nombre, categoria, precio, stock
+FROM productos
+WHERE stock < 50
+ORDER BY stock ASC;
+```
+
+::: {.fragment}
+**Pregunta del equipo de logística**:
+
+> ¿Qué pedidos están en estado 'pendiente' desde hace más de 3 días?
+
+```sql
+SELECT id_pedido, fecha_pedido, total
+FROM pedidos
+WHERE estado = 'pendiente'
+  AND fecha_pedido < DATE_SUB(CURDATE(), INTERVAL 3 DAY);
+```
+:::
+
+---
+
+## Integridad al Insertar y Actualizar
+
+::: {.incremental}
+- **No insertar datos falsos**: Si el cliente dice que vive en "Santiago" pero la zona es de Valparaíso, el dato es incorrecto desde el origen.
+- **Validar antes de actualizar**: Cambiar el precio de un producto afecta todos los cálculos futuros del CMI.
+- **Eliminar con cuidado**: Un `DELETE` sin `WHERE` es irreversible.
+:::
+
+::: {.fragment}
+**Buena práctica**: Antes de ejecutar `UPDATE` o `DELETE`, primero ejecutar el equivalente como `SELECT` para verificar qué registros serán afectados.
+:::
+
+---
+
+## Actividad: Set de 8 Consultas de Negocio
+
+**Resolver en MySQL Workbench**:
+
+::: {.incremental}
+1. Listar todos los productos de la categoría 'Ropa' ordenados por precio.
+2. Mostrar clientes sin teléfono registrado.
+3. Listar pedidos con `estado = 'pendiente'`.
+4. Mostrar los productos con precio entre $15.000 y $40.000.
+5. Listar todos los repartidores de la zona 'Las Condes'.
+6. Mostrar pedidos realizados en junio 2026.
+7. Listar los 3 productos con menor stock.
+8. Mostrar devoluciones con monto superior a $20.000.
+:::
+
+---
+
+## Conexión con la Toma de Decisiones
+
+::: {.incremental}
+- Cada consulta SELECT responde una pregunta de negocio concreta.
+- El analista de TechStyle no "busca datos" → formula una **pregunta de negocio** y la traduce a SQL.
+- **La consulta correcta es la diferencia entre una decisión informada y una decisión basada en suposiciones.**
+:::
+
+---
+
+## Para el Laboratorio de Hoy
+
+**Lab 13**: Poblar `techstyle_db` y resolver consultas básicas.
+
+1. Insertar al menos 20 registros por tabla usando scripts `INSERT`.
+2. Resolver el set de 8 consultas SELECT de negocio.
+3. Documentar cada consulta con la pregunta de negocio que responde.
+
+::: {.fragment}
+**Para la próxima semana**: Consultas avanzadas con `JOIN`, `GROUP BY` y funciones de agregación.
+:::

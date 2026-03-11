@@ -1,0 +1,161 @@
+---
+title: "Laboratorio 12: DDL — Crear techstyle_db en MySQL"
+subtitle: "Semana 11 · W11 · Unidad 3 · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+## Contexto
+
+Llegó el momento de construir la base de datos real. Implementarás `techstyle_db` en MySQL Workbench usando los comandos DDL, basándote en el diccionario de datos que elaboraste la semana pasada.
+
+Al finalizar esta sesión tendrás la estructura completa de la base de datos, lista para recibir datos la próxima semana.
+
+---
+
+## Objetivos
+
+- Crear la base de datos `techstyle_db` en MySQL.
+- Implementar las 7 tablas con todas sus columnas, tipos de dato y restricciones.
+- Verificar la estructura creada usando `DESCRIBE` y `SHOW CREATE TABLE`.
+- Guardar el script DDL para uso futuro.
+
+---
+
+## Instrucciones
+
+### Paso 1: Crear la base de datos (10 min)
+
+Abre MySQL Workbench, conéctate a tu servidor local y ejecuta:
+
+```sql
+-- Crear la base de datos con soporte completo para español
+CREATE DATABASE IF NOT EXISTS techstyle_db
+    CHARACTER SET utf8mb4
+    COLLATE utf8mb4_spanish_ci;
+
+-- Seleccionarla como base de datos activa
+USE techstyle_db;
+
+-- Verificar que está activa
+SELECT DATABASE();
+```
+
+### Paso 2: Crear las tablas en el orden correcto (60 min)
+
+**IMPORTANTE**: Crear las tablas respetando las dependencias de FK. Una tabla con FK debe crearse después de la tabla que referencia.
+
+**Orden correcto**:
+1. `zonas` (sin FK)
+2. `clientes` (sin FK)
+3. `repartidores` (FK → `zonas`)
+4. `productos` (sin FK)
+5. `pedidos` (FK → `clientes`, `repartidores`)
+6. `order_items` (FK → `pedidos`, `productos`)
+7. `devoluciones` (FK → `pedidos`)
+
+Usa el diccionario de datos de la semana 11 para definir correctamente cada columna. El script base para la tabla `clientes` es:
+
+```sql
+CREATE TABLE clientes (
+    id_cliente      INT           NOT NULL AUTO_INCREMENT,
+    nombre          VARCHAR(100)  NOT NULL,
+    email           VARCHAR(150)  NOT NULL,
+    telefono        VARCHAR(20)   NULL,
+    fecha_registro  DATE          NOT NULL DEFAULT (CURDATE()),
+    region          VARCHAR(50)   NOT NULL,
+    PRIMARY KEY (id_cliente),
+    UNIQUE KEY uq_cliente_email (email)
+);
+```
+
+Implementa las 6 tablas restantes con el mismo nivel de detalle.
+
+### Paso 3: Verificar la estructura creada (20 min)
+
+```sql
+-- Ver todas las tablas creadas
+SHOW TABLES;
+
+-- Verificar cada tabla
+DESCRIBE zonas;
+DESCRIBE clientes;
+DESCRIBE repartidores;
+DESCRIBE productos;
+DESCRIBE pedidos;
+DESCRIBE order_items;
+DESCRIBE devoluciones;
+
+-- Ver el DDL completo de una tabla (útil para revisar FK)
+SHOW CREATE TABLE pedidos\G
+SHOW CREATE TABLE order_items\G
+```
+
+Captura de pantalla de los resultados de `SHOW TABLES` y `DESCRIBE pedidos`.
+
+### Paso 4: Probar las restricciones de integridad (30 min)
+
+Realiza los siguientes intentos y documenta el mensaje de error de MySQL:
+
+**Prueba 1**: Insertar un pedido con un `id_cliente` que no existe.
+```sql
+INSERT INTO pedidos (fecha_pedido, total, estado, id_cliente)
+VALUES ('2026-06-01', 55000, 'pendiente', 9999);
+-- ¿Qué error devuelve MySQL?
+```
+
+**Prueba 2**: Intentar insertar dos clientes con el mismo email.
+```sql
+INSERT INTO clientes (nombre, email, region) VALUES ('Test 1', 'mismo@mail.cl', 'RM');
+INSERT INTO clientes (nombre, email, region) VALUES ('Test 2', 'mismo@mail.cl', 'RM');
+-- ¿Qué error devuelve MySQL?
+```
+
+**Prueba 3**: Intentar insertar un `order_item` con un `id_pedido` que no existe.
+```sql
+INSERT INTO order_items (id_pedido, id_producto, cantidad, precio_unitario)
+VALUES (9999, 1, 2, 12000.00);
+-- ¿Qué error devuelve MySQL?
+```
+
+### Paso 5: Guardar el script DDL (10 min)
+
+En MySQL Workbench:
+- `File` → `Save Script As` → guardar como `create_techstyle.sql`.
+
+El script debe contener todos los comandos desde `CREATE DATABASE` hasta el último `CREATE TABLE`.
+
+---
+
+## Entregable
+
+1. **Script SQL** `create_techstyle.sql` con el DDL completo.
+2. **Capturas de pantalla**: `SHOW TABLES` y `DESCRIBE` de al menos 3 tablas.
+3. **Informe de pruebas de integridad** (Word/PDF): los 3 intentos con el mensaje de error de MySQL y una explicación de por qué MySQL rechazó cada operación.
+
+**Subir con el nombre**: `lab12_apellido1_apellido2.zip` (conteniendo todos los archivos).
+
+---
+
+## Criterios de evaluación
+
+| Criterio | Puntaje |
+|---|---|
+| Las 7 tablas creadas en el orden correcto | 25 pts |
+| PK y AUTO_INCREMENT correctos en todas las tablas | 20 pts |
+| FK con nombres de restricción explícitos | 20 pts |
+| Restricciones adicionales (UNIQUE, NOT NULL, DEFAULT) | 15 pts |
+| Pruebas de integridad documentadas y explicadas | 20 pts |
+| **Total** | **100 pts** |
+
+---
+
+## Control Parcial 3
+
+Este laboratorio incluye el **Control Parcial 3** (evaluación sumativa): un ejercicio adicional en MySQL Workbench donde implementarás el DDL de un esquema diferente al de TechStyle, evaluando tu capacidad de transferir lo aprendido a un nuevo caso.
+
+El docente entregará el esquema a implementar durante la sesión.

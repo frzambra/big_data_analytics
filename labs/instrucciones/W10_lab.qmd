@@ -1,0 +1,154 @@
+---
+title: "Laboratorio 11: Diccionario de Datos y Configuración de MySQL Workbench"
+subtitle: "Semana 10 · W10 · Unidad 3 · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+## Contexto
+
+Antes de construir la base de datos en MySQL, necesitas dos cosas:
+
+1. **Documentar formalmente** el modelo relacional con un diccionario de datos.
+2. **Instalar y configurar** MySQL Workbench para las sesiones de laboratorio del resto del semestre.
+
+---
+
+## Parte A: Diccionario de Datos (90 min)
+
+### ¿Qué es el Diccionario de Datos?
+
+Es el documento formal que describe cada tabla y cada atributo del modelo relacional. Permite a cualquier desarrollador implementar la base de datos sin ambigüedades.
+
+### Instrucciones
+
+Usando la plantilla Excel `plantilla_diccionario_datos.xlsx` (disponible en la carpeta del laboratorio), completa el diccionario de datos para las **7 tablas** del modelo relacional de TechStyle.
+
+**Para cada atributo, define**:
+
+| Campo | Descripción |
+|---|---|
+| **Nombre** | Nombre exacto de la columna (en snake_case) |
+| **Tipo de dato** | INT, VARCHAR(n), DECIMAL(p,s), DATE, BOOLEAN, TEXT |
+| **Longitud** | Para VARCHAR y DECIMAL; dejar en blanco para los demás |
+| **NULL** | Sí o No |
+| **Default** | Valor por defecto (si aplica) |
+| **Restricción** | PRIMARY KEY, FOREIGN KEY, UNIQUE, CHECK |
+| **Descripción** | Explicación del campo en términos de negocio |
+
+### Referencia: Tipos de Datos en MySQL
+
+| Tipo | Cuándo usarlo | Ejemplo |
+|---|---|---|
+| `INT` | Números enteros | `id_cliente`, `stock`, `cantidad` |
+| `DECIMAL(10,2)` | Valores monetarios | `precio`, `total`, `monto_devolucion` |
+| `VARCHAR(n)` | Texto de longitud variable | `nombre VARCHAR(100)`, `email VARCHAR(150)` |
+| `DATE` | Solo fecha (sin hora) | `fecha_pedido`, `fecha_registro` |
+| `DATETIME` | Fecha y hora | Timestamps de transacciones |
+| `BOOLEAN` | Verdadero o falso | `activo`, `verificado` |
+| `TEXT` | Texto largo sin límite definido | `descripcion`, `motivo_devolucion` |
+
+### Tabla de ejemplo: `clientes`
+
+| Atributo | Tipo | Long. | NULL | Default | Restricción | Descripción |
+|---|---|---|---|---|---|---|
+| id_cliente | INT | — | No | AUTO_INCREMENT | PRIMARY KEY | Identificador único del cliente |
+| nombre | VARCHAR | 100 | No | — | — | Nombre completo |
+| email | VARCHAR | 150 | No | — | UNIQUE | Email de contacto y login |
+| telefono | VARCHAR | 20 | Sí | NULL | — | Teléfono de contacto |
+| fecha_registro | DATE | — | No | CURDATE() | — | Fecha de creación del registro |
+| region | VARCHAR | 50 | No | — | — | Región geográfica del cliente |
+
+Completa el mismo formato para las tablas: `zonas`, `repartidores`, `productos`, `pedidos`, `order_items`, `devoluciones`.
+
+---
+
+## Parte B: Instalación y Configuración de MySQL Workbench (60 min)
+
+### Paso 1: Verificar la instalación
+
+MySQL Workbench debería estar instalado en los computadores del laboratorio. Si no está:
+- Windows: Descargar desde el instalador oficial disponible en el servidor del laboratorio.
+- Abrir MySQL Workbench.
+
+### Paso 2: Crear una conexión al servidor local
+
+1. En la pantalla de inicio, hacer clic en **`+`** junto a "MySQL Connections".
+2. Completar los campos:
+   - **Connection Name**: `TechStyle_Local`
+   - **Hostname**: `127.0.0.1`
+   - **Port**: `3306`
+   - **Username**: `root`
+3. Hacer clic en **"Store in Vault"** e ingresar la contraseña.
+4. Hacer clic en **"Test Connection"** → debe aparecer "Successfully made the MySQL connection".
+5. Hacer clic en **OK**.
+
+### Paso 3: Explorar la base de datos de ejemplo `sakila`
+
+Conectarse a `TechStyle_Local` y ejecutar:
+
+```sql
+-- Ver todas las bases de datos disponibles
+SHOW DATABASES;
+
+-- Seleccionar la base de datos sakila
+USE sakila;
+
+-- Ver todas las tablas
+SHOW TABLES;
+
+-- Ver la estructura de la tabla 'film'
+DESCRIBE film;
+
+-- Ver las primeras 10 películas
+SELECT film_id, title, description, release_year, rental_rate
+FROM film
+LIMIT 10;
+```
+
+### Paso 4: Explorar las relaciones en sakila
+
+```sql
+-- Ver cuántas tablas tiene sakila
+SELECT COUNT(*) FROM information_schema.tables
+WHERE table_schema = 'sakila';
+
+-- Ver las FK de sakila (relaciones entre tablas)
+SELECT
+    TABLE_NAME,
+    COLUMN_NAME,
+    REFERENCED_TABLE_NAME,
+    REFERENCED_COLUMN_NAME
+FROM information_schema.KEY_COLUMN_USAGE
+WHERE TABLE_SCHEMA = 'sakila'
+  AND REFERENCED_TABLE_NAME IS NOT NULL;
+```
+
+Responde en tu informe:
+1. ¿Cuántas tablas tiene la base de datos `sakila`?
+2. ¿Qué tabla tiene más relaciones (FK)? ¿Por qué crees que es así?
+3. ¿Qué semejanzas encuentras entre el modelo de `sakila` y el modelo de TechStyle?
+
+---
+
+## Entregable
+
+1. Archivo Excel con el diccionario de datos completo (`lab11_diccionario_apellido1_apellido2.xlsx`).
+2. Captura de pantalla de la conexión exitosa a MySQL Workbench.
+3. Respuestas a las 3 preguntas sobre `sakila` en Word/PDF (`lab11_mysql_apellido1_apellido2.pdf`).
+
+---
+
+## Criterios de evaluación
+
+| Criterio | Puntaje |
+|---|---|
+| Diccionario de datos completo (7 tablas) | 50 pts |
+| Tipos de datos correctamente elegidos | 20 pts |
+| Restricciones correctamente definidas | 15 pts |
+| Exploración de sakila respondida | 15 pts |
+| **Total** | **100 pts** |

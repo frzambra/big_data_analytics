@@ -1,0 +1,126 @@
+---
+title: "Laboratorio 7: Modelo Entidad-Relación en draw.io"
+subtitle: "Semana 6 · W06 · Unidad 2 · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+## Contexto
+
+Con el Caso de Uso definido la semana pasada, el siguiente paso es modelar la **estructura de datos** que necesita el sistema. Construirás el Diagrama Entidad-Relación (ER) completo del sistema TechStyle, incluyendo las entidades nuevas: **Repartidor**, **Zona** y **Devolución**.
+
+Recuerda: *una base de datos es una representación estructurada de la realidad organizacional.*
+
+**Herramienta**: [draw.io](https://draw.io) — usar la notación **Pata de Gallo (Crow's Foot)**.
+
+---
+
+## Especificación de Entidades y Reglas de Negocio
+
+### Entidades a modelar
+
+| Entidad | Descripción |
+|---|---|
+| `Cliente` | Persona que realiza compras en TechStyle |
+| `Pedido` | Orden de compra realizada por un cliente |
+| `Producto` | Artículo disponible en el catálogo |
+| `OrderItem` | Ítem específico dentro de un pedido |
+| `Repartidor` | Persona que realiza las entregas |
+| `Zona` | Área geográfica de cobertura de entrega |
+| `Devolución` | Registro de pedidos devueltos por el cliente |
+
+### Reglas de negocio (cardinalidades)
+
+1. Un cliente puede realizar **muchos** pedidos. Un pedido pertenece a **un solo** cliente.
+2. Un pedido puede contener **muchos** productos. Un producto puede estar en **muchos** pedidos. (→ entidad `OrderItem`)
+3. Cada pedido es asignado a **un solo** repartidor. Un repartidor puede tener **muchos** pedidos asignados.
+4. Cada repartidor cubre **una sola** zona. Una zona puede tener **muchos** repartidores.
+5. Un pedido puede tener **cero o una** devolución. Una devolución corresponde a **un solo** pedido.
+
+---
+
+## Instrucciones
+
+### Paso 1: Definir atributos (20 min)
+
+Antes de diagramar, define los atributos de las 3 entidades nuevas:
+
+**Repartidor**:
+- Atributo identificador (PK): `id_repartidor`
+- Agrega al menos 3 atributos más (nombre, teléfono, etc.)
+
+**Zona**:
+- Atributo identificador (PK): `id_zona`
+- Agrega al menos 2 atributos más
+
+**Devolución**:
+- Atributo identificador (PK): `id_devolucion`
+- Agrega al menos 3 atributos más (fecha, motivo, monto, etc.)
+
+### Paso 2: Construir el diagrama ER en draw.io (70 min)
+
+1. Abrir [draw.io](https://draw.io) → buscar plantilla "Entity Relationship" o usar formas "ER".
+2. Usar la **notación Pata de Gallo (Crow's Foot)**:
+   - Las entidades son rectángulos con el nombre en la parte superior.
+   - Los atributos se listan dentro del rectángulo (indicar PK con subrayado o ícono de llave).
+   - Las líneas de relación usan los símbolos de Crow's Foot para indicar cardinalidad.
+3. Construir progresivamente:
+   - Primero: `Cliente` ↔ `Pedido`.
+   - Luego: `Pedido` ↔ `OrderItem` ↔ `Producto`.
+   - Luego: `Pedido` ↔ `Repartidor` ↔ `Zona`.
+   - Finalmente: `Pedido` ↔ `Devolución`.
+
+### Paso 3: Justificar cardinalidades (30 min)
+
+Para cada relación del diagrama, completa esta tabla:
+
+| Relación | Cardinalidad | Regla de negocio que la justifica |
+|---|---|---|
+| Cliente – Pedido | 1:N | |
+| Pedido – OrderItem | 1:N | |
+| OrderItem – Producto | N:1 | |
+| Pedido – Repartidor | N:1 | |
+| Repartidor – Zona | N:1 | |
+| Pedido – Devolución | 1:0..1 | |
+
+### Paso 4: Revisión de completitud (20 min)
+
+- [ ] Las 7 entidades están presentes en el diagrama.
+- [ ] Cada entidad tiene un identificador único (PK).
+- [ ] Las cardinalidades están correctamente marcadas con Crow's Foot.
+- [ ] La entidad `OrderItem` resuelve la relación N:M entre Pedido y Producto.
+- [ ] La relación opcional (0..1) entre Pedido y Devolución está correctamente marcada.
+- [ ] La tabla de justificación está completa.
+
+---
+
+## Entregable
+
+1. Diagrama ER exportado como **PNG** desde draw.io.
+2. Tabla de justificación de cardinalidades en Word/PDF.
+
+**Subir con el nombre**: `lab7_apellido1_apellido2.png` y `lab7_apellido1_apellido2.pdf`.
+
+---
+
+## Criterios de evaluación
+
+| Criterio | Puntaje |
+|---|---|
+| Las 7 entidades con atributos correctos | 25 pts |
+| Cardinalidades correctas (Crow's Foot) | 35 pts |
+| Entidad `OrderItem` correctamente modelada | 15 pts |
+| Justificación de cardinalidades con reglas de negocio | 25 pts |
+| **Total** | **100 pts** |
+
+---
+
+## Recursos de apoyo
+
+- Silberschatz et al. (2014), Cap. 6: Diseño de bases de datos usando el modelo E-R.
+- Presentación `class_week_7.qmd`.
+- Descripción del caso TechStyle con reglas de negocio (entregada en clase).

@@ -1,0 +1,146 @@
+---
+title: "Laboratorio 8: Preparación y Defensa — Solemne 2"
+subtitle: "Semana 8 · W08 · Unidad 2 · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+## Contexto
+
+Esta es la semana de evaluación de la Unidad 2. El laboratorio tiene dos partes:
+
+1. **Sesión TAL (repaso + presentación entre pares)**: Cada grupo presenta y recibe retroalimentación de sus compañeros.
+2. **Evaluación Solemne 2**: Entrega del informe de analítica de base de datos para TechStyle.
+
+---
+
+## Estructura del Proyecto Final Unidad 2
+
+El informe de tu grupo debe incluir los siguientes entregables, elaborados durante W04–W07:
+
+| Componente | Elaborado en | Descripción |
+|---|---|---|
+| Diagrama de Caso de Uso | W04 | Actores y casos de uso del módulo de pedidos |
+| Diagrama UML de Clases | W05 | 7 clases con atributos, métodos y relaciones |
+| Modelo Entidad-Relación | W06 | ER completo con cardinalidades justificadas |
+| Modelo Relacional | W07 | Tablas con PK, FK y dominios de atributos |
+| Informe escrito | Acumulado | Justificación de decisiones + ética |
+
+---
+
+## Parte A: Sesión de Presentación entre Pares (TAL – 50 min)
+
+### Formato de presentación
+
+**Cada grupo tiene 10 minutos**:
+
+1. **2 min**: Presentar el problema de negocio que resuelve su diseño.
+2. **3 min**: Recorrido por Caso de Uso y UML — ¿qué decisiones de diseño tomaron?
+3. **3 min**: Demostración del ER y el Modelo Relacional.
+4. **2 min**: Retroalimentación del grupo evaluador.
+
+### Guía para la retroalimentación entre pares
+
+Mientras el grupo presenta, evalúa con esta rúbrica rápida:
+
+| Criterio | Sí / No / Parcial | Comentario |
+|---|---|---|
+| Los actores del Caso de Uso reflejan los usuarios reales del negocio | | |
+| El UML tiene al menos 6 clases con atributos y métodos definidos | | |
+| Las cardinalidades del ER están justificadas con reglas de negocio | | |
+| El Modelo Relacional tiene PK y FK correctas en todas las tablas | | |
+| El diseño permite responder las preguntas del CMI | | |
+
+Escribe **1 fortaleza** y **1 sugerencia de mejora** para compartir al final.
+
+---
+
+## Parte B: Evaluación Solemne 2 (LAB – 100 min)
+
+### Entregables del informe (entrega del grupo)
+
+#### 1. Informe PDF — Analítica de Base de Datos TechStyle
+
+**Estructura del informe** (máximo 8 páginas sin contar diagramas):
+
+**Sección 1 — Contexto del negocio** (1 página):
+- Describir el negocio de TechStyle y el módulo modelado.
+- Identificar los 3 usuarios principales y sus necesidades de información.
+
+**Sección 2 — Diagrama de Caso de Uso** (½ página + diagrama):
+- Incluir el diagrama PNG.
+- Tabla de actores y casos de uso con descripción.
+- Justificar las relaciones `<<include>>` y `<<extend>>` elegidas.
+
+**Sección 3 — Diagrama UML de Clases** (½ página + diagrama):
+- Incluir el diagrama PNG.
+- Explicar por qué `OrderItem` es una clase separada y no un atributo de `Pedido`.
+
+**Sección 4 — Modelo Entidad-Relación** (½ página + diagrama):
+- Incluir el diagrama PNG.
+- Tabla de cardinalidades con regla de negocio que la justifica (una fila por relación).
+
+**Sección 5 — Modelo Relacional** (2 páginas):
+- Definición formal de todas las tablas (nombre, atributos, tipos, PK, FK).
+- Tabla de dominios para `clientes`, `pedidos` y `order_items`.
+- Responder: ¿Qué pasa si se intenta eliminar un cliente con pedidos activos?
+
+**Sección 6 — Consideraciones éticas** (½ página):
+- ¿Qué datos de clientes requieren protección especial?
+- ¿Cómo aplica el principio de mínimo privilegio al modelo relacional?
+
+**Sección 7 — Conclusión** (½ página):
+- ¿El diseño permite alimentar el CMI de TechStyle? ¿Qué KPI de cada perspectiva podría calcularse con los datos modelados?
+
+#### 2. Archivos de diagramas (PNG)
+
+- `solemne2_caso_uso_grupo_N.png`
+- `solemne2_uml_grupo_N.png`
+- `solemne2_er_grupo_N.png`
+- `solemne2_relacional_grupo_N.png`
+
+---
+
+## Rúbrica de Evaluación — Solemne 2
+
+| Criterio | Ponderación |
+|---|---|
+| Diagrama de Caso de Uso (corrección y completitud) | 15% |
+| Diagrama UML de Clases (clases, atributos, métodos, relaciones) | 20% |
+| Modelo ER (entidades, cardinalidades, justificación) | 25% |
+| Modelo Relacional (PK, FK, dominios, integridad referencial) | 25% |
+| Informe: consideraciones éticas y conexión con CMI | 15% |
+| **Total** | **100%** |
+
+---
+
+## Ponderación Solemne 2
+
+| Componente | % del total del curso |
+|---|---|
+| Control parcial acumulado W05–W07 | 10% |
+| Informe + diagramas (este entregable) | 25% |
+| **Total Solemne 2** | **35%** |
+
+---
+
+## Preguntas de Defensa Posibles
+
+El docente puede hacer alguna de estas preguntas durante la presentación:
+
+- ¿Por qué eligieron esa cardinalidad entre `Pedido` y `Repartidor`?
+- ¿Qué pasa si se elimina un `Producto` que tiene registros en `order_items`?
+- ¿Pueden agregar una entidad `Cupón de Descuento` sin romper el modelo relacional? ¿Dónde iría la FK?
+- ¿El modelo relacional que diseñaron está en 3FN? ¿Por qué?
+
+---
+
+## Recursos para la Presentación
+
+- Diagramas elaborados en W04–W07 (draw.io PNG).
+- Notas de los labs anteriores.
+- Rúbrica de evaluación (esta página).

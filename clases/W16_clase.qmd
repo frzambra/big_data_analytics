@@ -1,0 +1,252 @@
+---
+title: "Vistas SQL e Integración con el CMI"
+subtitle: "Semana 16 · W16 · Unidad 3 · Big Data y Analytics"
+author: "Universidad San Sebastián"
+date: "Julio 2026"
+format:
+  revealjs:
+    theme: default
+    incremental: false
+    slide-number: true
+    footer: "Big Data y Analytics · USS · 2026"
+---
+
+## ¿Qué Vimos la Semana Pasada?
+
+::: {.incremental}
+- Las **transacciones** garantizan que un conjunto de operaciones se ejecute como unidad indivisible.
+- Propiedades **ACID**: Atomicidad, Consistencia, Aislamiento, Durabilidad.
+- `START TRANSACTION`, `COMMIT`, `ROLLBACK`, `SAVEPOINT`.
+:::
+
+::: {.fragment}
+**Hoy**: Cerramos el círculo del semestre. Crearemos **vistas SQL** que alimentan directamente el CMI que diseñamos en la Semana 3.
+:::
+
+---
+
+## El Círculo Completo del Semestre
+
+```
+Unidad 1: Sistemas de Información
+    ↓ Decisión → Información → Datos → SI
+Unidad 2: Diseño (Caso de Uso → UML → ER → Relacional)
+    ↓ Modelo formal del negocio
+Unidad 3: Construcción (Normalización → DDL → DML → Transacciones)
+    ↓ Base de datos operativa
+Hoy: Vistas SQL → Puente entre la BD y el CMI
+    ↓
+CMI de TechStyle alimentado con datos reales
+```
+
+---
+
+## ¿Qué es una Vista SQL?
+
+::: {.incremental}
+- Una **vista** es una consulta guardada que se comporta como una tabla virtual.
+- No almacena datos: cada vez que se consulta, ejecuta la consulta subyacente.
+- Permite **encapsular consultas complejas** y reutilizarlas con un nombre simple.
+:::
+
+::: {.fragment}
+```sql
+-- Crear una vista
+CREATE VIEW nombre_vista AS
+    SELECT ... FROM ... JOIN ... WHERE ...;
+
+-- Consultar la vista (igual que una tabla)
+SELECT * FROM nombre_vista;
+```
+:::
+
+---
+
+## Ventajas de las Vistas
+
+| Beneficio | Descripción |
+|---|---|
+| **Simplicidad** | El analista de Power BI consulta `vw_ventas_mes` en vez de un JOIN complejo de 4 tablas |
+| **Seguridad** | Se puede dar acceso a la vista pero no a las tablas originales |
+| **Reutilización** | La misma consulta compleja usada por múltiples sistemas |
+| **Abstracción** | Cambios en la BD se reflejan automáticamente en la vista |
+
+---
+
+## Vista 1: KPI — Ventas por Categoría (Perspectiva Financiera del CMI)
+
+```sql
+CREATE VIEW vw_kpi_ventas_categoria AS
+SELECT
+    pr.categoria,
+    SUM(oi.cantidad * oi.precio_unitario) AS ventas_totales,
+    COUNT(DISTINCT p.id_pedido)           AS num_pedidos,
+    MONTH(p.fecha_pedido)                 AS mes,
+    YEAR(p.fecha_pedido)                  AS anio
+FROM order_items oi
+INNER JOIN pedidos   p  ON oi.id_pedido   = p.id_pedido
+INNER JOIN productos pr ON oi.id_producto = pr.id_producto
+WHERE p.estado = 'entregado'
+GROUP BY pr.categoria, YEAR(p.fecha_pedido), MONTH(p.fecha_pedido);
+```
+
+---
+
+## Vista 2: KPI — Ticket Promedio por Región (Perspectiva Cliente)
+
+```sql
+CREATE VIEW vw_kpi_ticket_por_region AS
+SELECT
+    c.region,
+    COUNT(p.id_pedido)  AS total_pedidos,
+    AVG(p.total)        AS ticket_promedio,
+    SUM(p.total)        AS ingresos_totales
+FROM pedidos p
+INNER JOIN clientes c ON p.id_cliente = c.id_cliente
+WHERE p.estado = 'entregado'
+GROUP BY c.region
+ORDER BY ingresos_totales DESC;
+```
+
+---
+
+## Vista 3: KPI — Tasa de Devolución (Perspectiva Procesos)
+
+```sql
+CREATE VIEW vw_kpi_tasa_devolucion AS
+SELECT
+    COUNT(DISTINCT d.id_devolucion) AS total_devoluciones,
+    COUNT(DISTINCT p.id_pedido)     AS total_pedidos,
+    ROUND(
+        COUNT(DISTINCT d.id_devolucion) * 100.0 /
+        NULLIF(COUNT(DISTINCT p.id_pedido), 0), 2
+    ) AS tasa_devolucion_pct
+FROM pedidos p
+LEFT JOIN devoluciones d ON p.id_pedido = d.id_pedido
+WHERE p.estado IN ('entregado', 'cancelado');
+```
+
+---
+
+## Vista 4: KPI — Clientes Inactivos (Perspectiva Aprendizaje)
+
+```sql
+CREATE VIEW vw_kpi_clientes_inactivos AS
+SELECT
+    c.id_cliente,
+    c.nombre,
+    c.email,
+    c.region,
+    MAX(p.fecha_pedido) AS ultimo_pedido,
+    DATEDIFF(CURDATE(), MAX(p.fecha_pedido)) AS dias_sin_comprar
+FROM clientes c
+LEFT JOIN pedidos p ON c.id_cliente = p.id_cliente
+GROUP BY c.id_cliente, c.nombre, c.email, c.region
+HAVING dias_sin_comprar > 60
+    OR MAX(p.fecha_pedido) IS NULL
+ORDER BY dias_sin_comprar DESC;
+```
+
+---
+
+## Consumir las Vistas desde Power BI
+
+Las vistas de MySQL se conectan directamente a Power BI Desktop:
+
+::: {.incremental}
+1. Power BI → "Obtener datos" → "MySQL Database".
+2. Servidor: `127.0.0.1`, Base de datos: `techstyle_db`.
+3. Seleccionar las vistas `vw_kpi_*`.
+4. Construir el CMI con las mismas vistas definidas en la Semana 3.
+:::
+
+::: {.fragment}
+**El CMI ahora está alimentado por datos reales de la base de datos que construyeron.**
+:::
+
+---
+
+## Modificar y Eliminar Vistas
+
+```sql
+-- Modificar una vista existente
+CREATE OR REPLACE VIEW vw_kpi_ventas_categoria AS
+    SELECT ... ; -- nueva definición
+
+-- Eliminar una vista
+DROP VIEW IF EXISTS vw_kpi_ventas_categoria;
+
+-- Ver todas las vistas de la base de datos
+SHOW FULL TABLES WHERE TABLE_TYPE = 'VIEW';
+```
+
+---
+
+## Sesión de Trabajo: Proyecto Final
+
+**Hoy es la última sesión de trabajo antes de la defensa**:
+
+::: {.incremental}
+1. Crear las 4 vistas del CMI de TechStyle.
+2. Verificar que cada vista devuelve resultados coherentes con los datos insertados.
+3. Avanzar en el informe escrito del proyecto.
+4. El docente realizará revisiones individuales de avance.
+:::
+
+::: {.fragment}
+**Entregables del proyecto final** (defensa Semana 17):
+1. Modelo ER normalizado. 2. DDL completo. 3. Datos cargados. 4. Consultas analíticas. 5. Vistas del CMI. 6. Informe + defensa oral.
+:::
+
+---
+
+## Síntesis del Semestre: Del SI a la BD Analítica
+
+| Semana | Hito |
+|---|---|
+| 1–4 | Sistemas de Información y toma de decisiones |
+| 5 | Solemne 1 |
+| 6–8 | Diseño: Caso de Uso, UML, ER, Modelo Relacional |
+| 9 | Solemne 2 |
+| 10 | Normalización |
+| 11 | Diccionario de datos + MySQL |
+| 12–13 | DDL + DML |
+| 14 | Consultas avanzadas |
+| 15 | Transacciones |
+| **16** | **Vistas + integración CMI** |
+| 16 | Vistas SQL + CMI + **Solemne 3** |
+
+---
+
+## Para el Laboratorio de Hoy
+
+**Lab 16**: Crear las vistas del CMI y avanzar en el proyecto final.
+
+1. Implementar las 4 vistas `vw_kpi_*` en `techstyle_db`.
+2. Verificar los resultados de cada vista.
+3. (Optativo) Conectar una vista a Power BI para visualizar el CMI.
+4. Avanzar en el informe escrito.
+
+::: {.fragment}
+**Próxima semana**: Defensa oral del proyecto final.
+
+Revisar la rúbrica y asegurarse de que todos los entregables están completos.
+:::
+
+---
+
+## Solemne 3 — Evaluación Final del Semestre
+
+**Esta sesión cierra con la evaluación Solemne 3.**
+
+::: {.incremental}
+- **Ponderación**: 35% de la nota final.
+  - Control parcial acumulado (semanas 11–15): 10%
+  - **Proyecto grupal `techstyle_db` + defensa oral**: 25%
+- **Formato**: Presentación y defensa en MySQL Workbench (15 min por grupo).
+- **Entregables**: Modelo ER, DDL completo, datos cargados, consultas analíticas, vistas CMI, informe escrito.
+:::
+
+::: {.fragment}
+**Éxito depende de**: Demostrar que los datos que construyeron permiten tomar mejores decisiones para TechStyle.
+:::

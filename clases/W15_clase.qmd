@@ -1,0 +1,244 @@
+---
+title: "Gestión de Transacciones: Propiedades ACID"
+subtitle: "Semana 15 · W15 · Unidad 3 · Big Data y Analytics"
+author: "Universidad San Sebastián"
+date: "Julio 2026"
+format:
+  revealjs:
+    theme: default
+    incremental: false
+    slide-number: true
+    footer: "Big Data y Analytics · USS · 2026"
+---
+
+## ¿Qué Vimos la Semana Pasada?
+
+::: {.incremental}
+- **JOIN**: combinar tablas para consultas complejas.
+- **Funciones de agregación**: `COUNT`, `SUM`, `AVG`, `MAX`, `MIN`.
+- **GROUP BY** y **HAVING**: agrupar y filtrar grupos.
+- **Subconsultas**: consultas anidadas dentro de otras.
+:::
+
+::: {.fragment}
+**Hoy**: ¿Qué pasa cuando una operación falla a la mitad? ¿Cómo protege MySQL la integridad de los datos?
+:::
+
+---
+
+## El Escenario del Horror: TechStyle a Medianoche
+
+**Situación**:
+
+Un cliente paga un pedido de $85.000. El sistema debe:
+
+::: {.incremental}
+1. Registrar el pedido en `pedidos`.
+2. Registrar los ítems en `order_items`.
+3. Descontar el stock en `productos`.
+4. Registrar el pago.
+:::
+
+::: {.fragment}
+**¿Qué pasa si el servidor falla después del paso 2, pero antes del paso 3?**
+
+→ El pedido existe, pero el stock no fue descontado. El mismo producto puede venderse dos veces.
+:::
+
+---
+
+## ¿Qué es una Transacción?
+
+::: {.incremental}
+- Una **transacción** es un conjunto de operaciones SQL que se ejecutan como una **unidad indivisible**.
+- O se ejecutan **todas** con éxito (COMMIT) o no se ejecuta **ninguna** (ROLLBACK).
+- Es el mecanismo que garantiza la integridad de datos en operaciones críticas.
+:::
+
+::: {.fragment}
+**Analogía**: Una transferencia bancaria. O el dinero sale de una cuenta Y llega a la otra, o no pasa nada. Nunca el dinero "desaparece en el camino".
+:::
+
+---
+
+## Propiedades ACID
+
+| Propiedad | Descripción |
+|---|---|
+| **Atomicidad** | Todas las operaciones ocurren o ninguna ocurre. |
+| **Consistencia** | La base de datos pasa de un estado válido a otro estado válido. |
+| **Aislamiento** | Las transacciones concurrentes no se interfieren entre sí. |
+| **Durabilidad** | Una vez confirmada (COMMIT), la transacción persiste aunque falle el servidor. |
+
+::: {.fragment}
+**ACID = la garantía de que los datos de TechStyle siempre son confiables.**
+:::
+
+---
+
+## Comandos de Gestión de Transacciones
+
+| Comando | Acción |
+|---|---|
+| `START TRANSACTION` | Inicia la transacción |
+| `COMMIT` | Confirma y hace permanentes todos los cambios |
+| `ROLLBACK` | Deshace todos los cambios desde `START TRANSACTION` |
+| `SAVEPOINT nombre` | Marca un punto intermedio al que se puede volver |
+| `ROLLBACK TO SAVEPOINT` | Vuelve al punto marcado sin deshacer todo |
+
+---
+
+## Transacción 1: Registro de Pedido + Descuento de Stock
+
+```sql
+START TRANSACTION;
+
+-- Paso 1: Registrar el pedido
+INSERT INTO pedidos (fecha_pedido, total, estado, id_cliente)
+VALUES (CURDATE(), 85000.00, 'pendiente', 3);
+
+SET @nuevo_pedido = LAST_INSERT_ID();
+
+-- Paso 2: Registrar los ítems
+INSERT INTO order_items (id_pedido, id_producto, cantidad, precio_unitario)
+VALUES (@nuevo_pedido, 1, 1, 45000.00),
+       (@nuevo_pedido, 2, 3, 12000.00);
+
+-- Paso 3: Descontar el stock
+UPDATE productos SET stock = stock - 1 WHERE id_producto = 1;
+UPDATE productos SET stock = stock - 3 WHERE id_producto = 2;
+
+-- Si todo salió bien, confirmar
+COMMIT;
+```
+
+---
+
+## Transacción con ROLLBACK: Simulando un Fallo
+
+```sql
+START TRANSACTION;
+
+INSERT INTO pedidos (fecha_pedido, total, estado, id_cliente)
+VALUES (CURDATE(), 45000.00, 'pendiente', 1);
+
+SET @id_pedido = LAST_INSERT_ID();
+
+-- Verificar que el producto tiene stock suficiente
+SELECT stock INTO @stock_actual FROM productos WHERE id_producto = 1;
+
+-- Si no hay stock, cancelar toda la operación
+-- (en una aplicación real, esto lo maneja el lenguaje de programación)
+-- Para demostración, hacemos ROLLBACK manual:
+ROLLBACK;
+
+-- Verificar: el pedido NO debe haberse registrado
+SELECT * FROM pedidos WHERE id_pedido = @id_pedido;
+```
+
+---
+
+## Transacción 2: Cancelación de Pedido con Reembolso de Stock
+
+```sql
+START TRANSACTION;
+
+-- Cambiar estado del pedido a 'cancelado'
+UPDATE pedidos
+SET estado = 'cancelado'
+WHERE id_pedido = 5;
+
+-- Devolver el stock de todos los ítems del pedido
+UPDATE productos pr
+INNER JOIN order_items oi ON pr.id_producto = oi.id_producto
+SET pr.stock = pr.stock + oi.cantidad
+WHERE oi.id_pedido = 5;
+
+-- Registrar la devolución
+INSERT INTO devoluciones (fecha, motivo, monto, id_pedido)
+VALUES (CURDATE(), 'Cancelación solicitada por cliente', 85000.00, 5);
+
+COMMIT;
+```
+
+---
+
+## SAVEPOINT: Puntos de Control Intermedios
+
+```sql
+START TRANSACTION;
+
+INSERT INTO pedidos (...) VALUES (...);
+SAVEPOINT despues_de_pedido;
+
+INSERT INTO order_items (...) VALUES (...);
+SAVEPOINT despues_de_items;
+
+-- Si falla el descuento de stock, volver solo a este punto
+UPDATE productos SET stock = stock - 1 WHERE id_producto = 1;
+
+-- Si detectamos un problema aquí:
+ROLLBACK TO SAVEPOINT despues_de_items;
+-- Solo se deshace lo que vino después de ese savepoint
+
+COMMIT;
+```
+
+---
+
+## ¿Por Qué las Transacciones son Críticas para TechStyle?
+
+::: {.incremental}
+- **Sin transacciones**: Un fallo de red a las 2 AM puede dejar pedidos registrados sin stock descontado → productos fantasma vendidos → pérdidas económicas reales.
+- **Con transacciones ACID**: Si algo falla, la base de datos vuelve al estado anterior automáticamente.
+- **Impacto en el CMI**: Los datos del CMI son confiables porque cada operación es atómica.
+:::
+
+---
+
+## Actividad: Implementar Transacciones para TechStyle
+
+**En MySQL Workbench** (Lab 15):
+
+::: {.incremental}
+1. **Transacción A**: Registro de pedido + descuento de stock.
+2. **Transacción B**: Actualización de estado de entrega del pedido.
+3. **Transacción C**: Cancelación de pedido con reembolso de stock.
+4. Simular un fallo en cada una y verificar el ROLLBACK.
+:::
+
+---
+
+## Evaluación Formativa
+
+**Preguntas de reflexión** (discutir en parejas):
+
+::: {.incremental}
+- ¿En qué operaciones de TechStyle es indispensable usar transacciones?
+- ¿Qué podría ocurrir si dos repartidores intentan tomar el mismo pedido simultáneamente? ¿Cómo lo resolvería una transacción?
+- ¿Por qué la propiedad de **Durabilidad** es especialmente importante en un e-commerce que opera 24/7?
+:::
+
+---
+
+## Conexión con la Toma de Decisiones
+
+::: {.incremental}
+- Las transacciones garantizan que el CMI siempre muestre datos que reflejan el estado real del negocio.
+- Un gerente que toma decisiones basadas en datos incorrectos (por falta de control transaccional) puede hacer inversiones equivocadas.
+- **La integridad de datos no es un tema técnico: es un tema de confianza en la información.**
+:::
+
+---
+
+## Para el Laboratorio de Hoy
+
+**Lab 15**: Implementar transacciones ACID en MySQL Workbench.
+
+- 3 transacciones completas para procesos críticos de TechStyle.
+- Simulación de fallos y verificación del ROLLBACK.
+- Redactar un análisis breve: ¿por qué las transacciones son críticas para TechStyle?
+
+::: {.fragment}
+**Para la próxima semana**: Vistas SQL y cierre del semestre — integrar la base de datos con el CMI diseñado en la Unidad 1.
+:::

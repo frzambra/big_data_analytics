@@ -1,0 +1,130 @@
+---
+title: "Laboratorio 2: Dashboards por Nivel Organizacional y Auditoría de Calidad"
+subtitle: "Semana 2 · W02 · Unidad 1 · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+## Contexto
+
+Este laboratorio integra dos actividades de la Semana 2:
+
+1. **Parte A** (Lab original Semana 2): Construir tres dashboards en Power BI para distintos niveles organizacionales de TechStyle.
+2. **Parte B** (Lab original Semana 3): Auditar la calidad de datos con Power Query y construir el CMI de TechStyle.
+
+Ambas actividades usan los mismos archivos de datos: `techstyle_orders.csv` y `techstyle_customers_dirty.csv`.
+
+**Tiempo total**: 2 horas 30 minutos.
+
+---
+
+## Parte A: Tres Dashboards, Tres Usuarios (60 min)
+
+### Contexto de Parte A
+
+El mismo dataset de TechStyle debe presentarse de forma radicalmente distinta según quién lo consume:
+
+- **Sofía** (repartidora): necesita saber sus pedidos del día, la dirección y el estado.
+- **Juan** (analista): necesita ver tendencias semanales de ventas por categoría y zona.
+- **Roberto** (CEO): necesita los KPIs financieros del mes de un vistazo.
+
+### Instrucciones
+
+1. Abrir Power BI Desktop.
+2. Cargar `techstyle_orders.csv` y `techstyle_customers_dirty.csv`.
+3. Construir **3 páginas** en el mismo archivo `.pbix`, una por usuario:
+
+**Página 1 — Vista de Sofía (Operativa)**:
+- Tabla con columnas: `id_pedido`, `fecha`, `producto`, `estado`, `dirección`.
+- Filtro de fecha = hoy (o semana actual).
+- Mapa con las entregas del día.
+
+**Página 2 — Vista de Juan (Táctica)**:
+- Gráfico de barras: ventas por categoría, semana a semana.
+- Tabla de top 10 productos más vendidos de la semana.
+- KPI de pedidos entregados vs. pendientes.
+
+**Página 3 — Vista de Roberto (Estratégica)**:
+- Tarjetas: ventas totales del mes, ticket promedio, tasa de devoluciones.
+- Gráfico de líneas: evolución de ventas mes a mes.
+- Tabla: ventas por región.
+
+### Preguntas de reflexión
+
+1. ¿Qué columnas de `techstyle_orders.csv` son relevantes para Sofía pero irrelevantes para Roberto?
+2. ¿Por qué el mismo dato "total de ventas" se muestra de forma distinta en cada vista?
+3. ¿Qué tipo de SI (TPS, BI, EIS) corresponde a cada vista?
+
+---
+
+## Parte B: Auditoría de Calidad y CMI con Datos Reales (90 min)
+
+### Contexto de Parte B
+
+Antes de construir el CMI, el analista Juan descubrió que `techstyle_customers_dirty.csv` tiene problemas de calidad que afectan directamente los KPIs.
+
+### Paso 1: Abrir Power Query (20 min)
+
+1. En Power BI Desktop → "Transformar datos" → abrir Power Query Editor.
+2. Seleccionar la consulta de `techstyle_customers_dirty`.
+3. Examinar columna por columna buscando problemas.
+
+### Paso 2: Identificar y clasificar problemas (20 min)
+
+Completa esta tabla con al menos 5 problemas:
+
+| Columna | Problema encontrado | Dimensión de calidad | KPI afectado |
+|---|---|---|---|
+| email | Emails con formato inválido (@mail sin dominio) | Exactitud | CRM – segmentación |
+| region | "Stgo.", "Santiago", "RM" para lo mismo | Consistencia | Ventas por región |
+| | | | |
+| | | | |
+| | | | |
+
+### Paso 3: Limpiar los datos en Power Query (30 min)
+
+Aplica al menos 3 transformaciones:
+
+```
+- Texto.MayúscMinú() en nombres para estandarizar capitalización
+- Reemplazar "Stgo." → "Metropolitana" en columna region
+- Eliminar filas con email vacío (filtrar nulls)
+- Recortar espacios en blanco con Texto.Recortar()
+```
+
+### Paso 4: Construir el CMI en Power BI (20 min)
+
+Usando los datos limpios, construir una página "CMI TechStyle" con:
+
+| Perspectiva | KPI | Visualización |
+|---|---|---|
+| Financiera | Ventas totales del mes | Tarjeta |
+| Cliente | Número de clientes activos | Tarjeta |
+| Procesos | % pedidos entregados a tiempo | Medidor (gauge) |
+| Aprendizaje | Nuevos clientes registrados este mes | Tarjeta |
+
+**Pregunta final**: ¿Cuál de los 4 KPIs del CMI está afectado por los problemas de calidad que encontraste? ¿Cómo cambia el valor del KPI antes y después de la limpieza?
+
+---
+
+## Entregable
+
+1. Archivo `lab2_apellido1_apellido2.pbix` con las 3 páginas de dashboard y la página de CMI.
+2. Tabla de problemas de calidad (Word/PDF) con mínimo 5 entradas.
+3. Respuestas a las preguntas de reflexión (incluir en el PDF).
+
+---
+
+## Criterios de evaluación
+
+| Criterio | Puntaje |
+|---|---|
+| 3 dashboards diferenciados por nivel organizacional | 30 pts |
+| Tabla de problemas de calidad (5 entradas correctas) | 25 pts |
+| Limpieza en Power Query (3+ transformaciones) | 25 pts |
+| CMI con 4 KPIs y respuesta a pregunta final | 20 pts |
+| **Total** | **100 pts** |

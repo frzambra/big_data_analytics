@@ -1,0 +1,139 @@
+---
+title: "Laboratorio 5: Diagrama UML de Clases en draw.io"
+subtitle: "Semana 5 · W05 · Unidad 2 · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+## Contexto
+
+La semana pasada construiste el Diagrama de Caso de Uso del módulo de pedidos de TechStyle. Ahora el equipo de desarrollo necesita entender **cómo está estructurado internamente** el sistema: qué clases existen, qué atributos tienen y cómo se relacionan.
+
+Tu tarea es construir el **Diagrama UML de Clases** completo para TechStyle.
+
+**Herramienta**: [draw.io](https://draw.io) — sin instalación.
+
+**Tiempo disponible**: 2 horas 30 minutos.
+
+---
+
+## Especificación de Clases
+
+El sistema TechStyle tiene las siguientes clases identificadas a partir del Caso de Uso:
+
+| Clase | Descripción |
+|---|---|
+| `Cliente` | Persona que realiza compras. Puede registrarse, hacer pedidos y solicitar devoluciones. |
+| `Pedido` | Transacción de compra realizada por un cliente. Tiene estado y un total calculado. |
+| `Producto` | Artículo disponible en el catálogo de TechStyle. Tiene stock y precio. |
+| `OrderItem` | Ítem individual dentro de un pedido. Asocia un Pedido con un Producto. |
+| `Repartidor` | Empleado que realiza las entregas. Cubre una zona geográfica. |
+| `Zona` | Área geográfica de cobertura de entregas. |
+| `Devolución` | Registro de un pedido devuelto por el cliente. Opcional (no todos los pedidos tienen una). |
+
+---
+
+## Instrucciones
+
+### Paso 1: Definir atributos y métodos (30 min)
+
+Antes de abrir draw.io, completa esta tabla para cada clase:
+
+**Clase `Pedido`**:
+
+| Atributo/Método | Tipo | Visibilidad | Descripción |
+|---|---|---|---|
+| id_pedido | int | - (privado) | Identificador único |
+| fecha_pedido | Date | - | Fecha de creación |
+| total | Decimal | - | Monto total del pedido |
+| estado | String | - | pendiente / en_camino / entregado / cancelado |
+| + calcularTotal() | Decimal | + (público) | Suma los precios de todos los OrderItems |
+| + cambiarEstado(e: String) | void | + | Actualiza el estado del pedido |
+
+Completa el mismo formato para: `Cliente`, `Producto`, `OrderItem`, `Repartidor`, `Zona`, `Devolución`.
+
+**Regla**: Cada clase debe tener mínimo 4 atributos y 2 métodos.
+
+### Paso 2: Definir relaciones y cardinalidades (20 min)
+
+Completa la tabla de relaciones:
+
+| Clase A | Relación | Cardinalidad | Clase B | Justificación |
+|---|---|---|---|---|
+| Cliente | Asociación | 1 — 0..* | Pedido | Un cliente puede tener cero o muchos pedidos |
+| Pedido | Composición | 1 — 1..* | OrderItem | Un pedido necesita al menos un ítem; si el pedido se elimina, los ítems también |
+| OrderItem | Asociación | 0..* — 1 | Producto | Un ítem hace referencia a un producto |
+| Repartidor | Asociación | 0..* — 1 | Zona | Muchos repartidores pueden operar en la misma zona |
+| Pedido | Asociación | 0..* — 1 | Repartidor | Muchos pedidos pueden asignarse al mismo repartidor |
+| Pedido | Composición | 1 — 0..1 | Devolución | Un pedido puede tener cero o una devolución |
+
+### Paso 3: Construir el diagrama en draw.io (60 min)
+
+1. Ir a [draw.io](https://draw.io) → Crear nuevo → Blank.
+2. En la barra de búsqueda, buscar "class" para encontrar las formas UML.
+3. Para cada clase, crear un rectángulo de 3 compartimentos:
+   - Superior: nombre de la clase (en negrita).
+   - Medio: atributos con visibilidad (`-` privado, `+` público) y tipo.
+   - Inferior: métodos con visibilidad, parámetros y tipo de retorno.
+4. Conectar las clases con las líneas de relación correctas:
+   - Asociación → línea sólida.
+   - Composición → línea sólida con diamante relleno (◆) en el lado del todo.
+   - Agregar las cardinalidades en los extremos de cada línea.
+
+**Distribución sugerida en el canvas**:
+- Centro: `Pedido` (es la clase más relacionada).
+- Izquierda: `Cliente`.
+- Derecha: `Repartidor` + `Zona`.
+- Abajo: `OrderItem` + `Producto`.
+- Arriba-derecha: `Devolución`.
+
+### Paso 4: Verificación (20 min)
+
+Usa esta lista antes de exportar:
+
+- [ ] Las 7 clases están presentes.
+- [ ] Cada clase tiene al menos 4 atributos con visibilidad y tipo.
+- [ ] Cada clase tiene al menos 2 métodos.
+- [ ] Todas las relaciones están correctamente dibujadas (tipo + cardinalidad).
+- [ ] La composición entre `Pedido` y `OrderItem` usa diamante relleno.
+- [ ] Las cardinalidades coinciden con las reglas de negocio.
+- [ ] El diagrama es legible (sin elementos superpuestos).
+
+### Paso 5: Documentación (20 min)
+
+En un documento Word/PDF:
+1. Tabla de clases con descripción de negocio de cada atributo.
+2. Justificación de cada tipo de relación (¿por qué composición y no asociación entre Pedido y OrderItem?).
+3. Responde: ¿Qué diferencia hay entre el diagrama UML de clases y el diagrama ER que harás la semana que viene?
+
+---
+
+## Entregable
+
+1. Diagrama UML exportado como **PNG** desde draw.io (`lab5_apellido1_apellido2.png`).
+2. Documento de documentación en PDF (`lab5_apellido1_apellido2.pdf`).
+
+---
+
+## Criterios de evaluación
+
+| Criterio | Puntaje |
+|---|---|
+| 7 clases con atributos (visibilidad + tipo) | 25 pts |
+| Métodos definidos para cada clase | 20 pts |
+| Relaciones correctas (tipo de línea + cardinalidad) | 30 pts |
+| Composición vs. asociación correctamente diferenciada | 10 pts |
+| Documentación y justificación | 15 pts |
+| **Total** | **100 pts** |
+
+---
+
+## Recursos de apoyo
+
+- Presentación `W05_clase.qmd`.
+- Silberschatz et al. (2014), Cap. 6 — introducción al modelamiento.
+- Oz (2008), Cap. 5.

@@ -1,0 +1,128 @@
+---
+title: "Presentación y Defensa – Solemne 2"
+subtitle: "Semana 8 · W08 · Unidad 2 · Big Data y Analytics"
+author: "Universidad San Sebastián"
+date: "Mayo 2026"
+format:
+  revealjs:
+    theme: default
+    incremental: false
+    slide-number: true
+    footer: "Big Data y Analytics · USS · 2026"
+---
+
+## Síntesis de la Unidad 2
+
+::: {.incremental}
+- **Semana 6**: Diagrama de Caso de Uso y esquema UML. Levantamiento de requerimientos.
+- **Semana 7**: Modelo Entidad-Relación. Entidades, atributos, relaciones y cardinalidades.
+- **Semana 8**: Modelo Relacional. Transformación ER → tablas con PK y FK. Integridad referencial.
+:::
+
+::: {.fragment}
+**Hoy**: Presentación grupal y entrega de la Solemne 2.
+:::
+
+---
+
+## Estructura del Entregable — Solemne 2
+
+**Informe de Analítica de Base de Datos para TechStyle**:
+
+::: {.incremental}
+1. **Diagrama de Caso de Uso**: Actores y casos de uso del módulo de pedidos.
+2. **Esquema UML**: Clases, atributos y relaciones.
+3. **Modelo Entidad-Relación**: Diagrama completo con cardinalidades justificadas.
+4. **Modelo Relacional**: Tablas con PK, FK y restricciones de dominio.
+5. **Informe**: Justificación de decisiones de diseño + consideraciones éticas.
+:::
+
+---
+
+## Criterios de Evaluación
+
+| Criterio | Ponderación |
+|---|---|
+| Diagrama de Caso de Uso (corrección y completitud) | 20% |
+| Esquema UML (clases, atributos, relaciones) | 20% |
+| Modelo ER (entidades, cardinalidades, justificación) | 25% |
+| Modelo Relacional (PK, FK, integridad referencial) | 25% |
+| Informe y presentación oral | 10% |
+
+::: {.fragment}
+**Ponderación Solemne 2**: Control parcial 2 (10%) + Analítica de base de datos (25%) = **35% total**.
+:::
+
+---
+
+## Dinámica de la Presentación
+
+**Formato por grupo** (10 minutos):
+
+::: {.incremental}
+1. **2 min**: Contexto del diseño — ¿qué problema de negocio resuelve?
+2. **3 min**: Recorrido por el Caso de Uso y el UML.
+3. **3 min**: Demostración del modelo ER y el modelo relacional.
+4. **2 min**: Preguntas del docente y retroalimentación entre pares.
+:::
+
+---
+
+## Preguntas de Defensa Posibles
+
+::: {.incremental}
+- ¿Por qué eligieron esa cardinalidad entre Pedido y Repartidor?
+- ¿Qué pasa si se elimina un cliente que tiene pedidos activos?
+- ¿Cómo garantiza su modelo que no se puede registrar un pedido con un producto que no existe?
+- ¿Qué entidad nueva agregarían si TechStyle quisiera implementar cupones de descuento?
+:::
+
+::: {.notes}
+Elegir 1–2 preguntas por grupo según el diseño que presenten. El objetivo es evaluar el razonamiento, no la memorización.
+:::
+
+---
+
+## Retroalimentación entre Pares
+
+Mientras cada grupo presenta, los demás evalúan con esta guía:
+
+::: {.incremental}
+- ¿El modelo ER refleja fielmente las reglas de negocio de TechStyle?
+- ¿Hay alguna entidad que faltaría para responder preguntas de negocio relevantes?
+- ¿Las cardinalidades están bien definidas y justificadas?
+:::
+
+::: {.fragment}
+**Anotar 1 fortaleza y 1 sugerencia** para compartir al final.
+:::
+
+---
+
+## Cierre de la Unidad 2
+
+::: {.incremental}
+- Pasamos de la realidad del negocio a un **modelo formal** que puede implementarse en una base de datos.
+- El proceso: Requerimientos → Caso de Uso → UML → ER → Relacional.
+- **Sin este diseño previo, la base de datos que construiremos en la Unidad 3 no tendría fundamento**.
+:::
+
+::: {.fragment}
+**Próxima semana**: Unidad 3 — ¿Cómo construimos y optimizamos una base de datos real en MySQL?
+
+→ Teoría de Normalización: primer paso.
+:::
+
+---
+
+## Conexión con la Toma de Decisiones
+
+> "El modelo relacional es el puente entre la realidad de la organización y la capacidad de análisis del sistema."
+
+::: {.fragment}
+Un modelo bien diseñado permite:
+- Consultar datos de forma eficiente.
+- Actualizar sin inconsistencias.
+- Escalar cuando el negocio crece.
+- **Responder las preguntas del CMI que la gerencia necesita**.
+:::

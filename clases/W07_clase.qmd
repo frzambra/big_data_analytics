@@ -1,0 +1,205 @@
+---
+title: "Modelo Relacional: Del ER a las Tablas"
+subtitle: "Semana 7 · W07 · Unidad 2 · Big Data y Analytics"
+author: "Universidad San Sebastián"
+date: "Abril 2026"
+format:
+  revealjs:
+    theme: default
+    incremental: false
+    slide-number: true
+    footer: "Big Data y Analytics · USS · 2026"
+---
+
+## ¿Qué Vimos la Semana Pasada?
+
+::: {.incremental}
+- El **Modelo ER** representa la realidad del negocio como entidades, atributos y relaciones.
+- La **cardinalidad** (1:1, 1:N, N:M) define las reglas de negocio.
+- Las relaciones N:M generan una **entidad asociativa** (tabla intermedia).
+:::
+
+::: {.fragment}
+**Hoy**: ¿Cómo convertimos el diagrama ER en tablas de una base de datos real?
+:::
+
+---
+
+## Del Diagrama al Sistema Real
+
+**El modelo ER es el plano. El modelo relacional es la construcción.**
+
+::: {.incremental}
+- El modelo relacional es la base teórica de bases de datos como MySQL, PostgreSQL y SQL Server.
+- Organiza los datos en **tablas** (relaciones) con filas y columnas.
+- Las **llaves** garantizan la integridad de los datos.
+:::
+
+::: {.fragment}
+**Inventado por Edgar Codd (IBM, 1970)** — fundamento de toda base de datos relacional moderna.
+:::
+
+---
+
+## Conceptos del Modelo Relacional
+
+| Concepto | Descripción |
+|---|---|
+| **Tabla (Relación)** | Conjunto de filas con el mismo esquema |
+| **Fila (Tupla)** | Un registro de datos |
+| **Columna (Atributo)** | Una característica del registro |
+| **Dominio** | Conjunto de valores válidos para un atributo |
+| **Llave Primaria (PK)** | Identifica de forma única cada fila |
+| **Llave Foránea (FK)** | Referencia a la PK de otra tabla |
+
+---
+
+## Reglas de Transformación ER → Relacional
+
+**Regla 1: Entidad → Tabla**
+- Cada entidad del ER se convierte en una tabla.
+- Los atributos de la entidad se convierten en columnas.
+- El identificador único se convierte en la PK.
+
+**Regla 2: Relación 1:N → Llave Foránea**
+- La FK se agrega en la tabla del lado N.
+- Ejemplo: `id_cliente` (FK) en la tabla `Pedidos`.
+
+**Regla 3: Relación N:M → Tabla Intermedia**
+- Se crea una tabla nueva con las PK de ambas entidades como FK.
+- Puede agregar atributos propios de la relación.
+
+---
+
+## Transformación TechStyle: Paso a Paso
+
+**Entidad `Cliente`**:
+```
+clientes(id_cliente PK, nombre, email, telefono, fecha_registro, region)
+```
+
+**Entidad `Pedido`** (con FK a Cliente):
+```
+pedidos(id_pedido PK, fecha_pedido, total, estado, id_cliente FK→clientes)
+```
+
+**Entidad `Producto`**:
+```
+productos(id_producto PK, nombre, categoria, precio, stock)
+```
+
+**Tabla Intermedia `OrderItem`** (N:M entre Pedido y Producto):
+```
+order_items(id_item PK, id_pedido FK→pedidos, id_producto FK→productos, cantidad, precio_unitario)
+```
+
+---
+
+## Continuación: Repartidor, Zona y Devolución
+
+**Entidad `Zona`**:
+```
+zonas(id_zona PK, nombre_zona, region)
+```
+
+**Entidad `Repartidor`** (con FK a Zona):
+```
+repartidores(id_repartidor PK, nombre, telefono, id_zona FK→zonas)
+```
+
+**Tabla `Pedidos` actualizada** (con FK a Repartidor):
+```
+pedidos(id_pedido PK, fecha_pedido, total, estado,
+        id_cliente FK→clientes, id_repartidor FK→repartidores)
+```
+
+**Entidad `Devolución`** (opcional, FK a Pedido):
+```
+devoluciones(id_devolucion PK, fecha, motivo, monto_devuelto, id_pedido FK→pedidos)
+```
+
+---
+
+## Integridad Referencial
+
+**Regla fundamental**: Una FK debe apuntar a una PK que **existe**.
+
+::: {.incremental}
+- No puedo registrar un pedido con `id_cliente = 999` si el cliente 999 no existe.
+- No puedo eliminar un cliente que tiene pedidos asociados (sin antes eliminar o reasignar esos pedidos).
+- Esto se llama **restricción de integridad referencial** y la base de datos la hace cumplir automáticamente.
+:::
+
+::: {.fragment}
+**¿Por qué importa?**: Sin integridad referencial, el CMI puede mostrar ventas de "clientes fantasma".
+:::
+
+---
+
+## Ética en el Diseño Relacional
+
+**Caso**: TechStyle almacena el número de RUT de cada cliente para facturación.
+
+::: {.incremental}
+- ¿Qué nivel de acceso debe tener cada actor del sistema a esta columna?
+- ¿Deben almacenarse datos sensibles en texto plano o cifrados?
+- **Principio de mínimo privilegio**: Cada actor accede solo a los datos que necesita para su función.
+:::
+
+::: {.fragment}
+**Responsabilidad del diseñador**: El modelo relacional define qué datos se guardan y cómo se protegen.
+:::
+
+---
+
+## Verificación: ¿Mi Modelo Relacional es Correcto?
+
+Checklist antes de continuar:
+
+::: {.incremental}
+- [ ] Cada entidad del ER tiene su tabla correspondiente.
+- [ ] Cada tabla tiene una PK definida.
+- [ ] Cada relación 1:N tiene una FK en la tabla correcta.
+- [ ] Cada relación N:M tiene su tabla intermedia.
+- [ ] No hay datos repetidos en columnas múltiples (ejemplo: `producto1`, `producto2`).
+- [ ] Ninguna columna tiene valores compuestos (ejemplo: `"nombre apellido"` en un solo campo).
+:::
+
+---
+
+## Actividad: Control Parcial 2
+
+**Control parcial 2** (evaluación sumativa):
+
+- **Caso**: FoodRapid — empresa de delivery de comida.
+- **Tarea**: Transformar el modelo ER de FoodRapid al modelo relacional completo.
+  - Definir tablas, PK, FK y restricciones.
+  - Justificar las cardinalidades con reglas de negocio.
+
+::: {.fragment}
+**Ponderación**: Parte de controles parciales (10% de Solemne 2).
+:::
+
+---
+
+## Conexión con la Toma de Decisiones
+
+::: {.incremental}
+- El modelo relacional completo de TechStyle permite responder: ¿Cuánto vendió cada repartidor por zona en el último trimestre?
+- Sin la FK correcta entre `pedidos` y `repartidores`, esa consulta es imposible.
+- **La calidad del modelo relacional determina la calidad de las decisiones que se pueden tomar**.
+:::
+
+---
+
+## Para el Laboratorio de Hoy
+
+**Lab 8**: Modelo relacional completo de TechStyle en draw.io o Excel.
+
+- Transformar el ER de la semana 7 al modelo relacional.
+- Definir PK y FK para cada tabla.
+- Documentar el dominio de cada atributo principal.
+
+::: {.fragment}
+**Para la próxima semana**: Preparar y defender el diseño completo (Caso de Uso + UML + ER + Relacional) para la Solemne 2.
+:::

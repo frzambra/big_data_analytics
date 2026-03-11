@@ -1,0 +1,334 @@
+---
+title: "Big Data, ETL y Síntesis de la Unidad 1"
+subtitle: "Semana 3 · W03 · Unidad 1 · Big Data y Analytics"
+author: "Universidad San Sebastián"
+date: "Marzo 2026"
+format:
+  revealjs:
+    theme: default
+    incremental: false
+    slide-number: true
+    footer: "Big Data y Analytics · USS · 2026"
+---
+
+## ¿Qué Vimos las Semanas Anteriores?
+
+::: {.incremental}
+- **W01**: Dato → Información → Conocimiento → Decisión. Los 5 componentes del SI. Niveles organizacionales.
+- **W02**: Tipos de SI (TPS, BI, DSS, CRM, EIS). CMI con 4 perspectivas y KPIs. Calidad de datos (4 dimensiones). Ética.
+:::
+
+::: {.fragment}
+**Hoy**: ¿Qué pasa cuando TechStyle pasa de 450.000 a 8.500.000 clientes? Y cerramos la Unidad 1 con evaluación.
+:::
+
+---
+
+## TechStyle en el Año 2028
+
+::: {.incremental}
+- **8,5 millones** de clientes registrados.
+- **340.000** pedidos diarios (¡un pedido cada 0,25 segundos!).
+- Datos de ventas, logística, redes sociales, reviews, GPS de repartidores.
+- El Excel de María ya no abre. El BI tarda 4 horas en generar un reporte.
+:::
+
+::: {.fragment}
+**¿Qué cambió?** TechStyle entró en el mundo del **Big Data**.
+:::
+
+---
+
+## Las 5 V del Big Data
+
+| V | Descripción | Ejemplo TechStyle 2028 |
+|---|---|---|
+| **Volumen** | Cantidad de datos | 8,5M clientes × historial 5 años |
+| **Velocidad** | Rapidez de generación | 340.000 pedidos/día, 24/7 |
+| **Variedad** | Formatos distintos | CSV, JSON, imágenes, texto, GPS |
+| **Veracidad** | Calidad y confiabilidad | Datos duplicados, reviews falsas |
+| **Valor** | Datos útiles para decisiones | Solo el 15% del dato genera insight |
+
+---
+
+## Aplicación: ¿Qué V Representa Cada Desafío de TechStyle?
+
+**Analiza cada problema con las 5 V:**
+
+::: {.incremental}
+- Los servidores de BI tardan 4 horas en calcular el reporte de ventas semanal → **Volumen + Velocidad**
+- El equipo de TI recibe datos de ventas CSV, reviews en texto, coordenadas GPS JSON → **Variedad**
+- 23% de las reviews de productos son de cuentas falsas → **Veracidad**
+- TechStyle tiene 180TB de datos históricos pero solo usa el 12% para tomar decisiones → **Valor**
+:::
+
+---
+
+## Las 5 V del Big Data: Visualización
+
+`[IMAGE/DIAGRAM PLACEHOLDER: Diagrama radial de las 5 V del Big Data — pentágono con cada V en un vértice. Volumen: ícono de base de datos grande. Velocidad: ícono de rayo. Variedad: ícono de documentos mixtos. Veracidad: ícono de escudo/verificación. Valor: ícono de gema. Ejemplos de TechStyle 2028 en cada vértice]`
+
+::: {.fragment}
+*No todos los problemas de Big Data involucran las 5 V simultáneamente. Identificar cuál V es el cuello de botella es el primer paso para solucionarlo.*
+:::
+
+---
+
+## Verificación: ¿Qué V Representa Cada Desafío?
+
+**Clasifica cada situación:**
+
+::: {.incremental}
+1. Un banco procesa 10 millones de transacciones por segundo durante la apertura de mercados → **Velocidad**
+2. Una clínica acumula radiografías, historiales en texto, registros de medicamentos y datos de sensores → **Variedad**
+3. Twitter genera 500 millones de tweets diarios → **Volumen**
+4. TechStyle descubre que el 30% de los correos de clientes están mal escritos → **Veracidad**
+5. Una empresa tiene 50TB de logs de servidores que nadie ha analizado → **Valor** (o ausencia de él)
+:::
+
+---
+
+## OLTP vs. OLAP: Dos Mundos Distintos
+
+| Característica | **OLTP** | **OLAP** |
+|---|---|---|
+| Propósito | Registrar operaciones | Analizar historiales |
+| Operación típica | INSERT / UPDATE / DELETE | SELECT con GROUP BY y JOINs |
+| Volumen por consulta | Pocas filas | Millones de filas |
+| Usuario típico | Sofía (repartidora) | Juan (analista) |
+| Ejemplo TechStyle | Sistema de pedidos | Reporte de ventas por categoría y año |
+
+::: {.fragment}
+**No se puede optimizar la misma base de datos para los dos usos a la vez.**
+:::
+
+---
+
+## Aplicación: ¿Qué Sistema usa Sofía vs. Juan?
+
+**Tipo de operación SQL y por qué importa:**
+
+::: {.incremental}
+- **Sofía (OLTP)**: `INSERT INTO pedidos (fecha, total, estado) VALUES (...)` → 1 fila, respuesta en < 100ms, crítico para el cliente
+- **Juan (OLAP)**: `SELECT categoria, SUM(total) FROM pedidos WHERE fecha BETWEEN ... GROUP BY categoria` → millones de filas, puede tardar segundos, no es urgente
+:::
+
+::: {.fragment}
+**Si Juan ejecuta su consulta en la BD de Sofía**, bloquea la BD y los pedidos dejan de procesarse → e-commerce caído.
+
+**Por eso existen sistemas separados**: OLTP para operar, OLAP para analizar.
+:::
+
+---
+
+## Verificación: ¿OLTP u OLAP?
+
+**Clasifica cada operación:**
+
+::: {.incremental}
+1. Registrar que un cliente confirmó la recepción de su pedido → **OLTP**
+2. Calcular el ticket promedio por región para los últimos 3 años → **OLAP**
+3. Actualizar el stock de un producto después de una venta → **OLTP**
+4. Comparar la tasa de devolución mensual de los últimos 24 meses → **OLAP**
+:::
+
+---
+
+## El Data Warehouse
+
+::: {.incremental}
+- Una base de datos diseñada **exclusivamente para análisis** (OLAP).
+- Integra múltiples fuentes OLTP en un solo repositorio histórico.
+- Organizado para consultas rápidas sobre grandes volúmenes.
+- TechStyle necesita un DW para que Juan genere reportes en segundos, no en horas.
+:::
+
+::: {.fragment}
+```
+[OLTP Ventas] ─┐
+[OLTP Clientes]─┤──→ ETL ──→ [Data Warehouse] ──→ [CMI / BI]
+[OLTP Logística]┘
+```
+:::
+
+---
+
+## Arquitectura del Data Warehouse: Capas
+
+**Un DW industrial tiene tres capas:**
+
+::: {.incremental}
+- **Staging (Área de preparación)**: los datos brutos del OLTP se copian aquí sin transformar. Es la "zona de cuarentena".
+- **Capa de integración**: los datos se limpian, unifican y enriquecen. "Santiago" + "Stgo." → "Metropolitana".
+- **Capa de presentación (Data Marts)**: tablas optimizadas para consultas específicas. Juan consulta el Data Mart de ventas. María consulta el Data Mart de clientes.
+:::
+
+::: {.fragment}
+**Power BI de Juan** se conecta a la capa de presentación, no directamente al OLTP.
+:::
+
+---
+
+## El Proceso ETL: El Puente entre OLTP y DW
+
+**ETL = Extraer + Transformar + Cargar**
+
+::: {.incremental}
+- **Extraer**: Conectarse a múltiples sistemas fuente (ventas, clientes, GPS).
+- **Transformar**: Limpiar (calidad de datos), unificar formatos, enriquecer.
+  - "Stgo." → "Santiago" → "Metropolitana"
+  - Eliminar duplicados, corregir nulos.
+- **Cargar**: Insertar los datos limpios en el Data Warehouse.
+:::
+
+::: {.fragment}
+**En el Lab 3**: implementaron un mini-ETL con Power Query para unificar 3 fuentes CSV de TechStyle.
+:::
+
+---
+
+## Aplicación: ETL de TechStyle — Paso a Paso
+
+**Un proceso ETL nocturno en TechStyle 2028:**
+
+::: {.incremental}
+- **02:00 — Extraer**: el proceso automático conecta con 3 fuentes → `pedidos_2028.csv` (3,2GB), `clientes_api.json` (1,1GB), `gps_logs.parquet` (820MB)
+- **02:45 — Transformar**: corregir 14.200 fechas inválidas, unificar 6 variantes de nombre de región, eliminar 893 duplicados, calcular campo derivado `tiempo_entrega_horas`
+- **04:10 — Cargar**: insertar 340.000 nuevas filas al DW con todas las columnas limpias
+- **04:15 — Disponible**: Juan llega a las 08:00 y el reporte ya está listo
+:::
+
+---
+
+## Verificación: ¿En qué Paso del ETL Está Este Problema?
+
+**Clasifica cada situación:**
+
+::: {.incremental}
+1. El servidor del OLTP de ventas rechaza la conexión del proceso ETL a las 02:00 → **Extraer**
+2. La columna `precio_unitario` tiene valores negativos que deben corregirse antes de cargar → **Transformar**
+3. La inserción al DW falla porque una columna nueva no existe en el esquema destino → **Cargar**
+4. Los datos de GPS no se pueden leer porque el formato `.parquet` no está soportado → **Extraer**
+:::
+
+---
+
+## El Flujo Completo: Del Dato Crudo al CMI
+
+```
+Operaciones diarias (OLTP)
+    ↓ ETL – cada noche (batch) o en tiempo real (streaming)
+Data Warehouse (OLAP)
+    ↓ Consultas SQL + BI
+Reportes y dashboards
+    ↓
+KPIs del CMI
+    ↓
+Decisión estratégica de Roberto
+```
+
+::: {.fragment}
+**Este flujo conecta todo lo visto en la Unidad 1.** La próxima unidad explica cómo se diseña cada eslabón.
+:::
+
+---
+
+## El Ciclo Completo con Herramientas Conocidas
+
+**Conectando con lo que ya dominan:**
+
+::: {.incremental}
+- **OLTP** → MySQL (lo construirán en la Unidad 3)
+- **ETL** → Power Query (ya lo conocen; en la Unidad 3 usarán SQL)
+- **Data Warehouse** → modelo relacional normalizado (lo diseñarán en la Unidad 2)
+- **BI / CMI** → Power BI (ya construyeron dashboards; ahora los alimentarán con datos reales)
+:::
+
+::: {.fragment}
+**Este semestre une todos los puntos que ya conocen.**
+:::
+
+---
+
+## Síntesis de la Unidad 1
+
+| Semana | Concepto clave |
+|---|---|
+| W01 | Dato → Información → Decisión. 5 componentes del SI. Actores y niveles. |
+| W02 | Tipos de SI (TPS→EIS). CMI con KPIs. Calidad (4 dimensiones). Ética. |
+| W03 | Big Data (5V). OLTP vs OLAP. Data Warehouse. ETL. |
+
+::: {.fragment}
+**Hilo conductor**: TechStyle necesita los datos correctos, en el sistema correcto, para el actor correcto, en el momento correcto → para tomar decisiones correctas.
+:::
+
+---
+
+## Actividad de Repaso: Caso ServiRápido
+
+**Empresa de mantención del hogar. En grupos (10 min)**:
+
+::: {.incremental}
+1. ¿Qué tipo de SI necesita en cada nivel organizacional?
+2. Diseña 2 KPIs por perspectiva del CMI.
+3. ¿Qué dimensión de calidad es más crítica para el KPI "tiempo de respuesta al cliente"?
+4. Dibuja el diagrama OLTP → ETL → DW para ServiRápido.
+:::
+
+---
+
+## Puntos Clave
+
+::: {.incremental}
+- El **Big Data** aparece cuando el volumen, velocidad y variedad de datos superan la capacidad de los sistemas tradicionales.
+- Las **5 V** (Volumen, Velocidad, Variedad, Veracidad, Valor) caracterizan los desafíos del Big Data.
+- **OLTP** está optimizado para operaciones unitarias en tiempo real; **OLAP** para análisis de grandes volúmenes históricos.
+- El **Data Warehouse** integra múltiples fuentes OLTP en un repositorio analítico unificado.
+- El **ETL** (Extraer, Transformar, Cargar) es el proceso que mueve y limpia los datos del OLTP al DW.
+- El flujo completo: OLTP → ETL → DW → BI → CMI → Decisión de Roberto.
+:::
+
+---
+
+## Preview del Laboratorio W03
+
+**Lab W03: Mini-ETL con Power Query**
+
+::: {.incremental}
+- Recibir 3 archivos CSV de TechStyle: `ventas_norte.csv`, `ventas_sur.csv`, `ventas_rm.csv`.
+- En Power Query: unificar las 3 fuentes en una sola tabla.
+- Transformar: estandarizar nombres de región, eliminar filas duplicadas, corregir fechas inválidas.
+- Cargar a Excel: tabla unificada y limpia lista para análisis.
+- Responder: ¿qué categoría lidera las ventas en el período analizado?
+:::
+
+---
+
+## Solemne 1
+
+**Evaluación individual – esta sesión (segunda parte)**
+
+::: {.incremental}
+- **Ponderación**: 30% de la nota final.
+  - Control parcial acumulado (W02–W03): 10%
+  - **Prueba escrita individual**: 20%
+- **Formato**: Análisis y aplicación a casos nuevos.
+- **Énfasis**: Razonamiento, no memorización. Justificación de tipos de SI y diseño de CMI.
+:::
+
+::: {.fragment}
+> "El éxito depende de entender el *por qué* de cada decisión de diseño."
+:::
+
+---
+
+## Hacia la Unidad 2
+
+::: {.incremental}
+- Unidad 1: Entendimos **qué hacen** los SI y **por qué** los necesita TechStyle.
+- Unidad 2: Aprenderemos a **modelar** la estructura de datos que alimenta esos SI.
+:::
+
+::: {.fragment}
+**Próxima semana (W04)**: ¿Cómo le decimos a un desarrollador qué debe construir, antes de escribir código? → Diagrama de Caso de Uso.
+:::

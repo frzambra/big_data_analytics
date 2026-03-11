@@ -1,0 +1,137 @@
+---
+title: "Laboratorio 10: Normalización hasta 3FN en Excel"
+subtitle: "Semana 9 · W09 · Unidad 3 · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+## Contexto
+
+TechStyle guardó sus datos de pedidos durante dos años en una sola hoja de Excel. La tabla está completamente desnormalizada: tiene grupos repetitivos, dependencias parciales y dependencias transitivas.
+
+Tu misión es normalizar esta tabla hasta **3FN**, documentando cada paso y cada anomalía detectada.
+
+**Herramienta**: Microsoft Excel o Google Sheets.
+
+---
+
+## Tabla Desnormalizada de TechStyle
+
+Abre la hoja de trabajo `techstyle_pedidos_desnormalizada.xlsx`. La tabla tiene esta estructura (simplificada):
+
+| id_pedido | fecha | cliente_id | cliente_nombre | cliente_email | cliente_region | repartidor_id | repartidor_nombre | zona_nombre | producto1_id | producto1_nombre | producto1_cat | producto1_precio | cant1 | producto2_id | producto2_nombre | producto2_cat | producto2_precio | cant2 | total |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 001 | 2024-03-01 | C01 | Ana González | ana@mail.cl | RM | R01 | Carlos Díaz | Las Condes | P01 | Zapatillas | Calzado | 45000 | 1 | P02 | Polera | Ropa | 12000 | 2 | 69000 |
+
+---
+
+## Instrucciones
+
+### Parte 1: Identificar Anomalías (30 min)
+
+Antes de corregir, identificar todos los problemas. Completa la siguiente tabla:
+
+| # | Anomalía encontrada | Tipo (1FN / 2FN / 3FN) | Columna(s) afectada(s) |
+|---|---|---|---|
+| 1 | Columnas producto1, producto2... | 1FN — grupo repetitivo | producto1_*, producto2_* |
+| 2 | | | |
+| 3 | | | |
+| ... | | | |
+
+Tipos de anomalías a buscar:
+- **1FN**: grupos repetitivos (columnas con sufijo 1, 2, 3...) y valores no atómicos.
+- **2FN**: atributos que dependen de solo parte de la PK compuesta.
+- **3FN**: atributos no-clave que dependen de otros atributos no-clave.
+
+### Parte 2: Aplicar Primera Forma Normal (30 min)
+
+1. Eliminar los grupos repetitivos de productos convirtiendo cada fila de ítem en una fila separada.
+2. Definir la nueva PK (puede ser compuesta: `id_pedido + id_producto`).
+3. Verificar que cada celda tiene un único valor atómico.
+
+**Resultado esperado**: Una tabla en 1FN donde cada fila representa un ítem de pedido.
+
+Crear una hoja nueva llamada `1FN` con el resultado.
+
+### Parte 3: Aplicar Segunda Forma Normal (30 min)
+
+En la tabla en 1FN (con PK compuesta `id_pedido + id_producto`):
+
+1. Identificar qué atributos dependen solo de `id_pedido` (y no del producto).
+2. Identificar qué atributos dependen solo de `id_producto` (y no del pedido).
+3. Separar en tablas distintas:
+   - `pedidos_2fn`: atributos que dependen de `id_pedido`.
+   - `items_2fn`: atributos que dependen de (`id_pedido`, `id_producto`).
+   - `productos_2fn`: atributos que dependen de `id_producto`.
+
+Crear hojas nuevas `pedidos_2fn`, `items_2fn` y `productos_2fn`.
+
+### Parte 4: Aplicar Tercera Forma Normal (30 min)
+
+En la tabla `pedidos_2fn`:
+
+1. Identificar dependencias transitivas:
+   - ¿`cliente_nombre` depende de `id_pedido` o de `cliente_id`?
+   - ¿`repartidor_nombre` depende de `id_pedido` o de `repartidor_id`?
+   - ¿`zona_nombre` depende de `repartidor_id` o de `zona_id`?
+
+2. Separar las dependencias transitivas en tablas propias:
+   - `clientes_3fn`
+   - `repartidores_3fn`
+   - `zonas_3fn`
+   - `pedidos_3fn` (limpio, solo con FK)
+
+Crear hojas para cada tabla resultante.
+
+### Parte 5: Resultado Final (20 min)
+
+Al final del proceso debes tener estas hojas:
+- `zonas_3fn`
+- `clientes_3fn`
+- `repartidores_3fn`
+- `productos_3fn`
+- `pedidos_3fn`
+- `items_3fn`
+
+En una hoja `RESUMEN`, describe:
+1. El número de tablas resultantes y el nombre de cada una.
+2. La PK de cada tabla.
+3. Las FK de cada tabla.
+4. ¿Cuántos registros duplicados eliminaste en el proceso?
+
+---
+
+## Entregable
+
+Archivo Excel con las hojas:
+- `ORIGINAL` (tabla desnormalizada original)
+- `ANOMALIAS` (tabla de anomalías identificadas)
+- `1FN`, `pedidos_2fn`, `items_2fn`, `productos_2fn`
+- `zonas_3fn`, `clientes_3fn`, `repartidores_3fn`, `pedidos_3fn`, `items_3fn`
+- `RESUMEN`
+
+**Subir con el nombre**: `lab10_apellido1_apellido2.xlsx`.
+
+---
+
+## Criterios de evaluación
+
+| Criterio | Puntaje |
+|---|---|
+| Tabla de anomalías completa y correcta | 25 pts |
+| 1FN correctamente aplicada | 20 pts |
+| 2FN correctamente aplicada (separación de dependencias parciales) | 25 pts |
+| 3FN correctamente aplicada (separación de dependencias transitivas) | 25 pts |
+| Hoja RESUMEN completa | 5 pts |
+| **Total** | **100 pts** |
+
+---
+
+## Recursos de apoyo
+
+- Silberschatz et al. (2014), Cap. 8: Diseño de bases de datos relacionales.
+- Presentación `class_week_10.qmd`.

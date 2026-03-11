@@ -1,0 +1,122 @@
+---
+title: "Laboratorio 8: Modelo Relacional Completo de TechStyle"
+subtitle: "Semana 7 · W07 · Unidad 2 · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+## Contexto
+
+Tienes el Diagrama ER completo de TechStyle. Ahora debes transformarlo al **Modelo Relacional**: el conjunto de tablas con PK, FK y restricciones de dominio que puede implementarse directamente en MySQL.
+
+Este es el último paso de diseño antes de comenzar la construcción real de la base de datos en la Unidad 3.
+
+**Herramientas disponibles**: draw.io o Excel (usa la que prefieras).
+
+---
+
+## Reglas de Transformación ER → Relacional
+
+Antes de comenzar, revisa las reglas:
+
+| Elemento ER | Transformación |
+|---|---|
+| Entidad | → Tabla |
+| Atributo simple | → Columna |
+| Identificador (PK del ER) | → PRIMARY KEY |
+| Relación 1:N | → FK en la tabla del lado N |
+| Relación N:M | → Tabla intermedia con FK de ambos lados |
+| Relación 1:1 | → FK en cualquiera de las dos tablas (preferir la más débil) |
+| Relación 0..1 | → FK con valor NULL permitido |
+
+---
+
+## Instrucciones
+
+### Paso 1: Transformar entidades a tablas (40 min)
+
+Para cada entidad del ER (Semana 7), define la tabla relacional completa:
+
+**Formato de tabla relacional** (para cada tabla):
+
+```
+nombre_tabla(
+    atributo_1  TIPO  [NOT NULL | NULL]  [restricciones],
+    atributo_2  TIPO  [NOT NULL | NULL]  [restricciones],
+    ...
+    PRIMARY KEY (atributo_PK),
+    FOREIGN KEY (atributo_FK) REFERENCES otra_tabla(pk_otra_tabla)
+)
+```
+
+Define las 7 tablas en este formato:
+1. `zonas`
+2. `clientes`
+3. `repartidores` (con FK a `zonas`)
+4. `productos`
+5. `pedidos` (con FK a `clientes` y `repartidores`)
+6. `order_items` (con FK a `pedidos` y `productos`)
+7. `devoluciones` (con FK a `pedidos`, FK con NULL permitido)
+
+### Paso 2: Definir dominios de atributos (30 min)
+
+Para cada tabla, completa la siguiente plantilla:
+
+| Atributo | Tipo de dato | Longitud | NULL? | Default | Descripción |
+|---|---|---|---|---|---|
+| id_cliente | INT | — | No | AUTO_INCREMENT | PK, identificador único |
+| nombre | VARCHAR | 100 | No | — | Nombre completo |
+| ... | | | | | |
+
+Tablas a documentar: `clientes`, `pedidos`, `order_items`.
+
+### Paso 3: Verificar integridad referencial (20 min)
+
+Para cada FK del modelo, responde:
+
+1. ¿Qué pasa si intento insertar un pedido con un `id_cliente` que no existe en `clientes`?
+2. ¿Puedo eliminar un producto que tiene registros en `order_items`? ¿Por qué?
+3. ¿Puede un pedido existir sin repartidor asignado? ¿Cómo se representa esto en el modelo relacional?
+
+### Paso 4: Diagrama del modelo relacional (30 min)
+
+Dibuja el diagrama del modelo relacional en draw.io o Excel, mostrando:
+- Cada tabla como un rectángulo con sus columnas.
+- Las PK marcadas con un ícono de llave o subrayadas.
+- Las FK marcadas con flechas hacia la tabla referenciada.
+
+---
+
+## Entregable
+
+1. **Definición formal** de las 7 tablas en el formato relacional (puede ser en Word o en draw.io).
+2. **Tabla de dominios** para `clientes`, `pedidos` y `order_items`.
+3. **Respuestas de integridad referencial** (3 preguntas).
+4. **Diagrama del modelo relacional** exportado como PNG.
+
+**Subir con el nombre**: `lab8_apellido1_apellido2.pdf` y `lab8_apellido1_apellido2_diagrama.png`.
+
+---
+
+## Criterios de evaluación
+
+| Criterio | Puntaje |
+|---|---|
+| Las 7 tablas con PK correctamente definidas | 20 pts |
+| FK correctas en todas las tablas | 25 pts |
+| Tabla de dominios completa | 20 pts |
+| Integridad referencial respondida correctamente | 20 pts |
+| Diagrama del modelo relacional | 15 pts |
+| **Total** | **100 pts** |
+
+---
+
+## Recursos de apoyo
+
+- Silberschatz et al. (2014), Cap. 2: Introducción al modelo relacional.
+- Guía de transformación ER → Relacional (entregada en clase).
+- Presentación `class_week_8.qmd`.

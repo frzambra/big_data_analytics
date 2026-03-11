@@ -1,0 +1,163 @@
+---
+title: "Laboratorio 13: Consultas con JOIN — Parte 1"
+subtitle: "Semana 13 · W13 · Unidad 3 · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+## Contexto
+
+La Gerente de Marketing María González necesita respuestas que cruzan múltiples tablas de `techstyle_db`. Esta semana practican **JOINs**: la herramienta fundamental para combinar información de tablas relacionadas.
+
+Cada consulta responde una pregunta de negocio concreta del CMI de TechStyle.
+
+---
+
+## Objetivos
+
+- Escribir consultas `INNER JOIN` y `LEFT JOIN` sobre 2 y 3 tablas.
+- Usar aliases de tabla para código limpio.
+- Identificar cuándo usar `INNER` vs `LEFT` JOIN según la pregunta de negocio.
+- Usar `EXPLAIN` para leer el plan de ejecución básico.
+- Interpretar los resultados como analista que reporta a la gerencia.
+
+---
+
+## Preparación
+
+Verificar que `techstyle_db` tiene datos suficientes:
+
+```sql
+USE techstyle_db;
+SELECT 'clientes'   AS tabla, COUNT(*) AS filas FROM clientes    UNION ALL
+SELECT 'pedidos',             COUNT(*)           FROM pedidos     UNION ALL
+SELECT 'productos',           COUNT(*)           FROM productos   UNION ALL
+SELECT 'order_items',         COUNT(*)           FROM order_items UNION ALL
+SELECT 'repartidores',        COUNT(*)           FROM repartidores;
+```
+
+**Mínimo necesario**: 10 clientes, 20 pedidos, 10 productos, 25 order_items, 5 repartidores.
+
+---
+
+## Set de 5 Consultas con JOIN
+
+Para cada consulta:
+1. Escribe la consulta SQL.
+2. Ejecuta y captura el resultado (screenshot).
+3. Escribe la interpretación de negocio (1–2 oraciones).
+
+---
+
+**Consulta 1 — INNER JOIN (2 tablas)**:
+
+> ¿Cuáles son los pedidos entregados, con el nombre del cliente y el monto total? (Ordenar de mayor a menor monto)
+
+```sql
+-- Escribe tu consulta aquí
+-- Tablas: pedidos (p) + clientes (c)
+-- Filtro: estado = 'entregado'
+-- Ordenar: ORDER BY p.total DESC
+```
+
+---
+
+**Consulta 2 — LEFT JOIN: Clientes inactivos**:
+
+> ¿Qué clientes existen en la base de datos pero nunca han realizado un pedido?
+
+```sql
+-- Escribe tu consulta aquí
+-- Tablas: clientes (c) LEFT JOIN pedidos (p)
+-- Filtro: WHERE p.id_pedido IS NULL
+```
+
+*Interpretación de negocio*: ¿Qué acción de marketing recomendarías con esta lista?
+
+---
+
+**Consulta 3 — INNER JOIN (2 tablas): Repartidores por zona**:
+
+> ¿Cuántos repartidores hay en cada zona? (Mostrar nombre de zona + conteo)
+
+```sql
+-- Escribe tu consulta aquí
+-- Tablas: repartidores (r) + zonas (z)
+-- GROUP BY z.nombre
+```
+
+---
+
+**Consulta 4 — INNER JOIN (3 tablas): Ítem + producto + pedido**:
+
+> ¿Cuáles son los productos que se han vendido en pedidos entregados, con la categoría y la cantidad total vendida por producto?
+
+```sql
+-- Escribe tu consulta aquí
+-- Tablas: order_items (oi) + pedidos (p) + productos (pr)
+-- Filtro: p.estado = 'entregado'
+-- GROUP BY pr.id_producto, pr.nombre, pr.categoria
+-- ORDER BY SUM(oi.cantidad) DESC
+```
+
+---
+
+**Consulta 5 — INNER JOIN (4 tablas): Ventas por zona geográfica**:
+
+> ¿Cuántas ventas totales (en $) ha generado cada zona geográfica del cliente?
+
+```sql
+-- Escribe tu consulta aquí
+-- Tablas: pedidos (p) + clientes (c) + repartidores (r) + zonas (z)
+-- Filtro: p.estado = 'entregado'
+-- GROUP BY z.nombre
+-- ORDER BY ventas DESC
+```
+
+---
+
+## Actividad Extra: EXPLAIN en la Consulta 4
+
+```sql
+EXPLAIN
+SELECT pr.nombre, pr.categoria, SUM(oi.cantidad) AS total_vendido
+FROM order_items oi
+INNER JOIN pedidos   p  ON oi.id_pedido   = p.id_pedido
+INNER JOIN productos pr ON oi.id_producto = pr.id_producto
+WHERE p.estado = 'entregado'
+GROUP BY pr.id_producto, pr.nombre, pr.categoria;
+```
+
+Responde:
+1. ¿Qué columna `type` muestra MySQL para cada tabla? ¿Es eficiente?
+2. ¿Qué `key` (índice) está usando MySQL para el JOIN?
+3. Si `type = ALL`, ¿qué índice crearías para mejorar el rendimiento?
+
+---
+
+## Entregable
+
+Script SQL `W13_lab_apellido1_apellido2.sql` con las 5 consultas.
+
+Documento `W13_lab_apellido1_apellido2.pdf` con:
+- Captura de pantalla del resultado de cada consulta.
+- Interpretación de negocio para cada resultado (1–2 oraciones).
+- Respuestas al análisis EXPLAIN (Actividad Extra).
+
+---
+
+## Criterios de evaluación
+
+| Criterio | Puntaje |
+|---|---|
+| Consulta 1 — INNER JOIN 2 tablas | 15 pts |
+| Consulta 2 — LEFT JOIN + IS NULL | 20 pts |
+| Consulta 3 — JOIN + GROUP BY | 15 pts |
+| Consulta 4 — JOIN 3 tablas + GROUP BY | 25 pts |
+| Consulta 5 — JOIN 4 tablas | 15 pts |
+| Análisis EXPLAIN | 10 pts |
+| **Total** | **100 pts** |

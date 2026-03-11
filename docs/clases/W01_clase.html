@@ -10,7 +10,8 @@
   <meta name="generator" content="quarto-1.8.25">
 
   <meta name="author" content="Universidad San Sebastián">
-  <title>Big Data y Síntesis de la Unidad 1</title>
+  <meta name="dcterms.date" content="2026-03-01">
+  <title>Sistemas de Información en el Contexto Empresarial</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -129,8 +130,8 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Big Data y Síntesis de la Unidad 1</h1>
-  <p class="subtitle">Clase 4 - Big Data y Analytics</p>
+  <h1 class="title">Sistemas de Información en el Contexto Empresarial</h1>
+  <p class="subtitle">Semana 1 · W01 · Unidad 1 · Big Data y Analytics</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -140,19 +141,14 @@ Universidad San Sebastián
 </div>
 </div>
 
+  <p class="date">2026-03-01</p>
 </section>
-<section id="qué-vimos-la-semana-pasada" class="slide level2">
-<h2>¿Qué Vimos la Semana Pasada?</h2>
-<ul>
-<li class="fragment">El <strong>CMI</strong> traduce la estrategia en 4 perspectivas y KPIs medibles</li>
-<li class="fragment">La <strong>calidad de datos</strong> tiene 4 dimensiones: exactitud, completitud, consistencia, oportunidad</li>
-<li class="fragment">El manejo de datos implica <strong>responsabilidades éticas</strong> reales</li>
-</ul>
-<div class="fragment">
-<p><strong>Hoy</strong>: ¿Qué pasa cuando los datos crecen tanto que los sistemas tradicionales no pueden manejarlos? Y cerramos la Unidad 1.</p>
-</div>
+<section id="bienvenidos" class="slide level2">
+<h2>Bienvenidos</h2>
+<p><strong>Big Data y Analytics · ICOM E015</strong></p>
+<p>Unidad 1: Sistemas de Información en el Contexto Empresarial</p>
 <aside class="notes">
-<p>Repaso rápido. Esta es la última clase de contenido antes de la Solemne 1. Es importante que los estudiantes lleguen preparados para integrar.</p>
+<p>Dar la bienvenida. Presentar el caso TechStyle que usaremos todo el semestre. Conectar con Excel y Power BI que ya conocen.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -165,22 +161,14 @@ Universidad San Sebastián
           display:block!important;
       }</style></aside>
 </section>
-<section id="situación-techstyle-en-el-año-2028" class="slide level2">
-<h2>Situación: TechStyle en el Año 2028</h2>
-<p><strong>TechStyle creció exponencialmente:</strong></p>
-<ul>
-<li class="fragment">De 450.000 a <strong>8.500.000</strong> clientes registrados</li>
-<li class="fragment">De 2.3M a <strong>47 millones</strong> de órdenes históricas</li>
-<li class="fragment">Expandida a <strong>6 países</strong> de Latinoamérica</li>
-<li class="fragment">Registra <strong>clicks, tiempo en página, búsquedas</strong> por cada usuario</li>
-<li class="fragment">Integra datos de <strong>redes sociales</strong>, clima y eventos locales</li>
-</ul>
-<div class="fragment">
-<p><strong>El sistema de base de datos actual colapsa cada fin de semana.</strong></p>
-<p>TechStyle ya no tiene un problema de “sistemas de información”. Tiene un problema de <strong>Big Data</strong>.</p>
-</div>
+<section id="situación-real-lunes-900-am" class="slide level2">
+<h2>Situación Real: Lunes 9:00 AM</h2>
+<p><strong>Reunión de Gerencia – TechStyle</strong></p>
+<p>María González, Gerente de Marketing de TechStyle (tienda online de retail), debe presentar su propuesta para la campaña del próximo mes.</p>
+<p><strong>Presupuesto</strong>: $15.000.000 CLP</p>
+<p><strong>Pregunta</strong>: ¿En qué categoría de productos invertir para maximizar las ventas?</p>
 <aside class="notes">
-<p>El salto conceptual es importante: el mismo tipo de problema (capturar, almacenar, procesar datos) pero a una escala que requiere arquitecturas completamente diferentes.</p>
+<p>Plantear el escenario como si los estudiantes estuvieran en esa sala. Hacer que se sientan parte de la situación.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -193,474 +181,392 @@ Universidad San Sebastián
           display:block!important;
       }</style></aside>
 </section>
-<section id="qué-es-big-data" class="slide level2">
-<h2>¿Qué es Big Data?</h2>
-<p><strong>No es solo “muchos datos”.</strong></p>
-<p>Big Data se define por un conjunto de características conocidas como las <strong>5 V</strong>:</p>
-<pre><code>  Volumen · Velocidad · Variedad · Veracidad · Valor</code></pre>
-<div class="fragment">
-<p>Cada “V” representa un desafío distinto que los sistemas tradicionales no pueden resolver.</p>
-</div>
-<aside class="notes">
-<p>Originalmente eran 3 V (Laney, 2001). Luego se agregaron Veracidad y Valor. El punto no es memorizar las V, sino entender que Big Data es cualitativamente diferente a los datos tradicionales.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="v1-volumen-v2-velocidad" class="slide level2">
-<h2>V1: Volumen · V2: Velocidad</h2>
-<div class="cols-2">
-<div>
-<p><strong>Volumen</strong>: la cantidad es masiva</p>
+<section id="con-qué-cuenta-maría" class="slide level2">
+<h2>¿Con qué cuenta María?</h2>
 <ul>
-<li class="fragment">TechStyle 2028: miles de millones de registros</li>
-<li class="fragment">Se mide en Terabytes y Petabytes</li>
-<li class="fragment">Los sistemas relacionales no escalan bien</li>
+<li class="fragment">Un archivo Excel con <strong>450.000 filas</strong> de órdenes de venta.</li>
+<li class="fragment">Datos en bruto: fecha, producto, categoría, precio, región, cliente.</li>
+<li class="fragment"><strong>Sin análisis previo</strong>. Solo datos crudos.</li>
 </ul>
-</div>
-<div>
-<p><strong>Velocidad</strong>: se genera y debe procesarse rápido</p>
-<ul>
-<li class="fragment">12.000 transacciones/minuto en Black Friday</li>
-<li class="fragment">Stock debe actualizarse en milisegundos</li>
-<li class="fragment">Detección de fraude: menos de 100ms</li>
-</ul>
-</div>
-</div>
 <div class="fragment">
-<p><strong>TechStyle ya no puede esperar un reporte diario — necesita información en tiempo real.</strong></p>
+<p><strong>Pregunta disparadora</strong>: ¿Qué diferencia hay entre tener datos y tener información?</p>
 </div>
-<aside class="notes">
-<p>Volumen solo no hace Big Data. Velocidad tampoco. Es la combinación de las 5 V lo que crea el desafío. Un banco tiene ambas características: millones de transacciones diarias que deben procesarse instantáneamente.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
-<section id="v3-variedad-v4-veracidad-v5-valor" class="slide level2">
-<h2>V3: Variedad · V4: Veracidad · V5: Valor</h2>
+<section id="la-jerarquía-del-valor-del-dato" class="slide level2">
+<h2>La Jerarquía del Valor del Dato</h2>
+
+<img data-src="../img/diagrama_jerarquia_dato.png" class="r-stretch"><div class="fragment">
+<p><strong>Los Sistemas de Información</strong> automatizan este recorrido.</p>
+</div>
+</section>
+<section id="aplicación-la-jerarquía-en-techstyle" class="slide level2">
+<h2>Aplicación: La Jerarquía en TechStyle</h2>
+<p><strong>Desde las 450.000 filas de María hasta la decisión de inversión:</strong></p>
+<ul>
+<li class="fragment"><strong>Dato</strong>: fila en el CSV → <code>{fecha: 2026-03-10, producto: "Zapatillas Runner", precio: 45000, región: RM}</code></li>
+<li class="fragment"><strong>Proceso</strong>: filtrar por mes, agrupar por categoría, sumar montos → tabla dinámica en Excel</li>
+<li class="fragment"><strong>Información</strong>: “Calzado generó $8,1M en ventas totales en Q1, liderando todas las categorías”</li>
+<li class="fragment"><strong>Conocimiento</strong>: “Calzado crece sostenidamente en Q1 los últimos 3 años. El patrón se mantiene.”</li>
+<li class="fragment"><strong>Decisión</strong>: María propone invertir $9M del presupuesto de $15M en campaña de Calzado para Q2</li>
+</ul>
+</section>
+<section id="la-jerarquía-del-dato-visualización" class="slide level2">
+<h2>La Jerarquía del Dato: Visualización</h2>
+<p><code>[IMAGE/DIAGRAM PLACEHOLDER: Pirámide del valor del dato — base ancha (datos crudos, millones de filas) → información (reportes) → conocimiento (patrones) → cima estrecha (decisión estratégica). Cada nivel con ícono y ejemplo de TechStyle]</code></p>
+<div class="fragment">
+<p><em>La pirámide muestra que los datos son abundantes pero solo una fracción se convierte en decisiones valiosas. El trabajo del analista es reducir esa pirámide eficientemente.</em></p>
+</div>
+</section>
+<section id="verificación-dato-información-o-conocimiento" class="slide level2">
+<h2>Verificación: ¿Dato, Información o Conocimiento?</h2>
+<p><strong>Clasifica cada enunciado:</strong></p>
+<ol type="1">
+<li class="fragment"><code>{id_cliente: 442, región: "Valparaíso", monto: 32.000}</code> → <strong>¿Dato?</strong></li>
+<li class="fragment">“Las ventas de Calzado cayeron 15% en julio 2026 respecto a julio 2025” → <strong>¿Información?</strong></li>
+<li class="fragment">“Cada vez que TechStyle hace descuentos en Ropa, las devoluciones aumentan 20%” → <strong>¿Conocimiento?</strong></li>
+<li class="fragment">“Lanzar la campaña de descuentos solo en Accesorios, no en Ropa” → <strong>¿Decisión?</strong></li>
+</ol>
+<div class="fragment">
+<p><strong>Respuestas</strong>: 1-Dato · 2-Información · 3-Conocimiento · 4-Decisión</p>
+</div>
+</section>
+<section id="qué-es-un-sistema-de-información" class="slide level2">
+<h2>¿Qué es un Sistema de Información?</h2>
+<blockquote>
+<p>Un <strong>Sistema de Información (SI)</strong> es un conjunto interrelacionado de componentes que recopilan, procesan, almacenan y distribuyen <strong>información</strong> para apoyar la <strong>toma de decisiones</strong> y el control en una organización.</p>
+</blockquote>
+<div class="fragment">
+<p><strong>No es solo software.</strong> Un SI tiene 5 componentes.</p>
+</div>
+</section>
+<section id="el-si-como-sistema-entradas-procesos-y-salidas" class="slide level2">
+<h2>El SI como Sistema: Entradas, Procesos y Salidas</h2>
+<p><strong>El modelo IPO (Input → Process → Output) aplicado a TechStyle:</strong></p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 8%">
-<col style="width: 38%">
-<col style="width: 52%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>V</th>
+<th>Fase</th>
+<th>Ejemplo en TechStyle</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Entrada</strong></td>
+<td>Registro del pedido #8821 por la aplicación móvil</td>
+</tr>
+<tr class="even">
+<td><strong>Proceso</strong></td>
+<td>Validar stock, calcular total, asignar repartidor</td>
+</tr>
+<tr class="odd">
+<td><strong>Salida</strong></td>
+<td>Confirmación al cliente + tarea asignada a Sofía</td>
+</tr>
+<tr class="even">
+<td><strong>Retroalimentación</strong></td>
+<td>Sofía marca “entregado” → actualiza KPI de tiempo de entrega</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p><strong>Sin este ciclo completo</strong>, el sistema recibe datos pero no genera valor para la decisión.</p>
+</div>
+</section>
+<section id="diagrama-de-flujo-de-un-si" class="slide level2">
+<h2>Diagrama de Flujo de un SI</h2>
+<p><code>[IMAGE/DIAGRAM PLACEHOLDER: Diagrama de flujo de un Sistema de Información — fuentes de datos (pedidos, clientes, GPS) → procesamiento (reglas de negocio, cálculos) → almacenamiento (base de datos) → distribución (reportes, alertas, dashboards) → decisiones. Flechas de retroalimentación de decisiones a entradas]</code></p>
+<div class="fragment">
+<p><em>El ciclo continuo: las decisiones generan nuevas operaciones que generan nuevos datos que alimentan nuevas decisiones.</em></p>
+</div>
+</section>
+<section id="los-5-componentes-de-un-si" class="slide level2">
+<h2>Los 5 Componentes de un SI</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Componente</th>
 <th>Descripción</th>
 <th>Ejemplo TechStyle</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Variedad</strong></td>
-<td>Datos de múltiples formatos y fuentes</td>
-<td>Órdenes (tablas) + Reseñas (texto) + Fotos + Clicks (logs)</td>
+<td><strong>Hardware</strong></td>
+<td>Dispositivos físicos</td>
+<td>Servidores, POS, tablets de repartidores</td>
 </tr>
 <tr class="even">
-<td><strong>Veracidad</strong></td>
-<td>No todos los datos son confiables</td>
-<td>Reseñas falsas entre 500.000 mensuales</td>
+<td><strong>Software</strong></td>
+<td>Aplicaciones y SO</td>
+<td>Plataforma e-commerce, ERP</td>
 </tr>
 <tr class="odd">
-<td><strong>Valor</strong></td>
-<td>Los datos solo valen si generan decisiones útiles</td>
-<td>¿Vale almacenar cada movimiento del cursor?</td>
+<td><strong>Datos</strong></td>
+<td>Hechos almacenados</td>
+<td><code>techstyle_orders.csv</code></td>
+</tr>
+<tr class="even">
+<td><strong>Personas</strong></td>
+<td>Usuarios y desarrolladores</td>
+<td>María, Juan, Sofía</td>
+</tr>
+<tr class="odd">
+<td><strong>Procesos</strong></td>
+<td>Procedimientos y reglas</td>
+<td>Flujo de aprobación de pedidos</td>
 </tr>
 </tbody>
 </table>
-<div class="fragment">
-<p><strong>La V más importante es el Valor</strong>: si no sabes para qué sirve el dato, no vale la pena recolectarlo.</p>
-</div>
-<aside class="notes">
-<p>La Variedad es el cambio más dramático. Las BD relacionales manejan bien datos estructurados (tablas), pero son rígidas con texto, imágenes o logs. El Valor conecta Big Data con el marco central del curso: los datos sirven para tomar decisiones.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
-<section id="discusión-1" class="slide level2">
-<h2>💬 Discusión 1</h2>
-<p><strong>En grupos de 3 (6 minutos)</strong>:</p>
-<p>Una empresa de transporte urbano (como Uber o un metro) genera Big Data constantemente.</p>
-<p>Identifiquen las <strong>5 V</strong> con ejemplos concretos para esa empresa:</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>V</th>
-<th>Ejemplo concreto</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Volumen</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Velocidad</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Variedad</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Veracidad</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Valor</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<aside class="notes">
-<p>Uber: Volumen (millones de viajes/día), Velocidad (GPS cada segundo), Variedad (GPS + pagos + calificaciones + mensajes), Veracidad (calificaciones falsas), Valor (precio dinámico según demanda en tiempo real = decisión de negocio que vale millones).</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<section id="aplicación-los-5-componentes-en-el-sistema-de-pedidos" class="slide level2">
+<h2>Aplicación: Los 5 Componentes en el Sistema de Pedidos</h2>
+<p><strong>Cuando Ana realiza un pedido en la app de TechStyle:</strong></p>
+<ul>
+<li class="fragment"><strong>Hardware</strong>: servidor de TechStyle en la nube + smartphone de Ana</li>
+<li class="fragment"><strong>Software</strong>: app móvil TechStyle + motor de base de datos MySQL</li>
+<li class="fragment"><strong>Datos</strong>: registro del pedido, stock actualizado, historial de compra de Ana</li>
+<li class="fragment"><strong>Personas</strong>: Ana (cliente), Sofía (repartidora), equipo de TI (mantiene el sistema)</li>
+<li class="fragment"><strong>Procesos</strong>: flujo de compra → validación de pago → asignación de repartidor → confirmación de entrega</li>
+</ul>
 </section>
-<section id="del-sistema-operacional-al-analítico" class="slide level2">
-<h2>Del Sistema Operacional al Analítico</h2>
-<p><strong>TechStyle tiene 2 necesidades de datos radicalmente distintas:</strong></p>
+<section id="verificación-qué-componente-falló" class="slide level2">
+<h2>Verificación: ¿Qué Componente Falló?</h2>
+<p><strong>Escenario</strong>: La tablet de Sofía (repartidora) se quedó sin batería y no pudo marcar el pedido como “entregado”. El cliente reclamó y el KPI de tiempo de entrega quedó sin actualizar.</p>
 <div class="fragment">
-<pre><code>  NECESIDAD 1: Registrar cada venta en tiempo real
-  → Rápido, muchas escrituras simultáneas, datos actuales
-
-  NECESIDAD 2: Analizar 5 años de ventas para decidir
-  → Complejo, pocas escrituras, grandes lecturas históricas</code></pre>
+<p><strong>¿Qué componente del SI falló?</strong></p>
+<ul>
+<li><del>Software</del> — la app funcionaba correctamente</li>
+<li><strong>Hardware</strong> — la tablet se apagó</li>
+<li><del>Datos</del> — los datos existían pero no pudieron registrarse</li>
+<li><del>Personas</del> — Sofía hizo su trabajo</li>
+<li><del>Procesos</del> — el proceso estaba definido</li>
+</ul>
 </div>
 <div class="fragment">
-<p><strong>¿Puede el mismo sistema hacer ambas eficientemente?</strong></p>
-<p><em>No.&nbsp;Por eso existen 2 arquitecturas distintas: OLTP y OLAP.</em></p>
+<p><strong>Conclusión</strong>: Un fallo en cualquier componente compromete todo el SI.</p>
 </div>
-<aside class="notes">
-<p>Esta tensión es la motivación central para OLTP/OLAP. No es una preferencia técnica: son requerimientos que se contradicen entre sí.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
-<section id="oltp-vs.-olap" class="slide level2">
-<h2>OLTP vs.&nbsp;OLAP</h2>
+<section id="actividad-identifica-los-componentes" class="slide level2">
+<h2>Actividad: Identifica los Componentes</h2>
+<p><strong>En parejas – 5 minutos:</strong></p>
+<p>Piensen en el sistema que usa su banco para mostrarles su saldo en la app.</p>
+<ol type="1">
+<li class="fragment">¿Cuál es el <strong>hardware</strong> involucrado?</li>
+<li class="fragment">¿Qué <strong>software</strong> usan ellos y tú?</li>
+<li class="fragment">¿Qué <strong>datos</strong> procesa el sistema?</li>
+<li class="fragment">¿Quiénes son las <strong>personas</strong> del sistema?</li>
+<li class="fragment">¿Qué <strong>proceso</strong> ocurre cuando transfieres dinero?</li>
+</ol>
+</section>
+<section id="actores-y-niveles-organizacionales-en-techstyle" class="slide level2">
+<h2>Actores y Niveles Organizacionales en TechStyle</h2>
+<ul>
+<li class="fragment"><strong>Nivel Operativo</strong>: Repartidora <strong>Sofía</strong> — registra entrega de pedido a pedido.</li>
+<li class="fragment"><strong>Nivel Táctico</strong>: Analista <strong>Juan</strong> — genera reportes semanales de ventas por zona.</li>
+<li class="fragment"><strong>Nivel Estratégico</strong>: CEO <strong>Roberto</strong> — decide si expandir TechStyle a nuevas ciudades.</li>
+</ul>
+<div class="fragment">
+<p><strong>Cada nivel necesita información diferente del mismo dato.</strong></p>
+</div>
+</section>
+<section id="la-pirámide-organizacional-de-techstyle" class="slide level2">
+<h2>La Pirámide Organizacional de TechStyle</h2>
+<p><code>[IMAGE/DIAGRAM PLACEHOLDER: Pirámide organizacional de TechStyle — base amplia con Sofía y el equipo operativo (nivel operativo, datos en tiempo real); franja media con Juan y el equipo de análisis (nivel táctico, reportes semanales/mensuales); cima con Roberto y la gerencia (nivel estratégico, tendencias y proyecciones). Cada nivel con el tipo de SI que usa]</code></p>
+<div class="fragment">
+<p><em>Cuantos más arriba en la pirámide, mayor el nivel de abstracción de la información y más largo el horizonte de tiempo de las decisiones.</em></p>
+</div>
+</section>
+<section id="decisiones-según-el-nivel-detalles" class="slide level2">
+<h2>Decisiones según el Nivel: Detalles</h2>
 <table class="caption-top">
 <colgroup>
-<col style="width: 55%">
-<col style="width: 22%">
-<col style="width: 22%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Característica</th>
-<th>OLTP</th>
-<th>OLAP</th>
+<th>Actor</th>
+<th>Nivel</th>
+<th>Horizonte</th>
+<th>Tipo de Decisión</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Propósito</strong></td>
-<td>Registrar operaciones</td>
-<td>Analizar histórico</td>
+<td><strong>Sofía</strong></td>
+<td>Operativo</td>
+<td>Hoy</td>
+<td>¿Cuál es la ruta de entregas de esta mañana?</td>
 </tr>
 <tr class="even">
-<td><strong>Usuarios</strong></td>
-<td>Miles (clientes, operarios)</td>
-<td>Pocos (analistas, gerentes)</td>
+<td><strong>Juan</strong></td>
+<td>Táctico</td>
+<td>Esta semana / mes</td>
+<td>¿Qué categoría está bajo la meta de ventas?</td>
 </tr>
 <tr class="odd">
-<td><strong>Operaciones</strong></td>
-<td>Muchas escrituras pequeñas</td>
-<td>Pocas lecturas complejas</td>
+<td><strong>María</strong></td>
+<td>Táctico</td>
+<td>Este mes / trimestre</td>
+<td>¿Dónde invertir los $15M de campaña?</td>
 </tr>
 <tr class="even">
-<td><strong>Datos</strong></td>
-<td>Actuales</td>
-<td>Históricos (años)</td>
-</tr>
-<tr class="odd">
-<td><strong>Respuesta</strong></td>
-<td>Milisegundos</td>
-<td>Segundos a minutos</td>
-</tr>
-<tr class="even">
-<td><strong>Ejemplo</strong></td>
-<td>Sistema de ventas online</td>
-<td>Dashboard de BI / CMI</td>
+<td><strong>Roberto</strong></td>
+<td>Estratégico</td>
+<td>Este año / 3 años</td>
+<td>¿Expandir TechStyle a Concepción en 2027?</td>
 </tr>
 </tbody>
 </table>
-<div class="fragment">
-<p><strong>TechStyle “¿está disponible este producto?” → OLTP</strong></p>
-<p><strong>“¿cuál fue la categoría más vendida en los últimos 3 años?” → OLAP</strong></p>
-</div>
-<aside class="notes">
-<p>Preguntas sobre “ahora” van a OLTP; preguntas sobre “patrones históricos” van a OLAP. Esta distinción es conceptualmente importante y prácticamente útil en cualquier trabajo de datos.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
-<section id="el-data-warehouse-integrando-todo" class="slide level2">
-<h2>El Data Warehouse: Integrando Todo</h2>
-<p><strong>Los datos van del OLTP al OLAP mediante transformación</strong></p>
-<pre><code>┌─────────────────────────────────────┐
-│         FUENTES OLTP                │
-│  BD Ventas · BD Clientes · CRM      │
-└──────────────────┬──────────────────┘
-                   │  ETL (cada noche)
-                   ▼
-        ┌──────────────────────┐
-        │    DATA WAREHOUSE    │
-        │   (OLAP · Historial) │
-        └──────────┬───────────┘
-                   │
-      ┌────────────┼────────────┐
-      ▼            ▼            ▼
-   [BI / CMI]  [Reportes]  [Analítica]</code></pre>
-<aside class="notes">
-<p>El Data Warehouse resuelve el problema de silos: integra datos de múltiples sistemas OLTP en un repositorio coherente optimizado para análisis. Es el corazón de la arquitectura de Business Intelligence.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="etl-el-proceso-de-integración" class="slide level2">
-<h2>ETL: El Proceso de Integración</h2>
-<p><strong>Extract · Transform · Load</strong></p>
-<ul>
-<li class="fragment"><strong>Extraer</strong>: obtener datos de los sistemas OLTP fuente</li>
-<li class="fragment"><strong>Transformar</strong>: limpiar, estandarizar, integrar, aplicar calidad de datos</li>
-<li class="fragment"><strong>Cargar</strong>: insertar en el Data Warehouse</li>
-</ul>
-<div class="fragment">
-<p><strong>TechStyle</strong>: cada noche a las 2am, el proceso ETL extrae datos de ventas, bodega y CRM; los limpia y estandariza; y los carga en el Data Warehouse.</p>
-<p>A las 7am el analista tiene datos frescos para el CMI del día.</p>
-</div>
-<aside class="notes">
-<p>ETL es donde se “paga el precio” de la integración. La transformación puede ser compleja: sistemas con formatos distintos, monedas distintas, nombres distintos para el mismo concepto. Aquí es donde la calidad de datos (clase anterior) se convierte en proceso sistemático.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="el-modelo-completo-de-techstyle" class="slide level2">
-<h2>El Modelo Completo de TechStyle</h2>
-<pre><code>   [Clientes compran]  →  OLTP  →  datos en tiempo real
-                                         ↓
-                                   ETL (noche)
-                                         ↓
-                               DATA WAREHOUSE (OLAP)
-                                         ↓
-                      ┌──────────────────────────────┐
-                      ▼              ▼               ▼
-                   CMI con       Reportes        Análisis
-                   4 KPIs       de ventas       predictivo
-                      ↓
-               DECISIONES DE NEGOCIO</code></pre>
-<div class="fragment">
-<p><strong>Cada concepto de la Unidad 1 corresponde a un eslabón de esta cadena.</strong></p>
-</div>
-<aside class="notes">
-<p>Este es el diagrama de cierre. Los estudiantes ya conocen todos los componentes: SI (semana 1), tipos de SI/TPS/BI (semana 2), CMI/calidad (semana 3), Big Data/OLTP/OLAP/DW (hoy). Todo está conectado.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="síntesis-los-5-conceptos-clave-de-la-unidad-1" class="slide level2">
-<h2>Síntesis: Los 5 Conceptos Clave de la Unidad 1</h2>
+<section id="verificación-a-qué-nivel-pertenece" class="slide level2">
+<h2>Verificación: ¿A Qué Nivel Pertenece?</h2>
+<p><strong>Clasifica cada necesidad de información:</strong></p>
 <ol type="1">
-<li class="fragment"><p><strong>Sistema de Información</strong> — conjunto de componentes que transforma datos en información para apoyar decisiones. Tiene 5 elementos: hardware, software, datos, personas, procesos.</p></li>
-<li class="fragment"><p><strong>Niveles y Tipos de SI</strong> — 3 niveles (operativo, táctico, estratégico) con SI distintos (TPS, BI, DSS, CRM, EIS).</p></li>
-<li class="fragment"><p><strong>CMI</strong> — 4 perspectivas (Financiera, Cliente, Procesos, Aprendizaje) con KPIs que conectan estrategia y datos.</p></li>
-<li class="fragment"><p><strong>Calidad de Datos</strong> — 4 dimensiones (exactitud, completitud, consistencia, oportunidad). Datos malos = decisiones malas.</p></li>
-<li class="fragment"><p><strong>Big Data y Arquitectura</strong> — 5 V, OLTP (operacional), OLAP (analítico), Data Warehouse, ETL.</p></li>
+<li class="fragment">“¿Cuántos pedidos debo entregar hoy en Las Condes?” → <strong>Operativo</strong></li>
+<li class="fragment">“¿Cuál fue el tiempo promedio de entrega por zona en el último trimestre?” → <strong>Táctico</strong></li>
+<li class="fragment">“¿Debería TechStyle expandirse a Perú en 2028?” → <strong>Estratégico</strong></li>
+<li class="fragment">“¿El pedido #9045 fue marcado como entregado?” → <strong>Operativo</strong></li>
+<li class="fragment">“¿En qué regiones está cayendo el NPS este mes?” → <strong>Táctico</strong></li>
 </ol>
-<aside class="notes">
-<p>Este repaso es el corazón de la preparación para la solemne. Pedir a los estudiantes que anoten qué concepto sienten menos claro para abordarlo en la actividad.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
-<section id="caso-integrador-servirápido" class="slide level2">
-<h2>Caso Integrador: ServiRápido</h2>
-<p><strong>ServiRápido</strong>: empresa de mantención del hogar (gasfitería, electricidad, cerrajería) con 180 técnicos y 3.200 servicios mensuales en Santiago.</p>
-<p><strong>Actualmente gestiona sus datos con</strong>: - Google Sheets para registrar servicios - WhatsApp para coordinar con técnicos - Email para enviar facturas - Notas en papel para inventario de repuestos</p>
-<div class="fragment">
-<p><strong>Problema</strong>: No saben si son rentables por zona ni qué técnicos tienen mejor desempeño.</p>
-<p><strong>Su rol</strong>: analista de datos contratado para diseñar el SI de ServiRápido.</p>
-</div>
-<aside class="notes">
-<p>Este escenario refleja la realidad de miles de PYMEs en Chile. Tiene todos los problemas vistos en la unidad: datos dispersos, mala calidad, sin arquitectura analítica.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<section id="el-mismo-dato-tres-perspectivas" class="slide level2">
+<h2>El Mismo Dato, Tres Perspectivas</h2>
+<p><strong>Dato origen</strong>: “Pedido #8821 — Zapatillas — $45.000 — Las Condes — 2026-03-10”</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Actor</th>
+<th>Lo que necesita ver</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sofía (operativo)</td>
+<td>¿El pedido está asignado a mi ruta de hoy?</td>
+</tr>
+<tr class="even">
+<td>Juan (táctico)</td>
+<td>¿Cuántos pedidos de Calzado procesamos esta semana en RM?</td>
+</tr>
+<tr class="odd">
+<td>Roberto (estratégico)</td>
+<td>¿Está creciendo TechStyle en las comunas de mayor poder adquisitivo?</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="actividad-diseñar-el-si-de-servirápido" class="slide level2">
-<h2>Actividad: Diseñar el SI de ServiRápido</h2>
-<p><strong>En grupos de 4-5 personas (15 minutos)</strong>:</p>
-<p><strong>Parte 1 — Diagnóstico</strong>: identifiquen 2 problemas de calidad de datos y 2 barreras al flujo de información.</p>
-<p><strong>Parte 2 — Diseño del SI</strong>: propongan qué tipos de SI necesita ServiRápido y por qué (TPS, BI, CRM, etc.).</p>
-<p><strong>Parte 3 — CMI</strong>: diseñen 1 objetivo y 1 KPI por cada perspectiva del CMI.</p>
-<p><strong>Presentación</strong>: 2 minutos por grupo.</p>
-<aside class="notes">
-<p>Parte 1: datos en papel → exactitud y completitud en riesgo; WhatsApp → no estructurado, no analizable. Parte 2: TPS para registro de servicios, CRM para clientes, BI para análisis de rentabilidad por zona. Parte 3: Financiero=margen por servicio, Cliente=tasa de recontratación, Procesos=tiempo de respuesta, Aprendizaje=capacitación de técnicos.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="preparación-para-la-solemne-1" class="slide level2">
-<h2>Preparación para la Solemne 1</h2>
-<p><strong>Semana 5 — Evaluación Unidad 1</strong></p>
-<ul>
-<li class="fragment">Temas: todos los conceptos de las semanas 1 a 4</li>
-<li class="fragment">Formato: prueba escrita individual</li>
-<li class="fragment">Enfoque: <strong>aplicación en contexto</strong>, no memorización de definiciones</li>
-</ul>
-<div class="fragment">
-<p><strong>Tipo de pregunta frecuente</strong>: <em>“Dada esta empresa, ¿qué SI implementarías y por qué?”</em></p>
-<p><strong>Practiquen</strong>: diseñar un CMI, identificar dimensiones de calidad, explicar la diferencia OLTP/OLAP.</p>
-</div>
-<aside class="notes">
-<p>Ser muy claro sobre el tipo de pregunta de la solemne. Los estudiantes tienden a memorizar definiciones; el énfasis debe estar en poder aplicar los conceptos a un caso nuevo.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="lo-que-aprendimos-hoy" class="slide level2">
-<h2>Lo Que Aprendimos Hoy</h2>
+<section id="del-dato-a-la-acción-flujo-completo" class="slide level2">
+<h2>Del Dato a la Acción: Flujo Completo</h2>
+<p><strong>Trazando el pedido #8821 a través de los tres niveles:</strong></p>
 <ol type="1">
-<li class="fragment">Big Data se define por las <strong>5 V</strong>: Volumen, Velocidad, Variedad, Veracidad, Valor</li>
-<li class="fragment">Los sistemas <strong>OLTP</strong> registran operaciones en tiempo real; los <strong>OLAP</strong> analizan histórico</li>
-<li class="fragment">El <strong>Data Warehouse</strong> integra datos de múltiples fuentes para análisis</li>
-<li class="fragment">El proceso <strong>ETL</strong> conecta los sistemas operacionales con el almacén analítico</li>
-<li class="fragment">Todos los conceptos de la Unidad 1 forman una <strong>cadena completa</strong>: dato → decisión</li>
+<li class="fragment"><strong>Dato registrado</strong>: Sofía confirma entrega en su tablet → <code>estado: entregado, fecha: 2026-03-10</code></li>
+<li class="fragment"><strong>Informe táctico</strong>: Juan agrega 1.247 pedidos más → “Calzado: 312 pedidos entregados esta semana, $14,1M”</li>
+<li class="fragment"><strong>KPI estratégico</strong>: Roberto ve en su EIS → “Calzado creció 22% vs.&nbsp;semana anterior en toda la RM”</li>
+<li class="fragment"><strong>Decisión</strong>: Roberto aprueba la campaña de $9M en Calzado para Q2</li>
 </ol>
 <div class="fragment">
-<p><strong>Big Data no es el objetivo: el objetivo son las decisiones que habilita.</strong></p>
+<p><strong>Sin el dato de Sofía bien registrado → toda la cadena falla.</strong></p>
 </div>
 </section>
-<section id="preguntas" class="slide level2">
-<h2>Preguntas</h2>
-<p>¿Dudas sobre el contenido de la Unidad 1?</p>
-<p><strong>Semana 5</strong>: Solemne 1</p>
-<p><strong>Contacto</strong>: [correo del profesor]</p>
+<section id="de-vuelta-con-maría" class="slide level2">
+<h2>De Vuelta con María</h2>
+<p>María necesita tomar una decisión <strong>hoy</strong>.</p>
+<ul>
+<li class="fragment">Tiene los datos en <code>techstyle_orders.csv</code>.</li>
+<li class="fragment">Necesita convertirlos en <strong>información útil</strong>.</li>
+<li class="fragment">Tiene experiencia con <strong>Excel y tablas dinámicas</strong>.</li>
+</ul>
+<div class="fragment">
+<p><strong>En el laboratorio de hoy</strong>: harás exactamente eso: de dato crudo a recomendación ejecutiva en 30 minutos.</p>
+</div>
 </section>
-<section id="gracias" class="slide level2">
-<h2>¡Gracias!</h2>
-<p><strong>Fin del contenido de la Unidad 1</strong></p>
-<p><em>Big Data y Analytics · Universidad San Sebastián</em></p>
-<aside class="notes">
-<p>Agradecer participación. Recordar que la solemne es la próxima semana y ofrecer espacio para consultas.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<section id="herramientas-que-ya-conocen" class="slide level2">
+<h2>Herramientas que ya Conocen</h2>
+<p><strong>El camino que ya han recorrido:</strong></p>
+<ul>
+<li class="fragment"><strong>Excel</strong> → tablas dinámicas para convertir filas en resúmenes</li>
+<li class="fragment"><strong>Power Pivot</strong> → cruzar múltiples tablas de datos para análisis más ricos</li>
+<li class="fragment"><strong>Power BI</strong> → visualizar KPIs en dashboards para la toma de decisiones</li>
+</ul>
+<div class="fragment">
+<p><strong>Este semestre aprenderán el siguiente nivel</strong>: diseñar y construir la <strong>base de datos</strong> que alimenta todo eso.</p>
+<p>Sin una buena base de datos → Power BI muestra datos incorrectos → las decisiones son incorrectas.</p>
+</div>
+</section>
+<section id="cuándo-falla-el-si" class="slide level2">
+<h2>¿Cuándo Falla el SI?</h2>
+<p><strong>Cuatro escenarios reales en TechStyle:</strong></p>
+<ol type="1">
+<li class="fragment"><strong>Falla de hardware</strong>: Los servidores caen a medianoche del Black Friday → 0 pedidos procesados durante 3 horas → pérdida directa de $4M.</li>
+<li class="fragment"><strong>Falla de datos</strong>: 12% de clientes sin región registrada → reportes de zona incompletos → campaña regional mal dirigida.</li>
+<li class="fragment"><strong>Falla de personas</strong>: Sofía registra “entregado” antes de entregar → KPI de tiempo de entrega artificialmente bueno → bonos incorrectos.</li>
+<li class="fragment"><strong>Falla de procesos</strong>: No existe un proceso de validación de duplicados → el mismo producto se descuenta del stock dos veces.</li>
+</ol>
+</section>
+<section id="los-si-en-el-ecosistema-digital-actual" class="slide level2">
+<h2>Los SI en el Ecosistema Digital Actual</h2>
+<p><strong>Tendencias que transforman los SI empresariales:</strong></p>
+<ul>
+<li class="fragment"><strong>Cloud computing</strong>: los servidores ya no son físicos en la empresa → menor costo, mayor escalabilidad</li>
+<li class="fragment"><strong>APIs y microservicios</strong>: TechStyle conecta su SI con Transbank, Starken y Google Maps</li>
+<li class="fragment"><strong>Mobile first</strong>: la tablet de Sofía es parte integral del SI, no un complemento</li>
+<li class="fragment"><strong>Big Data y Analytics</strong>: el volumen de datos crece tan rápido que los SI clásicos ya no son suficientes → <strong>próximas semanas</strong></li>
+</ul>
+</section>
+<section id="objetivo-de-aprendizaje-semana-1" class="slide level2">
+<h2>Objetivo de Aprendizaje – Semana 1</h2>
+<p><em>RA: Explica los distintos sistemas de información en el contexto de la toma de decisiones en una organización.</em></p>
+<ul>
+<li class="fragment">Distinguir <strong>dato</strong>, <strong>información</strong> y <strong>conocimiento</strong>.</li>
+<li class="fragment">Identificar los <strong>5 componentes</strong> de un SI en un caso real.</li>
+<li class="fragment">Reconocer los <strong>3 niveles organizacionales</strong> y qué información necesita cada uno.</li>
+</ul>
+</section>
+<section id="puntos-clave" class="slide level2">
+<h2>Puntos Clave</h2>
+<ul>
+<li class="fragment">Los <strong>datos</strong> por sí solos no son útiles: el valor surge del procesamiento → información → conocimiento → decisión.</li>
+<li class="fragment">Un SI tiene <strong>5 componentes</strong> interdependientes: si falla uno, falla el sistema completo.</li>
+<li class="fragment">Los <strong>3 niveles organizacionales</strong> necesitan información con diferente granularidad y horizonte temporal.</li>
+<li class="fragment">TechStyle es nuestro caso de estudio: cada concepto del semestre se aplicará a este negocio real.</li>
+<li class="fragment"><strong>El objetivo del curso</strong> es construir los SI que permiten a Roberto, María y Juan tomar mejores decisiones con datos.</li>
+</ul>
+</section>
+<section id="preview-del-laboratorio-w01" class="slide level2">
+<h2>Preview del Laboratorio W01</h2>
+<p><strong>Lab W01: “De Dato Crudo a Decisión”</strong></p>
+<ul>
+<li class="fragment">Abrir <code>techstyle_orders.csv</code> en Excel (450.000 filas de pedidos reales de TechStyle).</li>
+<li class="fragment">Clasificar 10 columnas del dataset como <strong>dato</strong>, <strong>información</strong> o <strong>conocimiento</strong>.</li>
+<li class="fragment">Identificar los <strong>5 componentes del SI</strong> en el sistema de pedidos de TechStyle.</li>
+<li class="fragment">Construir una tabla dinámica que responda la pregunta de María: ¿en qué categoría invertir los $15M?</li>
+<li class="fragment">Redactar una recomendación ejecutiva de 3 oraciones basada en los datos.</li>
+</ul>
+</section>
+<section id="reflexión-final" class="slide level2">
+<h2>Reflexión Final</h2>
+<blockquote>
+<p>“Antes del SI, la gerente tomaba decisiones basadas en intuición. Con el SI, toma decisiones basadas en evidencia.”</p>
+</blockquote>
+<div class="fragment">
+<p><strong>Próxima semana</strong>: ¿Qué tipos de SI existen? ¿Cuál es el adecuado para cada nivel y decisión?</p>
+</div>
 
 
 </section>
@@ -668,7 +574,7 @@ Universidad San Sebastián
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="../img/logo-horizontal-on-light.svg" class="slide-logo"></p>
 <div class="footer footer-default">
-
+<p>Big Data y Analytics · USS · 2026</p>
 </div>
 </div></div>
 

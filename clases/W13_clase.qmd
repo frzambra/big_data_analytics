@@ -1,0 +1,244 @@
+---
+title: "Consultas Avanzadas Parte 1: JOINs y Aliases"
+subtitle: "Semana 13 · W13 · Unidad 3 · Big Data y Analytics"
+author: "Universidad San Sebastián"
+date: "Junio 2026"
+format:
+  revealjs:
+    theme: default
+    incremental: false
+    slide-number: true
+    footer: "Big Data y Analytics · USS · 2026"
+---
+
+## ¿Qué Vimos la Semana Pasada?
+
+::: {.incremental}
+- **DML**: `INSERT INTO`, `UPDATE`, `DELETE` (siempre con `WHERE`).
+- **SELECT básico**: `WHERE`, `ORDER BY`, `LIMIT`, operadores de filtro.
+- Respondimos preguntas de negocio simples sobre una sola tabla.
+:::
+
+::: {.fragment}
+**Hoy**: ¿Cómo combinamos información de **múltiples tablas** para responder preguntas más complejas?
+:::
+
+---
+
+## El Límite del SELECT de una Sola Tabla
+
+**Pregunta de la Gerente María**:
+
+> ¿Cuánto vendió cada categoría de producto el mes pasado?
+
+Para responder necesito:
+- **`order_items`**: cantidad y precio_unitario de cada ítem.
+- **`productos`**: la categoría del producto.
+- **`pedidos`**: la fecha y el estado del pedido.
+
+::: {.fragment}
+**Sin JOIN**: tres consultas separadas que hay que cruzar manualmente. Lento, propenso a errores.
+
+**Con JOIN**: una sola consulta que cruza automáticamente las FK.
+:::
+
+---
+
+## ¿Qué es un JOIN?
+
+Un **JOIN** es una operación que combina filas de dos tablas usando una condición de enlace, típicamente **FK = PK**.
+
+```
+pedidos               clientes
+─────────────         ──────────────────
+id_pedido             id_cliente (PK)
+id_cliente (FK) ───── nombre
+total                 email
+estado                region
+```
+
+::: {.fragment}
+`pedidos JOIN clientes ON pedidos.id_cliente = clientes.id_cliente`
+:::
+
+---
+
+## Aliases de Tabla: Código más Limpio
+
+Los aliases (`p`, `c`, `pr`) acortan los nombres de tabla:
+
+```sql
+-- Sin alias (verboso)
+SELECT pedidos.id_pedido, clientes.nombre
+FROM pedidos
+JOIN clientes ON pedidos.id_cliente = clientes.id_cliente;
+
+-- Con alias (limpio)
+SELECT p.id_pedido, c.nombre
+FROM pedidos p
+JOIN clientes c ON p.id_cliente = c.id_cliente;
+```
+
+::: {.fragment}
+**Convención**: una letra por tabla (`p` = pedidos, `c` = clientes, `pr` = productos, `oi` = order_items, `r` = repartidores, `z` = zonas).
+:::
+
+---
+
+## INNER JOIN: Solo Registros Coincidentes
+
+Devuelve solo las filas que tienen coincidencia **en ambas tablas**.
+
+```sql
+-- Nombre del cliente y monto de sus pedidos entregados
+SELECT c.nombre, p.id_pedido, p.total, p.estado
+FROM pedidos p
+INNER JOIN clientes c ON p.id_cliente = c.id_cliente
+WHERE p.estado = 'entregado'
+ORDER BY p.total DESC;
+```
+
+::: {.fragment}
+- Clientes **sin pedidos** → NO aparecen.
+- Pedidos **sin cliente** → imposible por FK → NO aparecen.
+:::
+
+---
+
+## LEFT JOIN: Todos de la Tabla Izquierda
+
+Devuelve **todas las filas** de la tabla izquierda, con NULL en las columnas de la derecha cuando no hay coincidencia.
+
+```sql
+-- Todos los clientes, aunque no tengan pedidos
+SELECT c.nombre, c.email,
+       COUNT(p.id_pedido) AS total_pedidos
+FROM clientes c
+LEFT JOIN pedidos p ON c.id_cliente = p.id_cliente
+GROUP BY c.id_cliente, c.nombre, c.email;
+```
+
+::: {.fragment}
+**Caso de uso**: Identificar clientes inactivos (total_pedidos = 0).
+
+→ TechStyle puede lanzar una campaña de reactivación.
+:::
+
+---
+
+## RIGHT JOIN: Todos de la Tabla Derecha
+
+```sql
+-- Todos los repartidores, aunque no tengan pedidos asignados
+SELECT r.nombre AS repartidor, COUNT(p.id_pedido) AS pedidos
+FROM pedidos p
+RIGHT JOIN repartidores r ON p.id_repartidor = r.id_repartidor
+GROUP BY r.id_repartidor, r.nombre;
+```
+
+::: {.fragment}
+**Práctica**: En MySQL se prefiere `LEFT JOIN` invertiendo el orden de las tablas. `RIGHT JOIN` es menos común.
+:::
+
+---
+
+## JOIN de Tres Tablas: La Consulta Real del CMI
+
+```sql
+-- Ventas totales por categoría (último mes)
+SELECT pr.categoria,
+       SUM(oi.cantidad * oi.precio_unitario) AS ventas_totales,
+       COUNT(DISTINCT p.id_pedido)           AS num_pedidos
+FROM order_items  oi
+INNER JOIN pedidos   p  ON oi.id_pedido   = p.id_pedido
+INNER JOIN productos pr ON oi.id_producto = pr.id_producto
+WHERE p.estado = 'entregado'
+  AND p.fecha_pedido >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+GROUP BY pr.categoria
+ORDER BY ventas_totales DESC;
+```
+
+::: {.fragment}
+Esta consulta responde el KPI "ventas por categoría" del CMI **directamente desde la base de datos**.
+:::
+
+---
+
+## EXPLAIN: Leer el Plan de Consulta
+
+```sql
+EXPLAIN
+SELECT pr.categoria, SUM(oi.cantidad * oi.precio_unitario)
+FROM order_items oi
+INNER JOIN productos pr ON oi.id_producto = pr.id_producto
+GROUP BY pr.categoria;
+```
+
+::: {.incremental}
+- `type`: cómo MySQL accede a la tabla (ideal: `ref` o `eq_ref`, evitar: `ALL`).
+- `rows`: estimación de filas examinadas.
+- `key`: índice utilizado (NULL = escaneo completo de tabla).
+:::
+
+::: {.fragment}
+**Por qué importa**: En TechStyle con 8,5M pedidos, una consulta sin índice puede tardar minutos.
+:::
+
+---
+
+## Índices Básicos: Acelerar los JOINs
+
+```sql
+-- Crear un índice en la columna FK (si no existe ya)
+CREATE INDEX idx_pedidos_cliente    ON pedidos(id_cliente);
+CREATE INDEX idx_pedidos_repartidor ON pedidos(id_repartidor);
+CREATE INDEX idx_items_pedido       ON order_items(id_pedido);
+CREATE INDEX idx_items_producto     ON order_items(id_producto);
+
+-- Los índices en PK se crean automáticamente con PRIMARY KEY
+```
+
+::: {.fragment}
+**Regla práctica**: Toda columna usada en `ON ... = ...` de un JOIN debería tener índice.
+
+Las FK suelen necesitar índice explícito en MySQL.
+:::
+
+---
+
+## Resumen: ¿Qué Tipo de JOIN Usar?
+
+| ¿Qué necesito? | JOIN a usar |
+|---|---|
+| Solo registros que coinciden en ambas tablas | `INNER JOIN` |
+| Todos de la izquierda + coincidencias de la derecha | `LEFT JOIN` |
+| Encontrar registros sin pareja (huérfanos) | `LEFT JOIN WHERE derecha IS NULL` |
+| Cruzar 3 o más tablas | Encadenar `JOIN`s |
+
+---
+
+## Actividad: 5 Consultas con JOIN
+
+**Resolver en MySQL Workbench**:
+
+::: {.incremental}
+1. Nombre del cliente + total de cada pedido entregado (INNER JOIN).
+2. Todos los clientes + cuántos pedidos tiene cada uno (LEFT JOIN).
+3. Nombre del repartidor + zona que cubre (INNER JOIN 2 tablas).
+4. Pedidos entregados + categoría del producto + cantidad vendida (JOIN 3 tablas).
+5. Clientes que nunca han comprado (LEFT JOIN + WHERE IS NULL).
+:::
+
+::: {.fragment}
+→ Continuarán en el **Lab W13** con 5 consultas adicionales.
+:::
+
+---
+
+## Conexión con la Toma de Decisiones
+
+::: {.incremental}
+- Sin JOINs, un analista no puede cruzar la información de clientes con la de pedidos para segmentar campañas.
+- Sin JOINs, el CMI no puede calcular el "ticket promedio por zona" (requiere pedidos + clientes + zonas).
+- **El JOIN es el instrumento que une la realidad del negocio (múltiples tablas) con la pregunta que necesita responder la gerencia.**
+:::

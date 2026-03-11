@@ -1,0 +1,219 @@
+---
+title: "Modelo Entidad-Relación"
+subtitle: "Semana 6 · W06 · Unidad 2 · Big Data y Analytics"
+author: "Universidad San Sebastián"
+date: "Abril 2026"
+format:
+  revealjs:
+    theme: default
+    incremental: false
+    slide-number: true
+    footer: "Big Data y Analytics · USS · 2026"
+---
+
+## ¿Qué Vimos la Semana Pasada?
+
+::: {.incremental}
+- El **Diagrama de Caso de Uso** describe qué hace el sistema y quién lo usa.
+- El **Esquema UML** muestra la estructura de clases y sus relaciones.
+- El modelamiento previo evita errores costosos en la construcción de la base de datos.
+:::
+
+::: {.fragment}
+**Hoy**: ¿Cómo representamos la *realidad del negocio* como entidades y relaciones?
+:::
+
+---
+
+## El Principio Fundamental
+
+> **Una base de datos es una representación estructurada de la realidad organizacional.**
+
+::: {.fragment}
+- TechStyle tiene clientes, productos, pedidos, repartidores y zonas.
+- Todo eso existe en el mundo real.
+- El **Modelo Entidad-Relación** captura esa realidad en un diagrama formal.
+:::
+
+::: {.notes}
+Este es el concepto clave del curso. Repetirlo explícitamente y conectar con el caso TechStyle.
+:::
+
+---
+
+## ¿Qué es el Modelo Entidad-Relación?
+
+::: {.incremental}
+- Herramienta gráfica para diseñar la estructura de una base de datos.
+- Creado por Peter Chen en 1976.
+- Representa **entidades**, **atributos** y **relaciones**.
+:::
+
+::: {.fragment}
+**Notaciones más usadas**:
+- Chen (clásica, con rombos y elipses)
+- **Pata de Gallo** (Crow's Foot — usada en draw.io y herramientas modernas)
+:::
+
+---
+
+## Conceptos del Modelo ER
+
+| Concepto | Descripción | Ejemplo TechStyle |
+|---|---|---|
+| **Entidad** | Objeto del mundo real | `Cliente`, `Pedido` |
+| **Atributo** | Propiedad de la entidad | `nombre`, `fecha_pedido` |
+| **Relación** | Vínculo entre entidades | `Cliente REALIZA Pedido` |
+| **Cardinalidad** | Cuántos de cada lado | Un cliente realiza muchos pedidos |
+
+---
+
+## Cardinalidades: Las Reglas del Negocio
+
+::: {.incremental}
+- **1:1** — Una entidad se relaciona con exactamente una otra. *(Raro)*
+  - Ejemplo: Un pedido tiene un único comprobante de pago.
+- **1:N** — Una entidad se relaciona con muchas otras.
+  - Ejemplo: Un cliente puede tener muchos pedidos.
+- **N:M** — Muchas de una con muchas de otra.
+  - Ejemplo: Un pedido puede incluir muchos productos, y un producto puede estar en muchos pedidos.
+:::
+
+---
+
+## Entidades de TechStyle: Identificación Paso a Paso
+
+**Reglas de negocio de TechStyle**:
+
+::: {.incremental}
+1. Un cliente puede realizar múltiples pedidos.
+2. Un pedido contiene uno o más productos.
+3. Cada pedido es asignado a un repartidor.
+4. Cada repartidor cubre una zona geográfica.
+5. Un pedido puede generar una devolución (opcional).
+:::
+
+::: {.fragment}
+**Entidades**: `Cliente`, `Pedido`, `Producto`, `OrderItem`, `Repartidor`, `Zona`, `Devolución`
+:::
+
+---
+
+## Diagrama ER de TechStyle (Versión Base)
+
+```
+[Cliente] ──1:N──> [Pedido] ──1:N──> [OrderItem] <──N:1── [Producto]
+                      │
+                     1:1
+                      ↓
+                 [Repartidor] ──N:1──> [Zona]
+                      │
+                    0:1 (opcional)
+                      ↓
+                 [Devolución]
+```
+
+::: {.notes}
+Mostrar en draw.io. Construir progresivamente, empezando por Cliente-Pedido, luego agregar Producto y OrderItem, luego Repartidor y Zona, finalmente Devolución.
+:::
+
+---
+
+## Atributos de las Entidades Principales
+
+**Cliente**: `id_cliente` (PK), `nombre`, `email`, `telefono`, `fecha_registro`, `region`
+
+**Pedido**: `id_pedido` (PK), `fecha_pedido`, `total`, `estado`, `id_cliente` (FK)
+
+**Producto**: `id_producto` (PK), `nombre`, `categoria`, `precio`, `stock`
+
+**OrderItem**: `id_item` (PK), `id_pedido` (FK), `id_producto` (FK), `cantidad`, `precio_unitario`
+
+---
+
+## ¿Por qué Existe la Entidad OrderItem?
+
+**Problema**: Un pedido tiene muchos productos. ¿Cómo representamos eso?
+
+::: {.incremental}
+- **Mal diseño**: `pedido_1_producto_1`, `pedido_1_producto_2`... *(columnas infinitas)*
+- **Mal diseño**: Guardar lista de productos como texto en una columna. *(No es atómico)*
+- **Buen diseño**: Una tabla intermedia `OrderItem` que convierte la relación N:M en dos relaciones 1:N.
+:::
+
+::: {.fragment}
+**Regla**: Las relaciones N:M siempre generan una **entidad asociativa**.
+:::
+
+---
+
+## Justificación de Cardinalidades con Reglas de Negocio
+
+| Relación | Cardinalidad | Regla de negocio |
+|---|---|---|
+| Cliente → Pedido | 1:N | Un cliente puede hacer varios pedidos |
+| Pedido → OrderItem | 1:N | Un pedido contiene varios ítems |
+| OrderItem → Producto | N:1 | Varios ítems pueden ser el mismo producto |
+| Repartidor → Zona | N:1 | Varios repartidores pueden cubrir la misma zona |
+| Pedido → Devolución | 1:0..1 | No todos los pedidos generan devolución |
+
+---
+
+## Discusión: Ética en el Diseño del ER
+
+**Pregunta para reflexionar**:
+
+> TechStyle decide guardar la ubicación GPS de cada cliente en tiempo real para optimizar entregas. ¿Qué consideraciones éticas debe tener el diseñador del modelo ER?
+
+::: {.incremental}
+- ¿Es proporcional al objetivo (entrega) guardar localización continua?
+- ¿Cómo se protegen esos datos contra acceso no autorizado?
+- ¿El cliente fue informado y dio su consentimiento?
+:::
+
+---
+
+## Actividad en Grupos
+
+**En grupos de 3** — 20 minutos:
+
+Diseñen el modelo ER para TechStyle **ampliado**, incluyendo las entidades:
+`Repartidor`, `Zona` y `Devolución`.
+
+::: {.incremental}
+1. Definan los atributos de cada entidad nueva.
+2. Establezcan las cardinalidades con justificación de negocio.
+3. Usen draw.io para diagramar.
+:::
+
+::: {.fragment}
+→ Continuarán y completarán este diagrama en el laboratorio.
+:::
+
+---
+
+## Conexión con la Toma de Decisiones
+
+::: {.incremental}
+- Un buen modelo ER permite responder preguntas como: ¿Qué repartidor tiene mayor tasa de devoluciones?
+- Un modelo incompleto hace que ciertas preguntas sean **imposibles de responder**.
+- **El diseño del ER determina qué decisiones podrá tomar la organización en el futuro.**
+:::
+
+::: {.fragment}
+> "Si no modelamos la entidad Devolución, nunca podremos analizar por qué los clientes devuelven productos."
+:::
+
+---
+
+## Para el Laboratorio de Hoy
+
+**Lab 7**: Modelo Entidad-Relación en draw.io.
+
+- Diseñar el ER completo de TechStyle (con Repartidor, Zona y Devolución).
+- Justificar cada cardinalidad con reglas de negocio escritas.
+- Entregable: Diagrama exportado como PNG + tabla de justificación.
+
+::: {.fragment}
+**Para la próxima semana**: Transformar el modelo ER al modelo relacional (tablas con PK y FK).
+:::

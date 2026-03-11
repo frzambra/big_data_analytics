@@ -1,0 +1,203 @@
+---
+title: "Diagrama de Esquema UML de Clases"
+subtitle: "Semana 5 · W05 · Unidad 2 · Big Data y Analytics"
+author: "Universidad San Sebastián"
+date: "Abril 2026"
+format:
+  revealjs:
+    theme: default
+    incremental: false
+    slide-number: true
+    footer: "Big Data y Analytics · USS · 2026"
+---
+
+## ¿Qué Vimos la Semana Pasada?
+
+::: {.incremental}
+- El **Diagrama de Caso de Uso** describe *qué hace* el sistema y *quién* interactúa con él.
+- El levantamiento de requerimientos es la base de todo el modelamiento.
+- Actores: Cliente, Repartidor, Administrador.
+- Casos de uso: Realizar pedido, Confirmar entrega, Gestionar producto, etc.
+:::
+
+::: {.fragment}
+**Hoy**: ¿Cómo modelamos la *estructura interna* del sistema? → Diagrama UML de Clases.
+:::
+
+---
+
+## ¿Qué es el Diagrama UML de Clases?
+
+::: {.incremental}
+- **UML** = Unified Modeling Language. Estándar internacional para modelar software.
+- El **diagrama de clases** muestra las *entidades del sistema*, sus *atributos*, sus *métodos* y sus *relaciones*.
+- Es el paso previo al Modelo Entidad-Relación: muestra la *estructura*, no solo el *comportamiento*.
+:::
+
+::: {.fragment}
+**Diferencia con el Caso de Uso**:
+
+- Caso de Uso → ¿**Qué** hace el sistema?
+- Diagrama de Clases → ¿**Cómo** está estructurado internamente?
+:::
+
+---
+
+## Anatomía de una Clase UML
+
+```
+┌──────────────────────┐
+│       Cliente        │  ← Nombre de la clase
+├──────────────────────┤
+│ - id_cliente: int    │  ← Atributos (con tipo)
+│ - nombre: String     │  (- = privado, + = público)
+│ - email: String      │
+│ - telefono: String   │
+│ - region: String     │
+├──────────────────────┤
+│ + registrarse()      │  ← Métodos (operaciones)
+│ + actualizarEmail()  │
+│ + getHistorial()     │
+└──────────────────────┘
+```
+
+---
+
+## Clases del Sistema TechStyle
+
+**Clases identificadas a partir del Caso de Uso**:
+
+::: {.incremental}
+- `Cliente` — el actor que realiza pedidos.
+- `Pedido` — la transacción central del sistema.
+- `Producto` — lo que se vende.
+- `OrderItem` — el ítem individual dentro de un pedido.
+- `Repartidor` — quien entrega el pedido.
+- `Zona` — área geográfica de cobertura.
+- `Devolución` — pedido que el cliente retorna.
+:::
+
+---
+
+## Tipos de Relaciones UML
+
+| Relación | Símbolo | Significado |
+|---|---|---|
+| **Asociación** | Línea sólida | Dos clases se conocen/usan |
+| **Agregación** | Diamante vacío ◇ | "tiene un" (parte puede existir sin el todo) |
+| **Composición** | Diamante relleno ◆ | "compuesto de" (parte no existe sin el todo) |
+| **Dependencia** | Flecha punteada | Usa temporalmente otra clase |
+| **Herencia** | Flecha vacía ▷ | "es un" (subclase de) |
+
+---
+
+## Cardinalidades en UML
+
+::: {.incremental}
+- `1` — exactamente uno.
+- `0..1` — cero o uno (opcional).
+- `*` — cero o muchos.
+- `1..*` — uno o muchos.
+:::
+
+::: {.fragment}
+**Ejemplo**: Un `Cliente` puede tener `0..*` `Pedido`s. Un `Pedido` pertenece a exactamente `1` `Cliente`.
+:::
+
+---
+
+## Diagrama UML de TechStyle (Demo Parcial)
+
+```
+┌──────────────────┐  1    0..* ┌──────────────────────┐
+│    Cliente       │────────────│       Pedido          │
+├──────────────────┤            ├──────────────────────┤
+│ - id: int        │            │ - id: int            │
+│ - nombre: String │            │ - fecha: Date        │
+│ - email: String  │            │ - total: Decimal     │
+│ - region: String │            │ - estado: String     │
+└──────────────────┘            └──────────────────────┘
+                                         │ 1
+                                         │
+                                     0..* │
+                               ┌──────────────────┐
+                               │   OrderItem      │
+                               ├──────────────────┤
+                               │ - cantidad: int  │
+                               │ - precUnit: Dec  │
+                               └──────────────────┘
+                                         │ 0..*
+                                         │ 1
+                               ┌──────────────────┐
+                               │    Producto      │
+                               ├──────────────────┤
+                               │ - nombre: String │
+                               │ - precio: Dec    │
+                               └──────────────────┘
+```
+
+::: {.notes}
+Mostrar en draw.io cómo se construye paso a paso. Los estudiantes replicarán en el lab.
+:::
+
+---
+
+## Agregar Repartidor, Zona y Devolución
+
+**En draw.io**: completar el diagrama con:
+
+::: {.incremental}
+- `Repartidor` (1) — (0..*) `Pedido`: un repartidor puede tener muchos pedidos asignados.
+- `Repartidor` (0..*) — (1) `Zona`: muchos repartidores pueden operar en una zona.
+- `Pedido` (1) — (0..1) `Devolución`: un pedido puede generar cero o una devolución.
+:::
+
+::: {.fragment}
+**Para el estudio autónomo**: Agregar los **métodos** de cada clase (`Pedido.calcularTotal()`, `Repartidor.confirmarEntrega()`, etc.).
+:::
+
+---
+
+## Del UML al Modelo ER
+
+**Correspondencia directa**:
+
+| Elemento UML | Elemento ER |
+|---|---|
+| Clase | Entidad |
+| Atributo de clase | Atributo de entidad |
+| Atributo con `id` | Identificador / PK |
+| Asociación 1:N | Relación con FK en el lado N |
+| Asociación N:M con clase propia | Entidad asociativa |
+
+::: {.fragment}
+**La semana que viene (W06)** haremos exactamente esta transformación.
+:::
+
+---
+
+## Actividad: Completar el UML de TechStyle
+
+**En grupos de 3 – 20 minutos**:
+
+1. Agregar `Repartidor` y `Zona` al diagrama UML con sus atributos.
+2. Definir al menos 2 métodos por clase.
+3. Verificar que las cardinalidades coinciden con las reglas de negocio vistas en W04.
+
+::: {.fragment}
+→ Continuarán y entregarán el diagrama completo en el **Lab W05**.
+:::
+
+---
+
+## Para el Laboratorio de Hoy
+
+**Lab W05**: Diagrama UML completo en draw.io.
+
+- 7 clases con atributos y métodos.
+- Relaciones y cardinalidades correctas.
+- Entregable: PNG + tabla de clases con descripción de negocio de cada atributo.
+
+::: {.fragment}
+**Para la próxima semana (W06)**: Transformar el UML en un Modelo Entidad-Relación.
+:::

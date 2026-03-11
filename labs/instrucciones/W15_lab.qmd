@@ -1,0 +1,199 @@
+---
+title: "Laboratorio 15: Transacciones ACID en MySQL"
+subtitle: "Semana 15 · W15 · Unidad 3 · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+## Contexto
+
+TechStyle opera 24/7. En la madrugada del viernes, el servidor sufrió una caída durante el proceso de registro de 15 pedidos. Al revisar la base de datos el lunes, el equipo detectó pedidos registrados pero sin stock descontado, y stock descontado sin pedido correspondiente.
+
+Tu tarea es implementar transacciones ACID que **prevengan** este tipo de problemas en el futuro.
+
+---
+
+## Objetivos
+
+- Implementar transacciones con `START TRANSACTION`, `COMMIT` y `ROLLBACK`.
+- Usar `SAVEPOINT` para puntos de control intermedios.
+- Simular fallos y verificar el comportamiento del ROLLBACK.
+- Redactar un análisis de por qué las transacciones son críticas para TechStyle.
+
+---
+
+## Instrucciones
+
+### Transacción 1: Registro de Pedido con Descuento de Stock (40 min)
+
+Implementa la transacción completa para registrar un nuevo pedido:
+
+**Pasos que debe incluir**:
+1. Registrar el pedido en `pedidos`.
+2. Registrar cada ítem en `order_items`.
+3. Descontar el stock correspondiente en `productos`.
+4. Si todo es exitoso → `COMMIT`.
+5. Si algo falla (por ejemplo, stock insuficiente) → `ROLLBACK`.
+
+```sql
+START TRANSACTION;
+
+-- Paso 1: Registrar el pedido
+INSERT INTO pedidos (fecha_pedido, total, estado, id_cliente, id_repartidor)
+VALUES (CURDATE(), 57000.00, 'pendiente', 3, 2);
+
+SET @id_nuevo_pedido = LAST_INSERT_ID();
+
+-- Paso 2: Registrar ítems
+INSERT INTO order_items (id_pedido, id_producto, cantidad, precio_unitario)
+VALUES (@id_nuevo_pedido, 1, 1, 45000.00),
+       (@id_nuevo_pedido, 3, 1, 12000.00);
+
+-- Paso 3: Descontar stock
+UPDATE productos SET stock = stock - 1 WHERE id_producto = 1;
+UPDATE productos SET stock = stock - 1 WHERE id_producto = 3;
+
+-- Verificar: mostrar el stock actualizado ANTES del COMMIT
+SELECT id_producto, nombre, stock FROM productos WHERE id_producto IN (1, 3);
+
+-- Si todo está correcto, confirmar
+COMMIT;
+
+-- Verificar: el pedido debe existir y el stock debe estar actualizado
+SELECT * FROM pedidos WHERE id_pedido = @id_nuevo_pedido;
+SELECT id_producto, nombre, stock FROM productos WHERE id_producto IN (1, 3);
+```
+
+**Parte de simulación de fallo**:
+
+Repite la transacción pero esta vez agrega un `ROLLBACK` en lugar del `COMMIT` (simulando un fallo del servidor). Verifica que:
+- El pedido NO fue registrado.
+- El stock NO fue modificado.
+
+```sql
+START TRANSACTION;
+
+INSERT INTO pedidos (fecha_pedido, total, estado, id_cliente)
+VALUES (CURDATE(), 38000.00, 'pendiente', 4);
+
+SET @id_pedido_prueba = LAST_INSERT_ID();
+
+INSERT INTO order_items (id_pedido, id_producto, cantidad, precio_unitario)
+VALUES (@id_pedido_prueba, 5, 1, 35000.00),
+       (@id_pedido_prueba, 9, 1, 6500.00);
+
+UPDATE productos SET stock = stock - 1 WHERE id_producto IN (5, 9);
+
+-- SIMULACIÓN DE FALLO: en lugar de COMMIT, hacemos ROLLBACK
+ROLLBACK;
+
+-- Verificar que no quedaron registros residuales
+SELECT * FROM pedidos WHERE id_pedido = @id_pedido_prueba;
+```
+
+---
+
+### Transacción 2: Actualización de Estado de Entrega (30 min)
+
+Cuando un repartidor confirma la entrega, el sistema debe:
+1. Actualizar el estado del pedido a `'entregado'`.
+2. Registrar la fecha de entrega (si tienes esa columna) o solo verificar el estado.
+
+```sql
+START TRANSACTION;
+
+-- Verificar que el pedido existe y está en estado correcto para ser entregado
+SELECT id_pedido, estado FROM pedidos WHERE id_pedido = 5;
+
+-- Actualizar estado
+UPDATE pedidos
+SET estado = 'entregado'
+WHERE id_pedido = 5
+  AND estado = 'en_camino';   -- solo actualiza si estaba "en_camino"
+
+-- Verificar cuántas filas se actualizaron (debe ser 1)
+-- Si es 0, el pedido no estaba en el estado correcto → ROLLBACK
+SELECT ROW_COUNT() AS filas_actualizadas;
+
+COMMIT;
+```
+
+---
+
+### Transacción 3: Cancelación de Pedido con Reembolso de Stock (40 min)
+
+Cuando un cliente cancela un pedido, el sistema debe:
+1. Cambiar el estado del pedido a `'cancelado'`.
+2. Devolver el stock de todos los ítems del pedido.
+3. Registrar la devolución en la tabla `devoluciones`.
+
+```sql
+START TRANSACTION;
+
+-- Usar SAVEPOINT después del primer paso crítico
+UPDATE pedidos SET estado = 'cancelado' WHERE id_pedido = 3;
+SAVEPOINT estado_actualizado;
+
+-- Devolver stock de todos los ítems del pedido
+UPDATE productos pr
+INNER JOIN order_items oi ON pr.id_producto = oi.id_producto
+SET pr.stock = pr.stock + oi.cantidad
+WHERE oi.id_pedido = 3;
+
+SAVEPOINT stock_reintegrado;
+
+-- Registrar la devolución
+INSERT INTO devoluciones (fecha, motivo, monto, id_pedido)
+VALUES (CURDATE(), 'Cancelación solicitada por cliente antes de despacho',
+        (SELECT total FROM pedidos WHERE id_pedido = 3), 3);
+
+COMMIT;
+
+-- Verificar resultado completo
+SELECT p.id_pedido, p.estado, p.total,
+       d.id_devolucion, d.motivo
+FROM pedidos p
+LEFT JOIN devoluciones d ON p.id_pedido = d.id_pedido
+WHERE p.id_pedido = 3;
+```
+
+---
+
+## Análisis Escrito (30 min)
+
+Redacta un análisis de **una página** que responda:
+
+1. ¿Qué propiedad ACID garantiza que si el servidor falla durante el proceso de registro de un pedido, el stock no quede descontado sin pedido correspondiente?
+
+2. TechStyle tiene 500 clientes comprando simultáneamente en el Cyber Monday. ¿Qué propiedad ACID garantiza que dos clientes no puedan comprar el último par de zapatillas al mismo tiempo?
+
+3. Una auditoría descubrió que hay pedidos marcados como "cancelados" sin registro de devolución. ¿Qué falla de diseño transaccional pudo haber causado esto?
+
+4. ¿Por qué el uso de `SAVEPOINT` es más conveniente que hacer todo o nada con un solo `ROLLBACK` en procesos de múltiples pasos?
+
+---
+
+## Entregable
+
+1. Script SQL `lab15_apellido1_apellido2.sql` con las 3 transacciones (incluyendo simulaciones de fallo).
+2. Capturas de pantalla que demuestren:
+   - El COMMIT exitoso de la Transacción 1.
+   - El ROLLBACK de la Transacción 1 (sin registros residuales).
+   - El resultado final de la Transacción 3.
+3. Análisis escrito `lab15_analisis_apellido1_apellido2.pdf`.
+
+---
+
+## Criterios de evaluación
+
+| Criterio | Puntaje |
+|---|---|
+| Transacción 1 con COMMIT y simulación de ROLLBACK | 30 pts |
+| Transacción 2 con UPDATE condicional | 20 pts |
+| Transacción 3 con SAVEPOINT | 25 pts |
+| Análisis escrito (4 preguntas) | 25 pts |
+| **Total** | **100 pts** |

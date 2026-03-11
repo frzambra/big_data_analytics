@@ -1,0 +1,155 @@
+---
+title: "Laboratorio 14: Consultas con GROUP BY, HAVING y Subconsultas — Parte 2"
+subtitle: "Semana 14 · W14 · Unidad 3 · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+## Contexto
+
+Con los JOINs dominados, ahora combinamos **agregación**, **filtrado de grupos** y **subconsultas** para responder las preguntas analíticas más complejas del CMI de TechStyle.
+
+Cada una de las 5 consultas de este laboratorio responde directamente a un KPI del Cuadro de Mando Integral diseñado en la Semana 2.
+
+---
+
+## Objetivos
+
+- Usar funciones de agregación (`SUM`, `AVG`, `COUNT`, `MAX`, `MIN`) con JOIN.
+- Agrupar con `GROUP BY` y filtrar grupos con `HAVING`.
+- Escribir subconsultas en `WHERE` y en `FROM`.
+- Interpretar resultados analíticos como un reporte ejecutivo.
+
+---
+
+## Set de 5 Consultas Analíticas
+
+Para cada consulta:
+1. Escribe la consulta SQL.
+2. Ejecuta y captura el resultado.
+3. Escribe la interpretación de negocio como si presentaras a la directiva de TechStyle.
+
+---
+
+**Consulta 1 — KPI Financiero: Ventas por categoría este mes**:
+
+> ¿Cuáles son las 3 categorías de producto con mayores ventas totales (pedidos entregados en los últimos 30 días)?
+
+```sql
+-- Escribe tu consulta aquí
+-- Usar: JOIN order_items + pedidos + productos
+-- Filtro: estado = 'entregado' AND fecha >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+-- GROUP BY pr.categoria
+-- ORDER BY ventas_totales DESC LIMIT 3
+```
+
+*Interpretación*: Con este resultado, ¿en qué categoría recomendarías a María invertir los $15M de campaña?
+
+---
+
+**Consulta 2 — KPI Cliente: Clientes frecuentes**:
+
+> ¿Qué clientes han realizado más de 2 pedidos entregados? (Mostrar nombre, email, total de pedidos y gasto total)
+
+```sql
+-- Escribe tu consulta aquí
+-- Usar: JOIN pedidos + clientes
+-- GROUP BY c.id_cliente, c.nombre, c.email
+-- HAVING COUNT(p.id_pedido) > 2
+-- ORDER BY gasto_total DESC
+```
+
+*Interpretación*: ¿Cómo usaría el equipo de CRM esta lista para el programa de fidelización?
+
+---
+
+**Consulta 3 — KPI Procesos: Tasa de devolución por zona**:
+
+> ¿Cuál es la tasa de devolución (%) para cada zona geográfica? (Solo zonas con tasa > 5%)
+
+```sql
+-- Escribe tu consulta aquí
+-- Usar: JOIN pedidos + repartidores + zonas + LEFT JOIN devoluciones
+-- GROUP BY z.nombre
+-- HAVING tasa_devolucion_pct > 5
+-- Calcular: COUNT(d.id_devolucion) * 100.0 / COUNT(p.id_pedido)
+```
+
+*Interpretación*: ¿Qué zona tiene mayor problema de devoluciones? ¿Qué podría explicarlo?
+
+---
+
+**Consulta 4 — KPI Aprendizaje: Clientes inactivos (subconsulta)**:
+
+> ¿Qué clientes no han comprado en los últimos 60 días? (Usar subconsulta en WHERE)
+
+```sql
+-- Escribe tu consulta aquí
+-- Consulta principal: SELECT * FROM clientes WHERE id_cliente NOT IN (...)
+-- Subconsulta: SELECT DISTINCT id_cliente FROM pedidos
+--              WHERE fecha_pedido >= DATE_SUB(CURDATE(), INTERVAL 60 DAY)
+--                AND estado = 'entregado'
+```
+
+*Interpretación*: ¿Cuántos clientes están en riesgo de abandono? ¿Qué campaña lanzarías?
+
+---
+
+**Consulta 5 — KPI Financiero: Ticket promedio de clientes frecuentes (subconsulta en FROM)**:
+
+> ¿Cuál es el ticket promedio de los clientes que han comprado más de 2 veces, comparado con el ticket promedio general?
+
+```sql
+-- Consulta principal: calcular el AVG del subconjunto
+-- Subconsulta en FROM: clientes con COUNT(pedidos) > 2
+-- Comparar con: SELECT AVG(total) FROM pedidos WHERE estado = 'entregado'
+```
+
+*Interpretación*: ¿Los clientes frecuentes gastan más o menos en promedio? ¿Qué implica esto para la estrategia de fidelización?
+
+---
+
+## Actividad de Síntesis: Mini-Reporte Ejecutivo
+
+Elige las 3 consultas más relevantes de este laboratorio (pueden ser de W13 o W14) y redacta un **mini-reporte ejecutivo** de media página, como si fueras Juan (el analista) presentando a Roberto (el CEO):
+
+- Titular: "Análisis de Performance TechStyle — Semana de [fecha]"
+- Para cada KPI: el valor obtenido + la implicación para la decisión de negocio.
+- Recomendación final: una acción concreta basada en los datos.
+
+---
+
+## Control Parcial 4
+
+El docente entregará un conjunto de preguntas de negocio sobre un caso diferente a TechStyle. Deberás escribir y ejecutar las consultas SQL correspondientes.
+
+**Ponderación**: Parte de controles parciales (10% de Solemne 3).
+
+---
+
+## Entregable
+
+Script SQL `W14_lab_apellido1_apellido2.sql` con las 5 consultas.
+
+Documento `W14_lab_apellido1_apellido2.pdf` con:
+- Captura de pantalla del resultado de cada consulta.
+- Interpretación de negocio para cada resultado.
+- Mini-reporte ejecutivo de síntesis (media página).
+
+---
+
+## Criterios de evaluación
+
+| Criterio | Puntaje |
+|---|---|
+| Consulta 1 — GROUP BY + HAVING + LIMIT | 20 pts |
+| Consulta 2 — JOIN + GROUP BY + HAVING | 20 pts |
+| Consulta 3 — Tasa de devolución (JOIN 4 tablas + HAVING) | 20 pts |
+| Consulta 4 — Subconsulta en WHERE | 20 pts |
+| Consulta 5 — Subconsulta en FROM | 10 pts |
+| Mini-reporte ejecutivo | 10 pts |
+| **Total** | **100 pts** |

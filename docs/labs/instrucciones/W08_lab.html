@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Laboratorio 2: Tres Dashboards, Tres Usuarios</title>
+<title>Laboratorio 8: Preparación y Defensa — Solemne 2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -84,32 +84,20 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#contexto" id="toc-contexto" class="nav-link active" data-scroll-target="#contexto"><span class="header-section-number">1</span> Contexto</a></li>
-  <li><a href="#instrucciones-generales" id="toc-instrucciones-generales" class="nav-link" data-scroll-target="#instrucciones-generales"><span class="header-section-number">2</span> Instrucciones generales</a></li>
-  <li><a href="#parte-1-cargar-y-preparar-los-datos-5-min" id="toc-parte-1-cargar-y-preparar-los-datos-5-min" class="nav-link" data-scroll-target="#parte-1-cargar-y-preparar-los-datos-5-min"><span class="header-section-number">3</span> Parte 1 — Cargar y preparar los datos (5 min)</a>
+  <li><a href="#estructura-del-proyecto-final-unidad-2" id="toc-estructura-del-proyecto-final-unidad-2" class="nav-link" data-scroll-target="#estructura-del-proyecto-final-unidad-2"><span class="header-section-number">2</span> Estructura del Proyecto Final Unidad 2</a></li>
+  <li><a href="#parte-a-sesión-de-presentación-entre-pares-tal-50-min" id="toc-parte-a-sesión-de-presentación-entre-pares-tal-50-min" class="nav-link" data-scroll-target="#parte-a-sesión-de-presentación-entre-pares-tal-50-min"><span class="header-section-number">3</span> Parte A: Sesión de Presentación entre Pares (TAL – 50 min)</a>
   <ul class="collapse">
-  <li><a href="#paso-1-importar-datos" id="toc-paso-1-importar-datos" class="nav-link" data-scroll-target="#paso-1-importar-datos"><span class="header-section-number">3.1</span> Paso 1: Importar datos</a></li>
-  <li><a href="#paso-2-crear-una-medida-básica" id="toc-paso-2-crear-una-medida-básica" class="nav-link" data-scroll-target="#paso-2-crear-una-medida-básica"><span class="header-section-number">3.2</span> Paso 2: Crear una medida básica</a></li>
+  <li><a href="#formato-de-presentación" id="toc-formato-de-presentación" class="nav-link" data-scroll-target="#formato-de-presentación"><span class="header-section-number">3.1</span> Formato de presentación</a></li>
+  <li><a href="#guía-para-la-retroalimentación-entre-pares" id="toc-guía-para-la-retroalimentación-entre-pares" class="nav-link" data-scroll-target="#guía-para-la-retroalimentación-entre-pares"><span class="header-section-number">3.2</span> Guía para la retroalimentación entre pares</a></li>
   </ul></li>
-  <li><a href="#parte-2-página-1-vista-operativa-tps-para-sofía-8-min" id="toc-parte-2-página-1-vista-operativa-tps-para-sofía-8-min" class="nav-link" data-scroll-target="#parte-2-página-1-vista-operativa-tps-para-sofía-8-min"><span class="header-section-number">4</span> Parte 2 — Página 1: Vista Operativa (TPS) para Sofía (8 min)</a>
+  <li><a href="#parte-b-evaluación-solemne-2-lab-100-min" id="toc-parte-b-evaluación-solemne-2-lab-100-min" class="nav-link" data-scroll-target="#parte-b-evaluación-solemne-2-lab-100-min"><span class="header-section-number">4</span> Parte B: Evaluación Solemne 2 (LAB – 100 min)</a>
   <ul class="collapse">
-  <li><a href="#configuración-de-la-página" id="toc-configuración-de-la-página" class="nav-link" data-scroll-target="#configuración-de-la-página"><span class="header-section-number">4.1</span> Configuración de la página</a></li>
-  <li><a href="#criterio-de-diseño" id="toc-criterio-de-diseño" class="nav-link" data-scroll-target="#criterio-de-diseño"><span class="header-section-number">4.2</span> Criterio de diseño</a></li>
+  <li><a href="#entregables-del-informe-entrega-del-grupo" id="toc-entregables-del-informe-entrega-del-grupo" class="nav-link" data-scroll-target="#entregables-del-informe-entrega-del-grupo"><span class="header-section-number">4.1</span> Entregables del informe (entrega del grupo)</a></li>
   </ul></li>
-  <li><a href="#parte-3-página-2-vista-analítica-bi-para-juan-12-min" id="toc-parte-3-página-2-vista-analítica-bi-para-juan-12-min" class="nav-link" data-scroll-target="#parte-3-página-2-vista-analítica-bi-para-juan-12-min"><span class="header-section-number">5</span> Parte 3 — Página 2: Vista Analítica (BI) para Juan (12 min)</a>
-  <ul class="collapse">
-  <li><a href="#configuración-de-la-página-1" id="toc-configuración-de-la-página-1" class="nav-link" data-scroll-target="#configuración-de-la-página-1"><span class="header-section-number">5.1</span> Configuración de la página</a></li>
-  <li><a href="#criterio-de-diseño-1" id="toc-criterio-de-diseño-1" class="nav-link" data-scroll-target="#criterio-de-diseño-1"><span class="header-section-number">5.2</span> Criterio de diseño</a></li>
-  </ul></li>
-  <li><a href="#parte-4-página-3-vista-ejecutiva-eis-para-roberto-10-min" id="toc-parte-4-página-3-vista-ejecutiva-eis-para-roberto-10-min" class="nav-link" data-scroll-target="#parte-4-página-3-vista-ejecutiva-eis-para-roberto-10-min"><span class="header-section-number">6</span> Parte 4 — Página 3: Vista Ejecutiva (EIS) para Roberto (10 min)</a>
-  <ul class="collapse">
-  <li><a href="#configuración-de-la-página-2" id="toc-configuración-de-la-página-2" class="nav-link" data-scroll-target="#configuración-de-la-página-2"><span class="header-section-number">6.1</span> Configuración de la página</a></li>
-  <li><a href="#criterio-de-diseño-2" id="toc-criterio-de-diseño-2" class="nav-link" data-scroll-target="#criterio-de-diseño-2"><span class="header-section-number">6.2</span> Criterio de diseño</a></li>
-  </ul></li>
-  <li><a href="#parte-5-comparación-y-reflexión-5-min" id="toc-parte-5-comparación-y-reflexión-5-min" class="nav-link" data-scroll-target="#parte-5-comparación-y-reflexión-5-min"><span class="header-section-number">7</span> Parte 5 — Comparación y reflexión (5 min)</a>
-  <ul class="collapse">
-  <li><a href="#responde-con-tu-compañero" id="toc-responde-con-tu-compañero" class="nav-link" data-scroll-target="#responde-con-tu-compañero"><span class="header-section-number">7.1</span> Responde con tu compañero:</a></li>
-  </ul></li>
-  <li><a href="#entrega" id="toc-entrega" class="nav-link" data-scroll-target="#entrega"><span class="header-section-number">8</span> Entrega</a></li>
+  <li><a href="#rúbrica-de-evaluación-solemne-2" id="toc-rúbrica-de-evaluación-solemne-2" class="nav-link" data-scroll-target="#rúbrica-de-evaluación-solemne-2"><span class="header-section-number">5</span> Rúbrica de Evaluación — Solemne 2</a></li>
+  <li><a href="#ponderación-solemne-2" id="toc-ponderación-solemne-2" class="nav-link" data-scroll-target="#ponderación-solemne-2"><span class="header-section-number">6</span> Ponderación Solemne 2</a></li>
+  <li><a href="#preguntas-de-defensa-posibles" id="toc-preguntas-de-defensa-posibles" class="nav-link" data-scroll-target="#preguntas-de-defensa-posibles"><span class="header-section-number">7</span> Preguntas de Defensa Posibles</a></li>
+  <li><a href="#recursos-para-la-presentación" id="toc-recursos-para-la-presentación" class="nav-link" data-scroll-target="#recursos-para-la-presentación"><span class="header-section-number">8</span> Recursos para la Presentación</a></li>
   </ul>
 </nav>
     </div>
@@ -118,8 +106,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Laboratorio 2: Tres Dashboards, Tres Usuarios</h1>
-<p class="subtitle lead">Semana 2 · Big Data y Analytics · Universidad San Sebastián</p>
+<h1 class="title">Laboratorio 8: Preparación y Defensa — Solemne 2</h1>
+<p class="subtitle lead">Semana 8 · W08 · Unidad 2 · Big Data y Analytics · Universidad San Sebastián</p>
 </div>
 
 
@@ -138,282 +126,232 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="contexto" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="contexto"><span class="header-section-number">1</span> Contexto</h2>
-<p>Ya conoces los 5 componentes de un SI y los tipos de sistemas (TPS, BI, DSS, CRM, EIS). Ahora vas a <strong>construir y comparar</strong> tres vistas del mismo conjunto de datos para tres usuarios distintos de TechStyle:</p>
+<p>Esta es la semana de evaluación de la Unidad 2. El laboratorio tiene dos partes:</p>
+<ol type="1">
+<li><strong>Sesión TAL (repaso + presentación entre pares)</strong>: Cada grupo presenta y recibe retroalimentación de sus compañeros.</li>
+<li><strong>Evaluación Solemne 2</strong>: Entrega del informe de analítica de base de datos para TechStyle.</li>
+</ol>
+<hr>
+</section>
+<section id="estructura-del-proyecto-final-unidad-2" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="estructura-del-proyecto-final-unidad-2"><span class="header-section-number">2</span> Estructura del Proyecto Final Unidad 2</h2>
+<p>El informe de tu grupo debe incluir los siguientes entregables, elaborados durante W04–W07:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Usuario</th>
-<th>Nivel</th>
-<th>Tipo de SI</th>
+<th>Componente</th>
+<th>Elaborado en</th>
+<th>Descripción</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Sofía</strong> (repartidora)</td>
-<td>Operativo</td>
-<td>TPS</td>
+<td>Diagrama de Caso de Uso</td>
+<td>W04</td>
+<td>Actores y casos de uso del módulo de pedidos</td>
 </tr>
 <tr class="even">
-<td><strong>Juan</strong> (analista de datos)</td>
-<td>Táctico</td>
-<td>BI</td>
+<td>Diagrama UML de Clases</td>
+<td>W05</td>
+<td>7 clases con atributos, métodos y relaciones</td>
 </tr>
 <tr class="odd">
-<td><strong>Roberto</strong> (CEO)</td>
-<td>Estratégico</td>
-<td>EIS</td>
+<td>Modelo Entidad-Relación</td>
+<td>W06</td>
+<td>ER completo con cardinalidades justificadas</td>
+</tr>
+<tr class="even">
+<td>Modelo Relacional</td>
+<td>W07</td>
+<td>Tablas con PK, FK y dominios de atributos</td>
+</tr>
+<tr class="odd">
+<td>Informe escrito</td>
+<td>Acumulado</td>
+<td>Justificación de decisiones + ética</td>
 </tr>
 </tbody>
 </table>
-<p>El mismo dato sirve a los tres — pero cada uno necesita una presentación completamente diferente.</p>
 <hr>
 </section>
-<section id="instrucciones-generales" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="instrucciones-generales"><span class="header-section-number">2</span> Instrucciones generales</h2>
-<ul>
-<li>Trabajarás <strong>en parejas</strong> en Power BI Desktop.</li>
-<li>Usarás el archivo <code>techstyle_orders.csv</code> del laboratorio anterior.</li>
-<li>Cada pareja construirá las 3 páginas (vistas) de un mismo informe Power BI.</li>
-</ul>
-<p><strong>Duración</strong>: 35 minutos</p>
-<hr>
-</section>
-<section id="parte-1-cargar-y-preparar-los-datos-5-min" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="parte-1-cargar-y-preparar-los-datos-5-min"><span class="header-section-number">3</span> Parte 1 — Cargar y preparar los datos (5 min)</h2>
-<section id="paso-1-importar-datos" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="paso-1-importar-datos"><span class="header-section-number">3.1</span> Paso 1: Importar datos</h3>
+<section id="parte-a-sesión-de-presentación-entre-pares-tal-50-min" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="parte-a-sesión-de-presentación-entre-pares-tal-50-min"><span class="header-section-number">3</span> Parte A: Sesión de Presentación entre Pares (TAL – 50 min)</h2>
+<section id="formato-de-presentación" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="formato-de-presentación"><span class="header-section-number">3.1</span> Formato de presentación</h3>
+<p><strong>Cada grupo tiene 10 minutos</strong>:</p>
 <ol type="1">
-<li>Abre <strong>Power BI Desktop</strong></li>
-<li><em>Inicio → Obtener datos → Texto/CSV</em></li>
-<li>Selecciona <code>techstyle_orders.csv</code></li>
-<li>En la vista previa: verifica que las columnas tienen el tipo correcto
-<ul>
-<li><code>fecha</code> → Fecha</li>
-<li><code>venta_neta</code>, <code>precio_unitario</code> → Número decimal fijo</li>
-<li><code>cantidad</code>, <code>mes</code>, <code>año</code> → Número entero</li>
-</ul></li>
-<li>Haz clic en <strong>Cargar</strong></li>
+<li><strong>2 min</strong>: Presentar el problema de negocio que resuelve su diseño.</li>
+<li><strong>3 min</strong>: Recorrido por Caso de Uso y UML — ¿qué decisiones de diseño tomaron?</li>
+<li><strong>3 min</strong>: Demostración del ER y el Modelo Relacional.</li>
+<li><strong>2 min</strong>: Retroalimentación del grupo evaluador.</li>
 </ol>
 </section>
-<section id="paso-2-crear-una-medida-básica" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="paso-2-crear-una-medida-básica"><span class="header-section-number">3.2</span> Paso 2: Crear una medida básica</h3>
-<p>En el panel de Datos, crea estas medidas (botón derecho → Nueva medida):</p>
-<pre><code>Total Ventas = SUM(techstyle_orders[venta_neta])</code></pre>
-<pre><code>Cantidad Pedidos = DISTINCTCOUNT(techstyle_orders[order_id])</code></pre>
-<pre><code>Margen Promedio = AVERAGE(techstyle_orders[margen_pct])</code></pre>
-<hr>
-</section>
-</section>
-<section id="parte-2-página-1-vista-operativa-tps-para-sofía-8-min" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="parte-2-página-1-vista-operativa-tps-para-sofía-8-min"><span class="header-section-number">4</span> Parte 2 — Página 1: Vista Operativa (TPS) para Sofía (8 min)</h2>
-<p>Sofía es repartidora. Solo necesita ver <strong>sus pedidos del día</strong>, sin análisis ni histórico.</p>
-<section id="configuración-de-la-página" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="configuración-de-la-página"><span class="header-section-number">4.1</span> Configuración de la página</h3>
-<ol type="1">
-<li>Renombra la página como <code>"Vista Operativa (TPS)"</code></li>
-<li>Construye una <strong>tabla simple</strong> con estas columnas:
-<ul>
-<li><code>order_id</code>, <code>fecha</code>, <code>region</code>, <code>nombre_producto</code>, <code>categoria</code>, <code>cantidad</code>, <code>precio_unitario</code></li>
-</ul></li>
-<li>Agrega un <strong>filtro de segmentación</strong> (slicer) por <code>fecha</code></li>
-<li>Agrega un <strong>filtro de segmentación</strong> por <code>region</code></li>
-</ol>
-</section>
-<section id="criterio-de-diseño" class="level3" data-number="4.2">
-<h3 data-number="4.2" class="anchored" data-anchor-id="criterio-de-diseño"><span class="header-section-number">4.2</span> Criterio de diseño</h3>
-<ul>
-<li>Sin gráficos complejos</li>
-<li>Sin KPIs ni tendencias</li>
-<li>Datos actuales, no históricos</li>
-<li>Tabla que permita encontrar un pedido específico rápidamente</li>
-</ul>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Pregunta de diseño</strong>: ¿Necesita Sofía ver el margen de ganancia? ¿Por qué no?</p>
-</div>
-</div>
-<hr>
-</section>
-</section>
-<section id="parte-3-página-2-vista-analítica-bi-para-juan-12-min" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="parte-3-página-2-vista-analítica-bi-para-juan-12-min"><span class="header-section-number">5</span> Parte 3 — Página 2: Vista Analítica (BI) para Juan (12 min)</h2>
-<p>Juan es analista de datos. Necesita entender <strong>tendencias, comparaciones y patrones</strong> para apoyar decisiones de marketing.</p>
-<section id="configuración-de-la-página-1" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="configuración-de-la-página-1"><span class="header-section-number">5.1</span> Configuración de la página</h3>
-<ol type="1">
-<li>Renombra la página como <code>"Vista Analítica (BI)"</code></li>
-<li>Construye los siguientes visuales:</li>
-</ol>
+<section id="guía-para-la-retroalimentación-entre-pares" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="guía-para-la-retroalimentación-entre-pares"><span class="header-section-number">3.2</span> Guía para la retroalimentación entre pares</h3>
+<p>Mientras el grupo presenta, evalúa con esta rúbrica rápida:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 28%">
-<col style="width: 21%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Criterio</th>
+<th>Sí / No / Parcial</th>
+<th>Comentario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Los actores del Caso de Uso reflejan los usuarios reales del negocio</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>El UML tiene al menos 6 clases con atributos y métodos definidos</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Las cardinalidades del ER están justificadas con reglas de negocio</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>El Modelo Relacional tiene PK y FK correctas en todas las tablas</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>El diseño permite responder las preguntas del CMI</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Escribe <strong>1 fortaleza</strong> y <strong>1 sugerencia de mejora</strong> para compartir al final.</p>
+<hr>
+</section>
+</section>
+<section id="parte-b-evaluación-solemne-2-lab-100-min" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="parte-b-evaluación-solemne-2-lab-100-min"><span class="header-section-number">4</span> Parte B: Evaluación Solemne 2 (LAB – 100 min)</h2>
+<section id="entregables-del-informe-entrega-del-grupo" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="entregables-del-informe-entrega-del-grupo"><span class="header-section-number">4.1</span> Entregables del informe (entrega del grupo)</h3>
+<section id="informe-pdf-analítica-de-base-de-datos-techstyle" class="level4" data-number="4.1.1">
+<h4 data-number="4.1.1" class="anchored" data-anchor-id="informe-pdf-analítica-de-base-de-datos-techstyle"><span class="header-section-number">4.1.1</span> 1. Informe PDF — Analítica de Base de Datos TechStyle</h4>
+<p><strong>Estructura del informe</strong> (máximo 8 páginas sin contar diagramas):</p>
+<p><strong>Sección 1 — Contexto del negocio</strong> (1 página): - Describir el negocio de TechStyle y el módulo modelado. - Identificar los 3 usuarios principales y sus necesidades de información.</p>
+<p><strong>Sección 2 — Diagrama de Caso de Uso</strong> (½ página + diagrama): - Incluir el diagrama PNG. - Tabla de actores y casos de uso con descripción. - Justificar las relaciones <code>&lt;&lt;include&gt;&gt;</code> y <code>&lt;&lt;extend&gt;&gt;</code> elegidas.</p>
+<p><strong>Sección 3 — Diagrama UML de Clases</strong> (½ página + diagrama): - Incluir el diagrama PNG. - Explicar por qué <code>OrderItem</code> es una clase separada y no un atributo de <code>Pedido</code>.</p>
+<p><strong>Sección 4 — Modelo Entidad-Relación</strong> (½ página + diagrama): - Incluir el diagrama PNG. - Tabla de cardinalidades con regla de negocio que la justifica (una fila por relación).</p>
+<p><strong>Sección 5 — Modelo Relacional</strong> (2 páginas): - Definición formal de todas las tablas (nombre, atributos, tipos, PK, FK). - Tabla de dominios para <code>clientes</code>, <code>pedidos</code> y <code>order_items</code>. - Responder: ¿Qué pasa si se intenta eliminar un cliente con pedidos activos?</p>
+<p><strong>Sección 6 — Consideraciones éticas</strong> (½ página): - ¿Qué datos de clientes requieren protección especial? - ¿Cómo aplica el principio de mínimo privilegio al modelo relacional?</p>
+<p><strong>Sección 7 — Conclusión</strong> (½ página): - ¿El diseño permite alimentar el CMI de TechStyle? ¿Qué KPI de cada perspectiva podría calcularse con los datos modelados?</p>
+</section>
+<section id="archivos-de-diagramas-png" class="level4" data-number="4.1.2">
+<h4 data-number="4.1.2" class="anchored" data-anchor-id="archivos-de-diagramas-png"><span class="header-section-number">4.1.2</span> 2. Archivos de diagramas (PNG)</h4>
+<ul>
+<li><code>solemne2_caso_uso_grupo_N.png</code></li>
+<li><code>solemne2_uml_grupo_N.png</code></li>
+<li><code>solemne2_er_grupo_N.png</code></li>
+<li><code>solemne2_relacional_grupo_N.png</code></li>
+</ul>
+<hr>
+</section>
+</section>
+</section>
+<section id="rúbrica-de-evaluación-solemne-2" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="rúbrica-de-evaluación-solemne-2"><span class="header-section-number">5</span> Rúbrica de Evaluación — Solemne 2</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
 <col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Visual</th>
-<th>Tipo</th>
-<th>Configuración</th>
+<th>Criterio</th>
+<th>Ponderación</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Ventas por categoría</td>
-<td>Gráfico de barras</td>
-<td>Eje X: <code>categoria</code>, Eje Y: <code>Total Ventas</code></td>
+<td>Diagrama de Caso de Uso (corrección y completitud)</td>
+<td>15%</td>
 </tr>
 <tr class="even">
-<td>Evolución mensual</td>
-<td>Gráfico de líneas</td>
-<td>Eje X: <code>mes</code>, Eje Y: <code>Total Ventas</code>, Leyenda: <code>categoria</code></td>
+<td>Diagrama UML de Clases (clases, atributos, métodos, relaciones)</td>
+<td>20%</td>
 </tr>
 <tr class="odd">
-<td>Ventas por región</td>
-<td>Mapa o gráfico de barras</td>
-<td>Por <code>region</code></td>
+<td>Modelo ER (entidades, cardinalidades, justificación)</td>
+<td>25%</td>
 </tr>
 <tr class="even">
-<td>Tabla de detalle</td>
-<td>Tabla</td>
-<td><code>categoria</code>, <code>Total Ventas</code>, <code>Margen Promedio</code>, <code>Cantidad Pedidos</code></td>
+<td>Modelo Relacional (PK, FK, dominios, integridad referencial)</td>
+<td>25%</td>
+</tr>
+<tr class="odd">
+<td>Informe: consideraciones éticas y conexión con CMI</td>
+<td>15%</td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td><strong>100%</strong></td>
 </tr>
 </tbody>
 </table>
-<ol start="3" type="1">
-<li>Agrega segmentadores por <code>trimestre</code> y <code>canal_venta</code></li>
-</ol>
-</section>
-<section id="criterio-de-diseño-1" class="level3" data-number="5.2">
-<h3 data-number="5.2" class="anchored" data-anchor-id="criterio-de-diseño-1"><span class="header-section-number">5.2</span> Criterio de diseño</h3>
-<ul>
-<li>Permite comparar categorías entre sí</li>
-<li>Muestra tendencias en el tiempo</li>
-<li>Incluye métricas de negocio (margen, no solo ventas)</li>
-</ul>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Pregunta de diseño</strong>: ¿Necesita Juan ver el detalle de cada pedido individual? ¿Por qué no?</p>
-</div>
-</div>
 <hr>
 </section>
-</section>
-<section id="parte-4-página-3-vista-ejecutiva-eis-para-roberto-10-min" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="parte-4-página-3-vista-ejecutiva-eis-para-roberto-10-min"><span class="header-section-number">6</span> Parte 4 — Página 3: Vista Ejecutiva (EIS) para Roberto (10 min)</h2>
-<p>Roberto es el CEO. Tiene 5 minutos para revisar el negocio cada mañana. Necesita ver <strong>si todo va bien o si algo requiere su atención inmediata</strong>.</p>
-<section id="configuración-de-la-página-2" class="level3" data-number="6.1">
-<h3 data-number="6.1" class="anchored" data-anchor-id="configuración-de-la-página-2"><span class="header-section-number">6.1</span> Configuración de la página</h3>
-<ol type="1">
-<li>Renombra la página como <code>"Vista Ejecutiva (EIS)"</code></li>
-<li>Construye <strong>solamente</strong> estos 4 elementos:</li>
-</ol>
+<section id="ponderación-solemne-2" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="ponderación-solemne-2"><span class="header-section-number">6</span> Ponderación Solemne 2</h2>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 34%">
-<col style="width: 26%">
-<col style="width: 39%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Visual</th>
-<th>Tipo</th>
-<th>Métrica</th>
+<th>Componente</th>
+<th>% del total del curso</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Total ventas del período</td>
-<td>Tarjeta (KPI)</td>
-<td><code>Total Ventas</code></td>
+<td>Control parcial acumulado W05–W07</td>
+<td>10%</td>
 </tr>
 <tr class="even">
-<td>Margen promedio</td>
-<td>Tarjeta (KPI)</td>
-<td><code>Margen Promedio</code></td>
+<td>Informe + diagramas (este entregable)</td>
+<td>25%</td>
 </tr>
 <tr class="odd">
-<td>Cantidad de pedidos</td>
-<td>Tarjeta (KPI)</td>
-<td><code>Cantidad Pedidos</code></td>
-</tr>
-<tr class="even">
-<td>Ventas por categoría</td>
-<td>Gráfico de dona</td>
-<td>Proporciones por <code>categoria</code></td>
+<td><strong>Total Solemne 2</strong></td>
+<td><strong>35%</strong></td>
 </tr>
 </tbody>
 </table>
-<ol start="3" type="1">
-<li>Diseño: usa colores claros, números grandes, sin tablas de detalle</li>
-</ol>
+<hr>
 </section>
-<section id="criterio-de-diseño-2" class="level3" data-number="6.2">
-<h3 data-number="6.2" class="anchored" data-anchor-id="criterio-de-diseño-2"><span class="header-section-number">6.2</span> Criterio de diseño</h3>
+<section id="preguntas-de-defensa-posibles" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="preguntas-de-defensa-posibles"><span class="header-section-number">7</span> Preguntas de Defensa Posibles</h2>
+<p>El docente puede hacer alguna de estas preguntas durante la presentación:</p>
 <ul>
-<li>Responde “¿cómo va el negocio?” en menos de 10 segundos</li>
-<li>Sin tablas detalladas</li>
-<li>Sin jerga técnica</li>
-<li>Fácil de leer en una tablet o pantalla grande</li>
+<li>¿Por qué eligieron esa cardinalidad entre <code>Pedido</code> y <code>Repartidor</code>?</li>
+<li>¿Qué pasa si se elimina un <code>Producto</code> que tiene registros en <code>order_items</code>?</li>
+<li>¿Pueden agregar una entidad <code>Cupón de Descuento</code> sin romper el modelo relacional? ¿Dónde iría la FK?</li>
+<li>¿El modelo relacional que diseñaron está en 3FN? ¿Por qué?</li>
 </ul>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Restricción de diseño</strong>: No puedes usar más de 4 visuales en esta página. El CEO no tiene tiempo para más.</p>
-</div>
-</div>
 <hr>
 </section>
-</section>
-<section id="parte-5-comparación-y-reflexión-5-min" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="parte-5-comparación-y-reflexión-5-min"><span class="header-section-number">7</span> Parte 5 — Comparación y reflexión (5 min)</h2>
-<section id="responde-con-tu-compañero" class="level3" data-number="7.1">
-<h3 data-number="7.1" class="anchored" data-anchor-id="responde-con-tu-compañero"><span class="header-section-number">7.1</span> Responde con tu compañero:</h3>
-<ol type="1">
-<li><p><strong>Mismo dato, tres vistas</strong>: los tres usuarios ven datos del mismo archivo CSV. ¿En qué es diferente lo que cada uno necesita?</p></li>
-<li><p><strong>Diseño y propósito</strong>:</p>
+<section id="recursos-para-la-presentación" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="recursos-para-la-presentación"><span class="header-section-number">8</span> Recursos para la Presentación</h2>
 <ul>
-<li>¿Qué visual pusiste en la vista de Juan que NO pondrías en la de Roberto? ¿Por qué?</li>
-<li>¿Qué información ocultarías a Sofía que sí mostraría a Roberto?</li>
-</ul></li>
-<li><p><strong>Conecta con los tipos de SI</strong>:</p>
-<ul>
-<li>La Página 1 simula un _____ (tipo de SI)</li>
-<li>La Página 2 simula un _____ (tipo de SI)</li>
-<li>La Página 3 simula un _____ (tipo de SI)</li>
-</ul></li>
-<li><p><strong>Reflexión final</strong>: Si TechStyle implementara estos tres reportes para sus usuarios reales, ¿estaría usando 1 sistema o 3 sistemas diferentes? ¿Por qué?</p></li>
-</ol>
-<hr>
-</section>
-</section>
-<section id="entrega" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="entrega"><span class="header-section-number">8</span> Entrega</h2>
-<p>Guarda el archivo Power BI como <code>lab_semana2_[apellido1]_[apellido2].pbix</code>.</p>
-<p>El docente pedirá a 2-3 parejas que muestren su Vista Ejecutiva (EIS) y expliquen sus decisiones de diseño.</p>
+<li>Diagramas elaborados en W04–W07 (draw.io PNG).</li>
+<li>Notas de los labs anteriores.</li>
+<li>Rúbrica de evaluación (esta página).</li>
+</ul>
 
 
 </section>

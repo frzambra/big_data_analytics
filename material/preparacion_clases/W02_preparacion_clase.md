@@ -109,4 +109,95 @@ Personaliza el concepto de gobierno de datos en el caso concreto de TechStyle y 
 
 ---
 
+---
+
+## 6. Online Reference Materials
+
+Recursos organizados por los cuatro bloques temáticos de la sesión. Cada entrada incluye el propósito pedagógico específico para facilitar la preparación del profesor.
+
+### 6.1 Tipos de Sistemas de Información (TPS, BI, DSS, CRM, EIS, ERP)
+
+**Laudon & Laudon, *Management Information Systems* (14.ª ed.) — Capítulo 2 y Capítulo 11**
+- URL companion: https://www.pearson.com (buscar ISBN 978-0134639710).
+- El Capítulo 2 ("Global E-Business and Collaboration") detalla los tipos de SI por nivel organizacional. El Capítulo 11 ("Managing Knowledge and Artificial Intelligence") profundiza en DSS y sistemas de soporte a decisiones. Son las referencias académicas directas del contenido de la Fase 1.
+
+**SAP Learning Hub — "What is an ERP System?"**
+- URL: https://www.sap.com/insights/what-is-erp.html
+- Relevancia: descripción del ERP desde el proveedor líder del mercado. Útil para mostrar cómo el concepto teórico se concreta en el software que los estudiantes encontrarán en empresas reales. SAP es el ERP más usado en Chile en empresas medianas y grandes.
+
+**Salesforce — "What is CRM?"**
+- URL: https://www.salesforce.com/crm/what-is-crm/
+- Relevancia: explicación del CRM desde el proveedor más utilizado a nivel mundial. Incluye ejemplos de casos de uso que complementan el personaje de María en TechStyle. Recomendable también como lectura optativa para estudiantes.
+
+**Video — "Business Intelligence vs. Data Analytics" (Alex The Analyst)**
+- Buscar en YouTube: `"Business Intelligence vs Data Analytics Alex The Analyst"`.
+- Duración: ~10 minutos. Clarifica la distinción entre BI (análisis de datos históricos para reportes tácticos) y analytics avanzado, anticipando la transición conceptual hacia W03.
+
+---
+
+### 6.2 Cuadro de Mando Integral (CMI / Balanced Scorecard)
+
+**Artículo fundacional — Kaplan & Norton, "The Balanced Scorecard—Measures That Drive Performance" (HBR, 1992)**
+- URL: https://hbr.org/1992/01/the-balanced-scorecard-measures-that-drive-performance
+- Relevancia: el artículo original de 8 páginas publicado en Harvard Business Review. Lectura obligatoria para el profesor antes de impartir esta sección. El lenguaje es accesible y los ejemplos de empresas manufactureras son fácilmente trasladables al caso TechStyle. Disponible con suscripción institucional; la USS puede tener acceso vía biblioteca.
+
+**Balanced Scorecard Institute — Recursos gratuitos**
+- URL: https://balancedscorecard.org/resources/
+- Relevancia: el instituto fundado por los colaboradores de Kaplan y Norton ofrece plantillas, guías y ejemplos de CMI en distintos sectores. La sección "BSC Basics" es ideal para preparar los ejemplos de la Fase 2. El mapa estratégico de ejemplo disponible en el sitio puede usarse como contraste con el mapa de TechStyle.
+
+**Video — "Balanced Scorecard Explained" (Cascade Strategy)**
+- Buscar en YouTube: `"Balanced Scorecard Explained Cascade Strategy"`.
+- Duración: ~7 minutos. Visualización clara de las cuatro perspectivas con ejemplos empresariales modernos. Recomendable para proyectar como introducción antes de entrar al detalle de cada perspectiva.
+
+**Harvard Business School — Online Case Studies on BSC**
+- URL: https://www.hbs.edu/faculty/Pages/search.aspx (buscar "Balanced Scorecard Kaplan").
+- Relevancia: Robert Kaplan publicó múltiples casos de aplicación del CMI en empresas reales. Aunque los casos completos son de pago, los abstracts y resúmenes ejecutivos son de acceso libre y sirven para preparar ejemplos adicionales al de TechStyle.
+
+---
+
+### 6.3 Calidad de Datos y Gobierno de Datos
+
+**DAMA International — DAMA-DMBOK (Data Management Body of Knowledge)**
+- URL: https://www.dama.org/cpages/body-of-knowledge
+- Relevancia: el estándar internacional de gestión de datos. El Capítulo 13 ("Data Quality") define con precisión las dimensiones de calidad que se enseñan en la Fase 3. La versión completa es de pago, pero el sitio ofrece resúmenes y guías introductorias gratuitas. Es el marco que usan los profesionales de datos en Chile y el mundo.
+
+**Gartner — "How to Build a Data Quality Strategy"**
+- URL: https://www.gartner.com (buscar el título en la sección de investigación gratuita).
+- Relevancia: fuente del dato citado en la clase ($12,9 millones de costo promedio anual por mala calidad de datos). El reporte completo es de pago, pero Gartner publica resúmenes ejecutivos gratuitos con las cifras clave. Útil para respaldar el argumento de costo ante estudiantes escépticos sobre la relevancia práctica de la calidad de datos.
+
+**TDWI (Transforming Data with Intelligence) — "Data Quality Best Practices"**
+- URL: https://tdwi.org (sección Research; buscar "Data Quality").
+- Relevancia: TDWI es la asociación profesional de referencia en gestión de datos. Sus artículos de acceso libre explican las dimensiones de calidad con ejemplos de casos reales en retail y e-commerce, directamente transferibles al caso TechStyle.
+
+**Video — "Data Governance Explained" (IBM Technology)**
+- Buscar en YouTube: `"Data Governance Explained IBM Technology"`.
+- Duración: ~8 minutos. Explica el gobierno de datos, los roles de Data Owner y Data Steward, y el catálogo de datos con claridad conceptual y ejemplos visuales. IBM Technology es un canal de referencia con alta calidad pedagógica.
+
+---
+
+### 6.4 Ética en Datos y Marco Legal Chileno
+
+**Biblioteca del Congreso Nacional de Chile — Ley 19.628 (texto oficial vigente)**
+- URL: https://www.bcn.cl/leychile/navegar?idNorma=141599
+- Relevancia: texto legal completo y vigente. Para la clase es suficiente revisar los Artículos 4, 6, 9 y 20, que cubren el principio de finalidad, el consentimiento, los datos sensibles y los derechos del titular. El profesor debe conocer estos artículos para responder preguntas concretas durante la discusión ética.
+
+**CNTV / Consejo para la Transparencia — Guía de Protección de Datos Personales (Chile)**
+- URL: https://www.cplt.cl (sección Publicaciones; buscar "guía protección datos").
+- Relevancia: el organismo regulador chileno publica guías prácticas sobre el cumplimiento de la Ley 19.628. Más accesible que el texto legal. Incluye ejemplos de sectores como retail y e-commerce que se alinean directamente con el caso TechStyle.
+
+**GDPR.eu — "GDPR vs. Chilean Law 19.628: A Comparison"**
+- URL: https://gdpr.eu (buscar "Chile" o "Latin America data protection" en el buscador del sitio).
+- Relevancia: permite contextualizar la Ley 19.628 en el marco regulatorio global. La comparación con el GDPR europeo es relevante porque muchas empresas chilenas exportadoras (o que procesan datos de ciudadanos europeos) deben cumplir con ambas normativas.
+
+**TED Talk — "Why Privacy Matters" (Glenn Greenwald, 2014)**
+- URL: https://www.ted.com/talks/glenn_greenwald_why_privacy_matters
+- Duración: 20 minutos.
+- Relevancia: argumento filosófico y político sobre por qué la privacidad no es solo un requisito legal sino un derecho fundamental. Útil para elevar la discusión ética más allá del cumplimiento normativo y conectar con el principio de privacidad por diseño. Puede recomendarse como lectura optativa a estudiantes interesados en profundizar.
+
+**Future of Privacy Forum — "Privacy by Design: The 7 Foundational Principles"**
+- URL: https://fpf.org (buscar "Privacy by Design Ann Cavoukian").
+- Relevancia: el documento original de Ann Cavoukian que establece los 7 principios de privacidad por diseño, concepto mencionado en la Fase 4 de la clase. Lectura técnica pero accesible; las dos primeras páginas son suficientes para dominar el concepto antes de clase.
+
+---
+
 *Documento preparado para uso interno del equipo docente. No distribuir a estudiantes.*

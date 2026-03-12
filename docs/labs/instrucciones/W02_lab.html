@@ -155,16 +155,9 @@ ul.task-list li input[type="checkbox"] {
 <li>Cargar <code>techstyle_orders.csv</code> y <code>techstyle_customers_dirty.csv</code>.</li>
 <li>Construir <strong>3 páginas</strong> en el mismo archivo <code>.pbix</code>, una por usuario:</li>
 </ol>
-<p><strong>Página 1 — Vista de Sofía (Operativa)</strong>:<br>
-- Tabla con columnas: <code>id_pedido</code>, <code>fecha</code>, <code>producto</code>, <code>estado</code>, <code>dirección</code>.<br>
-- Filtro de fecha = hoy (o semana actual).<br>
-- Mapa con las entregas del día.</p>
-<p><strong>Página 2 — Vista de Juan (Táctica)</strong>: - Gráfico de barras: ventas por categoría, semana a semana.<br>
-- Tabla de top 10 productos más vendidos de la semana.<br>
-- KPI de pedidos entregados vs.&nbsp;pendientes.</p>
-<p><strong>Página 3 — Vista de Roberto (Estratégica)</strong>: - Tarjetas: ventas totales del mes, ticket promedio, tasa de devoluciones.<br>
-- Gráfico de líneas: evolución de ventas mes a mes.<br>
-- Tabla: ventas por región.</p>
+<p><strong>Página 1 — Vista de Sofía (Operativa)</strong>: - Tabla con columnas: <code>order_id</code>, <code>fecha</code>, <code>nombre_producto</code>, <code>categoria</code>, <code>cantidad</code>, <code>region</code>. - Filtro de fecha por semana (usar columna <code>fecha</code>). - Segmentador por <code>region</code> para filtrar sus zonas de despacho.</p>
+<p><strong>Página 2 — Vista de Juan (Táctica)</strong>: - Gráfico de barras: <code>venta_neta</code> por <code>categoria</code>, semana a semana (usar columna <code>fecha</code>). - Tabla de top 10 productos más vendidos (usar <code>nombre_producto</code> + <code>cantidad</code>). - KPI de unidades vendidas (<code>cantidad</code> total) vs.&nbsp;monto total (<code>venta_neta</code>).</p>
+<p><strong>Página 3 — Vista de Roberto (Estratégica)</strong>: - Tarjetas: ventas totales del mes (<code>venta_neta</code>), ticket promedio (<code>precio_unitario</code> promedio), margen promedio (<code>margen_pct</code>). - Gráfico de líneas: evolución de <code>venta_neta</code> mes a mes (usar columna <code>mes</code>). - Tabla: ventas por <code>region</code>.</p>
 </section>
 <section id="preguntas-de-reflexión" class="level3" data-number="2.3">
 <h3 data-number="2.3" class="anchored" data-anchor-id="preguntas-de-reflexión"><span class="header-section-number">2.3</span> Preguntas de reflexión</h3>
@@ -254,10 +247,17 @@ ul.task-list li input[type="checkbox"] {
 <h3 data-number="3.5" class="anchored" data-anchor-id="paso-4-construir-el-cmi-en-power-bi-20-min"><span class="header-section-number">3.5</span> Paso 4: Construir el CMI en Power BI (20 min)</h3>
 <p>Usando los datos limpios, construir una página “CMI TechStyle” con:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Perspectiva</th>
 <th>KPI</th>
+<th>Columna fuente</th>
 <th>Visualización</th>
 </tr>
 </thead>
@@ -265,21 +265,25 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td>Financiera</td>
 <td>Ventas totales del mes</td>
+<td><code>venta_neta</code> (orders)</td>
 <td>Tarjeta</td>
 </tr>
 <tr class="even">
 <td>Cliente</td>
-<td>Número de clientes activos</td>
+<td>Clientes únicos del mes</td>
+<td><code>cliente_id</code> (orders, valores únicos)</td>
 <td>Tarjeta</td>
 </tr>
 <tr class="odd">
 <td>Procesos</td>
-<td>% pedidos entregados a tiempo</td>
-<td>Medidor (gauge)</td>
+<td>Margen promedio por categoría</td>
+<td><code>margen_pct</code> + <code>categoria</code> (orders)</td>
+<td>Gráfico de barras</td>
 </tr>
 <tr class="even">
 <td>Aprendizaje</td>
 <td>Nuevos clientes registrados este mes</td>
+<td><code>fecha_registro</code> (customers)</td>
 <td>Tarjeta</td>
 </tr>
 </tbody>

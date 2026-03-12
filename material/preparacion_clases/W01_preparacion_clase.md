@@ -99,4 +99,69 @@ Los siguientes términos constituyen el capital conceptual mínimo que el estudi
 
 ---
 
+---
+
+## 6. Online Reference Materials
+
+Recursos organizados por tema. Se indica el propósito pedagógico específico de cada uno para facilitar su uso en la preparación de la clase.
+
+### 6.1 Jerarquía Dato → Información → Conocimiento → Decisión
+
+**Artículo fundacional — Russell Ackoff, "From Data to Wisdom" (1989)**
+- Fuente: *Journal of Applied Systems Analysis*, Vol. 16.
+- Cómo encontrarlo: buscar "Ackoff 1989 From Data to Wisdom" en Google Scholar (scholar.google.com). Disponible en múltiples repositorios abiertos.
+- Relevancia: el artículo original que establece la jerarquía DIKW (Data–Information–Knowledge–Wisdom) que estructura toda la Fase 1. Leer las primeras 4 páginas es suficiente para dominar el argumento.
+
+**Video explicativo — "Data, Information, Knowledge & Wisdom" (Conceptos DIKW)**
+- Canal: *The Audiopedia* en YouTube.
+- Buscar: `"DIKW hierarchy The Audiopedia"` en YouTube.
+- Duración: ~4 minutos. Útil para visualizar la jerarquía antes de clase y como referencia optativa para estudiantes que necesiten refuerzo.
+
+**IBM Think Blog — "Data vs. Information: What's the Difference?"**
+- URL: https://www.ibm.com/think (sección Blog; buscar el artículo por título).
+- Relevancia: explica la distinción con ejemplos de negocio modernos, complementa la perspectiva técnica del libro de Laudon con un enfoque empresarial aplicado.
+
+---
+
+### 6.2 Sistemas de Información: Definición, Componentes y Modelo IPO
+
+**Textbook companion — Laudon & Laudon, *Management Information Systems* (14.ª ed.)**
+- URL del recurso de soporte: https://www.pearson.com (buscar el ISBN 978-0134639710).
+- Relevancia: es el libro de referencia del curso. El Capítulo 1 ("Information Systems in Global Business Today") y el Capítulo 2 ("Global E-Business and Collaboration") cubren exactamente el contenido de W01. La biblioteca de la USS debería tener acceso a la versión digital.
+
+**MIT OpenCourseWare — 15.561: Information Technology Essentials**
+- URL: https://ocw.mit.edu (buscar "15.561" o "Information Technology Essentials").
+- Relevancia: notas de lectura del MIT sobre fundamentos de SI. Especialmente útil la sección sobre el modelo IPO y los roles de los sistemas en la organización. Acceso libre y gratuito.
+
+**Video — "What is an Information System?" (Irfan Zafar)**
+- Buscar en YouTube: `"What is an Information System Irfan Zafar"`.
+- Duración: ~8 minutos. Cubre los 5 componentes con ejemplos claros. Adecuado para recomendar a estudiantes antes del laboratorio.
+
+---
+
+### 6.3 Niveles Organizacionales y Toma de Decisiones
+
+**Harvard Business Review — "Big Data: The Management Revolution" (McAfee & Brynjolfsson, 2012)**
+- URL: https://hbr.org (buscar el título; artículo de octubre 2012).
+- Relevancia: aunque el foco es Big Data, la primera sección del artículo describe con precisión cómo los distintos niveles organizacionales usan la información de manera diferente. Útil como lectura de contexto para la Fase 3 de la clase.
+
+**TED Talk — "The Human Insights Missing from Big Data" (Tricia Wang, 2016)**
+- URL: https://www.ted.com/talks/tricia_wang_the_human_insights_missing_from_big_data
+- Duración: 15 minutos.
+- Relevancia: Wang argumenta que los datos cuantitativos deben complementarse con comprensión cualitativa de los actores. Es un contrapeso crítico al entusiasmo técnico; recomendable para estudiantes con tendencia a sobrevalorar las herramientas sobre el juicio. Conecta directamente con la diferencia entre dato, información y conocimiento aplicada a decisiones reales.
+
+**Gartner Glossary — "Information Systems"**
+- URL: https://www.gartner.com/en/information-technology/glossary (buscar "information system").
+- Relevancia: definiciones estándar de la industria. Útil para mostrar que las definiciones académicas del curso coinciden con los estándares profesionales que los estudiantes encontrarán en el mercado laboral.
+
+---
+
+### 6.4 Recurso de Apoyo General para el Profesor
+
+**CrashCourse Computer Science — Episodio 29: "The Internet of Things"** y **Episodio 30: "The World Wide Web"**
+- Canal: *CrashCourse* en YouTube (https://www.youtube.com/@crashcourse).
+- Relevancia: aunque no cubren SI directamente, los episodios de CrashCourse sobre cómo la información fluye por sistemas digitales ofrecen analogías visuales útiles para explicar el modelo IPO. El estilo accesible hace que sean apropiados para recomendar a estudiantes como material complementario.
+
+---
+
 *Documento preparado para uso interno del equipo docente. No distribuir a estudiantes.*

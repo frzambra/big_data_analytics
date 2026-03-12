@@ -38,20 +38,20 @@ El mismo dataset de TechStyle debe presentarse de forma radicalmente distinta se
 2. Cargar `techstyle_orders.csv` y `techstyle_customers_dirty.csv`.
 3. Construir **3 páginas** en el mismo archivo `.pbix`, una por usuario:
 
-**Página 1 — Vista de Sofía (Operativa)**:  
-- Tabla con columnas: `id_pedido`, `fecha`, `producto`, `estado`, `dirección`.  
-- Filtro de fecha = hoy (o semana actual).  
-- Mapa con las entregas del día.  
+**Página 1 — Vista de Sofía (Operativa)**:
+- Tabla con columnas: `order_id`, `fecha`, `nombre_producto`, `categoria`, `cantidad`, `region`.
+- Filtro de fecha por semana (usar columna `fecha`).
+- Segmentador por `region` para filtrar sus zonas de despacho.
 
 **Página 2 — Vista de Juan (Táctica)**:
-- Gráfico de barras: ventas por categoría, semana a semana.  
-- Tabla de top 10 productos más vendidos de la semana.  
-- KPI de pedidos entregados vs. pendientes.  
+- Gráfico de barras: `venta_neta` por `categoria`, semana a semana (usar columna `fecha`).
+- Tabla de top 10 productos más vendidos (usar `nombre_producto` + `cantidad`).
+- KPI de unidades vendidas (`cantidad` total) vs. monto total (`venta_neta`).
 
 **Página 3 — Vista de Roberto (Estratégica)**:
-- Tarjetas: ventas totales del mes, ticket promedio, tasa de devoluciones.  
-- Gráfico de líneas: evolución de ventas mes a mes.  
-- Tabla: ventas por región.  
+- Tarjetas: ventas totales del mes (`venta_neta`), ticket promedio (`precio_unitario` promedio), margen promedio (`margen_pct`).
+- Gráfico de líneas: evolución de `venta_neta` mes a mes (usar columna `mes`).
+- Tabla: ventas por `region`.
 
 ### Preguntas de reflexión
 
@@ -100,12 +100,12 @@ Aplica al menos 3 transformaciones:
 
 Usando los datos limpios, construir una página "CMI TechStyle" con:
 
-| Perspectiva | KPI | Visualización |
-|---|---|---|
-| Financiera | Ventas totales del mes | Tarjeta |
-| Cliente | Número de clientes activos | Tarjeta |
-| Procesos | % pedidos entregados a tiempo | Medidor (gauge) |
-| Aprendizaje | Nuevos clientes registrados este mes | Tarjeta |
+| Perspectiva | KPI | Columna fuente | Visualización |
+|---|---|---|---|
+| Financiera | Ventas totales del mes | `venta_neta` (orders) | Tarjeta |
+| Cliente | Clientes únicos del mes | `cliente_id` (orders, valores únicos) | Tarjeta |
+| Procesos | Margen promedio por categoría | `margen_pct` + `categoria` (orders) | Gráfico de barras |
+| Aprendizaje | Nuevos clientes registrados este mes | `fecha_registro` (customers) | Tarjeta |
 
 **Pregunta final**: ¿Cuál de los 4 KPIs del CMI está afectado por los problemas de calidad que encontraste? ¿Cómo cambia el valor del KPI antes y después de la limpieza?
 

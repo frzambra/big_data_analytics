@@ -143,13 +143,7 @@ format:
 - TechStyle necesita un DW para que Juan genere reportes en segundos, no en horas.
 :::
 
-::: {.fragment}
-```
-[OLTP Ventas] ─┐
-[OLTP Clientes]─┤──→ ETL ──→ [Data Warehouse] ──→ [CMI / BI]
-[OLTP Logística]┘
-```
-:::
+![](../img/diagrama_arquitectura_datos_BI.jpg)
 
 ---
 
@@ -215,17 +209,7 @@ format:
 
 ## El Flujo Completo: Del Dato Crudo al CMI
 
-```
-Operaciones diarias (OLTP)
-    ↓ ETL – cada noche (batch) o en tiempo real (streaming)
-Data Warehouse (OLAP)
-    ↓ Consultas SQL + BI
-Reportes y dashboards
-    ↓
-KPIs del CMI
-    ↓
-Decisión estratégica de Roberto
-```
+![](../img/flujo_datos_operacion_a_decision.jpg)
 
 ::: {.fragment}
 **Este flujo conecta todo lo visto en la Unidad 1.** La próxima unidad explica cómo se diseña cada eslabón.

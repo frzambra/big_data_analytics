@@ -314,12 +314,8 @@ Universidad San Sebastián
 <li class="fragment">Organizado para consultas rápidas sobre grandes volúmenes.</li>
 <li class="fragment">TechStyle necesita un DW para que Juan genere reportes en segundos, no en horas.</li>
 </ul>
-<div class="fragment">
-<pre><code>[OLTP Ventas] ─┐
-[OLTP Clientes]─┤──→ ETL ──→ [Data Warehouse] ──→ [CMI / BI]
-[OLTP Logística]┘</code></pre>
-</div>
-</section>
+
+<img data-src="../img/diagrama_arquitectura_datos_BI.jpg" class="r-stretch"></section>
 <section id="arquitectura-del-data-warehouse-capas" class="slide level2">
 <h2>Arquitectura del Data Warehouse: Capas</h2>
 <p><strong>Un DW industrial tiene tres capas:</strong></p>
@@ -370,16 +366,8 @@ Universidad San Sebastián
 </section>
 <section id="el-flujo-completo-del-dato-crudo-al-cmi" class="slide level2">
 <h2>El Flujo Completo: Del Dato Crudo al CMI</h2>
-<pre><code>Operaciones diarias (OLTP)
-    ↓ ETL – cada noche (batch) o en tiempo real (streaming)
-Data Warehouse (OLAP)
-    ↓ Consultas SQL + BI
-Reportes y dashboards
-    ↓
-KPIs del CMI
-    ↓
-Decisión estratégica de Roberto</code></pre>
-<div class="fragment">
+
+<img data-src="../img/flujo_datos_operacion_a_decision.jpg" class="r-stretch"><div class="fragment">
 <p><strong>Este flujo conecta todo lo visto en la Unidad 1.</strong> La próxima unidad explica cómo se diseña cada eslabón.</p>
 </div>
 </section>

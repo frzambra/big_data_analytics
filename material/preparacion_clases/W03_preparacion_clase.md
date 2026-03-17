@@ -72,25 +72,55 @@ La evaluación individual ocupa la segunda parte de la sesión. Antes de iniciar
 
 Esta pregunta fuerza a aplicar las 5 V como herramienta de diagnóstico, no como lista de definiciones, y a reconocer que la V crítica depende del contexto organizacional específico.
 
+**Respuesta de referencia:**
+- **Hospital Clínico de la U. de Chile**: la V más crítica es **Variedad**. El desafío no es solo el volumen (aunque es alto), sino que cada tipo de dato —tomografías DICOM, texto clínico libre, series temporales de sensores de UCI, tablas de medicamentos— requiere pipelines de procesamiento y sistemas de almacenamiento completamente distintos. Integrarlos en un único repositorio analítico coherente es el cuello de botella arquitectural dominante.
+- **Posta rural de La Araucanía**: la V más crítica es **Veracidad**. El volumen es bajo, la variedad es manejable, pero el personal reducido y sin formación en gestión de datos introduce inconsistencias sistemáticas (diagnósticos registrados a mano, campos omitidos, ortografía variable). Con poca capacidad de TI para corregirlos, los datos de baja calidad invalidan cualquier análisis posterior.
+- **Argumento central**: las 5 V son un marco de diagnóstico, no una lista de problemas universales. La V crítica depende del tamaño, la madurez tecnológica y los procesos operativos de la organización específica. El primer trabajo del analista de datos es identificar cuál V es el cuello de botella, no asumir que son todas iguales.
+
 **Pregunta 2 — Pensamiento causal sistémico** *(después de OLTP vs. OLAP)*
 > "Sofía registra un pedido en el sistema OLTP de TechStyle. Juan necesita en ese mismo instante el reporte de ventas del mes. ¿Por qué no puede Juan simplemente 'leer' la misma base de datos donde Sofía está escribiendo? ¿Qué pasaría operativamente si se lo permitieran?"
 
 Obliga a comprender la incompatibilidad OLTP–OLAP no como una regla a memorizar sino como una consecuencia lógica del diseño de bases de datos. Anticipa la discusión sobre bloqueos de filas y concurrencia que los estudiantes verán en detalle en la Unidad 3 (transacciones ACID, W15).
+
+**Respuesta de referencia:**
+- **¿Por qué no puede Juan leer la misma BD?** La consulta analítica de Juan (`SELECT ... GROUP BY` sobre millones de filas) requiere leer grandes porciones de la tabla y mantiene bloqueos compartidos sobre esas filas durante toda la ejecución, que puede durar varios minutos. Al mismo tiempo, el INSERT de Sofía necesita adquirir un bloqueo de escritura sobre la misma tabla para garantizar consistencia (principio ACID que verán en W15). Si ambas operaciones compiten en la misma base de datos, el motor debe elegir: o bloquea a Sofía mientras Juan lee, o cancela la consulta de Juan para liberar el paso. En cualquier caso, uno de los dos pierde.
+- **¿Qué pasaría operativamente?** Si se permite, los pedidos dejan de procesarse en tiempo real mientras el reporte está calculando. Para un e-commerce con 340.000 pedidos diarios, un bloqueo de 4 horas equivale a tens de miles de pedidos no procesados, clientes con compras fallidas y pérdida directa de ingresos. Es el equivalente a cerrar la caja de un supermercado para que el contador pueda revisar las ventas del mes en ese mismo cajón.
+- **La solución**: separar los sistemas. OLTP para operar (Sofía escribe sin contención), DW para analizar (Juan lee sin impactar operaciones), ETL como puente nocturno que mueve los datos entre ambos.
 
 **Pregunta 3 — Diseño de arquitectura** *(después del Data Warehouse y ETL)*
 > "TechStyle tiene tres equipos distintos que construyeron el sistema de ventas, el sistema de clientes y el sistema de logística en momentos diferentes. Los tres usan nombres distintos para la misma región ('RM', 'Santiago', 'Metropolitana') y formatos distintos para las fechas. ¿En qué capa del DW se resuelve este problema? ¿Quién debería tomar esa decisión: el equipo de TI, el área de ventas, o el Data Steward de W02?"
 
 Conecta la arquitectura técnica del DW con el gobierno de datos visto en W02 y fuerza a pensar en quién tiene autoridad sobre las definiciones de datos. No hay una respuesta única correcta; el debate entre solución técnica y solución organizacional es pedagógicamente productivo.
 
+**Respuesta de referencia:**
+- **¿En qué capa del DW?** En la **capa de integración** (segunda capa). La capa de Staging recibe los datos tal como llegan de cada OLTP, incluyendo todas las inconsistencias. Es en la capa de integración donde se aplican las reglas de estandarización: "RM", "Santiago" y "Metropolitana" convergen en un único valor canónico. Los Data Marts (tercera capa) ya reciben datos limpios y no saben que alguna vez existieron las variantes.
+- **¿Quién toma la decisión?** El **Data Steward**, no el equipo de TI. Esta es la distinción clave: TI puede *implementar* la transformación (`REPLACE "RM" WITH "Metropolitana"`), pero no puede *decidir* si "Santiago" como ciudad y "Metropolitana" como región son la misma cosa o no en el contexto de negocio. Esa decisión requiere conocimiento del negocio y autoridad sobre la definición oficial del dato. El área de ventas tiene el conocimiento de negocio pero puede tener un interés particular (su región puede quedar mejor o peor según cómo se agrupe). El Data Steward actúa como árbitro neutral con mandato organizacional explícito.
+- **Punto de debate productivo**: ¿qué pasa si TI toma la decisión sin consultar? Puede generar una estandarización técnicamente correcta pero analíticamente incorrecta (por ejemplo, fusionar "Santiago" como ciudad con datos de toda la Región Metropolitana, mezclando granularidades distintas). Este error no se ve hasta que alguien nota que los datos no cuadran con la realidad que conoce del negocio.
+
 **Pregunta 4 — Evaluación estratégica** *(durante la síntesis)*
 > "TechStyle acaba de invertir $500 millones en implementar un Data Warehouse en la nube. Roberto tiene acceso a un dashboard con 47 KPIs actualizados cada hora. Sin embargo, el equipo de logística sigue registrando las entregas con un día de atraso porque el sistema OLTP no los obliga a registrar en tiempo real. ¿Cuál de las 5 V es el problema? ¿Sirve de algo el DW en ese contexto?"
 
 Demuestra que la arquitectura técnica más sofisticada no resuelve problemas organizacionales o de procesos. Conecta la V de Oportunidad (veracidad temporal) con el concepto de gobierno de datos y con la calidad de datos de W02. Introduce el argumento de que la tecnología es condición necesaria pero no suficiente para la toma de decisiones de calidad.
 
+**Respuesta de referencia:**
+- **¿Cuál V es el problema?** **Veracidad**, específicamente en su dimensión de **Oportunidad** (uno de los atributos de calidad de datos de W02). Los datos existen, no hay problema de volumen ni variedad, pero llegan con 24 horas de retraso al OLTP, lo que hace que el dato sea temporalmente incorrecto en el momento en que se necesita para tomar decisiones.
+- **¿Sirve de algo el DW?** Sí, pero solo parcialmente. El DW es útil para **análisis históricos**: tendencias de entrega de los últimos 6 meses, tasa de retrasos por zona, rendimiento de transportistas en el año. No sirve para **alertas operacionales en tiempo real**: detectar que hoy hay 1.200 pedidos sin confirmar entrega no es posible si el dato llega mañana. El dashboard de Roberto muestra KPIs "actualizados cada hora" que en realidad reflejan la realidad de hace 24 horas para todo lo relacionado con logística.
+- **Conclusión clave**: los $500 millones en tecnología no resolvieron un problema de **proceso y gobierno organizacional**: el equipo de logística no registra en tiempo real porque nadie los obliga o incentiva a hacerlo. La arquitectura técnica es condición necesaria pero no suficiente. La solución real requiere una decisión organizacional (política de registro obligatorio en tiempo real) antes que una decisión tecnológica.
+
 **Pregunta 5 — Síntesis y proyección profesional** *(al cierre, antes de la Solemne)*
 > "Si en su primer trabajo como analistas de datos les piden construir un reporte mensual de ventas para el gerente comercial, ¿de qué sistema tomarían los datos: del OLTP, del DW o de Power BI directamente? ¿Qué preguntas harían antes de conectar la primera consulta?"
 
 Personaliza la arquitectura técnica en el contexto de la práctica profesional. Hace visible que las preguntas correctas antes de construir un reporte son preguntas sobre arquitectura de datos, no solo sobre visualización. Calibra si los estudiantes han internalizado el flujo OLTP → ETL → DW → BI como una cadena que el analista debe comprender, no solo usar.
+
+**Respuesta de referencia:**
+- **¿De qué sistema?** Del **DW** (o del Data Mart de ventas, si existe). No del OLTP: conectarse al OLTP para un reporte analítico degrada el rendimiento operacional y expone datos brutos sin limpiar (las mismas inconsistencias que corrigieron en el Lab W03). No de Power BI "directamente": Power BI es una herramienta de visualización, no una fuente de datos; siempre se conecta a algo (OLTP, DW, Excel, API), y ese "algo" es lo que importa elegir bien.
+- **¿Qué preguntas hacer antes de conectar?**
+  1. *¿Existe un DW o Data Mart de ventas?* Si no existe, ¿hay un proceso ETL que limpie los datos del OLTP antes de exponerlos?
+  2. *¿Cuál es la definición oficial de "venta"?* ¿Incluye devoluciones? ¿Solo pedidos confirmados o también pendientes? (Gobierno de datos)
+  3. *¿Con qué frecuencia se actualiza el DW?* Si el ETL es nocturno y el gerente pide datos del día, el DW no sirve sin un complemento.
+  4. *¿Existen medidas DAX o métricas ya definidas y validadas?* Reutilizarlas garantiza consistencia con otros reportes de la empresa.
+  5. *¿Qué período y granularidad necesita el gerente?* ¿Mensual por región, por producto, por vendedor? La respuesta determina qué tablas del modelo estrella son necesarias.
+- **Por qué estas preguntas son de arquitectura, no de visualización**: un analista que salta directamente a Power BI sin hacerse estas preguntas construirá un reporte técnicamente funcional pero analíticamente incorrecto o inconsistente con los reportes del resto de la empresa. Las preguntas correctas son las que mapean el requerimiento del negocio al eslabón correcto de la cadena OLTP → ETL → DW → BI.
 
 ---
 

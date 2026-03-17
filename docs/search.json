@@ -2013,7 +2013,7 @@
     "href": "clases/W03_clase.html#el-data-warehouse",
     "title": "Big Data, ETL y Síntesis de la Unidad 1",
     "section": "El Data Warehouse",
-    "text": "El Data Warehouse\n\nUna base de datos diseñada exclusivamente para análisis (OLAP).\nIntegra múltiples fuentes OLTP en un solo repositorio histórico.\nOrganizado para consultas rápidas sobre grandes volúmenes.\nTechStyle necesita un DW para que Juan genere reportes en segundos, no en horas.\n\n\n[OLTP Ventas] ─┐\n[OLTP Clientes]─┤──→ ETL ──→ [Data Warehouse] ──→ [CMI / BI]\n[OLTP Logística]┘"
+    "text": "El Data Warehouse\n\nUna base de datos diseñada exclusivamente para análisis (OLAP).\nIntegra múltiples fuentes OLTP en un solo repositorio histórico.\nOrganizado para consultas rápidas sobre grandes volúmenes.\nTechStyle necesita un DW para que Juan genere reportes en segundos, no en horas."
   },
   {
     "objectID": "clases/W03_clase.html#arquitectura-del-data-warehouse-capas",
@@ -2048,7 +2048,7 @@
     "href": "clases/W03_clase.html#el-flujo-completo-del-dato-crudo-al-cmi",
     "title": "Big Data, ETL y Síntesis de la Unidad 1",
     "section": "El Flujo Completo: Del Dato Crudo al CMI",
-    "text": "El Flujo Completo: Del Dato Crudo al CMI\nOperaciones diarias (OLTP)\n    ↓ ETL – cada noche (batch) o en tiempo real (streaming)\nData Warehouse (OLAP)\n    ↓ Consultas SQL + BI\nReportes y dashboards\n    ↓\nKPIs del CMI\n    ↓\nDecisión estratégica de Roberto\n\nEste flujo conecta todo lo visto en la Unidad 1. La próxima unidad explica cómo se diseña cada eslabón."
+    "text": "El Flujo Completo: Del Dato Crudo al CMI\n\n\nEste flujo conecta todo lo visto en la Unidad 1. La próxima unidad explica cómo se diseña cada eslabón."
   },
   {
     "objectID": "clases/W03_clase.html#el-ciclo-completo-con-herramientas-conocidas",

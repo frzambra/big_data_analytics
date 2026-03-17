@@ -1978,7 +1978,7 @@
     "href": "clases/W03_clase.html#las-5-v-del-big-data-visualización",
     "title": "Big Data, ETL y Síntesis de la Unidad 1",
     "section": "Las 5 V del Big Data: Visualización",
-    "text": "Las 5 V del Big Data: Visualización\n[IMAGE/DIAGRAM PLACEHOLDER: Diagrama radial de las 5 V del Big Data — pentágono con cada V en un vértice. Volumen: ícono de base de datos grande. Velocidad: ícono de rayo. Variedad: ícono de documentos mixtos. Veracidad: ícono de escudo/verificación. Valor: ícono de gema. Ejemplos de TechStyle 2028 en cada vértice]\n\nNo todos los problemas de Big Data involucran las 5 V simultáneamente. Identificar cuál V es el cuello de botella es el primer paso para solucionarlo."
+    "text": "Las 5 V del Big Data: Visualización\n\n\nNo todos los problemas de Big Data involucran las 5 V simultáneamente. Identificar cuál V es el cuello de botella es el primer paso para solucionarlo."
   },
   {
     "objectID": "clases/W03_clase.html#verificación-qué-v-representa-cada-desafío",
@@ -2027,7 +2027,7 @@
     "href": "clases/W03_clase.html#el-proceso-etl-el-puente-entre-oltp-y-dw",
     "title": "Big Data, ETL y Síntesis de la Unidad 1",
     "section": "El Proceso ETL: El Puente entre OLTP y DW",
-    "text": "El Proceso ETL: El Puente entre OLTP y DW\nETL = Extraer + Transformar + Cargar\n\nExtraer: Conectarse a múltiples sistemas fuente (ventas, clientes, GPS).\nTransformar: Limpiar (calidad de datos), unificar formatos, enriquecer.\n\n“Stgo.” → “Santiago” → “Metropolitana”\nEliminar duplicados, corregir nulos.\n\nCargar: Insertar los datos limpios en el Data Warehouse.\n\n\nEn el Lab 3: implementaron un mini-ETL con Power Query para unificar 3 fuentes CSV de TechStyle."
+    "text": "El Proceso ETL: El Puente entre OLTP y DW\nETL = Extraer + Transformar + Cargar\n\nExtraer: Conectarse a múltiples sistemas fuente (ventas, clientes, GPS).\nTransformar: Limpiar (calidad de datos), unificar formatos, enriquecer.\n\n“Stgo.” → “Santiago” → “Metropolitana”\nEliminar duplicados, corregir nulos.\n\nCargar: Insertar los datos limpios en el Data Warehouse.\n\n\nEn el Lab 3: implementarán un mini-ETL con Power Query para integrar 3 sistemas OLTP de TechStyle: ventas, clientes y productos."
   },
   {
     "objectID": "clases/W03_clase.html#aplicación-etl-de-techstyle-paso-a-paso",
@@ -2083,7 +2083,7 @@
     "href": "clases/W03_clase.html#preview-del-laboratorio-w03",
     "title": "Big Data, ETL y Síntesis de la Unidad 1",
     "section": "Preview del Laboratorio W03",
-    "text": "Preview del Laboratorio W03\nLab W03: Mini-ETL con Power Query\n\nRecibir 3 archivos CSV de TechStyle: ventas_norte.csv, ventas_sur.csv, ventas_rm.csv.\nEn Power Query: unificar las 3 fuentes en una sola tabla.\nTransformar: estandarizar nombres de región, eliminar filas duplicadas, corregir fechas inválidas.\nCargar a Excel: tabla unificada y limpia lista para análisis.\nResponder: ¿qué categoría lidera las ventas en el período analizado?"
+    "text": "Preview del Laboratorio W03\nLab W03: Mini-ETL con Power Query\n\nRecibir 3 archivos CSV de TechStyle: oltp_ventas.csv, oltp_clientes.csv, oltp_productos.csv.\nEn Power Query: limpiar y estandarizar cada fuente (renombrar columnas, corregir fechas, filtrar valores inválidos).\nCargar a Power BI: construir un modelo estrella conectando las 3 tablas.\nCrear medidas DAX y un dashboard CMI con las 4 perspectivas.\nResponder: ¿qué categoría lidera las ventas? ¿qué productos tienen stock crítico?"
   },
   {
     "objectID": "clases/W03_clase.html#solemne-1",

@@ -221,8 +221,8 @@ Universidad San Sebastián
 </section>
 <section id="las-5-v-del-big-data-visualización" class="slide level2">
 <h2>Las 5 V del Big Data: Visualización</h2>
-<p><code>[IMAGE/DIAGRAM PLACEHOLDER: Diagrama radial de las 5 V del Big Data — pentágono con cada V en un vértice. Volumen: ícono de base de datos grande. Velocidad: ícono de rayo. Variedad: ícono de documentos mixtos. Veracidad: ícono de escudo/verificación. Valor: ícono de gema. Ejemplos de TechStyle 2028 en cada vértice]</code></p>
-<div class="fragment">
+
+<img data-src="../img/las_5V_del_big_data.jpg" class="r-stretch"><div class="fragment">
 <p><em>No todos los problemas de Big Data involucran las 5 V simultáneamente. Identificar cuál V es el cuello de botella es el primer paso para solucionarlo.</em></p>
 </div>
 </section>
@@ -345,7 +345,7 @@ Universidad San Sebastián
 <li class="fragment"><strong>Cargar</strong>: Insertar los datos limpios en el Data Warehouse.</li>
 </ul>
 <div class="fragment">
-<p><strong>En el Lab 3</strong>: implementaron un mini-ETL con Power Query para unificar 3 fuentes CSV de TechStyle.</p>
+<p><strong>En el Lab 3</strong>: implementarán un mini-ETL con Power Query para integrar 3 sistemas OLTP de TechStyle: ventas, clientes y productos.</p>
 </div>
 </section>
 <section id="aplicación-etl-de-techstyle-paso-a-paso" class="slide level2">
@@ -453,11 +453,11 @@ Decisión estratégica de Roberto</code></pre>
 <h2>Preview del Laboratorio W03</h2>
 <p><strong>Lab W03: Mini-ETL con Power Query</strong></p>
 <ul>
-<li class="fragment">Recibir 3 archivos CSV de TechStyle: <code>ventas_norte.csv</code>, <code>ventas_sur.csv</code>, <code>ventas_rm.csv</code>.</li>
-<li class="fragment">En Power Query: unificar las 3 fuentes en una sola tabla.</li>
-<li class="fragment">Transformar: estandarizar nombres de región, eliminar filas duplicadas, corregir fechas inválidas.</li>
-<li class="fragment">Cargar a Excel: tabla unificada y limpia lista para análisis.</li>
-<li class="fragment">Responder: ¿qué categoría lidera las ventas en el período analizado?</li>
+<li class="fragment">Recibir 3 archivos CSV de TechStyle: <code>oltp_ventas.csv</code>, <code>oltp_clientes.csv</code>, <code>oltp_productos.csv</code>.</li>
+<li class="fragment">En Power Query: limpiar y estandarizar cada fuente (renombrar columnas, corregir fechas, filtrar valores inválidos).</li>
+<li class="fragment">Cargar a Power BI: construir un modelo estrella conectando las 3 tablas.</li>
+<li class="fragment">Crear medidas DAX y un dashboard CMI con las 4 perspectivas.</li>
+<li class="fragment">Responder: ¿qué categoría lidera las ventas? ¿qué productos tienen stock crítico?</li>
 </ul>
 </section>
 <section id="solemne-1" class="slide level2">

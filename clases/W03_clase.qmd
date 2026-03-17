@@ -182,7 +182,7 @@ format:
 :::
 
 ::: {.fragment}
-**En el Lab 3**: implementaron un mini-ETL con Power Query para unificar 3 fuentes CSV de TechStyle.
+**En el Lab 3**: implementarán un mini-ETL con Power Query para integrar 3 sistemas OLTP de TechStyle: ventas, clientes y productos.
 :::
 
 ---
@@ -295,11 +295,11 @@ Decisión estratégica de Roberto
 **Lab W03: Mini-ETL con Power Query**
 
 ::: {.incremental}
-- Recibir 3 archivos CSV de TechStyle: `ventas_norte.csv`, `ventas_sur.csv`, `ventas_rm.csv`.
-- En Power Query: unificar las 3 fuentes en una sola tabla.
-- Transformar: estandarizar nombres de región, eliminar filas duplicadas, corregir fechas inválidas.
-- Cargar a Excel: tabla unificada y limpia lista para análisis.
-- Responder: ¿qué categoría lidera las ventas en el período analizado?
+- Recibir 3 archivos CSV de TechStyle: `oltp_ventas.csv`, `oltp_clientes.csv`, `oltp_productos.csv`.
+- En Power Query: limpiar y estandarizar cada fuente (renombrar columnas, corregir fechas, filtrar valores inválidos).
+- Cargar a Power BI: construir un modelo estrella conectando las 3 tablas.
+- Crear medidas DAX y un dashboard CMI con las 4 perspectivas.
+- Responder: ¿qué categoría lidera las ventas? ¿qué productos tienen stock crítico?
 :::
 
 ---

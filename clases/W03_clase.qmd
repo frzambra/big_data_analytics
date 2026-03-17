@@ -66,7 +66,7 @@ format:
 
 ## Las 5 V del Big Data: Visualización
 
-`[IMAGE/DIAGRAM PLACEHOLDER: Diagrama radial de las 5 V del Big Data — pentágono con cada V en un vértice. Volumen: ícono de base de datos grande. Velocidad: ícono de rayo. Variedad: ícono de documentos mixtos. Veracidad: ícono de escudo/verificación. Valor: ícono de gema. Ejemplos de TechStyle 2028 en cada vértice]`
+![](../img/las_5V_del_big_data.jpg)
 
 ::: {.fragment}
 *No todos los problemas de Big Data involucran las 5 V simultáneamente. Identificar cuál V es el cuello de botella es el primer paso para solucionarlo.*

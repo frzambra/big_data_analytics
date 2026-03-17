@@ -1,0 +1,202 @@
+# Professor's Class Brief — W03
+## Big Data, OLTP/OLAP, ETL y Síntesis de la Unidad 1
+**Curso**: Big Data y Analytics · ICOM E015 · Universidad San Sebastián
+**Unidad**: 1 — Sistemas de Información en el Contexto Empresarial
+**Duración**: 1 hora 20 minutos (clase magistral) + Solemne 1 (segunda parte)
+
+---
+
+## 1. Core Thesis
+
+Esta sesión tiene una doble función: cierra la Unidad 1 con el argumento de mayor densidad tecnológica del bloque, y somete a evaluación todo lo aprendido en las tres semanas anteriores. La tesis que articula el contenido nuevo es que **los sistemas vistos hasta ahora —TPS, BI, CMI— no pueden coexistir en una única base de datos sin degradar mutuamente su desempeño**, y que la solución industrial a este problema es la arquitectura OLTP → ETL → Data Warehouse → BI. Esta arquitectura no es un detalle técnico optativo: es la razón por la que el CMI de Roberto puede mostrar datos frescos cada mañana sin bloquear el sistema de pedidos que Sofía usa en tiempo real.
+
+El segundo argumento es que el fenómeno del Big Data no es simplemente "mucho dato": es el conjunto de tensiones —Volumen, Velocidad, Variedad, Veracidad, Valor— que aparece cuando el crecimiento de TechStyle convierte un problema de análisis de datos convencional en un problema de ingeniería de datos. Estas tensiones tienen implicancias directas sobre los costos de arquitectura, la calidad de los datos y la latencia de las decisiones. El Big Data no cambia el propósito del sistema de información; cambia las condiciones bajo las cuales ese propósito debe cumplirse.
+
+El tercer argumento, transversal a toda la sesión, es de síntesis: las tres semanas de la Unidad 1 construyen una cadena conceptual única —Dato → Información → SI → Tipos de SI → CMI → Calidad de Datos → ETL → DW → Decisión— y cada concepto de la sesión de hoy es la extensión lógica de los anteriores. Esta sesión es, en ese sentido, el cierre argumentativo de la unidad: los estudiantes deben poder ver, al terminar, que todo el andamiaje conceptual forma un sistema coherente, no una colección de temas aislados.
+
+---
+
+## 2. Narrative Roadmap
+
+La sesión se articula en cuatro fases. Las dos primeras corresponden al contenido nuevo; la tercera es la síntesis de la unidad; la cuarta es la evaluación. El tiempo es ajustado: la disciplina narrativa es crítica.
+
+### Fase 1 — El Problema del Crecimiento: TechStyle en 2028 y el Big Data (≈ 25 min)
+
+La clase abre con una proyección: TechStyle en 2028 tiene 8,5 millones de clientes y 340.000 pedidos diarios. El Excel de María ya no abre. El BI tarda 4 horas en generar un reporte. El objetivo de esta fase no es enseñar las 5 V por sí mismas, sino demostrar que el crecimiento cuantitativo de los datos produce un cambio cualitativo en los desafíos de gestión informacional. Las 5 V son el vocabulario para nombrar esos desafíos, no un fin en sí mismas.
+
+El punto pedagógico crítico es la **V de Valor**: TechStyle tiene 180TB de datos históricos pero solo usa el 12% para tomar decisiones. Este es el argumento que conecta el Big Data con la Unidad 1 completa: no basta con tener datos (V1), generarlos rápido (V2) y en formatos diversos (V3) con buena calidad (V4). Si no existe la arquitectura y el proceso para extraer valor de ellos, el volumen es una carga, no un activo. Esta tensión entre datos disponibles y datos utilizados es la motivación directa para el ETL y el Data Warehouse.
+
+El ejercicio de clasificación ("¿Qué V representa cada desafío?") sirve como verificación activa antes de avanzar. Es rápido y permite identificar si los estudiantes están procesando las V como categorías de análisis o como definiciones para memorizar.
+
+### Fase 2 — La Arquitectura de la Solución: OLTP, OLAP, DW y ETL (≈ 30 min)
+
+Esta es la fase de mayor densidad conceptual. Se estructura en tres movimientos secuenciales que deben mantenerse en ese orden porque cada uno presupone el anterior.
+
+**Movimiento 1 — OLTP vs. OLAP**: la distinción no es entre sistemas "viejos" y "nuevos"; es entre sistemas optimizados para operaciones unitarias en tiempo real (OLTP) versus sistemas optimizados para consultas analíticas sobre grandes volúmenes históricos (OLAP). El argumento central —que no se puede optimizar la misma base de datos para los dos usos simultáneamente— no es una limitación tecnológica superable: es una consecuencia directa de las estructuras de índices y bloqueos de filas que hacen que un INSERT rápido y un GROUP BY sobre millones de filas sean mutuamente excluyentes en la misma arquitectura. Si Juan ejecuta su consulta analítica en la BD de Sofía, los pedidos dejan de procesarse. Este es el problema que justifica la existencia del Data Warehouse.
+
+**Movimiento 2 — El Data Warehouse y sus capas**: el DW no es simplemente una base de datos grande; es una base de datos diseñada exclusivamente para análisis, con una arquitectura en capas (Staging → Integración → Data Marts) que implementa exactamente el proceso de calidad de datos visto en W02. La capa de Staging recibe los datos brutos tal como vienen del OLTP (zona de cuarentena). La capa de integración aplica las transformaciones de calidad (estandarizar "Santiago" / "Stgo." / "RM" → "Metropolitana"). Los Data Marts exponen los datos limpios y organizados por dominio (ventas, clientes, logística) a las herramientas de BI. Esta arquitectura en capas es la respuesta organizacional a los problemas de calidad identificados en W02.
+
+**Movimiento 3 — El ETL**: el proceso Extraer–Transformar–Cargar es el mecanismo que conecta el OLTP con el DW. El punto pedagógico clave es que la fase de Transformación no es solo limpieza técnica: requiere entender las reglas de negocio que definen qué es un dato correcto, cuándo una fila debe eliminarse, y cómo deben fusionarse registros duplicados. Esta es la misma lógica de las dimensiones de calidad de W02, ahora operacionalizada como un proceso automático y repetible.
+
+**Conexión con herramientas conocidas**: el cierre de esta fase conecta la arquitectura industrial con lo que los estudiantes ya dominan. Power Query es un ETL de escritorio. Power BI se conecta a la capa de presentación del DW, no al OLTP. El modelo estrella que construyeron en el Lab W03 es el esquema típico del Data Mart. MySQL (que verán en la Unidad 3) es tanto el OLTP como el sustrato del DW en entornos medianos. Este mapeo entre conceptos nuevos y herramientas conocidas es fundamental para que los estudiantes vean el semestre como un sistema coherente y no como una secuencia de módulos independientes.
+
+### Fase 3 — Síntesis de la Unidad 1 (≈ 10 min)
+
+La sesión dedica 10 minutos explícitos a la síntesis de las tres semanas. El instrumento es la tabla de síntesis (W01: jerarquía y componentes; W02: tipos de SI y CMI; W03: Big Data y ETL) y el hilo conductor que une todas las semanas: TechStyle necesita los **datos correctos**, en el **sistema correcto**, para el **actor correcto**, en el **momento correcto** → para tomar **decisiones correctas**.
+
+La actividad de repaso "Caso ServiRápido" materializa esta síntesis: obliga a los estudiantes a aplicar simultáneamente conceptos de las tres semanas (tipos de SI, CMI, ETL) a un contexto nuevo, verificando si han incorporado el marco como herramienta de análisis o solo como contenido para la evaluación. Tiene una doble función: repasar y calibrar el nivel de preparación para la Solemne 1.
+
+### Fase 4 — Solemne 1 (segunda parte de la sesión)
+
+La evaluación individual ocupa la segunda parte de la sesión. Antes de iniciar, el profesor debe explicitar el énfasis: **razonamiento y justificación, no memorización**. Las preguntas de la Solemne no preguntan definiciones; preguntan por aplicación de conceptos a casos nuevos, diseño de KPIs para contextos específicos, y diagnóstico de problemas de calidad en datasets ficticios. Un estudiante que memorizó todas las definiciones pero no entiende por qué el CMI depende del ETL tendrá dificultades.
+
+---
+
+## 3. Key Visual Evidence
+
+| Visual | Archivo | Argumento que ilustra |
+|---|---|---|
+| **Diagrama OLTP → ETL → DW → BI → CMI** | Slide texto (código ASCII en la presentación) | Muestra el flujo completo de datos desde la operación hasta la decisión. Es el visual más importante de la sesión: integra todos los conceptos de la Unidad 1 en una arquitectura funcional única. |
+| **Tabla OLTP vs. OLAP** | Slide tabla | Contrasta las características de los dos sistemas en cinco dimensiones (propósito, operación SQL, volumen, usuario, ejemplo TechStyle). Demuestra que la incompatibilidad no es superficial sino estructural. |
+| **Diagrama de las 3 capas del DW** | Slide texto | Muestra cómo las etapas Staging → Integración → Data Marts implementan el proceso de calidad de datos del W02 como arquitectura. Conecta la calidad de datos (W02) con la arquitectura técnica (W03). |
+| **Pirámide Organizacional de TechStyle** | `img/piramide_organizacional_techstyle.jpg` | Reutilizada de W01–W02, pero ahora con el OLTP en la base, el ETL como proceso de ascenso, el DW en la capa táctica y el CMI en el vértice estratégico. El mismo visual, una capa más de interpretación. |
+
+**Nota para el profesor**: si el tiempo es escaso y debe elegir un solo visual para desarrollar, el diagrama de flujo completo (OLTP → ETL → DW → BI → CMI → Decisión) es el más importante. Condensa el argumento de toda la sesión y sirve como mapa conceptual para la Solemne 1. Los demás visuales pueden describirse verbalmente si es necesario.
+
+---
+
+## 4. Discussion Benchmarks
+
+**Pregunta 1 — Comprensión por analogía** *(después de las 5 V del Big Data)*
+> "Un hospital regional acumula tomografías, historiales médicos en texto, registros de medicamentos y datos de sensores de UCI. ¿Cuál de las 5 V es el desafío más crítico para ese hospital? ¿Cambiaría su respuesta si el hospital fuera el Hospital Clínico de la Universidad de Chile versus una posta rural de La Araucanía?"
+
+Esta pregunta fuerza a aplicar las 5 V como herramienta de diagnóstico, no como lista de definiciones, y a reconocer que la V crítica depende del contexto organizacional específico.
+
+**Pregunta 2 — Pensamiento causal sistémico** *(después de OLTP vs. OLAP)*
+> "Sofía registra un pedido en el sistema OLTP de TechStyle. Juan necesita en ese mismo instante el reporte de ventas del mes. ¿Por qué no puede Juan simplemente 'leer' la misma base de datos donde Sofía está escribiendo? ¿Qué pasaría operativamente si se lo permitieran?"
+
+Obliga a comprender la incompatibilidad OLTP–OLAP no como una regla a memorizar sino como una consecuencia lógica del diseño de bases de datos. Anticipa la discusión sobre bloqueos de filas y concurrencia que los estudiantes verán en detalle en la Unidad 3 (transacciones ACID, W15).
+
+**Pregunta 3 — Diseño de arquitectura** *(después del Data Warehouse y ETL)*
+> "TechStyle tiene tres equipos distintos que construyeron el sistema de ventas, el sistema de clientes y el sistema de logística en momentos diferentes. Los tres usan nombres distintos para la misma región ('RM', 'Santiago', 'Metropolitana') y formatos distintos para las fechas. ¿En qué capa del DW se resuelve este problema? ¿Quién debería tomar esa decisión: el equipo de TI, el área de ventas, o el Data Steward de W02?"
+
+Conecta la arquitectura técnica del DW con el gobierno de datos visto en W02 y fuerza a pensar en quién tiene autoridad sobre las definiciones de datos. No hay una respuesta única correcta; el debate entre solución técnica y solución organizacional es pedagógicamente productivo.
+
+**Pregunta 4 — Evaluación estratégica** *(durante la síntesis)*
+> "TechStyle acaba de invertir $500 millones en implementar un Data Warehouse en la nube. Roberto tiene acceso a un dashboard con 47 KPIs actualizados cada hora. Sin embargo, el equipo de logística sigue registrando las entregas con un día de atraso porque el sistema OLTP no los obliga a registrar en tiempo real. ¿Cuál de las 5 V es el problema? ¿Sirve de algo el DW en ese contexto?"
+
+Demuestra que la arquitectura técnica más sofisticada no resuelve problemas organizacionales o de procesos. Conecta la V de Oportunidad (veracidad temporal) con el concepto de gobierno de datos y con la calidad de datos de W02. Introduce el argumento de que la tecnología es condición necesaria pero no suficiente para la toma de decisiones de calidad.
+
+**Pregunta 5 — Síntesis y proyección profesional** *(al cierre, antes de la Solemne)*
+> "Si en su primer trabajo como analistas de datos les piden construir un reporte mensual de ventas para el gerente comercial, ¿de qué sistema tomarían los datos: del OLTP, del DW o de Power BI directamente? ¿Qué preguntas harían antes de conectar la primera consulta?"
+
+Personaliza la arquitectura técnica en el contexto de la práctica profesional. Hace visible que las preguntas correctas antes de construir un reporte son preguntas sobre arquitectura de datos, no solo sobre visualización. Calibra si los estudiantes han internalizado el flujo OLTP → ETL → DW → BI como una cadena que el analista debe comprender, no solo usar.
+
+---
+
+## 5. Essential Vocabulary
+
+Los siguientes términos constituyen el capital conceptual mínimo al término de la sesión y forman la base léxica de la Solemne 1. Se recomienda al profesor verificar 3–4 términos al azar durante el repaso de síntesis antes de iniciar la evaluación.
+
+| Término | Definición operacional en el contexto del curso |
+|---|---|
+| **Big Data** | Fenómeno caracterizado por datos que exceden la capacidad de los sistemas de procesamiento convencionales en al menos una de las 5 V (Volumen, Velocidad, Variedad, Veracidad, Valor). No es un tamaño absoluto: es una relación entre el dato y la capacidad del sistema que debe procesarlo. |
+| **Las 5 V** | Marco analítico para diagnosticar desafíos de Big Data. Volumen (cantidad), Velocidad (frecuencia de generación), Variedad (formatos heterogéneos), Veracidad (confiabilidad y calidad) y Valor (fracción del dato que genera insight accionable). |
+| **OLTP** (Online Transaction Processing) | Arquitectura de base de datos optimizada para operaciones transaccionales unitarias en tiempo real: INSERT, UPDATE, DELETE de pocas filas, con tiempos de respuesta menores a 100ms. Usuario típico: nivel operativo (Sofía). |
+| **OLAP** (Online Analytical Processing) | Arquitectura de base de datos optimizada para consultas analíticas sobre grandes volúmenes históricos: SELECT con GROUP BY, JOINs y agregaciones sobre millones de filas. Usuario típico: nivel táctico-estratégico (Juan, Roberto). |
+| **Data Warehouse (DW)** | Base de datos diseñada exclusivamente para OLAP. Integra múltiples fuentes OLTP en un repositorio histórico unificado. Arquitectura en tres capas: Staging (datos brutos), Integración (datos limpios y unificados), Data Marts (datos organizados por dominio analítico). |
+| **Data Mart** | Subconjunto del DW organizado para un dominio específico (ventas, clientes, logística). Los analistas y el BI se conectan al Data Mart de su área, no al DW completo ni al OLTP. |
+| **ETL** (Extract, Transform, Load) | Proceso que mueve datos desde los sistemas OLTP hacia el DW en tres fases: Extraer (conectar con las fuentes), Transformar (limpiar, estandarizar y enriquecer) y Cargar (insertar en el DW). En producción se ejecuta automáticamente de forma periódica (batch) o continua (streaming). |
+| **Batch ETL** | Modalidad de ETL en la que el proceso se ejecuta periódicamente (típicamente en horario nocturno) sobre el acumulado de datos desde la última ejecución. Contrasta con el ETL en streaming, que procesa eventos en tiempo real. |
+| **Modelo Estrella** | Esquema de organización del Data Mart con una tabla de hechos central (transacciones) rodeada de tablas de dimensiones (clientes, productos, tiempo, región). Optimizado para consultas analíticas con JOINs radiales. |
+| **Staging (área de preparación)** | Primera capa del DW donde se copian los datos brutos del OLTP sin transformar. Actúa como zona de cuarentena: garantiza que los datos de origen no se modifican y permite repetir las transformaciones si se detectan errores. |
+
+---
+
+## Notas de Coordinación Docente
+
+- **Conexión con W01 y W02**: esta sesión presupone el dominio de la jerarquía dato–información–decisión, los 5 componentes del SI, la taxonomía de tipos de SI, el CMI y las cuatro dimensiones de calidad de datos. Si la Solemne 1 evidencia debilidades sistemáticas en alguno de estos conceptos, es señal de que el Lab W02 no logró consolidarlos y deberá reforzarse en las primeras sesiones de la Unidad 2.
+- **Gestión del tiempo**: la presión de tiempo es la principal dificultad de esta sesión. El contenido nuevo (Big Data, OLTP/OLAP, DW, ETL) podría extenderse 90 minutos sin dificultad, pero debe comprimirse en 55 minutos para dejar margen a la síntesis y la Solemne. La disciplina es no profundizar en detalles de implementación del ETL (transformaciones específicas de Power Query) sino en el argumento arquitectural: por qué el flujo existe y qué problema resuelve.
+- **La Solemne 1**: el 30% de ponderación (10% control acumulado + 20% prueba escrita) implica que los estudiantes con bajo rendimiento en W02 pueden recuperar terreno. El énfasis en razonamiento sobre memorización es intencional y debe comunicarse explícitamente antes de la evaluación para evitar la ansiedad que genera en estudiantes con buen rendimiento memorizador pero menor capacidad de análisis aplicado.
+- **Conexión con la Unidad 2**: la sesión cierra señalando que la Unidad 2 responde a la pregunta "¿cómo se diseña la estructura de datos que alimenta el OLTP?". Esto ancla los conceptos de modelado (diagrama ER, modelo relacional, normalización) en un propósito funcional que los estudiantes ya comprenden: construir bien el OLTP es condición previa para que el ETL y el CMI funcionen correctamente.
+- **Laboratorio W03**: el Lab materializa el proceso ETL completo usando Power BI y Power Query. Los estudiantes recibirán exactamente las tres fuentes OLTP mencionadas en clase (`oltp_ventas.csv`, `oltp_clientes.csv`, `oltp_productos.csv`) con las inconsistencias descritas (columnas con nombres distintos, formatos de fecha heterogéneos, variantes de región). El script de referencia `labs/scripts/W03_etl_mini.py` reproduce el flujo completo en Python para uso del docente.
+
+---
+
+## 6. Online Reference Materials
+
+Recursos organizados por los cuatro bloques temáticos de la sesión. Se indica el propósito pedagógico específico de cada uno.
+
+### 6.1 Big Data y las 5 V
+
+**IBM — "What is Big Data?"**
+- URL: https://www.ibm.com/think/topics/big-data
+- Relevancia: descripción actualizada del fenómeno Big Data desde una perspectiva empresarial, incluyendo las 5 V con ejemplos industriales concretos. IBM tiene la ventaja de ser simultáneamente fuente académicamente respetable y proveedor de soluciones de Big Data en empresas chilenas (plataforma Cloud). Útil para mostrar que las definiciones del curso coinciden con el estándar de la industria.
+
+**O'Reilly — "What is Big Data?" (Mike Loukides, 2010)**
+- URL: https://www.oreilly.com (buscar el artículo "What is Big Data?" de Mike Loukides)
+- Relevancia: uno de los textos fundacionales que popularizó el término "Big Data" en la industria tecnológica. La perspectiva es histórica y ayuda a situar por qué el concepto emergió en ese momento específico (explosión de datos generados por usuarios de internet). Útil para el profesor como contexto; no es lectura obligatoria para estudiantes.
+
+**Video — "Big Data In 5 Minutes" (Simplilearn)**
+- Buscar en YouTube: `"Big Data In 5 Minutes Simplilearn"`
+- Duración: ~5 minutos. Visualiza las 5 V con ejemplos concretos de Amazon, Netflix y Twitter. El ritmo acelerado lo hace adecuado como introducción visual antes de la clase o como refuerzo recomendado a estudiantes.
+
+---
+
+### 6.2 OLTP vs. OLAP y Data Warehouse
+
+**AWS — "OLAP vs. OLTP: What's the Difference?"**
+- URL: https://aws.amazon.com/compare/the-difference-between-olap-and-oltp/
+- Relevancia: comparación técnica detallada con ejemplos de casos de uso reales. Amazon Web Services es el proveedor de nube líder en Chile y la región; usar su documentación como referencia refuerza la conexión entre contenido académico y práctica profesional. La tabla comparativa de características es transferible directamente a la clase.
+
+**Kimball Group — "The Data Warehouse Toolkit" (recursos gratuitos)**
+- URL: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/
+- Relevancia: Ralph Kimball es el arquitecto intelectual del modelo dimensional (esquema estrella/copo de nieve) que es el estándar de diseño de Data Warehouses. El sitio ofrece capítulos de muestra y artículos gratuitos. El Capítulo 1 de "The Data Warehouse Toolkit" (3.ª ed.) es la referencia más citada en la industria sobre diseño de DW para análisis. La arquitectura en capas (Staging → DW → Data Marts) corresponde exactamente al marco de Kimball.
+
+**Microsoft — "What is a Data Warehouse?" (Azure documentation)**
+- URL: https://learn.microsoft.com/en-us/azure/architecture/data-guide/relational-data/data-warehousing
+- Relevancia: documentación oficial de Azure Synapse Analytics, el DW en la nube de Microsoft. Relevante porque los estudiantes con experiencia en Power BI ya están en el ecosistema Microsoft; esta documentación muestra cómo el DW industrial es la extensión natural de lo que hacen en Power BI de escritorio.
+
+**Video — "Data Warehouse vs. Data Lake vs. Data Lakehouse" (IBM Technology)**
+- Buscar en YouTube: `"Data Warehouse vs Data Lake IBM Technology"`
+- Duración: ~9 minutos. Contextualiza el DW en la arquitectura de datos moderna y adelanta los conceptos de Data Lake y Lakehouse que los estudiantes encontrarán en sus carreras. Apropiado para recomendar a estudiantes que quieran profundizar más allá del contenido de clase.
+
+---
+
+### 6.3 ETL: Extraer, Transformar, Cargar
+
+**Talend — "What is ETL (Extract, Transform, Load)?"**
+- URL: https://www.talend.com/resources/what-is-etl/
+- Relevancia: Talend es uno de los proveedores de herramientas ETL más utilizados en la industria. Su guía introductoria cubre las tres fases con ejemplos de retail y e-commerce directamente aplicables al caso TechStyle. Muestra también la distinción entre ETL y ELT (Extraer-Cargar-Transformar), variante que los estudiantes pueden encontrar en contextos de Data Lake.
+
+**dbt Labs — "What is a data transformation?"**
+- URL: https://docs.getdbt.com/terms/data-transformation
+- Relevancia: dbt (data build tool) es la herramienta de transformación de datos de código abierto que más ha crecido en adopción en los últimos cinco años. La documentación es pedagógicamente clara y usa SQL como lenguaje de transformación, conectando directamente con la Unidad 3 del curso. Útil para mostrar que el ETL tiene una implementación moderna con SQL puro, no solo con herramientas de arrastrar-y-soltar.
+
+**Video — "ETL vs. ELT: What's the Difference?" (Fivetran)**
+- Buscar en YouTube: `"ETL vs ELT Difference Fivetran"`
+- Duración: ~5 minutos. Introduce la variante ELT (load primero, luego transform en el DW) que es el patrón dominante en arquitecturas de nube modernas. No es necesario profundizarlo en clase, pero ayuda al profesor a responder la pregunta "¿por qué no simplemente cargar todo y limpiar después?" que invariablemente surge.
+
+**Apache Airflow — "What is a Data Pipeline?"**
+- URL: https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/overview.html
+- Relevancia: Apache Airflow es el orquestador de pipelines de datos más utilizado en la industria para programar y monitorear procesos ETL. La documentación introductoria muestra cómo un proceso ETL se convierte en un pipeline automatizado y repetible, que es exactamente la respuesta a la pregunta "¿cómo se ejecuta el ETL automáticamente cada noche?".
+
+---
+
+### 6.4 Síntesis: El Flujo Completo y la Arquitectura Moderna de Datos
+
+**a16z (Andreessen Horowitz) — "The Modern Data Stack"**
+- URL: https://a16z.com (buscar "modern data stack" en el buscador del sitio)
+- Relevancia: el ensayo de a16z sobre el "Modern Data Stack" (Fivetran + Snowflake + dbt + Looker) muestra cómo la arquitectura OLTP → ETL → DW → BI que se enseña en clase se implementa hoy en startups y empresas de crecimiento rápido. El paralelismo con TechStyle es directo. Adecuado para el profesor como contexto; accesible también para estudiantes con interés en tecnología.
+
+**Snowflake — "What is a Data Lakehouse?"**
+- URL: https://www.snowflake.com/guides/data-lakehouse
+- Relevancia: Snowflake es el DW en la nube más relevante del momento en el mercado latinoamericano. La guía introductoria explica la convergencia entre Data Warehouse y Data Lake en el concepto de Lakehouse, que es la arquitectura que muchas empresas chilenas están adoptando. Útil para mostrar que los conceptos del curso son la base de las discusiones arquitecturales actuales en la industria.
+
+**Video — "How Netflix Builds Fast Pipelines" (Engineering Netflix)**
+- Buscar en YouTube: `"Netflix data engineering pipeline"`
+- Relevancia: Netflix es un caso extremo de Big Data (todas las 5 V al máximo) y publica regularmente sobre su arquitectura de datos. Ver cómo una empresa de clase mundial implementa el flujo OLTP → ETL → DW → BI refuerza que los conceptos del curso no son académicos abstractos sino la base de las decisiones de ingeniería más complejas de la industria tecnológica global.
+
+---
+
+*Documento preparado para uso interno del equipo docente. No distribuir a estudiantes.*

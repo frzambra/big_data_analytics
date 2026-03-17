@@ -1,0 +1,7 @@
+﻿Columna,Problema encontrado,Dimensión de calidad,KPI afectado,Filas afectadas
+email,30 emails vacíos (null/NaN),Completitud,Clientes únicos del mes / segmentación CRM,30
+email,"23 emails con formato inválido (@mail sin dominio, etc.)",Exactitud,Segmentación CRM – tasa de contacto,23
+region,Valores inconsistentes para la misma región: ['RM'],Consistencia,Ventas por región / nuevos clientes por región,99
+nombre / apellido,11 valores con espacios al inicio/final,Consistencia,Deduplicación de clientes,11
+nombre,"11 nombres con capitalización no estándar (ej: 'jUAN', 'MARIA')",Consistencia,Reportes de clientes / nombres en dashboards,11
+segmento,59 valores fuera del catálogo: ['Básico'],Validez,Análisis de segmento / tasa de conversión por segmento,59

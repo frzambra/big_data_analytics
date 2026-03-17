@@ -1,0 +1,501 @@
+﻿venta_id,fecha,cliente_id,producto_id,cantidad,precio_unitario,descuento_pct,venta_total,venta_neta,mes,anio,nombre,apellido,email,region,segmento,fecha_registro,meses_cliente,nombre_producto,categoria,costo,precio_venta,stock,margen_pct,clasificacion_margen,alerta_stock
+5001,2023-06-25,78,3003,1,14990,0,14990,14990.0,6,2023,Sofía,Silva,sofía.silva78@gmail.com,Metropolitana,Estándar,2020-10-17,65,Organizador Cajones,Hogar,5000,14990,172,66.6,Alto,Stock normal
+5002,2023-05-08,170,3008,3,40491,10,121473,109326.0,5,2023,Andrés,Díaz,andrés.díaz170@gmail.com,Metropolitana,Básico,2021-12-12,51,Alfombra 120x80,Hogar,18000,44990,50,60.0,Alto,Stock normal
+5003,2023-01-20,1,2002,2,29990,0,59980,59980.0,1,2023,Isidora,Flores,isidora.flores1@gmail.com,Valparaíso,Premium,2021-03-11,61,Jeans Slim,Ropa,11000,29990,48,63.3,Alto,Stock bajo
+5004,2023-02-07,100,4005,2,7191,10,14382,12944.0,2,2023,Alejandro,Sepúlveda,alejandro.sepúlveda100@gmail.com,Metropolitana,Básico,2022-05-26,46,Pulsera Silicona,Accesorios,1500,7990,55,81.2,Alto,Stock normal
+5005,2023-05-03,18,1008,1,46742,15,46742,39731.0,5,2023,Nicolás,Silva,nicolás.silva18@gmail.com,Biobío,Básico,2022-03-30,48,Disco Duro Externo 1TB,Electrónica,22000,54990,83,60.0,Alto,Stock normal
+5006,2023-03-13,38,1006,1,139990,0,139990,139990.0,3,2023,Isidora,Fuentes,isidora.fuentes38@gmail.com,Metropolitana,Estándar,2022-08-01,44,"Monitor 24""",Electrónica,68000,139990,106,51.4,Alto,Stock normal
+5007,2023-04-09,91,3005,1,11990,0,11990,11990.0,4,2023,Isidora,Díaz,isidora.díaz91@gmail.com,Metropolitana,Básico,2021-09-19,54,Cojín Decorativo,Hogar,3500,11990,192,70.8,Alto,Stock normal
+5008,2023-04-16,155,3006,1,16142,15,16142,13721.0,4,2023,Andrés,Pérez,andrés.pérez155@gmail.com,Metropolitana,Estándar,2021-01-27,62,Set Toallas x3,Hogar,6500,18990,115,65.8,Alto,Stock normal
+5009,2023-03-04,99,4003,1,29990,0,29990,29990.0,3,2023,Nicolás,Soto,nicolás.soto99@gmail.com,Metropolitana,Estándar,2021-12-25,51,Gafas de Sol,Accesorios,9000,29990,185,70.0,Alto,Stock normal
+5010,2023-05-07,137,2007,1,5690,5,5690,5406.0,5,2023,Alejandro,Espinoza,alejandro.espinoza137@gmail.com,Metropolitana,Básico,2023-04-25,35,Calcetines Pack 3,Ropa,1800,5990,183,69.9,Alto,Stock normal
+5011,2023-04-18,135,2007,2,5990,0,11980,11980.0,4,2023,Catalina,Martínez,catalina.martínez135@gmail.com,Maule,Básico,2021-06-23,57,Calcetines Pack 3,Ropa,1800,5990,183,69.9,Alto,Stock normal
+5012,2023-01-01,53,1002,1,15990,0,15990,15990.0,1,2023,Valentina,Torres,valentina.torres53@gmail.com,Maule,Premium,2023-03-24,36,Cargador Rápido USB-C,Electrónica,6000,15990,73,62.5,Alto,Stock normal
+5013,2023-02-04,29,1004,2,24990,0,49980,49980.0,2,2023,Martín,Silva,martín.silva29@gmail.com,Antofagasta,Premium,2023-05-15,34,Mouse Inalámbrico,Electrónica,9000,24990,58,64.0,Alto,Stock normal
+5014,2023-02-05,76,4006,1,22491,10,22491,20242.0,2,2023,Martín,Castro,martín.castro76@gmail.com,Antofagasta,Básico,2021-12-22,51,Porta Notebook,Accesorios,8000,24990,129,68.0,Alto,Stock normal
+5015,2023-04-18,63,2006,2,19990,0,39980,39980.0,4,2023,Valentina,Ramos,valentina.ramos63@gmail.com,Valparaíso,Estándar,2023-03-18,36,Pantalón de Buzo,Ropa,6000,19990,22,70.0,Alto,Stock bajo
+5016,2023-02-05,31,2002,1,29990,0,29990,29990.0,2,2023,Andrés,Vargas,andrés.vargas31@gmail.com,La Araucanía,Estándar,2021-04-02,60,Jeans Slim,Ropa,11000,29990,48,63.3,Alto,Stock bajo
+5017,2023-04-19,96,1004,2,23740,5,47480,45106.0,4,2023,Valentina,Castro,valentina.castro96@gmail.com,Biobío,Premium,2020-09-15,66,Mouse Inalámbrico,Electrónica,9000,24990,58,64.0,Alto,Stock normal
+5018,2023-01-19,123,2003,1,59990,0,59990,59990.0,1,2023,Isidora,Flores,isidora.flores123@gmail.com,Biobío,Premium,2022-06-18,45,Parka Impermeable,Ropa,23000,59990,130,61.7,Alto,Stock normal
+5019,2023-01-21,63,1005,1,71991,10,71991,64792.0,1,2023,Valentina,Ramos,valentina.ramos63@gmail.com,Valparaíso,Estándar,2023-03-18,36,Teclado Mecánico,Electrónica,32000,79990,196,60.0,Alto,Stock normal
+5020,2023-04-17,39,2004,1,49990,0,49990,49990.0,4,2023,Fernanda,Sepúlveda,fernanda.sepúlveda39@gmail.com,La Araucanía,Básico,2022-10-20,41,Zapatillas Running,Ropa,19000,49990,5,62.0,Alto,Stock crítico
+5021,2023-05-16,179,3004,1,23740,5,23740,22553.0,5,2023,Fernanda,Herrera,fernanda.herrera179@gmail.com,Metropolitana,Estándar,2021-01-06,63,Lámpara LED Escritorio,Hogar,9000,24990,78,64.0,Alto,Stock normal
+5022,2023-04-24,166,1001,1,44990,0,44990,44990.0,4,2023,Constanza,Silva,constanza.silva166@gmail.com,Metropolitana,Básico,2021-07-03,57,Audífonos Bluetooth,Electrónica,18000,44990,41,60.0,Alto,Stock bajo
+5023,2023-06-14,9,2004,1,49990,0,49990,49990.0,6,2023,Felipe,Espinoza,felipe.espinoza9@gmail.com,Valparaíso,Estándar,2021-06-28,57,Zapatillas Running,Ropa,19000,49990,5,62.0,Alto,Stock crítico
+5024,2023-04-19,175,4006,1,22491,10,22491,20242.0,4,2023,Francisco,Díaz,francisco.díaz175@gmail.com,Maule,Básico,2022-02-21,49,Porta Notebook,Accesorios,8000,24990,129,68.0,Alto,Stock normal
+5025,2023-05-27,129,3004,2,24990,0,49980,49980.0,5,2023,Felipe,Castro,felipe.castro129@gmail.com,Maule,Premium,2022-03-07,49,Lámpara LED Escritorio,Hogar,9000,24990,78,64.0,Alto,Stock normal
+5026,2023-02-10,70,1006,1,118992,15,118992,101143.0,2,2023,Pablo,Soto,pablo.soto70@gmail.com,Metropolitana,Estándar,2022-07-04,45,"Monitor 24""",Electrónica,68000,139990,106,51.4,Alto,Stock normal
+5027,2023-02-02,191,2006,1,19990,0,19990,19990.0,2,2023,Andrés,Martínez,andrés.martínez191@gmail.com,Biobío,Premium,2020-09-09,67,Pantalón de Buzo,Ropa,6000,19990,22,70.0,Alto,Stock bajo
+5028,2023-04-11,48,1005,2,79990,0,159980,159980.0,4,2023,Felipe,Fuentes,felipe.fuentes48@gmail.com,Metropolitana,Estándar,2021-08-02,56,Teclado Mecánico,Electrónica,32000,79990,196,60.0,Alto,Stock normal
+5029,2023-03-22,168,4002,2,19990,0,39980,39980.0,3,2023,Constanza,Muñoz,constanza.muñoz168@gmail.com,Biobío,Premium,2021-07-22,56,Billetera Cuero,Accesorios,6000,19990,52,70.0,Alto,Stock normal
+5030,2023-04-06,166,4004,1,49990,0,49990,49990.0,4,2023,Constanza,Silva,constanza.silva166@gmail.com,Metropolitana,Básico,2021-07-03,57,Reloj Digital,Accesorios,16000,49990,39,68.0,Alto,Stock bajo
+5031,2023-01-20,93,3006,1,18990,0,18990,18990.0,1,2023,Andrés,Martínez,andrés.martínez93@gmail.com,Biobío,Premium,2020-04-08,72,Set Toallas x3,Hogar,6500,18990,115,65.8,Alto,Stock normal
+5032,2023-05-19,28,1005,1,79990,0,79990,79990.0,5,2023,Fernanda,Gutiérrez,fernanda.gutiérrez28@gmail.com,Biobío,Premium,2022-10-04,41,Teclado Mecánico,Electrónica,32000,79990,196,60.0,Alto,Stock normal
+5033,2023-03-21,49,2005,1,24990,0,24990,24990.0,3,2023,Daniela,Gutiérrez,daniela.gutiérrez49@gmail.com,Metropolitana,Estándar,2020-09-25,66,Poleron Algodón,Ropa,8500,24990,29,66.0,Alto,Stock bajo
+5034,2023-03-10,22,1003,1,53991,10,53991,48592.0,3,2023,Fernanda,Herrera,fernanda.herrera22@gmail.com,La Araucanía,Básico,2021-09-09,54,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5035,2023-01-12,13,3005,1,11990,0,11990,11990.0,1,2023,Isidora,González,isidora.gonzález13@gmail.com,Valparaíso,Básico,2022-04-02,48,Cojín Decorativo,Hogar,3500,11990,192,70.8,Alto,Stock normal
+5036,2023-04-02,193,3003,3,14990,0,44970,44970.0,4,2023,Sebastián,Pérez,sebastián.pérez193@gmail.com,Metropolitana,Premium,2021-04-04,60,Organizador Cajones,Hogar,5000,14990,172,66.6,Alto,Stock normal
+5037,2023-03-22,193,4002,2,16992,15,33984,28886.0,3,2023,Sebastián,Pérez,sebastián.pérez193@gmail.com,Metropolitana,Premium,2021-04-04,60,Billetera Cuero,Accesorios,6000,19990,52,70.0,Alto,Stock normal
+5038,2023-06-29,173,1007,1,35991,10,35991,32392.0,6,2023,Sofía,González,sofía.gonzález173@gmail.com,La Araucanía,Básico,2021-03-25,60,Webcam HD,Electrónica,16000,39990,183,60.0,Alto,Stock normal
+5039,2023-05-09,26,2002,1,26991,10,26991,24292.0,5,2023,Martín,Fuentes,martín.fuentes26@gmail.com,Maule,Básico,2021-03-27,60,Jeans Slim,Ropa,11000,29990,48,63.3,Alto,Stock bajo
+5040,2023-05-03,151,1003,1,59990,0,59990,59990.0,5,2023,María,Contreras,maría.contreras151@gmail.com,Valparaíso,Premium,2020-06-27,69,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5041,2023-04-29,21,1006,3,139990,0,419970,419970.0,4,2023,Fernanda,Castro,fernanda.castro21@gmail.com,Los Lagos,Premium,2022-10-30,41,"Monitor 24""",Electrónica,68000,139990,106,51.4,Alto,Stock normal
+5042,2023-02-25,175,2002,2,29990,0,59980,59980.0,2,2023,Francisco,Díaz,francisco.díaz175@gmail.com,Maule,Básico,2022-02-21,49,Jeans Slim,Ropa,11000,29990,48,63.3,Alto,Stock bajo
+5043,2023-05-09,133,3006,1,18990,0,18990,18990.0,5,2023,Matías,Sepúlveda,matías.sepúlveda133@gmail.com,Metropolitana,Estándar,2020-06-18,69,Set Toallas x3,Hogar,6500,18990,115,65.8,Alto,Stock normal
+5044,2023-03-16,93,4004,1,47490,5,47490,45116.0,3,2023,Andrés,Martínez,andrés.martínez93@gmail.com,Biobío,Premium,2020-04-08,72,Reloj Digital,Accesorios,16000,49990,39,68.0,Alto,Stock bajo
+5045,2023-06-24,100,2008,1,11390,5,11390,10820.0,6,2023,Alejandro,Sepúlveda,alejandro.sepúlveda100@gmail.com,Metropolitana,Básico,2022-05-26,46,Gorra,Ropa,3500,11990,111,70.8,Alto,Stock normal
+5046,2023-01-20,40,4008,1,12990,0,12990,12990.0,1,2023,Nicolás,Pérez,nicolás.pérez40@gmail.com,Biobío,Básico,2020-10-25,65,Lentes de Lectura,Accesorios,3500,12990,133,73.1,Alto,Stock normal
+5047,2023-03-21,141,1006,1,139990,0,139990,139990.0,3,2023,Sebastián,Castro,sebastián.castro141@gmail.com,Metropolitana,Premium,2021-04-18,59,"Monitor 24""",Electrónica,68000,139990,106,51.4,Alto,Stock normal
+5048,2023-02-13,76,2003,1,56990,5,56990,54140.0,2,2023,Martín,Castro,martín.castro76@gmail.com,Antofagasta,Básico,2021-12-22,51,Parka Impermeable,Ropa,23000,59990,130,61.7,Alto,Stock normal
+5049,2023-04-01,23,1005,1,71991,10,71991,64792.0,4,2023,Andrés,Flores,andrés.flores23@gmail.com,Metropolitana,Premium,2022-07-02,45,Teclado Mecánico,Electrónica,32000,79990,196,60.0,Alto,Stock normal
+5050,2023-03-08,122,3001,2,19990,0,39980,39980.0,3,2023,Diego,Vargas,diego.vargas122@gmail.com,Los Lagos,Estándar,2023-01-03,38,Sartén Antiadherente,Hogar,7000,19990,139,65.0,Alto,Stock normal
+5051,2023-02-05,32,4008,1,11691,10,11691,10522.0,2,2023,Isidora,Sepúlveda,isidora.sepúlveda32@gmail.com,Metropolitana,Estándar,2020-07-01,69,Lentes de Lectura,Accesorios,3500,12990,133,73.1,Alto,Stock normal
+5052,2023-04-13,105,2001,1,12990,0,12990,12990.0,4,2023,Alejandro,Pérez,alejandro.pérez105@gmail.com,Valparaíso,Básico,2022-11-20,40,Polera Básica,Ropa,4000,12990,6,69.2,Alto,Stock crítico
+5053,2023-06-09,81,3008,1,44990,0,44990,44990.0,6,2023,Camila,Gutiérrez,camila.gutiérrez81@gmail.com,Metropolitana,Básico,2022-02-20,49,Alfombra 120x80,Hogar,18000,44990,50,60.0,Alto,Stock normal
+5054,2023-04-26,68,1003,1,56990,5,56990,54140.0,4,2023,Matías,Rojas,matías.rojas68@gmail.com,Valparaíso,Básico,2023-04-12,35,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5055,2023-03-04,180,1001,1,44990,0,44990,44990.0,3,2023,Javiera,Soto,javiera.soto180@gmail.com,Metropolitana,Básico,2022-10-01,42,Audífonos Bluetooth,Electrónica,18000,44990,41,60.0,Alto,Stock bajo
+5056,2023-04-07,41,4002,2,19990,0,39980,39980.0,4,2023,Sofía,Espinoza,sofía.espinoza41@gmail.com,Metropolitana,Básico,2022-10-25,41,Billetera Cuero,Accesorios,6000,19990,52,70.0,Alto,Stock normal
+5057,2023-04-29,172,1006,1,139990,0,139990,139990.0,4,2023,Fernanda,Vargas,fernanda.vargas172@gmail.com,Los Lagos,Estándar,2021-08-26,55,"Monitor 24""",Electrónica,68000,139990,106,51.4,Alto,Stock normal
+5058,2023-05-17,120,1007,1,37990,5,37990,36090.0,5,2023,Sebastián,Díaz,sebastián.díaz120@gmail.com,Antofagasta,Premium,2020-01-15,75,Webcam HD,Electrónica,16000,39990,183,60.0,Alto,Stock normal
+5059,2023-04-12,197,4004,1,49990,0,49990,49990.0,4,2023,Isidora,Sepúlveda,isidora.sepúlveda197@gmail.com,Metropolitana,Estándar,2023-06-14,33,Reloj Digital,Accesorios,16000,49990,39,68.0,Alto,Stock bajo
+5060,2023-03-23,88,4008,1,12340,5,12340,11723.0,3,2023,Andrés,Vargas,andrés.vargas88@gmail.com,Metropolitana,Estándar,2020-07-01,69,Lentes de Lectura,Accesorios,3500,12990,133,73.1,Alto,Stock normal
+5061,2023-01-30,72,4006,1,24990,0,24990,24990.0,1,2023,Javiera,Rojas,javiera.rojas72@gmail.com,Valparaíso,Premium,2020-03-12,73,Porta Notebook,Accesorios,8000,24990,129,68.0,Alto,Stock normal
+5062,2023-05-01,38,2006,1,19990,0,19990,19990.0,5,2023,Isidora,Fuentes,isidora.fuentes38@gmail.com,Metropolitana,Estándar,2022-08-01,44,Pantalón de Buzo,Ropa,6000,19990,22,70.0,Alto,Stock bajo
+5063,2023-06-03,199,4001,1,35991,10,35991,32392.0,6,2023,Pablo,Pérez,pablo.pérez199@gmail.com,Metropolitana,Estándar,2022-12-22,39,Mochila Urban,Accesorios,14000,39990,100,65.0,Alto,Stock normal
+5064,2023-04-21,122,2006,1,17991,10,17991,16192.0,4,2023,Diego,Vargas,diego.vargas122@gmail.com,Los Lagos,Estándar,2023-01-03,38,Pantalón de Buzo,Ropa,6000,19990,22,70.0,Alto,Stock bajo
+5065,2023-06-25,109,3002,1,29990,0,29990,29990.0,6,2023,Alejandro,Silva,alejandro.silva109@gmail.com,Metropolitana,Premium,2022-01-21,50,Juego de Camas 2P,Hogar,11000,29990,111,63.3,Alto,Stock normal
+5066,2023-02-06,18,3002,1,29990,0,29990,29990.0,2,2023,Nicolás,Silva,nicolás.silva18@gmail.com,Biobío,Básico,2022-03-30,48,Juego de Camas 2P,Hogar,11000,29990,111,63.3,Alto,Stock normal
+5067,2023-04-26,108,2006,1,19990,0,19990,19990.0,4,2023,Alejandro,Espinoza,alejandro.espinoza108@gmail.com,Metropolitana,Premium,2022-07-07,44,Pantalón de Buzo,Ropa,6000,19990,22,70.0,Alto,Stock bajo
+5068,2023-01-14,24,4004,1,44991,10,44991,40492.0,1,2023,Matías,Gutiérrez,matías.gutiérrez24@gmail.com,Metropolitana,Premium,2021-03-09,61,Reloj Digital,Accesorios,16000,49990,39,68.0,Alto,Stock bajo
+5069,2023-02-12,51,3007,3,34990,0,104970,104970.0,2,2023,Javiera,Ramos,javiera.ramos51@gmail.com,Metropolitana,Estándar,2022-09-15,42,Jarra Filtro Agua,Hogar,13000,34990,48,62.8,Alto,Stock bajo
+5070,2023-05-18,177,2003,3,59990,0,179970,179970.0,5,2023,Martín,Martínez,martín.martínez177@gmail.com,Metropolitana,Premium,2022-03-20,48,Parka Impermeable,Ropa,23000,59990,130,61.7,Alto,Stock normal
+5071,2023-06-27,147,4001,2,37990,5,75980,72181.0,6,2023,Sebastián,Soto,sebastián.soto147@gmail.com,Metropolitana,Estándar,2022-10-03,42,Mochila Urban,Accesorios,14000,39990,100,65.0,Alto,Stock normal
+5072,2023-06-02,51,1005,2,75990,5,151980,144381.0,6,2023,Javiera,Ramos,javiera.ramos51@gmail.com,Metropolitana,Estándar,2022-09-15,42,Teclado Mecánico,Electrónica,32000,79990,196,60.0,Alto,Stock normal
+5073,2023-02-07,83,3005,1,10791,10,10791,9712.0,2,2023,Sebastián,Pérez,sebastián.pérez83@gmail.com,Valparaíso,Básico,2020-05-24,70,Cojín Decorativo,Hogar,3500,11990,192,70.8,Alto,Stock normal
+5074,2023-02-07,128,3005,1,10192,15,10192,8663.0,2,2023,Sebastián,Herrera,sebastián.herrera128@gmail.com,Valparaíso,Estándar,2020-09-17,66,Cojín Decorativo,Hogar,3500,11990,192,70.8,Alto,Stock normal
+5075,2023-04-15,68,1001,3,38242,15,114726,97517.0,4,2023,Matías,Rojas,matías.rojas68@gmail.com,Valparaíso,Básico,2023-04-12,35,Audífonos Bluetooth,Electrónica,18000,44990,41,60.0,Alto,Stock bajo
+5076,2023-02-02,163,4005,1,7590,5,7590,7210.0,2,2023,Felipe,Fuentes,felipe.fuentes163@gmail.com,Biobío,Premium,2021-02-27,61,Pulsera Silicona,Accesorios,1500,7990,55,81.2,Alto,Stock normal
+5077,2023-01-10,56,2005,1,24990,0,24990,24990.0,1,2023,Sofía,Díaz,sofía.díaz56@gmail.com,O'Higgins,Básico,2021-11-24,52,Poleron Algodón,Ropa,8500,24990,29,66.0,Alto,Stock bajo
+5078,2023-02-12,154,4001,1,39990,0,39990,39990.0,2,2023,Andrés,Espinoza,andrés.espinoza154@gmail.com,Metropolitana,Premium,2022-08-29,43,Mochila Urban,Accesorios,14000,39990,100,65.0,Alto,Stock normal
+5079,2023-02-18,174,1001,1,44990,0,44990,44990.0,2,2023,María,Soto,maría.soto174@gmail.com,Metropolitana,Básico,2020-02-02,74,Audífonos Bluetooth,Electrónica,18000,44990,41,60.0,Alto,Stock bajo
+5080,2023-03-19,79,1008,1,52240,5,52240,49628.0,3,2023,Daniela,Pérez,daniela.pérez79@gmail.com,Biobío,Básico,2021-03-18,60,Disco Duro Externo 1TB,Electrónica,22000,54990,83,60.0,Alto,Stock normal
+5081,2023-04-27,106,4003,1,26991,10,26991,24292.0,4,2023,Andrés,Díaz,andrés.díaz106@gmail.com,Metropolitana,Premium,2023-06-16,33,Gafas de Sol,Accesorios,9000,29990,185,70.0,Alto,Stock normal
+5082,2023-04-20,134,3006,1,18990,0,18990,18990.0,4,2023,Catalina,Espinoza,catalina.espinoza134@gmail.com,Metropolitana,Premium,2022-11-13,40,Set Toallas x3,Hogar,6500,18990,115,65.8,Alto,Stock normal
+5083,2023-04-20,96,2004,1,49990,0,49990,49990.0,4,2023,Valentina,Castro,valentina.castro96@gmail.com,Biobío,Premium,2020-09-15,66,Zapatillas Running,Ropa,19000,49990,5,62.0,Alto,Stock crítico
+5084,2023-04-22,98,3003,2,14240,5,28480,27056.0,4,2023,Diego,Silva,diego.silva98@gmail.com,Biobío,Básico,2022-05-06,47,Organizador Cajones,Hogar,5000,14990,172,66.6,Alto,Stock normal
+5085,2023-04-22,163,3003,2,12742,15,25484,21661.0,4,2023,Felipe,Fuentes,felipe.fuentes163@gmail.com,Biobío,Premium,2021-02-27,61,Organizador Cajones,Hogar,5000,14990,172,66.6,Alto,Stock normal
+5086,2023-01-26,23,1007,1,39990,0,39990,39990.0,1,2023,Andrés,Flores,andrés.flores23@gmail.com,Metropolitana,Premium,2022-07-02,45,Webcam HD,Electrónica,16000,39990,183,60.0,Alto,Stock normal
+5087,2023-04-16,27,4008,2,12340,5,24680,23446.0,4,2023,María,Herrera,maría.herrera27@gmail.com,Coquimbo,Básico,2020-09-09,67,Lentes de Lectura,Accesorios,3500,12990,133,73.1,Alto,Stock normal
+5088,2023-05-20,26,4005,1,7191,10,7191,6472.0,5,2023,Martín,Fuentes,martín.fuentes26@gmail.com,Maule,Básico,2021-03-27,60,Pulsera Silicona,Accesorios,1500,7990,55,81.2,Alto,Stock normal
+5089,2023-06-20,75,4003,1,26991,10,26991,24292.0,6,2023,Constanza,Gutiérrez,constanza.gutiérrez75@gmail.com,Metropolitana,Estándar,2023-03-27,36,Gafas de Sol,Accesorios,9000,29990,185,70.0,Alto,Stock normal
+5090,2023-05-22,98,1008,1,54990,0,54990,54990.0,5,2023,Diego,Silva,diego.silva98@gmail.com,Biobío,Básico,2022-05-06,47,Disco Duro Externo 1TB,Electrónica,22000,54990,83,60.0,Alto,Stock normal
+5091,2023-02-01,90,4006,1,22491,10,22491,20242.0,2,2023,Valentina,Díaz,valentina.díaz90@gmail.com,Metropolitana,Estándar,2021-03-31,60,Porta Notebook,Accesorios,8000,24990,129,68.0,Alto,Stock normal
+5092,2023-06-30,190,4002,1,19990,0,19990,19990.0,6,2023,Constanza,Morales,constanza.morales190@gmail.com,Valparaíso,Premium,2021-05-14,58,Billetera Cuero,Accesorios,6000,19990,52,70.0,Alto,Stock normal
+5093,2023-02-27,130,3003,1,14240,5,14240,13528.0,2,2023,Isidora,Díaz,isidora.díaz130@gmail.com,La Araucanía,Premium,2020-09-15,66,Organizador Cajones,Hogar,5000,14990,172,66.6,Alto,Stock normal
+5094,2023-03-20,107,2008,1,10192,15,10192,8663.0,3,2023,Valentina,Vargas,valentina.vargas107@gmail.com,Biobío,Premium,2021-12-07,52,Gorra,Ropa,3500,11990,111,70.8,Alto,Stock normal
+5095,2023-01-09,4,1002,1,15990,0,15990,15990.0,1,2023,Javiera,Rojas,javiera.rojas4@gmail.com,Metropolitana,Premium,2022-02-12,49,Cargador Rápido USB-C,Electrónica,6000,15990,73,62.5,Alto,Stock normal
+5096,2023-05-13,190,3005,1,10192,15,10192,8663.0,5,2023,Constanza,Morales,constanza.morales190@gmail.com,Valparaíso,Premium,2021-05-14,58,Cojín Decorativo,Hogar,3500,11990,192,70.8,Alto,Stock normal
+5097,2023-04-21,62,4002,1,18990,5,18990,18040.0,4,2023,Isidora,Herrera,isidora.herrera62@gmail.com,Biobío,Premium,2022-11-09,40,Billetera Cuero,Accesorios,6000,19990,52,70.0,Alto,Stock normal
+5098,2023-01-14,148,4004,1,47490,5,47490,45116.0,1,2023,Martín,Sepúlveda,martín.sepúlveda148@gmail.com,Metropolitana,Básico,2020-01-28,74,Reloj Digital,Accesorios,16000,49990,39,68.0,Alto,Stock bajo
+5099,2023-02-14,104,3005,1,11990,0,11990,11990.0,2,2023,Constanza,Gutiérrez,constanza.gutiérrez104@gmail.com,Antofagasta,Estándar,2020-01-22,74,Cojín Decorativo,Hogar,3500,11990,192,70.8,Alto,Stock normal
+5100,2023-01-26,182,2001,1,12340,5,12340,11723.0,1,2023,Felipe,Espinoza,felipe.espinoza182@gmail.com,Metropolitana,Premium,2020-10-20,65,Polera Básica,Ropa,4000,12990,6,69.2,Alto,Stock crítico
+5101,2023-04-11,196,3001,2,19990,0,39980,39980.0,4,2023,Isidora,Herrera,isidora.herrera196@gmail.com,Metropolitana,Premium,2020-08-13,68,Sartén Antiadherente,Hogar,7000,19990,139,65.0,Alto,Stock normal
+5102,2023-03-24,53,1006,1,139990,0,139990,139990.0,3,2023,Valentina,Torres,valentina.torres53@gmail.com,Maule,Premium,2023-03-24,36,"Monitor 24""",Electrónica,68000,139990,106,51.4,Alto,Stock normal
+5103,2023-06-10,198,2002,1,28490,5,28490,27066.0,6,2023,Isidora,Torres,isidora.torres198@gmail.com,Antofagasta,Premium,2020-06-22,69,Jeans Slim,Ropa,11000,29990,48,63.3,Alto,Stock bajo
+5104,2023-01-21,147,4001,1,37990,5,37990,36090.0,1,2023,Sebastián,Soto,sebastián.soto147@gmail.com,Metropolitana,Estándar,2022-10-03,42,Mochila Urban,Accesorios,14000,39990,100,65.0,Alto,Stock normal
+5105,2023-04-27,163,3007,1,33240,5,33240,31578.0,4,2023,Felipe,Fuentes,felipe.fuentes163@gmail.com,Biobío,Premium,2021-02-27,61,Jarra Filtro Agua,Hogar,13000,34990,48,62.8,Alto,Stock bajo
+5106,2023-02-26,77,2005,1,24990,0,24990,24990.0,2,2023,Andrés,Castro,andrés.castro77@gmail.com,Metropolitana,Básico,2020-07-21,68,Poleron Algodón,Ropa,8500,24990,29,66.0,Alto,Stock bajo
+5107,2023-04-07,198,3001,1,19990,0,19990,19990.0,4,2023,Isidora,Torres,isidora.torres198@gmail.com,Antofagasta,Premium,2020-06-22,69,Sartén Antiadherente,Hogar,7000,19990,139,65.0,Alto,Stock normal
+5108,2023-02-06,161,1002,1,15190,5,15190,14430.0,2,2023,Felipe,Herrera,felipe.herrera161@gmail.com,Biobío,Premium,2022-11-17,40,Cargador Rápido USB-C,Electrónica,6000,15990,73,62.5,Alto,Stock normal
+5109,2023-01-27,29,4006,3,24990,0,74970,74970.0,1,2023,Martín,Silva,martín.silva29@gmail.com,Antofagasta,Premium,2023-05-15,34,Porta Notebook,Accesorios,8000,24990,129,68.0,Alto,Stock normal
+5110,2023-02-06,73,3001,2,19990,0,39980,39980.0,2,2023,Isidora,Castro,isidora.castro73@gmail.com,Metropolitana,Premium,2023-01-19,38,Sartén Antiadherente,Hogar,7000,19990,139,65.0,Alto,Stock normal
+5111,2023-05-07,93,2006,1,19990,0,19990,19990.0,5,2023,Andrés,Martínez,andrés.martínez93@gmail.com,Biobío,Premium,2020-04-08,72,Pantalón de Buzo,Ropa,6000,19990,22,70.0,Alto,Stock bajo
+5112,2023-01-06,106,1005,1,75990,5,75990,72190.0,1,2023,Andrés,Díaz,andrés.díaz106@gmail.com,Metropolitana,Premium,2023-06-16,33,Teclado Mecánico,Electrónica,32000,79990,196,60.0,Alto,Stock normal
+5113,2023-02-23,176,4003,1,29990,0,29990,29990.0,2,2023,María,Espinoza,maría.espinoza176@gmail.com,Valparaíso,Premium,2022-06-24,45,Gafas de Sol,Accesorios,9000,29990,185,70.0,Alto,Stock normal
+5114,2023-04-26,42,2004,1,42492,15,42492,36118.0,4,2023,Isidora,Martínez,isidora.martínez42@gmail.com,O'Higgins,Estándar,2023-03-21,36,Zapatillas Running,Ropa,19000,49990,5,62.0,Alto,Stock crítico
+5115,2023-06-18,146,1003,1,59990,0,59990,59990.0,6,2023,Constanza,Herrera,constanza.herrera146@gmail.com,Metropolitana,Premium,2023-05-27,34,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5116,2023-03-30,124,1001,1,42740,5,42740,40603.0,3,2023,Fernanda,Torres,fernanda.torres124@gmail.com,Maule,Estándar,2020-01-12,75,Audífonos Bluetooth,Electrónica,18000,44990,41,60.0,Alto,Stock bajo
+5117,2023-02-01,50,1002,1,15990,0,15990,15990.0,2,2023,Francisco,Muñoz,francisco.muñoz50@gmail.com,La Araucanía,Estándar,2021-09-14,54,Cargador Rápido USB-C,Electrónica,6000,15990,73,62.5,Alto,Stock normal
+5118,2023-02-09,56,3008,1,44990,0,44990,44990.0,2,2023,Sofía,Díaz,sofía.díaz56@gmail.com,O'Higgins,Básico,2021-11-24,52,Alfombra 120x80,Hogar,18000,44990,50,60.0,Alto,Stock normal
+5119,2023-03-25,36,2007,1,5690,5,5690,5406.0,3,2023,Felipe,Vargas,felipe.vargas36@gmail.com,Metropolitana,Básico,2022-01-17,50,Calcetines Pack 3,Ropa,1800,5990,183,69.9,Alto,Stock normal
+5120,2023-02-02,69,3002,1,25492,15,25492,21668.0,2,2023,Isidora,Contreras,isidora.contreras69@gmail.com,Coquimbo,Premium,2020-08-28,67,Juego de Camas 2P,Hogar,11000,29990,111,63.3,Alto,Stock normal
+5121,2023-03-31,182,3003,1,13491,10,13491,12142.0,3,2023,Felipe,Espinoza,felipe.espinoza182@gmail.com,Metropolitana,Premium,2020-10-20,65,Organizador Cajones,Hogar,5000,14990,172,66.6,Alto,Stock normal
+5122,2023-04-22,132,4002,3,19990,0,59970,59970.0,4,2023,Martín,Vargas,martín.vargas132@gmail.com,O'Higgins,Estándar,2020-01-17,75,Billetera Cuero,Accesorios,6000,19990,52,70.0,Alto,Stock normal
+5123,2023-02-20,176,3002,3,29990,0,89970,89970.0,2,2023,María,Espinoza,maría.espinoza176@gmail.com,Valparaíso,Premium,2022-06-24,45,Juego de Camas 2P,Hogar,11000,29990,111,63.3,Alto,Stock normal
+5124,2023-05-31,80,2003,2,50992,15,101984,86686.0,5,2023,Diego,Martínez,diego.martínez80@gmail.com,Metropolitana,Estándar,2023-06-28,33,Parka Impermeable,Ropa,23000,59990,130,61.7,Alto,Stock normal
+5125,2023-05-05,111,4005,1,7590,5,7590,7210.0,5,2023,Felipe,Soto,felipe.soto111@gmail.com,Metropolitana,Estándar,2020-08-19,67,Pulsera Silicona,Accesorios,1500,7990,55,81.2,Alto,Stock normal
+5126,2023-03-23,160,1007,1,39990,0,39990,39990.0,3,2023,Sofía,Ramos,sofía.ramos160@gmail.com,Metropolitana,Básico,2021-01-24,62,Webcam HD,Electrónica,16000,39990,183,60.0,Alto,Stock normal
+5127,2023-05-26,91,3008,2,40491,10,80982,72884.0,5,2023,Isidora,Díaz,isidora.díaz91@gmail.com,Metropolitana,Básico,2021-09-19,54,Alfombra 120x80,Hogar,18000,44990,50,60.0,Alto,Stock normal
+5128,2023-04-26,43,1003,3,59990,0,179970,179970.0,4,2023,Daniela,Herrera,daniela.herrera43@gmail.com,Metropolitana,Premium,2022-02-10,49,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5129,2023-04-15,76,3007,1,34990,0,34990,34990.0,4,2023,Martín,Castro,martín.castro76@gmail.com,Antofagasta,Básico,2021-12-22,51,Jarra Filtro Agua,Hogar,13000,34990,48,62.8,Alto,Stock bajo
+5130,2023-03-24,110,2004,1,49990,0,49990,49990.0,3,2023,Alejandro,Torres,alejandro.torres110@gmail.com,Coquimbo,Estándar,2022-05-15,46,Zapatillas Running,Ropa,19000,49990,5,62.0,Alto,Stock crítico
+5131,2023-06-18,96,3008,1,44990,0,44990,44990.0,6,2023,Valentina,Castro,valentina.castro96@gmail.com,Biobío,Premium,2020-09-15,66,Alfombra 120x80,Hogar,18000,44990,50,60.0,Alto,Stock normal
+5132,2023-01-03,82,1001,2,44990,0,89980,89980.0,1,2023,Javiera,Fuentes,javiera.fuentes82@gmail.com,Valparaíso,Básico,2021-06-04,58,Audífonos Bluetooth,Electrónica,18000,44990,41,60.0,Alto,Stock bajo
+5133,2023-05-26,83,2007,1,5990,0,5990,5990.0,5,2023,Sebastián,Pérez,sebastián.pérez83@gmail.com,Valparaíso,Básico,2020-05-24,70,Calcetines Pack 3,Ropa,1800,5990,183,69.9,Alto,Stock normal
+5134,2023-06-04,55,2006,1,19990,0,19990,19990.0,6,2023,Javiera,Muñoz,javiera.muñoz55@gmail.com,Metropolitana,Premium,2022-08-28,43,Pantalón de Buzo,Ropa,6000,19990,22,70.0,Alto,Stock bajo
+5135,2023-06-05,172,1005,1,75990,5,75990,72190.0,6,2023,Fernanda,Vargas,fernanda.vargas172@gmail.com,Los Lagos,Estándar,2021-08-26,55,Teclado Mecánico,Electrónica,32000,79990,196,60.0,Alto,Stock normal
+5136,2023-06-24,194,4004,1,49990,0,49990,49990.0,6,2023,Catalina,Vargas,catalina.vargas194@gmail.com,Metropolitana,Básico,2021-12-24,51,Reloj Digital,Accesorios,16000,49990,39,68.0,Alto,Stock bajo
+5137,2023-02-20,13,4008,1,11042,15,11042,9386.0,2,2023,Isidora,González,isidora.gonzález13@gmail.com,Valparaíso,Básico,2022-04-02,48,Lentes de Lectura,Accesorios,3500,12990,133,73.1,Alto,Stock normal
+5138,2023-04-18,31,1008,1,52240,5,52240,49628.0,4,2023,Andrés,Vargas,andrés.vargas31@gmail.com,La Araucanía,Estándar,2021-04-02,60,Disco Duro Externo 1TB,Electrónica,22000,54990,83,60.0,Alto,Stock normal
+5139,2023-06-01,99,2008,1,11990,0,11990,11990.0,6,2023,Nicolás,Soto,nicolás.soto99@gmail.com,Metropolitana,Estándar,2021-12-25,51,Gorra,Ropa,3500,11990,111,70.8,Alto,Stock normal
+5140,2023-06-14,148,1001,2,44990,0,89980,89980.0,6,2023,Martín,Sepúlveda,martín.sepúlveda148@gmail.com,Metropolitana,Básico,2020-01-28,74,Audífonos Bluetooth,Electrónica,18000,44990,41,60.0,Alto,Stock bajo
+5141,2023-04-14,10,1003,1,59990,0,59990,59990.0,4,2023,Matías,Morales,matías.morales10@gmail.com,Biobío,Estándar,2021-11-20,52,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5142,2023-05-01,25,4003,2,29990,0,59980,59980.0,5,2023,Camila,Díaz,camila.díaz25@gmail.com,Metropolitana,Premium,2020-02-29,73,Gafas de Sol,Accesorios,9000,29990,185,70.0,Alto,Stock normal
+5143,2023-03-30,103,1006,1,139990,0,139990,139990.0,3,2023,Catalina,Rojas,catalina.rojas103@gmail.com,Metropolitana,Premium,2020-04-27,71,"Monitor 24""",Electrónica,68000,139990,106,51.4,Alto,Stock normal
+5144,2023-06-06,13,4002,1,16992,15,16992,14443.0,6,2023,Isidora,González,isidora.gonzález13@gmail.com,Valparaíso,Básico,2022-04-02,48,Billetera Cuero,Accesorios,6000,19990,52,70.0,Alto,Stock normal
+5145,2023-05-07,165,1008,2,46742,15,93484,79461.0,5,2023,Valentina,Castro,valentina.castro165@gmail.com,Valparaíso,Estándar,2022-12-11,39,Disco Duro Externo 1TB,Electrónica,22000,54990,83,60.0,Alto,Stock normal
+5146,2023-01-27,8,2007,1,5990,0,5990,5990.0,1,2023,Francisco,Muñoz,francisco.muñoz8@gmail.com,Metropolitana,Premium,2022-12-05,39,Calcetines Pack 3,Ropa,1800,5990,183,69.9,Alto,Stock normal
+5147,2023-01-27,83,4004,1,49990,0,49990,49990.0,1,2023,Sebastián,Pérez,sebastián.pérez83@gmail.com,Valparaíso,Básico,2020-05-24,70,Reloj Digital,Accesorios,16000,49990,39,68.0,Alto,Stock bajo
+5148,2023-04-05,138,1001,3,40491,10,121473,109326.0,4,2023,Fernanda,Silva,fernanda.silva138@gmail.com,Metropolitana,Premium,2022-04-01,48,Audífonos Bluetooth,Electrónica,18000,44990,41,60.0,Alto,Stock bajo
+5149,2023-03-08,12,1008,1,54990,0,54990,54990.0,3,2023,Felipe,Fuentes,felipe.fuentes12@gmail.com,Biobío,Estándar,2021-12-30,51,Disco Duro Externo 1TB,Electrónica,22000,54990,83,60.0,Alto,Stock normal
+5150,2023-03-09,85,4001,1,39990,0,39990,39990.0,3,2023,Alejandro,Espinoza,alejandro.espinoza85@gmail.com,Metropolitana,Estándar,2020-11-10,65,Mochila Urban,Accesorios,14000,39990,100,65.0,Alto,Stock normal
+5151,2023-02-05,150,4006,1,24990,0,24990,24990.0,2,2023,Francisco,Castro,francisco.castro150@gmail.com,Biobío,Básico,2021-05-02,59,Porta Notebook,Accesorios,8000,24990,129,68.0,Alto,Stock normal
+5152,2023-02-07,193,4003,1,28490,5,28490,27066.0,2,2023,Sebastián,Pérez,sebastián.pérez193@gmail.com,Metropolitana,Premium,2021-04-04,60,Gafas de Sol,Accesorios,9000,29990,185,70.0,Alto,Stock normal
+5153,2023-05-14,136,2008,1,11390,5,11390,10820.0,5,2023,Catalina,Vargas,catalina.vargas136@gmail.com,Metropolitana,Básico,2020-07-30,68,Gorra,Ropa,3500,11990,111,70.8,Alto,Stock normal
+5154,2023-03-13,83,4007,1,14990,0,14990,14990.0,3,2023,Sebastián,Pérez,sebastián.pérez83@gmail.com,Valparaíso,Básico,2020-05-24,70,Paraguas Compacto,Accesorios,4500,14990,51,70.0,Alto,Stock normal
+5155,2023-03-17,183,1006,1,125991,10,125991,113392.0,3,2023,Sebastián,Silva,sebastián.silva183@gmail.com,Valparaíso,Premium,2022-04-04,48,"Monitor 24""",Electrónica,68000,139990,106,51.4,Alto,Stock normal
+5156,2023-03-04,169,2006,1,19990,0,19990,19990.0,3,2023,María,Muñoz,maría.muñoz169@gmail.com,Biobío,Premium,2021-05-24,58,Pantalón de Buzo,Ropa,6000,19990,22,70.0,Alto,Stock bajo
+5157,2023-05-07,16,2006,1,19990,0,19990,19990.0,5,2023,Sebastián,Contreras,sebastián.contreras16@gmail.com,Metropolitana,Premium,2021-10-21,53,Pantalón de Buzo,Ropa,6000,19990,22,70.0,Alto,Stock bajo
+5158,2023-04-09,49,4008,1,12990,0,12990,12990.0,4,2023,Daniela,Gutiérrez,daniela.gutiérrez49@gmail.com,Metropolitana,Estándar,2020-09-25,66,Lentes de Lectura,Accesorios,3500,12990,133,73.1,Alto,Stock normal
+5159,2023-06-01,195,3005,2,11990,0,23980,23980.0,6,2023,Constanza,Silva,constanza.silva195@gmail.com,Antofagasta,Básico,2022-02-26,49,Cojín Decorativo,Hogar,3500,11990,192,70.8,Alto,Stock normal
+5160,2023-04-27,168,2002,2,29990,0,59980,59980.0,4,2023,Constanza,Muñoz,constanza.muñoz168@gmail.com,Biobío,Premium,2021-07-22,56,Jeans Slim,Ropa,11000,29990,48,63.3,Alto,Stock bajo
+5161,2023-02-03,57,3008,1,44990,0,44990,44990.0,2,2023,Sebastián,Pérez,sebastián.pérez57@gmail.com,Biobío,Premium,2022-04-07,47,Alfombra 120x80,Hogar,18000,44990,50,60.0,Alto,Stock normal
+5162,2023-06-08,132,2005,2,24990,0,49980,49980.0,6,2023,Martín,Vargas,martín.vargas132@gmail.com,O'Higgins,Estándar,2020-01-17,75,Poleron Algodón,Ropa,8500,24990,29,66.0,Alto,Stock bajo
+5163,2023-03-13,109,2003,1,50992,15,50992,43343.0,3,2023,Alejandro,Silva,alejandro.silva109@gmail.com,Metropolitana,Premium,2022-01-21,50,Parka Impermeable,Ropa,23000,59990,130,61.7,Alto,Stock normal
+5164,2023-05-28,166,1007,1,35991,10,35991,32392.0,5,2023,Constanza,Silva,constanza.silva166@gmail.com,Metropolitana,Básico,2021-07-03,57,Webcam HD,Electrónica,16000,39990,183,60.0,Alto,Stock normal
+5165,2023-01-29,62,1002,2,15990,0,31980,31980.0,1,2023,Isidora,Herrera,isidora.herrera62@gmail.com,Biobío,Premium,2022-11-09,40,Cargador Rápido USB-C,Electrónica,6000,15990,73,62.5,Alto,Stock normal
+5166,2023-01-08,122,4005,1,7990,0,7990,7990.0,1,2023,Diego,Vargas,diego.vargas122@gmail.com,Los Lagos,Estándar,2023-01-03,38,Pulsera Silicona,Accesorios,1500,7990,55,81.2,Alto,Stock normal
+5167,2023-05-21,22,3007,1,34990,0,34990,34990.0,5,2023,Fernanda,Herrera,fernanda.herrera22@gmail.com,La Araucanía,Básico,2021-09-09,54,Jarra Filtro Agua,Hogar,13000,34990,48,62.8,Alto,Stock bajo
+5168,2023-05-09,111,3006,1,18990,0,18990,18990.0,5,2023,Felipe,Soto,felipe.soto111@gmail.com,Metropolitana,Estándar,2020-08-19,67,Set Toallas x3,Hogar,6500,18990,115,65.8,Alto,Stock normal
+5169,2023-01-26,13,4001,2,39990,0,79980,79980.0,1,2023,Isidora,González,isidora.gonzález13@gmail.com,Valparaíso,Básico,2022-04-02,48,Mochila Urban,Accesorios,14000,39990,100,65.0,Alto,Stock normal
+5170,2023-03-17,49,4002,1,19990,0,19990,19990.0,3,2023,Daniela,Gutiérrez,daniela.gutiérrez49@gmail.com,Metropolitana,Estándar,2020-09-25,66,Billetera Cuero,Accesorios,6000,19990,52,70.0,Alto,Stock normal
+5171,2023-06-05,127,4004,1,49990,0,49990,49990.0,6,2023,Daniela,Herrera,daniela.herrera127@gmail.com,Coquimbo,Premium,2021-06-28,57,Reloj Digital,Accesorios,16000,49990,39,68.0,Alto,Stock bajo
+5172,2023-03-05,29,2007,1,5391,10,5391,4852.0,3,2023,Martín,Silva,martín.silva29@gmail.com,Antofagasta,Premium,2023-05-15,34,Calcetines Pack 3,Ropa,1800,5990,183,69.9,Alto,Stock normal
+5173,2023-05-28,69,2008,1,11990,0,11990,11990.0,5,2023,Isidora,Contreras,isidora.contreras69@gmail.com,Coquimbo,Premium,2020-08-28,67,Gorra,Ropa,3500,11990,111,70.8,Alto,Stock normal
+5174,2023-02-27,159,4002,1,19990,0,19990,19990.0,2,2023,Javiera,Espinoza,javiera.espinoza159@gmail.com,Metropolitana,Estándar,2020-09-21,66,Billetera Cuero,Accesorios,6000,19990,52,70.0,Alto,Stock normal
+5175,2023-06-27,69,4008,1,11691,10,11691,10522.0,6,2023,Isidora,Contreras,isidora.contreras69@gmail.com,Coquimbo,Premium,2020-08-28,67,Lentes de Lectura,Accesorios,3500,12990,133,73.1,Alto,Stock normal
+5176,2023-03-30,164,3003,2,14990,0,29980,29980.0,3,2023,Valentina,Soto,valentina.soto164@gmail.com,Valparaíso,Básico,2023-04-27,35,Organizador Cajones,Hogar,5000,14990,172,66.6,Alto,Stock normal
+5177,2023-01-01,25,2004,1,47490,5,47490,45116.0,1,2023,Camila,Díaz,camila.díaz25@gmail.com,Metropolitana,Premium,2020-02-29,73,Zapatillas Running,Ropa,19000,49990,5,62.0,Alto,Stock crítico
+5178,2023-05-03,190,3004,2,23740,5,47480,45106.0,5,2023,Constanza,Morales,constanza.morales190@gmail.com,Valparaíso,Premium,2021-05-14,58,Lámpara LED Escritorio,Hogar,9000,24990,78,64.0,Alto,Stock normal
+5179,2023-02-13,81,1005,1,79990,0,79990,79990.0,2,2023,Camila,Gutiérrez,camila.gutiérrez81@gmail.com,Metropolitana,Básico,2022-02-20,49,Teclado Mecánico,Electrónica,32000,79990,196,60.0,Alto,Stock normal
+5180,2023-04-27,37,1001,1,44990,0,44990,44990.0,4,2023,Fernanda,Castro,fernanda.castro37@gmail.com,Biobío,Premium,2023-04-24,35,Audífonos Bluetooth,Electrónica,18000,44990,41,60.0,Alto,Stock bajo
+5181,2023-01-06,46,3001,2,19990,0,39980,39980.0,1,2023,Felipe,Sepúlveda,felipe.sepúlveda46@gmail.com,O'Higgins,Premium,2020-11-22,64,Sartén Antiadherente,Hogar,7000,19990,139,65.0,Alto,Stock normal
+5182,2023-01-03,153,3007,3,33240,5,99720,94734.0,1,2023,Daniela,Contreras,daniela.contreras153@gmail.com,Biobío,Premium,2020-07-21,68,Jarra Filtro Agua,Hogar,13000,34990,48,62.8,Alto,Stock bajo
+5183,2023-05-06,64,4007,1,13491,10,13491,12142.0,5,2023,María,Díaz,maría.díaz64@gmail.com,La Araucanía,Estándar,2021-01-05,63,Paraguas Compacto,Accesorios,4500,14990,51,70.0,Alto,Stock normal
+5184,2023-05-26,175,3003,2,14990,0,29980,29980.0,5,2023,Francisco,Díaz,francisco.díaz175@gmail.com,Maule,Básico,2022-02-21,49,Organizador Cajones,Hogar,5000,14990,172,66.6,Alto,Stock normal
+5185,2023-02-12,194,2002,2,29990,0,59980,59980.0,2,2023,Catalina,Vargas,catalina.vargas194@gmail.com,Metropolitana,Básico,2021-12-24,51,Jeans Slim,Ropa,11000,29990,48,63.3,Alto,Stock bajo
+5186,2023-03-27,116,4008,2,11042,15,22084,18771.0,3,2023,Sofía,Torres,sofía.torres116@gmail.com,Metropolitana,Estándar,2022-07-31,44,Lentes de Lectura,Accesorios,3500,12990,133,73.1,Alto,Stock normal
+5187,2023-03-07,170,4008,1,12990,0,12990,12990.0,3,2023,Andrés,Díaz,andrés.díaz170@gmail.com,Metropolitana,Básico,2021-12-12,51,Lentes de Lectura,Accesorios,3500,12990,133,73.1,Alto,Stock normal
+5188,2023-04-01,78,3006,2,17091,10,34182,30764.0,4,2023,Sofía,Silva,sofía.silva78@gmail.com,Metropolitana,Estándar,2020-10-17,65,Set Toallas x3,Hogar,6500,18990,115,65.8,Alto,Stock normal
+5189,2023-06-02,124,1008,1,54990,0,54990,54990.0,6,2023,Fernanda,Torres,fernanda.torres124@gmail.com,Maule,Estándar,2020-01-12,75,Disco Duro Externo 1TB,Electrónica,22000,54990,83,60.0,Alto,Stock normal
+5190,2023-06-13,6,2002,3,26991,10,80973,72876.0,6,2023,Matías,Herrera,matías.herrera6@gmail.com,Biobío,Premium,2020-07-25,68,Jeans Slim,Ropa,11000,29990,48,63.3,Alto,Stock bajo
+5191,2023-06-18,37,3007,1,34990,0,34990,34990.0,6,2023,Fernanda,Castro,fernanda.castro37@gmail.com,Biobío,Premium,2023-04-24,35,Jarra Filtro Agua,Hogar,13000,34990,48,62.8,Alto,Stock bajo
+5192,2023-06-28,111,3008,1,44990,0,44990,44990.0,6,2023,Felipe,Soto,felipe.soto111@gmail.com,Metropolitana,Estándar,2020-08-19,67,Alfombra 120x80,Hogar,18000,44990,50,60.0,Alto,Stock normal
+5193,2023-04-07,164,1007,3,35991,10,107973,97176.0,4,2023,Valentina,Soto,valentina.soto164@gmail.com,Valparaíso,Básico,2023-04-27,35,Webcam HD,Electrónica,16000,39990,183,60.0,Alto,Stock normal
+5194,2023-06-23,140,4005,3,7191,10,21573,19416.0,6,2023,Pablo,Contreras,pablo.contreras140@gmail.com,Metropolitana,Estándar,2020-04-14,72,Pulsera Silicona,Accesorios,1500,7990,55,81.2,Alto,Stock normal
+5195,2023-02-14,68,3007,2,34990,0,69980,69980.0,2,2023,Matías,Rojas,matías.rojas68@gmail.com,Valparaíso,Básico,2023-04-12,35,Jarra Filtro Agua,Hogar,13000,34990,48,62.8,Alto,Stock bajo
+5196,2023-04-17,71,3004,1,23740,5,23740,22553.0,4,2023,Isidora,Muñoz,isidora.muñoz71@gmail.com,Metropolitana,Básico,2021-02-26,61,Lámpara LED Escritorio,Hogar,9000,24990,78,64.0,Alto,Stock normal
+5197,2023-06-29,88,1008,1,54990,0,54990,54990.0,6,2023,Andrés,Vargas,andrés.vargas88@gmail.com,Metropolitana,Estándar,2020-07-01,69,Disco Duro Externo 1TB,Electrónica,22000,54990,83,60.0,Alto,Stock normal
+5198,2023-03-30,74,1008,3,54990,0,164970,164970.0,3,2023,Sebastián,González,sebastián.gonzález74@gmail.com,Metropolitana,Básico,2020-04-04,72,Disco Duro Externo 1TB,Electrónica,22000,54990,83,60.0,Alto,Stock normal
+5199,2023-06-25,38,4006,1,24990,0,24990,24990.0,6,2023,Isidora,Fuentes,isidora.fuentes38@gmail.com,Metropolitana,Estándar,2022-08-01,44,Porta Notebook,Accesorios,8000,24990,129,68.0,Alto,Stock normal
+5200,2023-03-16,160,2003,1,59990,0,59990,59990.0,3,2023,Sofía,Ramos,sofía.ramos160@gmail.com,Metropolitana,Básico,2021-01-24,62,Parka Impermeable,Ropa,23000,59990,130,61.7,Alto,Stock normal
+5201,2023-03-17,4,4006,1,24990,0,24990,24990.0,3,2023,Javiera,Rojas,javiera.rojas4@gmail.com,Metropolitana,Premium,2022-02-12,49,Porta Notebook,Accesorios,8000,24990,129,68.0,Alto,Stock normal
+5202,2023-06-01,32,1004,1,24990,0,24990,24990.0,6,2023,Isidora,Sepúlveda,isidora.sepúlveda32@gmail.com,Metropolitana,Estándar,2020-07-01,69,Mouse Inalámbrico,Electrónica,9000,24990,58,64.0,Alto,Stock normal
+5203,2023-04-01,170,1001,1,44990,0,44990,44990.0,4,2023,Andrés,Díaz,andrés.díaz170@gmail.com,Metropolitana,Básico,2021-12-12,51,Audífonos Bluetooth,Electrónica,18000,44990,41,60.0,Alto,Stock bajo
+5204,2023-03-14,129,2002,3,28490,5,85470,81196.0,3,2023,Felipe,Castro,felipe.castro129@gmail.com,Maule,Premium,2022-03-07,49,Jeans Slim,Ropa,11000,29990,48,63.3,Alto,Stock bajo
+5205,2023-02-06,188,2005,1,21242,15,21242,18056.0,2,2023,Andrés,Morales,andrés.morales188@gmail.com,Los Lagos,Premium,2020-06-23,69,Poleron Algodón,Ropa,8500,24990,29,66.0,Alto,Stock bajo
+5206,2023-03-16,57,1003,1,59990,0,59990,59990.0,3,2023,Sebastián,Pérez,sebastián.pérez57@gmail.com,Biobío,Premium,2022-04-07,47,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5207,2023-06-23,164,4001,1,33992,15,33992,28893.0,6,2023,Valentina,Soto,valentina.soto164@gmail.com,Valparaíso,Básico,2023-04-27,35,Mochila Urban,Accesorios,14000,39990,100,65.0,Alto,Stock normal
+5208,2023-01-26,67,3004,1,24990,0,24990,24990.0,1,2023,Felipe,González,felipe.gonzález67@gmail.com,Metropolitana,Básico,2023-01-03,38,Lámpara LED Escritorio,Hogar,9000,24990,78,64.0,Alto,Stock normal
+5209,2023-04-22,174,3005,2,11990,0,23980,23980.0,4,2023,María,Soto,maría.soto174@gmail.com,Metropolitana,Básico,2020-02-02,74,Cojín Decorativo,Hogar,3500,11990,192,70.8,Alto,Stock normal
+5210,2023-02-21,65,2001,1,12990,0,12990,12990.0,2,2023,Matías,Vargas,matías.vargas65@gmail.com,Metropolitana,Premium,2020-09-13,67,Polera Básica,Ropa,4000,12990,6,69.2,Alto,Stock crítico
+5211,2023-03-20,22,3004,1,23740,5,23740,22553.0,3,2023,Fernanda,Herrera,fernanda.herrera22@gmail.com,La Araucanía,Básico,2021-09-09,54,Lámpara LED Escritorio,Hogar,9000,24990,78,64.0,Alto,Stock normal
+5212,2023-05-20,47,4001,2,35991,10,71982,64784.0,5,2023,Andrés,Fuentes,andrés.fuentes47@gmail.com,Metropolitana,Estándar,2022-08-27,43,Mochila Urban,Accesorios,14000,39990,100,65.0,Alto,Stock normal
+5213,2023-01-25,36,4005,1,7990,0,7990,7990.0,1,2023,Felipe,Vargas,felipe.vargas36@gmail.com,Metropolitana,Básico,2022-01-17,50,Pulsera Silicona,Accesorios,1500,7990,55,81.2,Alto,Stock normal
+5214,2023-06-25,183,3007,1,34990,0,34990,34990.0,6,2023,Sebastián,Silva,sebastián.silva183@gmail.com,Valparaíso,Premium,2022-04-04,48,Jarra Filtro Agua,Hogar,13000,34990,48,62.8,Alto,Stock bajo
+5215,2023-04-18,106,4006,1,23740,5,23740,22553.0,4,2023,Andrés,Díaz,andrés.díaz106@gmail.com,Metropolitana,Premium,2023-06-16,33,Porta Notebook,Accesorios,8000,24990,129,68.0,Alto,Stock normal
+5216,2023-04-18,23,2001,1,12990,0,12990,12990.0,4,2023,Andrés,Flores,andrés.flores23@gmail.com,Metropolitana,Premium,2022-07-02,45,Polera Básica,Ropa,4000,12990,6,69.2,Alto,Stock crítico
+5217,2023-03-04,149,3008,1,44990,0,44990,44990.0,3,2023,Andrés,Pérez,andrés.pérez149@gmail.com,Metropolitana,Básico,2022-01-10,50,Alfombra 120x80,Hogar,18000,44990,50,60.0,Alto,Stock normal
+5218,2023-05-25,76,1004,2,24990,0,49980,49980.0,5,2023,Martín,Castro,martín.castro76@gmail.com,Antofagasta,Básico,2021-12-22,51,Mouse Inalámbrico,Electrónica,9000,24990,58,64.0,Alto,Stock normal
+5219,2023-04-14,172,1001,1,40491,10,40491,36442.0,4,2023,Fernanda,Vargas,fernanda.vargas172@gmail.com,Los Lagos,Estándar,2021-08-26,55,Audífonos Bluetooth,Electrónica,18000,44990,41,60.0,Alto,Stock bajo
+5220,2023-05-13,118,1004,1,24990,0,24990,24990.0,5,2023,Javiera,Fuentes,javiera.fuentes118@gmail.com,Metropolitana,Estándar,2020-07-26,68,Mouse Inalámbrico,Electrónica,9000,24990,58,64.0,Alto,Stock normal
+5221,2023-06-16,28,3006,1,17091,10,17091,15382.0,6,2023,Fernanda,Gutiérrez,fernanda.gutiérrez28@gmail.com,Biobío,Premium,2022-10-04,41,Set Toallas x3,Hogar,6500,18990,115,65.8,Alto,Stock normal
+5222,2023-05-25,124,3006,2,18990,0,37980,37980.0,5,2023,Fernanda,Torres,fernanda.torres124@gmail.com,Maule,Estándar,2020-01-12,75,Set Toallas x3,Hogar,6500,18990,115,65.8,Alto,Stock normal
+5223,2023-05-30,173,1004,2,24990,0,49980,49980.0,5,2023,Sofía,González,sofía.gonzález173@gmail.com,La Araucanía,Básico,2021-03-25,60,Mouse Inalámbrico,Electrónica,9000,24990,58,64.0,Alto,Stock normal
+5224,2023-05-24,190,4008,1,11691,10,11691,10522.0,5,2023,Constanza,Morales,constanza.morales190@gmail.com,Valparaíso,Premium,2021-05-14,58,Lentes de Lectura,Accesorios,3500,12990,133,73.1,Alto,Stock normal
+5225,2023-06-13,40,3004,1,23740,5,23740,22553.0,6,2023,Nicolás,Pérez,nicolás.pérez40@gmail.com,Biobío,Básico,2020-10-25,65,Lámpara LED Escritorio,Hogar,9000,24990,78,64.0,Alto,Stock normal
+5226,2023-01-02,125,2005,1,24990,0,24990,24990.0,1,2023,Daniela,Díaz,daniela.díaz125@gmail.com,Metropolitana,Premium,2020-03-23,72,Poleron Algodón,Ropa,8500,24990,29,66.0,Alto,Stock bajo
+5227,2023-06-04,31,1007,1,39990,0,39990,39990.0,6,2023,Andrés,Vargas,andrés.vargas31@gmail.com,La Araucanía,Estándar,2021-04-02,60,Webcam HD,Electrónica,16000,39990,183,60.0,Alto,Stock normal
+5228,2023-01-07,130,4005,1,6792,15,6792,5773.0,1,2023,Isidora,Díaz,isidora.díaz130@gmail.com,La Araucanía,Premium,2020-09-15,66,Pulsera Silicona,Accesorios,1500,7990,55,81.2,Alto,Stock normal
+5229,2023-03-18,104,4007,3,13491,10,40473,36426.0,3,2023,Constanza,Gutiérrez,constanza.gutiérrez104@gmail.com,Antofagasta,Estándar,2020-01-22,74,Paraguas Compacto,Accesorios,4500,14990,51,70.0,Alto,Stock normal
+5230,2023-05-20,67,4005,2,7590,5,15180,14421.0,5,2023,Felipe,González,felipe.gonzález67@gmail.com,Metropolitana,Básico,2023-01-03,38,Pulsera Silicona,Accesorios,1500,7990,55,81.2,Alto,Stock normal
+5231,2023-04-21,38,1002,1,14391,10,14391,12952.0,4,2023,Isidora,Fuentes,isidora.fuentes38@gmail.com,Metropolitana,Estándar,2022-08-01,44,Cargador Rápido USB-C,Electrónica,6000,15990,73,62.5,Alto,Stock normal
+5232,2023-06-18,62,2003,1,56990,5,56990,54140.0,6,2023,Isidora,Herrera,isidora.herrera62@gmail.com,Biobío,Premium,2022-11-09,40,Parka Impermeable,Ropa,23000,59990,130,61.7,Alto,Stock normal
+5233,2023-02-21,122,4007,1,14240,5,14240,13528.0,2,2023,Diego,Vargas,diego.vargas122@gmail.com,Los Lagos,Estándar,2023-01-03,38,Paraguas Compacto,Accesorios,4500,14990,51,70.0,Alto,Stock normal
+5234,2023-05-31,127,3008,1,44990,0,44990,44990.0,5,2023,Daniela,Herrera,daniela.herrera127@gmail.com,Coquimbo,Premium,2021-06-28,57,Alfombra 120x80,Hogar,18000,44990,50,60.0,Alto,Stock normal
+5235,2023-06-28,28,4006,1,24990,0,24990,24990.0,6,2023,Fernanda,Gutiérrez,fernanda.gutiérrez28@gmail.com,Biobío,Premium,2022-10-04,41,Porta Notebook,Accesorios,8000,24990,129,68.0,Alto,Stock normal
+5236,2023-01-08,73,4006,1,24990,0,24990,24990.0,1,2023,Isidora,Castro,isidora.castro73@gmail.com,Metropolitana,Premium,2023-01-19,38,Porta Notebook,Accesorios,8000,24990,129,68.0,Alto,Stock normal
+5237,2023-05-29,78,1003,1,53991,10,53991,48592.0,5,2023,Sofía,Silva,sofía.silva78@gmail.com,Metropolitana,Estándar,2020-10-17,65,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5238,2023-06-08,114,1003,2,59990,0,119980,119980.0,6,2023,Francisco,Fuentes,francisco.fuentes114@gmail.com,Metropolitana,Básico,2021-09-16,54,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5239,2023-02-05,120,4006,1,21242,15,21242,18056.0,2,2023,Sebastián,Díaz,sebastián.díaz120@gmail.com,Antofagasta,Premium,2020-01-15,75,Porta Notebook,Accesorios,8000,24990,129,68.0,Alto,Stock normal
+5240,2023-04-02,129,2006,1,18990,5,18990,18040.0,4,2023,Felipe,Castro,felipe.castro129@gmail.com,Maule,Premium,2022-03-07,49,Pantalón de Buzo,Ropa,6000,19990,22,70.0,Alto,Stock bajo
+5241,2023-04-10,132,1005,1,79990,0,79990,79990.0,4,2023,Martín,Vargas,martín.vargas132@gmail.com,O'Higgins,Estándar,2020-01-17,75,Teclado Mecánico,Electrónica,32000,79990,196,60.0,Alto,Stock normal
+5242,2023-06-17,185,3006,1,17091,10,17091,15382.0,6,2023,Isidora,Fuentes,isidora.fuentes185@gmail.com,Metropolitana,Premium,2020-08-13,68,Set Toallas x3,Hogar,6500,18990,115,65.8,Alto,Stock normal
+5243,2023-02-05,72,3004,3,24990,0,74970,74970.0,2,2023,Javiera,Rojas,javiera.rojas72@gmail.com,Valparaíso,Premium,2020-03-12,73,Lámpara LED Escritorio,Hogar,9000,24990,78,64.0,Alto,Stock normal
+5244,2023-06-15,124,4001,3,37990,5,113970,108272.0,6,2023,Fernanda,Torres,fernanda.torres124@gmail.com,Maule,Estándar,2020-01-12,75,Mochila Urban,Accesorios,14000,39990,100,65.0,Alto,Stock normal
+5245,2023-02-16,148,3001,1,19990,0,19990,19990.0,2,2023,Martín,Sepúlveda,martín.sepúlveda148@gmail.com,Metropolitana,Básico,2020-01-28,74,Sartén Antiadherente,Hogar,7000,19990,139,65.0,Alto,Stock normal
+5246,2023-05-29,90,4002,1,19990,0,19990,19990.0,5,2023,Valentina,Díaz,valentina.díaz90@gmail.com,Metropolitana,Estándar,2021-03-31,60,Billetera Cuero,Accesorios,6000,19990,52,70.0,Alto,Stock normal
+5247,2023-02-10,60,1007,1,39990,0,39990,39990.0,2,2023,Camila,Flores,camila.flores60@gmail.com,Los Lagos,Estándar,2022-02-21,49,Webcam HD,Electrónica,16000,39990,183,60.0,Alto,Stock normal
+5248,2023-06-23,122,3005,2,10192,15,20384,17326.0,6,2023,Diego,Vargas,diego.vargas122@gmail.com,Los Lagos,Estándar,2023-01-03,38,Cojín Decorativo,Hogar,3500,11990,192,70.8,Alto,Stock normal
+5249,2023-03-02,27,2004,2,49990,0,99980,99980.0,3,2023,María,Herrera,maría.herrera27@gmail.com,Coquimbo,Básico,2020-09-09,67,Zapatillas Running,Ropa,19000,49990,5,62.0,Alto,Stock crítico
+5250,2023-04-18,17,1004,1,24990,0,24990,24990.0,4,2023,Diego,Muñoz,diego.muñoz17@gmail.com,Coquimbo,Básico,2021-10-28,53,Mouse Inalámbrico,Electrónica,9000,24990,58,64.0,Alto,Stock normal
+5251,2023-01-19,114,3008,1,40491,10,40491,36442.0,1,2023,Francisco,Fuentes,francisco.fuentes114@gmail.com,Metropolitana,Básico,2021-09-16,54,Alfombra 120x80,Hogar,18000,44990,50,60.0,Alto,Stock normal
+5252,2023-02-14,83,1007,1,39990,0,39990,39990.0,2,2023,Sebastián,Pérez,sebastián.pérez83@gmail.com,Valparaíso,Básico,2020-05-24,70,Webcam HD,Electrónica,16000,39990,183,60.0,Alto,Stock normal
+5253,2023-06-13,147,2005,1,24990,0,24990,24990.0,6,2023,Sebastián,Soto,sebastián.soto147@gmail.com,Metropolitana,Estándar,2022-10-03,42,Poleron Algodón,Ropa,8500,24990,29,66.0,Alto,Stock bajo
+5254,2023-06-23,74,2007,1,5990,0,5990,5990.0,6,2023,Sebastián,González,sebastián.gonzález74@gmail.com,Metropolitana,Básico,2020-04-04,72,Calcetines Pack 3,Ropa,1800,5990,183,69.9,Alto,Stock normal
+5255,2023-05-16,50,1006,1,132990,5,132990,126340.0,5,2023,Francisco,Muñoz,francisco.muñoz50@gmail.com,La Araucanía,Estándar,2021-09-14,54,"Monitor 24""",Electrónica,68000,139990,106,51.4,Alto,Stock normal
+5256,2023-06-21,25,2006,1,19990,0,19990,19990.0,6,2023,Camila,Díaz,camila.díaz25@gmail.com,Metropolitana,Premium,2020-02-29,73,Pantalón de Buzo,Ropa,6000,19990,22,70.0,Alto,Stock bajo
+5257,2023-01-02,93,4003,1,26991,10,26991,24292.0,1,2023,Andrés,Martínez,andrés.martínez93@gmail.com,Biobío,Premium,2020-04-08,72,Gafas de Sol,Accesorios,9000,29990,185,70.0,Alto,Stock normal
+5258,2023-03-29,48,4008,1,12990,0,12990,12990.0,3,2023,Felipe,Fuentes,felipe.fuentes48@gmail.com,Metropolitana,Estándar,2021-08-02,56,Lentes de Lectura,Accesorios,3500,12990,133,73.1,Alto,Stock normal
+5259,2023-05-02,129,3007,1,31491,10,31491,28342.0,5,2023,Felipe,Castro,felipe.castro129@gmail.com,Maule,Premium,2022-03-07,49,Jarra Filtro Agua,Hogar,13000,34990,48,62.8,Alto,Stock bajo
+5260,2023-02-05,18,4005,1,7990,0,7990,7990.0,2,2023,Nicolás,Silva,nicolás.silva18@gmail.com,Biobío,Básico,2022-03-30,48,Pulsera Silicona,Accesorios,1500,7990,55,81.2,Alto,Stock normal
+5261,2023-01-19,146,1006,1,139990,0,139990,139990.0,1,2023,Constanza,Herrera,constanza.herrera146@gmail.com,Metropolitana,Premium,2023-05-27,34,"Monitor 24""",Electrónica,68000,139990,106,51.4,Alto,Stock normal
+5262,2023-01-26,31,4008,1,12340,5,12340,11723.0,1,2023,Andrés,Vargas,andrés.vargas31@gmail.com,La Araucanía,Estándar,2021-04-02,60,Lentes de Lectura,Accesorios,3500,12990,133,73.1,Alto,Stock normal
+5263,2023-03-26,6,2007,2,5990,0,11980,11980.0,3,2023,Matías,Herrera,matías.herrera6@gmail.com,Biobío,Premium,2020-07-25,68,Calcetines Pack 3,Ropa,1800,5990,183,69.9,Alto,Stock normal
+5264,2023-03-06,100,3007,1,31491,10,31491,28342.0,3,2023,Alejandro,Sepúlveda,alejandro.sepúlveda100@gmail.com,Metropolitana,Básico,2022-05-26,46,Jarra Filtro Agua,Hogar,13000,34990,48,62.8,Alto,Stock bajo
+5265,2023-03-15,20,2008,2,10192,15,20384,17326.0,3,2023,Isidora,Fuentes,isidora.fuentes20@gmail.com,Metropolitana,Básico,2021-02-03,62,Gorra,Ropa,3500,11990,111,70.8,Alto,Stock normal
+5266,2023-05-09,80,4002,1,19990,0,19990,19990.0,5,2023,Diego,Martínez,diego.martínez80@gmail.com,Metropolitana,Estándar,2023-06-28,33,Billetera Cuero,Accesorios,6000,19990,52,70.0,Alto,Stock normal
+5267,2023-01-29,150,4007,3,12742,15,38226,32492.0,1,2023,Francisco,Castro,francisco.castro150@gmail.com,Biobío,Básico,2021-05-02,59,Paraguas Compacto,Accesorios,4500,14990,51,70.0,Alto,Stock normal
+5268,2023-06-17,8,1003,1,59990,0,59990,59990.0,6,2023,Francisco,Muñoz,francisco.muñoz8@gmail.com,Metropolitana,Premium,2022-12-05,39,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5269,2023-03-27,196,1004,1,24990,0,24990,24990.0,3,2023,Isidora,Herrera,isidora.herrera196@gmail.com,Metropolitana,Premium,2020-08-13,68,Mouse Inalámbrico,Electrónica,9000,24990,58,64.0,Alto,Stock normal
+5270,2023-03-26,194,1004,1,24990,0,24990,24990.0,3,2023,Catalina,Vargas,catalina.vargas194@gmail.com,Metropolitana,Básico,2021-12-24,51,Mouse Inalámbrico,Electrónica,9000,24990,58,64.0,Alto,Stock normal
+5271,2023-05-25,157,1003,1,59990,0,59990,59990.0,5,2023,Diego,Flores,diego.flores157@gmail.com,Biobío,Estándar,2020-08-28,67,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5272,2023-04-17,154,1006,2,139990,0,279980,279980.0,4,2023,Andrés,Espinoza,andrés.espinoza154@gmail.com,Metropolitana,Premium,2022-08-29,43,"Monitor 24""",Electrónica,68000,139990,106,51.4,Alto,Stock normal
+5273,2023-02-03,70,1003,1,59990,0,59990,59990.0,2,2023,Pablo,Soto,pablo.soto70@gmail.com,Metropolitana,Estándar,2022-07-04,45,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5274,2023-02-27,167,3007,1,34990,0,34990,34990.0,2,2023,Isidora,Soto,isidora.soto167@gmail.com,Metropolitana,Premium,2022-12-28,39,Jarra Filtro Agua,Hogar,13000,34990,48,62.8,Alto,Stock bajo
+5275,2023-02-28,6,1004,1,22491,10,22491,20242.0,2,2023,Matías,Herrera,matías.herrera6@gmail.com,Biobío,Premium,2020-07-25,68,Mouse Inalámbrico,Electrónica,9000,24990,58,64.0,Alto,Stock normal
+5276,2023-02-20,137,4001,1,37990,5,37990,36090.0,2,2023,Alejandro,Espinoza,alejandro.espinoza137@gmail.com,Metropolitana,Básico,2023-04-25,35,Mochila Urban,Accesorios,14000,39990,100,65.0,Alto,Stock normal
+5277,2023-05-22,124,1004,1,24990,0,24990,24990.0,5,2023,Fernanda,Torres,fernanda.torres124@gmail.com,Maule,Estándar,2020-01-12,75,Mouse Inalámbrico,Electrónica,9000,24990,58,64.0,Alto,Stock normal
+5278,2023-02-02,111,4004,1,49990,0,49990,49990.0,2,2023,Felipe,Soto,felipe.soto111@gmail.com,Metropolitana,Estándar,2020-08-19,67,Reloj Digital,Accesorios,16000,49990,39,68.0,Alto,Stock bajo
+5279,2023-01-31,158,3008,1,44990,0,44990,44990.0,1,2023,Camila,Herrera,camila.herrera158@gmail.com,Metropolitana,Premium,2022-10-28,41,Alfombra 120x80,Hogar,18000,44990,50,60.0,Alto,Stock normal
+5280,2023-01-15,61,2007,1,5990,0,5990,5990.0,1,2023,Nicolás,Torres,nicolás.torres61@gmail.com,Metropolitana,Premium,2020-08-26,67,Calcetines Pack 3,Ropa,1800,5990,183,69.9,Alto,Stock normal
+5281,2023-04-16,192,1003,3,59990,0,179970,179970.0,4,2023,Sofía,Díaz,sofía.díaz192@gmail.com,Valparaíso,Básico,2020-07-29,68,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5282,2023-03-05,15,1005,1,79990,0,79990,79990.0,3,2023,Catalina,Torres,catalina.torres15@gmail.com,Valparaíso,Básico,2022-08-31,43,Teclado Mecánico,Electrónica,32000,79990,196,60.0,Alto,Stock normal
+5283,2023-03-14,12,3005,1,11390,5,11390,10820.0,3,2023,Felipe,Fuentes,felipe.fuentes12@gmail.com,Biobío,Estándar,2021-12-30,51,Cojín Decorativo,Hogar,3500,11990,192,70.8,Alto,Stock normal
+5284,2023-03-04,75,2001,1,12990,0,12990,12990.0,3,2023,Constanza,Gutiérrez,constanza.gutiérrez75@gmail.com,Metropolitana,Estándar,2023-03-27,36,Polera Básica,Ropa,4000,12990,6,69.2,Alto,Stock crítico
+5285,2023-02-01,169,1005,1,67992,15,67992,57793.0,2,2023,María,Muñoz,maría.muñoz169@gmail.com,Biobío,Premium,2021-05-24,58,Teclado Mecánico,Electrónica,32000,79990,196,60.0,Alto,Stock normal
+5286,2023-02-22,127,3007,2,31491,10,62982,56684.0,2,2023,Daniela,Herrera,daniela.herrera127@gmail.com,Coquimbo,Premium,2021-06-28,57,Jarra Filtro Agua,Hogar,13000,34990,48,62.8,Alto,Stock bajo
+5287,2023-04-24,183,3004,3,22491,10,67473,60726.0,4,2023,Sebastián,Silva,sebastián.silva183@gmail.com,Valparaíso,Premium,2022-04-04,48,Lámpara LED Escritorio,Hogar,9000,24990,78,64.0,Alto,Stock normal
+5288,2023-03-16,168,2008,1,11990,0,11990,11990.0,3,2023,Constanza,Muñoz,constanza.muñoz168@gmail.com,Biobío,Premium,2021-07-22,56,Gorra,Ropa,3500,11990,111,70.8,Alto,Stock normal
+5289,2023-06-28,139,1007,1,33992,15,33992,28893.0,6,2023,María,Contreras,maría.contreras139@gmail.com,Antofagasta,Premium,2022-05-23,46,Webcam HD,Electrónica,16000,39990,183,60.0,Alto,Stock normal
+5290,2023-06-30,160,4008,1,12990,0,12990,12990.0,6,2023,Sofía,Ramos,sofía.ramos160@gmail.com,Metropolitana,Básico,2021-01-24,62,Lentes de Lectura,Accesorios,3500,12990,133,73.1,Alto,Stock normal
+5291,2023-02-05,134,2007,1,5690,5,5690,5406.0,2,2023,Catalina,Espinoza,catalina.espinoza134@gmail.com,Metropolitana,Premium,2022-11-13,40,Calcetines Pack 3,Ropa,1800,5990,183,69.9,Alto,Stock normal
+5292,2023-02-01,96,2002,1,29990,0,29990,29990.0,2,2023,Valentina,Castro,valentina.castro96@gmail.com,Biobío,Premium,2020-09-15,66,Jeans Slim,Ropa,11000,29990,48,63.3,Alto,Stock bajo
+5293,2023-04-23,167,4006,3,24990,0,74970,74970.0,4,2023,Isidora,Soto,isidora.soto167@gmail.com,Metropolitana,Premium,2022-12-28,39,Porta Notebook,Accesorios,8000,24990,129,68.0,Alto,Stock normal
+5294,2023-01-09,70,3002,1,29990,0,29990,29990.0,1,2023,Pablo,Soto,pablo.soto70@gmail.com,Metropolitana,Estándar,2022-07-04,45,Juego de Camas 2P,Hogar,11000,29990,111,63.3,Alto,Stock normal
+5295,2023-01-22,16,3002,2,29990,0,59980,59980.0,1,2023,Sebastián,Contreras,sebastián.contreras16@gmail.com,Metropolitana,Premium,2021-10-21,53,Juego de Camas 2P,Hogar,11000,29990,111,63.3,Alto,Stock normal
+5296,2023-01-05,98,4001,1,39990,0,39990,39990.0,1,2023,Diego,Silva,diego.silva98@gmail.com,Biobío,Básico,2022-05-06,47,Mochila Urban,Accesorios,14000,39990,100,65.0,Alto,Stock normal
+5297,2023-04-08,48,4004,1,47490,5,47490,45116.0,4,2023,Felipe,Fuentes,felipe.fuentes48@gmail.com,Metropolitana,Estándar,2021-08-02,56,Reloj Digital,Accesorios,16000,49990,39,68.0,Alto,Stock bajo
+5298,2023-01-09,139,3007,3,29742,15,89226,75842.0,1,2023,María,Contreras,maría.contreras139@gmail.com,Antofagasta,Premium,2022-05-23,46,Jarra Filtro Agua,Hogar,13000,34990,48,62.8,Alto,Stock bajo
+5299,2023-03-28,68,2006,2,19990,0,39980,39980.0,3,2023,Matías,Rojas,matías.rojas68@gmail.com,Valparaíso,Básico,2023-04-12,35,Pantalón de Buzo,Ropa,6000,19990,22,70.0,Alto,Stock bajo
+5300,2023-06-09,112,4004,2,42492,15,84984,72236.0,6,2023,Catalina,Gutiérrez,catalina.gutiérrez112@gmail.com,Los Lagos,Estándar,2020-08-29,67,Reloj Digital,Accesorios,16000,49990,39,68.0,Alto,Stock bajo
+5301,2023-01-15,28,4001,3,33992,15,101976,86680.0,1,2023,Fernanda,Gutiérrez,fernanda.gutiérrez28@gmail.com,Biobío,Premium,2022-10-04,41,Mochila Urban,Accesorios,14000,39990,100,65.0,Alto,Stock normal
+5302,2023-03-15,137,4006,1,23740,5,23740,22553.0,3,2023,Alejandro,Espinoza,alejandro.espinoza137@gmail.com,Metropolitana,Básico,2023-04-25,35,Porta Notebook,Accesorios,8000,24990,129,68.0,Alto,Stock normal
+5303,2023-05-13,67,2003,3,59990,0,179970,179970.0,5,2023,Felipe,González,felipe.gonzález67@gmail.com,Metropolitana,Básico,2023-01-03,38,Parka Impermeable,Ropa,23000,59990,130,61.7,Alto,Stock normal
+5304,2023-03-02,34,1001,1,42740,5,42740,40603.0,3,2023,Diego,Pérez,diego.pérez34@gmail.com,Los Lagos,Básico,2022-02-17,49,Audífonos Bluetooth,Electrónica,18000,44990,41,60.0,Alto,Stock bajo
+5305,2023-03-12,22,2008,2,11990,0,23980,23980.0,3,2023,Fernanda,Herrera,fernanda.herrera22@gmail.com,La Araucanía,Básico,2021-09-09,54,Gorra,Ropa,3500,11990,111,70.8,Alto,Stock normal
+5306,2023-05-27,102,1003,1,59990,0,59990,59990.0,5,2023,Sebastián,Morales,sebastián.morales102@gmail.com,La Araucanía,Premium,2020-06-11,70,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5307,2023-06-18,65,1001,1,42740,5,42740,40603.0,6,2023,Matías,Vargas,matías.vargas65@gmail.com,Metropolitana,Premium,2020-09-13,67,Audífonos Bluetooth,Electrónica,18000,44990,41,60.0,Alto,Stock bajo
+5308,2023-03-24,68,2004,1,49990,0,49990,49990.0,3,2023,Matías,Rojas,matías.rojas68@gmail.com,Valparaíso,Básico,2023-04-12,35,Zapatillas Running,Ropa,19000,49990,5,62.0,Alto,Stock crítico
+5309,2023-01-03,120,1003,3,59990,0,179970,179970.0,1,2023,Sebastián,Díaz,sebastián.díaz120@gmail.com,Antofagasta,Premium,2020-01-15,75,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5310,2023-05-23,56,4003,1,25492,15,25492,21668.0,5,2023,Sofía,Díaz,sofía.díaz56@gmail.com,O'Higgins,Básico,2021-11-24,52,Gafas de Sol,Accesorios,9000,29990,185,70.0,Alto,Stock normal
+5311,2023-03-12,157,3005,3,11990,0,35970,35970.0,3,2023,Diego,Flores,diego.flores157@gmail.com,Biobío,Estándar,2020-08-28,67,Cojín Decorativo,Hogar,3500,11990,192,70.8,Alto,Stock normal
+5312,2023-03-08,197,3002,1,29990,0,29990,29990.0,3,2023,Isidora,Sepúlveda,isidora.sepúlveda197@gmail.com,Metropolitana,Estándar,2023-06-14,33,Juego de Camas 2P,Hogar,11000,29990,111,63.3,Alto,Stock normal
+5313,2023-02-28,162,2004,1,47490,5,47490,45116.0,2,2023,Javiera,Flores,javiera.flores162@gmail.com,Maule,Básico,2022-02-25,49,Zapatillas Running,Ropa,19000,49990,5,62.0,Alto,Stock crítico
+5314,2023-01-13,60,1008,1,54990,0,54990,54990.0,1,2023,Camila,Flores,camila.flores60@gmail.com,Los Lagos,Estándar,2022-02-21,49,Disco Duro Externo 1TB,Electrónica,22000,54990,83,60.0,Alto,Stock normal
+5315,2023-05-10,113,3005,1,11390,5,11390,10820.0,5,2023,Constanza,Herrera,constanza.herrera113@gmail.com,Metropolitana,Premium,2021-03-12,61,Cojín Decorativo,Hogar,3500,11990,192,70.8,Alto,Stock normal
+5316,2023-01-16,183,3001,3,19990,0,59970,59970.0,1,2023,Sebastián,Silva,sebastián.silva183@gmail.com,Valparaíso,Premium,2022-04-04,48,Sartén Antiadherente,Hogar,7000,19990,139,65.0,Alto,Stock normal
+5317,2023-04-01,139,1003,1,59990,0,59990,59990.0,4,2023,María,Contreras,maría.contreras139@gmail.com,Antofagasta,Premium,2022-05-23,46,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5318,2023-01-20,130,4005,1,7990,0,7990,7990.0,1,2023,Isidora,Díaz,isidora.díaz130@gmail.com,La Araucanía,Premium,2020-09-15,66,Pulsera Silicona,Accesorios,1500,7990,55,81.2,Alto,Stock normal
+5319,2023-02-22,84,3008,2,42740,5,85480,81206.0,2,2023,María,Contreras,maría.contreras84@gmail.com,Biobío,Básico,2023-02-28,37,Alfombra 120x80,Hogar,18000,44990,50,60.0,Alto,Stock normal
+5320,2023-01-19,165,4004,2,49990,0,99980,99980.0,1,2023,Valentina,Castro,valentina.castro165@gmail.com,Valparaíso,Estándar,2022-12-11,39,Reloj Digital,Accesorios,16000,49990,39,68.0,Alto,Stock bajo
+5321,2023-03-25,156,3008,1,44990,0,44990,44990.0,3,2023,Andrés,Martínez,andrés.martínez156@gmail.com,Los Lagos,Estándar,2023-02-21,37,Alfombra 120x80,Hogar,18000,44990,50,60.0,Alto,Stock normal
+5322,2023-06-16,96,4007,3,14990,0,44970,44970.0,6,2023,Valentina,Castro,valentina.castro96@gmail.com,Biobío,Premium,2020-09-15,66,Paraguas Compacto,Accesorios,4500,14990,51,70.0,Alto,Stock normal
+5323,2023-01-08,42,3008,1,38242,15,38242,32506.0,1,2023,Isidora,Martínez,isidora.martínez42@gmail.com,O'Higgins,Estándar,2023-03-21,36,Alfombra 120x80,Hogar,18000,44990,50,60.0,Alto,Stock normal
+5324,2023-06-01,7,1007,1,35991,10,35991,32392.0,6,2023,Sofía,Martínez,sofía.martínez7@gmail.com,Maule,Básico,2020-01-15,75,Webcam HD,Electrónica,16000,39990,183,60.0,Alto,Stock normal
+5325,2023-05-11,184,3007,3,34990,0,104970,104970.0,5,2023,Alejandro,Pérez,alejandro.pérez184@gmail.com,Maule,Básico,2020-01-25,74,Jarra Filtro Agua,Hogar,13000,34990,48,62.8,Alto,Stock bajo
+5326,2023-05-30,9,2002,1,25492,15,25492,21668.0,5,2023,Felipe,Espinoza,felipe.espinoza9@gmail.com,Valparaíso,Estándar,2021-06-28,57,Jeans Slim,Ropa,11000,29990,48,63.3,Alto,Stock bajo
+5327,2023-01-21,20,2007,1,5092,15,5092,4328.0,1,2023,Isidora,Fuentes,isidora.fuentes20@gmail.com,Metropolitana,Básico,2021-02-03,62,Calcetines Pack 3,Ropa,1800,5990,183,69.9,Alto,Stock normal
+5328,2023-06-11,141,4003,1,29990,0,29990,29990.0,6,2023,Sebastián,Castro,sebastián.castro141@gmail.com,Metropolitana,Premium,2021-04-18,59,Gafas de Sol,Accesorios,9000,29990,185,70.0,Alto,Stock normal
+5329,2023-05-16,14,4007,1,14990,0,14990,14990.0,5,2023,Fernanda,González,fernanda.gonzález14@gmail.com,Biobío,Estándar,2022-12-22,39,Paraguas Compacto,Accesorios,4500,14990,51,70.0,Alto,Stock normal
+5330,2023-03-23,69,2005,2,24990,0,49980,49980.0,3,2023,Isidora,Contreras,isidora.contreras69@gmail.com,Coquimbo,Premium,2020-08-28,67,Poleron Algodón,Ropa,8500,24990,29,66.0,Alto,Stock bajo
+5331,2023-03-04,85,2008,2,10192,15,20384,17326.0,3,2023,Alejandro,Espinoza,alejandro.espinoza85@gmail.com,Metropolitana,Estándar,2020-11-10,65,Gorra,Ropa,3500,11990,111,70.8,Alto,Stock normal
+5332,2023-03-01,117,3005,2,11990,0,23980,23980.0,3,2023,Constanza,Torres,constanza.torres117@gmail.com,Metropolitana,Básico,2021-12-17,51,Cojín Decorativo,Hogar,3500,11990,192,70.8,Alto,Stock normal
+5333,2023-03-03,114,4003,1,29990,0,29990,29990.0,3,2023,Francisco,Fuentes,francisco.fuentes114@gmail.com,Metropolitana,Básico,2021-09-16,54,Gafas de Sol,Accesorios,9000,29990,185,70.0,Alto,Stock normal
+5334,2023-05-10,20,3008,1,42740,5,42740,40603.0,5,2023,Isidora,Fuentes,isidora.fuentes20@gmail.com,Metropolitana,Básico,2021-02-03,62,Alfombra 120x80,Hogar,18000,44990,50,60.0,Alto,Stock normal
+5335,2023-04-25,108,2007,1,5391,10,5391,4852.0,4,2023,Alejandro,Espinoza,alejandro.espinoza108@gmail.com,Metropolitana,Premium,2022-07-07,44,Calcetines Pack 3,Ropa,1800,5990,183,69.9,Alto,Stock normal
+5336,2023-02-02,138,2008,2,11990,0,23980,23980.0,2,2023,Fernanda,Silva,fernanda.silva138@gmail.com,Metropolitana,Premium,2022-04-01,48,Gorra,Ropa,3500,11990,111,70.8,Alto,Stock normal
+5337,2023-05-30,171,2001,1,11691,10,11691,10522.0,5,2023,Pablo,Torres,pablo.torres171@gmail.com,Metropolitana,Estándar,2023-01-29,38,Polera Básica,Ropa,4000,12990,6,69.2,Alto,Stock crítico
+5338,2023-03-29,81,1008,1,54990,0,54990,54990.0,3,2023,Camila,Gutiérrez,camila.gutiérrez81@gmail.com,Metropolitana,Básico,2022-02-20,49,Disco Duro Externo 1TB,Electrónica,22000,54990,83,60.0,Alto,Stock normal
+5339,2023-02-07,148,4008,1,11691,10,11691,10522.0,2,2023,Martín,Sepúlveda,martín.sepúlveda148@gmail.com,Metropolitana,Básico,2020-01-28,74,Lentes de Lectura,Accesorios,3500,12990,133,73.1,Alto,Stock normal
+5340,2023-02-16,117,1001,1,44990,0,44990,44990.0,2,2023,Constanza,Torres,constanza.torres117@gmail.com,Metropolitana,Básico,2021-12-17,51,Audífonos Bluetooth,Electrónica,18000,44990,41,60.0,Alto,Stock bajo
+5341,2023-05-22,183,4007,2,14990,0,29980,29980.0,5,2023,Sebastián,Silva,sebastián.silva183@gmail.com,Valparaíso,Premium,2022-04-04,48,Paraguas Compacto,Accesorios,4500,14990,51,70.0,Alto,Stock normal
+5342,2023-01-09,111,1002,1,13592,15,13592,11553.0,1,2023,Felipe,Soto,felipe.soto111@gmail.com,Metropolitana,Estándar,2020-08-19,67,Cargador Rápido USB-C,Electrónica,6000,15990,73,62.5,Alto,Stock normal
+5343,2023-02-03,132,4001,2,39990,0,79980,79980.0,2,2023,Martín,Vargas,martín.vargas132@gmail.com,O'Higgins,Estándar,2020-01-17,75,Mochila Urban,Accesorios,14000,39990,100,65.0,Alto,Stock normal
+5344,2023-04-13,179,2008,2,11990,0,23980,23980.0,4,2023,Fernanda,Herrera,fernanda.herrera179@gmail.com,Metropolitana,Estándar,2021-01-06,63,Gorra,Ropa,3500,11990,111,70.8,Alto,Stock normal
+5345,2023-03-28,152,1007,3,39990,0,119970,119970.0,3,2023,Fernanda,Espinoza,fernanda.espinoza152@gmail.com,Metropolitana,Básico,2023-04-16,35,Webcam HD,Electrónica,16000,39990,183,60.0,Alto,Stock normal
+5346,2023-04-01,115,4003,1,28490,5,28490,27066.0,4,2023,Alejandro,Muñoz,alejandro.muñoz115@gmail.com,Antofagasta,Estándar,2023-06-19,33,Gafas de Sol,Accesorios,9000,29990,185,70.0,Alto,Stock normal
+5347,2023-04-22,75,4007,2,14240,5,28480,27056.0,4,2023,Constanza,Gutiérrez,constanza.gutiérrez75@gmail.com,Metropolitana,Estándar,2023-03-27,36,Paraguas Compacto,Accesorios,4500,14990,51,70.0,Alto,Stock normal
+5348,2023-05-31,131,1006,1,139990,0,139990,139990.0,5,2023,Diego,Castro,diego.castro131@gmail.com,Metropolitana,Premium,2021-04-29,59,"Monitor 24""",Electrónica,68000,139990,106,51.4,Alto,Stock normal
+5349,2023-06-01,95,4006,1,24990,0,24990,24990.0,6,2023,Pablo,Fuentes,pablo.fuentes95@gmail.com,Valparaíso,Estándar,2020-09-18,66,Porta Notebook,Accesorios,8000,24990,129,68.0,Alto,Stock normal
+5350,2023-05-11,185,3002,3,29990,0,89970,89970.0,5,2023,Isidora,Fuentes,isidora.fuentes185@gmail.com,Metropolitana,Premium,2020-08-13,68,Juego de Camas 2P,Hogar,11000,29990,111,63.3,Alto,Stock normal
+5351,2023-03-18,127,3006,1,18990,0,18990,18990.0,3,2023,Daniela,Herrera,daniela.herrera127@gmail.com,Coquimbo,Premium,2021-06-28,57,Set Toallas x3,Hogar,6500,18990,115,65.8,Alto,Stock normal
+5352,2023-05-15,149,4004,1,49990,0,49990,49990.0,5,2023,Andrés,Pérez,andrés.pérez149@gmail.com,Metropolitana,Básico,2022-01-10,50,Reloj Digital,Accesorios,16000,49990,39,68.0,Alto,Stock bajo
+5353,2023-02-15,37,1003,2,56990,5,113980,108281.0,2,2023,Fernanda,Castro,fernanda.castro37@gmail.com,Biobío,Premium,2023-04-24,35,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5354,2023-02-23,111,3002,1,28490,5,28490,27066.0,2,2023,Felipe,Soto,felipe.soto111@gmail.com,Metropolitana,Estándar,2020-08-19,67,Juego de Camas 2P,Hogar,11000,29990,111,63.3,Alto,Stock normal
+5355,2023-01-26,89,3003,1,14990,0,14990,14990.0,1,2023,Martín,Martínez,martín.martínez89@gmail.com,Metropolitana,Estándar,2021-04-07,60,Organizador Cajones,Hogar,5000,14990,172,66.6,Alto,Stock normal
+5356,2023-05-05,113,2007,2,5990,0,11980,11980.0,5,2023,Constanza,Herrera,constanza.herrera113@gmail.com,Metropolitana,Premium,2021-03-12,61,Calcetines Pack 3,Ropa,1800,5990,183,69.9,Alto,Stock normal
+5357,2023-03-08,156,1007,3,37990,5,113970,108272.0,3,2023,Andrés,Martínez,andrés.martínez156@gmail.com,Los Lagos,Estándar,2023-02-21,37,Webcam HD,Electrónica,16000,39990,183,60.0,Alto,Stock normal
+5358,2023-02-06,25,2006,1,19990,0,19990,19990.0,2,2023,Camila,Díaz,camila.díaz25@gmail.com,Metropolitana,Premium,2020-02-29,73,Pantalón de Buzo,Ropa,6000,19990,22,70.0,Alto,Stock bajo
+5359,2023-02-13,8,1003,3,59990,0,179970,179970.0,2,2023,Francisco,Muñoz,francisco.muñoz8@gmail.com,Metropolitana,Premium,2022-12-05,39,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5360,2023-02-19,2,4008,2,12990,0,25980,25980.0,2,2023,Daniela,Muñoz,daniela.muñoz2@gmail.com,Maule,Estándar,2021-01-27,62,Lentes de Lectura,Accesorios,3500,12990,133,73.1,Alto,Stock normal
+5361,2023-02-22,73,4004,2,49990,0,99980,99980.0,2,2023,Isidora,Castro,isidora.castro73@gmail.com,Metropolitana,Premium,2023-01-19,38,Reloj Digital,Accesorios,16000,49990,39,68.0,Alto,Stock bajo
+5362,2023-04-27,76,1008,2,46742,15,93484,79461.0,4,2023,Martín,Castro,martín.castro76@gmail.com,Antofagasta,Básico,2021-12-22,51,Disco Duro Externo 1TB,Electrónica,22000,54990,83,60.0,Alto,Stock normal
+5363,2023-01-31,114,4004,1,49990,0,49990,49990.0,1,2023,Francisco,Fuentes,francisco.fuentes114@gmail.com,Metropolitana,Básico,2021-09-16,54,Reloj Digital,Accesorios,16000,49990,39,68.0,Alto,Stock bajo
+5364,2023-02-05,72,1008,3,49491,10,148473,133626.0,2,2023,Javiera,Rojas,javiera.rojas72@gmail.com,Valparaíso,Premium,2020-03-12,73,Disco Duro Externo 1TB,Electrónica,22000,54990,83,60.0,Alto,Stock normal
+5365,2023-02-26,187,1005,1,79990,0,79990,79990.0,2,2023,Fernanda,Espinoza,fernanda.espinoza187@gmail.com,Metropolitana,Premium,2020-01-20,74,Teclado Mecánico,Electrónica,32000,79990,196,60.0,Alto,Stock normal
+5366,2023-03-12,117,1005,2,79990,0,159980,159980.0,3,2023,Constanza,Torres,constanza.torres117@gmail.com,Metropolitana,Básico,2021-12-17,51,Teclado Mecánico,Electrónica,32000,79990,196,60.0,Alto,Stock normal
+5367,2023-01-10,111,1007,3,35991,10,107973,97176.0,1,2023,Felipe,Soto,felipe.soto111@gmail.com,Metropolitana,Estándar,2020-08-19,67,Webcam HD,Electrónica,16000,39990,183,60.0,Alto,Stock normal
+5368,2023-03-23,49,1003,3,56990,5,170970,162422.0,3,2023,Daniela,Gutiérrez,daniela.gutiérrez49@gmail.com,Metropolitana,Estándar,2020-09-25,66,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5369,2023-03-04,36,4001,2,39990,0,79980,79980.0,3,2023,Felipe,Vargas,felipe.vargas36@gmail.com,Metropolitana,Básico,2022-01-17,50,Mochila Urban,Accesorios,14000,39990,100,65.0,Alto,Stock normal
+5370,2023-02-20,68,4007,1,13491,10,13491,12142.0,2,2023,Matías,Rojas,matías.rojas68@gmail.com,Valparaíso,Básico,2023-04-12,35,Paraguas Compacto,Accesorios,4500,14990,51,70.0,Alto,Stock normal
+5371,2023-05-08,73,2001,1,11691,10,11691,10522.0,5,2023,Isidora,Castro,isidora.castro73@gmail.com,Metropolitana,Premium,2023-01-19,38,Polera Básica,Ropa,4000,12990,6,69.2,Alto,Stock crítico
+5372,2023-05-13,186,2006,1,19990,0,19990,19990.0,5,2023,Sofía,Pérez,sofía.pérez186@gmail.com,Metropolitana,Estándar,2020-06-20,69,Pantalón de Buzo,Ropa,6000,19990,22,70.0,Alto,Stock bajo
+5373,2023-05-23,157,2006,2,19990,0,39980,39980.0,5,2023,Diego,Flores,diego.flores157@gmail.com,Biobío,Estándar,2020-08-28,67,Pantalón de Buzo,Ropa,6000,19990,22,70.0,Alto,Stock bajo
+5374,2023-06-26,68,4001,1,39990,0,39990,39990.0,6,2023,Matías,Rojas,matías.rojas68@gmail.com,Valparaíso,Básico,2023-04-12,35,Mochila Urban,Accesorios,14000,39990,100,65.0,Alto,Stock normal
+5375,2023-03-31,124,2004,2,44991,10,89982,80984.0,3,2023,Fernanda,Torres,fernanda.torres124@gmail.com,Maule,Estándar,2020-01-12,75,Zapatillas Running,Ropa,19000,49990,5,62.0,Alto,Stock crítico
+5376,2023-03-16,172,4008,1,12340,5,12340,11723.0,3,2023,Fernanda,Vargas,fernanda.vargas172@gmail.com,Los Lagos,Estándar,2021-08-26,55,Lentes de Lectura,Accesorios,3500,12990,133,73.1,Alto,Stock normal
+5377,2023-06-03,92,4007,1,14990,0,14990,14990.0,6,2023,Matías,Díaz,matías.díaz92@gmail.com,Valparaíso,Estándar,2023-03-17,36,Paraguas Compacto,Accesorios,4500,14990,51,70.0,Alto,Stock normal
+5378,2023-03-15,108,4005,1,7590,5,7590,7210.0,3,2023,Alejandro,Espinoza,alejandro.espinoza108@gmail.com,Metropolitana,Premium,2022-07-07,44,Pulsera Silicona,Accesorios,1500,7990,55,81.2,Alto,Stock normal
+5379,2023-01-30,46,4006,3,23740,5,71220,67659.0,1,2023,Felipe,Sepúlveda,felipe.sepúlveda46@gmail.com,O'Higgins,Premium,2020-11-22,64,Porta Notebook,Accesorios,8000,24990,129,68.0,Alto,Stock normal
+5380,2023-03-30,179,4002,2,17991,10,35982,32384.0,3,2023,Fernanda,Herrera,fernanda.herrera179@gmail.com,Metropolitana,Estándar,2021-01-06,63,Billetera Cuero,Accesorios,6000,19990,52,70.0,Alto,Stock normal
+5381,2023-05-04,126,4003,1,29990,0,29990,29990.0,5,2023,Felipe,Vargas,felipe.vargas126@gmail.com,Maule,Premium,2020-03-05,73,Gafas de Sol,Accesorios,9000,29990,185,70.0,Alto,Stock normal
+5382,2023-03-10,130,2006,2,17991,10,35982,32384.0,3,2023,Isidora,Díaz,isidora.díaz130@gmail.com,La Araucanía,Premium,2020-09-15,66,Pantalón de Buzo,Ropa,6000,19990,22,70.0,Alto,Stock bajo
+5383,2023-01-16,144,3005,1,11990,0,11990,11990.0,1,2023,Diego,Vargas,diego.vargas144@gmail.com,Metropolitana,Premium,2020-04-07,72,Cojín Decorativo,Hogar,3500,11990,192,70.8,Alto,Stock normal
+5384,2023-04-11,114,4004,1,42492,15,42492,36118.0,4,2023,Francisco,Fuentes,francisco.fuentes114@gmail.com,Metropolitana,Básico,2021-09-16,54,Reloj Digital,Accesorios,16000,49990,39,68.0,Alto,Stock bajo
+5385,2023-03-10,125,2007,1,5391,10,5391,4852.0,3,2023,Daniela,Díaz,daniela.díaz125@gmail.com,Metropolitana,Premium,2020-03-23,72,Calcetines Pack 3,Ropa,1800,5990,183,69.9,Alto,Stock normal
+5386,2023-03-20,115,4003,1,26991,10,26991,24292.0,3,2023,Alejandro,Muñoz,alejandro.muñoz115@gmail.com,Antofagasta,Estándar,2023-06-19,33,Gafas de Sol,Accesorios,9000,29990,185,70.0,Alto,Stock normal
+5387,2023-05-18,53,1008,3,52240,5,156720,148884.0,5,2023,Valentina,Torres,valentina.torres53@gmail.com,Maule,Premium,2023-03-24,36,Disco Duro Externo 1TB,Electrónica,22000,54990,83,60.0,Alto,Stock normal
+5388,2023-03-26,34,1002,3,15990,0,47970,47970.0,3,2023,Diego,Pérez,diego.pérez34@gmail.com,Los Lagos,Básico,2022-02-17,49,Cargador Rápido USB-C,Electrónica,6000,15990,73,62.5,Alto,Stock normal
+5389,2023-04-08,24,3006,2,17091,10,34182,30764.0,4,2023,Matías,Gutiérrez,matías.gutiérrez24@gmail.com,Metropolitana,Premium,2021-03-09,61,Set Toallas x3,Hogar,6500,18990,115,65.8,Alto,Stock normal
+5390,2023-05-22,17,1004,1,24990,0,24990,24990.0,5,2023,Diego,Muñoz,diego.muñoz17@gmail.com,Coquimbo,Básico,2021-10-28,53,Mouse Inalámbrico,Electrónica,9000,24990,58,64.0,Alto,Stock normal
+5391,2023-02-20,41,4002,2,19990,0,39980,39980.0,2,2023,Sofía,Espinoza,sofía.espinoza41@gmail.com,Metropolitana,Básico,2022-10-25,41,Billetera Cuero,Accesorios,6000,19990,52,70.0,Alto,Stock normal
+5392,2023-02-11,96,3006,1,18040,5,18040,17138.0,2,2023,Valentina,Castro,valentina.castro96@gmail.com,Biobío,Premium,2020-09-15,66,Set Toallas x3,Hogar,6500,18990,115,65.8,Alto,Stock normal
+5393,2023-03-05,4,1003,2,53991,10,107982,97184.0,3,2023,Javiera,Rojas,javiera.rojas4@gmail.com,Metropolitana,Premium,2022-02-12,49,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5394,2023-05-15,27,4002,2,19990,0,39980,39980.0,5,2023,María,Herrera,maría.herrera27@gmail.com,Coquimbo,Básico,2020-09-09,67,Billetera Cuero,Accesorios,6000,19990,52,70.0,Alto,Stock normal
+5395,2023-03-14,78,1002,1,14391,10,14391,12952.0,3,2023,Sofía,Silva,sofía.silva78@gmail.com,Metropolitana,Estándar,2020-10-17,65,Cargador Rápido USB-C,Electrónica,6000,15990,73,62.5,Alto,Stock normal
+5396,2023-03-05,9,3002,2,26991,10,53982,48584.0,3,2023,Felipe,Espinoza,felipe.espinoza9@gmail.com,Valparaíso,Estándar,2021-06-28,57,Juego de Camas 2P,Hogar,11000,29990,111,63.3,Alto,Stock normal
+5397,2023-04-07,168,4002,1,18990,5,18990,18040.0,4,2023,Constanza,Muñoz,constanza.muñoz168@gmail.com,Biobío,Premium,2021-07-22,56,Billetera Cuero,Accesorios,6000,19990,52,70.0,Alto,Stock normal
+5398,2023-03-11,22,1005,1,75990,5,75990,72190.0,3,2023,Fernanda,Herrera,fernanda.herrera22@gmail.com,La Araucanía,Básico,2021-09-09,54,Teclado Mecánico,Electrónica,32000,79990,196,60.0,Alto,Stock normal
+5399,2023-04-17,6,1001,2,44990,0,89980,89980.0,4,2023,Matías,Herrera,matías.herrera6@gmail.com,Biobío,Premium,2020-07-25,68,Audífonos Bluetooth,Electrónica,18000,44990,41,60.0,Alto,Stock bajo
+5400,2023-02-08,25,4002,1,18990,5,18990,18040.0,2,2023,Camila,Díaz,camila.díaz25@gmail.com,Metropolitana,Premium,2020-02-29,73,Billetera Cuero,Accesorios,6000,19990,52,70.0,Alto,Stock normal
+5401,2023-03-21,83,4004,1,49990,0,49990,49990.0,3,2023,Sebastián,Pérez,sebastián.pérez83@gmail.com,Valparaíso,Básico,2020-05-24,70,Reloj Digital,Accesorios,16000,49990,39,68.0,Alto,Stock bajo
+5402,2023-03-12,118,2005,1,21242,15,21242,18056.0,3,2023,Javiera,Fuentes,javiera.fuentes118@gmail.com,Metropolitana,Estándar,2020-07-26,68,Poleron Algodón,Ropa,8500,24990,29,66.0,Alto,Stock bajo
+5403,2023-05-28,121,4001,1,39990,0,39990,39990.0,5,2023,María,Silva,maría.silva121@gmail.com,Valparaíso,Estándar,2022-02-05,50,Mochila Urban,Accesorios,14000,39990,100,65.0,Alto,Stock normal
+5404,2023-04-15,144,3002,1,25492,15,25492,21668.0,4,2023,Diego,Vargas,diego.vargas144@gmail.com,Metropolitana,Premium,2020-04-07,72,Juego de Camas 2P,Hogar,11000,29990,111,63.3,Alto,Stock normal
+5405,2023-05-17,130,2008,1,10192,15,10192,8663.0,5,2023,Isidora,Díaz,isidora.díaz130@gmail.com,La Araucanía,Premium,2020-09-15,66,Gorra,Ropa,3500,11990,111,70.8,Alto,Stock normal
+5406,2023-04-11,96,1007,1,37990,5,37990,36090.0,4,2023,Valentina,Castro,valentina.castro96@gmail.com,Biobío,Premium,2020-09-15,66,Webcam HD,Electrónica,16000,39990,183,60.0,Alto,Stock normal
+5407,2023-01-07,102,2007,1,5990,0,5990,5990.0,1,2023,Sebastián,Morales,sebastián.morales102@gmail.com,La Araucanía,Premium,2020-06-11,70,Calcetines Pack 3,Ropa,1800,5990,183,69.9,Alto,Stock normal
+5408,2023-01-28,165,3004,1,22491,10,22491,20242.0,1,2023,Valentina,Castro,valentina.castro165@gmail.com,Valparaíso,Estándar,2022-12-11,39,Lámpara LED Escritorio,Hogar,9000,24990,78,64.0,Alto,Stock normal
+5409,2023-01-22,25,2003,1,50992,15,50992,43343.0,1,2023,Camila,Díaz,camila.díaz25@gmail.com,Metropolitana,Premium,2020-02-29,73,Parka Impermeable,Ropa,23000,59990,130,61.7,Alto,Stock normal
+5410,2023-06-01,64,1006,1,132990,5,132990,126340.0,6,2023,María,Díaz,maría.díaz64@gmail.com,La Araucanía,Estándar,2021-01-05,63,"Monitor 24""",Electrónica,68000,139990,106,51.4,Alto,Stock normal
+5411,2023-05-02,134,2007,1,5990,0,5990,5990.0,5,2023,Catalina,Espinoza,catalina.espinoza134@gmail.com,Metropolitana,Premium,2022-11-13,40,Calcetines Pack 3,Ropa,1800,5990,183,69.9,Alto,Stock normal
+5412,2023-04-16,80,3006,2,18990,0,37980,37980.0,4,2023,Diego,Martínez,diego.martínez80@gmail.com,Metropolitana,Estándar,2023-06-28,33,Set Toallas x3,Hogar,6500,18990,115,65.8,Alto,Stock normal
+5413,2023-06-26,145,4003,2,29990,0,59980,59980.0,6,2023,Sofía,González,sofía.gonzález145@gmail.com,Metropolitana,Premium,2021-10-20,53,Gafas de Sol,Accesorios,9000,29990,185,70.0,Alto,Stock normal
+5414,2023-02-23,194,4008,1,12990,0,12990,12990.0,2,2023,Catalina,Vargas,catalina.vargas194@gmail.com,Metropolitana,Básico,2021-12-24,51,Lentes de Lectura,Accesorios,3500,12990,133,73.1,Alto,Stock normal
+5415,2023-06-16,61,3005,1,11990,0,11990,11990.0,6,2023,Nicolás,Torres,nicolás.torres61@gmail.com,Metropolitana,Premium,2020-08-26,67,Cojín Decorativo,Hogar,3500,11990,192,70.8,Alto,Stock normal
+5416,2023-05-23,190,1006,3,139990,0,419970,419970.0,5,2023,Constanza,Morales,constanza.morales190@gmail.com,Valparaíso,Premium,2021-05-14,58,"Monitor 24""",Electrónica,68000,139990,106,51.4,Alto,Stock normal
+5417,2023-01-20,97,2001,2,12990,0,25980,25980.0,1,2023,Felipe,Ramos,felipe.ramos97@gmail.com,Maule,Básico,2020-04-18,71,Polera Básica,Ropa,4000,12990,6,69.2,Alto,Stock crítico
+5418,2023-02-01,43,2005,1,21242,15,21242,18056.0,2,2023,Daniela,Herrera,daniela.herrera43@gmail.com,Metropolitana,Premium,2022-02-10,49,Poleron Algodón,Ropa,8500,24990,29,66.0,Alto,Stock bajo
+5419,2023-01-10,109,4008,1,11691,10,11691,10522.0,1,2023,Alejandro,Silva,alejandro.silva109@gmail.com,Metropolitana,Premium,2022-01-21,50,Lentes de Lectura,Accesorios,3500,12990,133,73.1,Alto,Stock normal
+5420,2023-05-05,36,4003,1,29990,0,29990,29990.0,5,2023,Felipe,Vargas,felipe.vargas36@gmail.com,Metropolitana,Básico,2022-01-17,50,Gafas de Sol,Accesorios,9000,29990,185,70.0,Alto,Stock normal
+5421,2023-04-22,76,3002,1,28490,5,28490,27066.0,4,2023,Martín,Castro,martín.castro76@gmail.com,Antofagasta,Básico,2021-12-22,51,Juego de Camas 2P,Hogar,11000,29990,111,63.3,Alto,Stock normal
+5422,2023-04-06,145,2003,1,59990,0,59990,59990.0,4,2023,Sofía,González,sofía.gonzález145@gmail.com,Metropolitana,Premium,2021-10-20,53,Parka Impermeable,Ropa,23000,59990,130,61.7,Alto,Stock normal
+5423,2023-02-22,158,3008,1,44990,0,44990,44990.0,2,2023,Camila,Herrera,camila.herrera158@gmail.com,Metropolitana,Premium,2022-10-28,41,Alfombra 120x80,Hogar,18000,44990,50,60.0,Alto,Stock normal
+5424,2023-04-29,54,3006,3,18040,5,54120,51414.0,4,2023,Fernanda,Fuentes,fernanda.fuentes54@gmail.com,Coquimbo,Básico,2022-05-24,46,Set Toallas x3,Hogar,6500,18990,115,65.8,Alto,Stock normal
+5425,2023-02-04,43,4007,1,14990,0,14990,14990.0,2,2023,Daniela,Herrera,daniela.herrera43@gmail.com,Metropolitana,Premium,2022-02-10,49,Paraguas Compacto,Accesorios,4500,14990,51,70.0,Alto,Stock normal
+5426,2023-02-08,121,1005,3,79990,0,239970,239970.0,2,2023,María,Silva,maría.silva121@gmail.com,Valparaíso,Estándar,2022-02-05,50,Teclado Mecánico,Electrónica,32000,79990,196,60.0,Alto,Stock normal
+5427,2023-06-29,49,2005,1,24990,0,24990,24990.0,6,2023,Daniela,Gutiérrez,daniela.gutiérrez49@gmail.com,Metropolitana,Estándar,2020-09-25,66,Poleron Algodón,Ropa,8500,24990,29,66.0,Alto,Stock bajo
+5428,2023-03-26,25,1004,1,23740,5,23740,22553.0,3,2023,Camila,Díaz,camila.díaz25@gmail.com,Metropolitana,Premium,2020-02-29,73,Mouse Inalámbrico,Electrónica,9000,24990,58,64.0,Alto,Stock normal
+5429,2023-01-18,90,2007,1,5990,0,5990,5990.0,1,2023,Valentina,Díaz,valentina.díaz90@gmail.com,Metropolitana,Estándar,2021-03-31,60,Calcetines Pack 3,Ropa,1800,5990,183,69.9,Alto,Stock normal
+5430,2023-02-19,71,3003,2,13491,10,26982,24284.0,2,2023,Isidora,Muñoz,isidora.muñoz71@gmail.com,Metropolitana,Básico,2021-02-26,61,Organizador Cajones,Hogar,5000,14990,172,66.6,Alto,Stock normal
+5431,2023-05-30,187,3004,1,22491,10,22491,20242.0,5,2023,Fernanda,Espinoza,fernanda.espinoza187@gmail.com,Metropolitana,Premium,2020-01-20,74,Lámpara LED Escritorio,Hogar,9000,24990,78,64.0,Alto,Stock normal
+5432,2023-03-07,144,2005,1,24990,0,24990,24990.0,3,2023,Diego,Vargas,diego.vargas144@gmail.com,Metropolitana,Premium,2020-04-07,72,Poleron Algodón,Ropa,8500,24990,29,66.0,Alto,Stock bajo
+5433,2023-02-25,72,2004,1,49990,0,49990,49990.0,2,2023,Javiera,Rojas,javiera.rojas72@gmail.com,Valparaíso,Premium,2020-03-12,73,Zapatillas Running,Ropa,19000,49990,5,62.0,Alto,Stock crítico
+5434,2023-05-14,151,4001,1,35991,10,35991,32392.0,5,2023,María,Contreras,maría.contreras151@gmail.com,Valparaíso,Premium,2020-06-27,69,Mochila Urban,Accesorios,14000,39990,100,65.0,Alto,Stock normal
+5435,2023-06-01,155,3002,3,28490,5,85470,81196.0,6,2023,Andrés,Pérez,andrés.pérez155@gmail.com,Metropolitana,Estándar,2021-01-27,62,Juego de Camas 2P,Hogar,11000,29990,111,63.3,Alto,Stock normal
+5436,2023-06-07,172,4007,1,14990,0,14990,14990.0,6,2023,Fernanda,Vargas,fernanda.vargas172@gmail.com,Los Lagos,Estándar,2021-08-26,55,Paraguas Compacto,Accesorios,4500,14990,51,70.0,Alto,Stock normal
+5437,2023-03-01,56,1006,3,132990,5,398970,379022.0,3,2023,Sofía,Díaz,sofía.díaz56@gmail.com,O'Higgins,Básico,2021-11-24,52,"Monitor 24""",Electrónica,68000,139990,106,51.4,Alto,Stock normal
+5438,2023-02-06,43,4007,2,14990,0,29980,29980.0,2,2023,Daniela,Herrera,daniela.herrera43@gmail.com,Metropolitana,Premium,2022-02-10,49,Paraguas Compacto,Accesorios,4500,14990,51,70.0,Alto,Stock normal
+5439,2023-01-14,36,4005,1,7990,0,7990,7990.0,1,2023,Felipe,Vargas,felipe.vargas36@gmail.com,Metropolitana,Básico,2022-01-17,50,Pulsera Silicona,Accesorios,1500,7990,55,81.2,Alto,Stock normal
+5440,2023-03-19,129,1008,1,54990,0,54990,54990.0,3,2023,Felipe,Castro,felipe.castro129@gmail.com,Maule,Premium,2022-03-07,49,Disco Duro Externo 1TB,Electrónica,22000,54990,83,60.0,Alto,Stock normal
+5441,2023-04-09,181,4007,1,13491,10,13491,12142.0,4,2023,Javiera,Sepúlveda,javiera.sepúlveda181@gmail.com,Metropolitana,Premium,2020-11-29,64,Paraguas Compacto,Accesorios,4500,14990,51,70.0,Alto,Stock normal
+5442,2023-03-23,136,1006,2,125991,10,251982,226784.0,3,2023,Catalina,Vargas,catalina.vargas136@gmail.com,Metropolitana,Básico,2020-07-30,68,"Monitor 24""",Electrónica,68000,139990,106,51.4,Alto,Stock normal
+5443,2023-02-12,163,3002,2,26991,10,53982,48584.0,2,2023,Felipe,Fuentes,felipe.fuentes163@gmail.com,Biobío,Premium,2021-02-27,61,Juego de Camas 2P,Hogar,11000,29990,111,63.3,Alto,Stock normal
+5444,2023-05-24,114,4008,1,12990,0,12990,12990.0,5,2023,Francisco,Fuentes,francisco.fuentes114@gmail.com,Metropolitana,Básico,2021-09-16,54,Lentes de Lectura,Accesorios,3500,12990,133,73.1,Alto,Stock normal
+5445,2023-01-31,143,4004,1,49990,0,49990,49990.0,1,2023,Sofía,Sepúlveda,sofía.sepúlveda143@gmail.com,Metropolitana,Estándar,2022-01-14,50,Reloj Digital,Accesorios,16000,49990,39,68.0,Alto,Stock bajo
+5446,2023-04-04,120,3007,2,34990,0,69980,69980.0,4,2023,Sebastián,Díaz,sebastián.díaz120@gmail.com,Antofagasta,Premium,2020-01-15,75,Jarra Filtro Agua,Hogar,13000,34990,48,62.8,Alto,Stock bajo
+5447,2023-05-24,49,4001,1,33992,15,33992,28893.0,5,2023,Daniela,Gutiérrez,daniela.gutiérrez49@gmail.com,Metropolitana,Estándar,2020-09-25,66,Mochila Urban,Accesorios,14000,39990,100,65.0,Alto,Stock normal
+5448,2023-01-03,51,4005,1,7990,0,7990,7990.0,1,2023,Javiera,Ramos,javiera.ramos51@gmail.com,Metropolitana,Estándar,2022-09-15,42,Pulsera Silicona,Accesorios,1500,7990,55,81.2,Alto,Stock normal
+5449,2023-05-31,80,3006,1,18990,0,18990,18990.0,5,2023,Diego,Martínez,diego.martínez80@gmail.com,Metropolitana,Estándar,2023-06-28,33,Set Toallas x3,Hogar,6500,18990,115,65.8,Alto,Stock normal
+5450,2023-03-06,129,1001,1,44990,0,44990,44990.0,3,2023,Felipe,Castro,felipe.castro129@gmail.com,Maule,Premium,2022-03-07,49,Audífonos Bluetooth,Electrónica,18000,44990,41,60.0,Alto,Stock bajo
+5451,2023-03-12,165,4007,1,12742,15,12742,10831.0,3,2023,Valentina,Castro,valentina.castro165@gmail.com,Valparaíso,Estándar,2022-12-11,39,Paraguas Compacto,Accesorios,4500,14990,51,70.0,Alto,Stock normal
+5452,2023-06-30,65,3002,1,25492,15,25492,21668.0,6,2023,Matías,Vargas,matías.vargas65@gmail.com,Metropolitana,Premium,2020-09-13,67,Juego de Camas 2P,Hogar,11000,29990,111,63.3,Alto,Stock normal
+5453,2023-01-08,184,4007,3,14240,5,42720,40584.0,1,2023,Alejandro,Pérez,alejandro.pérez184@gmail.com,Maule,Básico,2020-01-25,74,Paraguas Compacto,Accesorios,4500,14990,51,70.0,Alto,Stock normal
+5454,2023-05-06,45,4007,2,14240,5,28480,27056.0,5,2023,Catalina,Muñoz,catalina.muñoz45@gmail.com,Antofagasta,Estándar,2021-01-01,63,Paraguas Compacto,Accesorios,4500,14990,51,70.0,Alto,Stock normal
+5455,2023-05-20,27,1003,1,56990,5,56990,54140.0,5,2023,María,Herrera,maría.herrera27@gmail.com,Coquimbo,Básico,2020-09-09,67,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5456,2023-02-09,181,2004,2,49990,0,99980,99980.0,2,2023,Javiera,Sepúlveda,javiera.sepúlveda181@gmail.com,Metropolitana,Premium,2020-11-29,64,Zapatillas Running,Ropa,19000,49990,5,62.0,Alto,Stock crítico
+5457,2023-04-18,31,1004,1,23740,5,23740,22553.0,4,2023,Andrés,Vargas,andrés.vargas31@gmail.com,La Araucanía,Estándar,2021-04-02,60,Mouse Inalámbrico,Electrónica,9000,24990,58,64.0,Alto,Stock normal
+5458,2023-03-22,25,3002,3,29990,0,89970,89970.0,3,2023,Camila,Díaz,camila.díaz25@gmail.com,Metropolitana,Premium,2020-02-29,73,Juego de Camas 2P,Hogar,11000,29990,111,63.3,Alto,Stock normal
+5459,2023-06-07,189,1002,1,15190,5,15190,14430.0,6,2023,Fernanda,Herrera,fernanda.herrera189@gmail.com,Maule,Premium,2022-06-28,45,Cargador Rápido USB-C,Electrónica,6000,15990,73,62.5,Alto,Stock normal
+5460,2023-03-23,182,2003,2,56990,5,113980,108281.0,3,2023,Felipe,Espinoza,felipe.espinoza182@gmail.com,Metropolitana,Premium,2020-10-20,65,Parka Impermeable,Ropa,23000,59990,130,61.7,Alto,Stock normal
+5461,2023-04-04,133,1001,3,44990,0,134970,134970.0,4,2023,Matías,Sepúlveda,matías.sepúlveda133@gmail.com,Metropolitana,Estándar,2020-06-18,69,Audífonos Bluetooth,Electrónica,18000,44990,41,60.0,Alto,Stock bajo
+5462,2023-06-20,172,1004,1,22491,10,22491,20242.0,6,2023,Fernanda,Vargas,fernanda.vargas172@gmail.com,Los Lagos,Estándar,2021-08-26,55,Mouse Inalámbrico,Electrónica,9000,24990,58,64.0,Alto,Stock normal
+5463,2023-05-09,38,3002,1,29990,0,29990,29990.0,5,2023,Isidora,Fuentes,isidora.fuentes38@gmail.com,Metropolitana,Estándar,2022-08-01,44,Juego de Camas 2P,Hogar,11000,29990,111,63.3,Alto,Stock normal
+5464,2023-03-12,156,2005,1,24990,0,24990,24990.0,3,2023,Andrés,Martínez,andrés.martínez156@gmail.com,Los Lagos,Estándar,2023-02-21,37,Poleron Algodón,Ropa,8500,24990,29,66.0,Alto,Stock bajo
+5465,2023-06-12,192,1001,1,42740,5,42740,40603.0,6,2023,Sofía,Díaz,sofía.díaz192@gmail.com,Valparaíso,Básico,2020-07-29,68,Audífonos Bluetooth,Electrónica,18000,44990,41,60.0,Alto,Stock bajo
+5466,2023-01-31,88,4006,1,23740,5,23740,22553.0,1,2023,Andrés,Vargas,andrés.vargas88@gmail.com,Metropolitana,Estándar,2020-07-01,69,Porta Notebook,Accesorios,8000,24990,129,68.0,Alto,Stock normal
+5467,2023-05-25,119,1006,1,139990,0,139990,139990.0,5,2023,Matías,Contreras,matías.contreras119@gmail.com,Metropolitana,Premium,2022-11-19,40,"Monitor 24""",Electrónica,68000,139990,106,51.4,Alto,Stock normal
+5468,2023-01-23,48,3005,1,10192,15,10192,8663.0,1,2023,Felipe,Fuentes,felipe.fuentes48@gmail.com,Metropolitana,Estándar,2021-08-02,56,Cojín Decorativo,Hogar,3500,11990,192,70.8,Alto,Stock normal
+5469,2023-02-13,3,2006,1,19990,0,19990,19990.0,2,2023,Sebastián,Flores,sebastián.flores3@gmail.com,Biobío,Básico,2020-08-11,68,Pantalón de Buzo,Ropa,6000,19990,22,70.0,Alto,Stock bajo
+5470,2023-03-05,79,2005,2,23740,5,47480,45106.0,3,2023,Daniela,Pérez,daniela.pérez79@gmail.com,Biobío,Básico,2021-03-18,60,Poleron Algodón,Ropa,8500,24990,29,66.0,Alto,Stock bajo
+5471,2023-03-21,14,4001,2,39990,0,79980,79980.0,3,2023,Fernanda,González,fernanda.gonzález14@gmail.com,Biobío,Estándar,2022-12-22,39,Mochila Urban,Accesorios,14000,39990,100,65.0,Alto,Stock normal
+5472,2023-02-05,145,3005,1,10791,10,10791,9712.0,2,2023,Sofía,González,sofía.gonzález145@gmail.com,Metropolitana,Premium,2021-10-20,53,Cojín Decorativo,Hogar,3500,11990,192,70.8,Alto,Stock normal
+5473,2023-03-11,52,2004,3,49990,0,149970,149970.0,3,2023,Fernanda,Contreras,fernanda.contreras52@gmail.com,Metropolitana,Básico,2021-02-04,62,Zapatillas Running,Ropa,19000,49990,5,62.0,Alto,Stock crítico
+5474,2023-04-23,68,1006,1,132990,5,132990,126340.0,4,2023,Matías,Rojas,matías.rojas68@gmail.com,Valparaíso,Básico,2023-04-12,35,"Monitor 24""",Electrónica,68000,139990,106,51.4,Alto,Stock normal
+5475,2023-03-31,198,4005,2,7590,5,15180,14421.0,3,2023,Isidora,Torres,isidora.torres198@gmail.com,Antofagasta,Premium,2020-06-22,69,Pulsera Silicona,Accesorios,1500,7990,55,81.2,Alto,Stock normal
+5476,2023-02-13,10,4001,1,37990,5,37990,36090.0,2,2023,Matías,Morales,matías.morales10@gmail.com,Biobío,Estándar,2021-11-20,52,Mochila Urban,Accesorios,14000,39990,100,65.0,Alto,Stock normal
+5477,2023-06-29,112,3007,1,33240,5,33240,31578.0,6,2023,Catalina,Gutiérrez,catalina.gutiérrez112@gmail.com,Los Lagos,Estándar,2020-08-29,67,Jarra Filtro Agua,Hogar,13000,34990,48,62.8,Alto,Stock bajo
+5478,2023-03-15,54,3006,1,18990,0,18990,18990.0,3,2023,Fernanda,Fuentes,fernanda.fuentes54@gmail.com,Coquimbo,Básico,2022-05-24,46,Set Toallas x3,Hogar,6500,18990,115,65.8,Alto,Stock normal
+5479,2023-03-10,24,2006,1,19990,0,19990,19990.0,3,2023,Matías,Gutiérrez,matías.gutiérrez24@gmail.com,Metropolitana,Premium,2021-03-09,61,Pantalón de Buzo,Ropa,6000,19990,22,70.0,Alto,Stock bajo
+5480,2023-01-09,30,2004,1,49990,0,49990,49990.0,1,2023,Martín,Fuentes,martín.fuentes30@gmail.com,Antofagasta,Básico,2022-02-20,49,Zapatillas Running,Ropa,19000,49990,5,62.0,Alto,Stock crítico
+5481,2023-03-24,96,4001,1,33992,15,33992,28893.0,3,2023,Valentina,Castro,valentina.castro96@gmail.com,Biobío,Premium,2020-09-15,66,Mochila Urban,Accesorios,14000,39990,100,65.0,Alto,Stock normal
+5482,2023-03-24,180,1007,1,35991,10,35991,32392.0,3,2023,Javiera,Soto,javiera.soto180@gmail.com,Metropolitana,Básico,2022-10-01,42,Webcam HD,Electrónica,16000,39990,183,60.0,Alto,Stock normal
+5483,2023-01-03,41,4003,1,29990,0,29990,29990.0,1,2023,Sofía,Espinoza,sofía.espinoza41@gmail.com,Metropolitana,Básico,2022-10-25,41,Gafas de Sol,Accesorios,9000,29990,185,70.0,Alto,Stock normal
+5484,2023-01-26,48,3007,1,34990,0,34990,34990.0,1,2023,Felipe,Fuentes,felipe.fuentes48@gmail.com,Metropolitana,Estándar,2021-08-02,56,Jarra Filtro Agua,Hogar,13000,34990,48,62.8,Alto,Stock bajo
+5485,2023-02-17,193,1002,1,15190,5,15190,14430.0,2,2023,Sebastián,Pérez,sebastián.pérez193@gmail.com,Metropolitana,Premium,2021-04-04,60,Cargador Rápido USB-C,Electrónica,6000,15990,73,62.5,Alto,Stock normal
+5486,2023-06-01,148,4004,2,49990,0,99980,99980.0,6,2023,Martín,Sepúlveda,martín.sepúlveda148@gmail.com,Metropolitana,Básico,2020-01-28,74,Reloj Digital,Accesorios,16000,49990,39,68.0,Alto,Stock bajo
+5487,2023-03-04,65,3008,1,44990,0,44990,44990.0,3,2023,Matías,Vargas,matías.vargas65@gmail.com,Metropolitana,Premium,2020-09-13,67,Alfombra 120x80,Hogar,18000,44990,50,60.0,Alto,Stock normal
+5488,2023-04-13,77,1003,3,53991,10,161973,145776.0,4,2023,Andrés,Castro,andrés.castro77@gmail.com,Metropolitana,Básico,2020-07-21,68,Parlante Portátil,Electrónica,25000,59990,196,58.3,Alto,Stock normal
+5489,2023-05-10,28,4003,1,29990,0,29990,29990.0,5,2023,Fernanda,Gutiérrez,fernanda.gutiérrez28@gmail.com,Biobío,Premium,2022-10-04,41,Gafas de Sol,Accesorios,9000,29990,185,70.0,Alto,Stock normal
+5490,2023-05-28,103,1002,1,15990,0,15990,15990.0,5,2023,Catalina,Rojas,catalina.rojas103@gmail.com,Metropolitana,Premium,2020-04-27,71,Cargador Rápido USB-C,Electrónica,6000,15990,73,62.5,Alto,Stock normal
+5491,2023-03-18,153,2005,3,23740,5,71220,67659.0,3,2023,Daniela,Contreras,daniela.contreras153@gmail.com,Biobío,Premium,2020-07-21,68,Poleron Algodón,Ropa,8500,24990,29,66.0,Alto,Stock bajo
+5492,2023-02-05,34,3006,2,18990,0,37980,37980.0,2,2023,Diego,Pérez,diego.pérez34@gmail.com,Los Lagos,Básico,2022-02-17,49,Set Toallas x3,Hogar,6500,18990,115,65.8,Alto,Stock normal
+5493,2023-01-24,80,2002,2,29990,0,59980,59980.0,1,2023,Diego,Martínez,diego.martínez80@gmail.com,Metropolitana,Estándar,2023-06-28,33,Jeans Slim,Ropa,11000,29990,48,63.3,Alto,Stock bajo
+5494,2023-02-12,118,1001,1,44990,0,44990,44990.0,2,2023,Javiera,Fuentes,javiera.fuentes118@gmail.com,Metropolitana,Estándar,2020-07-26,68,Audífonos Bluetooth,Electrónica,18000,44990,41,60.0,Alto,Stock bajo
+5495,2023-02-14,78,3004,1,24990,0,24990,24990.0,2,2023,Sofía,Silva,sofía.silva78@gmail.com,Metropolitana,Estándar,2020-10-17,65,Lámpara LED Escritorio,Hogar,9000,24990,78,64.0,Alto,Stock normal
+5496,2023-02-22,112,1006,2,139990,0,279980,279980.0,2,2023,Catalina,Gutiérrez,catalina.gutiérrez112@gmail.com,Los Lagos,Estándar,2020-08-29,67,"Monitor 24""",Electrónica,68000,139990,106,51.4,Alto,Stock normal
+5497,2023-05-23,199,3008,1,44990,0,44990,44990.0,5,2023,Pablo,Pérez,pablo.pérez199@gmail.com,Metropolitana,Estándar,2022-12-22,39,Alfombra 120x80,Hogar,18000,44990,50,60.0,Alto,Stock normal
+5498,2023-01-26,121,4002,1,16992,15,16992,14443.0,1,2023,María,Silva,maría.silva121@gmail.com,Valparaíso,Estándar,2022-02-05,50,Billetera Cuero,Accesorios,6000,19990,52,70.0,Alto,Stock normal
+5499,2023-06-21,97,4006,2,22491,10,44982,40484.0,6,2023,Felipe,Ramos,felipe.ramos97@gmail.com,Maule,Básico,2020-04-18,71,Porta Notebook,Accesorios,8000,24990,129,68.0,Alto,Stock normal
+5500,2023-01-25,100,2001,1,11042,15,11042,9386.0,1,2023,Alejandro,Sepúlveda,alejandro.sepúlveda100@gmail.com,Metropolitana,Básico,2022-05-26,46,Polera Básica,Ropa,4000,12990,6,69.2,Alto,Stock crítico

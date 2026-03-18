@@ -46,6 +46,70 @@ La sesión dedica 10 minutos explícitos a la síntesis de las tres semanas. El 
 
 La actividad de repaso "Caso ServiRápido" materializa esta síntesis: obliga a los estudiantes a aplicar simultáneamente conceptos de las tres semanas (tipos de SI, CMI, ETL) a un contexto nuevo, verificando si han incorporado el marco como herramienta de análisis o solo como contenido para la evaluación. Tiene una doble función: repasar y calibrar el nivel de preparación para la Solemne 1.
 
+---
+
+#### Caso ServiRápido — Enunciado y Respuesta de Referencia
+
+**Enunciado (presentar a los estudiantes)**
+
+> ServiRápido es una empresa de delivery de comida con sede en Temuco. Fundada en 2019, comenzó con 12 repartidores y hoy opera con 380, procesa 4.200 pedidos diarios y tiene convenio con 640 restaurantes en tres regiones. La empresa usa un sistema para registrar pedidos, otro para gestionar repartidores y un tercero para cobrar a los restaurantes. Los tres sistemas fueron desarrollados por proveedores distintos y no se comunican entre sí.
+>
+> Valentina, la gerenta de operaciones, necesita responder tres preguntas cada lunes: ¿Cuántos pedidos se entregaron tarde la semana pasada?, ¿qué restaurantes tienen mayor tasa de cancelación? y ¿cuál es el tiempo promedio de entrega por zona?. Hoy, Valentina obtiene esas respuestas exportando tres Excel distintos, cruzándolos a mano y calculando en una planilla propia. El proceso le toma entre 3 y 4 horas cada semana.
+>
+> Además, el equipo de TI detectó que la columna "tiempo de entrega" se registra en minutos en el sistema de repartidores pero en segundos en el sistema de pedidos. El campo "nombre del restaurante" tiene 47 variantes ortográficas distintas para los mismos 640 locales.
+>
+> **Preguntas:**
+> 1. ¿Qué tipo de SI es el sistema de registro de pedidos de ServiRápido? ¿Y la planilla de Valentina?
+> 2. Diseña tres KPIs que debería incluir un CMI para Valentina. Para cada KPI indica el nombre, la fórmula y la fuente de datos.
+> 3. ¿Qué problema de calidad de datos afecta a ServiRápido? Identifica al menos dos dimensiones de calidad comprometidas.
+> 4. Valentina quiere automatizar su reporte semanal. ¿Qué arquitectura le recomendarías? Describe brevemente el rol del OLTP, el ETL y el DW en la solución.
+> 5. El equipo de TI propone que Juan, el analista de datos, se conecte directamente a la base de datos de pedidos para generar el reporte de Valentina. ¿Es una buena decisión? ¿Por qué sí o por qué no?
+
+---
+
+**Respuesta de referencia (uso del profesor)**
+
+**Pregunta 1 — Tipos de SI**
+
+El sistema de registro de pedidos es un **TPS (Transaction Processing System)** u **OLTP**: registra operaciones unitarias en tiempo real (un pedido = una transacción), involucra al nivel operativo (repartidores, restaurantes) y su prioridad es velocidad y consistencia en cada escritura. La planilla de Valentina es un **DSS (Decision Support System)** rudimentario o, en el lenguaje del curso, un sistema de **BI artesanal**: consolida datos de múltiples fuentes para apoyar decisiones de nivel táctico. No es un CMI formal porque no está automatizado, no tiene indicadores estandarizados y depende del trabajo manual de una persona.
+
+**Pregunta 2 — KPIs para el CMI de Valentina**
+
+| KPI | Fórmula | Fuente |
+|---|---|---|
+| **Tasa de entrega a tiempo** | (Pedidos entregados en ≤ tiempo prometido / Total pedidos entregados) × 100 | Sistema de repartidores + sistema de pedidos |
+| **Tasa de cancelación por restaurante** | (Pedidos cancelados por restaurante / Total pedidos del restaurante) × 100 | Sistema de pedidos |
+| **Tiempo promedio de entrega por zona** | Suma(tiempo de entrega por zona) / Total pedidos de esa zona | Sistema de repartidores (una vez estandarizado a minutos) |
+
+Nota para el profesor: los estudiantes deben justificar la fuente. Si dicen "el sistema" sin especificar cuál, pedir que identifiquen cuál de los tres sistemas tiene el dato. Esto conecta con la necesidad del ETL para integrar fuentes heterogéneas.
+
+**Pregunta 3 — Calidad de datos**
+
+Dimensiones comprometidas (W02):
+
+- **Consistencia**: el tiempo de entrega está en unidades distintas en dos sistemas (minutos vs. segundos). Un JOIN directo produciría datos incorrectos sin transformación previa. Es inconsistencia entre sistemas.
+- **Exactitud / Unicidad**: las 47 variantes ortográficas del nombre del restaurante impiden agrupar correctamente. Un reporte por restaurante mezclaría filas del mismo local bajo identidades distintas, generando duplicados analíticos. Es un problema de estandarización que el ETL debe resolver en la capa de integración del DW.
+
+Dimensión adicional válida: **Completitud**, si hay pedidos sin tiempo de entrega registrado (repartidores que olvidan marcar la entrega en el sistema).
+
+**Pregunta 4 — Arquitectura recomendada**
+
+ServiRápido necesita la arquitectura **OLTP → ETL → DW → BI**:
+
+- **OLTP** (los tres sistemas actuales): continúan operando como están. No se modifican. Su función es registrar operaciones en tiempo real; no deben usarse para análisis.
+- **ETL** (proceso automático, idealmente nocturno): extrae los datos de los tres sistemas, aplica las transformaciones necesarias (convertir segundos a minutos, estandarizar nombres de restaurantes a una forma canónica, resolver el campo "zona" si tiene variantes) y carga los datos limpios en el DW. Este proceso reemplaza las 3–4 horas semanales de Valentina.
+- **DW** (repositorio analítico centralizado): almacena los datos limpios e integrados de los tres sistemas en un modelo optimizado para consultas. La capa de Staging recibe los datos brutos; la capa de integración aplica las transformaciones; el Data Mart de operaciones expone exactamente las tablas que necesita el BI de Valentina.
+- **BI** (Power BI o similar): se conecta al Data Mart, no a los OLTP. El reporte de Valentina se actualiza automáticamente cada lunes sin intervención manual.
+
+**Pregunta 5 — Conexión directa al OLTP**
+
+No es una buena decisión, por dos razones:
+
+1. **Degradación operacional**: la consulta analítica de Juan (`GROUP BY`, `JOIN` entre tablas de pedidos y repartidores) requiere leer grandes volúmenes de datos y mantiene bloqueos sobre esas filas mientras se ejecuta. Esto interfiere con los INSERT de nuevos pedidos, generando latencia o bloqueos en el sistema operativo. Para una empresa con 4.200 pedidos diarios, un bloqueo de 20–30 minutos durante el reporte es operacionalmente inaceptable.
+2. **Datos sin limpiar**: el OLTP tiene las inconsistencias descritas (unidades distintas, 47 variantes de nombres). Un reporte construido directamente sobre esos datos producirá resultados incorrectos sin que Juan necesariamente lo note. El reporte puede ser técnicamente funcional pero analíticamente erróneo.
+
+La solución correcta es que Juan se conecte al **Data Mart** del DW, donde los datos ya fueron limpiados y estandarizados por el ETL. Si no existe aún el DW, la solución mínima es que Juan aplique las transformaciones en Power Query antes de construir el reporte, documentando las reglas de transformación para que sean reproducibles.
+
 ### Fase 4 — Solemne 1 (segunda parte de la sesión)
 
 La evaluación individual ocupa la segunda parte de la sesión. Antes de iniciar, el profesor debe explicitar el énfasis: **razonamiento y justificación, no memorización**. Las preguntas de la Solemne no preguntan definiciones; preguntan por aplicación de conceptos a casos nuevos, diseño de KPIs para contextos específicos, y diagnóstico de problemas de calidad en datasets ficticios. Un estudiante que memorizó todas las definiciones pero no entiende por qué el CMI depende del ETL tendrá dificultades.

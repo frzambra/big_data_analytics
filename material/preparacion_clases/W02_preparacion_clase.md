@@ -61,25 +61,56 @@ La sesión cierra con la dimensión que con mayor frecuencia se omite en los cur
 
 Esta pregunta fuerza a los estudiantes a pensar en jerarquías de valor entre sistemas, no solo en sus definiciones. Anticipar: probablemente defenderán el TPS como irremplazable (sin él no hay operación), lo que abre la discusión sobre dependencias de datos.
 
+**Respuesta de referencia:**
+- **Irremplazable: el TPS.** Sin él no se registran pedidos, pagos ni entregas. El TPS es la fuente de todos los datos del sistema; eliminarlo colapsa la operación en horas y deja sin insumos a todos los demás sistemas. Es el único cuya ausencia destruye el negocio en tiempo real.
+- **Más prescindible a corto plazo: el EIS.** Roberto puede tomar decisiones estratégicas usando los dashboards del BI directamente, aunque con menos comodidad. El EIS agrega valor (consolida, abstrae, personaliza la vista ejecutiva) pero no es el único camino al dato.
+- **Argumento central — jerarquía de dependencias**: los sistemas de información no tienen el mismo peso operacional. El TPS es fundacional; el BI, el CRM y el EIS son capas construidas sobre los datos que el TPS genera. Eliminar una capa superior degrada la calidad de las decisiones pero no detiene las operaciones. Eliminar la base colapsa todo. Esta jerarquía explica por qué la arquitectura OLTP → ETL → DW → BI tiene ese orden y no el inverso.
+- **Punto de debate productivo**: ¿se puede eliminar el CRM si TechStyle tiene 8,5 millones de clientes? La historia de compras y comportamiento está parcialmente en el TPS, pero la lógica de segmentación y retención está en el CRM. Eliminar el CRM no colapsa la operación, pero puede costar más en ventas perdidas de lo que ahorra en licencias.
+
 **Pregunta 2 — Evaluación de KPIs** *(después del CMI y los criterios SMART)*
 > "Roberto tiene el siguiente KPI en su dashboard: 'Satisfacción del cliente'. ¿Es este un buen KPI para el CMI? ¿Qué tendría que cambiarle para que cumpla los criterios SMART? ¿De qué sistema de TechStyle provendría el dato?"
 
 Obliga a aplicar inmediatamente los criterios SMART y a trazar la cadena que va del KPI hasta su fuente de datos. Demuestra que definir un KPI es también definir un requisito sobre el sistema de datos que lo alimenta.
+
+**Respuesta de referencia:**
+- **"Satisfacción del cliente" NO es un buen KPI**. Falla en tres criterios SMART: no es Específico (¿satisfacción de qué? ¿del producto, del envío, de la atención postventa?), no es Medible (¿en qué escala? ¿con qué instrumento?), y no es Acotado en el tiempo (¿medido cuándo? ¿con qué frecuencia?).
+- **Versión SMART**: *"Índice NPS post-entrega ≥ 70 puntos, medido mensualmente sobre una muestra aleatoria de 500 clientes que recibieron pedido en los últimos 30 días."* Este KPI es Específico (NPS post-entrega), Medible (escala numérica 0–100), Alcanzable (meta de 70 es ambiciosa pero razonable para el sector), Relevante (mide directamente la experiencia del cliente con el servicio central de TechStyle) y Acotado en el tiempo (mensual, ventana de 30 días).
+- **Fuente del dato**: el CRM (encuesta post-entrega automatizada), posiblemente enriquecido con datos del TPS (tiempo real de entrega vs. prometido) para correlacionar satisfacción con desempeño logístico.
+- **Argumento clave**: definir un KPI es también definir un requisito de datos. Si TechStyle no tiene un proceso de encuesta post-entrega en su CRM, el KPI NPS es imposible de medir aunque esté perfectamente formulado. El CMI obliga a pensar simultáneamente en la estrategia y en la infraestructura de datos que la hace observable.
 
 **Pregunta 3 — Análisis causal del caso de bonos** *(después del caso TechStyle)*
 > "En el caso de los bonos mal pagados, se identificaron fallas en el TPS, en el BI y en el proceso de auditoría. Si tuvieran que implementar una sola medida para evitar que esto vuelva a ocurrir, ¿cuál sería y en qué punto del sistema la aplicarían?"
 
 Desarrolla el pensamiento sistémico y el diseño de controles. No hay una respuesta única correcta; el debate entre validación en el TPS versus auditoría en el BI es pedagógicamente productivo.
 
+**Respuesta de referencia:**
+- **La causa raíz está en el TPS**, no en el BI ni en la auditoría. El campo `fecha_entrega` no tenía una definición de negocio formal: ¿es la fecha en que el repartidor marca "entregado" en la app? ¿La fecha en que el cliente confirma recepción? ¿La fecha del GPS? Sin una regla de negocio explícita, distintos repartidores registraron el mismo evento de formas distintas, generando las 847 fechas imposibles.
+- **La medida de mayor impacto**: **validación en el punto de entrada al TPS**. Implementar una regla de negocio a nivel de base de datos: `fecha_entrega` no puede ser posterior a la fecha de registro, no puede ser anterior a `fecha_pedido`, y solo puede registrarse cuando el GPS confirma proximidad al destino o el cliente confirma recepción. Esta regla impide que el dato inválido entre al sistema; todo lo que viene después (BI, auditoría) no puede compensar datos que ya ingresaron mal.
+- **¿Por qué no el BI?** Un control de anomalías en el BI (alerta cuando `fecha_entrega` está 30 días en el futuro) es un control compensatorio, no preventivo. El dato inválido ya está en el sistema; el BI lo detecta tarde y no siempre. Además, un analista ocupado puede pasar por alto la alerta.
+- **¿Por qué no la auditoría?** Por la misma razón: es el último eslabón y depende de que alguien la ejecute correctamente cada vez. Los controles manuales fallan con el tiempo por fatiga, sobrecarga o cambio de personal.
+- **Punto de debate productivo**: algunos estudiantes pueden argumentar que la medida más realista es la alerta en el BI, porque modificar el TPS es costoso y requiere coordinación con logística. Esta es una respuesta válida desde la perspectiva de la gestión del cambio, aunque técnicamente inferior. El debate entre la solución óptima y la solución factible es productivo.
+
 **Pregunta 4 — Dilema ético** *(después del marco ético y legal)*
 > "TechStyle descubre que puede predecir con 87% de precisión qué clientes van a cancelar su suscripción, usando datos de comportamiento de navegación que los clientes entregaron 'para mejorar la experiencia de compra'. ¿Pueden usar esos datos para una campaña de retención? ¿Dónde está el límite entre personalización y vigilancia?"
 
 Introduce la tensión entre valor de negocio y privacidad del usuario. Conecta con el principio de proporcionalidad y con el concepto de finalidad declarada en la Ley 19.628.
 
+**Respuesta de referencia:**
+- **¿Pueden usar esos datos? No sin nuevo consentimiento.** La Ley 19.628 establece el principio de **finalidad**: los datos solo pueden usarse para el propósito declarado al momento de su recopilación. "Mejorar la experiencia de compra" y "predecir y contactar a clientes en riesgo de cancelar para una campaña de retención" son finalidades distintas. Usar los datos de navegación para la campaña sin obtener consentimiento explícito para ese nuevo uso constituye una infracción al principio de finalidad, independientemente de que el dato ya esté en manos de TechStyle.
+- **¿Dónde está el límite?** El criterio es el **principio de proporcionalidad**: ¿se está usando el mínimo de datos necesario para lograr el objetivo? Una campaña de retención puede lograrse sin perfilado individual de navegación, por ejemplo: ofrecer mejoras de servicio generalizadas a todos los clientes, no solo a los que el modelo identifica como en riesgo. Cuando el análisis individual de comportamiento se convierte en el mecanismo de acción, la empresa sabe más sobre las intenciones del cliente que el propio cliente conscientemente ha comunicado. Ese es el umbral de la vigilancia.
+- **Personalización vs. vigilancia**: la personalización sirve al cliente (hace su experiencia mejor en términos que el cliente valora y esperaría). La vigilancia sirve a la empresa extrayendo valor del comportamiento del cliente sin su conocimiento activo. Un cliente que sabe que su navegación se registra "para mejorar la experiencia" no espera que eso signifique "para identificarme como cliente en riesgo y enviarme una campaña de retención". La distancia entre lo que el cliente esperaba y lo que TechStyle hace con el dato es la medida del problema ético.
+- **Solución compatible con privacidad por diseño**: recopilar consentimiento explícito y separado para el uso analítico-predictivo, o alternativamente, basar la campaña de retención en datos que el cliente entregó voluntariamente para ese fin (encuesta de satisfacción, historial de contacto al servicio al cliente).
+
 **Pregunta 5 — Integración y proyección** *(al cierre)*
 > "Si el gobierno de datos asigna a cada área de TechStyle la responsabilidad sobre sus propios datos, ¿quién debería ser el Data Owner del campo `fecha_entrega`? ¿Logística? ¿TI? ¿El cliente? ¿Y quién debería ser el Data Steward que valida la calidad día a día?"
 
 Personaliza el concepto de gobierno de datos en el caso concreto de TechStyle y genera discusión sobre la intersección entre estructura organizacional y gestión de datos.
+
+**Respuesta de referencia:**
+- **Data Owner: Logística**, no TI y no el cliente. El Data Owner debe ser el área de negocio que usa el dato para tomar decisiones y que es responsable de su exactitud. Logística es el área cuyo desempeño se mide con `fecha_entrega` (tasa de entregas a tiempo, tiempo promedio de despacho) y cuyos procesos operativos determinan cuándo y cómo se registra. TI tiene la responsabilidad técnica del sistema que almacena el dato, pero no tiene mandato sobre su definición de negocio. El cliente confirma la recepción, pero no forma parte de la estructura organizacional de TechStyle y no puede ser Data Owner.
+- **Matiz importante**: si `fecha_entrega` se usa además para calcular bonos (Finanzas) y para medir satisfacción (Marketing), el Data Owner de Logística no puede definirlo unilateralmente. En ese caso, se requiere un proceso de alineación entre áreas con arbitraje del gobierno de datos, con Logística como área líder pero no única.
+- **Data Steward**: idealmente, un analista de operaciones en Logística con suficiente comprensión de los sistemas de datos. Sus responsabilidades diarias: ejecutar controles de calidad automatizados (verificar que no hay fechas futuras, que no hay fechas anteriores al pedido, que el % de nulos no supera el umbral acordado), escalar anomalías al Data Owner antes de que lleguen al BI, y mantener actualizado el catálogo de datos con la definición vigente del campo.
+- **Conexión con el caso de bonos**: si esta estructura hubiera existido antes del incidente, el Data Steward habría detectado las 847 fechas inválidas durante el proceso de carga al DW (en la capa de Staging), bloqueado esas filas y notificado a Logística para corrección antes de que llegaran al cálculo de bonos. El gobierno de datos no elimina los errores de origen, pero sí impide que se propaguen hasta causar daño.
 
 ---
 

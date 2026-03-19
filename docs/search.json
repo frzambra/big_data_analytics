@@ -2069,7 +2069,7 @@
     "href": "clases/W03_clase.html#actividad-de-repaso-caso-servirápido",
     "title": "Big Data, ETL y Síntesis de la Unidad 1",
     "section": "Actividad de Repaso: Caso ServiRápido",
-    "text": "Actividad de Repaso: Caso ServiRápido\nEmpresa de mantención del hogar. En grupos (10 min):\n\n¿Qué tipo de SI necesita en cada nivel organizacional?\nDiseña 2 KPIs por perspectiva del CMI.\n¿Qué dimensión de calidad es más crítica para el KPI “tiempo de respuesta al cliente”?\nDibuja el diagrama OLTP → ETL → DW para ServiRápido."
+    "text": "Actividad de Repaso: Caso ServiRápido\nEmpresa de mantención del hogar. En grupos:\n\n¿Qué tipo de SI necesita en cada nivel organizacional?\nDiseña 2 KPIs por perspectiva del CMI.\n¿Qué dimensión de calidad es más crítica para el KPI “tiempo de respuesta al cliente”?\nDibuja el diagrama OLTP → ETL → DW para ServiRápido."
   },
   {
     "objectID": "clases/W03_clase.html#puntos-clave",

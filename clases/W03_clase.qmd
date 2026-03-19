@@ -250,7 +250,7 @@ format:
 
 ## Actividad de Repaso: Caso ServiRápido
 
-**Empresa de mantención del hogar. En grupos (10 min)**:
+**Empresa de mantención del hogar. En grupos**:
 
 ::: {.incremental}
 1. ¿Qué tipo de SI necesita en cada nivel organizacional?

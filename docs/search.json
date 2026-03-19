@@ -2086,13 +2086,6 @@
     "text": "Preview del Laboratorio W03\nLab W03: Mini-ETL con Power Query\n\nRecibir 3 archivos CSV de TechStyle: oltp_ventas.csv, oltp_clientes.csv, oltp_productos.csv.\nEn Power Query: limpiar y estandarizar cada fuente (renombrar columnas, corregir fechas, filtrar valores inválidos).\nCargar a Power BI: construir un modelo estrella conectando las 3 tablas.\nCrear medidas DAX y un dashboard CMI con las 4 perspectivas.\nResponder: ¿qué categoría lidera las ventas? ¿qué productos tienen stock crítico?"
   },
   {
-    "objectID": "clases/W03_clase.html#solemne-1",
-    "href": "clases/W03_clase.html#solemne-1",
-    "title": "Big Data, ETL y Síntesis de la Unidad 1",
-    "section": "Solemne 1",
-    "text": "Solemne 1\nEvaluación individual – esta sesión (segunda parte)\n\nPonderación: 30% de la nota final.\n\nControl parcial acumulado (W02–W03): 10%\nPrueba escrita individual: 20%\n\nFormato: Análisis y aplicación a casos nuevos.\nÉnfasis: Razonamiento, no memorización. Justificación de tipos de SI y diseño de CMI.\n\n\n\n“El éxito depende de entender el por qué de cada decisión de diseño.”"
-  },
-  {
     "objectID": "clases/W03_clase.html#hacia-la-unidad-2",
     "href": "clases/W03_clase.html#hacia-la-unidad-2",
     "title": "Big Data, ETL y Síntesis de la Unidad 1",

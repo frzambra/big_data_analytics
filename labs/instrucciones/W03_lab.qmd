@@ -27,7 +27,7 @@ El problema: **cada sistema fue construido por equipos distintos**, en momentos 
 
 ## Instrucciones generales
 
-- Trabajarás **en parejas**.
+- Trabajarás **en grupos**.
 - Todo el trabajo se realiza en **Power BI Desktop** usando Power Query y la Vista de Informe.
 - **Duración total**: 2 horas (120 minutos)
 - Guarda el archivo frecuentemente como `W03_lab_[apellido1]_[apellido2].pbix`.

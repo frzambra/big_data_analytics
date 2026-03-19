@@ -259,6 +259,11 @@ def calcular_kpis(hechos: pd.DataFrame) -> dict:
                             [["nombre_producto", "stock", "alerta_stock"]]
                             .drop_duplicates("nombre_producto")
                             .sort_values("stock"),
+        "ventas_x_producto": (hechos.groupby(["nombre_producto", "categoria", "margen_pct"])
+                              .agg(venta_neta=("venta_neta", "sum"),
+                                   cantidad=("cantidad", "sum"))
+                              .reset_index()
+                              .sort_values("venta_neta", ascending=False)),
     }
 
 
@@ -376,6 +381,8 @@ def _pagina_analisis_productos(kpis: dict):
     fig.text(0.5, 0.952, "Perspectiva de Procesos Internos",
              ha="center", fontsize=10, color="#94a3b8", va="top")
 
+    prods = kpis["ventas_x_producto"]
+
     # ── Tarjeta: margen promedio + KPI procesos ────────────────────────────────
     ax_kpi = fig.add_subplot(gs[0, 0])
     ax_kpi.axis("off")
@@ -383,19 +390,69 @@ def _pagina_analisis_productos(kpis: dict):
               f"{kpis['margen_promedio']:.1f}%", "#f97316")
 
     # ── Dispersión: Ventas vs. Margen por producto ────────────────────────────
-    # (necesitamos ventas_x_producto — lo recalculamos desde hechos en el scope exterior)
     ax_dis = fig.add_subplot(gs[0, 1])
     ax_dis.set_facecolor("#1e293b")
-    ax_dis.text(0.5, 0.5,
-                "Ver tabla de productos\n(datos en consola)",
-                ha="center", va="center", color="#475569",
-                fontsize=10, transform=ax_dis.transAxes)
-    ax_dis.set_title("Scatter: Ventas vs. Margen", fontsize=10, color="white", pad=6)
+
+    COLORES_CAT = {
+        cat: c for cat, c in zip(
+            prods["categoria"].unique(),
+            ["#22d3ee", "#4ade80", "#f97316", "#a78bfa",
+             "#fbbf24", "#f472b6", "#34d399", "#60a5fa"],
+        )
+    }
+    for cat, grupo in prods.groupby("categoria"):
+        ax_dis.scatter(
+            grupo["margen_pct"], grupo["venta_neta"] / 1_000,
+            label=cat, color=COLORES_CAT.get(cat, "#94a3b8"),
+            alpha=0.80, s=60, edgecolors="none",
+        )
+
+    # Etiqueta del top-5 por venta
+    top5 = prods.nlargest(5, "venta_neta")
+    for _, row in top5.iterrows():
+        ax_dis.annotate(
+            row["nombre_producto"],
+            (row["margen_pct"], row["venta_neta"] / 1_000),
+            textcoords="offset points", xytext=(6, 4),
+            fontsize=6, color="white", alpha=0.85,
+        )
+
+    ax_dis.set_xlabel("Margen bruto (%)", color="#94a3b8", fontsize=8)
+    ax_dis.set_ylabel("Ventas netas (miles CLP)", color="#94a3b8", fontsize=8)
+    ax_dis.tick_params(colors="white", labelsize=7)
+    ax_dis.xaxis.set_tick_params(labelcolor="white")
+    ax_dis.yaxis.set_tick_params(labelcolor="white")
+    ax_dis.set_title("Scatter: Ventas vs. Margen por producto",
+                     fontsize=10, color="white", pad=6)
+    legend = ax_dis.legend(fontsize=7, facecolor="#1e293b",
+                           edgecolor="#334155", labelcolor="white",
+                           title="Categoría", title_fontsize=7)
+    legend.get_title().set_color("white")
     for spine in ax_dis.spines.values():
         spine.set_edgecolor("#334155")
 
+    # ── Top-10 productos por venta (barras horizontales) ──────────────────────
+    ax_top = fig.add_subplot(gs[1, 0])
+    ax_top.set_facecolor("#1e293b")
+    top10 = prods.nlargest(10, "venta_neta")
+    colores_top = [COLORES_CAT.get(c, "#94a3b8") for c in top10["categoria"]]
+    ax_top.barh(range(len(top10)), top10["venta_neta"].values,
+                color=colores_top, alpha=0.85)
+    ax_top.set_yticks(range(len(top10)))
+    ax_top.set_yticklabels(top10["nombre_producto"], fontsize=7, color="white")
+    ax_top.invert_yaxis()
+    ax_top.tick_params(colors="white", labelsize=7)
+    ax_top.xaxis.set_tick_params(labelcolor="white")
+    ax_top.set_title("Top 10 Productos por Ventas Netas",
+                     fontsize=10, color="white", pad=6)
+    for bar, val in zip(ax_top.patches, top10["venta_neta"].values):
+        ax_top.text(bar.get_width() * 1.01, bar.get_y() + bar.get_height() / 2,
+                    f"${val:,.0f}", va="center", fontsize=6.5, color="white")
+    for spine in ax_top.spines.values():
+        spine.set_edgecolor("#334155")
+
     # ── Tabla: alertas de stock ────────────────────────────────────────────────
-    ax_stock = fig.add_subplot(gs[1, :])
+    ax_stock = fig.add_subplot(gs[1, 1])
     ax_stock.set_facecolor("#1e293b")
     ax_stock.axis("off")
 

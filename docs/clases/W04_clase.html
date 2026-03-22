@@ -10,8 +10,8 @@
   <meta name="generator" content="quarto-1.8.25">
 
   <meta name="author" content="Universidad San Sebastián">
-  <meta name="dcterms.date" content="2026-01-01">
-  <title>Levantamiento de Requerimientos y Diagrama de Caso de Uso</title>
+  <meta name="dcterms.date" content="2026-03-01">
+  <title>De la Planilla al Modelo</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -29,8 +29,74 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-534cd8e3a96973385dffff3f4709048d.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-7aaf31681eed659f0200bcc8fe9a56fc.css">
   <link rel="stylesheet" href="../styles/custom.css">
   <link rel="stylesheet" href="../styles/presentacion_docente.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -124,14 +190,17 @@
       margin-right: 0; 
     }
   </style>
+  <script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+  <script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+  <link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Levantamiento de Requerimientos y Diagrama de Caso de Uso</h1>
-  <p class="subtitle">Semana 4 · W04 · Unidad 2 · Big Data y Analytics</p>
+  <h1 class="title">De la Planilla al Modelo</h1>
+  <p class="subtitle">Entidades, Relaciones y Normalización · Semana 4 · Unidad II</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -141,38 +210,141 @@ Universidad San Sebastián
 </div>
 </div>
 
-  <p class="date">2026-01-01</p>
+  <p class="date">2026-03-01</p>
 </section>
-<section id="retroalimentación-solemne-1" class="slide level2">
-<h2>Retroalimentación Solemne 1</h2>
+<section id="dónde-estamos" class="slide level2">
+<h2>¿Dónde Estamos?</h2>
 <ul>
-<li class="fragment">Revisión de resultados y errores frecuentes.</li>
-<li class="fragment"><strong>Patrón de error más común</strong>: Confundir el <em>tipo</em> de SI con el <em>nivel</em> organizacional.</li>
-<li class="fragment"><strong>Fortaleza observada</strong>: Aplicación del CMI y calidad de datos al caso TechStyle.</li>
+<li class="fragment"><strong>Unidad 1</strong> (W01–W03): Entendimos <em>para qué</em> sirven los SI y cómo fluyen los datos desde OLTP hasta el CMI.</li>
+<li class="fragment"><strong>Hoy comienza la Unidad 2</strong>: aprendemos a <em>diseñar</em> la estructura de datos que hace funcionar esos sistemas.</li>
 </ul>
 <div class="fragment">
-<p><strong>Hoy iniciamos la Unidad 2</strong>: ¿Cómo se modela un sistema de información antes de construir la base de datos?</p>
+<p><strong>Pregunta de inicio</strong>: ¿por qué TechStyle no puede simplemente usar Excel para gestionar sus 8,5 millones de clientes?</p>
 </div>
 </section>
-<section id="resumen-de-la-unidad-1-en-una-frase" class="slide level2">
-<h2>Resumen de la Unidad 1 en una Frase</h2>
+<section id="el-problema-de-roberto-la-planilla-imposible" class="slide level2">
+<h2>El Problema de Roberto: La Planilla Imposible</h2>
+<p>María, la Gerente de Marketing de TechStyle, abre el archivo <code>ventas_historial.xlsx</code>:</p>
+<ul>
+<li class="fragment">340.000 filas, todas en <strong>una sola hoja</strong>.</li>
+<li class="fragment">Nombre del cliente repetido en <strong>cada fila</strong> de su historial de compras.</li>
+<li class="fragment">Si un cliente cambia de email → hay que buscar y corregir <strong>todas</strong> sus filas manualmente.</li>
+<li class="fragment">¿Hay productos sin precio? Solo si los buscas uno a uno.</li>
+<li class="fragment">Juan intenta un <code>BUSCARV(VLOOKUP)</code> para cruzar con proveedores → Excel tarda <strong>47 minutos</strong> y se congela.</li>
+</ul>
+<div class="fragment">
 <blockquote>
-<p>“Los Sistemas de Información convierten datos crudos en decisiones estratégicas — pero solo funcionan si el modelo de datos que los alimenta refleja fielmente la realidad del negocio.”</p>
+<p>“Necesitamos una <em>base de datos</em>,” dice Roberto. “Pero, ¿cómo se diseña una?”</p>
 </blockquote>
-<div class="fragment">
-<p><strong>La Unidad 2</strong> se dedica exactamente a eso: modelar la realidad del negocio antes de construir la base de datos.</p>
-<p>Secuencia: Caso de Uso → UML → Modelo ER → Modelo Relacional → (Unidad 3) Implementación en MySQL.</p>
 </div>
 </section>
-<section id="el-problema-de-techstyle-crecen-y-no-saben-qué-construir" class="slide level2">
-<h2>El Problema de TechStyle: Crecen y No Saben Qué Construir</h2>
-<p><strong>Situación real</strong>:</p>
-<p>TechStyle decide construir un nuevo módulo de pedidos. El equipo de TI necesita entender <strong>qué debe hacer el sistema</strong> antes de escribir una sola línea de código o crear una tabla.</p>
-<div class="fragment">
-<p><strong>Pregunta disparadora</strong>: ¿Cómo le explicamos a un desarrollador qué debe hacer el sistema, usando el lenguaje del negocio?</p>
+<section id="la-planilla-plana-de-techstyle" class="slide level2">
+<h2>La Planilla Plana de TechStyle</h2>
+<p>Así se ve <code>ventas_historial.xlsx</code>:</p>
+<div style="font-size: 0.5em; width: 100%;">
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>ID_Venta</th>
+<th>Fecha</th>
+<th>Cliente_ID</th>
+<th>Cliente_Nombre</th>
+<th>Cliente_Email</th>
+<th>Producto_ID</th>
+<th>Producto_Nombre</th>
+<th>Categoria</th>
+<th>Precio</th>
+<th>Cant</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>V001</td>
+<td>15/01/26</td>
+<td>C001</td>
+<td>Juan Pérez</td>
+<td>juan@mail.com</td>
+<td>P001</td>
+<td>Nike Air Max</td>
+<td>Calzado</td>
+<td>89990</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>V002</td>
+<td>15/01/26</td>
+<td>C001</td>
+<td>Juan Pérez</td>
+<td>juan@mail.com</td>
+<td>P002</td>
+<td>Polera Adidas</td>
+<td>Ropa</td>
+<td>24990</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>V003</td>
+<td>16/01/26</td>
+<td>C002</td>
+<td>María López</td>
+<td>maria@mail.com</td>
+<td>P001</td>
+<td>Nike Air Max</td>
+<td>Calzado</td>
+<td>89990</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
 </div>
+<div class="fragment">
+<p><strong>¿Qué ves de inmediato?</strong> Juan Pérez aparece dos veces. Nike Air Max aparece dos veces.</p>
+</div>
+</section>
+<section id="las-3-anomalías-de-una-planilla-plana" class="slide level2">
+<h2>Las 3 Anomalías de una Planilla Plana</h2>
+<p><strong>Anomalía de actualización:</strong> Si Juan Pérez cambia su email, hay que modificar <em>todas</em> las filas donde aparece. Si se olvida una → datos inconsistentes.</p>
+<div class="fragment">
+<p><strong>Anomalía de inserción:</strong> Para registrar un cliente nuevo (sin ventas aún), ¿qué pongo en las columnas de Producto, Precio, Cantidad? → <code>NULL</code> en todas → fila sin sentido.</p>
+</div>
+<div class="fragment">
+<p><strong>Anomalía de eliminación:</strong> Si elimino la venta V003 (la única de María López), pierdo también todos los datos del cliente. → El cliente desaparece de la “base de datos”.</p>
+</div>
+</section>
+<section id="desafío-rápido-1" class="slide level2" data-background-color="#e8f4f8">
+<h2>🚀 Desafío Rápido 1</h2>
+<p><strong>En parejas (3 minutos):</strong></p>
+<p>Analiza esta situación de TechStyle:</p>
+<blockquote>
+<p>El proveedor de “Nike Air Max” cambia su nombre a “Nike Air Max 2026”. El producto aparece en 1.200 filas de la planilla.</p>
+</blockquote>
+<ol type="1">
+<li>¿Qué anomalía representa este problema?</li>
+<li>¿Cuántas filas hay que modificar manualmente?</li>
+<li>¿Qué riesgo existe si la actualización queda incompleta?</li>
+<li>¿Cómo lo resolvería una base de datos bien diseñada?</li>
+</ol>
 <aside class="notes">
-<p>Conectar con la experiencia de los estudiantes usando Power BI: ellos ya modelaron datos, ahora aprenderán a modelar sistemas.</p>
+<p><strong>Solución Desafío Rápido 1</strong></p>
+<ol type="1">
+<li><p><strong>Anomalía de actualización</strong>: el nombre del producto está almacenado en 1.200 filas distintas. Un cambio en ese valor exige actualizar todas las ocurrencias manualmente.</p></li>
+<li><p><strong>1.200 filas</strong> deben modificarse. Con un UPDATE masivo en SQL podría hacerse en segundos, pero en Excel es una operación manual propensa a errores.</p></li>
+<li><p><strong>Riesgo de inconsistencia</strong>: si la actualización queda incompleta, el mismo producto tendrá dos nombres distintos en el sistema. Cualquier reporte que agrupe por nombre de producto dividirá las ventas de ese ítem en dos categorías distintas, produciendo cifras incorrectas para María y Roberto.</p></li>
+<li><p><strong>La solución del modelo relacional</strong>: en una tabla PRODUCTO normalizada, “Nike Air Max” tiene exactamente <strong>una sola fila</strong>. Para renombrarlo basta con actualizar ese único registro. Todas las filas de ventas que referencian ese <code>producto_id</code> reflejan automáticamente el nombre nuevo sin tocar ninguna otra tabla. Cero riesgo de inconsistencia.</p></li>
+</ol>
+<p><em>Punto de cierre</em>: esto no es solo comodidad técnica. Es la diferencia entre un sistema que garantiza la verdad y uno que la negocia cada vez que alguien actualiza un dato.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -185,79 +357,64 @@ Universidad San Sebastián
           display:block!important;
       }</style></aside>
 </section>
-<section id="qué-es-el-levantamiento-de-requerimientos" class="slide level2">
-<h2>¿Qué es el Levantamiento de Requerimientos?</h2>
-<ul>
-<li class="fragment">Proceso de identificar <strong>qué necesita hacer</strong> el sistema.</li>
-<li class="fragment">Se realiza <strong>antes</strong> del diseño técnico.</li>
-<li class="fragment">Fuentes: entrevistas con usuarios, observación de procesos, documentos actuales.</li>
-</ul>
+<section id="la-solución-separar-la-realidad-en-piezas" class="slide level2">
+<h2>La Solución: Separar la Realidad en Piezas</h2>
+<p><strong>Idea clave</strong>: en el mundo real, un cliente <em>existe independientemente</em> de sus compras. Un producto <em>existe independientemente</em> de quién lo compró.</p>
 <div class="fragment">
-<p><strong>Salida del levantamiento</strong>: una lista de requerimientos funcionales y no funcionales.</p>
-<p><strong>Requerimiento funcional</strong>: “El sistema debe permitir que el cliente realice un pedido.”</p>
-<p><strong>Requerimiento no funcional</strong>: “El sistema debe responder en menos de 2 segundos.”</p>
+<p>Una base de datos bien diseñada refleja esta realidad:</p>
+<ul>
+<li><strong>Una tabla para Clientes</strong> → cada cliente existe una sola vez.</li>
+<li><strong>Una tabla para Productos</strong> → cada producto existe una sola vez.</li>
+<li><strong>Una tabla para Ventas</strong> → registra <em>qué cliente</em> compró <em>qué producto</em>.</li>
+</ul>
+</div>
+<div class="fragment">
+<blockquote>
+<p><strong>Principio clave de la Unidad 2</strong>: “Una base de datos es una representación estructurada de la realidad del negocio.”</p>
+</blockquote>
 </div>
 </section>
-<section id="técnicas-de-levantamiento-de-requerimientos" class="slide level2">
-<h2>Técnicas de Levantamiento de Requerimientos</h2>
-<p><strong>Cómo obtiene Juan la información que necesita del negocio:</strong></p>
+<section id="el-modelo-entidad-relación-mer" class="slide level2">
+<h2>El Modelo Entidad-Relación (MER)</h2>
+<p>El MER es el lenguaje para <strong>describir esa realidad</strong> antes de construir la base de datos.</p>
 <ul>
-<li class="fragment"><strong>Entrevistas individuales</strong>: conversar con Sofía, María y Roberto para entender qué necesita cada actor.</li>
-<li class="fragment"><strong>Observación directa</strong>: acompañar a Sofía en su ruta para entender cómo usa el sistema hoy.</li>
-<li class="fragment"><strong>Talleres facilitados</strong>: reunir a todos los actores y modelar el proceso juntos (story mapping).</li>
-<li class="fragment"><strong>Revisión de documentos</strong>: analizar los formularios en papel, hojas Excel y correos actuales.</li>
-<li class="fragment"><strong>Prototipado</strong>: mostrar una versión preliminar del sistema y recoger feedback temprano.</li>
-</ul>
-</section>
-<section id="aplicación-entrevista-con-maría-gonzález" class="slide level2">
-<h2>Aplicación: Entrevista con María González</h2>
-<p><strong>Juan entrevista a María para levantar requerimientos:</strong></p>
-<ul>
-<li class="fragment"><em>Juan</em>: “María, ¿qué necesitas saber sobre los pedidos para tomar decisiones de campaña?”</li>
-<li class="fragment"><em>María</em>: “Necesito saber qué categorías venden más, en qué zonas y en qué fechas.”</li>
-<li class="fragment"><em>Juan</em>: “¿Con qué frecuencia necesitas esta información?”</li>
-<li class="fragment"><em>María</em>: “Cada semana, los lunes a primera hora.”</li>
-<li class="fragment"><em>Juan</em>: “¿Qué pasa si la información llega el martes?”</li>
-<li class="fragment"><em>María</em>: “Ya es tarde — la reunión de presupuesto es el lunes.”</li>
+<li class="fragment">Es un <strong>plano</strong> que se entrega al desarrollador (o al gestor de BD) para que construya el sistema.</li>
+<li class="fragment">Tiene tres elementos fundamentales: <strong>Entidades</strong>, <strong>Atributos</strong> y <strong>Relaciones</strong>.</li>
+<li class="fragment">Es independiente del software: funciona para MySQL, PostgreSQL, SQL Server, etc.</li>
 </ul>
 <div class="fragment">
-<p><strong>Requerimiento extraído</strong>: El sistema debe generar el reporte de ventas por categoría y zona todos los domingos antes de las 23:59. <strong>(Funcional + No funcional de oportunidad)</strong></p>
+<p><strong>Analogía</strong>: el MER es al programador lo que el plano arquitectónico es al constructor. Nadie construye un edificio sin un plano.</p>
 </div>
 </section>
-<section id="verificación-funcional-o-no-funcional" class="slide level2">
-<h2>Verificación: ¿Funcional o No Funcional?</h2>
-<p><strong>Clasifica cada requerimiento:</strong></p>
-<ol type="1">
-<li class="fragment">“El sistema debe permitir al repartidor marcar un pedido como entregado desde su app” → <strong>Funcional</strong></li>
-<li class="fragment">“El sistema debe soportar 10.000 usuarios simultáneos sin degradar el tiempo de respuesta” → <strong>No funcional (rendimiento)</strong></li>
-<li class="fragment">“El sistema debe enviar una notificación al cliente cuando el pedido está en camino” → <strong>Funcional</strong></li>
-<li class="fragment">“El sistema debe estar disponible el 99,9% del tiempo” → <strong>No funcional (disponibilidad)</strong></li>
-<li class="fragment">“El sistema debe permitir al Administrador desactivar un producto del catálogo” → <strong>Funcional</strong></li>
-</ol>
-</section>
-<section id="secuencia-de-modelamiento" class="slide level2">
-<h2>Secuencia de Modelamiento</h2>
-<pre><code>Levantamiento de Requerimientos
-       ↓
-Diagrama de Caso de Uso (¿qué hace el sistema?)
-       ↓ (Semana 5)
-Diagrama UML de Clases (¿cómo está estructurado?)
-       ↓ (Semana 6)
-Modelo Entidad-Relación (¿qué datos almacena?)
-       ↓ (Semana 7)
-Modelo Relacional (¿cómo se organizan las tablas?)
-       ↓ (Semana 8)
-Solemne 2 — Defensa del diseño completo</code></pre>
-</section>
-<section id="la-secuencia-de-modelamiento-visualización" class="slide level2">
-<h2>La Secuencia de Modelamiento: Visualización</h2>
-<p><code>[IMAGE/DIAGRAM PLACEHOLDER: Diagrama de flujo horizontal de 5 pasos de modelamiento — (1) Levantamiento con ícono de entrevista, (2) Caso de Uso con ícono de elipse y actor, (3) UML de Clases con ícono de rectángulo con compartimentos, (4) Modelo ER con ícono de diamante, (5) Modelo Relacional con ícono de tabla. Flechas entre cada paso. Cada paso muestra la pregunta que responde]</code></p>
+<section id="entidades-las-cosas-del-negocio" class="slide level2">
+<h2>Entidades: Las “Cosas” del Negocio</h2>
+<p>Una <strong>entidad</strong> es cualquier objeto, persona o concepto relevante para el negocio que necesita ser almacenado.</p>
+<ul>
+<li class="fragment">Se representa como un <strong>rectángulo</strong>.</li>
+<li class="fragment">Debe ser identificable de forma única.</li>
+<li class="fragment">En TechStyle: <strong>Cliente</strong>, <strong>Producto</strong>, <strong>Venta</strong>, <strong>Proveedor</strong>, <strong>Región</strong>.</li>
+</ul>
 <div class="fragment">
-<p><em>Cada paso transforma el conocimiento del negocio en un artefacto más cercano a la implementación técnica.</em></p>
+<p><strong>Regla práctica</strong>: si puedes hacerte la pregunta “¿hay más de uno de esto?”, probablemente es una entidad.</p>
+<p>→ ¿Hay más de un cliente? Sí → <strong>CLIENTE</strong> es una entidad. → ¿Hay más de un producto? Sí → <strong>PRODUCTO</strong> es una entidad.</p>
 </div>
 </section>
-<section id="diagrama-de-caso-de-uso-conceptos-clave" class="slide level2">
-<h2>Diagrama de Caso de Uso: Conceptos Clave</h2>
+<section id="atributos-las-características-de-las-entidades" class="slide level2">
+<h2>Atributos: Las Características de las Entidades</h2>
+<p>Un <strong>atributo</strong> es una propiedad o característica de una entidad.</p>
+<ul>
+<li class="fragment">Se representan como <strong>óvalos</strong> conectados a su entidad (en el diagrama clásico) o como columnas de la tabla.</li>
+<li class="fragment">Cada entidad tiene un <strong>atributo clave</strong> (PK) que la identifica de forma única: subrayado.</li>
+<li class="fragment">Tipos: simples (nombre), compuestos (dirección = calle + número), derivados (edad = fecha_hoy − fecha_nacimiento).</li>
+</ul>
+<div class="fragment">
+<p><strong>CLIENTE</strong>: <code>cliente_id (PK)</code>, <code>nombre</code>, <code>apellido</code>, <code>email</code>, <code>region</code>, <code>segmento</code> <strong>PRODUCTO</strong>: <code>producto_id (PK)</code>, <code>nombre_producto</code>, <code>categoria</code>, <code>precio_venta</code>, <code>stock</code></p>
+</div>
+</section>
+<section id="clave-primaria-y-clave-foránea" class="slide level2">
+<h2>Clave Primaria y Clave Foránea</h2>
+<p><strong>Clave Primaria (PK — Primary Key)</strong>: Atributo (o combinación de atributos) que <strong>identifica de forma única</strong> cada fila de una tabla. No puede repetirse ni ser nulo.</p>
+<div class="fragment">
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -266,173 +423,175 @@ Solemne 2 — Defensa del diseño completo</code></pre>
 </colgroup>
 <thead>
 <tr class="header">
-<th>Elemento</th>
-<th>Símbolo</th>
-<th>Descripción</th>
+<th>Tabla</th>
+<th>Clave Primaria</th>
+<th>¿Por qué?</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Actor</strong></td>
-<td>Figura humana</td>
-<td>Quien interactúa con el sistema</td>
+<td>CLIENTE</td>
+<td><code>cliente_id</code></td>
+<td>Dos clientes pueden llamarse igual, pero su ID es único</td>
 </tr>
 <tr class="even">
-<td><strong>Caso de uso</strong></td>
-<td>Elipse</td>
-<td>Acción que el sistema realiza</td>
+<td>PRODUCTO</td>
+<td><code>producto_id</code></td>
+<td>El código del producto no se repite</td>
 </tr>
 <tr class="odd">
-<td><strong>Include</strong></td>
-<td>Flecha punteada <code>&lt;&lt;include&gt;&gt;</code></td>
-<td>Caso de uso que siempre ocurre</td>
-</tr>
-<tr class="even">
-<td><strong>Extend</strong></td>
-<td>Flecha punteada <code>&lt;&lt;extend&gt;&gt;</code></td>
-<td>Caso de uso opcional</td>
-</tr>
-<tr class="odd">
-<td><strong>Sistema</strong></td>
-<td>Rectángulo</td>
-<td>Límite del sistema</td>
+<td>DETALLE_VENTA</td>
+<td><code>(venta_id, producto_id)</code></td>
+<td>Clave <strong>compuesta</strong>: la combinación identifica una línea de venta</td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="elementos-del-diagrama-de-caso-de-uso-visualización" class="slide level2">
-<h2>Elementos del Diagrama de Caso de Uso: Visualización</h2>
-<p><code>[IMAGE/DIAGRAM PLACEHOLDER: Elementos del Diagrama de Caso de Uso — figura humana (actor) con etiqueta "Cliente"; elipse con "Realizar pedido"; rectángulo que enmarca el sistema "Módulo de Pedidos TechStyle"; flecha punteada con &lt;&lt;include&gt;&gt; conectando "Realizar pedido" con "Procesar pago"; flecha punteada con &lt;&lt;extend&gt;&gt; desde "Realizar pedido" hacia "Solicitar devolución"]</code></p>
+</div>
 <div class="fragment">
-<p><em>El rectángulo delimita claramente qué está dentro del sistema y qué es externo. Nada fuera del rectángulo es responsabilidad del sistema.</em></p>
+<p><strong>Clave Foránea (FK — Foreign Key)</strong>: Atributo que <strong>referencia la PK de otra tabla</strong>, estableciendo el vínculo entre tablas. Garantiza que no existan datos huérfanos.</p>
+<p>→ <code>VENTA.cliente_id</code> es FK que referencia <code>CLIENTE.cliente_id</code>. → Esto significa: <em>no puede existir una venta de un cliente que no esté en la tabla CLIENTE</em>.</p>
 </div>
 </section>
-<section id="aplicación-include-vs-extend-en-techstyle" class="slide level2">
-<h2>Aplicación: include vs extend en TechStyle</h2>
-<p><strong>Dos relaciones que se confunden frecuentemente:</strong></p>
-<ul>
-<li class="fragment"><strong><code>&lt;&lt;include&gt;&gt;</code></strong>: “Realizar pedido” <strong>siempre</strong> incluye “Procesar pago” — no existe un pedido sin pago. Es obligatorio, no opcional.</li>
-<li class="fragment"><strong><code>&lt;&lt;extend&gt;&gt;</code></strong>: “Realizar pedido” <strong>puede</strong> extenderse con “Solicitar devolución” — pero no en todos los casos. Solo cuando el pedido fue entregado y el cliente no quedó satisfecho.</li>
-</ul>
-<div class="fragment">
-<p><strong>Regla mnemotécnica</strong>: - <code>include</code> = “siempre pasa” → como el IVA en una boleta - <code>extend</code> = “a veces pasa” → como un seguro de envío opcional</p>
-</div>
-</section>
-<section id="verificación-include-o-extend" class="slide level2">
-<h2>Verificación: ¿Include o Extend?</h2>
-<p><strong>Clasifica la relación entre cada par de casos de uso:</strong></p>
-<ol type="1">
-<li class="fragment">“Registrar pedido” → “Validar stock” → <strong><code>&lt;&lt;include&gt;&gt;</code></strong> (siempre se valida el stock)</li>
-<li class="fragment">“Confirmar entrega” → “Enviar encuesta de satisfacción” → <strong><code>&lt;&lt;extend&gt;&gt;</code></strong> (opcional: solo si el cliente aceptó recibirlas)</li>
-<li class="fragment">“Crear cuenta” → “Verificar email” → <strong><code>&lt;&lt;include&gt;&gt;</code></strong> (siempre se verifica el email)</li>
-<li class="fragment">“Consultar historial” → “Exportar a PDF” → <strong><code>&lt;&lt;extend&gt;&gt;</code></strong> (el cliente puede o no querer exportar)</li>
-</ol>
-</section>
-<section id="actores-del-módulo-de-pedidos-techstyle" class="slide level2">
-<h2>Actores del Módulo de Pedidos TechStyle</h2>
-<ul>
-<li class="fragment"><strong>Cliente</strong>: Navega el catálogo, realiza pedidos, paga, consulta estado, solicita devoluciones.</li>
-<li class="fragment"><strong>Repartidor</strong>: Ve pedidos asignados, confirma entrega.</li>
-<li class="fragment"><strong>Administrador</strong>: Gestiona catálogo de productos, procesa devoluciones, ve reportes.</li>
-</ul>
-<div class="fragment">
-<p><strong>Regla de oro</strong>: Un actor es <strong>externo</strong> al sistema. No es un módulo del sistema, es quien <em>usa</em> el sistema.</p>
-</div>
-</section>
-<section id="reglas-para-identificar-actores" class="slide level2">
-<h2>Reglas para Identificar Actores</h2>
-<p><strong>Un buen actor cumple estas condiciones:</strong></p>
-<ul>
-<li class="fragment"><strong>Es externo</strong> al sistema (no es un componente de software).</li>
-<li class="fragment"><strong>Tiene un rol definido</strong> en relación al sistema (no es solo “una persona”).</li>
-<li class="fragment"><strong>Inicia o responde</strong> a casos de uso.</li>
-<li class="fragment"><strong>No se implementa</strong> — solo interactúa.</li>
-</ul>
-<div class="fragment">
-<p><strong>Ejemplo de error común</strong>: “Sistema de pago externo (Transbank)” <em>puede</em> ser un actor (actor externo de sistema) si el alcance del diagrama lo incluye. “Base de datos” <strong>no</strong> es un actor — es parte del sistema.</p>
-</div>
-</section>
-<section id="es-un-actor-o-un-módulo-del-sistema" class="slide level2">
-<h2>¿Es un Actor o un Módulo del Sistema?</h2>
-<p><strong>Clasifica cada elemento como Actor o como parte interna del sistema:</strong></p>
-<ol type="1">
-<li class="fragment">“Módulo de facturación” → <strong>Parte del sistema</strong> (es software interno)</li>
-<li class="fragment">“Gerente de logística que aprueba rutas” → <strong>Actor</strong> (externo, tiene rol)</li>
-<li class="fragment">“Scheduler que ejecuta el ETL a las 2am” → <strong>Actor externo de sistema</strong> (si se modela a ese nivel)</li>
-<li class="fragment">“Base de datos MySQL” → <strong>Parte del sistema</strong> (es infraestructura interna)</li>
-<li class="fragment">“Servicio de SMS (Twilio)” → <strong>Actor externo de sistema</strong> (sistema externo que interactúa)</li>
-</ol>
-</section>
-<section id="casos-de-uso-principales" class="slide level2">
-<h2>Casos de Uso Principales</h2>
-<ul>
-<li class="fragment"><code>Realizar pedido</code> ← Cliente</li>
-<li class="fragment"><code>Seleccionar producto</code> ← Cliente</li>
-<li class="fragment"><code>Procesar pago</code> ← Cliente (siempre junto a Realizar pedido → <strong><code>&lt;&lt;include&gt;&gt;</code></strong>)</li>
-<li class="fragment"><code>Consultar estado de pedido</code> ← Cliente</li>
-<li class="fragment"><code>Solicitar devolución</code> ← Cliente (solo si pedido entregado → <strong><code>&lt;&lt;extend&gt;&gt;</code></strong>)</li>
-<li class="fragment"><code>Confirmar entrega</code> ← Repartidor</li>
-<li class="fragment"><code>Gestionar producto</code> ← Administrador</li>
-<li class="fragment"><code>Procesar devolución</code> ← Administrador</li>
-</ul>
-</section>
-<section id="descripción-narrativa-de-un-caso-de-uso" class="slide level2">
-<h2>Descripción Narrativa de un Caso de Uso</h2>
-<p><strong>Caso de uso: “Realizar pedido”</strong></p>
+<section id="relaciones-y-cardinalidad" class="slide level2">
+<h2>Relaciones y Cardinalidad</h2>
+<p>Una <strong>relación</strong> describe cómo se asocian dos entidades.</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Elemento</th>
-<th>Descripción</th>
+<th>Tipo</th>
+<th>Lectura</th>
+<th>Ejemplo TechStyle</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Nombre</strong></td>
-<td>Realizar pedido</td>
+<td><strong>1 : 1</strong></td>
+<td>Uno a uno</td>
+<td>Un empleado tiene un contrato</td>
 </tr>
 <tr class="even">
-<td><strong>Actor</strong></td>
-<td>Cliente</td>
+<td><strong>1 : N</strong></td>
+<td>Uno a muchos</td>
+<td>Un cliente realiza muchas ventas</td>
 </tr>
 <tr class="odd">
-<td><strong>Precondición</strong></td>
-<td>El cliente está autenticado en el sistema</td>
-</tr>
-<tr class="even">
-<td><strong>Flujo principal</strong></td>
-<td>1. Cliente selecciona producto · 2. Agrega al carrito · 3. Ingresa dirección · 4. Procesa pago · 5. Sistema confirma pedido</td>
-</tr>
-<tr class="odd">
-<td><strong>Flujo alternativo</strong></td>
-<td>Stock insuficiente → el sistema notifica y sugiere productos similares</td>
-</tr>
-<tr class="even">
-<td><strong>Postcondición</strong></td>
-<td>El pedido queda registrado con estado “pendiente”</td>
+<td><strong>N : M</strong></td>
+<td>Muchos a muchos</td>
+<td>Una venta incluye muchos productos; un producto aparece en muchas ventas</td>
 </tr>
 </tbody>
 </table>
+<div class="fragment">
+<p><strong>Notación “cuervo” (crow’s foot):</strong> - <code>||</code> = exactamente uno - <code>o{</code> = cero o muchos - <code>|{</code> = uno o muchos</p>
+</div>
 </section>
-<section id="demo-construyendo-el-diagrama-en-draw.io" class="slide level2">
-<h2>Demo: Construyendo el Diagrama en draw.io</h2>
-<pre><code>┌──────────────────────────────────────────────────────┐
-│              SISTEMA TECHSTYLE – MÓDULO PEDIDOS       │
-│                                                        │
-│  (Realizar pedido)──&lt;&lt;include&gt;&gt;──(Procesar pago)      │
-│  (Consultar estado pedido)                            │
-│  (Solicitar devolución)──&lt;&lt;extend&gt;&gt; desde Realizar    │
-│  (Confirmar entrega)                                  │
-│  (Gestionar producto)                                 │
-│  (Procesar devolución)                                │
-└──────────────────────────────────────────────────────┘
-   👤 Cliente      👤 Repartidor      👤 Administrador</code></pre>
+<section id="diagrama-mer-de-techstyle" class="slide level2 scrollable">
+<h2>Diagrama MER de TechStyle</h2>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">erDiagram
+    CLIENTE {
+        INT cliente_id PK
+        VARCHAR nombre
+        VARCHAR apellido
+        VARCHAR email
+        VARCHAR region
+        VARCHAR segmento
+    }
+    PRODUCTO {
+        INT producto_id PK
+        VARCHAR nombre_producto
+        VARCHAR categoria
+        DECIMAL precio_venta
+        INT stock
+    }
+    VENTA {
+        INT venta_id PK
+        DATE fecha
+        INT cliente_id FK
+    }
+    DETALLE_VENTA {
+        INT venta_id FK
+        INT producto_id FK
+        INT cantidad
+        DECIMAL precio_unitario
+    }
+    CLIENTE ||--o{ VENTA : "realiza"
+    VENTA ||--|{ DETALLE_VENTA : "contiene"
+    PRODUCTO ||--o{ DETALLE_VENTA : "aparece en"
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="por-qué-existe-detalle_venta" class="slide level2">
+<h2>¿Por Qué Existe DETALLE_VENTA?</h2>
+<p>Una venta puede incluir <strong>múltiples productos</strong>, y un producto puede aparecer en <strong>múltiples ventas</strong> → relación N:M.</p>
+<div class="fragment">
+<p>Las bases de datos relacionales <strong>no pueden implementar directamente</strong> relaciones N:M.</p>
+<p><strong>Solución</strong>: crear una tabla intermedia <code>DETALLE_VENTA</code> que “rompe” el N:M en dos relaciones 1:N:</p>
+<ul>
+<li><code>VENTA (1) → DETALLE_VENTA (N)</code> → una venta tiene muchas líneas de detalle.</li>
+<li><code>PRODUCTO (1) → DETALLE_VENTA (N)</code> → un producto aparece en muchas líneas de detalle.</li>
+</ul>
+</div>
+<div class="fragment">
+<p>La clave primaria de <code>DETALLE_VENTA</code> es <strong>compuesta</strong>: <code>(venta_id, producto_id)</code>.</p>
+</div>
+</section>
+<section id="introducción-a-uml-diagrama-de-casos-de-uso" class="slide level2">
+<h2>Introducción a UML: Diagrama de Casos de Uso</h2>
+<p>El <strong>Diagrama de Casos de Uso</strong> describe <em>quién hace qué</em> en el sistema, antes de diseñar las tablas.</p>
+<ul>
+<li class="fragment"><strong>Actor</strong>: persona o sistema externo que interactúa con el sistema (representado como un muñeco).</li>
+<li class="fragment"><strong>Caso de Uso</strong>: acción que el actor realiza (representado como una elipse).</li>
+<li class="fragment"><strong>Relación</strong>: línea que conecta actor con caso de uso.</li>
+</ul>
+<div class="fragment">
+<p><strong>Actores en TechStyle</strong>: Cliente Web, Gerente de Ventas, Sistema de Bodega.</p>
+<p><strong>Casos de Uso</strong>: Registrar Venta, Consultar Stock, Generar Reporte, Procesar Pago.</p>
+</div>
+</section>
+<section id="desafío-rápido-2" class="slide level2" data-background-color="#e8f4f8">
+<h2>🚀 Desafío Rápido 2</h2>
+<p><strong>En grupos de 3 (5 minutos):</strong></p>
+<p>Para el sistema de TechStyle, identifica:</p>
+<ol type="1">
+<li>¿Cuáles son las entidades principales? (nombra al menos 4)</li>
+<li>Para la entidad <strong>CLIENTE</strong>: lista 5 atributos relevantes para el análisis de ventas.</li>
+<li>¿Qué tipo de relación existe entre PROVEEDOR y PRODUCTO? (1:1 / 1:N / N:M) — justifica.</li>
+<li>Si TechStyle agrega un sistema de despacho, ¿qué nueva entidad agregarías al modelo?</li>
+</ol>
 <aside class="notes">
-<p>Mostrar en draw.io en tiempo real. Los estudiantes observan y replican en el laboratorio.</p>
+<p><strong>Solución Desafío Rápido 2</strong></p>
+<ol type="1">
+<li><strong>Entidades principales</strong> (respuestas esperadas, aceptar variaciones bien justificadas):
+<ul>
+<li>CLIENTE, PRODUCTO, VENTA, DETALLE_VENTA (mínimo obligatorio)</li>
+<li>Opcionales válidas: PROVEEDOR, CATEGORÍA, REGIÓN, EMPLEADO, BODEGA</li>
+</ul></li>
+<li><strong>Atributos de CLIENTE relevantes para análisis de ventas</strong>:
+<ul>
+<li><code>cliente_id</code> (PK), <code>nombre</code>, <code>apellido</code>, <code>email</code>, <code>region</code>, <code>segmento</code> (Premium/Estándar/Básico), <code>fecha_registro</code></li>
+<li>Para análisis de ventas son especialmente relevantes <code>region</code> (ventas por zona) y <code>segmento</code> (rentabilidad por tipo de cliente).</li>
+</ul></li>
+<li><strong>Relación PROVEEDOR — PRODUCTO es N:M</strong>: un proveedor puede abastecer muchos productos y un producto puede provenir de múltiples proveedores (ej. Nike Air Max puede comprarse a dos importadores distintos según disponibilidad). Se implementa con tabla intermedia PROVEEDOR_PRODUCTO <code>(proveedor_id, producto_id, precio_compra, fecha_contrato)</code>.
+<ul>
+<li><strong>Ojo</strong>: si TechStyle trabaja con un único proveedor por producto, puede ser 1:N (un proveedor abastece muchos productos). Esto depende de una decisión de negocio — subrayar que el modelo debe reflejar la <em>realidad del negocio</em>, no la solución más conveniente técnicamente.</li>
+</ul></li>
+<li><strong>Nueva entidad para sistema de despacho</strong>: DESPACHO o PEDIDO_DESPACHO con atributos <code>despacho_id (PK)</code>, <code>venta_id (FK)</code>, <code>direccion_entrega</code>, <code>fecha_despacho</code>, <code>fecha_entrega_real</code>, <code>estado</code>, <code>repartidor_id (FK)</code>. Esto introduce también la entidad REPARTIDOR si no existe. La relación con VENTA es 1:1 o 1:N dependiendo de si una venta puede generar múltiples despachos parciales.</li>
+</ol>
+<p><em>Punto de cierre</em>: la pregunta 3 ilustra que la cardinalidad no es una propiedad matemática abstracta — es una decisión de negocio que el diseñador debe validar con el área correspondiente antes de dibujar la línea en el diagrama.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -445,83 +604,513 @@ Solemne 2 — Defensa del diseño completo</code></pre>
           display:block!important;
       }</style></aside>
 </section>
-<section id="errores-comunes-en-diagramas-de-caso-de-uso" class="slide level2">
-<h2>Errores Comunes en Diagramas de Caso de Uso</h2>
-<p><strong>Los 5 errores más frecuentes (y cómo evitarlos):</strong></p>
-<ol type="1">
-<li class="fragment"><strong>Poner procesos como casos de uso</strong>: “Validar contraseña” no es un CU — es parte del flujo interno de “Iniciar sesión”.</li>
-<li class="fragment"><strong>Olvidar el límite del sistema</strong>: sin el rectángulo, no queda claro qué está dentro y qué fuera.</li>
-<li class="fragment"><strong>Confundir include/extend</strong>: usar <code>&lt;&lt;extend&gt;&gt;</code> donde siempre ocurre (debería ser <code>&lt;&lt;include&gt;&gt;</code>).</li>
-<li class="fragment"><strong>Demasiados actores</strong>: “Gerente de ventas” y “Subgerente de ventas” que hacen exactamente lo mismo → un solo actor “Administrador”.</li>
-<li class="fragment"><strong>Casos de uso demasiado detallados</strong>: “Hacer clic en el botón Comprar” no es un caso de uso — es un paso de interfaz.</li>
-</ol>
-</section>
-<section id="por-qué-modelar-antes-de-construir" class="slide level2">
-<h2>¿Por Qué Modelar Antes de Construir?</h2>
-<p><strong>Caso TechStyle</strong>:</p>
-<blockquote>
-<p>Construyeron el primer módulo de pedidos sin modelamiento. Después de 6 meses, descubrieron que olvidaron registrar la <strong>zona de entrega</strong> de cada pedido.</p>
-</blockquote>
+<section id="normalización-para-qué-sirve" class="slide level2">
+<h2>Normalización: ¿Para Qué Sirve?</h2>
+<p>La <strong>normalización</strong> es el proceso de organizar las tablas para:</p>
 <ul>
-<li class="fragment">No pueden calcular el KPI “tiempo de entrega por zona” del CMI.</li>
-<li class="fragment">Deben rediseñar la base de datos, migrar datos y rehacer reportes.</li>
-<li class="fragment"><strong>Costo estimado</strong>: 3 meses de trabajo adicional.</li>
+<li class="fragment">Eliminar redundancia (no repetir el mismo dato en múltiples lugares).</li>
+<li class="fragment">Prevenir anomalías de inserción, actualización y eliminación.</li>
+<li class="fragment">Garantizar integridad de los datos.</li>
 </ul>
 <div class="fragment">
-<p><strong>Conclusión</strong>: Un diagrama de 2 horas evita 3 meses de retrabajo.</p>
+<p>Se aplica siguiendo una secuencia de <strong>Formas Normales</strong> (FN). Cada forma elimina un tipo específico de problema.</p>
+<p>Para el 99% de los sistemas de negocio, llegar a la <strong>3FN es suficiente</strong>.</p>
 </div>
 </section>
-<section id="impacto-en-el-cmi-modelamiento-y-decisiones" class="slide level2">
-<h2>Impacto en el CMI: Modelamiento y Decisiones</h2>
-<ul>
-<li class="fragment">Si “consultar estado de pedido” no está en el Caso de Uso → no se diseña → no hay pantalla para el cliente → el cliente llama al call center → costo operativo innecesario.</li>
-<li class="fragment">Si “solicitar devolución” no está en el CU → no hay datos de devolución → el CMI no puede calcular la “tasa de devolución por zona”.</li>
-<li class="fragment">Si “confirmar entrega” no está en el CU → no hay registro de fecha real de entrega → el KPI “tiempo de entrega” es incalculable.</li>
-</ul>
-<div class="fragment">
-<p><strong>Cada caso de uso omitido es un KPI que no podrá calcularse.</strong></p>
+<section id="el-caso-de-la-factura-de-techstyle" class="slide level2">
+<h2>El Caso de la Factura de TechStyle</h2>
+<p>Así almacenaba TechStyle sus facturas en Excel (sin normalizar):</p>
+<div style="font-size: 0.5em; width: 100%;">
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>N_Factura</th>
+<th>Fecha</th>
+<th>RUT</th>
+<th>Nombre_Cliente</th>
+<th>Ciudad</th>
+<th>Item1_Cod</th>
+<th>Item1_Nombre</th>
+<th>Item1_Precio</th>
+<th>Item1_Cant</th>
+<th>Item2_Cod</th>
+<th>Item2_Nombre</th>
+<th>Item2_Precio</th>
+<th>Item2_Cant</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>F001</td>
+<td>15/01/26</td>
+<td>12.345.678-9</td>
+<td>Juan Pérez</td>
+<td>Santiago</td>
+<td>P001</td>
+<td>Nike Air Max</td>
+<td>89.990</td>
+<td>1</td>
+<td>P002</td>
+<td>Polera Adidas</td>
+<td>24.990</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>F002</td>
+<td>16/01/26</td>
+<td>23.456.789-0</td>
+<td>María López</td>
+<td>Valparaíso</td>
+<td>P003</td>
+<td>Short Nike</td>
+<td>19.990</td>
+<td>3</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
 </div>
+<div class="fragment">
+<p><strong>Problema inmediato</strong>: ¿qué pasa si un cliente compra 5 productos? ¿Agrego Item3, Item4, Item5? → La estructura de la tabla cambia. Eso viola la <strong>Primera Forma Normal</strong>.</p>
+</div>
+</section>
+<section id="fn-primera-forma-normal" class="slide level2">
+<h2>1FN — Primera Forma Normal</h2>
+<p><strong>Regla</strong>: cada celda debe contener <strong>un solo valor atómico</strong> (indivisible). No pueden existir grupos repetidos.</p>
+<p><strong>Antes (violación):</strong> columnas Item1, Item2, Item3… — grupos repetidos.</p>
+<p><strong>Después (en 1FN):</strong> una fila por cada ítem comprado:</p>
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>N_Factura</th>
+<th>Fecha</th>
+<th>RUT</th>
+<th>Nombre_Cliente</th>
+<th>Ciudad</th>
+<th>Cod_Prod</th>
+<th>Nombre_Prod</th>
+<th>Precio</th>
+<th>Cantidad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>F001</td>
+<td>15/01/26</td>
+<td>12.345.678-9</td>
+<td>Juan Pérez</td>
+<td>Santiago</td>
+<td>P001</td>
+<td>Nike Air Max</td>
+<td>89.990</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>F001</td>
+<td>15/01/26</td>
+<td>12.345.678-9</td>
+<td>Juan Pérez</td>
+<td>Santiago</td>
+<td>P002</td>
+<td>Polera Adidas</td>
+<td>24.990</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>F002</td>
+<td>16/01/26</td>
+<td>23.456.789-0</td>
+<td>María López</td>
+<td>Valparaíso</td>
+<td>P003</td>
+<td>Short Nike</td>
+<td>19.990</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p><strong>Clave primaria compuesta</strong>: <code>(N_Factura, Cod_Prod)</code>. ¿Nuevo problema? <code>Nombre_Prod</code> y <code>Precio</code> dependen solo de <code>Cod_Prod</code>, no de toda la clave.</p>
+</div>
+</section>
+<section id="fn-segunda-forma-normal" class="slide level2">
+<h2>2FN — Segunda Forma Normal</h2>
+<p><strong>Regla</strong>: debe estar en 1FN <strong>y</strong> cada atributo no-clave debe depender de <strong>toda la clave primaria</strong> (no solo de una parte).</p>
+<p><strong>Problema detectado en la tabla 1FN</strong>: <code>Nombre_Prod</code> y <code>Precio</code> dependen solo de <code>Cod_Prod</code> (dependencia parcial).</p>
+<div class="fragment">
+<p><strong>Solución</strong>: separar en tablas distintas.</p>
+<p><strong>FACTURA</strong> <code>(N_Factura, Fecha, RUT, Nombre_Cliente, Ciudad)</code> <strong>PRODUCTO</strong> <code>(Cod_Prod, Nombre_Prod, Precio)</code> <strong>DETALLE</strong> <code>(N_Factura, Cod_Prod, Cantidad)</code> ← clave compuesta, sin dependencias parciales</p>
+</div>
+<div class="fragment">
+<p>Ahora si el precio de Nike Air Max cambia → se actualiza <strong>una sola fila</strong> en PRODUCTO.</p>
+</div>
+</section>
+<section id="fn-tercera-forma-normal" class="slide level2">
+<h2>3FN — Tercera Forma Normal</h2>
+<p><strong>Regla</strong>: debe estar en 2FN <strong>y</strong> ningún atributo no-clave debe depender de otro atributo no-clave (no puede haber dependencias transitivas).</p>
+<p><strong>Problema en FACTURA</strong>: <code>Nombre_Cliente</code> y <code>Ciudad</code> dependen de <code>RUT</code>, no de <code>N_Factura</code>.</p>
+<div class="fragment">
+<p>→ Si Juan Pérez se cambia a Valparaíso, actualizo Ciudad en FACTURA… pero, ¿en cuántas filas de FACTURA aparece Juan? En <strong>todas</strong> sus compras.</p>
+</div>
+<div class="fragment">
+<p><strong>Solución</strong>: separar al cliente.</p>
+<p><strong>FACTURA</strong> <code>(N_Factura, Fecha, RUT)</code> ← solo la llave foránea <strong>CLIENTE</strong> <code>(RUT, Nombre_Cliente, Ciudad)</code> ← datos del cliente, una sola vez <strong>PRODUCTO</strong> <code>(Cod_Prod, Nombre_Prod, Precio)</code> <strong>DETALLE</strong> <code>(N_Factura, Cod_Prod, Cantidad)</code></p>
+</div>
+</section>
+<section id="el-resultado-final-4-tablas-limpias" class="slide level2">
+<h2>El Resultado Final: 4 Tablas Limpias</h2>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">erDiagram
+    CLIENTE {
+        VARCHAR rut PK
+        VARCHAR nombre_cliente
+        VARCHAR ciudad
+    }
+    FACTURA {
+        INT n_factura PK
+        DATE fecha
+        VARCHAR rut FK
+    }
+    PRODUCTO {
+        VARCHAR cod_prod PK
+        VARCHAR nombre_prod
+        DECIMAL precio
+    }
+    DETALLE {
+        INT n_factura FK
+        VARCHAR cod_prod FK
+        INT cantidad
+    }
+    CLIENTE ||--o{ FACTURA : "emite"
+    FACTURA ||--|{ DETALLE : "contiene"
+    PRODUCTO ||--o{ DETALLE : "aparece en"
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="resumen-las-3-formas-normales" class="slide level2">
+<h2>Resumen: Las 3 Formas Normales</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Forma Normal</th>
+<th>Elimina</th>
+<th>Pregunta clave</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>1FN</strong></td>
+<td>Grupos repetidos / valores no atómicos</td>
+<td>¿Cada celda tiene un único valor?</td>
+</tr>
+<tr class="even">
+<td><strong>2FN</strong></td>
+<td>Dependencias parciales</td>
+<td>¿Cada columna depende de <em>toda</em> la clave?</td>
+</tr>
+<tr class="odd">
+<td><strong>3FN</strong></td>
+<td>Dependencias transitivas</td>
+<td>¿Alguna columna depende de otra columna no-clave?</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p><strong>Metáfora</strong>: la normalización es como organizar una bodega. 1FN: un artículo por caja. 2FN: artículos del mismo tipo en la misma sección. 3FN: cada sección tiene su propio catálogo, sin duplicar información entre secciones.</p>
+</div>
+</section>
+<section id="desafío-rápido-3" class="slide level2" data-background-color="#e8f4f8">
+<h2>🚀 Desafío Rápido 3</h2>
+<p><strong>En parejas (5 minutos):</strong></p>
+<p>La siguiente tabla del sistema de RRHH de TechStyle está en 1FN:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>ID_Contrato</th>
+<th>ID_Empleado</th>
+<th>Nombre_Empleado</th>
+<th>ID_Cargo</th>
+<th>Nombre_Cargo</th>
+<th>Sueldo_Base</th>
+<th>ID_Departamento</th>
+<th>Nombre_Depto</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Clave primaria compuesta: <code>(ID_Contrato, ID_Cargo)</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Identifica: 1. ¿Viola la 2FN? ¿Cuál es la dependencia parcial? 2. ¿Viola la 3FN? ¿Cuál es la dependencia transitiva? 3. ¿Cuántas tablas necesitas para llegar a 3FN? Nombra cada una con sus atributos.</p>
+<aside class="notes">
+<p><strong>Solución Desafío Rápido 3</strong></p>
+<p>PK compuesta: <code>(ID_Contrato, ID_Cargo)</code>.</p>
+<p><strong>1. Violación de 2FN — Dependencias parciales:</strong> - <code>Nombre_Empleado</code> depende solo de <code>ID_Empleado</code> (que depende de <code>ID_Contrato</code>), no del par <code>(ID_Contrato, ID_Cargo)</code>. - <code>Nombre_Cargo</code> y <code>Sueldo_Base</code> dependen solo de <code>ID_Cargo</code>, no de <code>ID_Contrato</code>. - <code>ID_Departamento</code> depende de <code>ID_Cargo</code> (cada cargo pertenece a un departamento), no de <code>ID_Contrato</code>. → Hay múltiples dependencias parciales. Solución: separar CARGO y EMPLEADO.</p>
+<p><strong>2. Violación de 3FN — Dependencias transitivas</strong> (después de resolver 2FN): - En la tabla CARGO: <code>Nombre_Depto</code> depende de <code>ID_Departamento</code>, que no es la PK de CARGO. <code>ID_Cargo → ID_Departamento → Nombre_Depto</code> = dependencia transitiva. → Solución: separar DEPARTAMENTO.</p>
+<p><strong>3. Tablas resultantes en 3FN (4 tablas):</strong></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Tabla</th>
+<th>PK</th>
+<th>Atributos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CONTRATO</td>
+<td>ID_Contrato</td>
+<td>ID_Empleado (FK), ID_Cargo (FK)</td>
+</tr>
+<tr class="even">
+<td>EMPLEADO</td>
+<td>ID_Empleado</td>
+<td>Nombre_Empleado</td>
+</tr>
+<tr class="odd">
+<td>CARGO</td>
+<td>ID_Cargo</td>
+<td>Nombre_Cargo, Sueldo_Base, ID_Departamento (FK)</td>
+</tr>
+<tr class="even">
+<td>DEPARTAMENTO</td>
+<td>ID_Departamento</td>
+<td>Nombre_Depto</td>
+</tr>
+</tbody>
+</table>
+<p><em>Punto de cierre</em>: de 1 tabla con 8 columnas a 4 tablas con 2–3 columnas cada una. Cada tabla tiene ahora una única razón para cambiar: si un empleado cambia de nombre → 1 fila en EMPLEADO. Si el sueldo de un cargo sube → 1 fila en CARGO. Si un cargo cambia de departamento → 1 fila en CARGO. Cero riesgo de inconsistencia.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="conexión-con-la-toma-de-decisiones" class="slide level2">
 <h2>Conexión con la Toma de Decisiones</h2>
+<p>¿Por qué le importa esto a Roberto, el CEO?</p>
 <ul>
-<li class="fragment">Un Caso de Uso bien hecho garantiza que <strong>ningún proceso crítico del negocio</strong> quede fuera del sistema.</li>
-<li class="fragment">Si “solicitar devolución” no está en el Caso de Uso → no se diseña → no hay datos → el CMI no puede calcular la tasa de devolución.</li>
-<li class="fragment"><strong>Sin buen modelamiento → sin buenos datos → sin buenas decisiones.</strong></li>
+<li class="fragment">Una BD <strong>no normalizada</strong> → anomalías → datos incorrectos → <strong>decisiones equivocadas</strong>.</li>
+<li class="fragment">Si el email de 500 clientes Premium está desactualizado → la campaña de María llega al segmento equivocado → $15M mal invertidos.</li>
+<li class="fragment">Una BD en 3FN → cada dato existe <strong>en un solo lugar</strong> → actualizaciones fiables → KPIs correctos → CMI confiable.</li>
 </ul>
+<div class="fragment">
+<p><strong>El modelo de datos es la base de confianza del sistema analítico.</strong> Un mal modelo de datos hace que todos los análisis posteriores sean cuestionables.</p>
+</div>
 </section>
-<section id="puntos-clave" class="slide level2">
-<h2>Puntos Clave</h2>
+<section id="el-diccionario-de-datos" class="slide level2">
+<h2>El Diccionario de Datos</h2>
+<p>El <strong>Diccionario de Datos</strong> es el documento que acompaña al MER. Especifica, para cada atributo, su tipo de dato, restricciones y descripción.</p>
+<div class="fragment">
+<p>Es el “manual de instrucciones” para el desarrollador que implementará la base de datos. Sin él, el MER está incompleto.</p>
+</div>
+<div class="fragment">
+<p><strong>Ejemplo — Tabla CLIENTE:</strong></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Atributo</th>
+<th>Tipo</th>
+<th>NOT NULL</th>
+<th>Restricción</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>cliente_id</code></td>
+<td><code>INT</code></td>
+<td>Sí</td>
+<td>PK</td>
+<td>Identificador único del cliente</td>
+</tr>
+<tr class="even">
+<td><code>email</code></td>
+<td><code>VARCHAR(100)</code></td>
+<td>Sí</td>
+<td>UNIQUE</td>
+<td>Correo electrónico, uno por cliente</td>
+</tr>
+<tr class="odd">
+<td><code>segmento</code></td>
+<td><code>VARCHAR(20)</code></td>
+<td>No</td>
+<td>CHECK: Premium/Estándar/Básico</td>
+<td>Segmento comercial</td>
+</tr>
+<tr class="even">
+<td><code>fecha_registro</code></td>
+<td><code>DATE</code></td>
+<td>Sí</td>
+<td></td>
+<td>Fecha de alta en el sistema</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="tipos-de-datos-sql-fundamentales" class="slide level2">
+<h2>Tipos de Datos SQL Fundamentales</h2>
+<p>Los tipos de dato definen <strong>qué clase de valor</strong> puede almacenar una columna y <strong>cuánto espacio</strong> ocupa.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tipo</th>
+<th>Uso</th>
+<th>Ejemplo en TechStyle</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>INT</code></td>
+<td>Números enteros</td>
+<td><code>cliente_id</code>, <code>stock</code>, <code>cantidad</code></td>
+</tr>
+<tr class="even">
+<td><code>VARCHAR(n)</code></td>
+<td>Texto de longitud variable (máx. n caracteres)</td>
+<td><code>nombre</code>, <code>email</code>, <code>categoria</code></td>
+</tr>
+<tr class="odd">
+<td><code>DECIMAL(p, s)</code></td>
+<td>Número con decimales exactos (p dígitos, s decimales)</td>
+<td><code>precio_venta DECIMAL(10,2)</code> = hasta $99.999.999,99</td>
+</tr>
+<tr class="even">
+<td><code>DATE</code></td>
+<td>Fecha (sin hora): <code>YYYY-MM-DD</code></td>
+<td><code>fecha_venta</code>, <code>fecha_registro</code></td>
+</tr>
+<tr class="odd">
+<td><code>BOOLEAN</code></td>
+<td>Verdadero / Falso</td>
+<td><code>producto_activo</code></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p><strong>Restricciones comunes:</strong> - <code>NOT NULL</code> → el campo no puede quedar vacío. - <code>UNIQUE</code> → no puede repetirse el valor en la columna. - <code>DEFAULT valor</code> → valor automático si no se especifica. - <code>CHECK (condición)</code> → MySQL verifica que el valor cumpla la condición antes de insertarlo.</p>
+</div>
+</section>
+<section id="del-mer-al-sql-el-siguiente-paso" class="slide level2">
+<h2>Del MER al SQL: El Siguiente Paso</h2>
+<p>Una vez que el MER está en 3FN, cada entidad se convierte en una tabla SQL:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a></a><span class="co">-- Cada entidad → una tabla</span></span>
+<span id="cb1-2"><a></a><span class="co">-- Cada atributo → una columna con su tipo de dato</span></span>
+<span id="cb1-3"><a></a><span class="co">-- Cada PK → PRIMARY KEY</span></span>
+<span id="cb1-4"><a></a><span class="co">-- Cada FK → FOREIGN KEY (garantiza integridad referencial)</span></span>
+<span id="cb1-5"><a></a></span>
+<span id="cb1-6"><a></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> cliente (</span>
+<span id="cb1-7"><a></a>    rut          <span class="dt">VARCHAR</span>(<span class="dv">12</span>)  <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb1-8"><a></a>    nombre       <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-9"><a></a>    ciudad       <span class="dt">VARCHAR</span>(<span class="dv">50</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb1-10"><a></a>);</span>
+<span id="cb1-11"><a></a></span>
+<span id="cb1-12"><a></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> factura (</span>
+<span id="cb1-13"><a></a>    n_factura    <span class="dt">INT</span>          <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb1-14"><a></a>    fecha        <span class="dt">DATE</span>         <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-15"><a></a>    rut          <span class="dt">VARCHAR</span>(<span class="dv">12</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-16"><a></a>    <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (rut) <span class="kw">REFERENCES</span> cliente(rut)</span>
+<span id="cb1-17"><a></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="puntos-clave-de-la-semana-4" class="slide level2">
+<h2>Puntos Clave de la Semana 4</h2>
 <ul>
-<li class="fragment">El <strong>levantamiento de requerimientos</strong> identifica qué debe hacer el sistema antes de cualquier decisión técnica.</li>
-<li class="fragment">Los requerimientos son <strong>funcionales</strong> (qué hace) o <strong>no funcionales</strong> (cómo lo hace: rendimiento, disponibilidad).</li>
-<li class="fragment">El <strong>Diagrama de Caso de Uso</strong> muestra actores, acciones del sistema y sus relaciones en lenguaje del negocio.</li>
-<li class="fragment"><strong><code>&lt;&lt;include&gt;&gt;</code></strong>: el caso de uso base siempre ejecuta el incluido. <strong><code>&lt;&lt;extend&gt;&gt;</code></strong>: solo en condiciones específicas.</li>
-<li class="fragment">Cada caso de uso omitido en el diagrama es un proceso que no se modelará, no se implementará y no generará datos.</li>
+<li class="fragment"><strong>Excel no es una base de datos</strong>: genera anomalías de actualización, inserción y eliminación que comprometen la integridad de los datos.</li>
+<li class="fragment">Una <strong>entidad</strong> es una “cosa” del negocio (Cliente, Producto, Venta); un <strong>atributo</strong> es una característica de esa entidad.</li>
+<li class="fragment">Las <strong>relaciones</strong> entre entidades pueden ser 1:1, 1:N o N:M. Los N:M se implementan con una tabla intermedia.</li>
+<li class="fragment">La <strong>normalización</strong> es el proceso de eliminar redundancias: 1FN elimina grupos repetidos, 2FN elimina dependencias parciales, 3FN elimina dependencias transitivas.</li>
+<li class="fragment">Un modelo en <strong>3FN garantiza</strong> que cada dato existe en un único lugar → actualizaciones confiables → análisis confiables → decisiones correctas.</li>
 </ul>
 </section>
 <section id="preview-del-laboratorio-w04" class="slide level2">
 <h2>Preview del Laboratorio W04</h2>
-<p><strong>Lab W04: Diagrama de Caso de Uso completo en draw.io</strong></p>
+<p><strong>Lab W04: De la Planilla al Modelo</strong></p>
 <ul>
-<li class="fragment">Herramienta: draw.io (online, sin instalación, gratis).</li>
-<li class="fragment">Caso: Módulo completo de ventas de TechStyle.</li>
-<li class="fragment">Identificar y documentar los 3 actores con descripción de su rol.</li>
-<li class="fragment">Dibujar al menos 8 casos de uso con las relaciones <code>&lt;&lt;include&gt;&gt;</code> y <code>&lt;&lt;extend&gt;&gt;</code> justificadas.</li>
-<li class="fragment">Entregable: PNG del diagrama + tabla de actores/casos de uso con justificación de negocio.</li>
+<li class="fragment">Recibirás <code>techstyle_ventas_planas.csv</code>: una tabla desnormalizada de ventas de TechStyle con todos los problemas vistos en clase.</li>
+<li class="fragment"><strong>Parte 1</strong>: Identificar las anomalías y violaciones de forma normal.</li>
+<li class="fragment"><strong>Parte 2</strong>: Diseñar el Diagrama MER (draw.io o MySQL Workbench) con las entidades normalizadas.</li>
+<li class="fragment"><strong>Parte 3</strong>: Construir el Diccionario de Datos (tipos de datos SQL por atributo).</li>
+<li class="fragment"><strong>Parte 4</strong>: Escribir las sentencias <code>CREATE TABLE</code> en SQL.</li>
 </ul>
-</section>
-<section id="para-el-laboratorio-de-hoy" class="slide level2">
-<h2>Para el Laboratorio de Hoy</h2>
-<p><strong>Lab W04</strong>: Diagrama de Caso de Uso completo en draw.io.</p>
-<ul>
-<li>Herramienta: <a href="https://draw.io">draw.io</a> (online, sin instalación).</li>
-<li>Caso: Módulo de ventas de TechStyle (descripción entregada en clase).</li>
-<li>Entregable: PNG del diagrama + tabla de actores y casos de uso con justificación.</li>
-</ul>
-<div class="fragment">
-<p><strong>Para la próxima semana (W05)</strong>: ¿Cómo modelamos la <em>estructura de clases</em> del sistema? → Diagrama UML.</p>
-</div>
 
 
 </section>

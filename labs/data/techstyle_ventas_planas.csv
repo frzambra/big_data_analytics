@@ -1,0 +1,22 @@
+id_venta,fecha_venta,cliente_id,cliente_nombre,cliente_apellido,cliente_email,cliente_region,cliente_segmento,producto_id,producto_nombre,categoria,precio_unitario,costo_unitario,cantidad,descuento_pct,venta_total
+V001,2026-01-15,C001,Juan,Pérez,juan.perez@gmail.com,Metropolitana,Premium,P001,Nike Air Max,Calzado,89990,45000,1,0,89990
+V001,2026-01-15,C001,Juan,Pérez,juan.perez@gmail.com,Metropolitana,Premium,P002,Polera Adidas,Ropa,24990,8000,2,0,49980
+V002,2026-01-16,C002,María,González,mgonzalez@outlook.com,Valparaíso,Estándar,P003,Short Nike,Ropa,19990,6500,3,10,53973
+V003,2026-01-20,C001,Juan,Pérez,juanperez@gmail.com,Metropolitana,Premium,P001,Nike Air Max,Calzado,94990,45000,1,0,94990
+V004,2026-01-22,C004,Ana,Torres,ana.torres@gmail.com,Metropolitana,Premium,P001,Nike Air Max,Calzado,89990,45000,1,5,85490
+V004,2026-01-22,C004,Ana,Torres,ana.torres@gmail.com,Metropolitana,Premium,P004,Mochila Samsonite,Accesorios,49990,22000,1,0,49990
+V005,2026-01-28,C003,Carlos,Rojas,carlos.rojas@hotmail.com,Biobío,Básico,P005,Zapatilla Puma,Calzado,69990,32000,1,0,69990
+V006,2026-02-03,C002,María,González,mgonzalez@outlook.com,Valparaíso,Estándar,P002,Polera Adidas,Ropa,24990,8000,2,5,47481
+V006,2026-02-03,C002,María,González,mgonzalez@outlook.com,Valparaíso,Estándar,P006,Gorra New Era,Accesorios,14990,4500,1,0,14990
+V007,2026-02-10,C001,Juan,Pérez,juanperez@gmail.com,Metropolitana,Premium,P003,Short Nike,Ropa,19990,6500,2,0,39980
+V008,2026-02-15,C005,Pedro,Muñoz,pedro.munoz@yahoo.com,Araucanía,Estándar,P001,Nike Air Max,Calzado,89990,45000,2,10,161982
+V008,2026-02-15,C005,Pedro,Muñoz,pedro.munoz@yahoo.com,Araucanía,Estándar,P005,Zapatilla Puma,Calzado,69990,32000,1,0,69990
+V009,2026-02-20,C004,Ana,Torres,ana.torres@gmail.com,Metropolitana,Premium,P002,Polera Adidas,Ropa,24990,8000,3,10,67473
+V010,2026-02-25,C002,María,González,mgonzalez@outlook.com,Valparaíso,Estándar,P004,Mochila Samsonite,Accesorios,49990,22000,1,0,49990
+V011,2026-03-01,C001,Juan,Pérez,juan.perez@gmail.com,Metropolitana,Premium,P004,Mochila Samsonite,Accesorios,49990,22000,2,5,94981
+V011,2026-03-01,C001,Juan,Pérez,juan.perez@gmail.com,Metropolitana,Premium,P006,Gorra New Era,Accesorios,14990,4500,1,0,14990
+V012,2026-03-05,C005,Pedro,Muñoz,pedro.munoz@yahoo.com,Araucanía,Estándar,P003,Short Nike,Ropa,19990,6500,4,0,79960
+V013,2026-03-10,C004,Ana,Torres,ana.torres@gmail.com,Metropolitana,Premium,P005,Zapatilla Puma,Calzado,69990,32000,1,10,62991
+V013,2026-03-10,C004,Ana,Torres,ana.torres@gmail.com,Metropolitana,Premium,P001,Nike Air Max,Calzado,89990,45000,1,0,89990
+V014,2026-03-15,C002,María,González,mgonzalez@outlook.com,Valparaíso,Estándar,P001,Nike Air Max,Calzado,89990,45000,1,0,89990
+V015,2026-03-20,C001,Juan,Pérez,juan.perez@gmail.com,Metropolitana,Premium,P002,Polera Adidas,Ropa,24990,8000,4,15,84966

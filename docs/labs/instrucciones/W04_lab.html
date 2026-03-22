@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Laboratorio 4: Diagrama de Caso de Uso en draw.io</title>
+<title>Laboratorio 4: De la Planilla al Modelo</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -84,17 +119,44 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#contexto" id="toc-contexto" class="nav-link active" data-scroll-target="#contexto"><span class="header-section-number">1</span> Contexto</a></li>
-  <li><a href="#descripción-del-sistema-módulo-de-ventas-de-techstyle" id="toc-descripción-del-sistema-módulo-de-ventas-de-techstyle" class="nav-link" data-scroll-target="#descripción-del-sistema-módulo-de-ventas-de-techstyle"><span class="header-section-number">2</span> Descripción del Sistema: Módulo de Ventas de TechStyle</a></li>
-  <li><a href="#instrucciones" id="toc-instrucciones" class="nav-link" data-scroll-target="#instrucciones"><span class="header-section-number">3</span> Instrucciones</a>
+  <li><a href="#instrucciones-generales" id="toc-instrucciones-generales" class="nav-link" data-scroll-target="#instrucciones-generales"><span class="header-section-number">2</span> Instrucciones generales</a></li>
+  <li><a href="#sec-auditar" id="toc-sec-auditar" class="nav-link" data-scroll-target="#sec-auditar"><span class="header-section-number">3</span> Parte 1 — Auditar la Planilla Plana</a>
   <ul class="collapse">
-  <li><a href="#paso-1-identificar-actores-y-casos-de-uso-20-min" id="toc-paso-1-identificar-actores-y-casos-de-uso-20-min" class="nav-link" data-scroll-target="#paso-1-identificar-actores-y-casos-de-uso-20-min"><span class="header-section-number">3.1</span> Paso 1: Identificar actores y casos de uso (20 min)</a></li>
-  <li><a href="#paso-2-crear-el-diagrama-en-draw.io-60-min" id="toc-paso-2-crear-el-diagrama-en-draw.io-60-min" class="nav-link" data-scroll-target="#paso-2-crear-el-diagrama-en-draw.io-60-min"><span class="header-section-number">3.2</span> Paso 2: Crear el diagrama en draw.io (60 min)</a></li>
-  <li><a href="#paso-3-verificación-20-min" id="toc-paso-3-verificación-20-min" class="nav-link" data-scroll-target="#paso-3-verificación-20-min"><span class="header-section-number">3.3</span> Paso 3: Verificación (20 min)</a></li>
-  <li><a href="#paso-4-documentar-30-min" id="toc-paso-4-documentar-30-min" class="nav-link" data-scroll-target="#paso-4-documentar-30-min"><span class="header-section-number">3.4</span> Paso 4: Documentar (30 min)</a></li>
+  <li><a href="#paso-1-conocer-el-archivo" id="toc-paso-1-conocer-el-archivo" class="nav-link" data-scroll-target="#paso-1-conocer-el-archivo"><span class="header-section-number">3.1</span> Paso 1: Conocer el archivo</a></li>
+  <li><a href="#paso-2-identificar-anomalías" id="toc-paso-2-identificar-anomalías" class="nav-link" data-scroll-target="#paso-2-identificar-anomalías"><span class="header-section-number">3.2</span> Paso 2: Identificar anomalías</a></li>
+  <li><a href="#paso-3-identificar-violaciones-de-forma-normal" id="toc-paso-3-identificar-violaciones-de-forma-normal" class="nav-link" data-scroll-target="#paso-3-identificar-violaciones-de-forma-normal"><span class="header-section-number">3.3</span> Paso 3: Identificar violaciones de forma normal</a></li>
+  <li><a href="#paso-4-contar-la-redundancia" id="toc-paso-4-contar-la-redundancia" class="nav-link" data-scroll-target="#paso-4-contar-la-redundancia"><span class="header-section-number">3.4</span> Paso 4: Contar la redundancia</a></li>
   </ul></li>
-  <li><a href="#entregable" id="toc-entregable" class="nav-link" data-scroll-target="#entregable"><span class="header-section-number">4</span> Entregable</a></li>
-  <li><a href="#criterios-de-evaluación" id="toc-criterios-de-evaluación" class="nav-link" data-scroll-target="#criterios-de-evaluación"><span class="header-section-number">5</span> Criterios de evaluación</a></li>
-  <li><a href="#recursos-de-apoyo" id="toc-recursos-de-apoyo" class="nav-link" data-scroll-target="#recursos-de-apoyo"><span class="header-section-number">6</span> Recursos de apoyo</a></li>
+  <li><a href="#sec-normalizar" id="toc-sec-normalizar" class="nav-link" data-scroll-target="#sec-normalizar"><span class="header-section-number">4</span> Parte 2 — Normalizar: de la Planilla a las Tablas</a>
+  <ul class="collapse">
+  <li><a href="#paso-5-aplicar-1fn" id="toc-paso-5-aplicar-1fn" class="nav-link" data-scroll-target="#paso-5-aplicar-1fn"><span class="header-section-number">4.1</span> Paso 5: Aplicar 1FN</a></li>
+  <li><a href="#paso-6-aplicar-2fn-separar-entidades-con-dependencias-parciales" id="toc-paso-6-aplicar-2fn-separar-entidades-con-dependencias-parciales" class="nav-link" data-scroll-target="#paso-6-aplicar-2fn-separar-entidades-con-dependencias-parciales"><span class="header-section-number">4.2</span> Paso 6: Aplicar 2FN — Separar entidades con dependencias parciales</a></li>
+  <li><a href="#paso-7-aplicar-3fn-eliminar-dependencias-transitivas" id="toc-paso-7-aplicar-3fn-eliminar-dependencias-transitivas" class="nav-link" data-scroll-target="#paso-7-aplicar-3fn-eliminar-dependencias-transitivas"><span class="header-section-number">4.3</span> Paso 7: Aplicar 3FN — Eliminar dependencias transitivas</a></li>
+  </ul></li>
+  <li><a href="#sec-mer" id="toc-sec-mer" class="nav-link" data-scroll-target="#sec-mer"><span class="header-section-number">5</span> Parte 3 — Diseñar el Diagrama MER en draw.io</a>
+  <ul class="collapse">
+  <li><a href="#paso-8-configurar-draw.io" id="toc-paso-8-configurar-draw.io" class="nav-link" data-scroll-target="#paso-8-configurar-draw.io"><span class="header-section-number">5.1</span> Paso 8: Configurar draw.io</a></li>
+  <li><a href="#paso-9-crear-las-entidades" id="toc-paso-9-crear-las-entidades" class="nav-link" data-scroll-target="#paso-9-crear-las-entidades"><span class="header-section-number">5.2</span> Paso 9: Crear las entidades</a></li>
+  <li><a href="#paso-10-dibujar-las-relaciones" id="toc-paso-10-dibujar-las-relaciones" class="nav-link" data-scroll-target="#paso-10-dibujar-las-relaciones"><span class="header-section-number">5.3</span> Paso 10: Dibujar las relaciones</a></li>
+  <li><a href="#paso-11-verificar-el-diagrama" id="toc-paso-11-verificar-el-diagrama" class="nav-link" data-scroll-target="#paso-11-verificar-el-diagrama"><span class="header-section-number">5.4</span> Paso 11: Verificar el diagrama</a></li>
+  </ul></li>
+  <li><a href="#sec-diccionario" id="toc-sec-diccionario" class="nav-link" data-scroll-target="#sec-diccionario"><span class="header-section-number">6</span> Parte 4 — Diccionario de Datos</a>
+  <ul class="collapse">
+  <li><a href="#paso-12-completar-el-diccionario" id="toc-paso-12-completar-el-diccionario" class="nav-link" data-scroll-target="#paso-12-completar-el-diccionario"><span class="header-section-number">6.1</span> Paso 12: Completar el diccionario</a></li>
+  </ul></li>
+  <li><a href="#sec-sql" id="toc-sec-sql" class="nav-link" data-scroll-target="#sec-sql"><span class="header-section-number">7</span> Parte 5 — Sentencias CREATE TABLE en SQL</a>
+  <ul class="collapse">
+  <li><a href="#paso-13-escribir-el-sql-de-creación" id="toc-paso-13-escribir-el-sql-de-creación" class="nav-link" data-scroll-target="#paso-13-escribir-el-sql-de-creación"><span class="header-section-number">7.1</span> Paso 13: Escribir el SQL de creación</a></li>
+  <li><a href="#paso-14-verificar-la-integridad-referencial" id="toc-paso-14-verificar-la-integridad-referencial" class="nav-link" data-scroll-target="#paso-14-verificar-la-integridad-referencial"><span class="header-section-number">7.2</span> Paso 14: Verificar la integridad referencial</a></li>
+  </ul></li>
+  <li><a href="#sec-reflexion" id="toc-sec-reflexion" class="nav-link" data-scroll-target="#sec-reflexion"><span class="header-section-number">8</span> Parte 6 — Síntesis y Reflexión</a>
+  <ul class="collapse">
+  <li><a href="#paso-15-comparar-el-antes-y-el-después" id="toc-paso-15-comparar-el-antes-y-el-después" class="nav-link" data-scroll-target="#paso-15-comparar-el-antes-y-el-después"><span class="header-section-number">8.1</span> Paso 15: Comparar el antes y el después</a></li>
+  <li><a href="#paso-16-reporte-ejecutivo-para-roberto" id="toc-paso-16-reporte-ejecutivo-para-roberto" class="nav-link" data-scroll-target="#paso-16-reporte-ejecutivo-para-roberto"><span class="header-section-number">8.2</span> Paso 16: Reporte ejecutivo para Roberto</a></li>
+  <li><a href="#paso-17-preguntas-de-reflexión" id="toc-paso-17-preguntas-de-reflexión" class="nav-link" data-scroll-target="#paso-17-preguntas-de-reflexión"><span class="header-section-number">8.3</span> Paso 17: Preguntas de reflexión</a></li>
+  </ul></li>
+  <li><a href="#entregable" id="toc-entregable" class="nav-link" data-scroll-target="#entregable"><span class="header-section-number">9</span> Entregable</a></li>
+  <li><a href="#criterios-de-evaluación" id="toc-criterios-de-evaluación" class="nav-link" data-scroll-target="#criterios-de-evaluación"><span class="header-section-number">10</span> Criterios de Evaluación</a></li>
   </ul>
 </nav>
     </div>
@@ -103,8 +165,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Laboratorio 4: Diagrama de Caso de Uso en draw.io</h1>
-<p class="subtitle lead">Semana 4 · W04 · Unidad 2 · Big Data y Analytics · Universidad San Sebastián</p>
+<h1 class="title">Laboratorio 4: De la Planilla al Modelo</h1>
+<p class="subtitle lead">Semana 4 · W04 · Unidad II · Modelamiento de Datos · Universidad San Sebastián</p>
 </div>
 
 
@@ -123,105 +185,1125 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="contexto" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="contexto"><span class="header-section-number">1</span> Contexto</h2>
-<p>TechStyle ha decidido modernizar su módulo de ventas. El equipo de TI necesita un <strong>Diagrama de Caso de Uso</strong> que describa qué debe hacer el sistema y quién interactúa con él, antes de diseñar la base de datos.</p>
-<p>Tú eres el analista de sistemas asignado a este proyecto.</p>
-<p><strong>Herramienta</strong>: <a href="https://draw.io">draw.io</a> — sin instalación, funciona en el navegador.</p>
-<p><strong>Tiempo disponible</strong>: 2 horas 30 minutos.</p>
+<p>El equipo de TI de TechStyle lleva años registrando sus ventas en una sola hoja de Excel. El archivo <code>techstyle_ventas_planas.csv</code> contiene <strong>toda</strong> la información de ventas, clientes y productos en una única tabla plana — exactamente como lo haría alguien que nunca diseñó una base de datos.</p>
+<p>Roberto, el CEO, acaba de contratar a Juan como analista de datos. La primera tarea de Juan es <strong>diseñar el modelo de datos</strong> que permitirá migrar esta información a una base de datos relacional en MySQL (que construirán en las semanas 6–7).</p>
+<p><strong>Tu tarea como equipo de analistas</strong>: revisar la planilla, identificar sus problemas, diseñar el modelo entidad-relación y documentar la estructura de tablas lista para ser implementada.</p>
 <hr>
 </section>
-<section id="descripción-del-sistema-módulo-de-ventas-de-techstyle" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="descripción-del-sistema-módulo-de-ventas-de-techstyle"><span class="header-section-number">2</span> Descripción del Sistema: Módulo de Ventas de TechStyle</h2>
-<p><strong>Requerimientos del cliente (TechStyle)</strong>:</p>
-<p>El módulo de ventas debe permitir:</p>
+<section id="instrucciones-generales" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="instrucciones-generales"><span class="header-section-number">2</span> Instrucciones generales</h2>
 <ul>
-<li>Los <strong>clientes</strong> pueden registrarse, iniciar sesión, navegar el catálogo de productos, agregar productos al carrito, realizar el pedido y pagar.</li>
-<li>Al pagar, el sistema puede requerir validación de pago (siempre ocurre).</li>
-<li>Los <strong>clientes</strong> pueden también consultar el estado de su pedido y solicitar una devolución (solo si el pedido fue entregado).</li>
-<li>Los <strong>repartidores</strong> pueden ver los pedidos asignados a ellos y confirmar la entrega.</li>
-<li>Los <strong>administradores</strong> pueden gestionar el catálogo de productos (agregar, editar, eliminar), gestionar usuarios y ver reportes de ventas.</li>
-<li>Los administradores también pueden procesar devoluciones solicitadas por clientes.</li>
+<li>Trabajarás <strong>en grupos de 2 personas</strong>.</li>
+<li><strong>Duración total</strong>: 2 horas 30 minutos.</li>
+<li>Guarda tu trabajo frecuentemente.</li>
+<li>Archivo de datos: <code>labs/data/techstyle_ventas_planas.csv</code>.</li>
 </ul>
-<hr>
-</section>
-<section id="instrucciones" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="instrucciones"><span class="header-section-number">3</span> Instrucciones</h2>
-<section id="paso-1-identificar-actores-y-casos-de-uso-20-min" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="paso-1-identificar-actores-y-casos-de-uso-20-min"><span class="header-section-number">3.1</span> Paso 1: Identificar actores y casos de uso (20 min)</h3>
-<p>Antes de abrir draw.io, completa esta tabla en papel o en un documento:</p>
+<p><strong>Herramientas necesarias:</strong></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Actor</th>
-<th>Casos de uso que le corresponden</th>
+<th>Herramienta</th>
+<th>Uso</th>
+<th>Dónde obtenerla</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Cliente</td>
+<td>Cualquier editor de texto / Excel / Calc</td>
+<td>Abrir el CSV</td>
+<td>Ya instalado</td>
+</tr>
+<tr class="even">
+<td><a href="https://draw.io">draw.io</a> (online, gratuito)</td>
+<td>Diagrama MER</td>
+<td>Solo navegador, sin instalación</td>
+</tr>
+<tr class="odd">
+<td>Cualquier editor de texto</td>
+<td>Diccionario de datos y SQL</td>
+<td>Bloc de notas, VS Code, etc.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Estructura del laboratorio:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parte</th>
+<th>Actividad</th>
+<th>Tiempo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Auditar la planilla plana</td>
+<td>25 min</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Normalizar: de la planilla a las tablas</td>
+<td>30 min</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Diseñar el diagrama MER en draw.io</td>
+<td>35 min</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Construir el Diccionario de Datos</td>
+<td>20 min</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Escribir sentencias CREATE TABLE en SQL</td>
+<td>20 min</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Síntesis y reflexión</td>
+<td>20 min</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="sec-auditar" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="sec-auditar"><span class="header-section-number">3</span> Parte 1 — Auditar la Planilla Plana</h2>
+<p><strong>Duración: 25 minutos</strong></p>
+<section id="paso-1-conocer-el-archivo" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="paso-1-conocer-el-archivo"><span class="header-section-number">3.1</span> Paso 1: Conocer el archivo</h3>
+<p>Abre <code>techstyle_ventas_planas.csv</code> y observa su estructura. La tabla tiene las siguientes columnas:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Columna</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>id_venta</code></td>
+<td>Identificador de la venta</td>
+</tr>
+<tr class="even">
+<td><code>fecha_venta</code></td>
+<td>Fecha de la transacción</td>
+</tr>
+<tr class="odd">
+<td><code>cliente_id</code></td>
+<td>Código del cliente</td>
+</tr>
+<tr class="even">
+<td><code>cliente_nombre</code></td>
+<td>Nombre del cliente</td>
+</tr>
+<tr class="odd">
+<td><code>cliente_apellido</code></td>
+<td>Apellido del cliente</td>
+</tr>
+<tr class="even">
+<td><code>cliente_email</code></td>
+<td>Correo electrónico</td>
+</tr>
+<tr class="odd">
+<td><code>cliente_region</code></td>
+<td>Región del cliente</td>
+</tr>
+<tr class="even">
+<td><code>cliente_segmento</code></td>
+<td>Segmento: Premium / Estándar / Básico</td>
+</tr>
+<tr class="odd">
+<td><code>producto_id</code></td>
+<td>Código del producto</td>
+</tr>
+<tr class="even">
+<td><code>producto_nombre</code></td>
+<td>Nombre del producto</td>
+</tr>
+<tr class="odd">
+<td><code>categoria</code></td>
+<td>Categoría del producto</td>
+</tr>
+<tr class="even">
+<td><code>precio_unitario</code></td>
+<td>Precio de venta unitario</td>
+</tr>
+<tr class="odd">
+<td><code>costo_unitario</code></td>
+<td>Costo del producto</td>
+</tr>
+<tr class="even">
+<td><code>cantidad</code></td>
+<td>Unidades vendidas</td>
+</tr>
+<tr class="odd">
+<td><code>descuento_pct</code></td>
+<td>Porcentaje de descuento aplicado</td>
+</tr>
+<tr class="even">
+<td><code>venta_total</code></td>
+<td>Monto total de la venta</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="paso-2-identificar-anomalías" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="paso-2-identificar-anomalías"><span class="header-section-number">3.2</span> Paso 2: Identificar anomalías</h3>
+<p>Busca en los datos evidencia de cada tipo de anomalía. Completa la tabla:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tipo de anomalía</th>
+<th>¿Presente?</th>
+<th>Ejemplo concreto del archivo</th>
+<th>¿Qué problema causa?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Actualización</strong></td>
+<td>Sí / No</td>
+<td></td>
 <td></td>
 </tr>
 <tr class="even">
-<td>Repartidor</td>
+<td><strong>Inserción</strong></td>
+<td>Sí / No</td>
+<td></td>
 <td></td>
 </tr>
 <tr class="odd">
-<td>Administrador</td>
+<td><strong>Eliminación</strong></td>
+<td>Sí / No</td>
+<td></td>
 <td></td>
 </tr>
 </tbody>
 </table>
-<p>Identifica también: - ¿Qué casos de uso tienen relación <code>&lt;&lt;include&gt;&gt;</code>? (siempre ocurren) - ¿Qué casos de uso tienen relación <code>&lt;&lt;extend&gt;&gt;</code>? (ocurren condicionalmente)</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Pista para anomalía de actualización</strong>: filtra por <code>cliente_id</code> = C001 y observa si todos sus atributos (email, región) son consistentes en todas las filas.</p>
+</div>
+</div>
 </section>
-<section id="paso-2-crear-el-diagrama-en-draw.io-60-min" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="paso-2-crear-el-diagrama-en-draw.io-60-min"><span class="header-section-number">3.2</span> Paso 2: Crear el diagrama en draw.io (60 min)</h3>
+<section id="paso-3-identificar-violaciones-de-forma-normal" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="paso-3-identificar-violaciones-de-forma-normal"><span class="header-section-number">3.3</span> Paso 3: Identificar violaciones de forma normal</h3>
+<p>Completa el siguiente diagnóstico:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pregunta</th>
+<th>Respuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¿La tabla está en <strong>1FN</strong>? ¿Por qué sí o no?</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>¿Si estuviera en 1FN, estaría en <strong>2FN</strong>? Identifica una dependencia parcial.</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>¿Si estuviera en 2FN, estaría en <strong>3FN</strong>? Identifica una dependencia transitiva.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Recordatorio:</strong> Una dependencia parcial ocurre cuando un atributo no-clave depende solo de <em>parte</em> de la clave compuesta. Una dependencia transitiva ocurre cuando un atributo no-clave depende de otro atributo no-clave.</p>
+</div>
+</div>
+</section>
+<section id="paso-4-contar-la-redundancia" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="paso-4-contar-la-redundancia"><span class="header-section-number">3.4</span> Paso 4: Contar la redundancia</h3>
+<p>Responde las siguientes preguntas mirando los datos:</p>
 <ol type="1">
-<li>Ir a <a href="https://draw.io">draw.io</a> → “Crear nuevo diagrama” → seleccionar “Blank”.</li>
-<li>En la barra de búsqueda de formas, buscar “use case” para encontrar los elementos correctos.</li>
-<li>Construir el diagrama con:
-<ul>
-<li>Un <strong>rectángulo</strong> que delimita el sistema (titulado “Sistema TechStyle – Módulo de Ventas”).</li>
-<li><strong>Figuras de actor</strong> (palito de hombre) para cada actor fuera del rectángulo.</li>
-<li><strong>Elipses</strong> para cada caso de uso dentro del rectángulo.</li>
-<li><strong>Líneas de asociación</strong> entre actores y casos de uso.</li>
-<li><strong>Flechas punteadas</strong> con etiquetas <code>&lt;&lt;include&gt;&gt;</code> o <code>&lt;&lt;extend&gt;&gt;</code> donde corresponda.</li>
-</ul></li>
+<li>¿Cuántas veces aparece el nombre “Nike Air Max” (o el producto más frecuente) en la tabla?</li>
+<li>¿Cuántas filas tendría que modificar si el cliente con más compras cambia su email?</li>
+<li>Si eliminamos todas las ventas de un cliente, ¿qué información perdemos que no debería perderse?</li>
 </ol>
+<hr>
 </section>
-<section id="paso-3-verificación-20-min" class="level3" data-number="3.3">
-<h3 data-number="3.3" class="anchored" data-anchor-id="paso-3-verificación-20-min"><span class="header-section-number">3.3</span> Paso 3: Verificación (20 min)</h3>
-<p>Revisar el diagrama usando esta lista:</p>
-<ul class="task-list">
-<li><label><input type="checkbox">Los 3 actores están representados correctamente.</label></li>
-<li><label><input type="checkbox">Todos los casos de uso están dentro del límite del sistema.</label></li>
-<li><label><input type="checkbox">Hay al menos 8 casos de uso distintos.</label></li>
-<li><label><input type="checkbox">Al menos 1 relación <code>&lt;&lt;include&gt;&gt;</code> correctamente etiquetada.</label></li>
-<li><label><input type="checkbox">Al menos 1 relación <code>&lt;&lt;extend&gt;&gt;</code> correctamente etiquetada.</label></li>
-<li><label><input type="checkbox">El diagrama es legible (sin elementos superpuestos).</label></li>
+</section>
+<section id="sec-normalizar" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="sec-normalizar"><span class="header-section-number">4</span> Parte 2 — Normalizar: de la Planilla a las Tablas</h2>
+<p><strong>Duración: 30 minutos</strong></p>
+<p>El objetivo de esta parte es pasar la planilla plana por las tres formas normales y llegar a las tablas finales que irán al diagrama MER.</p>
+<section id="paso-5-aplicar-1fn" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="paso-5-aplicar-1fn"><span class="header-section-number">4.1</span> Paso 5: Aplicar 1FN</h3>
+<p>La tabla original ya tiene un valor por celda (no hay grupos repetidos tipo Item1, Item2…), por lo que técnicamente <strong>ya está en 1FN</strong>.</p>
+<p>Sin embargo, identifica y registra:</p>
+<ul>
+<li>¿Cuál sería la <strong>clave primaria</strong> de esta tabla plana? (puede ser simple o compuesta)</li>
+<li>¿Esa clave identifica unívocamente cada fila?</li>
 </ul>
 </section>
-<section id="paso-4-documentar-30-min" class="level3" data-number="3.4">
-<h3 data-number="3.4" class="anchored" data-anchor-id="paso-4-documentar-30-min"><span class="header-section-number">3.4</span> Paso 4: Documentar (30 min)</h3>
-<p>En un documento aparte (Word o Google Docs), describe:</p>
-<ol type="1">
-<li><strong>Tabla de actores</strong>: Para cada actor, explica su rol en el sistema.</li>
-<li><strong>Tabla de casos de uso</strong>: Para cada caso de uso, describe qué hace y por qué es necesario.</li>
-<li><strong>Justificación de relaciones</strong>: Explica por qué elegiste esas relaciones <code>&lt;&lt;include&gt;&gt;</code> y <code>&lt;&lt;extend&gt;&gt;</code>.</li>
-</ol>
-<hr>
-</section>
-</section>
-<section id="entregable" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="entregable"><span class="header-section-number">4</span> Entregable</h2>
-<ol type="1">
-<li>Diagrama exportado como <strong>PNG</strong> (draw.io → Extras → Exportar → PNG).</li>
-<li>Documento Word/PDF con la tabla de actores, casos de uso y justificación de relaciones.</li>
-</ol>
-<p><strong>Subir ambos archivos</strong> con el nombre: <code>lab6_apellido1_apellido2.png</code> y <code>lab6_apellido1_apellido2.pdf</code>.</p>
-<hr>
-</section>
-<section id="criterios-de-evaluación" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="criterios-de-evaluación"><span class="header-section-number">5</span> Criterios de evaluación</h2>
+<section id="paso-6-aplicar-2fn-separar-entidades-con-dependencias-parciales" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="paso-6-aplicar-2fn-separar-entidades-con-dependencias-parciales"><span class="header-section-number">4.2</span> Paso 6: Aplicar 2FN — Separar entidades con dependencias parciales</h3>
+<p>Asumiendo la clave primaria compuesta <code>(id_venta, producto_id)</code>:</p>
+<p><strong>6.1</strong> Identifica qué columnas dependen <strong>solo de <code>producto_id</code></strong> (no de <code>id_venta</code>):</p>
 <table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Columna</th>
+<th>¿Depende solo de <code>producto_id</code>?</th>
+<th>¿A qué tabla moverla?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>producto_nombre</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>categoria</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>precio_unitario</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>costo_unitario</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>cantidad</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>6.2</strong> Identifica qué columnas dependen <strong>solo de <code>id_venta</code></strong> (no de <code>producto_id</code>):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Columna</th>
+<th>¿Depende solo de <code>id_venta</code>?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>fecha_venta</code></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>cliente_id</code></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>cliente_nombre</code></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>venta_total</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>6.3</strong> Define las tres tablas que resultan de aplicar 2FN:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tabla</th>
+<th>Clave primaria</th>
+<th>Columnas que incluye</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ventas</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>productos</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>detalle_ventas</code></td>
+<td><em>(compuesta)</em></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="paso-7-aplicar-3fn-eliminar-dependencias-transitivas" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="paso-7-aplicar-3fn-eliminar-dependencias-transitivas"><span class="header-section-number">4.3</span> Paso 7: Aplicar 3FN — Eliminar dependencias transitivas</h3>
+<p>En la tabla <code>ventas</code> del paso anterior quedan columnas del cliente (<code>cliente_nombre</code>, <code>cliente_apellido</code>, <code>cliente_email</code>, <code>cliente_region</code>, <code>cliente_segmento</code>).</p>
+<p><strong>7.1</strong> ¿De qué columna dependen esos atributos del cliente? ¿De <code>id_venta</code> o de <code>cliente_id</code>?</p>
+<p><strong>7.2</strong> Crea la tabla <code>clientes</code> con los atributos correspondientes:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tabla</th>
+<th>Clave primaria</th>
+<th>Columnas que incluye</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>clientes</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>ventas</code> <em>(actualizada)</em></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>7.3</strong> ¿Quedan dependencias transitivas en alguna de las 4 tablas resultantes? Verifica cada una.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Al terminar este paso deberías tener 4 tablas</strong>: <code>clientes</code>, <code>ventas</code>, <code>productos</code> y <code>detalle_ventas</code>. Estas son las entidades del modelo relacional de TechStyle.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="sec-mer" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="sec-mer"><span class="header-section-number">5</span> Parte 3 — Diseñar el Diagrama MER en draw.io</h2>
+<p><strong>Duración: 35 minutos</strong></p>
+<section id="paso-8-configurar-draw.io" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="paso-8-configurar-draw.io"><span class="header-section-number">5.1</span> Paso 8: Configurar draw.io</h3>
+<ol type="1">
+<li>Abre un navegador y ve a <a href="https://draw.io">draw.io</a>.</li>
+<li>Selecciona <em>Crear nuevo diagrama</em> → <em>Diagrama en blanco</em>.</li>
+<li>En el menú <em>Buscar formas</em>, escribe “entity” para encontrar las formas de Entidad-Relación.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>También puedes usar <strong>MySQL Workbench</strong> si está instalado: <em>File → New Model → Add Diagram</em>. La ventaja de Workbench es que puede generar el SQL directamente desde el diagrama.</p>
+</div>
+</div>
+</section>
+<section id="paso-9-crear-las-entidades" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="paso-9-crear-las-entidades"><span class="header-section-number">5.2</span> Paso 9: Crear las entidades</h3>
+<p>Para cada una de las 4 tablas definidas en la Parte 2, crea un rectángulo con:</p>
+<ul>
+<li><strong>Nombre de la entidad</strong> en la parte superior (en mayúsculas).</li>
+<li><strong>Lista de atributos</strong> dentro del rectángulo.</li>
+<li><strong>Clave primaria subrayada</strong> (o marcada con <code>PK</code>).</li>
+<li><strong>Claves foráneas marcadas</strong> con <code>FK</code>.</li>
+</ul>
+<p><strong>Entidad CLIENTES:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Atributo</th>
+<th>Rol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>cliente_id</code></td>
+<td>PK</td>
+</tr>
+<tr class="even">
+<td><code>nombre</code></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>apellido</code></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>email</code></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>region</code></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>segmento</code></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>fecha_registro</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Entidad PRODUCTOS:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Atributo</th>
+<th>Rol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>producto_id</code></td>
+<td>PK</td>
+</tr>
+<tr class="even">
+<td><code>nombre_producto</code></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>categoria</code></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>precio_venta</code></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>costo_unitario</code></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>stock</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Entidad VENTAS:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Atributo</th>
+<th>Rol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>venta_id</code></td>
+<td>PK</td>
+</tr>
+<tr class="even">
+<td><code>fecha</code></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>cliente_id</code></td>
+<td>FK → CLIENTES</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Entidad DETALLE_VENTAS:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Atributo</th>
+<th>Rol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>venta_id</code></td>
+<td>PK, FK → VENTAS</td>
+</tr>
+<tr class="even">
+<td><code>producto_id</code></td>
+<td>PK, FK → PRODUCTOS</td>
+</tr>
+<tr class="odd">
+<td><code>cantidad</code></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>precio_unitario</code></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>descuento_pct</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="paso-10-dibujar-las-relaciones" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="paso-10-dibujar-las-relaciones"><span class="header-section-number">5.3</span> Paso 10: Dibujar las relaciones</h3>
+<p>Conecta las entidades con líneas de relación y anota la cardinalidad:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Relación</th>
+<th>Cardinalidad</th>
+<th>Semántica</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CLIENTES → VENTAS</td>
+<td>1 : N</td>
+<td>Un cliente realiza muchas ventas</td>
+</tr>
+<tr class="even">
+<td>VENTAS → DETALLE_VENTAS</td>
+<td>1 : N</td>
+<td>Una venta contiene muchos ítems</td>
+</tr>
+<tr class="odd">
+<td>PRODUCTOS → DETALLE_VENTAS</td>
+<td>1 : N</td>
+<td>Un producto aparece en muchos ítems</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Usa la notación <strong>crow’s foot</strong> (pata de gallo) en draw.io: en el menú de líneas, selecciona el conector con las marcas de cardinalidad. El lado “uno” lleva <code>||</code> y el lado “muchos” lleva <code>o{</code> o <code>|{</code>.</p>
+</div>
+</div>
+</section>
+<section id="paso-11-verificar-el-diagrama" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="paso-11-verificar-el-diagrama"><span class="header-section-number">5.4</span> Paso 11: Verificar el diagrama</h3>
+<p>Antes de continuar, verifica:</p>
+<ul class="task-list">
+<li><label><input type="checkbox">¿Cada entidad tiene una clave primaria claramente identificada?</label></li>
+<li><label><input type="checkbox">¿Cada relación tiene su cardinalidad anotada?</label></li>
+<li><label><input type="checkbox">¿La relación N:M entre VENTAS y PRODUCTOS está resuelta con la tabla DETALLE_VENTAS?</label></li>
+<li><label><input type="checkbox">¿Las claves foráneas están marcadas en las tablas “del lado muchos”?</label></li>
+<li><label><input type="checkbox">¿El diagrama refleja exactamente las 4 tablas definidas en la Parte 2?</label></li>
+</ul>
+<p><strong>Exporta el diagrama</strong>: <em>Archivo → Exportar como → PNG</em>. Guárdalo como <code>W04_diagrama_MER.png</code>.</p>
+<hr>
+</section>
+</section>
+<section id="sec-diccionario" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="sec-diccionario"><span class="header-section-number">6</span> Parte 4 — Diccionario de Datos</h2>
+<p><strong>Duración: 20 minutos</strong></p>
+<p>El <strong>Diccionario de Datos</strong> documenta cada atributo: su nombre, tipo de dato SQL, si acepta nulos y su descripción. Es el documento que recibe el desarrollador para implementar la base de datos.</p>
+<section id="paso-12-completar-el-diccionario" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="paso-12-completar-el-diccionario"><span class="header-section-number">6.1</span> Paso 12: Completar el diccionario</h3>
+<p>Completa el diccionario para las 4 tablas. Usa los tipos SQL estándar:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tipo SQL</th>
+<th>Uso</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>INT</code></td>
+<td>Números enteros (IDs, cantidades, stock)</td>
+</tr>
+<tr class="even">
+<td><code>VARCHAR(n)</code></td>
+<td>Texto de longitud variable (nombres, emails, categorías)</td>
+</tr>
+<tr class="odd">
+<td><code>DECIMAL(p,s)</code></td>
+<td>Números con decimales (precios, montos)</td>
+</tr>
+<tr class="even">
+<td><code>DATE</code></td>
+<td>Fechas (sin hora)</td>
+</tr>
+<tr class="odd">
+<td><code>BOOLEAN</code></td>
+<td>Verdadero / Falso</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tabla: CLIENTES</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Atributo</th>
+<th>Tipo SQL</th>
+<th>NOT NULL</th>
+<th>Restricciones</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>cliente_id</code></td>
+<td><code>INT</code></td>
+<td>Sí</td>
+<td>PK</td>
+<td>Identificador único del cliente</td>
+</tr>
+<tr class="even">
+<td><code>nombre</code></td>
+<td><code>VARCHAR(50)</code></td>
+<td>Sí</td>
+<td></td>
+<td>Nombre de pila</td>
+</tr>
+<tr class="odd">
+<td><code>apellido</code></td>
+<td><code>VARCHAR(50)</code></td>
+<td>Sí</td>
+<td></td>
+<td>Apellido</td>
+</tr>
+<tr class="even">
+<td><code>email</code></td>
+<td><code>VARCHAR(100)</code></td>
+<td>Sí</td>
+<td>UNIQUE</td>
+<td>Correo electrónico (único en el sistema)</td>
+</tr>
+<tr class="odd">
+<td><code>region</code></td>
+<td><code>VARCHAR(50)</code></td>
+<td>Sí</td>
+<td></td>
+<td>Región de residencia</td>
+</tr>
+<tr class="even">
+<td><code>segmento</code></td>
+<td><code>VARCHAR(20)</code></td>
+<td>No</td>
+<td>CHECK: Premium / Estándar / Básico</td>
+<td>Segmento comercial del cliente</td>
+</tr>
+<tr class="odd">
+<td><code>fecha_registro</code></td>
+<td><code>DATE</code></td>
+<td>Sí</td>
+<td></td>
+<td>Fecha en que el cliente se registró</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tabla: PRODUCTOS</strong></p>
+<p>Completa los campos en blanco:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Atributo</th>
+<th>Tipo SQL</th>
+<th>NOT NULL</th>
+<th>Restricciones</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>producto_id</code></td>
+<td></td>
+<td>Sí</td>
+<td>PK</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>nombre_producto</code></td>
+<td></td>
+<td>Sí</td>
+<td></td>
+<td>Nombre comercial del producto</td>
+</tr>
+<tr class="odd">
+<td><code>categoria</code></td>
+<td></td>
+<td>Sí</td>
+<td></td>
+<td>Ej: Calzado, Ropa, Accesorios</td>
+</tr>
+<tr class="even">
+<td><code>precio_venta</code></td>
+<td><code>DECIMAL(10,2)</code></td>
+<td>Sí</td>
+<td>CHECK &gt; 0</td>
+<td>Precio de venta al público</td>
+</tr>
+<tr class="odd">
+<td><code>costo_unitario</code></td>
+<td></td>
+<td>Sí</td>
+<td></td>
+<td>Costo de adquisición</td>
+</tr>
+<tr class="even">
+<td><code>stock</code></td>
+<td></td>
+<td>Sí</td>
+<td>DEFAULT 0</td>
+<td>Unidades disponibles en bodega</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tabla: VENTAS</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Atributo</th>
+<th>Tipo SQL</th>
+<th>NOT NULL</th>
+<th>Restricciones</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>venta_id</code></td>
+<td></td>
+<td>Sí</td>
+<td>PK</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>fecha</code></td>
+<td></td>
+<td>Sí</td>
+<td></td>
+<td>Fecha de la transacción</td>
+</tr>
+<tr class="odd">
+<td><code>cliente_id</code></td>
+<td></td>
+<td>Sí</td>
+<td>FK → CLIENTES</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tabla: DETALLE_VENTAS</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Atributo</th>
+<th>Tipo SQL</th>
+<th>NOT NULL</th>
+<th>Restricciones</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>venta_id</code></td>
+<td><code>INT</code></td>
+<td>Sí</td>
+<td>PK, FK → VENTAS</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>producto_id</code></td>
+<td><code>INT</code></td>
+<td>Sí</td>
+<td>PK, FK → PRODUCTOS</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>cantidad</code></td>
+<td></td>
+<td>Sí</td>
+<td>CHECK &gt; 0</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>precio_unitario</code></td>
+<td><code>DECIMAL(10,2)</code></td>
+<td>Sí</td>
+<td></td>
+<td>Precio al momento de la venta (puede diferir del precio actual del producto)</td>
+</tr>
+<tr class="odd">
+<td><code>descuento_pct</code></td>
+<td></td>
+<td>No</td>
+<td>CHECK 0–100, DEFAULT 0</td>
+<td>Porcentaje de descuento aplicado</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>¿Por qué <code>precio_unitario</code> está en DETALLE_VENTAS y no solo en PRODUCTOS?</strong> El precio de un producto puede cambiar con el tiempo. Si una venta de hace 6 meses registró un precio de $89.990 y hoy el producto vale $99.990, necesitamos guardar el precio <em>histórico</em> al momento de la venta. Por eso <code>precio_unitario</code> vive en el detalle, no en la tabla de productos.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="sec-sql" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="sec-sql"><span class="header-section-number">7</span> Parte 5 — Sentencias CREATE TABLE en SQL</h2>
+<p><strong>Duración: 20 minutos</strong></p>
+<section id="paso-13-escribir-el-sql-de-creación" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="paso-13-escribir-el-sql-de-creación"><span class="header-section-number">7.1</span> Paso 13: Escribir el SQL de creación</h3>
+<p>Con base en el diccionario de datos, escribe las sentencias <code>CREATE TABLE</code> para las 4 tablas. El orden importa: primero las tablas sin dependencias foráneas.</p>
+<p><strong>Orden correcto</strong>: CLIENTES → PRODUCTOS → VENTAS → DETALLE_VENTAS.</p>
+<p><strong>Tabla CLIENTES</strong> (ya resuelta — úsala como referencia):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> clientes (</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    cliente_id      <span class="dt">INT</span>           <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    nombre          <span class="dt">VARCHAR</span>(<span class="dv">50</span>)   <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    apellido        <span class="dt">VARCHAR</span>(<span class="dv">50</span>)   <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    email           <span class="dt">VARCHAR</span>(<span class="dv">100</span>)  <span class="kw">UNIQUE</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    region          <span class="dt">VARCHAR</span>(<span class="dv">50</span>)   <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    segmento        <span class="dt">VARCHAR</span>(<span class="dv">20</span>)   <span class="kw">CHECK</span> (segmento <span class="kw">IN</span> (<span class="st">'Premium'</span>, <span class="st">'Estándar'</span>, <span class="st">'Básico'</span>)),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    fecha_registro  <span class="dt">DATE</span>          <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Tabla PRODUCTOS</strong> (completa los espacios en blanco):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> productos (</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    producto_id      ___________   <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    nombre_producto  ___________   <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    categoria        ___________   <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    precio_venta     <span class="dt">DECIMAL</span>(<span class="dv">10</span>,<span class="dv">2</span>) <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">CHECK</span> (precio_venta <span class="op">&gt;</span> <span class="dv">0</span>),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    costo_unitario   ___________   <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">CHECK</span> (costo_unitario <span class="op">&gt;</span> <span class="dv">0</span>),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    stock            ___________   <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">DEFAULT</span> <span class="dv">0</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Tabla VENTAS</strong> (escríbela desde cero):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Escribe aquí la sentencia CREATE TABLE ventas</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Recuerda: incluir la FOREIGN KEY hacia clientes</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Tabla DETALLE_VENTAS</strong> (escríbela desde cero):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Escribe aquí la sentencia CREATE TABLE detalle_ventas</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Recuerda:</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">--   - Clave primaria COMPUESTA: (venta_id, producto_id)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">--   - Dos FOREIGN KEYs: hacia ventas y hacia productos</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">--   - CHECK en cantidad y descuento_pct</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="paso-14-verificar-la-integridad-referencial" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="paso-14-verificar-la-integridad-referencial"><span class="header-section-number">7.2</span> Paso 14: Verificar la integridad referencial</h3>
+<p>Responde:</p>
+<ol type="1">
+<li>¿Por qué <code>DETALLE_VENTAS</code> se crea <em>después</em> de <code>VENTAS</code> y <code>PRODUCTOS</code>?</li>
+<li>¿Qué ocurre en MySQL si intentas insertar una fila en <code>DETALLE_VENTAS</code> con un <code>venta_id</code> que no existe en <code>VENTAS</code>?</li>
+<li>¿Qué ocurre si intentas eliminar un cliente de <code>CLIENTES</code> que tiene ventas asociadas en <code>VENTAS</code>?</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Esto es la <strong>integridad referencial</strong> garantizada por las <code>FOREIGN KEY</code>. MySQL no permite insertar datos huérfanos ni eliminar datos que otros registros referencian — exactamente el tipo de protección que Excel no puede ofrecer.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="sec-reflexion" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="sec-reflexion"><span class="header-section-number">8</span> Parte 6 — Síntesis y Reflexión</h2>
+<p><strong>Duración: 20 minutos</strong></p>
+<section id="paso-15-comparar-el-antes-y-el-después" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="paso-15-comparar-el-antes-y-el-después"><span class="header-section-number">8.1</span> Paso 15: Comparar el antes y el después</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Dimensión</th>
+<th>Planilla Excel plana</th>
+<th>Modelo relacional en 3FN</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¿Dónde vive el email de un cliente?</td>
+<td>En cada fila de sus ventas</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>¿Cómo se actualiza el precio de un producto?</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>¿Qué pasa si eliminas todas las ventas de un cliente?</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>¿Cuántas tablas necesitas para consultar ventas por región?</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>¿Puede haber dos productos con el mismo código?</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="paso-16-reporte-ejecutivo-para-roberto" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="paso-16-reporte-ejecutivo-para-roberto"><span class="header-section-number">8.2</span> Paso 16: Reporte ejecutivo para Roberto</h3>
+<p>Redacta un párrafo breve (6–8 líneas) como si fueras Juan presentando el modelo de datos a Roberto:</p>
+<blockquote class="blockquote">
+<p><strong>Para:</strong> Roberto (CEO)</p>
+<p><strong>Asunto:</strong> Diseño del modelo de datos para migración de Excel a MySQL</p>
+<p>El modelo propuesto organiza la información de TechStyle en 4 tablas normalizadas… <em>(continúa)</em></p>
+</blockquote>
+<p>Incluye: - Por qué el diseño actual en Excel genera riesgos. - Qué garantiza el nuevo modelo que Excel no puede garantizar. - Cuántas tablas tiene el nuevo modelo y qué representa cada una.</p>
+</section>
+<section id="paso-17-preguntas-de-reflexión" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="paso-17-preguntas-de-reflexión"><span class="header-section-number">8.3</span> Paso 17: Preguntas de reflexión</h3>
+<p>Responde en conjunto con tu compañero:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pregunta</th>
+<th>Respuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¿En qué parte de la normalización fue más difícil decidir qué tabla pertenece a qué entidad?</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>¿Podría haber una 4FN o 5FN? ¿Cuándo se usarían?</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Si TechStyle agrega un módulo de despacho (con dirección de entrega, repartidor, hora de entrega), ¿qué nuevas entidades agregarías al modelo?</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>¿Por qué el <code>precio_unitario</code> se guarda en <code>DETALLE_VENTAS</code> y no se puede simplemente calcular desde <code>PRODUCTOS</code>?</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="entregable" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="entregable"><span class="header-section-number">9</span> Entregable</h2>
+<p>Sube a la plataforma del curso los siguientes archivos comprimidos en una carpeta <code>W04_lab_[apellido1]_[apellido2].zip</code>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Archivo</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>W04_diagrama_MER.png</code></td>
+<td>Diagrama MER exportado desde draw.io</td>
+</tr>
+<tr class="even">
+<td><code>W04_diccionario_datos.pdf</code> o <code>.docx</code></td>
+<td>Tablas del diccionario de datos completas</td>
+</tr>
+<tr class="odd">
+<td><code>W04_modelo.sql</code></td>
+<td>Las 4 sentencias CREATE TABLE completas</td>
+</tr>
+<tr class="even">
+<td><code>W04_reflexion.pdf</code> o <code>.docx</code></td>
+<td>Reporte ejecutivo + respuestas de reflexión</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="criterios-de-evaluación" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="criterios-de-evaluación"><span class="header-section-number">10</span> Criterios de Evaluación</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Criterio</th>
@@ -230,36 +1312,31 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td>Actores correctamente identificados y ubicados</td>
+<td>Identificación correcta de anomalías y violaciones de FN (Partes 1–2)</td>
 <td>20 pts</td>
 </tr>
 <tr class="even">
-<td>Casos de uso completos y dentro del límite</td>
-<td>30 pts</td>
+<td>Diagrama MER: entidades, atributos, relaciones y cardinalidades correctas (Parte 3)</td>
+<td>25 pts</td>
 </tr>
 <tr class="odd">
-<td>Relaciones <code>&lt;&lt;include&gt;&gt;</code> y <code>&lt;&lt;extend&gt;&gt;</code> correctas</td>
-<td>25 pts</td>
+<td>Diccionario de datos: tipos SQL correctos y restricciones apropiadas (Parte 4)</td>
+<td>20 pts</td>
 </tr>
 <tr class="even">
-<td>Documentación de actores y casos de uso</td>
+<td>Sentencias CREATE TABLE con PK, FK y CHECK correctos (Parte 5)</td>
 <td>25 pts</td>
 </tr>
 <tr class="odd">
+<td>Reporte ejecutivo y reflexión (Parte 6)</td>
+<td>10 pts</td>
+</tr>
+<tr class="even">
 <td><strong>Total</strong></td>
 <td><strong>100 pts</strong></td>
 </tr>
 </tbody>
 </table>
-<hr>
-</section>
-<section id="recursos-de-apoyo" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="recursos-de-apoyo"><span class="header-section-number">6</span> Recursos de apoyo</h2>
-<ul>
-<li>Laudon &amp; Laudon (2016), Cap. 5: Infraestructura de TI y tecnologías emergentes.</li>
-<li>Oz (2008), Cap. 5: Sistemas de gestión de bases de datos.</li>
-<li>Descripción de requerimientos del módulo de pedidos TechStyle (entregada en clase).</li>
-</ul>
 
 
 </section>

@@ -1,390 +1,620 @@
 ---
-title: "Levantamiento de Requerimientos y Diagrama de Caso de Uso"
-subtitle: "Semana 4 · W04 · Unidad 2 · Big Data y Analytics"
+title: "De la Planilla al Modelo"
+subtitle: "Entidades, Relaciones y Normalización · Semana 4 · Unidad II"
 author: "Universidad San Sebastián"
-date: "Abril 2026"
+date: "Marzo 2026"
 format:
   revealjs:
-    theme: default
+    theme: sky
     incremental: false
     slide-number: true
     footer: "Big Data y Analytics · USS · 2026"
 ---
 
-## Retroalimentación Solemne 1
+## ¿Dónde Estamos?
 
 ::: {.incremental}
-- Revisión de resultados y errores frecuentes.
-- **Patrón de error más común**: Confundir el *tipo* de SI con el *nivel* organizacional.
-- **Fortaleza observada**: Aplicación del CMI y calidad de datos al caso TechStyle.
+- **Unidad 1** (W01–W03): Entendimos *para qué* sirven los SI y cómo fluyen los datos desde OLTP hasta el CMI.
+- **Hoy comienza la Unidad 2**: aprendemos a *diseñar* la estructura de datos que hace funcionar esos sistemas.
 :::
 
 ::: {.fragment}
-**Hoy iniciamos la Unidad 2**: ¿Cómo se modela un sistema de información antes de construir la base de datos?
+**Pregunta de inicio**: ¿por qué TechStyle no puede simplemente usar Excel para gestionar sus 8,5 millones de clientes?
 :::
 
 ---
 
-## Resumen de la Unidad 1 en una Frase
+## El Problema de Roberto: La Planilla Imposible
 
-> "Los Sistemas de Información convierten datos crudos en decisiones estratégicas — pero solo funcionan si el modelo de datos que los alimenta refleja fielmente la realidad del negocio."
+María, la Gerente de Marketing de TechStyle, abre el archivo `ventas_historial.xlsx`:
+
+::: {.incremental}
+- 340.000 filas, todas en **una sola hoja**.
+- Nombre del cliente repetido en **cada fila** de su historial de compras.
+- Si un cliente cambia de email → hay que buscar y corregir **todas** sus filas manualmente.
+- ¿Hay productos sin precio? Solo si los buscas uno a uno.
+- Juan intenta un `BUSCARV(VLOOKUP)` para cruzar con proveedores → Excel tarda **47 minutos** y se congela.
+:::
 
 ::: {.fragment}
-**La Unidad 2** se dedica exactamente a eso: modelar la realidad del negocio antes de construir la base de datos.
-
-Secuencia: Caso de Uso → UML → Modelo ER → Modelo Relacional → (Unidad 3) Implementación en MySQL.
+> "Necesitamos una *base de datos*," dice Roberto. "Pero, ¿cómo se diseña una?"
 :::
 
 ---
 
-## El Problema de TechStyle: Crecen y No Saben Qué Construir
+## La Planilla Plana de TechStyle
 
-**Situación real**:
+Así se ve `ventas_historial.xlsx`:
 
-TechStyle decide construir un nuevo módulo de pedidos. El equipo de TI necesita entender **qué debe hacer el sistema** antes de escribir una sola línea de código o crear una tabla.
+::: {style="font-size: 0.5em; width: 100%;"}
+| ID_Venta | Fecha | Cliente_ID | Cliente_Nombre | Cliente_Email | Producto_ID | Producto_Nombre | Categoria | Precio | Cant |
+|---|---|---|---|---|---|---|---|---|---|
+| V001 | 15/01/26 | C001 | Juan Pérez | juan@mail.com | P001 | Nike Air Max | Calzado | 89990 | 1 |
+| V002 | 15/01/26 | C001 | Juan Pérez | juan@mail.com | P002 | Polera Adidas | Ropa | 24990 | 2 |
+| V003 | 16/01/26 | C002 | María López | maria@mail.com | P001 | Nike Air Max | Calzado | 89990 | 1 |
+:::
 
 ::: {.fragment}
-**Pregunta disparadora**: ¿Cómo le explicamos a un desarrollador qué debe hacer el sistema, usando el lenguaje del negocio?
+**¿Qué ves de inmediato?** Juan Pérez aparece dos veces. Nike Air Max aparece dos veces.
 :::
+
+---
+
+## Las 3 Anomalías de una Planilla Plana
+
+**Anomalía de actualización:**
+Si Juan Pérez cambia su email, hay que modificar *todas* las filas donde aparece. Si se olvida una → datos inconsistentes.
+
+::: {.fragment}
+**Anomalía de inserción:**
+Para registrar un cliente nuevo (sin ventas aún), ¿qué pongo en las columnas de Producto, Precio, Cantidad? → `NULL` en todas → fila sin sentido.
+:::
+
+::: {.fragment}
+**Anomalía de eliminación:**
+Si elimino la venta V003 (la única de María López), pierdo también todos los datos del cliente. → El cliente desaparece de la "base de datos".
+:::
+
+---
+
+## 🚀 Desafío Rápido 1 {background-color="#e8f4f8"}
+
+**En parejas (3 minutos):**
+
+Analiza esta situación de TechStyle:
+
+> El proveedor de "Nike Air Max" cambia su nombre a "Nike Air Max 2026". El producto aparece en 1.200 filas de la planilla.
+
+1. ¿Qué anomalía representa este problema?
+2. ¿Cuántas filas hay que modificar manualmente?
+3. ¿Qué riesgo existe si la actualización queda incompleta?
+4. ¿Cómo lo resolvería una base de datos bien diseñada?
 
 ::: {.notes}
-Conectar con la experiencia de los estudiantes usando Power BI: ellos ya modelaron datos, ahora aprenderán a modelar sistemas.
+**Solución Desafío Rápido 1**
+
+1. **Anomalía de actualización**: el nombre del producto está almacenado en 1.200 filas distintas. Un cambio en ese valor exige actualizar todas las ocurrencias manualmente.
+
+2. **1.200 filas** deben modificarse. Con un UPDATE masivo en SQL podría hacerse en segundos, pero en Excel es una operación manual propensa a errores.
+
+3. **Riesgo de inconsistencia**: si la actualización queda incompleta, el mismo producto tendrá dos nombres distintos en el sistema. Cualquier reporte que agrupe por nombre de producto dividirá las ventas de ese ítem en dos categorías distintas, produciendo cifras incorrectas para María y Roberto.
+
+4. **La solución del modelo relacional**: en una tabla PRODUCTO normalizada, "Nike Air Max" tiene exactamente **una sola fila**. Para renombrarlo basta con actualizar ese único registro. Todas las filas de ventas que referencian ese `producto_id` reflejan automáticamente el nombre nuevo sin tocar ninguna otra tabla. Cero riesgo de inconsistencia.
+
+*Punto de cierre*: esto no es solo comodidad técnica. Es la diferencia entre un sistema que garantiza la verdad y uno que la negocia cada vez que alguien actualiza un dato.
 :::
 
 ---
 
-## ¿Qué es el Levantamiento de Requerimientos?
+## La Solución: Separar la Realidad en Piezas
 
-::: {.incremental}
-- Proceso de identificar **qué necesita hacer** el sistema.
-- Se realiza **antes** del diseño técnico.
-- Fuentes: entrevistas con usuarios, observación de procesos, documentos actuales.
+**Idea clave**: en el mundo real, un cliente *existe independientemente* de sus compras. Un producto *existe independientemente* de quién lo compró.
+
+::: {.fragment}
+Una base de datos bien diseñada refleja esta realidad:
+
+- **Una tabla para Clientes** → cada cliente existe una sola vez.
+- **Una tabla para Productos** → cada producto existe una sola vez.
+- **Una tabla para Ventas** → registra *qué cliente* compró *qué producto*.
 :::
 
 ::: {.fragment}
-**Salida del levantamiento**: una lista de requerimientos funcionales y no funcionales.
-
-**Requerimiento funcional**: "El sistema debe permitir que el cliente realice un pedido."
-
-**Requerimiento no funcional**: "El sistema debe responder en menos de 2 segundos."
+> **Principio clave de la Unidad 2**: "Una base de datos es una representación estructurada de la realidad del negocio."
 :::
 
 ---
 
-## Técnicas de Levantamiento de Requerimientos
+## El Modelo Entidad-Relación (MER)
 
-**Cómo obtiene Juan la información que necesita del negocio:**
-
-::: {.incremental}
-- **Entrevistas individuales**: conversar con Sofía, María y Roberto para entender qué necesita cada actor.
-- **Observación directa**: acompañar a Sofía en su ruta para entender cómo usa el sistema hoy.
-- **Talleres facilitados**: reunir a todos los actores y modelar el proceso juntos (story mapping).
-- **Revisión de documentos**: analizar los formularios en papel, hojas Excel y correos actuales.
-- **Prototipado**: mostrar una versión preliminar del sistema y recoger feedback temprano.
-:::
-
----
-
-## Aplicación: Entrevista con María González
-
-**Juan entrevista a María para levantar requerimientos:**
+El MER es el lenguaje para **describir esa realidad** antes de construir la base de datos.
 
 ::: {.incremental}
-- *Juan*: "María, ¿qué necesitas saber sobre los pedidos para tomar decisiones de campaña?"
-- *María*: "Necesito saber qué categorías venden más, en qué zonas y en qué fechas."
-- *Juan*: "¿Con qué frecuencia necesitas esta información?"
-- *María*: "Cada semana, los lunes a primera hora."
-- *Juan*: "¿Qué pasa si la información llega el martes?"
-- *María*: "Ya es tarde — la reunión de presupuesto es el lunes."
+- Es un **plano** que se entrega al desarrollador (o al gestor de BD) para que construya el sistema.
+- Tiene tres elementos fundamentales: **Entidades**, **Atributos** y **Relaciones**.
+- Es independiente del software: funciona para MySQL, PostgreSQL, SQL Server, etc.
 :::
 
 ::: {.fragment}
-**Requerimiento extraído**: El sistema debe generar el reporte de ventas por categoría y zona todos los domingos antes de las 23:59. **(Funcional + No funcional de oportunidad)**
+**Analogía**: el MER es al programador lo que el plano arquitectónico es al constructor. Nadie construye un edificio sin un plano.
 :::
 
 ---
 
-## Verificación: ¿Funcional o No Funcional?
+## Entidades: Las "Cosas" del Negocio
 
-**Clasifica cada requerimiento:**
+Una **entidad** es cualquier objeto, persona o concepto relevante para el negocio que necesita ser almacenado.
 
 ::: {.incremental}
-1. "El sistema debe permitir al repartidor marcar un pedido como entregado desde su app" → **Funcional**
-2. "El sistema debe soportar 10.000 usuarios simultáneos sin degradar el tiempo de respuesta" → **No funcional (rendimiento)**
-3. "El sistema debe enviar una notificación al cliente cuando el pedido está en camino" → **Funcional**
-4. "El sistema debe estar disponible el 99,9% del tiempo" → **No funcional (disponibilidad)**
-5. "El sistema debe permitir al Administrador desactivar un producto del catálogo" → **Funcional**
+- Se representa como un **rectángulo**.
+- Debe ser identificable de forma única.
+- En TechStyle: **Cliente**, **Producto**, **Venta**, **Proveedor**, **Región**.
 :::
-
----
-
-## Secuencia de Modelamiento
-
-```
-Levantamiento de Requerimientos
-       ↓
-Diagrama de Caso de Uso (¿qué hace el sistema?)
-       ↓ (Semana 5)
-Diagrama UML de Clases (¿cómo está estructurado?)
-       ↓ (Semana 6)
-Modelo Entidad-Relación (¿qué datos almacena?)
-       ↓ (Semana 7)
-Modelo Relacional (¿cómo se organizan las tablas?)
-       ↓ (Semana 8)
-Solemne 2 — Defensa del diseño completo
-```
-
----
-
-## La Secuencia de Modelamiento: Visualización
-
-`[IMAGE/DIAGRAM PLACEHOLDER: Diagrama de flujo horizontal de 5 pasos de modelamiento — (1) Levantamiento con ícono de entrevista, (2) Caso de Uso con ícono de elipse y actor, (3) UML de Clases con ícono de rectángulo con compartimentos, (4) Modelo ER con ícono de diamante, (5) Modelo Relacional con ícono de tabla. Flechas entre cada paso. Cada paso muestra la pregunta que responde]`
 
 ::: {.fragment}
-*Cada paso transforma el conocimiento del negocio en un artefacto más cercano a la implementación técnica.*
+**Regla práctica**: si puedes hacerte la pregunta "¿hay más de uno de esto?", probablemente es una entidad.
+
+→ ¿Hay más de un cliente? Sí → **CLIENTE** es una entidad.
+→ ¿Hay más de un producto? Sí → **PRODUCTO** es una entidad.
 :::
 
 ---
 
-## Diagrama de Caso de Uso: Conceptos Clave
+## Atributos: Las Características de las Entidades
 
-| Elemento | Símbolo | Descripción |
+Un **atributo** es una propiedad o característica de una entidad.
+
+::: {.incremental}
+- Se representan como **óvalos** conectados a su entidad (en el diagrama clásico) o como columnas de la tabla.
+- Cada entidad tiene un **atributo clave** (PK) que la identifica de forma única: subrayado.
+- Tipos: simples (nombre), compuestos (dirección = calle + número), derivados (edad = fecha_hoy − fecha_nacimiento).
+:::
+
+::: {.fragment}
+**CLIENTE**: `cliente_id (PK)`, `nombre`, `apellido`, `email`, `region`, `segmento`
+**PRODUCTO**: `producto_id (PK)`, `nombre_producto`, `categoria`, `precio_venta`, `stock`
+:::
+
+---
+
+## Clave Primaria y Clave Foránea
+
+**Clave Primaria (PK — Primary Key)**:
+Atributo (o combinación de atributos) que **identifica de forma única** cada fila de una tabla. No puede repetirse ni ser nulo.
+
+::: {.fragment}
+| Tabla | Clave Primaria | ¿Por qué? |
 |---|---|---|
-| **Actor** | Figura humana | Quien interactúa con el sistema |
-| **Caso de uso** | Elipse | Acción que el sistema realiza |
-| **Include** | Flecha punteada `<<include>>` | Caso de uso que siempre ocurre |
-| **Extend** | Flecha punteada `<<extend>>` | Caso de uso opcional |
-| **Sistema** | Rectángulo | Límite del sistema |
-
----
-
-## Elementos del Diagrama de Caso de Uso: Visualización
-
-`[IMAGE/DIAGRAM PLACEHOLDER: Elementos del Diagrama de Caso de Uso — figura humana (actor) con etiqueta "Cliente"; elipse con "Realizar pedido"; rectángulo que enmarca el sistema "Módulo de Pedidos TechStyle"; flecha punteada con <<include>> conectando "Realizar pedido" con "Procesar pago"; flecha punteada con <<extend>> desde "Realizar pedido" hacia "Solicitar devolución"]`
-
-::: {.fragment}
-*El rectángulo delimita claramente qué está dentro del sistema y qué es externo. Nada fuera del rectángulo es responsabilidad del sistema.*
-:::
-
----
-
-## Aplicación: include vs extend en TechStyle
-
-**Dos relaciones que se confunden frecuentemente:**
-
-::: {.incremental}
-- **`<<include>>`**: "Realizar pedido" **siempre** incluye "Procesar pago" — no existe un pedido sin pago. Es obligatorio, no opcional.
-- **`<<extend>>`**: "Realizar pedido" **puede** extenderse con "Solicitar devolución" — pero no en todos los casos. Solo cuando el pedido fue entregado y el cliente no quedó satisfecho.
+| CLIENTE | `cliente_id` | Dos clientes pueden llamarse igual, pero su ID es único |
+| PRODUCTO | `producto_id` | El código del producto no se repite |
+| DETALLE_VENTA | `(venta_id, producto_id)` | Clave **compuesta**: la combinación identifica una línea de venta |
 :::
 
 ::: {.fragment}
-**Regla mnemotécnica**:
-- `include` = "siempre pasa" → como el IVA en una boleta
-- `extend` = "a veces pasa" → como un seguro de envío opcional
+**Clave Foránea (FK — Foreign Key)**:
+Atributo que **referencia la PK de otra tabla**, estableciendo el vínculo entre tablas. Garantiza que no existan datos huérfanos.
+
+→ `VENTA.cliente_id` es FK que referencia `CLIENTE.cliente_id`.
+→ Esto significa: *no puede existir una venta de un cliente que no esté en la tabla CLIENTE*.
 :::
 
 ---
 
-## Verificación: ¿Include o Extend?
+## Relaciones y Cardinalidad
 
-**Clasifica la relación entre cada par de casos de uso:**
+Una **relación** describe cómo se asocian dos entidades.
 
-::: {.incremental}
-1. "Registrar pedido" → "Validar stock" → **`<<include>>`** (siempre se valida el stock)
-2. "Confirmar entrega" → "Enviar encuesta de satisfacción" → **`<<extend>>`** (opcional: solo si el cliente aceptó recibirlas)
-3. "Crear cuenta" → "Verificar email" → **`<<include>>`** (siempre se verifica el email)
-4. "Consultar historial" → "Exportar a PDF" → **`<<extend>>`** (el cliente puede o no querer exportar)
-:::
-
----
-
-## Actores del Módulo de Pedidos TechStyle
-
-::: {.incremental}
-- **Cliente**: Navega el catálogo, realiza pedidos, paga, consulta estado, solicita devoluciones.
-- **Repartidor**: Ve pedidos asignados, confirma entrega.
-- **Administrador**: Gestiona catálogo de productos, procesa devoluciones, ve reportes.
-:::
+| Tipo | Lectura | Ejemplo TechStyle |
+|---|---|---|
+| **1 : 1** | Uno a uno | Un empleado tiene un contrato |
+| **1 : N** | Uno a muchos | Un cliente realiza muchas ventas |
+| **N : M** | Muchos a muchos | Una venta incluye muchos productos; un producto aparece en muchas ventas |
 
 ::: {.fragment}
-**Regla de oro**: Un actor es **externo** al sistema. No es un módulo del sistema, es quien *usa* el sistema.
+**Notación "cuervo" (crow's foot):**
+- `||` = exactamente uno
+- `o{` = cero o muchos
+- `|{` = uno o muchos
 :::
 
 ---
 
-## Reglas para Identificar Actores
+## Diagrama MER de TechStyle {.scrollable}
 
-**Un buen actor cumple estas condiciones:**
-
-::: {.incremental}
-- **Es externo** al sistema (no es un componente de software).
-- **Tiene un rol definido** en relación al sistema (no es solo "una persona").
-- **Inicia o responde** a casos de uso.
-- **No se implementa** — solo interactúa.
-:::
-
-::: {.fragment}
-**Ejemplo de error común**: "Sistema de pago externo (Transbank)" *puede* ser un actor (actor externo de sistema) si el alcance del diagrama lo incluye. "Base de datos" **no** es un actor — es parte del sistema.
-:::
-
----
-
-## ¿Es un Actor o un Módulo del Sistema?
-
-**Clasifica cada elemento como Actor o como parte interna del sistema:**
-
-::: {.incremental}
-1. "Módulo de facturación" → **Parte del sistema** (es software interno)
-2. "Gerente de logística que aprueba rutas" → **Actor** (externo, tiene rol)
-3. "Scheduler que ejecuta el ETL a las 2am" → **Actor externo de sistema** (si se modela a ese nivel)
-4. "Base de datos MySQL" → **Parte del sistema** (es infraestructura interna)
-5. "Servicio de SMS (Twilio)" → **Actor externo de sistema** (sistema externo que interactúa)
-:::
-
----
-
-## Casos de Uso Principales
-
-::: {.incremental}
-- `Realizar pedido` ← Cliente
-- `Seleccionar producto` ← Cliente
-- `Procesar pago` ← Cliente (siempre junto a Realizar pedido → **`<<include>>`**)
-- `Consultar estado de pedido` ← Cliente
-- `Solicitar devolución` ← Cliente (solo si pedido entregado → **`<<extend>>`**)
-- `Confirmar entrega` ← Repartidor
-- `Gestionar producto` ← Administrador
-- `Procesar devolución` ← Administrador
-:::
-
----
-
-## Descripción Narrativa de un Caso de Uso
-
-**Caso de uso: "Realizar pedido"**
-
-| Elemento | Descripción |
-|---|---|
-| **Nombre** | Realizar pedido |
-| **Actor** | Cliente |
-| **Precondición** | El cliente está autenticado en el sistema |
-| **Flujo principal** | 1. Cliente selecciona producto · 2. Agrega al carrito · 3. Ingresa dirección · 4. Procesa pago · 5. Sistema confirma pedido |
-| **Flujo alternativo** | Stock insuficiente → el sistema notifica y sugiere productos similares |
-| **Postcondición** | El pedido queda registrado con estado "pendiente" |
-
----
-
-## Demo: Construyendo el Diagrama en draw.io
-
+```{mermaid}
+erDiagram
+    CLIENTE {
+        INT cliente_id PK
+        VARCHAR nombre
+        VARCHAR apellido
+        VARCHAR email
+        VARCHAR region
+        VARCHAR segmento
+    }
+    PRODUCTO {
+        INT producto_id PK
+        VARCHAR nombre_producto
+        VARCHAR categoria
+        DECIMAL precio_venta
+        INT stock
+    }
+    VENTA {
+        INT venta_id PK
+        DATE fecha
+        INT cliente_id FK
+    }
+    DETALLE_VENTA {
+        INT venta_id FK
+        INT producto_id FK
+        INT cantidad
+        DECIMAL precio_unitario
+    }
+    CLIENTE ||--o{ VENTA : "realiza"
+    VENTA ||--|{ DETALLE_VENTA : "contiene"
+    PRODUCTO ||--o{ DETALLE_VENTA : "aparece en"
 ```
-┌──────────────────────────────────────────────────────┐
-│              SISTEMA TECHSTYLE – MÓDULO PEDIDOS       │
-│                                                        │
-│  (Realizar pedido)──<<include>>──(Procesar pago)      │
-│  (Consultar estado pedido)                            │
-│  (Solicitar devolución)──<<extend>> desde Realizar    │
-│  (Confirmar entrega)                                  │
-│  (Gestionar producto)                                 │
-│  (Procesar devolución)                                │
-└──────────────────────────────────────────────────────┘
-   👤 Cliente      👤 Repartidor      👤 Administrador
-```
+
+---
+
+## ¿Por Qué Existe DETALLE_VENTA?
+
+Una venta puede incluir **múltiples productos**, y un producto puede aparecer en **múltiples ventas** → relación N:M.
+
+::: {.fragment}
+Las bases de datos relacionales **no pueden implementar directamente** relaciones N:M.
+
+**Solución**: crear una tabla intermedia `DETALLE_VENTA` que "rompe" el N:M en dos relaciones 1:N:
+
+- `VENTA (1) → DETALLE_VENTA (N)` → una venta tiene muchas líneas de detalle.
+- `PRODUCTO (1) → DETALLE_VENTA (N)` → un producto aparece en muchas líneas de detalle.
+:::
+
+::: {.fragment}
+La clave primaria de `DETALLE_VENTA` es **compuesta**: `(venta_id, producto_id)`.
+:::
+
+---
+
+## Introducción a UML: Diagrama de Casos de Uso
+
+El **Diagrama de Casos de Uso** describe *quién hace qué* en el sistema, antes de diseñar las tablas.
+
+::: {.incremental}
+- **Actor**: persona o sistema externo que interactúa con el sistema (representado como un muñeco).
+- **Caso de Uso**: acción que el actor realiza (representado como una elipse).
+- **Relación**: línea que conecta actor con caso de uso.
+:::
+
+::: {.fragment}
+**Actores en TechStyle**: Cliente Web, Gerente de Ventas, Sistema de Bodega.
+
+**Casos de Uso**: Registrar Venta, Consultar Stock, Generar Reporte, Procesar Pago.
+:::
+
+---
+
+## 🚀 Desafío Rápido 2 {background-color="#e8f4f8"}
+
+**En grupos de 3 (5 minutos):**
+
+Para el sistema de TechStyle, identifica:
+
+1. ¿Cuáles son las entidades principales? (nombra al menos 4)
+2. Para la entidad **CLIENTE**: lista 5 atributos relevantes para el análisis de ventas.
+3. ¿Qué tipo de relación existe entre PROVEEDOR y PRODUCTO? (1:1 / 1:N / N:M) — justifica.
+4. Si TechStyle agrega un sistema de despacho, ¿qué nueva entidad agregarías al modelo?
 
 ::: {.notes}
-Mostrar en draw.io en tiempo real. Los estudiantes observan y replican en el laboratorio.
+**Solución Desafío Rápido 2**
+
+1. **Entidades principales** (respuestas esperadas, aceptar variaciones bien justificadas):
+   - CLIENTE, PRODUCTO, VENTA, DETALLE_VENTA (mínimo obligatorio)
+   - Opcionales válidas: PROVEEDOR, CATEGORÍA, REGIÓN, EMPLEADO, BODEGA
+
+2. **Atributos de CLIENTE relevantes para análisis de ventas**:
+   - `cliente_id` (PK), `nombre`, `apellido`, `email`, `region`, `segmento` (Premium/Estándar/Básico), `fecha_registro`
+   - Para análisis de ventas son especialmente relevantes `region` (ventas por zona) y `segmento` (rentabilidad por tipo de cliente).
+
+3. **Relación PROVEEDOR — PRODUCTO es N:M**: un proveedor puede abastecer muchos productos y un producto puede provenir de múltiples proveedores (ej. Nike Air Max puede comprarse a dos importadores distintos según disponibilidad). Se implementa con tabla intermedia PROVEEDOR_PRODUCTO `(proveedor_id, producto_id, precio_compra, fecha_contrato)`.
+   - **Ojo**: si TechStyle trabaja con un único proveedor por producto, puede ser 1:N (un proveedor abastece muchos productos). Esto depende de una decisión de negocio — subrayar que el modelo debe reflejar la *realidad del negocio*, no la solución más conveniente técnicamente.
+
+4. **Nueva entidad para sistema de despacho**: DESPACHO o PEDIDO_DESPACHO con atributos `despacho_id (PK)`, `venta_id (FK)`, `direccion_entrega`, `fecha_despacho`, `fecha_entrega_real`, `estado`, `repartidor_id (FK)`. Esto introduce también la entidad REPARTIDOR si no existe. La relación con VENTA es 1:1 o 1:N dependiendo de si una venta puede generar múltiples despachos parciales.
+
+*Punto de cierre*: la pregunta 3 ilustra que la cardinalidad no es una propiedad matemática abstracta — es una decisión de negocio que el diseñador debe validar con el área correspondiente antes de dibujar la línea en el diagrama.
 :::
 
 ---
 
-## Errores Comunes en Diagramas de Caso de Uso
+## Normalización: ¿Para Qué Sirve?
 
-**Los 5 errores más frecuentes (y cómo evitarlos):**
-
-::: {.incremental}
-1. **Poner procesos como casos de uso**: "Validar contraseña" no es un CU — es parte del flujo interno de "Iniciar sesión".
-2. **Olvidar el límite del sistema**: sin el rectángulo, no queda claro qué está dentro y qué fuera.
-3. **Confundir include/extend**: usar `<<extend>>` donde siempre ocurre (debería ser `<<include>>`).
-4. **Demasiados actores**: "Gerente de ventas" y "Subgerente de ventas" que hacen exactamente lo mismo → un solo actor "Administrador".
-5. **Casos de uso demasiado detallados**: "Hacer clic en el botón Comprar" no es un caso de uso — es un paso de interfaz.
-:::
-
----
-
-## ¿Por Qué Modelar Antes de Construir?
-
-**Caso TechStyle**:
-
-> Construyeron el primer módulo de pedidos sin modelamiento. Después de 6 meses, descubrieron que olvidaron registrar la **zona de entrega** de cada pedido.
+La **normalización** es el proceso de organizar las tablas para:
 
 ::: {.incremental}
-- No pueden calcular el KPI "tiempo de entrega por zona" del CMI.
-- Deben rediseñar la base de datos, migrar datos y rehacer reportes.
-- **Costo estimado**: 3 meses de trabajo adicional.
+- Eliminar redundancia (no repetir el mismo dato en múltiples lugares).
+- Prevenir anomalías de inserción, actualización y eliminación.
+- Garantizar integridad de los datos.
 :::
 
 ::: {.fragment}
-**Conclusión**: Un diagrama de 2 horas evita 3 meses de retrabajo.
+Se aplica siguiendo una secuencia de **Formas Normales** (FN). Cada forma elimina un tipo específico de problema.
+
+Para el 99% de los sistemas de negocio, llegar a la **3FN es suficiente**.
 :::
 
 ---
 
-## Impacto en el CMI: Modelamiento y Decisiones
+## El Caso de la Factura de TechStyle
 
-::: {.incremental}
-- Si "consultar estado de pedido" no está en el Caso de Uso → no se diseña → no hay pantalla para el cliente → el cliente llama al call center → costo operativo innecesario.
-- Si "solicitar devolución" no está en el CU → no hay datos de devolución → el CMI no puede calcular la "tasa de devolución por zona".
-- Si "confirmar entrega" no está en el CU → no hay registro de fecha real de entrega → el KPI "tiempo de entrega" es incalculable.
+Así almacenaba TechStyle sus facturas en Excel (sin normalizar):
+
+::: {style="font-size: 0.5em; width: 100%;"}
+| N_Factura | Fecha | RUT | Nombre_Cliente | Ciudad | Item1_Cod | Item1_Nombre | Item1_Precio | Item1_Cant | Item2_Cod | Item2_Nombre | Item2_Precio | Item2_Cant |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| F001 | 15/01/26 | 12.345.678-9 | Juan Pérez | Santiago | P001 | Nike Air Max | 89.990 | 1 | P002 | Polera Adidas | 24.990 | 2 |
+| F002 | 16/01/26 | 23.456.789-0 | María López | Valparaíso | P003 | Short Nike | 19.990 | 3 | — | — | — | — |
 :::
 
 ::: {.fragment}
-**Cada caso de uso omitido es un KPI que no podrá calcularse.**
+**Problema inmediato**: ¿qué pasa si un cliente compra 5 productos? ¿Agrego Item3, Item4, Item5? → La estructura de la tabla cambia. Eso viola la **Primera Forma Normal**.
+:::
+
+---
+
+## 1FN — Primera Forma Normal
+
+**Regla**: cada celda debe contener **un solo valor atómico** (indivisible). No pueden existir grupos repetidos.
+
+**Antes (violación):** columnas Item1, Item2, Item3... — grupos repetidos.
+
+**Después (en 1FN):** una fila por cada ítem comprado:
+
+| N_Factura | Fecha | RUT | Nombre_Cliente | Ciudad | Cod_Prod | Nombre_Prod | Precio | Cantidad |
+|---|---|---|---|---|---|---|---|---|
+| F001 | 15/01/26 | 12.345.678-9 | Juan Pérez | Santiago | P001 | Nike Air Max | 89.990 | 1 |
+| F001 | 15/01/26 | 12.345.678-9 | Juan Pérez | Santiago | P002 | Polera Adidas | 24.990 | 2 |
+| F002 | 16/01/26 | 23.456.789-0 | María López | Valparaíso | P003 | Short Nike | 19.990 | 3 |
+
+::: {.fragment}
+**Clave primaria compuesta**: `(N_Factura, Cod_Prod)`. ¿Nuevo problema? `Nombre_Prod` y `Precio` dependen solo de `Cod_Prod`, no de toda la clave.
+:::
+
+---
+
+## 2FN — Segunda Forma Normal
+
+**Regla**: debe estar en 1FN **y** cada atributo no-clave debe depender de **toda la clave primaria** (no solo de una parte).
+
+**Problema detectado en la tabla 1FN**: `Nombre_Prod` y `Precio` dependen solo de `Cod_Prod` (dependencia parcial).
+
+::: {.fragment}
+**Solución**: separar en tablas distintas.
+
+**FACTURA** `(N_Factura, Fecha, RUT, Nombre_Cliente, Ciudad)`
+**PRODUCTO** `(Cod_Prod, Nombre_Prod, Precio)`
+**DETALLE** `(N_Factura, Cod_Prod, Cantidad)` ← clave compuesta, sin dependencias parciales
+:::
+
+::: {.fragment}
+Ahora si el precio de Nike Air Max cambia → se actualiza **una sola fila** en PRODUCTO.
+:::
+
+---
+
+## 3FN — Tercera Forma Normal
+
+**Regla**: debe estar en 2FN **y** ningún atributo no-clave debe depender de otro atributo no-clave (no puede haber dependencias transitivas).
+
+**Problema en FACTURA**: `Nombre_Cliente` y `Ciudad` dependen de `RUT`, no de `N_Factura`.
+
+::: {.fragment}
+→ Si Juan Pérez se cambia a Valparaíso, actualizo Ciudad en FACTURA... pero, ¿en cuántas filas de FACTURA aparece Juan? En **todas** sus compras.
+:::
+
+::: {.fragment}
+**Solución**: separar al cliente.
+
+**FACTURA** `(N_Factura, Fecha, RUT)` ← solo la llave foránea
+**CLIENTE** `(RUT, Nombre_Cliente, Ciudad)` ← datos del cliente, una sola vez
+**PRODUCTO** `(Cod_Prod, Nombre_Prod, Precio)`
+**DETALLE** `(N_Factura, Cod_Prod, Cantidad)`
+:::
+
+---
+
+## El Resultado Final: 4 Tablas Limpias
+
+```{mermaid}
+erDiagram
+    CLIENTE {
+        VARCHAR rut PK
+        VARCHAR nombre_cliente
+        VARCHAR ciudad
+    }
+    FACTURA {
+        INT n_factura PK
+        DATE fecha
+        VARCHAR rut FK
+    }
+    PRODUCTO {
+        VARCHAR cod_prod PK
+        VARCHAR nombre_prod
+        DECIMAL precio
+    }
+    DETALLE {
+        INT n_factura FK
+        VARCHAR cod_prod FK
+        INT cantidad
+    }
+    CLIENTE ||--o{ FACTURA : "emite"
+    FACTURA ||--|{ DETALLE : "contiene"
+    PRODUCTO ||--o{ DETALLE : "aparece en"
+```
+
+---
+
+## Resumen: Las 3 Formas Normales
+
+| Forma Normal | Elimina | Pregunta clave |
+|---|---|---|
+| **1FN** | Grupos repetidos / valores no atómicos | ¿Cada celda tiene un único valor? |
+| **2FN** | Dependencias parciales | ¿Cada columna depende de *toda* la clave? |
+| **3FN** | Dependencias transitivas | ¿Alguna columna depende de otra columna no-clave? |
+
+::: {.fragment}
+**Metáfora**: la normalización es como organizar una bodega. 1FN: un artículo por caja. 2FN: artículos del mismo tipo en la misma sección. 3FN: cada sección tiene su propio catálogo, sin duplicar información entre secciones.
+:::
+
+---
+
+## 🚀 Desafío Rápido 3 {background-color="#e8f4f8"}
+
+**En parejas (5 minutos):**
+
+La siguiente tabla del sistema de RRHH de TechStyle está en 1FN:
+
+| ID_Contrato | ID_Empleado | Nombre_Empleado | ID_Cargo | Nombre_Cargo | Sueldo_Base | ID_Departamento | Nombre_Depto |
+|---|---|---|---|---|---|---|---|
+| Clave primaria compuesta: `(ID_Contrato, ID_Cargo)` |
+
+Identifica:
+1. ¿Viola la 2FN? ¿Cuál es la dependencia parcial?
+2. ¿Viola la 3FN? ¿Cuál es la dependencia transitiva?
+3. ¿Cuántas tablas necesitas para llegar a 3FN? Nombra cada una con sus atributos.
+
+::: {.notes}
+**Solución Desafío Rápido 3**
+
+PK compuesta: `(ID_Contrato, ID_Cargo)`.
+
+**1. Violación de 2FN — Dependencias parciales:**
+- `Nombre_Empleado` depende solo de `ID_Empleado` (que depende de `ID_Contrato`), no del par `(ID_Contrato, ID_Cargo)`.
+- `Nombre_Cargo` y `Sueldo_Base` dependen solo de `ID_Cargo`, no de `ID_Contrato`.
+- `ID_Departamento` depende de `ID_Cargo` (cada cargo pertenece a un departamento), no de `ID_Contrato`.
+→ Hay múltiples dependencias parciales. Solución: separar CARGO y EMPLEADO.
+
+**2. Violación de 3FN — Dependencias transitivas** (después de resolver 2FN):
+- En la tabla CARGO: `Nombre_Depto` depende de `ID_Departamento`, que no es la PK de CARGO.
+  `ID_Cargo → ID_Departamento → Nombre_Depto` = dependencia transitiva.
+→ Solución: separar DEPARTAMENTO.
+
+**3. Tablas resultantes en 3FN (4 tablas):**
+
+| Tabla | PK | Atributos |
+|---|---|---|
+| CONTRATO | ID_Contrato | ID_Empleado (FK), ID_Cargo (FK) |
+| EMPLEADO | ID_Empleado | Nombre_Empleado |
+| CARGO | ID_Cargo | Nombre_Cargo, Sueldo_Base, ID_Departamento (FK) |
+| DEPARTAMENTO | ID_Departamento | Nombre_Depto |
+
+*Punto de cierre*: de 1 tabla con 8 columnas a 4 tablas con 2–3 columnas cada una. Cada tabla tiene ahora una única razón para cambiar: si un empleado cambia de nombre → 1 fila en EMPLEADO. Si el sueldo de un cargo sube → 1 fila en CARGO. Si un cargo cambia de departamento → 1 fila en CARGO. Cero riesgo de inconsistencia.
 :::
 
 ---
 
 ## Conexión con la Toma de Decisiones
 
+¿Por qué le importa esto a Roberto, el CEO?
+
 ::: {.incremental}
-- Un Caso de Uso bien hecho garantiza que **ningún proceso crítico del negocio** quede fuera del sistema.
-- Si "solicitar devolución" no está en el Caso de Uso → no se diseña → no hay datos → el CMI no puede calcular la tasa de devolución.
-- **Sin buen modelamiento → sin buenos datos → sin buenas decisiones.**
+- Una BD **no normalizada** → anomalías → datos incorrectos → **decisiones equivocadas**.
+- Si el email de 500 clientes Premium está desactualizado → la campaña de María llega al segmento equivocado → $15M mal invertidos.
+- Una BD en 3FN → cada dato existe **en un solo lugar** → actualizaciones fiables → KPIs correctos → CMI confiable.
+:::
+
+::: {.fragment}
+**El modelo de datos es la base de confianza del sistema analítico.** Un mal modelo de datos hace que todos los análisis posteriores sean cuestionables.
 :::
 
 ---
 
-## Puntos Clave
+## El Diccionario de Datos
+
+El **Diccionario de Datos** es el documento que acompaña al MER. Especifica, para cada atributo, su tipo de dato, restricciones y descripción.
+
+::: {.fragment}
+Es el "manual de instrucciones" para el desarrollador que implementará la base de datos. Sin él, el MER está incompleto.
+:::
+
+::: {.fragment}
+**Ejemplo — Tabla CLIENTE:**
+
+| Atributo | Tipo | NOT NULL | Restricción | Descripción |
+|---|---|---|---|---|
+| `cliente_id` | `INT` | Sí | PK | Identificador único del cliente |
+| `email` | `VARCHAR(100)` | Sí | UNIQUE | Correo electrónico, uno por cliente |
+| `segmento` | `VARCHAR(20)` | No | CHECK: Premium/Estándar/Básico | Segmento comercial |
+| `fecha_registro` | `DATE` | Sí | | Fecha de alta en el sistema |
+:::
+
+---
+
+## Tipos de Datos SQL Fundamentales
+
+Los tipos de dato definen **qué clase de valor** puede almacenar una columna y **cuánto espacio** ocupa.
+
+| Tipo | Uso | Ejemplo en TechStyle |
+|---|---|---|
+| `INT` | Números enteros | `cliente_id`, `stock`, `cantidad` |
+| `VARCHAR(n)` | Texto de longitud variable (máx. n caracteres) | `nombre`, `email`, `categoria` |
+| `DECIMAL(p, s)` | Número con decimales exactos (p dígitos, s decimales) | `precio_venta DECIMAL(10,2)` = hasta $99.999.999,99 |
+| `DATE` | Fecha (sin hora): `YYYY-MM-DD` | `fecha_venta`, `fecha_registro` |
+| `BOOLEAN` | Verdadero / Falso | `producto_activo` |
+
+::: {.fragment}
+**Restricciones comunes:**
+- `NOT NULL` → el campo no puede quedar vacío.
+- `UNIQUE` → no puede repetirse el valor en la columna.
+- `DEFAULT valor` → valor automático si no se especifica.
+- `CHECK (condición)` → MySQL verifica que el valor cumpla la condición antes de insertarlo.
+:::
+
+---
+
+## Del MER al SQL: El Siguiente Paso
+
+Una vez que el MER está en 3FN, cada entidad se convierte en una tabla SQL:
+
+```sql
+-- Cada entidad → una tabla
+-- Cada atributo → una columna con su tipo de dato
+-- Cada PK → PRIMARY KEY
+-- Cada FK → FOREIGN KEY (garantiza integridad referencial)
+
+CREATE TABLE cliente (
+    rut          VARCHAR(12)  PRIMARY KEY,
+    nombre       VARCHAR(100) NOT NULL,
+    ciudad       VARCHAR(50)  NOT NULL
+);
+
+CREATE TABLE factura (
+    n_factura    INT          PRIMARY KEY,
+    fecha        DATE         NOT NULL,
+    rut          VARCHAR(12)  NOT NULL,
+    FOREIGN KEY (rut) REFERENCES cliente(rut)
+);
+```
+
+---
+
+## Puntos Clave de la Semana 4
 
 ::: {.incremental}
-- El **levantamiento de requerimientos** identifica qué debe hacer el sistema antes de cualquier decisión técnica.
-- Los requerimientos son **funcionales** (qué hace) o **no funcionales** (cómo lo hace: rendimiento, disponibilidad).
-- El **Diagrama de Caso de Uso** muestra actores, acciones del sistema y sus relaciones en lenguaje del negocio.
-- **`<<include>>`**: el caso de uso base siempre ejecuta el incluido. **`<<extend>>`**: solo en condiciones específicas.
-- Cada caso de uso omitido en el diagrama es un proceso que no se modelará, no se implementará y no generará datos.
+- **Excel no es una base de datos**: genera anomalías de actualización, inserción y eliminación que comprometen la integridad de los datos.
+- Una **entidad** es una "cosa" del negocio (Cliente, Producto, Venta); un **atributo** es una característica de esa entidad.
+- Las **relaciones** entre entidades pueden ser 1:1, 1:N o N:M. Los N:M se implementan con una tabla intermedia.
+- La **normalización** es el proceso de eliminar redundancias: 1FN elimina grupos repetidos, 2FN elimina dependencias parciales, 3FN elimina dependencias transitivas.
+- Un modelo en **3FN garantiza** que cada dato existe en un único lugar → actualizaciones confiables → análisis confiables → decisiones correctas.
 :::
 
 ---
 
 ## Preview del Laboratorio W04
 
-**Lab W04: Diagrama de Caso de Uso completo en draw.io**
+**Lab W04: De la Planilla al Modelo**
 
 ::: {.incremental}
-- Herramienta: draw.io (online, sin instalación, gratis).
-- Caso: Módulo completo de ventas de TechStyle.
-- Identificar y documentar los 3 actores con descripción de su rol.
-- Dibujar al menos 8 casos de uso con las relaciones `<<include>>` y `<<extend>>` justificadas.
-- Entregable: PNG del diagrama + tabla de actores/casos de uso con justificación de negocio.
-:::
-
----
-
-## Para el Laboratorio de Hoy
-
-**Lab W04**: Diagrama de Caso de Uso completo en draw.io.
-
-- Herramienta: [draw.io](https://draw.io) (online, sin instalación).
-- Caso: Módulo de ventas de TechStyle (descripción entregada en clase).
-- Entregable: PNG del diagrama + tabla de actores y casos de uso con justificación.
-
-::: {.fragment}
-**Para la próxima semana (W05)**: ¿Cómo modelamos la *estructura de clases* del sistema? → Diagrama UML.
+- Recibirás `techstyle_ventas_planas.csv`: una tabla desnormalizada de ventas de TechStyle con todos los problemas vistos en clase.
+- **Parte 1**: Identificar las anomalías y violaciones de forma normal.
+- **Parte 2**: Diseñar el Diagrama MER (draw.io o MySQL Workbench) con las entidades normalizadas.
+- **Parte 3**: Construir el Diccionario de Datos (tipos de datos SQL por atributo).
+- **Parte 4**: Escribir las sentencias `CREATE TABLE` en SQL.
 :::

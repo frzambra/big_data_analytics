@@ -66,8 +66,8 @@ All the weeks should be organized according to:
 ### Unit Duration (16-week semester)
 
 - **Unit 1: 3 weeks** (W01–W03) — Sistemas de Información en el Contexto Empresarial
-- **Unit 2: 5 weeks** (W04–W08) — Fundamentos de Bases de Datos
-- **Unit 3: 8 weeks** (W09–W16) — Modelamiento y Gestión de Base de Datos
+- **Unit 2: 5 weeks** (W04–W09) — Modelamiento y Arquitectura de Datos Relacionales
+- **Unit 3: 8 weeks** (W10–W16) — Analítica de Datos y Programación con Python (54 hrs*)
 
 ### File Naming Convention
 
@@ -82,19 +82,7 @@ All files use the `W{NN}_` prefix to guarantee correct sort order in the file ex
 | `W01_clase.qmd` | `W01_lab.qmd` | 1 | Unit 1 | SI, datos, componentes, actores |
 | `W02_clase.qmd` | `W02_lab.qmd` | 2 | Unit 1 | Tipos de SI, CMI, calidad de datos, ética |
 | `W03_clase.qmd` | `W03_lab.qmd` | 3 | Unit 1 | Big Data, OLTP/OLAP, ETL + **Solemne 1** |
-| `W04_clase.qmd` | `W04_lab.qmd` | 4 | Unit 2 | Levantamiento de requerimientos + Caso de Uso |
-| `W05_clase.qmd` | `W05_lab.qmd` | 5 | Unit 2 | Diagrama UML de Clases |
-| `W06_clase.qmd` | `W06_lab.qmd` | 6 | Unit 2 | Modelo Entidad-Relación |
-| `W07_clase.qmd` | `W07_lab.qmd` | 7 | Unit 2 | Modelo Relacional |
-| `W08_clase.qmd` | `W08_lab.qmd` | 8 | Unit 2 | **Solemne 2** — Presentación grupal |
-| `W09_clase.qmd` | `W09_lab.qmd` | 9 | Unit 3 | Normalización (1FN, 2FN, 3FN) |
-| `W10_clase.qmd` | `W10_lab.qmd` | 10 | Unit 3 | Diccionario de datos + Intro MySQL |
-| `W11_clase.qmd` | `W11_lab.qmd` | 11 | Unit 3 | DDL en MySQL |
-| `W12_clase.qmd` | `W12_lab.qmd` | 12 | Unit 3 | DML y SELECT básico |
-| `W13_clase.qmd` | `W13_lab.qmd` | 13 | Unit 3 | Consultas avanzadas Parte 1: JOINs |
-| `W14_clase.qmd` | `W14_lab.qmd` | 14 | Unit 3 | Consultas avanzadas Parte 2: GROUP BY + subconsultas |
-| `W15_clase.qmd` | `W15_lab.qmd` | 15 | Unit 3 | Gestión de transacciones ACID |
-| `W16_clase.qmd` | `W16_lab.qmd` | 16 | Unit 3 | Vistas SQL + CMI + **Solemne 3** |
+
 
 ## Quarto Commands
 

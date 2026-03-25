@@ -153,7 +153,7 @@ Una **entidad** es cualquier objeto, persona o concepto relevante para el negoci
 ::: {.fragment}
 **Regla práctica**: si puedes hacerte la pregunta "¿hay más de uno de esto?", probablemente es una entidad.
 
-→ ¿Hay más de un cliente? Sí → **CLIENTE** es una entidad.
+→ ¿Hay más de un cliente? Sí → **CLIENTE** es una entidad.  
 → ¿Hay más de un producto? Sí → **PRODUCTO** es una entidad.
 :::
 
@@ -178,19 +178,21 @@ Un **atributo** es una propiedad o característica de una entidad.
 
 ## Clave Primaria y Clave Foránea
 
-**Clave Primaria (PK — Primary Key)**:
+**Clave Primaria (PK — Primary Key)**:  
 Atributo (o combinación de atributos) que **identifica de forma única** cada fila de una tabla. No puede repetirse ni ser nulo.
 
 ::: {.fragment}
+::: {style="font-size: 0.7em; width: 100%;"}
 | Tabla | Clave Primaria | ¿Por qué? |
 |---|---|---|
 | CLIENTE | `cliente_id` | Dos clientes pueden llamarse igual, pero su ID es único |
 | PRODUCTO | `producto_id` | El código del producto no se repite |
 | DETALLE_VENTA | `(venta_id, producto_id)` | Clave **compuesta**: la combinación identifica una línea de venta |
 :::
+:::
 
 ::: {.fragment}
-**Clave Foránea (FK — Foreign Key)**:
+**Clave Foránea (FK — Foreign Key)**:  
 Atributo que **referencia la PK de otra tabla**, estableciendo el vínculo entre tablas. Garantiza que no existan datos huérfanos.
 
 → `VENTA.cliente_id` es FK que referencia `CLIENTE.cliente_id`.
@@ -210,9 +212,9 @@ Una **relación** describe cómo se asocian dos entidades.
 | **N : M** | Muchos a muchos | Una venta incluye muchos productos; un producto aparece en muchas ventas |
 
 ::: {.fragment}
-**Notación "cuervo" (crow's foot):**
-- `||` = exactamente uno
-- `o{` = cero o muchos
+**Notación "cuervo" (crow's foot):**  
+- `||` = exactamente uno  
+- `o{` = cero o muchos  
 - `|{` = uno o muchos
 :::
 
@@ -260,7 +262,7 @@ erDiagram
 Una venta puede incluir **múltiples productos**, y un producto puede aparecer en **múltiples ventas** → relación N:M.
 
 ::: {.fragment}
-Las bases de datos relacionales **no pueden implementar directamente** relaciones N:M.
+Las bases de datos relacionales **no pueden implementar directamente** relaciones N:M.  
 
 **Solución**: crear una tabla intermedia `DETALLE_VENTA` que "rompe" el N:M en dos relaciones 1:N:
 
@@ -336,6 +338,7 @@ La **normalización** es el proceso de organizar las tablas para:
 
 ::: {.fragment}
 Se aplica siguiendo una secuencia de **Formas Normales** (FN). Cada forma elimina un tipo específico de problema.
+<br><br>
 
 Para el 99% de los sistemas de negocio, llegar a la **3FN es suficiente**.
 :::
@@ -354,7 +357,11 @@ Así almacenaba TechStyle sus facturas en Excel (sin normalizar):
 :::
 
 ::: {.fragment}
-**Problema inmediato**: ¿qué pasa si un cliente compra 5 productos? ¿Agrego Item3, Item4, Item5? → La estructura de la tabla cambia. Eso viola la **Primera Forma Normal**.
+**Problema inmediato**: ¿qué pasa si un cliente compra 5 productos? ¿Agrego Item3, Item4, Item5? → La estructura de la tabla cambia.  
+:::
+
+::: {.fragment}
+Eso viola la **Primera Forma Normal**.
 :::
 
 ---
@@ -386,12 +393,13 @@ Así almacenaba TechStyle sus facturas en Excel (sin normalizar):
 **Regla**: debe estar en 1FN **y** cada atributo no-clave debe depender de **toda la clave primaria** (no solo de una parte).
 
 **Problema detectado en la tabla 1FN**: `Nombre_Prod` y `Precio` dependen solo de `Cod_Prod` (dependencia parcial).
+<br><br>
 
 ::: {.fragment}
 **Solución**: separar en tablas distintas.
 
-**FACTURA** `(N_Factura, Fecha, RUT, Nombre_Cliente, Ciudad)`
-**PRODUCTO** `(Cod_Prod, Nombre_Prod, Precio)`
+**FACTURA** `(N_Factura, Fecha, RUT, Nombre_Cliente, Ciudad)`  
+**PRODUCTO** `(Cod_Prod, Nombre_Prod, Precio)`  
 **DETALLE** `(N_Factura, Cod_Prod, Cantidad)` ← clave compuesta, sin dependencias parciales
 :::
 
@@ -405,24 +413,28 @@ Ahora si el precio de Nike Air Max cambia → se actualiza **una sola fila** en 
 
 **Regla**: debe estar en 2FN **y** ningún atributo no-clave debe depender de otro atributo no-clave (no puede haber dependencias transitivas).
 
+<br>
+
 **Problema en FACTURA**: `Nombre_Cliente` y `Ciudad` dependen de `RUT`, no de `N_Factura`.
 
 ::: {.fragment}
 → Si Juan Pérez se cambia a Valparaíso, actualizo Ciudad en FACTURA... pero, ¿en cuántas filas de FACTURA aparece Juan? En **todas** sus compras.
 :::
 
+<br>
+
 ::: {.fragment}
 **Solución**: separar al cliente.
 
-**FACTURA** `(N_Factura, Fecha, RUT)` ← solo la llave foránea
-**CLIENTE** `(RUT, Nombre_Cliente, Ciudad)` ← datos del cliente, una sola vez
-**PRODUCTO** `(Cod_Prod, Nombre_Prod, Precio)`
+**FACTURA** `(N_Factura, Fecha, RUT)` ← solo la llave foránea  
+**CLIENTE** `(RUT, Nombre_Cliente, Ciudad)` ← datos del cliente, una sola vez  
+**PRODUCTO** `(Cod_Prod, Nombre_Prod, Precio)`  
 **DETALLE** `(N_Factura, Cod_Prod, Cantidad)`
 :::
 
 ---
 
-## El Resultado Final: 4 Tablas Limpias
+## El Resultado Final: 4 Tablas Limpias {.scrollable}
 
 ```{mermaid}
 erDiagram
@@ -479,10 +491,10 @@ La siguiente tabla del sistema de RRHH de TechStyle está en 1FN:
 | Clave primaria compuesta: `(ID_Contrato, ID_Cargo)` |
 :::
 
-Identifica:
-1. ¿Viola la 2FN? ¿Cuál es la dependencia parcial?
-2. ¿Viola la 3FN? ¿Cuál es la dependencia transitiva?
-3. ¿Cuántas tablas necesitas para llegar a 3FN? Nombra cada una con sus atributos.
+Identifica:  
+1. ¿Viola la 2FN? ¿Cuál es la dependencia parcial?  
+2. ¿Viola la 3FN? ¿Cuál es la dependencia transitiva?  
+3. ¿Cuántas tablas necesitas para llegar a 3FN? Nombra cada una con sus atributos.  
 
 ::: {.notes}
 **Solución Desafío Rápido 3**
@@ -514,6 +526,7 @@ PK compuesta: `(ID_Contrato, ID_Cargo)`.
 
 ---
 
+
 ## Conexión con la Toma de Decisiones
 
 ¿Por qué le importa esto a Roberto, el CEO?
@@ -525,7 +538,8 @@ PK compuesta: `(ID_Contrato, ID_Cargo)`.
 :::
 
 ::: {.fragment}
-**El modelo de datos es la base de confianza del sistema analítico.** Un mal modelo de datos hace que todos los análisis posteriores sean cuestionables.
+**El modelo de datos es la base de confianza del sistema analítico.  
+** Un mal modelo de datos hace que todos los análisis posteriores sean cuestionables.
 :::
 
 ---
@@ -533,6 +547,8 @@ PK compuesta: `(ID_Contrato, ID_Cargo)`.
 ## El Diccionario de Datos
 
 El **Diccionario de Datos** es el documento que acompaña al MER. Especifica, para cada atributo, su tipo de dato, restricciones y descripción.
+
+<br>
 
 ::: {.fragment}
 Es el "manual de instrucciones" para el desarrollador que implementará la base de datos. Sin él, el MER está incompleto.
@@ -549,8 +565,11 @@ Es el "manual de instrucciones" para el desarrollador que implementará la base 
 | `segmento` | `VARCHAR(20)` | No | CHECK: Premium/Estándar/Básico | Segmento comercial |
 | `fecha_registro` | `DATE` | Sí | | Fecha de alta en el sistema |
 :::
+:::
 
 ---
+
+
 
 ## Tipos de Datos SQL Fundamentales
 
@@ -564,12 +583,16 @@ Los tipos de dato definen **qué clase de valor** puede almacenar una columna y 
 | `DATE` | Fecha (sin hora): `YYYY-MM-DD` | `fecha_venta`, `fecha_registro` |
 | `BOOLEAN` | Verdadero / Falso | `producto_activo` |
 
+---
+
+## Tipos de Datos SQL Fundamentales
+
 ::: {.fragment}
-**Restricciones comunes:**
-- `NOT NULL` → el campo no puede quedar vacío.
-- `UNIQUE` → no puede repetirse el valor en la columna.
-- `DEFAULT valor` → valor automático si no se especifica.
-- `CHECK (condición)` → MySQL verifica que el valor cumpla la condición antes de insertarlo.
+**Restricciones comunes:**  
+- `NOT NULL` → el campo no puede quedar vacío.  
+- `UNIQUE` → no puede repetirse el valor en la columna.  
+- `DEFAULT valor` → valor automático si no se especifica.  
+- `CHECK (condición)` → MySQL verifica que el valor cumpla la condición antes de insertarlo.  
 :::
 
 ---
@@ -623,3 +646,6 @@ CREATE TABLE factura (
 - **Parte 3**: Construir el Diccionario de Datos (tipos de datos SQL por atributo).
 - **Parte 4**: Escribir las sentencias `CREATE TABLE` en SQL.
 :::
+
+
+

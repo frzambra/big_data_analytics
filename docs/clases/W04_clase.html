@@ -396,7 +396,8 @@ Universidad San Sebastián
 </ul>
 <div class="fragment">
 <p><strong>Regla práctica</strong>: si puedes hacerte la pregunta “¿hay más de uno de esto?”, probablemente es una entidad.</p>
-<p>→ ¿Hay más de un cliente? Sí → <strong>CLIENTE</strong> es una entidad. → ¿Hay más de un producto? Sí → <strong>PRODUCTO</strong> es una entidad.</p>
+<p>→ ¿Hay más de un cliente? Sí → <strong>CLIENTE</strong> es una entidad.<br>
+→ ¿Hay más de un producto? Sí → <strong>PRODUCTO</strong> es una entidad.</p>
 </div>
 </section>
 <section id="atributos-las-características-de-las-entidades" class="slide level2">
@@ -413,8 +414,10 @@ Universidad San Sebastián
 </section>
 <section id="clave-primaria-y-clave-foránea" class="slide level2">
 <h2>Clave Primaria y Clave Foránea</h2>
-<p><strong>Clave Primaria (PK — Primary Key)</strong>: Atributo (o combinación de atributos) que <strong>identifica de forma única</strong> cada fila de una tabla. No puede repetirse ni ser nulo.</p>
+<p><strong>Clave Primaria (PK — Primary Key)</strong>:<br>
+Atributo (o combinación de atributos) que <strong>identifica de forma única</strong> cada fila de una tabla. No puede repetirse ni ser nulo.</p>
 <div class="fragment">
+<div style="font-size: 0.7em; width: 100%;">
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -447,8 +450,10 @@ Universidad San Sebastián
 </tbody>
 </table>
 </div>
+</div>
 <div class="fragment">
-<p><strong>Clave Foránea (FK — Foreign Key)</strong>: Atributo que <strong>referencia la PK de otra tabla</strong>, estableciendo el vínculo entre tablas. Garantiza que no existan datos huérfanos.</p>
+<p><strong>Clave Foránea (FK — Foreign Key)</strong>:<br>
+Atributo que <strong>referencia la PK de otra tabla</strong>, estableciendo el vínculo entre tablas. Garantiza que no existan datos huérfanos.</p>
 <p>→ <code>VENTA.cliente_id</code> es FK que referencia <code>CLIENTE.cliente_id</code>. → Esto significa: <em>no puede existir una venta de un cliente que no esté en la tabla CLIENTE</em>.</p>
 </div>
 </section>
@@ -487,7 +492,10 @@ Universidad San Sebastián
 </tbody>
 </table>
 <div class="fragment">
-<p><strong>Notación “cuervo” (crow’s foot):</strong> - <code>||</code> = exactamente uno - <code>o{</code> = cero o muchos - <code>|{</code> = uno o muchos</p>
+<p><strong>Notación “cuervo” (crow’s foot):</strong><br>
+- <code>||</code> = exactamente uno<br>
+- <code>o{</code> = cero o muchos<br>
+- <code>|{</code> = uno o muchos</p>
 </div>
 </section>
 <section id="diagrama-mer-de-techstyle" class="slide level2 scrollable">
@@ -613,7 +621,7 @@ Universidad San Sebastián
 <li class="fragment">Garantizar integridad de los datos.</li>
 </ul>
 <div class="fragment">
-<p>Se aplica siguiendo una secuencia de <strong>Formas Normales</strong> (FN). Cada forma elimina un tipo específico de problema.</p>
+<p>Se aplica siguiendo una secuencia de <strong>Formas Normales</strong> (FN). Cada forma elimina un tipo específico de problema. <br><br></p>
 <p>Para el 99% de los sistemas de negocio, llegar a la <strong>3FN es suficiente</strong>.</p>
 </div>
 </section>
@@ -689,7 +697,10 @@ Universidad San Sebastián
 </table>
 </div>
 <div class="fragment">
-<p><strong>Problema inmediato</strong>: ¿qué pasa si un cliente compra 5 productos? ¿Agrego Item3, Item4, Item5? → La estructura de la tabla cambia. Eso viola la <strong>Primera Forma Normal</strong>.</p>
+<p><strong>Problema inmediato</strong>: ¿qué pasa si un cliente compra 5 productos? ¿Agrego Item3, Item4, Item5? → La estructura de la tabla cambia.</p>
+</div>
+<div class="fragment">
+<p>Eso viola la <strong>Primera Forma Normal</strong>.</p>
 </div>
 </section>
 <section id="fn-primera-forma-normal" class="slide level2">
@@ -767,10 +778,12 @@ Universidad San Sebastián
 <section id="fn-segunda-forma-normal" class="slide level2">
 <h2>2FN — Segunda Forma Normal</h2>
 <p><strong>Regla</strong>: debe estar en 1FN <strong>y</strong> cada atributo no-clave debe depender de <strong>toda la clave primaria</strong> (no solo de una parte).</p>
-<p><strong>Problema detectado en la tabla 1FN</strong>: <code>Nombre_Prod</code> y <code>Precio</code> dependen solo de <code>Cod_Prod</code> (dependencia parcial).</p>
+<p><strong>Problema detectado en la tabla 1FN</strong>: <code>Nombre_Prod</code> y <code>Precio</code> dependen solo de <code>Cod_Prod</code> (dependencia parcial). <br><br></p>
 <div class="fragment">
 <p><strong>Solución</strong>: separar en tablas distintas.</p>
-<p><strong>FACTURA</strong> <code>(N_Factura, Fecha, RUT, Nombre_Cliente, Ciudad)</code> <strong>PRODUCTO</strong> <code>(Cod_Prod, Nombre_Prod, Precio)</code> <strong>DETALLE</strong> <code>(N_Factura, Cod_Prod, Cantidad)</code> ← clave compuesta, sin dependencias parciales</p>
+<p><strong>FACTURA</strong> <code>(N_Factura, Fecha, RUT, Nombre_Cliente, Ciudad)</code><br>
+<strong>PRODUCTO</strong> <code>(Cod_Prod, Nombre_Prod, Precio)</code><br>
+<strong>DETALLE</strong> <code>(N_Factura, Cod_Prod, Cantidad)</code> ← clave compuesta, sin dependencias parciales</p>
 </div>
 <div class="fragment">
 <p>Ahora si el precio de Nike Air Max cambia → se actualiza <strong>una sola fila</strong> en PRODUCTO.</p>
@@ -779,16 +792,21 @@ Universidad San Sebastián
 <section id="fn-tercera-forma-normal" class="slide level2">
 <h2>3FN — Tercera Forma Normal</h2>
 <p><strong>Regla</strong>: debe estar en 2FN <strong>y</strong> ningún atributo no-clave debe depender de otro atributo no-clave (no puede haber dependencias transitivas).</p>
+<p><br></p>
 <p><strong>Problema en FACTURA</strong>: <code>Nombre_Cliente</code> y <code>Ciudad</code> dependen de <code>RUT</code>, no de <code>N_Factura</code>.</p>
 <div class="fragment">
 <p>→ Si Juan Pérez se cambia a Valparaíso, actualizo Ciudad en FACTURA… pero, ¿en cuántas filas de FACTURA aparece Juan? En <strong>todas</strong> sus compras.</p>
 </div>
+<p><br></p>
 <div class="fragment">
 <p><strong>Solución</strong>: separar al cliente.</p>
-<p><strong>FACTURA</strong> <code>(N_Factura, Fecha, RUT)</code> ← solo la llave foránea <strong>CLIENTE</strong> <code>(RUT, Nombre_Cliente, Ciudad)</code> ← datos del cliente, una sola vez <strong>PRODUCTO</strong> <code>(Cod_Prod, Nombre_Prod, Precio)</code> <strong>DETALLE</strong> <code>(N_Factura, Cod_Prod, Cantidad)</code></p>
+<p><strong>FACTURA</strong> <code>(N_Factura, Fecha, RUT)</code> ← solo la llave foránea<br>
+<strong>CLIENTE</strong> <code>(RUT, Nombre_Cliente, Ciudad)</code> ← datos del cliente, una sola vez<br>
+<strong>PRODUCTO</strong> <code>(Cod_Prod, Nombre_Prod, Precio)</code><br>
+<strong>DETALLE</strong> <code>(N_Factura, Cod_Prod, Cantidad)</code></p>
 </div>
 </section>
-<section id="el-resultado-final-4-tablas-limpias" class="slide level2">
+<section id="el-resultado-final-4-tablas-limpias" class="slide level2 scrollable">
 <h2>El Resultado Final: 4 Tablas Limpias</h2>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
@@ -905,7 +923,10 @@ Universidad San Sebastián
 </tbody>
 </table>
 </div>
-<p>Identifica: 1. ¿Viola la 2FN? ¿Cuál es la dependencia parcial? 2. ¿Viola la 3FN? ¿Cuál es la dependencia transitiva? 3. ¿Cuántas tablas necesitas para llegar a 3FN? Nombra cada una con sus atributos.</p>
+<p>Identifica:<br>
+1. ¿Viola la 2FN? ¿Cuál es la dependencia parcial?<br>
+2. ¿Viola la 3FN? ¿Cuál es la dependencia transitiva?<br>
+3. ¿Cuántas tablas necesitas para llegar a 3FN? Nombra cada una con sus atributos.</p>
 <aside class="notes">
 <p><strong>Solución Desafío Rápido 3</strong></p>
 <p>PK compuesta: <code>(ID_Contrato, ID_Cargo)</code>.</p>
@@ -965,12 +986,14 @@ Universidad San Sebastián
 <li class="fragment">Una BD en 3FN → cada dato existe <strong>en un solo lugar</strong> → actualizaciones fiables → KPIs correctos → CMI confiable.</li>
 </ul>
 <div class="fragment">
-<p><strong>El modelo de datos es la base de confianza del sistema analítico.</strong> Un mal modelo de datos hace que todos los análisis posteriores sean cuestionables.</p>
+<p><strong>El modelo de datos es la base de confianza del sistema analítico.<br>
+</strong> Un mal modelo de datos hace que todos los análisis posteriores sean cuestionables.</p>
 </div>
 </section>
 <section id="el-diccionario-de-datos" class="slide level2">
 <h2>El Diccionario de Datos</h2>
 <p>El <strong>Diccionario de Datos</strong> es el documento que acompaña al MER. Especifica, para cada atributo, su tipo de dato, restricciones y descripción.</p>
+<p><br></p>
 <div class="fragment">
 <p>Es el “manual de instrucciones” para el desarrollador que implementará la base de datos. Sin él, el MER está incompleto.</p>
 </div>
@@ -1026,7 +1049,8 @@ Universidad San Sebastián
 </tbody>
 </table>
 </div>
-<hr>
+</div>
+</section>
 <section id="tipos-de-datos-sql-fundamentales" class="slide level2">
 <h2>Tipos de Datos SQL Fundamentales</h2>
 <p>Los tipos de dato definen <strong>qué clase de valor</strong> puede almacenar una columna y <strong>cuánto espacio</strong> ocupa.</p>
@@ -1071,10 +1095,16 @@ Universidad San Sebastián
 </tr>
 </tbody>
 </table>
+</section>
+<section id="tipos-de-datos-sql-fundamentales-1" class="slide level2">
+<h2>Tipos de Datos SQL Fundamentales</h2>
 <div class="fragment">
-<p><strong>Restricciones comunes:</strong> - <code>NOT NULL</code> → el campo no puede quedar vacío. - <code>UNIQUE</code> → no puede repetirse el valor en la columna. - <code>DEFAULT valor</code> → valor automático si no se especifica. - <code>CHECK (condición)</code> → MySQL verifica que el valor cumpla la condición antes de insertarlo.</p>
+<p><strong>Restricciones comunes:</strong><br>
+- <code>NOT NULL</code> → el campo no puede quedar vacío.<br>
+- <code>UNIQUE</code> → no puede repetirse el valor en la columna.<br>
+- <code>DEFAULT valor</code> → valor automático si no se especifica.<br>
+- <code>CHECK (condición)</code> → MySQL verifica que el valor cumpla la condición antes de insertarlo.</p>
 </div>
-<hr>
 </section>
 <section id="del-mer-al-sql-el-siguiente-paso" class="slide level2">
 <h2>Del MER al SQL: El Siguiente Paso</h2>
@@ -1096,7 +1126,6 @@ Universidad San Sebastián
 <span id="cb1-15"><a></a>    rut          <span class="dt">VARCHAR</span>(<span class="dv">12</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
 <span id="cb1-16"><a></a>    <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (rut) <span class="kw">REFERENCES</span> cliente(rut)</span>
 <span id="cb1-17"><a></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<hr>
 </section>
 <section id="puntos-clave-de-la-semana-4" class="slide level2">
 <h2>Puntos Clave de la Semana 4</h2>
@@ -1107,7 +1136,6 @@ Universidad San Sebastián
 <li class="fragment">La <strong>normalización</strong> es el proceso de eliminar redundancias: 1FN elimina grupos repetidos, 2FN elimina dependencias parciales, 3FN elimina dependencias transitivas.</li>
 <li class="fragment">Un modelo en <strong>3FN garantiza</strong> que cada dato existe en un único lugar → actualizaciones confiables → análisis confiables → decisiones correctas.</li>
 </ul>
-<hr>
 </section>
 <section id="preview-del-laboratorio-w04" class="slide level2">
 <h2>Preview del Laboratorio W04</h2>
@@ -1121,8 +1149,6 @@ Universidad San Sebastián
 </ul>
 
 
-</section>
-</div>
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">

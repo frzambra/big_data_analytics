@@ -1,0 +1,311 @@
+---
+title: "Solución — Laboratorio 4: De la Planilla al Modelo"
+subtitle: "Semana 4 · W04 · Unidad II · Modelamiento de Datos · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+::: {.callout-warning}
+**Documento de uso exclusivo del docente.** No distribuir a estudiantes antes de que completen el laboratorio.
+:::
+
+---
+
+## Parte 1 — Auditar la Planilla Plana
+
+### Paso 2: Anomalías — Respuestas esperadas
+
+El archivo `techstyle_ventas_planas.csv` tiene 21 filas de datos y exhibe las tres anomalías clásicas:
+
+| Tipo de anomalía | ¿Presente? | Ejemplo concreto del archivo | ¿Qué problema causa? |
+|---|---|---|---|
+| **Actualización** | **Sí** | El cliente C001 (Juan Pérez) aparece con dos emails distintos: `juan.perez@gmail.com` en sus primeras compras y `juanperez@gmail.com` en la fila V003. Si se actualiza el email en una fila, las demás quedan desactualizadas. | Si se actualiza el email de Juan en algunos registros pero no en todos, la base de datos queda **inconsistente**. No se puede saber cuál es el email correcto. |
+| **Inserción** | **Sí** | Para registrar un nuevo producto (ej. "Bolso Cuero") sin ventas aún, habría que crear una fila con datos de venta inventados o vacíos, porque no hay tabla separada de productos. | No se puede agregar un producto al catálogo sin registrar una venta ficticia. |
+| **Eliminación** | **Sí** | Si se eliminan todas las ventas del cliente C003 (o de cualquier cliente con pocas compras), se pierde toda la información de ese cliente: nombre, email, región, segmento. | No se puede borrar un registro de venta sin perder datos del cliente que no deberían eliminarse. |
+
+::: {.callout-tip}
+**Para el docente**: La anomalía de actualización es la más evidente en el archivo — buscar `cliente_id = C001` y mostrar las dos filas con emails distintos. Esto fue diseñado intencionalmente en el dataset.
+:::
+
+### Paso 3: Violaciones de forma normal
+
+| Pregunta | Respuesta |
+|---|---|
+| ¿La tabla está en **1FN**? ¿Por qué sí o no? | **Técnicamente sí**: cada celda contiene un valor atómico y no hay grupos repetidos en columnas (no hay Item1, Item2...). Sin embargo, la tabla mezcla atributos de múltiples entidades, lo que viola el *principio de relación única*. |
+| ¿Estaría en **2FN**? Dependencia parcial. | **No.** Asumiendo clave compuesta `(id_venta, producto_id)`: `producto_nombre`, `categoria`, `precio_unitario` y `costo_unitario` dependen **solo de `producto_id`**, no de `id_venta`. Eso es una dependencia parcial — viola 2FN. |
+| ¿Estaría en **3FN**? Dependencia transitiva. | **No.** `cliente_nombre`, `cliente_apellido`, `cliente_email`, `cliente_region` y `cliente_segmento` dependen de `cliente_id`, que a su vez depende de `id_venta`. Eso es una dependencia transitiva: atributo no-clave → atributo no-clave. |
+
+### Paso 4: Cuantificar la redundancia
+
+| Pregunta | Respuesta |
+|---|---|
+| ¿Cuántas veces aparece "Nike Air Max"? | **6 veces** (aparece en 6 filas de ventas distintas) |
+| ¿Cuántas filas hay que modificar si C001 cambia su email? | **7 filas** (C001 tiene 7 registros de venta en el archivo) |
+| Si eliminamos todas las ventas de un cliente, ¿qué perdemos? | Todo su perfil: nombre, apellido, email, región, segmento. **Se pierde información que no debería depender de las ventas**. |
+
+---
+
+## Parte 2 — Normalizar: de la Planilla a las Tablas
+
+### Paso 5: Aplicar 1FN
+
+**Clave primaria de la tabla plana:**
+- **`id_venta`** no sirve sola: la venta V001 tiene dos filas (dos productos distintos).
+- La clave primaria correcta es **(id_venta, producto_id)** — compuesta, ya que una venta puede tener múltiples productos.
+
+### Paso 6: Aplicar 2FN — Separar dependencias parciales
+
+**6.1 Columnas que dependen solo de `producto_id`:**
+
+| Columna | ¿Depende solo de `producto_id`? | ¿A qué tabla moverla? |
+|---|---|---|
+| `producto_nombre` | **Sí** — el nombre del producto no cambia según la venta | `productos` |
+| `categoria` | **Sí** — la categoría es del producto, no de la venta | `productos` |
+| `precio_unitario` | **Parcialmente** — el precio al momento de la venta puede diferir del precio actual (ver nota) | `detalle_ventas` (precio histórico) |
+| `costo_unitario` | **Sí** — el costo es del producto | `productos` |
+| `cantidad` | **No** — depende de la venta específica | `detalle_ventas` |
+
+::: {.callout-note}
+**Precio unitario**: es uno de los atributos más discutidos. El precio actual del producto va en `productos`. Pero el precio *al momento de la venta* debe guardarse en `detalle_ventas` para mantener el historial correcto. Esto se discute en profundidad en el Paso 12.
+:::
+
+**6.2 Columnas que dependen solo de `id_venta`:**
+
+| Columna | ¿Depende solo de `id_venta`? |
+|---|---|
+| `fecha_venta` | **Sí** — la fecha es de la venta, no del producto |
+| `cliente_id` | **Sí** — el cliente es de la venta |
+| `cliente_nombre` | No directamente — depende de `cliente_id` (dependencia transitiva, se resuelve en 3FN) |
+| `venta_total` | **Sí** — pero es calculable; podría omitirse o guardarse como campo derivado |
+
+**6.3 Tres tablas resultantes de 2FN:**
+
+| Tabla | Clave primaria | Columnas que incluye |
+|---|---|---|
+| `ventas` | `id_venta` | `id_venta`, `fecha_venta`, `cliente_id`, `cliente_nombre`, `cliente_apellido`, `cliente_email`, `cliente_region`, `cliente_segmento` |
+| `productos` | `producto_id` | `producto_id`, `producto_nombre`, `categoria`, `costo_unitario` |
+| `detalle_ventas` | (`id_venta`, `producto_id`) | `id_venta`, `producto_id`, `cantidad`, `precio_unitario`, `descuento_pct` |
+
+### Paso 7: Aplicar 3FN — Eliminar dependencias transitivas
+
+**7.1** Los atributos de cliente (`cliente_nombre`, `cliente_apellido`, `cliente_email`, `cliente_region`, `cliente_segmento`) dependen de **`cliente_id`**, no de `id_venta`. Eso es una dependencia transitiva: `id_venta` → `cliente_id` → atributos del cliente.
+
+**7.2 Cuatro tablas resultantes de 3FN:**
+
+| Tabla | Clave primaria | Columnas que incluye |
+|---|---|---|
+| `clientes` | `cliente_id` | `cliente_id`, `nombre`, `apellido`, `email`, `region`, `segmento`, `fecha_registro` |
+| `ventas` *(actualizada)* | `venta_id` | `venta_id`, `fecha`, `cliente_id` (FK) |
+| `productos` | `producto_id` | `producto_id`, `nombre_producto`, `categoria`, `precio_venta`, `costo_unitario`, `stock` |
+| `detalle_ventas` | (`venta_id`, `producto_id`) | `venta_id` (FK), `producto_id` (FK), `cantidad`, `precio_unitario`, `descuento_pct` |
+
+**7.3 ¿Quedan dependencias transitivas?**
+
+- `clientes`: No — todos los atributos dependen directamente de `cliente_id`.
+- `ventas`: No — `fecha` y `cliente_id` dependen directamente de `venta_id`.
+- `productos`: No — todos los atributos dependen de `producto_id`. La `categoria` podría normalizarse a una tabla `categorias` (4FN), pero para este modelo es suficiente en 3FN.
+- `detalle_ventas`: No — `cantidad`, `precio_unitario` y `descuento_pct` dependen de la clave compuesta.
+
+---
+
+## Parte 3 — Diagrama MER
+
+### Paso 9-10: Descripción del diagrama correcto
+
+El diagrama debe mostrar **4 entidades** conectadas con **notación crow's foot**:
+
+```
+CLIENTES ─────────────────────── VENTAS
+(PK: cliente_id)    1       ∞   (PK: venta_id)
+                                 (FK: cliente_id)
+                                      |
+                                      | 1
+                                      |
+                                      ∞
+                              DETALLE_VENTAS
+                              (PK: venta_id + producto_id)
+                              (FK: venta_id, producto_id)
+                                      |
+                                      | ∞
+                                      |
+                                      1
+                                 PRODUCTOS
+                              (PK: producto_id)
+```
+
+**Relaciones con cardinalidad:**
+
+| Relación | Cardinalidad | Descripción |
+|---|---|---|
+| CLIENTES → VENTAS | 1 : N | Un cliente puede tener muchas ventas; cada venta pertenece a un solo cliente |
+| VENTAS → DETALLE_VENTAS | 1 : N | Una venta tiene uno o más ítems; cada ítem pertenece a una venta |
+| PRODUCTOS → DETALLE_VENTAS | 1 : N | Un producto aparece en uno o más ítems; cada ítem referencia un solo producto |
+
+::: {.callout-important}
+**La tabla DETALLE_VENTAS resuelve la relación N:M** entre VENTAS y PRODUCTOS. Sin ella, un producto podría aparecer en muchas ventas y una venta podría incluir muchos productos, lo que no se puede representar directamente con una FK simple.
+:::
+
+### Paso 11: Lista de verificación del diagrama
+
+- [x] Cada entidad tiene PK claramente identificada
+- [x] Relaciones con cardinalidad anotada (crow's foot)
+- [x] Relación N:M VENTAS↔PRODUCTOS resuelta con DETALLE_VENTAS
+- [x] FK en el lado "muchos" de cada relación
+- [x] 4 tablas exactamente como las definidas en Parte 2
+
+---
+
+## Parte 4 — Diccionario de Datos
+
+### Paso 12: Diccionario completo
+
+**Tabla: PRODUCTOS** (completar los espacios en blanco del lab)
+
+| Atributo | Tipo SQL | NOT NULL | Restricciones | Descripción |
+|---|---|---|---|---|
+| `producto_id` | `INT` | Sí | PK | Identificador único del producto |
+| `nombre_producto` | `VARCHAR(100)` | Sí | | Nombre comercial del producto |
+| `categoria` | `VARCHAR(50)` | Sí | CHECK: Calzado / Ropa / Electrónica / Accesorios / Hogar | Línea o categoría del producto |
+| `precio_venta` | `DECIMAL(10,2)` | Sí | CHECK > 0 | Precio de venta al público vigente |
+| `costo_unitario` | `DECIMAL(10,2)` | Sí | CHECK > 0 | Costo de adquisición del producto |
+| `stock` | `INT` | Sí | DEFAULT 0, CHECK >= 0 | Unidades disponibles en bodega |
+
+**Tabla: VENTAS**
+
+| Atributo | Tipo SQL | NOT NULL | Restricciones | Descripción |
+|---|---|---|---|---|
+| `venta_id` | `INT` | Sí | PK | Identificador único de la venta |
+| `fecha` | `DATE` | Sí | | Fecha en que se realizó la transacción |
+| `cliente_id` | `INT` | Sí | FK → CLIENTES | Cliente que realizó la compra |
+
+**Tabla: DETALLE_VENTAS**
+
+| Atributo | Tipo SQL | NOT NULL | Restricciones | Descripción |
+|---|---|---|---|---|
+| `venta_id` | `INT` | Sí | PK, FK → VENTAS | Venta a la que pertenece este ítem |
+| `producto_id` | `INT` | Sí | PK, FK → PRODUCTOS | Producto vendido |
+| `cantidad` | `INT` | Sí | CHECK > 0 | Unidades vendidas de este producto en esta venta |
+| `precio_unitario` | `DECIMAL(10,2)` | Sí | CHECK > 0 | Precio al momento de la venta (histórico) |
+| `descuento_pct` | `INT` | No | CHECK >= 0 AND <= 100, DEFAULT 0 | Porcentaje de descuento aplicado |
+
+---
+
+## Parte 5 — Sentencias CREATE TABLE
+
+### Paso 13: SQL completo — Respuesta modelo
+
+```sql
+-- ============================================================
+-- MODELO RELACIONAL TECHSTYLE — Orden correcto de creación
+-- Primero tablas sin FK, luego las que dependen de ellas
+-- ============================================================
+
+-- 1. CLIENTES (sin dependencias foráneas)
+CREATE TABLE clientes (
+    cliente_id      INT             PRIMARY KEY,
+    nombre          VARCHAR(50)     NOT NULL,
+    apellido        VARCHAR(50)     NOT NULL,
+    email           VARCHAR(100)    UNIQUE NOT NULL,
+    region          VARCHAR(50)     NOT NULL,
+    segmento        VARCHAR(20)     CHECK (segmento IN ('Premium', 'Estándar', 'Básico')),
+    fecha_registro  DATE            NOT NULL
+);
+
+-- 2. PRODUCTOS (sin dependencias foráneas)
+CREATE TABLE productos (
+    producto_id      INT             PRIMARY KEY,
+    nombre_producto  VARCHAR(100)    NOT NULL,
+    categoria        VARCHAR(50)     NOT NULL,
+    precio_venta     DECIMAL(10,2)   NOT NULL CHECK (precio_venta > 0),
+    costo_unitario   DECIMAL(10,2)   NOT NULL CHECK (costo_unitario > 0),
+    stock            INT             NOT NULL DEFAULT 0 CHECK (stock >= 0)
+);
+
+-- 3. VENTAS (depende de CLIENTES)
+CREATE TABLE ventas (
+    venta_id    INT     PRIMARY KEY,
+    fecha       DATE    NOT NULL,
+    cliente_id  INT     NOT NULL,
+    FOREIGN KEY (cliente_id) REFERENCES clientes(cliente_id)
+);
+
+-- 4. DETALLE_VENTAS (depende de VENTAS y PRODUCTOS)
+CREATE TABLE detalle_ventas (
+    venta_id        INT             NOT NULL,
+    producto_id     INT             NOT NULL,
+    cantidad        INT             NOT NULL CHECK (cantidad > 0),
+    precio_unitario DECIMAL(10,2)   NOT NULL CHECK (precio_unitario > 0),
+    descuento_pct   INT             NOT NULL DEFAULT 0 CHECK (descuento_pct >= 0 AND descuento_pct <= 100),
+    PRIMARY KEY (venta_id, producto_id),
+    FOREIGN KEY (venta_id)    REFERENCES ventas(venta_id),
+    FOREIGN KEY (producto_id) REFERENCES productos(producto_id)
+);
+```
+
+### Paso 14: Integridad referencial — Respuestas esperadas
+
+| Pregunta | Respuesta |
+|---|---|
+| ¿Por qué DETALLE_VENTAS se crea después de VENTAS y PRODUCTOS? | Porque tiene FK que referencian esas tablas. MySQL no puede crear una FK hacia una tabla que no existe. Orden obligatorio: primero las tablas referenciadas, luego las que referencian. |
+| ¿Qué pasa si insertas un `venta_id` inexistente en DETALLE_VENTAS? | MySQL lanza un error: `ERROR 1452: Cannot add or update a child row: a foreign key constraint fails`. La inserción es rechazada. No se pueden insertar registros "huérfanos". |
+| ¿Qué pasa si eliminas un cliente con ventas en VENTAS? | MySQL rechaza la eliminación con `ERROR 1451: Cannot delete or update a parent row: a foreign key constraint fails`. Para eliminar el cliente, primero deberían eliminarse sus ventas (o usar `ON DELETE CASCADE`). |
+
+---
+
+## Parte 6 — Síntesis y Reflexión
+
+### Paso 15: Comparación antes/después
+
+| Dimensión | Planilla Excel plana | Modelo relacional en 3FN |
+|---|---|---|
+| ¿Dónde vive el email de un cliente? | En **cada fila** de sus ventas — 7 copias para un cliente con 7 compras | En **una sola fila** de la tabla `clientes` |
+| ¿Cómo se actualiza el precio de un producto? | Hay que buscar y modificar **todas las filas** que contienen ese producto | Se modifica **una sola fila** en `productos`; el historial de ventas no se altera |
+| ¿Qué pasa si eliminas todas las ventas de un cliente? | Se **pierde toda la información** del cliente (nombre, email, región, segmento) | Nada — el cliente sigue existiendo en `clientes`. Solo se eliminan los registros de `ventas` y `detalle_ventas`. |
+| ¿Cuántas tablas para consultar ventas por región? | 1 tabla (la planilla plana) — pero con datos redundantes | 2 tablas: `ventas` + `clientes` (JOIN por `cliente_id`) |
+| ¿Puede haber dos productos con el mismo código? | **Sí** — Excel no lo impide. | **No** — la PRIMARY KEY en `productos` garantiza unicidad. MySQL rechaza el duplicado. |
+
+### Paso 16: Reporte ejecutivo para Roberto — Respuesta modelo
+
+> **Para:** Roberto (CEO), TechStyle
+>
+> **Asunto:** Diseño del modelo de datos para migración de Excel a MySQL
+>
+> El modelo propuesto organiza la información de TechStyle en **4 tablas normalizadas**: `clientes`, `ventas`, `productos` y `detalle_ventas`. Este diseño elimina los tres riesgos críticos que tiene el sistema actual en Excel: (1) si un cliente cambia su email, hay que actualizar decenas de filas — con el nuevo modelo, se actualiza una sola vez; (2) borrar ventas antiguas actualmente destruye información de clientes que debería conservarse; (3) Excel no puede garantizar que el mismo producto no aparezca con distintos precios en diferentes filas.
+>
+> El nuevo modelo garantiza integridad referencial mediante claves foráneas: MySQL rechaza automáticamente cualquier venta sin cliente válido o cualquier ítem sin producto válido. Además, el precio unitario histórico se guarda en `detalle_ventas`, permitiendo auditar exactamente cuánto pagó cada cliente por cada producto en cada compra, aunque el precio actual haya cambiado.
+>
+> Este modelo es el fundamento técnico para migrar a MySQL y, posteriormente, construir el sistema analítico completo que requiere TechStyle.
+
+### Paso 17: Preguntas de reflexión — Respuestas esperadas
+
+| Pregunta | Respuesta esperada |
+|---|---|
+| ¿Dónde fue más difícil decidir qué tabla pertenece a qué entidad? | Al separar `precio_unitario` — intuitivamente parece ser del producto, pero al razonar sobre el historial de precios, queda claro que debe estar en `detalle_ventas`. |
+| ¿Podría haber 4FN o 5FN? ¿Cuándo se usarían? | **4FN** (dependencias multivaluadas) se aplica cuando un atributo puede tener múltiples valores independientes entre sí. Ej: si un producto pudiera tener múltiples categorías independientes de sus múltiples proveedores. **5FN** (dependencias de join) es muy raro en la práctica y casi nunca se implementa en sistemas de negocio reales. |
+| Si TechStyle agrega un módulo de despacho, ¿qué entidades nuevas? | `despachos` (despacho_id, venta_id FK, repartidor_id FK, direccion, hora_salida, hora_entrega, estado) + `repartidores` (repartidor_id, nombre, vehiculo, zona_asignada). La relación sería: VENTAS 1:1 DESPACHOS ∗:1 REPARTIDORES. |
+| ¿Por qué `precio_unitario` está en DETALLE_VENTAS y no en PRODUCTOS? | Porque el precio de un producto cambia con el tiempo (promociones, inflación, ajustes). Una venta de enero a $89.990 debe conservar ese precio histórico aunque hoy el producto valga $99.990. Si el precio solo existiera en `productos`, no habría forma de auditar ventas pasadas correctamente. |
+
+---
+
+::: {.hidden}
+## Notas para el docente
+
+**Sobre la corrección del SQL:**
+
+El SQL de los estudiantes debe evaluar:
+1. **Orden correcto** — CLIENTES y PRODUCTOS primero, sin FK hacia otras tablas aún no creadas.
+2. **Clave compuesta** en DETALLE_VENTAS — `PRIMARY KEY (venta_id, producto_id)` como declaración separada o al final.
+3. **CHECK constraints** — especialmente `descuento_pct BETWEEN 0 AND 100` y `cantidad > 0`.
+4. **NOT NULL** en columnas obligatorias — `fecha`, `cliente_id`, `cantidad`, `precio_unitario`.
+
+**Variaciones aceptables:**
+- `AUTO_INCREMENT` en `venta_id` y `producto_id` — bonus, no requerido.
+- `ON DELETE CASCADE` en las FK — aceptable pero discutir las implicancias (si se borra una venta, se borran automáticamente sus ítems).
+- `ENUM` en vez de `CHECK` para `segmento` — válido en MySQL: `segmento ENUM('Premium', 'Estándar', 'Básico')`.
+
+**Error frecuente:** Los estudiantes a veces crean `DETALLE_VENTAS` antes de `VENTAS` o `PRODUCTOS`. Esto falla porque la FK referencia tablas que aún no existen. Use este error como ejemplo de integridad referencial en la discusión de clase.
+:::

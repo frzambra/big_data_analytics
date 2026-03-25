@@ -259,6 +259,78 @@ format:
 4. Dibuja el diagrama OLTP → ETL → DW para ServiRápido.
 :::
 
+::: {.notes}
+**Respuestas esperadas para el docente:**
+
+**1. Tipos de SI por nivel organizacional en ServiRápido**
+
+| Nivel | Actor ejemplo | Tipo de SI | Uso concreto |
+|---|---|---|---|
+| Operativo | Técnico en terreno | TPS | Registrar órdenes de trabajo, materiales usados, hora de llegada/salida |
+| Táctico | Supervisor de zona | CRM / BI | Ver órdenes pendientes por técnico, eficiencia por zona, satisfacción semanal |
+| Estratégico | Gerente general | EIS / DSS | KPIs consolidados: rentabilidad por servicio, NPS, crecimiento de clientes |
+
+**2. KPIs por perspectiva del CMI (2 por perspectiva)**
+
+*Financiera:*
+
+- % margen bruto por tipo de servicio (gasfitería, electricidad, pintura) — meta: ≥ 35%.
+- Ingresos mensuales recurrentes por contratos de mantención — meta: crecimiento 5% mensual.
+
+*Cliente:*
+
+- NPS de clientes atendidos — meta: ≥ 70.
+- Tasa de retención (clientes que vuelven en 6 meses) — meta: ≥ 60%.
+
+*Procesos Internos:*
+
+- Tiempo promedio desde solicitud hasta llegada del técnico — meta: ≤ 4 horas.
+- % de órdenes completadas en la primera visita (First-Time Fix Rate) — meta: ≥ 85%.
+
+*Aprendizaje y Crecimiento:*
+
+- % de técnicos certificados en al menos 2 especialidades — meta: ≥ 70%.
+- Horas promedio de capacitación por técnico al trimestre — meta: ≥ 8 horas.
+
+**3. Dimensión de calidad más crítica para "tiempo de respuesta al cliente"**
+
+La dimensión más crítica es la **oportunidad** (timeliness): el tiempo de respuesta solo es útil si se registra en el momento exacto en que ocurre. Si el técnico marca la llegada con 30 minutos de retraso en el sistema, el KPI muestra un valor mejor al real, distorsionando las decisiones del supervisor. Sin oportunidad, el indicador pierde su capacidad de disparar alertas a tiempo. Como segunda dimensión relevante, la **exactitud**: si el timestamp de la solicitud o de la llegada está mal capturado, el cálculo resulta incorrecto aunque se registre de inmediato.
+
+**4. Diagrama OLTP → ETL → DW para ServiRápido**
+
+```
+┌──────────────────────────────────────────────┐
+│               FUENTES OLTP                    │
+│  ┌──────────────┐    ┌──────────────────┐    │
+│  │ App Técnicos │    │  CRM Clientes    │    │
+│  │ (órdenes de  │    │ (solicitudes,    │    │
+│  │  trabajo)    │    │  contactos, NPS) │    │
+│  └──────┬───────┘    └────────┬─────────┘    │
+└─────────┼─────────────────────┼──────────────┘
+          │                     │
+          ▼                     ▼
+┌──────────────────────────────────────────────┐
+│                    ETL                        │
+│  Extraer → Limpiar → Estandarizar → Cargar   │
+│  (unificar formatos de fecha, eliminar        │
+│   duplicados, calcular tiempo de respuesta)   │
+└───────────────────────┬──────────────────────┘
+                        │
+                        ▼
+┌──────────────────────────────────────────────┐
+│              DATA WAREHOUSE                   │
+│  Dim_Técnico | Dim_Cliente | Dim_Servicio    │
+│  Dim_Tiempo  |  Fact_OrdenTrabajo            │
+└───────────────────────┬──────────────────────┘
+                        │
+                        ▼
+               BI / CMI (Power BI)
+          KPIs para supervisores y gerencia
+```
+
+Aceptar diagramas dibujados a mano que muestren las tres capas (OLTP, ETL, DW) con al menos 2 fuentes OLTP identificadas y alguna tabla de hechos nombrada.
+:::
+
 ---
 
 ## Puntos Clave

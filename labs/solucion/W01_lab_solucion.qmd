@@ -1,0 +1,134 @@
+---
+title: "Solución — Laboratorio 1: De Dato Crudo a Decisión"
+subtitle: "Semana 1 · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+::: {.callout-warning}
+**Documento de uso exclusivo del docente.** No distribuir a estudiantes antes de que completen el laboratorio.
+:::
+
+---
+
+## Parte 1 — Explorar los datos brutos
+
+### Paso 2: Reflexión inicial — Respuestas esperadas
+
+| Pregunta | Respuesta |
+|----------|-----------|
+| ¿Cuántos registros (filas) tiene el archivo? | **1.257 filas** (sin contar el encabezado) |
+| ¿Qué período de tiempo cubre? | **Año 2023 completo** (enero a diciembre) |
+| ¿Qué categorías de productos existen? | **Electrónica, Ropa, Hogar, Accesorios** |
+| ¿Puedes responder la pregunta de María con solo mirar los datos? | **No.** Con 1.257 filas desordenadas es imposible identificar tendencias o comparar categorías sin transformar primero los datos. |
+
+::: {.callout-note}
+**Para el docente**: El punto central de esta reflexión es que los datos crudos requieren transformación antes de ser útiles para tomar decisiones. Reforzar que "ver los datos" no es lo mismo que "extraer información".
+:::
+
+---
+
+## Parte 2 — Transformar datos en información
+
+### Paso 3: Tabla Dinámica — Resultados esperados
+
+Resultados de ventas totales por categoría (ordenados de mayor a menor):
+
+| Categoría | Ventas Totales (CLP) | Cantidad (unidades) | Margen Promedio (%) |
+|-----------|---------------------|---------------------|---------------------|
+| Electrónica | $27.668.324 | ~850 | 57,4% |
+| Ropa | $12.047.137 | ~620 | 64,7% |
+| Hogar | $10.580.186 | ~540 | 63,2% |
+| Accesorios | $7.032.922 | ~380 | 68,9% |
+
+::: {.callout-note}
+Los valores exactos pueden variar levemente dependiendo del redondeo en Excel, pero la **posición relativa** de las categorías debe ser la misma.
+:::
+
+### Paso 4: Tendencias por trimestre
+
+Evolución T3 → T4 por categoría:
+
+| Categoría | T3 | T4 | Tendencia |
+|-----------|----|----|-----------|
+| Electrónica | $6.224.336 | $9.639.000 | **Sube** ↑ |
+| Ropa | $3.813.555 | $2.628.985 | Baja ↓ |
+| Hogar | $2.953.216 | $2.723.151 | Baja ↓ |
+| Accesorios | $2.306.891 | $1.710.083 | Baja ↓ |
+
+**Hallazgo clave**: Solo Electrónica muestra tendencia alcista hacia el T4, lo que coincide con la temporada de fiestas y el peak de ventas tecnológicas (Navidad, Año Nuevo).
+
+---
+
+## Parte 3 — De información a decisión
+
+### Paso 6: Tabla de análisis — Respuestas esperadas
+
+| Categoría | Ventas Totales (CLP) | Margen Promedio (%) | Tendencia T3→T4 | ¿Es buena inversión? |
+|-----------|---------------------|---------------------|-----------------|---------------------|
+| Electrónica | $27.668.324 | 57,4% | **Sube** ↑ | **Sí** — Líder en ventas y en crecimiento |
+| Ropa | $12.047.137 | 64,7% | Baja ↓ | Posible — Alto margen pero tendencia negativa |
+| Hogar | $10.580.186 | 63,2% | Baja ↓ | Dudoso — Margen decente pero tendencia negativa |
+| Accesorios | $7.032.922 | 68,9% | Baja ↓ | Marginal — Mayor margen pero volumen bajo |
+
+### Paso 7: Recomendación para María — Respuesta modelo
+
+> *"Recomiendo invertir los $15.000.000 en la categoría **Electrónica** porque lidera las ventas con $27.668.324 anuales y es la única con tendencia de crecimiento positiva hacia el T4 (de $6,2M en T3 a $9,6M en T4), lo que sugiere un peak estacional que la campaña puede capitalizar."*
+
+**Argumentación alternativa válida (Ropa):**
+> *"Si bien Electrónica lidera en volumen, Ropa tiene el segundo mayor volumen ($12M) y el mayor margen de las categorías con alto volumen (64,7%). Podría ser más rentable invertir aquí si el margen es la prioridad estratégica, aunque su tendencia T3→T4 es negativa."*
+
+::: {.callout-tip}
+**Para el docente**: Ambas argumentaciones son válidas. El objetivo pedagógico es que la recomendación esté **justificada con datos**. Penalizar respuestas sin evidencia cuantitativa.
+:::
+
+---
+
+## Parte 4 — Reflexión final
+
+### Pregunta 1 — ¿Por qué no se podía responder sin procesar?
+
+Con 1.257 filas individuales desordenadas, no es posible identificar cuál categoría vende más, cuál tiene mejor margen, ni cuál está creciendo. La transformación (tablas dinámicas) fue necesaria para **agregar y resumir** los datos en información accionable.
+
+### Pregunta 2 — ¿Qué transformé?
+
+| Nivel | Ejemplo |
+|-------|---------|
+| Datos crudos | 1.257 filas con transacciones individuales: fecha, producto, precio, región... |
+| Información generada | Ventas totales por categoría ordenadas, margen promedio, tendencia trimestral |
+| Conocimiento aplicado | Que una categoría con tendencia creciente hacia T4 es mejor candidata para inversión de campaña que una en declive, aunque tenga menor margen |
+
+### Pregunta 3 — Límite de Excel
+
+| Escenario | Observación esperada |
+|-----------|---------------------|
+| 1.250 filas (actual) | Carga instantánea, operaciones fluidas |
+| 5.000 filas (triplicado) | Carga lenta, tablas dinámicas demoran más |
+| 8.750.000 filas (TechStyle real) | Excel **no puede manejar** más de ~1.048.576 filas (límite técnico). El archivo no abriría. |
+
+::: {.callout-important}
+**Punto de entrada al curso**: La incapacidad de Excel para manejar datos a escala real es precisamente la motivación para estudiar sistemas de bases de datos, arquitecturas de datos y herramientas analíticas escalables — que es exactamente lo que cubrirá este curso.
+:::
+
+---
+
+::: {.hidden}
+## Notas para el docente — Discusión en clase
+
+**Preguntas para provocar debate:**
+
+1. "Si dos grupos llegaron a recomendaciones distintas usando los mismos datos, ¿cuál tiene razón?" → No hay una sola respuesta; la calidad del análisis está en la justificación.
+
+2. "¿Qué información adicional le pediríamos a TI para hacer una mejor recomendación?" → Meta de ventas por categoría, histórico de campañas anteriores, costo de adquisición de clientes por categoría, ROI de campañas pasadas.
+
+3. "¿Qué supuesto implícito hicimos al recomendar la categoría con mayor venta?" → Asumimos que más ventas pasadas implican más potencial futuro, lo que no siempre es cierto (mercados saturados, estacionalidad, competencia).
+
+**Posibles errores comunes de los estudiantes:**
+- Recomendar basándose solo en ventas totales sin considerar la tendencia temporal.
+- No notar que Accesorios tiene el mayor margen (68,9%) pero el menor volumen.
+- Confundir `margen_pct` con la ganancia total en pesos.
+:::

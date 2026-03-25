@@ -5,6 +5,7 @@ project:
     - index.qmd
     - clases/*.qmd
     - labs/instrucciones/*.qmd
+    - labs/solucion/*.qmd
 
 format:
   revealjs:

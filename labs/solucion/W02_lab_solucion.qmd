@@ -1,0 +1,161 @@
+---
+title: "Solución — Laboratorio 2: Dashboards por Nivel Organizacional y Auditoría de Calidad"
+subtitle: "Semana 2 · W02 · Unidad 1 · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+::: {.callout-warning}
+**Documento de uso exclusivo del docente.** No distribuir a estudiantes antes de que completen el laboratorio.
+:::
+
+---
+
+## Parte A: Tres Dashboards, Tres Usuarios
+
+### Preguntas de reflexión — Respuestas esperadas
+
+**1. ¿Qué columnas son relevantes para Sofía pero irrelevantes para Roberto?**
+
+| Columna | Sofía (Operativa) | Roberto (Estratégica) |
+|---------|-------------------|----------------------|
+| `order_id` | Relevante — identifica cada pedido | Irrelevante — nivel transaccional |
+| `region` | Relevante — su zona de despacho | Relevante — pero agregado, no individual |
+| `fecha` (exacta) | Relevante — necesita el día exacto | Irrelevante — ve mes o trimestre |
+| `nombre_producto` | Relevante — sabe qué entregar | Irrelevante — ve categorías |
+| `venta_neta` | Irrelevante — no necesita $ por pedido | Relevante — KPI financiero |
+| `margen_pct` | Irrelevante — no es su decisión | Relevante — KPI de rentabilidad |
+
+**2. ¿Por qué el mismo dato "total de ventas" se muestra de forma distinta?**
+
+El dato numérico es el mismo (suma de `venta_neta`), pero la granularidad y el contexto cambian:
+- **Sofía** no lo ve — no es información que necesite para operar.
+- **Juan** lo ve desglosado por semana y categoría — para identificar tendencias y anomalías.
+- **Roberto** lo ve como un único número mensual comparado contra una meta — para tomar decisiones estratégicas.
+
+Esto ilustra que **la información útil no depende solo del dato, sino del destinatario y la decisión que debe tomar**.
+
+**3. ¿Qué tipo de SI corresponde a cada vista?**
+
+| Vista | Tipo de SI | Justificación |
+|-------|-----------|---------------|
+| Sofía (Página 1) | **TPS** (Transaction Processing System) | Gestión de operaciones del día, registro de transacciones individuales |
+| Juan (Página 2) | **DSS / BI** (Decision Support System / Business Intelligence) | Análisis de tendencias para apoyar decisiones tácticas |
+| Roberto (Página 3) | **EIS** (Executive Information System) | KPIs estratégicos en un vistazo para decisiones de alto nivel |
+
+---
+
+## Parte B: Auditoría de Calidad y CMI
+
+### Paso 2: Tabla de problemas de calidad — Respuesta completa
+
+El archivo `techstyle_customers_dirty.csv` contiene los siguientes problemas documentados:
+
+| Columna | Problema encontrado | Dimensión de calidad | KPI afectado |
+|---------|--------------------|--------------------|-------------|
+| `email` | 41 filas con email vacío (campo nulo) | **Completitud** | CRM – segmentación, campañas de marketing |
+| `region` | "RM", "Metropolitana", "Santiago" representan la misma región; variantes inconsistentes | **Consistencia** | Ventas por región — agrupa mal las métricas |
+| `email` | Algunos correos con formato inválido (sin dominio completo) | **Exactitud** | Tasa de rebote en campañas de email |
+| `region` | 10 filas con región vacía (campo nulo) | **Completitud** | Análisis geográfico de clientes |
+| `segmento` | Verificar si los valores son exactamente 'Premium', 'Estándar', 'Básico' sin variantes | **Consistencia** | Segmentación de clientes para campañas |
+| `fecha_registro` | Formato de fecha puede variar entre filas (DD/MM/YYYY vs. texto) | **Consistencia** | Cálculo de antigüedad del cliente |
+| `nombre` / `apellido` | Posibles inconsistencias de capitalización (FLORES vs. Flores) | **Consistencia** | Reportes y comunicaciones formales |
+
+::: {.callout-note}
+**Para el docente**: Los estudiantes deben encontrar al menos 5 problemas. La tabla anterior contiene 7 posibles respuestas válidas. Aceptar cualquier combinación de 5 bien justificada.
+:::
+
+### Paso 3: Transformaciones en Power Query — Guía de implementación
+
+**Transformación 1 — Estandarizar capitalización de nombres:**
+```
+Seleccionar columna 'nombre' → Transformar → Formato → Poner en mayúsculas cada palabra
+Seleccionar columna 'apellido' → Transformar → Formato → Poner en mayúsculas cada palabra
+```
+
+**Transformación 2 — Estandarizar la columna 'region':**
+```
+1. Transformar → Formato → Mayúsculas (normalizar todo a mayúsculas)
+2. Reemplazar valores:
+   "RM" → "Metropolitana"
+   "SANTIAGO" → "Metropolitana"
+   "REGIÓN METROPOLITANA" → "Metropolitana"
+3. Poner en mayúsculas cada palabra para formato final
+```
+
+**Transformación 3 — Eliminar filas con email vacío:**
+```
+Filtrar columna 'email' → Desmarcar "(null)" y "" (vacío)
+→ Resultado: 41 filas eliminadas (de 205 a ~164 clientes con email válido)
+```
+
+**Transformación 4 (adicional) — Recortar espacios:**
+```
+Seleccionar todas las columnas de texto → Transformar → Formato → Recortar
+```
+
+### Paso 4: CMI TechStyle — Construcción en Power BI
+
+**Medidas necesarias (crear en Power BI con DAX):**
+
+```dax
+-- Perspectiva Financiera
+Total Ventas Mes =
+CALCULATE(
+    SUM(techstyle_orders[venta_neta]),
+    MONTH(techstyle_orders[fecha]) = MONTH(TODAY()),
+    YEAR(techstyle_orders[año]) = YEAR(TODAY())
+)
+
+-- Perspectiva Cliente
+Clientes Unicos Mes =
+CALCULATE(
+    DISTINCTCOUNT(techstyle_orders[cliente_id]),
+    MONTH(techstyle_orders[fecha]) = MONTH(TODAY())
+)
+
+-- Perspectiva Aprendizaje
+Nuevos Clientes Mes =
+CALCULATE(
+    COUNTROWS(techstyle_customers_dirty),
+    MONTH(techstyle_customers_dirty[fecha_registro]) = MONTH(TODAY()),
+    YEAR(techstyle_customers_dirty[fecha_registro]) = YEAR(TODAY())
+)
+```
+
+**Visualizaciones del CMI:**
+
+| Perspectiva | KPI | Columna fuente | Visualización | Resultado esperado |
+|-------------|-----|----------------|-----------|--------------------|
+| Financiera | Ventas totales del mes | `venta_neta` (orders) | Tarjeta | Varía según mes seleccionado |
+| Cliente | Clientes únicos del mes | `cliente_id` (orders, distintos) | Tarjeta | Número de clientes activos |
+| Procesos | Margen promedio por categoría | `margen_pct` + `categoria` | Gráfico de barras | Accesorios 68,9% / Ropa 64,7% / Hogar 63,2% / Electrónica 57,4% |
+| Aprendizaje | Nuevos clientes registrados | `fecha_registro` (customers) | Tarjeta | Clientes nuevos del mes |
+
+### Pregunta final — ¿Cuál KPI está afectado por los problemas de calidad?
+
+**KPI más afectado: "Clientes únicos del mes" (Perspectiva Cliente)**
+
+- Los 41 registros con email vacío representan aproximadamente un **20% de la base de clientes**.
+- Si un mismo cliente aparece varias veces con variantes de región ("RM" y "Metropolitana"), las segmentaciones geográficas del CMI mostrarán datos incorrectos.
+- **Antes de la limpieza**: el conteo de clientes únicos puede estar inflado por duplicados y la segmentación por región fragmentada.
+- **Después de la limpieza**: los conteos son más precisos y la vista por región está consolidada.
+
+::: {.callout-important}
+**Punto pedagógico clave**: Un KPI construido sobre datos sucios produce una **ilusión de información**. La decisión de Roberto basada en ese CMI podría ser incorrecta. La calidad de datos no es un problema técnico — es un problema de negocio.
+:::
+
+---
+
+## Criterios de evaluación — Rúbrica de corrección
+
+| Criterio | Puntaje máximo | Indicadores de logro |
+|----------|---------------|---------------------|
+| 3 dashboards diferenciados | 30 pts | Cada página tiene visualizaciones apropiadas al nivel (operativo/táctico/estratégico), usa los campos correctos, tiene filtros funcionales |
+| Tabla de calidad (5 entradas) | 25 pts | Cada entrada identifica columna, problema concreto, dimensión de calidad (exactitud/completitud/consistencia/oportunidad) y KPI afectado |
+| Limpieza Power Query (3+ transf.) | 25 pts | Transformaciones aplicadas y visibles en "Pasos aplicados"; datos resultantes son coherentes |
+| CMI con 4 KPIs | 20 pts | Las 4 perspectivas del BSC representadas; respuesta a la pregunta final muestra comprensión del impacto de calidad |

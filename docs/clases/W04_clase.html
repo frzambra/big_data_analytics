@@ -697,6 +697,7 @@ Universidad San Sebastián
 <p><strong>Regla</strong>: cada celda debe contener <strong>un solo valor atómico</strong> (indivisible). No pueden existir grupos repetidos.</p>
 <p><strong>Antes (violación):</strong> columnas Item1, Item2, Item3… — grupos repetidos.</p>
 <p><strong>Después (en 1FN):</strong> una fila por cada ítem comprado:</p>
+<div style="font-size: 0.5em; width: 100%;">
 <table class="caption-top" style="width:100%;">
 <colgroup>
 <col style="width: 11%">
@@ -758,6 +759,7 @@ Universidad San Sebastián
 </tr>
 </tbody>
 </table>
+</div>
 <div class="fragment">
 <p><strong>Clave primaria compuesta</strong>: <code>(N_Factura, Cod_Prod)</code>. ¿Nuevo problema? <code>Nombre_Prod</code> y <code>Precio</code> dependen solo de <code>Cod_Prod</code>, no de toda la clave.</p>
 </div>
@@ -865,6 +867,7 @@ Universidad San Sebastián
 <h2>🚀 Desafío Rápido 3</h2>
 <p><strong>En parejas (5 minutos):</strong></p>
 <p>La siguiente tabla del sistema de RRHH de TechStyle está en 1FN:</p>
+<div style="font-size: 0.5em; width: 100%;">
 <table class="caption-top">
 <colgroup>
 <col style="width: 12%">
@@ -901,6 +904,7 @@ Universidad San Sebastián
 </tr>
 </tbody>
 </table>
+</div>
 <p>Identifica: 1. ¿Viola la 2FN? ¿Cuál es la dependencia parcial? 2. ¿Viola la 3FN? ¿Cuál es la dependencia transitiva? 3. ¿Cuántas tablas necesitas para llegar a 3FN? Nombra cada una con sus atributos.</p>
 <aside class="notes">
 <p><strong>Solución Desafío Rápido 3</strong></p>
@@ -972,6 +976,7 @@ Universidad San Sebastián
 </div>
 <div class="fragment">
 <p><strong>Ejemplo — Tabla CLIENTE:</strong></p>
+<div style="font-size: 0.7em; width: 100%;">
 <table class="caption-top">
 <colgroup>
 <col style="width: 20%">
@@ -1021,7 +1026,7 @@ Universidad San Sebastián
 </tbody>
 </table>
 </div>
-</section>
+<hr>
 <section id="tipos-de-datos-sql-fundamentales" class="slide level2">
 <h2>Tipos de Datos SQL Fundamentales</h2>
 <p>Los tipos de dato definen <strong>qué clase de valor</strong> puede almacenar una columna y <strong>cuánto espacio</strong> ocupa.</p>
@@ -1069,6 +1074,7 @@ Universidad San Sebastián
 <div class="fragment">
 <p><strong>Restricciones comunes:</strong> - <code>NOT NULL</code> → el campo no puede quedar vacío. - <code>UNIQUE</code> → no puede repetirse el valor en la columna. - <code>DEFAULT valor</code> → valor automático si no se especifica. - <code>CHECK (condición)</code> → MySQL verifica que el valor cumpla la condición antes de insertarlo.</p>
 </div>
+<hr>
 </section>
 <section id="del-mer-al-sql-el-siguiente-paso" class="slide level2">
 <h2>Del MER al SQL: El Siguiente Paso</h2>
@@ -1090,6 +1096,7 @@ Universidad San Sebastián
 <span id="cb1-15"><a></a>    rut          <span class="dt">VARCHAR</span>(<span class="dv">12</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
 <span id="cb1-16"><a></a>    <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (rut) <span class="kw">REFERENCES</span> cliente(rut)</span>
 <span id="cb1-17"><a></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
 </section>
 <section id="puntos-clave-de-la-semana-4" class="slide level2">
 <h2>Puntos Clave de la Semana 4</h2>
@@ -1100,6 +1107,7 @@ Universidad San Sebastián
 <li class="fragment">La <strong>normalización</strong> es el proceso de eliminar redundancias: 1FN elimina grupos repetidos, 2FN elimina dependencias parciales, 3FN elimina dependencias transitivas.</li>
 <li class="fragment">Un modelo en <strong>3FN garantiza</strong> que cada dato existe en un único lugar → actualizaciones confiables → análisis confiables → decisiones correctas.</li>
 </ul>
+<hr>
 </section>
 <section id="preview-del-laboratorio-w04" class="slide level2">
 <h2>Preview del Laboratorio W04</h2>
@@ -1113,6 +1121,8 @@ Universidad San Sebastián
 </ul>
 
 
+</section>
+</div>
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">

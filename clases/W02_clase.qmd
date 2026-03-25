@@ -551,6 +551,36 @@ En grupos de 3, respondan las siguientes preguntas sobre TechStyle:
 4. Diseña un KPI SMART para la perspectiva "Procesos Internos" del CMI de TechStyle.
 :::
 
+::: {.notes}
+**Respuestas esperadas para el docente:**
+
+**1. Firma digital al recibir el pedido**
+Un **TPS (Transaction Processing System)** es el tipo de SI adecuado. El TPS registra automáticamente transacciones operativas en tiempo real: en este caso, captura la firma digital del cliente, la fecha/hora de entrega y el estado del pedido. Sofía (operaria de bodega) es quien interactúa con este sistema. Algunos estudiantes pueden mencionar también un WMS (Warehouse Management System), lo cual es aceptable como respuesta más específica dentro de la familia TPS.
+
+**2. Dimensión de calidad vulnerada por el sesgo muestral del NPS**
+La dimensión vulnerada es la **completitud** (o representatividad), dado que solo se encuesta a clientes que gastaron más de $50.000, excluyendo al resto de la base. Secundariamente también se puede argumentar **exactitud**, pues el KPI no representa la realidad del conjunto total de clientes. El NPS de 72 está sesgado: los clientes de menor ticket —que podrían tener peor experiencia— quedan invisibles en el indicador estratégico de Roberto.
+
+**3. Consideraciones éticas y legales del remarketing con datos de navegación**
+- **Ley 19.628 (Chile)**: exige consentimiento explícito del titular para tratar datos personales con fines comerciales. Los datos de navegación son datos personales si permiten identificar al usuario.
+- **Principio de finalidad**: los datos recogidos para una finalidad (completar una compra) no pueden usarse automáticamente para otra (remarketing) sin nuevo consentimiento.
+- **Principio de proporcionalidad**: solo deben usarse los datos estrictamente necesarios para la campaña.
+- **Transparencia**: TechStyle debe informar a los clientes qué datos recopila y con qué propósito (política de privacidad visible y comprensible).
+- **Seguridad**: los datos de navegación deben almacenarse con controles de acceso adecuados.
+
+**4. KPI SMART para "Procesos Internos"**
+Ejemplo de respuesta correcta:
+*"Reducir el porcentaje de pedidos entregados fuera del plazo prometido de 24 h desde un 18% a un 8%, medido semanalmente en el TPS, durante el próximo trimestre."*
+
+Criterios SMART aplicados:
+- **Específico**: pedidos fuera de plazo de 24 h.
+- **Medible**: porcentaje calculable desde los registros del TPS.
+- **Alcanzable**: reducción de 18% a 8% es ambiciosa pero realista.
+- **Relevante**: impacta directamente en satisfacción del cliente y costos logísticos.
+- **Temporal**: plazo de un trimestre definido.
+
+Aceptar variantes siempre que cumplan los cinco criterios SMART y se enmarquen en procesos internos (logística, despacho, devoluciones, tiempos de respuesta).
+:::
+
 ---
 
 ## Objetivos de Aprendizaje – Semana 2

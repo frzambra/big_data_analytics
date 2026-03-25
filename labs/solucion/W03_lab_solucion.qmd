@@ -1,0 +1,240 @@
+---
+title: "Solución — Laboratorio 3: Mini-ETL — De Fuentes OLTP al Análisis"
+subtitle: "Semana 3 · W03 · Unidad 1 · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+::: {.callout-warning}
+**Documento de uso exclusivo del docente.** No distribuir a estudiantes antes de que completen el laboratorio.
+:::
+
+---
+
+## Parte 1 — Extraer: conocer y auditar las fuentes
+
+### Paso 2: Tabla de diagnóstico de inconsistencias — Respuesta completa
+
+| Problema detectado | Tabla afectada | Columna | Detalle del problema |
+|-------------------|---------------|---------|----------------------|
+| Nombre de columna inconsistente | `oltp_ventas` | `Cant` | Abreviación — debe renombrarse a `cantidad` para estandarizar |
+| Nombre de columna inconsistente | `oltp_ventas` | `Cod_Prod` | Debe renombrarse a `producto_id` para que coincida con `oltp_productos` |
+| Formato de fecha distinto | `oltp_ventas` | `Fecha_Venta` | Formato `YYYY/MM/DD` (barras, no guiones), distinto al estándar ISO |
+| Llave de unión con nombres distintos | `oltp_ventas` / `oltp_clientes` | `ID_Cliente` / `CustomerID` | El mismo identificador tiene nombre diferente en cada tabla |
+| Llave de unión con nombres distintos | `oltp_ventas` / `oltp_productos` | `Cod_Prod` / `Cod_Producto` | Distintos nombres para la misma llave de unión |
+| Categoría con nombre inconsistente | `oltp_productos` | `Linea` | Nombre diferente al estándar — debe renombrarse a `categoria` |
+| Columna de nombre compuesto | `oltp_clientes` | `NombreCompleto` | Nombre y apellido juntos en un solo campo — debe separarse |
+| Formato de fecha distinto | `oltp_clientes` | `FechaRegistro` | Formato `DD/MM/YYYY` — distinto al de `oltp_ventas` |
+
+### Paso 3: Auditoría de calidad — 4 dimensiones
+
+| Dimensión | `oltp_ventas` | `oltp_clientes` | `oltp_productos` |
+|-----------|--------------|----------------|-----------------|
+| **Exactitud** | Los precios y montos parecen consistentes; sin valores negativos detectados | Emails con formato válido; nombres en capitalización variada | Precios y costos positivos; márgenes calculables y razonables |
+| **Completitud** | ~100% de campos con valor; revisar si hay `Total_Venta` con nulos | Algunos campos pueden tener nulos; revisar `Correo` | `Activo` presente en todas las filas; sin nulos obvios |
+| **Consistencia** | Formato de fecha `YYYY/MM/DD` inconsistente con ISO; nombres de columnas abreviados | Ciudad con nombre `Ciudad` en vez de `region`; `NombreCompleto` en vez de campos separados | `Linea` en vez de `categoria`; capitalización puede variar entre filas |
+| **Oportunidad** | Datos de 2023; verificar si reflejan el período de análisis requerido | Fecha de registro en formato chileno (DD/MM/YYYY) | Sin columna de fecha de actualización de precios — no se puede verificar oportunidad |
+
+### Paso 4: Llaves de unión
+
+| Relación | Columna en `oltp_ventas` | Columna en dimensión | ¿Compatible? |
+|----------|--------------------------|---------------------|-------------|
+| Ventas → Clientes | `ID_Cliente` | `CustomerID` | **No** — mismo valor, distinto nombre. Hay que renombrar una |
+| Ventas → Productos | `Cod_Prod` | `Cod_Producto` | **No** — mismo valor, distinto nombre. Hay que renombrar una |
+
+::: {.callout-note}
+**Para el docente**: La incompatibilidad de nombres es la causa más frecuente de errores al construir relaciones en Power BI. Los estudiantes deben entender que el sistema no une tablas automáticamente por el *valor*, sino por el *nombre* de la columna al definir la relación.
+:::
+
+---
+
+## Parte 2 — Transformar: limpiar, estandarizar y enriquecer
+
+### Paso 5: Estandarizar `oltp_ventas` — Resumen de transformaciones
+
+| Transformación | Descripción | Resultado esperado |
+|---------------|-------------|-------------------|
+| Renombrar columnas | 8 columnas renombradas según tabla del lab | Nombres consistentes en minúsculas y snake_case |
+| Corregir tipo de fecha | `Fecha_Venta` de texto a tipo Fecha | Power BI reconoce la columna como fecha |
+| Corregir tipos numéricos | `cantidad` → Entero; `precio_unitario` y `venta_total` → Decimal fijo | Operaciones matemáticas correctas |
+| Filtrar valores inválidos | Filtrar `venta_total > 0` y `cantidad > 0` | Se eliminan filas erróneas (si existen) |
+| Columna calculada `venta_neta` | `[precio_unitario] * [cantidad] * (1 - [descuento_pct] / 100)` | Ingreso real descontado por transacción |
+| Columnas de fecha | `mes` (nombre) y `anio` (número) | Análisis temporal en el dashboard |
+
+**Fórmula `venta_neta` detallada:**
+```
+= [precio_unitario] * [cantidad] * (1 - [descuento_pct] / 100)
+```
+Ejemplo: precio_unitario=14.990, cantidad=1, descuento_pct=0 → venta_neta = 14.990
+Ejemplo: precio_unitario=40.491, cantidad=3, descuento_pct=10 → venta_neta = 109.326,70
+
+### Paso 6: Estandarizar `oltp_clientes` — Resumen
+
+| Transformación | Descripción |
+|---------------|-------------|
+| Renombrar 6 columnas | `CustomerID` → `cliente_id`, `NombreCompleto` → separar en `nombre`/`apellido`, etc. |
+| Separar `NombreCompleto` | Dividir por espacio en primera aparición → columnas `nombre` y `apellido` |
+| Estandarizar `region` | Normalizar capitalización + reemplazar variantes (ver tabla abajo) |
+| Corregir `fecha_registro` | DD/MM/YYYY → tipo Fecha con configuración regional Español (Chile) |
+| Validar emails | Columna `email_valido` = `Text.Contains([email],"@") and Text.Contains([email],".")` |
+| Calcular `meses_cliente` | `Duration.TotalDays(DateTime.LocalNow() - [fecha_registro]) / 30` → Entero |
+
+**Estandarización de región — reemplazos esperados:**
+```
+"STGO." → "Metropolitana"
+"RM" → "Metropolitana"
+"SANTIAGO" → "Metropolitana"
+"REGION METROPOLITANA" → "Metropolitana"
+"VINA DEL MAR" → "Valparaíso"   (si aplica)
+```
+
+### Paso 7: Estandarizar `oltp_productos` — Resumen
+
+| Transformación | Descripción |
+|---------------|-------------|
+| Renombrar 7 columnas | `Cod_Producto` → `producto_id`, `Descripcion` → `nombre_producto`, `Linea` → `categoria`, etc. |
+| Estandarizar `categoria` | Poner en mayúsculas cada palabra (Electrónica, Ropa, Hogar, Accesorios) |
+| Filtrar productos inactivos | Filtrar `activo = TRUE` / `SI` — ningún producto inactivo en este dataset |
+| Columna `margen_pct` | `([precio_venta] - [costo]) / [precio_venta] * 100` |
+| Columna `clasificacion_margen` | Condicional: ≥40% → "Alto", ≥20% → "Medio", else → "Bajo" |
+| Columna `alerta_stock` | Condicional: =0 → "Sin stock", <20 → "Stock crítico", <50 → "Stock bajo", else → "Stock normal" |
+
+**Resultado esperado de `clasificacion_margen`** (basado en los datos reales):
+- `margen_pct` para productos de Electrónica oscila entre 55–70% → todos clasifican como **"Alto"**
+- `margen_pct` para Ropa, Hogar y Accesorios similarmente alto → **"Alto"**
+
+---
+
+## Parte 3 — Cargar: modelo estrella y medidas DAX
+
+### Paso 9: Relaciones del modelo estrella
+
+```
+oltp_clientes (1) ←── (∗) oltp_ventas (∗) ──→ (1) oltp_productos
+    cliente_id                cliente_id            producto_id
+                              producto_id
+```
+
+**Configuración correcta en Power BI:**
+
+| Relación | Cardinalidad | Dirección de filtro | Activa |
+|----------|-------------|---------------------|--------|
+| oltp_ventas[cliente_id] → oltp_clientes[cliente_id] | Varios a uno (∗:1) | Único (clientes → ventas) | Sí |
+| oltp_ventas[producto_id] → oltp_productos[producto_id] | Varios a uno (∗:1) | Único (productos → ventas) | Sí |
+
+::: {.callout-note}
+**Para el docente**: Este es el modelo estrella clásico que los estudiantes ya conocen de Power BI desde su curso anterior. La diferencia es que ahora lo construyeron desde cero con fuentes OLTP separadas. Reforzar esta conexión conceptual.
+:::
+
+### Paso 10: Medidas DAX — Implementación completa
+
+```dax
+-- Medida 1: Total de ventas
+Total Ventas = SUM(oltp_ventas[venta_neta])
+
+-- Medida 2: Número de pedidos
+Num Pedidos = COUNTROWS(oltp_ventas)
+
+-- Medida 3: Ticket promedio
+Ticket Promedio = DIVIDE([Total Ventas], [Num Pedidos], 0)
+
+-- Medida 4: Clientes únicos
+Clientes Unicos = DISTINCTCOUNT(oltp_ventas[cliente_id])
+
+-- Medida 5: Ventas del mes actual
+Ventas Mes Actual =
+CALCULATE(
+    [Total Ventas],
+    MONTH(oltp_ventas[fecha]) = MONTH(TODAY()),
+    YEAR(oltp_ventas[fecha]) = YEAR(TODAY())
+)
+
+-- Medida 6: Margen promedio de productos vendidos
+Margen Promedio =
+AVERAGE(oltp_productos[margen_pct])
+```
+
+**Errores comunes a monitorear:**
+- Usar `SUM` en vez de `AVERAGE` para el margen promedio.
+- No usar `DIVIDE` (división segura) → error de división por cero si no hay pedidos.
+- En Medida 5: comparar contra `TODAY()` cuando los datos son de 2023 dará 0. Aceptar también versión sin filtro de fecha.
+
+---
+
+## Parte 4 — Dashboard CMI
+
+### Página 1 "Resumen Ejecutivo" — Configuración esperada
+
+| Visualización | Configuración | Resultado con los datos |
+|--------------|---------------|------------------------|
+| Tarjeta Total Ventas | Medida `Total Ventas`, formato CLP | ~$X.XXX.XXX (total del dataset) |
+| Tarjeta Ticket Promedio | Medida `Ticket Promedio`, formato CLP | $XX.XXX aprox. |
+| Tarjeta Clientes Activos | Medida `Clientes Unicos` | Número de IDs únicos en ventas |
+| Tarjeta Margen Promedio | Medida `Margen Promedio`, formato % | ~60–65% (estimado) |
+| Gráfico de líneas | Eje: `anio` + `mes`; Valores: `Total Ventas` | Evolución mensual de 2023 |
+| Gráfico de barras | Eje: `categoria`; Valores: `Total Ventas`; orden desc. | Electrónica líder |
+| Barras horizontales | Eje: `region`; Valores: `Total Ventas` | RM con mayor proporción |
+| Segmentador 1 | Campo: `segmento` de clientes | Premium / Estándar / Básico |
+| Segmentador 2 | Campo: `anio` de ventas | 2023 |
+
+### Página 2 "Análisis de Productos" — Configuración esperada
+
+| Visualización | Configuración |
+|--------------|---------------|
+| Tabla Top 10 productos | `nombre_producto`, `categoria`, `Total Ventas`, `Num Pedidos`, `margen_pct`, `clasificacion_margen`; ordenar por Total Ventas desc. |
+| Dispersión Ventas vs. Margen | Eje X: `margen_pct`; Eje Y: `Total Ventas`; Detalle: `nombre_producto`; Leyenda: `clasificacion_margen` |
+| Barras apiladas | Eje: `categoria`; Valores: `Total Ventas`; Leyenda: `segmento` |
+| Tabla stock crítico | `nombre_producto`, `stock`, `alerta_stock`; filtrado por "Sin stock" o "Stock crítico"; formato condicional rojo |
+
+---
+
+## Parte 5 — Síntesis y reflexión
+
+### Paso 13: Mini-reporte ejecutivo para Roberto — Respuesta modelo
+
+> **Análisis de Performance TechStyle — 2023**
+>
+> **KPI Financiero**: Las ventas totales del período alcanzan valores consolidados de las tres fuentes integradas. El ticket promedio refleja la combinación de productos de alta gama (Electrónica) con accesorios de menor valor.
+>
+> **Hallazgo 1 — Perspectiva Cliente**: Los clientes segmentados como "Premium" concentran una proporción significativa de los ingresos con un ticket promedio superior al de los segmentos Estándar y Básico, lo que sugiere que las acciones de retención de clientes Premium tienen alto impacto financiero.
+>
+> **Hallazgo 2 — Perspectiva Procesos**: La categoría Electrónica lidera en volumen de ventas, aunque su margen porcentual es el más bajo de las cuatro categorías (~57%). Accesorios y Ropa tienen el mayor margen (>64%) pero menor volumen. La categoría con mejor equilibrio margen-volumen para la campaña es Ropa.
+>
+> **Alerta — Stock**: Productos con stock igual a 0 o inferior a 20 unidades representan ventas potencialmente perdidas. Estos deben reabastecerse antes de la campaña.
+>
+> **Recomendación para María**: Invertir los $15.000.000 en Electrónica dado su liderazgo en ventas y tendencia de crecimiento hacia T4. Como alternativa, Ropa ofrece el mayor margen entre las categorías de alto volumen, con menor riesgo de saturación.
+
+### Paso 14: Reflexión — Respuestas esperadas
+
+| Pregunta | Respuesta esperada |
+|----------|-------------------|
+| ¿Qué paso del ETL fue más largo? | **Transform** — la estandarización de columnas, fechas y regiones requiere más pasos que la extracción o la carga |
+| ¿Dimensión de calidad más problemática? | **Consistencia** — nombres de columna distintos, formatos de fecha distintos, variantes de región |
+| Si se ejecutara cada noche, ¿qué arquitectura sería? | **ETL batch nocturno** (batch pipeline). En empresas: Azure Data Factory, dbt, Apache Airflow |
+| ¿Qué cambiaría con 8,5 millones de filas? | Power Query no escalaría. Se necesitaría Spark, Databricks, BigQuery o Snowflake |
+| ¿El modelo estrella es OLTP u OLAP? | **OLAP** — está optimizado para consultas analíticas agregadas, no para transacciones individuales. La tabla de hechos centraliza los números y las dimensiones proveen contexto |
+| ¿Qué KPI no pudiste calcular? | **Aprendizaje/Crecimiento** del CMI — no hay datos sobre capacitación, satisfacción de empleados, ni nuevos clientes registrados (no hay tabla de clientes con fecha de registro) |
+
+---
+
+::: {.hidden}
+## Notas para el docente
+
+**Puntos de discusión post-laboratorio:**
+
+1. La mayoría de los errores de integración no son de código — son de **no conocer bien los datos de origen** antes de transformar.
+
+2. Los "Pasos aplicados" en Power Query son equivalentes a un **log de auditoría** del proceso ETL. En producción, esto es crítico para reproducibilidad y debugging.
+
+3. La diferencia entre `venta_total` (campo original del sistema) y `venta_neta` (columna calculada) ilustra por qué los datos de origen nunca se modifican directamente — se crean nuevas columnas calculadas.
+
+**Errores comunes a buscar en la entrega:**
+- Relaciones en Power BI con dirección de filtro bidireccional (incorrecto para modelo estrella).
+- Usar `oltp_ventas[venta_total]` en vez de la nueva columna `venta_neta` en las medidas.
+- Olvidar filtrar productos inactivos antes de cerrar Power Query.
+- No verificar que las relaciones unen por `cliente_id`/`producto_id` (nombres renombrados) y no por los nombres originales.
+:::

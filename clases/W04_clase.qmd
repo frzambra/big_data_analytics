@@ -367,11 +367,13 @@ Así almacenaba TechStyle sus facturas en Excel (sin normalizar):
 
 **Después (en 1FN):** una fila por cada ítem comprado:
 
+::: {style="font-size: 0.5em; width: 100%;"}
 | N_Factura | Fecha | RUT | Nombre_Cliente | Ciudad | Cod_Prod | Nombre_Prod | Precio | Cantidad |
 |---|---|---|---|---|---|---|---|---|
 | F001 | 15/01/26 | 12.345.678-9 | Juan Pérez | Santiago | P001 | Nike Air Max | 89.990 | 1 |
 | F001 | 15/01/26 | 12.345.678-9 | Juan Pérez | Santiago | P002 | Polera Adidas | 24.990 | 2 |
 | F002 | 16/01/26 | 23.456.789-0 | María López | Valparaíso | P003 | Short Nike | 19.990 | 3 |
+:::
 
 ::: {.fragment}
 **Clave primaria compuesta**: `(N_Factura, Cod_Prod)`. ¿Nuevo problema? `Nombre_Prod` y `Precio` dependen solo de `Cod_Prod`, no de toda la clave.
@@ -471,9 +473,11 @@ erDiagram
 
 La siguiente tabla del sistema de RRHH de TechStyle está en 1FN:
 
+::: {style="font-size: 0.5em; width: 100%;"}
 | ID_Contrato | ID_Empleado | Nombre_Empleado | ID_Cargo | Nombre_Cargo | Sueldo_Base | ID_Departamento | Nombre_Depto |
 |---|---|---|---|---|---|---|---|
 | Clave primaria compuesta: `(ID_Contrato, ID_Cargo)` |
+:::
 
 Identifica:
 1. ¿Viola la 2FN? ¿Cuál es la dependencia parcial?
@@ -537,6 +541,7 @@ Es el "manual de instrucciones" para el desarrollador que implementará la base 
 ::: {.fragment}
 **Ejemplo — Tabla CLIENTE:**
 
+::: {style="font-size: 0.7em; width: 100%;"}
 | Atributo | Tipo | NOT NULL | Restricción | Descripción |
 |---|---|---|---|---|
 | `cliente_id` | `INT` | Sí | PK | Identificador único del cliente |

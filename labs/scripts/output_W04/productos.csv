@@ -1,0 +1,7 @@
+producto_id,nombre_producto,categoria,precio_venta,costo_unitario,stock
+P001,Nike Air Max,Calzado,89990,45000,0
+P002,Polera Adidas,Ropa,24990,8000,0
+P003,Short Nike,Ropa,19990,6500,0
+P004,Mochila Samsonite,Accesorios,49990,22000,0
+P005,Zapatilla Puma,Calzado,69990,32000,0
+P006,Gorra New Era,Accesorios,14990,4500,0

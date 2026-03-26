@@ -1,0 +1,6 @@
+cliente_id,nombre,apellido,email,region,segmento,fecha_registro
+C001,Juan,Pérez,juan.perez@gmail.com,Metropolitana,Premium,
+C002,María,González,mgonzalez@outlook.com,Valparaíso,Estándar,
+C003,Carlos,Rojas,carlos.rojas@hotmail.com,Biobío,Básico,
+C004,Ana,Torres,ana.torres@gmail.com,Metropolitana,Premium,
+C005,Pedro,Muñoz,pedro.munoz@yahoo.com,Araucanía,Estándar,

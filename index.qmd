@@ -271,5 +271,29 @@ format:
 
   </div>
 
+  <!-- ── Unidad 2 · W04–W09 ──────────────────────────── -->
+  <div class="section-label">
+    <div class="line"></div>
+    <span>Unidad 2 · Modelamiento y Arquitectura de Datos Relacionales · Semanas 4–9</span>
+    <div class="line"></div>
+  </div>
+
+  <div class="card-grid">
+    <a class="card semana" href="clases/W04_clase.html">
+      <span class="card-tag">W04 · Presentación</span>
+      <span class="card-title">De la Planilla al Modelo</span>
+      <span class="card-subtitle">Entidades · Relaciones · Cardinalidad · Normalización 1FN/2FN/3FN · Diccionario de Datos</span>
+      <span class="card-arrow">Ver presentación →</span>
+    </a>
+    <div class="card lab">
+      <span class="card-tag">W04 · Laboratorio</span>
+      <span class="card-title">De la Planilla al Modelo</span>
+      <span class="card-subtitle">Auditoría de planilla plana · Normalización · Diagrama MER en draw.io · Diccionario de Datos · CREATE TABLE</span>
+      <div class="card-links">
+        <a class="link-lab" href="labs/instrucciones/W04_lab.html">Ver laboratorio →</a>
+      </div>
+    </div>
+  </div>
+
 </div>
 ```

@@ -1,0 +1,657 @@
+---
+title: "Del Modelo al Sistema"
+subtitle: "Modelo Relacional Completo, UML y MySQL Workbench · Semana 5 · Unidad II"
+author: "Universidad San Sebastián"
+date: "Abril 2026"
+format:
+  revealjs:
+    theme: sky
+    incremental: false
+    slide-number: true
+    footer: "Big Data y Analytics · USS · 2026"
+---
+
+## ¿Dónde Estamos?
+
+::: {.incremental}
+- **W04**: Identificamos los problemas de la planilla plana, aprendimos a diseñar el MER y a normalizar hasta 3FN.
+- **Hoy (W05)**: Completamos el diseño — formalizamos con UML, ampliamos el modelo de TechStyle y lo llevamos a MySQL Workbench.
+- **W06–W07**: Implementaremos esta base de datos en MySQL y escribiremos consultas.
+:::
+
+::: {.fragment}
+**El trabajo de hoy es el último paso de diseño antes de construir.**
+:::
+
+---
+
+## El Problema de Roberto Esta Semana
+
+TechStyle acaba de cerrar su proceso de rediseño de sistemas. María (Gerente de Marketing) y Carlos (Gerente de Logística) tienen nuevas demandas para Juan el analista de datos:
+
+::: {.incremental}
+- **María**: "Necesito saber qué proveedor abastece cada producto. Si hay desabastecimiento, quiero saber a quién llamar."
+- **Carlos**: "Necesito registrar cada despacho: dirección, fecha de entrega, estado. Los despachos son una entidad del negocio."
+- **Roberto**: "Y si alguien hace una devolución, ¿cómo la registramos? No podemos simplemente borrar la venta."
+:::
+
+::: {.fragment}
+**El modelo de W04 no cubre ninguna de estas necesidades.** Hay que ampliarlo — y hacerlo bien antes de escribir una sola línea de SQL.
+:::
+
+---
+
+## Antes de Diseñar Tablas: Entender el Sistema
+
+El error más común en diseño de bases de datos: **empezar a crear tablas sin entender quién usa el sistema y para qué**.
+
+::: {.fragment}
+La herramienta para evitar ese error es el **Diagrama de Casos de Uso (UML)**.
+
+Responde tres preguntas antes de diseñar:
+
+1. ¿**Quiénes** interactúan con el sistema? → **Actores**
+2. ¿**Qué** acciones realizan? → **Casos de Uso**
+3. ¿**Qué información** necesitan guardar esas acciones? → **Entidades y atributos**
+:::
+
+---
+
+## UML: Diagrama de Casos de Uso
+
+| Elemento | Símbolo | Descripción |
+|---|---|---|
+| **Actor** | Figura humana (stick figure) | Persona o sistema externo que interactúa |
+| **Caso de Uso** | Elipse con texto | Acción que el sistema realiza para el actor |
+| **Asociación** | Línea simple | Conecta actor con su caso de uso |
+| **Límite del sistema** | Rectángulo grande | Separa lo que está dentro del sistema de lo externo |
+
+::: {.fragment}
+**Regla clave**: el actor *usa* el sistema pero no vive dentro de él. Un cliente, un gerente, un sistema de pago externo son actores.
+:::
+
+---
+
+## Actores del Sistema TechStyle
+
+```{mermaid}
+graph LR
+    A["👤 Cliente Web"] --> S[Sistema TechStyle]
+    B["👤 Vendedor"] --> S
+    C["👤 Gerente de Ventas"] --> S
+    D["👤 Gerente de Logística"] --> S
+    E["⚙️ Sistema de Pago Externo"] --> S
+    S --> F["⚙️ Sistema de Despacho"]
+```
+
+::: {.fragment}
+Cada actor tiene necesidades distintas → accede a funcionalidades distintas → necesita datos distintos → genera entidades distintas.
+:::
+
+---
+
+## Diagrama de Casos de Uso de TechStyle {.scrollable}
+
+```{mermaid}
+graph TB
+    subgraph Sistema["Sistema TechStyle"]
+        UC1(["Registrar Venta"])
+        UC2(["Consultar Stock"])
+        UC3(["Gestionar Clientes"])
+        UC4(["Registrar Despacho"])
+        UC5(["Procesar Devolución"])
+        UC6(["Generar Reporte de Ventas"])
+        UC7(["Gestionar Proveedores"])
+    end
+
+    Cliente["👤 Cliente Web"] --> UC1
+    Vendedor["👤 Vendedor"] --> UC1
+    Vendedor --> UC2
+    Vendedor --> UC3
+    Logistica["👤 Gte. Logística"] --> UC4
+    Logistica --> UC2
+    Ventas["👤 Gte. Ventas"] --> UC6
+    Ventas --> UC5
+    Admin["👤 Administrador"] --> UC7
+```
+
+---
+
+## De los Casos de Uso a las Entidades
+
+Cada caso de uso que **guarda o consulta información** genera al menos una entidad en el modelo de datos.
+
+| Caso de Uso | Entidades que genera |
+|---|---|
+| Registrar Venta | VENTA, DETALLE_VENTA |
+| Gestionar Clientes | CLIENTE |
+| Registrar Despacho | DESPACHO |
+| Procesar Devolución | DEVOLUCION |
+| Gestionar Proveedores | PROVEEDOR, PROVEEDOR_PRODUCTO |
+
+::: {.fragment}
+**Conclusión**: el modelo de W04 (4 tablas) es incompleto para el sistema real de TechStyle. Necesitamos ampliarlo.
+:::
+
+---
+
+## 🚀 Desafío Rápido 1 {background-color="#e8f4f8"}
+
+**En parejas (4 minutos):**
+
+Para el caso de uso **"Procesar Devolución"**:
+
+1. ¿Qué información mínima necesitarías guardar sobre una devolución?
+2. ¿Con qué entidades existentes se relaciona DEVOLUCION? ¿Cuál es la cardinalidad?
+3. ¿La devolución genera una nueva entidad o puede resolverse con un atributo en VENTA?
+
+::: {.notes}
+**Solución Desafío Rápido 1**
+
+1. **Información mínima de una devolución:**
+   `devolucion_id (PK)`, `venta_id (FK)`, `producto_id (FK)`, `fecha_devolucion`, `cantidad_devuelta`, `motivo`, `estado` (Pendiente/Aprobada/Rechazada), `monto_reembolsado`.
+
+2. **Relaciones:**
+   - DEVOLUCION → VENTA: N:1 (una venta puede tener varias devoluciones, ej. dos productos distintos devueltos por separado).
+   - DEVOLUCION → PRODUCTO: N:1 (una devolución específica refiere a un producto específico).
+
+3. **¿Nueva entidad o atributo en VENTA?**
+   Nueva entidad. Si guardáramos `fue_devuelta = true` en VENTA, perderíamos: ¿qué producto?, ¿cuántas unidades?, ¿cuándo?, ¿por qué motivo?. Una venta puede tener devoluciones parciales (devuelvo 1 de 3 unidades de un producto). Ninguno de esos casos se puede representar con un solo atributo booleano.
+
+   *Punto de cierre*: la regla es "si el negocio necesita *información sobre el evento*, crea una entidad". Las devoluciones son eventos de negocio con su propio ciclo de vida → entidad propia.
+:::
+
+---
+
+## El Modelo Relacional: Notación Formal
+
+El **Modelo Relacional** es la representación final del diseño antes de implementar en SQL. Se expresa en notación textual:
+
+```
+TABLA(atributo1, atributo2, ...)
+```
+
+- **Subrayado simple**: clave primaria (PK).
+- **Subrayado doble** o cursiva: clave foránea (FK).
+- Las relaciones se expresan implícitamente a través de las FK.
+
+::: {.fragment}
+**Ejemplo — TechStyle base (W04):**
+
+`CLIENTE(`<u>`cliente_id`</u>`, nombre, apellido, email, region, segmento)`
+`VENTA(`<u>`venta_id`</u>`, fecha, *cliente_id*)`
+`PRODUCTO(`<u>`producto_id`</u>`, nombre_producto, categoria, precio_venta, stock)`
+`DETALLE_VENTA(`<u>`*venta_id*, *producto_id*`</u>`, cantidad, precio_unitario, descuento_pct)`
+:::
+
+---
+
+## Ampliar el Modelo: Módulo de Proveedores
+
+Roberto quiere saber qué proveedor abastece cada producto.
+
+::: {.fragment}
+**¿Cuál es la cardinalidad entre PROVEEDOR y PRODUCTO?**
+
+- Un proveedor puede abastecer muchos productos.
+- Un producto puede ser abastecido por varios proveedores (y TechStyle negocia precio con cada uno).
+→ **Relación N:M** → tabla intermedia `PROVEEDOR_PRODUCTO`.
+:::
+
+::: {.fragment}
+```{mermaid}
+erDiagram
+    PROVEEDOR {
+        INT proveedor_id PK
+        VARCHAR nombre_proveedor
+        VARCHAR rut
+        VARCHAR contacto
+        VARCHAR email
+        VARCHAR telefono
+    }
+    PROVEEDOR_PRODUCTO {
+        INT proveedor_id FK
+        INT producto_id FK
+        DECIMAL precio_compra
+        INT plazo_entrega_dias
+        BOOLEAN proveedor_principal
+    }
+    PRODUCTO {
+        INT producto_id PK
+        VARCHAR nombre_producto
+    }
+    PROVEEDOR ||--o{ PROVEEDOR_PRODUCTO : "abastece"
+    PRODUCTO ||--o{ PROVEEDOR_PRODUCTO : "es abastecido por"
+```
+:::
+
+---
+
+## Ampliar el Modelo: Módulo de Despacho
+
+Carlos necesita rastrear cada despacho: desde que sale de bodega hasta que llega al cliente.
+
+::: {.fragment}
+```{mermaid}
+erDiagram
+    VENTA {
+        INT venta_id PK
+        DATE fecha
+        INT cliente_id FK
+    }
+    DESPACHO {
+        INT despacho_id PK
+        INT venta_id FK
+        VARCHAR direccion_entrega
+        DATE fecha_despacho
+        DATE fecha_entrega_estimada
+        DATE fecha_entrega_real
+        VARCHAR estado
+    }
+    VENTA ||--o| DESPACHO : "genera"
+```
+:::
+
+::: {.fragment}
+**¿Por qué 1:1 y no 1:N?** En este negocio, cada venta genera exactamente un despacho. Si en el futuro TechStyle permite despachos parciales, cambia a 1:N — pero el modelo actual refleja la realidad *de hoy*.
+:::
+
+---
+
+## Ampliar el Modelo: Módulo de Devoluciones
+
+::: {.fragment}
+```{mermaid}
+erDiagram
+    VENTA {
+        INT venta_id PK
+    }
+    DEVOLUCION {
+        INT devolucion_id PK
+        INT venta_id FK
+        INT producto_id FK
+        DATE fecha_devolucion
+        INT cantidad_devuelta
+        VARCHAR motivo
+        VARCHAR estado
+        DECIMAL monto_reembolsado
+    }
+    PRODUCTO {
+        INT producto_id PK
+    }
+    VENTA ||--o{ DEVOLUCION : "puede originar"
+    PRODUCTO ||--o{ DEVOLUCION : "referencia"
+```
+:::
+
+::: {.fragment}
+**Nota de diseño**: DEVOLUCION referencia directamente PRODUCTO porque se devuelve un ítem específico, no toda la venta.
+:::
+
+---
+
+## 🚀 Desafío Rápido 2 {background-color="#e8f4f8"}
+
+**En grupos de 3 (5 minutos):**
+
+TechStyle quiere agregar un **módulo de categorías** con jerarquía. Ejemplo:
+- Categoría padre: "Ropa"
+- Subcategorías: "Poleras", "Pantalones", "Chaquetas"
+
+1. ¿Cómo modificarías la tabla PRODUCTO para soportar esto?
+2. ¿Necesitas una nueva tabla CATEGORIA? ¿Qué atributos tendría?
+3. ¿Cómo representarías la jerarquía (padre/hijo) en el modelo relacional?
+
+::: {.notes}
+**Solución Desafío Rápido 2**
+
+1. **Modificar PRODUCTO**: agregar `categoria_id INT FK → CATEGORIA` en lugar del atributo `categoria VARCHAR`. Así el nombre de la categoría vive en una sola tabla.
+
+2. **Nueva tabla CATEGORIA**:
+   `CATEGORIA(categoria_id PK, nombre_categoria, descripcion, categoria_padre_id FK → CATEGORIA)`
+
+3. **Jerarquía con FK auto-referencial**: `categoria_padre_id` es una FK que apunta a la misma tabla CATEGORIA. Si una categoría es raíz (sin padre), `categoria_padre_id = NULL`.
+
+   Ejemplo:
+   | categoria_id | nombre | categoria_padre_id |
+   |---|---|---|
+   | 1 | Ropa | NULL |
+   | 2 | Poleras | 1 |
+   | 3 | Pantalones | 1 |
+
+   *Punto de cierre*: las FK pueden apuntar a la misma tabla — relación **auto-referencial** o **recursiva**. Es el patrón clásico para representar jerarquías (organigrama, categorías, etc.). Esta es una solución elegant que no requiere crear una tabla por nivel.
+:::
+
+---
+
+## El Modelo Completo de TechStyle {.scrollable}
+
+```{mermaid}
+erDiagram
+    CLIENTE {
+        INT cliente_id PK
+        VARCHAR nombre
+        VARCHAR apellido
+        VARCHAR email
+        VARCHAR region
+        VARCHAR segmento
+        DATE fecha_registro
+    }
+    VENTA {
+        INT venta_id PK
+        DATE fecha
+        INT cliente_id FK
+    }
+    DETALLE_VENTA {
+        INT venta_id FK
+        INT producto_id FK
+        INT cantidad
+        DECIMAL precio_unitario
+        DECIMAL descuento_pct
+    }
+    PRODUCTO {
+        INT producto_id PK
+        VARCHAR nombre_producto
+        INT categoria_id FK
+        DECIMAL precio_venta
+        DECIMAL costo_unitario
+        INT stock
+    }
+    CATEGORIA {
+        INT categoria_id PK
+        VARCHAR nombre_categoria
+        INT categoria_padre_id FK
+    }
+    PROVEEDOR {
+        INT proveedor_id PK
+        VARCHAR nombre_proveedor
+        VARCHAR email
+        VARCHAR telefono
+    }
+    PROVEEDOR_PRODUCTO {
+        INT proveedor_id FK
+        INT producto_id FK
+        DECIMAL precio_compra
+        BOOLEAN proveedor_principal
+    }
+    DESPACHO {
+        INT despacho_id PK
+        INT venta_id FK
+        VARCHAR direccion_entrega
+        DATE fecha_despacho
+        VARCHAR estado
+    }
+    DEVOLUCION {
+        INT devolucion_id PK
+        INT venta_id FK
+        INT producto_id FK
+        DATE fecha_devolucion
+        INT cantidad_devuelta
+        VARCHAR motivo
+        VARCHAR estado
+    }
+    CLIENTE ||--o{ VENTA : "realiza"
+    VENTA ||--|{ DETALLE_VENTA : "contiene"
+    PRODUCTO ||--o{ DETALLE_VENTA : "aparece en"
+    PRODUCTO }o--|| CATEGORIA : "pertenece a"
+    CATEGORIA ||--o{ CATEGORIA : "tiene subcategoría"
+    PROVEEDOR ||--o{ PROVEEDOR_PRODUCTO : "abastece"
+    PRODUCTO ||--o{ PROVEEDOR_PRODUCTO : "es abastecido por"
+    VENTA ||--o| DESPACHO : "genera"
+    VENTA ||--o{ DEVOLUCION : "puede originar"
+    PRODUCTO ||--o{ DEVOLUCION : "referencia"
+```
+
+---
+
+## MySQL Workbench: El Tablero del Diseñador
+
+**MySQL Workbench** es la herramienta oficial de Oracle para diseñar e implementar bases de datos MySQL.
+
+::: {.incremental}
+- **EER Diagram** (Enhanced Entity-Relationship): diseñas el modelo visualmente.
+- **Forward Engineering**: genera el SQL automáticamente desde el diagrama.
+- **Reverse Engineering**: genera el diagrama desde una base de datos existente.
+- Valida errores de diseño *antes* de implementar.
+:::
+
+::: {.fragment}
+> **Analogía**: Workbench es a la base de datos lo que AutoCAD es a la arquitectura. Diseñas en el plano digital y el sistema genera los planos de construcción.
+:::
+
+---
+
+## MySQL Workbench: Crear un EER Diagram
+
+**Pasos básicos:**
+
+::: {.incremental}
+1. Abrir Workbench → *File → New Model*.
+2. En el panel inferior, hacer doble clic en *Add Diagram*.
+3. En la paleta izquierda, usar **Table** (cuadro rojo) para crear tablas.
+4. Nombrar la tabla y agregar columnas con sus tipos de dato.
+5. Marcar la PK con el ícono de llave.
+6. Usar la herramienta **1:N** o **N:M** para conectar tablas → Workbench crea la FK automáticamente.
+7. *Database → Forward Engineer* para generar el SQL.
+:::
+
+---
+
+## Demo: Tabla CLIENTE en MySQL Workbench
+
+Al crear la tabla CLIENTE en Workbench, la herramienta genera automáticamente:
+
+```sql
+CREATE TABLE IF NOT EXISTS `techstyle`.`clientes` (
+  `cliente_id`      INT           NOT NULL AUTO_INCREMENT,
+  `nombre`          VARCHAR(50)   NOT NULL,
+  `apellido`        VARCHAR(50)   NOT NULL,
+  `email`           VARCHAR(100)  NOT NULL,
+  `region`          VARCHAR(50)   NOT NULL,
+  `segmento`        VARCHAR(20)   NULL,
+  `fecha_registro`  DATE          NOT NULL,
+  PRIMARY KEY (`cliente_id`),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC)
+) ENGINE=InnoDB;
+```
+
+::: {.fragment}
+**Observa**: Workbench agrega `AUTO_INCREMENT` en la PK entera → MySQL genera el ID automáticamente al insertar. No necesitas calcularlo manualmente.
+:::
+
+---
+
+## AUTO_INCREMENT: Claves que se Generan Solas
+
+```sql
+-- Sin AUTO_INCREMENT: tú calculas el siguiente ID
+INSERT INTO clientes VALUES (1, 'Juan', 'Pérez', ...);
+INSERT INTO clientes VALUES (2, 'María', 'López', ...);
+
+-- Con AUTO_INCREMENT: MySQL lo calcula solo
+INSERT INTO clientes (nombre, apellido, email, ...)
+VALUES ('Juan', 'Pérez', 'juan@mail.com', ...);
+-- MySQL asigna cliente_id = 1 automáticamente
+
+INSERT INTO clientes (nombre, apellido, email, ...)
+VALUES ('María', 'López', 'maria@mail.com', ...);
+-- MySQL asigna cliente_id = 2 automáticamente
+```
+
+::: {.fragment}
+**¿Por qué es importante?** Elimina el riesgo de IDs duplicados cuando múltiples usuarios insertan simultáneamente (lo que ocurre en todo sistema real).
+:::
+
+---
+
+## Relaciones en Workbench: FK Automáticas
+
+Cuando conectas VENTA → CLIENTE en Workbench con la herramienta *1:N*:
+
+```sql
+CREATE TABLE IF NOT EXISTS `techstyle`.`ventas` (
+  `venta_id`    INT   NOT NULL AUTO_INCREMENT,
+  `fecha`       DATE  NOT NULL,
+  `cliente_id`  INT   NOT NULL,
+  PRIMARY KEY (`venta_id`),
+  INDEX `fk_ventas_clientes_idx` (`cliente_id` ASC),
+  CONSTRAINT `fk_ventas_clientes`
+    FOREIGN KEY (`cliente_id`)
+    REFERENCES `techstyle`.`clientes` (`cliente_id`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE
+) ENGINE=InnoDB;
+```
+
+::: {.fragment}
+**`ON DELETE RESTRICT`**: MySQL impide eliminar un cliente que tiene ventas.
+**`ON UPDATE CASCADE`**: si cambia el `cliente_id`, se actualiza en VENTAS automáticamente.
+:::
+
+---
+
+## ON DELETE y ON UPDATE: Integridad Referencial
+
+| Opción | Comportamiento |
+|---|---|
+| `RESTRICT` (por defecto) | Bloquea la operación si hay registros dependientes |
+| `CASCADE` | Propaga el cambio/eliminación a las filas hijas |
+| `SET NULL` | Pone NULL en la FK cuando se elimina/modifica el padre |
+| `NO ACTION` | Similar a RESTRICT, evaluado al final de la transacción |
+
+::: {.fragment}
+**Regla práctica para TechStyle:**
+
+- FK de VENTA → CLIENTE: `ON DELETE RESTRICT` (no borrar cliente con ventas).
+- FK de DETALLE_VENTA → VENTA: `ON DELETE CASCADE` (si se cancela la venta, se borran sus líneas).
+- FK de DEVOLUCION → VENTA: `ON DELETE RESTRICT` (no borrar venta con devoluciones).
+:::
+
+---
+
+## 🚀 Desafío Rápido 3 {background-color="#e8f4f8"}
+
+**En grupos de 3 (5 minutos):**
+
+La tabla DESPACHO tiene la columna `estado` que puede ser: 'Pendiente', 'En tránsito', 'Entregado', 'No entregado'.
+
+1. ¿Cómo implementarías esa restricción en SQL? (pista: CHECK o ENUM).
+2. ¿Cuál es la diferencia entre `VARCHAR(20)` con CHECK y `ENUM` para este caso?
+3. Si TechStyle agrega el estado 'Devuelto', ¿qué operación SQL se necesita en cada caso?
+
+::: {.notes}
+**Solución Desafío Rápido 3**
+
+1. **Dos opciones:**
+   - `estado VARCHAR(20) CHECK (estado IN ('Pendiente', 'En tránsito', 'Entregado', 'No entregado'))`
+   - `estado ENUM('Pendiente', 'En tránsito', 'Entregado', 'No entregado') NOT NULL`
+
+2. **Diferencia:**
+   - `VARCHAR + CHECK`: almacena como texto variable, más portable entre motores SQL. La restricción es verificada por MySQL.
+   - `ENUM`: tipo de dato propio de MySQL, almacenado internamente como entero (más eficiente en espacio), pero menos portable y con comportamiento especial ante valores inválidos.
+   - Para TechStyle en MySQL: ambas funcionan. ENUM es ligeramente más eficiente; VARCHAR+CHECK es más estándar.
+
+3. **Agregar estado nuevo:**
+   - Con `VARCHAR + CHECK`: `ALTER TABLE despacho MODIFY estado VARCHAR(20) CHECK (estado IN ('Pendiente', 'En tránsito', 'Entregado', 'No entregado', 'Devuelto'));`
+   - Con `ENUM`: `ALTER TABLE despacho MODIFY estado ENUM('Pendiente', 'En tránsito', 'Entregado', 'No entregado', 'Devuelto');`
+   - Ambos requieren ALTER TABLE. Con ENUM hay riesgo si hay datos existentes; con VARCHAR+CHECK es más seguro porque el tipo no cambia.
+
+   *Punto de cierre*: esta decisión parece técnica pero tiene implicaciones de mantenimiento. Si la lista de estados es fija (lo decidió el negocio), ENUM es razonable. Si el equipo prevé cambios frecuentes, VARCHAR+CHECK es más ágil. El analista debe preguntar al área de logística antes de decidir.
+:::
+
+---
+
+## Del Modelo Relacional al Script SQL Completo
+
+El **script DDL** (Data Definition Language) es el conjunto ordenado de `CREATE TABLE` que construye toda la base de datos.
+
+::: {.fragment}
+**Regla de orden**: crea primero las tablas que *no tienen FK*, luego las que sí.
+
+```
+1. CATEGORIA (no tiene FK externa)
+2. CLIENTES   (no tiene FK)
+3. PROVEEDOR  (no tiene FK)
+4. PRODUCTO   (FK → CATEGORIA)
+5. VENTAS     (FK → CLIENTES)
+6. DETALLE_VENTA  (FK → VENTAS, PRODUCTO)
+7. PROVEEDOR_PRODUCTO (FK → PROVEEDOR, PRODUCTO)
+8. DESPACHO   (FK → VENTAS)
+9. DEVOLUCION (FK → VENTAS, PRODUCTO)
+```
+:::
+
+::: {.fragment}
+Si creas VENTAS antes que CLIENTES, MySQL lanzará un error: la tabla referenciada no existe.
+:::
+
+---
+
+## Índices: Acelerar las Consultas
+
+Un **índice** es una estructura auxiliar que MySQL mantiene para encontrar filas rápidamente sin escanear toda la tabla.
+
+::: {.incremental}
+- La PK **siempre** crea un índice automáticamente.
+- Las FK también crean un índice automáticamente en Workbench.
+- Puedes crear índices adicionales en columnas que se usan frecuentemente en búsquedas (`WHERE`, `JOIN`).
+:::
+
+::: {.fragment}
+**Ejemplo para TechStyle:**
+
+```sql
+-- María filtra constantemente por región y segmento
+CREATE INDEX idx_clientes_region ON clientes(region);
+CREATE INDEX idx_clientes_segmento ON clientes(segmento);
+
+-- Consultas frecuentes de ventas por fecha
+CREATE INDEX idx_ventas_fecha ON ventas(fecha);
+```
+:::
+
+---
+
+## ¿Por Qué Importan los Índices para el Negocio?
+
+::: {.incremental}
+- Sin índice: MySQL escanea **todas** las filas de la tabla para encontrar las que cumplen la condición.
+- Con índice: MySQL salta directamente a las filas relevantes.
+- Con 10.000 clientes → diferencia imperceptible.
+- Con 8.500.000 clientes (como TechStyle) → diferencia de **segundos vs. minutos** en cada consulta.
+:::
+
+::: {.fragment}
+> El CMI de Roberto que carga en 3 segundos vs. el que carga en 4 minutos depende, en parte, de los índices bien diseñados.
+:::
+
+---
+
+## Puntos Clave de la Semana 5
+
+::: {.incremental}
+- El **Diagrama de Casos de Uso (UML)** mapea quién usa el sistema y para qué, *antes* de diseñar tablas. Cada caso de uso que guarda información genera una entidad.
+- El **Modelo Relacional** es la notación formal que convierte el MER en tablas con PK, FK y restricciones.
+- Un modelo de negocio real requiere más entidades que el mínimo: PROVEEDOR, DESPACHO, DEVOLUCION, CATEGORIA son necesidades concretas de TechStyle.
+- **`AUTO_INCREMENT`** garantiza unicidad de IDs en sistemas multiusuario.
+- **`ON DELETE` / `ON UPDATE`** definen qué pasa con los datos hijos cuando cambia el padre — son decisiones de negocio, no solo técnicas.
+- Los **índices** son la diferencia entre un sistema analítico que responde en segundos y uno que tarda minutos.
+:::
+
+---
+
+## Preview del Laboratorio W05
+
+**Lab W05: Diseñando el Modelo Completo en MySQL Workbench**
+
+::: {.incremental}
+- Instalarás y configurarás MySQL Workbench.
+- Crearás el EER Diagram con las 9 tablas del modelo ampliado de TechStyle.
+- Usarás Forward Engineering para generar el script SQL completo.
+- Verificarás la integridad referencial del modelo.
+- Al finalizar, tendrás el script DDL listo para la implementación de W06.
+:::
+
+::: {.fragment}
+> El entregable de hoy es el **plano de arquitectura** de la base de datos de TechStyle. Las semanas 6 y 7 lo convertirán en realidad.
+:::

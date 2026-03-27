@@ -21,7 +21,7 @@ Roberto, el CEO, acaba de contratar a Juan como analista de datos. La primera ta
 
 ## Instrucciones generales
 
-- Trabajarás **en grupos de 2 personas**.
+- Trabajarás **en los grupos asignados**.
 - **Duración total**: 2 horas 30 minutos.
 - Guarda tu trabajo frecuentemente.
 - Archivo de datos: `labs/data/techstyle_ventas_planas.csv`.

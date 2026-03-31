@@ -1,0 +1,12 @@
+{
+    "https://api.shinyapps.io": {
+        "server_url": "https://api.shinyapps.io",
+        "filename": "/home/francisco/Documentos/Universidad San Sebastian/Cursos/Big_Data_Analytics_v2/labs/shiny_apps/Lab04",
+        "app_url": "https://frzambra.shinyapps.io/w04-techstyle-modelo/",
+        "app_id": "17025424",
+        "app_guid": null,
+        "title": "W04-TechStyle-Modelo",
+        "app_mode": "python-shiny",
+        "app_store_version": 1
+    }
+}

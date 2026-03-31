@@ -1,0 +1,12 @@
+{
+    "https://api.shinyapps.io": {
+        "server_url": "https://api.shinyapps.io",
+        "filename": "/home/francisco/Documentos/Universidad San Sebastian/Cursos/Big_Data_Analytics_v2/labs/shiny_apps/Lab03",
+        "app_url": "https://frzambra.shinyapps.io/w03-techstyle-etl/",
+        "app_id": "17025375",
+        "app_guid": null,
+        "title": "W03-TechStyle-ETL",
+        "app_mode": "python-shiny",
+        "app_store_version": 1
+    }
+}

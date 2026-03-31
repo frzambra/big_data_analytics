@@ -170,6 +170,8 @@ format:
   .card-links a.link-lab:hover { color: var(--verde-lab); text-decoration: underline; }
   .card-links a.link-sol    { color: var(--tierra); }
   .card-links a.link-sol:hover { color: var(--tierra-oscuro); text-decoration: underline; }
+  .card-links a.link-shiny  { color: #7c3aed; }
+  .card-links a.link-shiny:hover { color: #5b21b6; text-decoration: underline; }
   .card-links .link-divider { color: #ccc; font-size: 0.75rem; }
 </style>
 
@@ -266,6 +268,8 @@ format:
         <a class="link-lab" href="labs/instrucciones/W03_lab.html">Ver laboratorio →</a>
         <span class="link-divider">|</span>
         <a class="link-sol" href="labs/solucion/W03_lab_solucion.html">Ver solución →</a>
+        <span class="link-divider">|</span>
+        <a class="link-shiny" href="https://frzambra.shinyapps.io/W03-TechStyle-ETL" target="_blank">Dashboard →</a>
       </div>
     </div>
 

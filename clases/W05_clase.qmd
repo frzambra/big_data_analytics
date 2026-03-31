@@ -93,6 +93,7 @@ Cada actor tiene necesidades distintas â†’ accede a funcionalidades distintas â†
 ## Diagrama de Casos de Uso de TechStyle {.scrollable}
 
 ```{mermaid}
+%%{init: {'theme': 'base', 'themeVariables': {'clusterBkg': '#dbeafe', 'clusterBorder': '#2563eb', 'titleColor': '#1e3a5f'}}}%%
 graph TB
     subgraph Sistema["Sistema TechStyle"]
         UC1(["Registrar Venta"])

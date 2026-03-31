@@ -1,0 +1,201 @@
+CustomerID,NombreCompleto,Correo,Ciudad,FechaRegistro,TipoCliente
+1,Isidora Flores,isidora.flores1@gmail.com,Valparaíso,11/03/2021,Premium
+2,Daniela Muñoz,daniela.muñoz2@gmail.com,Maule,27/01/2021,Estándar
+3,Sebastián Flores,sebastián.flores3@gmail.com,Biobío,11/08/2020,Básico
+4,Javiera Rojas,javiera.rojas4@gmail.com,RM,12/02/2022,Premium
+5,María Rojas,maría.rojas5@gmail.com,RM,14/04/2023,Premium
+6,Matías Herrera,matías.herrera6@gmail.com,Biobío,25/07/2020,Premium
+7,Sofía Martínez,sofía.martínez7@gmail.com,Maule,15/01/2020,Básico
+8,Francisco Muñoz,francisco.muñoz8@gmail.com,RM,05/12/2022,Premium
+9,Felipe Espinoza,felipe.espinoza9@gmail.com,Valparaíso,28/06/2021,Estándar
+10,Matías Morales,matías.morales10@gmail.com,Biobío,20/11/2021,Estándar
+11,Martín Morales,martín.morales11@gmail.com,La Araucanía,09/01/2022,Básico
+12,Felipe Fuentes,felipe.fuentes12@gmail.com,Biobío,30/12/2021,Estándar
+13,Isidora González,isidora.gonzález13@gmail.com,Valparaíso,02/04/2022,Básico
+14,Fernanda González,fernanda.gonzález14@gmail.com,Biobío,22/12/2022,Estándar
+15,Catalina Torres,catalina.torres15@gmail.com,Valparaíso,31/08/2022,Básico
+16,Sebastián Contreras,sebastián.contreras16@gmail.com,RM,21/10/2021,Premium
+17,Diego Muñoz,diego.muñoz17@gmail.com,Coquimbo,28/10/2021,Básico
+18,Nicolás Silva,nicolás.silva18@gmail.com,Biobío,30/03/2022,Básico
+19,Pablo Rojas,pablo.rojas19@gmail.com,RM,02/09/2022,Básico
+20,Isidora Fuentes,isidora.fuentes20@gmail.com,RM,03/02/2021,Básico
+21,Fernanda Castro,fernanda.castro21@gmail.com,Los Lagos,30/10/2022,Premium
+22,Fernanda Herrera,fernanda.herrera22@gmail.com,La Araucanía,09/09/2021,Básico
+23,Andrés Flores,andrés.flores23@gmail.com,RM,02/07/2022,Premium
+24,Matías Gutiérrez,matías.gutiérrez24@gmail.com,RM,09/03/2021,Premium
+25,Camila Díaz,camila.díaz25@gmail.com,RM,29/02/2020,Premium
+26,Martín Fuentes,martín.fuentes26@gmail.com,Maule,27/03/2021,Básico
+27,María Herrera,maría.herrera27@gmail.com,Coquimbo,09/09/2020,Básico
+28,Fernanda Gutiérrez,fernanda.gutiérrez28@gmail.com,Biobío,04/10/2022,Premium
+29,Martín Silva,martín.silva29@gmail.com,Antofagasta,15/05/2023,Premium
+30,Martín Fuentes,martín.fuentes30@gmail.com,Antofagasta,20/02/2022,Básico
+31,Andrés Vargas,andrés.vargas31@gmail.com,La Araucanía,02/04/2021,Estándar
+32,Isidora Sepúlveda,isidora.sepúlveda32@gmail.com,RM,01/07/2020,Estándar
+33,Francisco Contreras,francisco.contreras33@gmail.com,Maule,25/08/2020,Básico
+34,Diego Pérez,diego.pérez34@gmail.com,Los Lagos,17/02/2022,Básico
+35,Valentina Sepúlveda,valentina.sepúlveda35@gmail.com,RM,01/01/2023,Premium
+36,Felipe Vargas,felipe.vargas36@gmail.com,RM,17/01/2022,Básico
+37,Fernanda Castro,fernanda.castro37@gmail.com,Biobío,24/04/2023,Premium
+38,Isidora Fuentes,isidora.fuentes38@gmail.com,RM,01/08/2022,Estándar
+39,Fernanda Sepúlveda,fernanda.sepúlveda39@gmail.com,La Araucanía,20/10/2022,Básico
+40,Nicolás Pérez,nicolás.pérez40@gmail.com,Biobío,25/10/2020,Básico
+41,Sofía Espinoza,sofía.espinoza41@gmail.com,RM,25/10/2022,Básico
+42,Isidora Martínez,isidora.martínez42@gmail.com,O'Higgins,21/03/2023,Estándar
+43,Daniela Herrera,daniela.herrera43@gmail.com,RM,10/02/2022,Premium
+44,Martín Pérez,martín.pérez44@gmail.com,La Araucanía,07/03/2021,Básico
+45,Catalina Muñoz,catalina.muñoz45@gmail.com,Antofagasta,01/01/2021,Estándar
+46,Felipe Sepúlveda,felipe.sepúlveda46@gmail.com,O'Higgins,22/11/2020,Premium
+47,Andrés Fuentes,andrés.fuentes47@gmail.com,RM,27/08/2022,Estándar
+48,Felipe Fuentes,felipe.fuentes48@gmail.com,RM,02/08/2021,Estándar
+49,Daniela Gutiérrez,daniela.gutiérrez49@gmail.com,RM,25/09/2020,Estándar
+50,Francisco Muñoz,francisco.muñoz50@gmail.com,La Araucanía,14/09/2021,Estándar
+51,Javiera Ramos,javiera.ramos51@gmail.com,RM,15/09/2022,Estándar
+52,Fernanda Contreras,fernanda.contreras52@gmail.com,RM,04/02/2021,Básico
+53,Valentina Torres,valentina.torres53@gmail.com,Maule,24/03/2023,Premium
+54,Fernanda Fuentes,fernanda.fuentes54@gmail.com,Coquimbo,24/05/2022,Básico
+55,Javiera Muñoz,javiera.muñoz55@gmail.com,RM,28/08/2022,Premium
+56,Sofía Díaz,sofía.díaz56@gmail.com,O'Higgins,24/11/2021,Básico
+57,Sebastián Pérez,sebastián.pérez57@gmail.com,Biobío,07/04/2022,Premium
+58,Sofía Díaz,sofía.díaz58@gmail.com,RM,27/09/2022,Estándar
+59,Pablo Soto,pablo.soto59@gmail.com,Biobío,07/02/2022,Básico
+60,Camila Flores,camila.flores60@gmail.com,Los Lagos,21/02/2022,Estándar
+61,Nicolás Torres,nicolás.torres61@gmail.com,RM,26/08/2020,Premium
+62,Isidora Herrera,isidora.herrera62@gmail.com,Biobío,09/11/2022,Premium
+63,Valentina Ramos,valentina.ramos63@gmail.com,Valparaíso,18/03/2023,Estándar
+64,María Díaz,maría.díaz64@gmail.com,La Araucanía,05/01/2021,Estándar
+65,Matías Vargas,matías.vargas65@gmail.com,RM,13/09/2020,Premium
+66,Martín Rojas,martín.rojas66@gmail.com,Biobío,05/01/2023,Premium
+67,Felipe González,felipe.gonzález67@gmail.com,RM,03/01/2023,Básico
+68,Matías Rojas,matías.rojas68@gmail.com,Valparaíso,12/04/2023,Básico
+69,Isidora Contreras,isidora.contreras69@gmail.com,Coquimbo,28/08/2020,Premium
+70,Pablo Soto,pablo.soto70@gmail.com,RM,04/07/2022,Estándar
+71,Isidora Muñoz,isidora.muñoz71@gmail.com,RM,26/02/2021,Básico
+72,Javiera Rojas,javiera.rojas72@gmail.com,Valparaíso,12/03/2020,Premium
+73,Isidora Castro,isidora.castro73@gmail.com,RM,19/01/2023,Premium
+74,Sebastián González,sebastián.gonzález74@gmail.com,RM,04/04/2020,Básico
+75,Constanza Gutiérrez,constanza.gutiérrez75@gmail.com,RM,27/03/2023,Estándar
+76,Martín Castro,martín.castro76@gmail.com,Antofagasta,22/12/2021,Básico
+77,Andrés Castro,andrés.castro77@gmail.com,RM,21/07/2020,Básico
+78,Sofía Silva,sofía.silva78@gmail.com,RM,17/10/2020,Estándar
+79,Daniela Pérez,daniela.pérez79@gmail.com,Biobío,18/03/2021,Básico
+80,Diego Martínez,diego.martínez80@gmail.com,RM,28/06/2023,Estándar
+81,Camila Gutiérrez,camila.gutiérrez81@gmail.com,RM,20/02/2022,Básico
+82,Javiera Fuentes,javiera.fuentes82@gmail.com,Valparaíso,04/06/2021,Básico
+83,Sebastián Pérez,sebastián.pérez83@gmail.com,Valparaíso,24/05/2020,Básico
+84,María Contreras,maría.contreras84@gmail.com,Biobío,28/02/2023,Básico
+85,Alejandro Espinoza,alejandro.espinoza85@gmail.com,RM,10/11/2020,Estándar
+86,Sebastián Fuentes,sebastián.fuentes86@gmail.com,RM,21/05/2023,Premium
+87,Camila Martínez,camila.martínez87@gmail.com,RM,13/08/2020,Básico
+88,Andrés Vargas,andrés.vargas88@gmail.com,RM,01/07/2020,Estándar
+89,Martín Martínez,martín.martínez89@gmail.com,RM,07/04/2021,Estándar
+90,Valentina Díaz,valentina.díaz90@gmail.com,RM,31/03/2021,Estándar
+91,Isidora Díaz,isidora.díaz91@gmail.com,RM,19/09/2021,Básico
+92,Matías Díaz,matías.díaz92@gmail.com,Valparaíso,17/03/2023,Estándar
+93,Andrés Martínez,andrés.martínez93@gmail.com,Biobío,08/04/2020,Premium
+94,Martín Fuentes,martín.fuentes94@gmail.com,RM,24/12/2022,Básico
+95,Pablo Fuentes,pablo.fuentes95@gmail.com,Valparaíso,18/09/2020,Estándar
+96,Valentina Castro,valentina.castro96@gmail.com,Biobío,15/09/2020,Premium
+97,Felipe Ramos,felipe.ramos97@gmail.com,Maule,18/04/2020,Básico
+98,Diego Silva,diego.silva98@gmail.com,Biobío,06/05/2022,Básico
+99,Nicolás Soto,nicolás.soto99@gmail.com,RM,25/12/2021,Estándar
+100,Alejandro Sepúlveda,alejandro.sepúlveda100@gmail.com,RM,26/05/2022,Básico
+101,Catalina Sepúlveda,catalina.sepúlveda101@gmail.com,Biobío,27/06/2020,Estándar
+102,Sebastián Morales,sebastián.morales102@gmail.com,La Araucanía,11/06/2020,Premium
+103,Catalina Rojas,catalina.rojas103@gmail.com,RM,27/04/2020,Premium
+104,Constanza Gutiérrez,constanza.gutiérrez104@gmail.com,Antofagasta,22/01/2020,Estándar
+105,Alejandro Pérez,alejandro.pérez105@gmail.com,Valparaíso,20/11/2022,Básico
+106,Andrés Díaz,andrés.díaz106@gmail.com,RM,16/06/2023,Premium
+107,Valentina Vargas,valentina.vargas107@gmail.com,Biobío,07/12/2021,Premium
+108,Alejandro Espinoza,alejandro.espinoza108@gmail.com,RM,07/07/2022,Premium
+109,Alejandro Silva,alejandro.silva109@gmail.com,RM,21/01/2022,Premium
+110,Alejandro Torres,alejandro.torres110@gmail.com,Coquimbo,15/05/2022,Estándar
+111,Felipe Soto,felipe.soto111@gmail.com,RM,19/08/2020,Estándar
+112,Catalina Gutiérrez,catalina.gutiérrez112@gmail.com,Los Lagos,29/08/2020,Estándar
+113,Constanza Herrera,constanza.herrera113@gmail.com,RM,12/03/2021,Premium
+114,Francisco Fuentes,francisco.fuentes114@gmail.com,RM,16/09/2021,Básico
+115,Alejandro Muñoz,alejandro.muñoz115@gmail.com,Antofagasta,19/06/2023,Estándar
+116,Sofía Torres,sofía.torres116@gmail.com,RM,31/07/2022,Estándar
+117,Constanza Torres,constanza.torres117@gmail.com,RM,17/12/2021,Básico
+118,Javiera Fuentes,javiera.fuentes118@gmail.com,RM,26/07/2020,Estándar
+119,Matías Contreras,matías.contreras119@gmail.com,RM,19/11/2022,Premium
+120,Sebastián Díaz,sebastián.díaz120@gmail.com,Antofagasta,15/01/2020,Premium
+121,María Silva,maría.silva121@gmail.com,Valparaíso,05/02/2022,Estándar
+122,Diego Vargas,diego.vargas122@gmail.com,Los Lagos,03/01/2023,Estándar
+123,Isidora Flores,isidora.flores123@gmail.com,Biobío,18/06/2022,Premium
+124,Fernanda Torres,fernanda.torres124@gmail.com,Maule,12/01/2020,Estándar
+125,Daniela Díaz,daniela.díaz125@gmail.com,RM,23/03/2020,Premium
+126,Felipe Vargas,felipe.vargas126@gmail.com,Maule,05/03/2020,Premium
+127,Daniela Herrera,daniela.herrera127@gmail.com,Coquimbo,28/06/2021,Premium
+128,Sebastián Herrera,sebastián.herrera128@gmail.com,Valparaíso,17/09/2020,Estándar
+129,Felipe Castro,felipe.castro129@gmail.com,Maule,07/03/2022,Premium
+130,Isidora Díaz,isidora.díaz130@gmail.com,La Araucanía,15/09/2020,Premium
+131,Diego Castro,diego.castro131@gmail.com,RM,29/04/2021,Premium
+132,Martín Vargas,martín.vargas132@gmail.com,O'Higgins,17/01/2020,Estándar
+133,Matías Sepúlveda,matías.sepúlveda133@gmail.com,RM,18/06/2020,Estándar
+134,Catalina Espinoza,catalina.espinoza134@gmail.com,RM,13/11/2022,Premium
+135,Catalina Martínez,catalina.martínez135@gmail.com,Maule,23/06/2021,Básico
+136,Catalina Vargas,catalina.vargas136@gmail.com,RM,30/07/2020,Básico
+137,Alejandro Espinoza,alejandro.espinoza137@gmail.com,RM,25/04/2023,Básico
+138,Fernanda Silva,fernanda.silva138@gmail.com,RM,01/04/2022,Premium
+139,María Contreras,maría.contreras139@gmail.com,Antofagasta,23/05/2022,Premium
+140,Pablo Contreras,pablo.contreras140@gmail.com,RM,14/04/2020,Estándar
+141,Sebastián Castro,sebastián.castro141@gmail.com,RM,18/04/2021,Premium
+142,Martín Vargas,martín.vargas142@gmail.com,Valparaíso,10/11/2022,Estándar
+143,Sofía Sepúlveda,sofía.sepúlveda143@gmail.com,RM,14/01/2022,Estándar
+144,Diego Vargas,diego.vargas144@gmail.com,RM,07/04/2020,Premium
+145,Sofía González,sofía.gonzález145@gmail.com,RM,20/10/2021,Premium
+146,Constanza Herrera,constanza.herrera146@gmail.com,RM,27/05/2023,Premium
+147,Sebastián Soto,sebastián.soto147@gmail.com,RM,03/10/2022,Estándar
+148,Martín Sepúlveda,martín.sepúlveda148@gmail.com,RM,28/01/2020,Básico
+149,Andrés Pérez,andrés.pérez149@gmail.com,RM,10/01/2022,Básico
+150,Francisco Castro,francisco.castro150@gmail.com,Biobío,02/05/2021,Básico
+151,María Contreras,maría.contreras151@gmail.com,Valparaíso,27/06/2020,Premium
+152,Fernanda Espinoza,fernanda.espinoza152@gmail.com,RM,16/04/2023,Básico
+153,Daniela Contreras,daniela.contreras153@gmail.com,Biobío,21/07/2020,Premium
+154,Andrés Espinoza,andrés.espinoza154@gmail.com,RM,29/08/2022,Premium
+155,Andrés Pérez,andrés.pérez155@gmail.com,RM,27/01/2021,Estándar
+156,Andrés Martínez,andrés.martínez156@gmail.com,Los Lagos,21/02/2023,Estándar
+157,Diego Flores,diego.flores157@gmail.com,Biobío,28/08/2020,Estándar
+158,Camila Herrera,camila.herrera158@gmail.com,RM,28/10/2022,Premium
+159,Javiera Espinoza,javiera.espinoza159@gmail.com,RM,21/09/2020,Estándar
+160,Sofía Ramos,sofía.ramos160@gmail.com,RM,24/01/2021,Básico
+161,Felipe Herrera,felipe.herrera161@gmail.com,Biobío,17/11/2022,Premium
+162,Javiera Flores,javiera.flores162@gmail.com,Maule,25/02/2022,Básico
+163,Felipe Fuentes,felipe.fuentes163@gmail.com,Biobío,27/02/2021,Premium
+164,Valentina Soto,valentina.soto164@gmail.com,Valparaíso,27/04/2023,Básico
+165,Valentina Castro,valentina.castro165@gmail.com,Valparaíso,11/12/2022,Estándar
+166,Constanza Silva,constanza.silva166@gmail.com,RM,03/07/2021,Básico
+167,Isidora Soto,isidora.soto167@gmail.com,RM,28/12/2022,Premium
+168,Constanza Muñoz,constanza.muñoz168@gmail.com,Biobío,22/07/2021,Premium
+169,María Muñoz,maría.muñoz169@gmail.com,Biobío,24/05/2021,Premium
+170,Andrés Díaz,andrés.díaz170@gmail.com,RM,12/12/2021,Básico
+171,Pablo Torres,pablo.torres171@gmail.com,RM,29/01/2023,Estándar
+172,Fernanda Vargas,fernanda.vargas172@gmail.com,Los Lagos,26/08/2021,Estándar
+173,Sofía González,sofía.gonzález173@gmail.com,La Araucanía,25/03/2021,Básico
+174,María Soto,maría.soto174@gmail.com,RM,02/02/2020,Básico
+175,Francisco Díaz,francisco.díaz175@gmail.com,Maule,21/02/2022,Básico
+176,María Espinoza,maría.espinoza176@gmail.com,Valparaíso,24/06/2022,Premium
+177,Martín Martínez,martín.martínez177@gmail.com,RM,20/03/2022,Premium
+178,Nicolás Silva,nicolás.silva178@gmail.com,Maule,07/06/2022,Estándar
+179,Fernanda Herrera,fernanda.herrera179@gmail.com,RM,06/01/2021,Estándar
+180,Javiera Soto,javiera.soto180@gmail.com,RM,01/10/2022,Básico
+181,Javiera Sepúlveda,javiera.sepúlveda181@gmail.com,RM,29/11/2020,Premium
+182,Felipe Espinoza,felipe.espinoza182@gmail.com,RM,20/10/2020,Premium
+183,Sebastián Silva,sebastián.silva183@gmail.com,Valparaíso,04/04/2022,Premium
+184,Alejandro Pérez,alejandro.pérez184@gmail.com,Maule,25/01/2020,Básico
+185,Isidora Fuentes,isidora.fuentes185@gmail.com,RM,13/08/2020,Premium
+186,Sofía Pérez,sofía.pérez186@gmail.com,RM,20/06/2020,Estándar
+187,Fernanda Espinoza,fernanda.espinoza187@gmail.com,RM,20/01/2020,Premium
+188,Andrés Morales,andrés.morales188@gmail.com,Los Lagos,23/06/2020,Premium
+189,Fernanda Herrera,fernanda.herrera189@gmail.com,Maule,28/06/2022,Premium
+190,Constanza Morales,constanza.morales190@gmail.com,Valparaíso,14/05/2021,Premium
+191,Andrés Martínez,andrés.martínez191@gmail.com,Biobío,09/09/2020,Premium
+192,Sofía Díaz,sofía.díaz192@gmail.com,Valparaíso,29/07/2020,Básico
+193,Sebastián Pérez,sebastián.pérez193@gmail.com,RM,04/04/2021,Premium
+194,Catalina Vargas,catalina.vargas194@gmail.com,RM,24/12/2021,Básico
+195,Constanza Silva,constanza.silva195@gmail.com,Antofagasta,26/02/2022,Básico
+196,Isidora Herrera,isidora.herrera196@gmail.com,RM,13/08/2020,Premium
+197,Isidora Sepúlveda,isidora.sepúlveda197@gmail.com,RM,14/06/2023,Estándar
+198,Isidora Torres,isidora.torres198@gmail.com,Antofagasta,22/06/2020,Premium
+199,Pablo Pérez,pablo.pérez199@gmail.com,RM,22/12/2022,Estándar
+200,Pablo Soto,pablo.soto200@gmail.com,Biobío,03/11/2020,Básico

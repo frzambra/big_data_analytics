@@ -401,7 +401,7 @@ graph TB
 </section>
 <section id="desafío-rápido-1" class="slide level2" data-background-color="#e8f4f8">
 <h2>🚀 Desafío Rápido 1</h2>
-<p><strong>En parejas (4 minutos):</strong></p>
+<!-- **En parejas (4 minutos):** -->
 <p>Para el caso de uso <strong>“Procesar Devolución”</strong>:</p>
 <ol type="1">
 <li>¿Qué información mínima necesitarías guardar sobre una devolución?</li>
@@ -443,10 +443,13 @@ graph TB
 </ul>
 <div class="fragment">
 <p><strong>Ejemplo — TechStyle base (W04):</strong></p>
-<p><code>CLIENTE(</code><u><code>cliente_id</code></u><code>, nombre, apellido, email, region, segmento)</code> <code>VENTA(</code><u><code>venta_id</code></u><code>, fecha, *cliente_id*)</code> <code>PRODUCTO(</code><u><code>producto_id</code></u><code>, nombre_producto, categoria, precio_venta, stock)</code> <code>DETALLE_VENTA(</code><u><code>*venta_id*, *producto_id*</code></u><code>, cantidad, precio_unitario, descuento_pct)</code></p>
+<p><code>CLIENTE(</code><u><code>cliente_id</code></u><code>, nombre, apellido, email, region, segmento)</code><br>
+<code>VENTA(</code><u><code>venta_id</code></u><code>, fecha, *cliente_id*)</code><br>
+<code>PRODUCTO(</code><u><code>producto_id</code></u><code>, nombre_producto, categoria, precio_venta, stock)</code><br>
+<code>DETALLE_VENTA(</code><u><code>*venta_id*, *producto_id*</code></u><code>, cantidad, precio_unitario, descuento_pct)</code></p>
 </div>
 </section>
-<section id="ampliar-el-modelo-módulo-de-proveedores" class="slide level2">
+<section id="ampliar-el-modelo-módulo-de-proveedores" class="slide level2 scrollable">
 <h2>Ampliar el Modelo: Módulo de Proveedores</h2>
 <p>Roberto quiere saber qué proveedor abastece cada producto.</p>
 <div class="fragment">
@@ -492,7 +495,7 @@ graph TB
 </div>
 </div>
 </section>
-<section id="ampliar-el-modelo-módulo-de-despacho" class="slide level2">
+<section id="ampliar-el-modelo-módulo-de-despacho" class="slide level2 scrollable">
 <h2>Ampliar el Modelo: Módulo de Despacho</h2>
 <p>Carlos necesita rastrear cada despacho: desde que sale de bodega hasta que llega al cliente.</p>
 <div class="fragment">
@@ -528,7 +531,7 @@ graph TB
 <p><strong>¿Por qué 1:1 y no 1:N?</strong> En este negocio, cada venta genera exactamente un despacho. Si en el futuro TechStyle permite despachos parciales, cambia a 1:N — pero el modelo actual refleja la realidad <em>de hoy</em>.</p>
 </div>
 </section>
-<section id="ampliar-el-modelo-módulo-de-devoluciones" class="slide level2">
+<section id="ampliar-el-modelo-módulo-de-devoluciones" class="slide level2 scrollable">
 <h2>Ampliar el Modelo: Módulo de Devoluciones</h2>
 <div class="fragment">
 <div class="cell" data-reveal="true" data-layout-align="default">
@@ -568,7 +571,7 @@ graph TB
 </section>
 <section id="desafío-rápido-2" class="slide level2" data-background-color="#e8f4f8">
 <h2>🚀 Desafío Rápido 2</h2>
-<p><strong>En grupos de 3 (5 minutos):</strong></p>
+<!-- **En grupos de 3 (5 minutos):** -->
 <p>TechStyle quiere agregar un <strong>módulo de categorías</strong> con jerarquía. Ejemplo: - Categoría padre: “Ropa” - Subcategorías: “Poleras”, “Pantalones”, “Chaquetas”</p>
 <ol type="1">
 <li>¿Cómo modificarías la tabla PRODUCTO para soportar esto?</li>
@@ -763,7 +766,8 @@ graph TB
 <span id="cb4-11"><a></a>    <span class="kw">ON</span> <span class="kw">UPDATE</span> <span class="kw">CASCADE</span></span>
 <span id="cb4-12"><a></a>) ENGINE<span class="op">=</span>InnoDB;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
-<p><strong><code>ON DELETE RESTRICT</code></strong>: MySQL impide eliminar un cliente que tiene ventas. <strong><code>ON UPDATE CASCADE</code></strong>: si cambia el <code>cliente_id</code>, se actualiza en VENTAS automáticamente.</p>
+<p><strong><code>ON DELETE RESTRICT</code></strong>: MySQL impide eliminar un cliente que tiene ventas.<br>
+<strong><code>ON UPDATE CASCADE</code></strong>: si cambia el <code>cliente_id</code>, se actualiza en VENTAS automáticamente.</p>
 </div>
 </section>
 <section id="on-delete-y-on-update-integridad-referencial" class="slide level2">
@@ -809,7 +813,7 @@ graph TB
 </section>
 <section id="desafío-rápido-3" class="slide level2" data-background-color="#e8f4f8">
 <h2>🚀 Desafío Rápido 3</h2>
-<p><strong>En grupos de 3 (5 minutos):</strong></p>
+<!-- **En grupos de 3 (5 minutos):** -->
 <p>La tabla DESPACHO tiene la columna <code>estado</code> que puede ser: ‘Pendiente’, ‘En tránsito’, ‘Entregado’, ‘No entregado’.</p>
 <ol type="1">
 <li>¿Cómo implementarías esa restricción en SQL? (pista: CHECK o ENUM).</li>

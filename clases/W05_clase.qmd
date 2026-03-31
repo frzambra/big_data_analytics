@@ -151,7 +151,7 @@ Cada caso de uso que **guarda o consulta información** genera al menos una enti
 
 ## 🚀 Desafío Rápido 1 {background-color="#e8f4f8"}
 
-**En parejas (4 minutos):**
+<!-- **En parejas (4 minutos):** -->
 
 Para el caso de uso **"Procesar Devolución"**:
 
@@ -192,15 +192,15 @@ TABLA(atributo1, atributo2, ...)
 ::: {.fragment}
 **Ejemplo — TechStyle base (W04):**
 
-`CLIENTE(`<u>`cliente_id`</u>`, nombre, apellido, email, region, segmento)`
-`VENTA(`<u>`venta_id`</u>`, fecha, *cliente_id*)`
-`PRODUCTO(`<u>`producto_id`</u>`, nombre_producto, categoria, precio_venta, stock)`
+`CLIENTE(`<u>`cliente_id`</u>`, nombre, apellido, email, region, segmento)`  
+`VENTA(`<u>`venta_id`</u>`, fecha, *cliente_id*)`  
+`PRODUCTO(`<u>`producto_id`</u>`, nombre_producto, categoria, precio_venta, stock)`  
 `DETALLE_VENTA(`<u>`*venta_id*, *producto_id*`</u>`, cantidad, precio_unitario, descuento_pct)`
 :::
 
 ---
 
-## Ampliar el Modelo: Módulo de Proveedores
+## Ampliar el Modelo: Módulo de Proveedores {.scrollable}
 
 Roberto quiere saber qué proveedor abastece cada producto.
 
@@ -241,7 +241,7 @@ erDiagram
 
 ---
 
-## Ampliar el Modelo: Módulo de Despacho
+## Ampliar el Modelo: Módulo de Despacho {.scrollable}
 
 Carlos necesita rastrear cada despacho: desde que sale de bodega hasta que llega al cliente.
 
@@ -272,7 +272,7 @@ erDiagram
 
 ---
 
-## Ampliar el Modelo: Módulo de Devoluciones
+## Ampliar el Modelo: Módulo de Devoluciones {.scrollable}
 
 ::: {.fragment}
 ```{mermaid}
@@ -306,7 +306,7 @@ erDiagram
 
 ## 🚀 Desafío Rápido 2 {background-color="#e8f4f8"}
 
-**En grupos de 3 (5 minutos):**
+<!-- **En grupos de 3 (5 minutos):** -->
 
 TechStyle quiere agregar un **módulo de categorías** con jerarquía. Ejemplo:
 - Categoría padre: "Ropa"
@@ -518,7 +518,7 @@ CREATE TABLE IF NOT EXISTS `techstyle`.`ventas` (
 ```
 
 ::: {.fragment}
-**`ON DELETE RESTRICT`**: MySQL impide eliminar un cliente que tiene ventas.
+**`ON DELETE RESTRICT`**: MySQL impide eliminar un cliente que tiene ventas.  
 **`ON UPDATE CASCADE`**: si cambia el `cliente_id`, se actualiza en VENTAS automáticamente.
 :::
 
@@ -545,7 +545,7 @@ CREATE TABLE IF NOT EXISTS `techstyle`.`ventas` (
 
 ## 🚀 Desafío Rápido 3 {background-color="#e8f4f8"}
 
-**En grupos de 3 (5 minutos):**
+<!-- **En grupos de 3 (5 minutos):** -->
 
 La tabla DESPACHO tiene la columna `estado` que puede ser: 'Pendiente', 'En tránsito', 'Entregado', 'No entregado'.
 

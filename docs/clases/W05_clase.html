@@ -321,7 +321,17 @@ Universidad San Sebastián
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<pre class="mermaid mermaid-js">%%{init: {'theme': 'base', 'themeVariables': {'clusterBkg': '#dbeafe', 'clusterBorder': '#2563eb', 'titleColor': '#1e3a5f'}}}%%
+<pre class="mermaid mermaid-js">%%{init: {
+    'theme': 'base', 
+    'themeVariables': {
+        'mainBkg': '#f8fafc',
+        'clusterBkg': '#dbeafe', 
+        'clusterBorder': '#2563eb', 
+        'titleColor': '#1e3a5f',
+        'nodeBkg': '#ffffff',
+        'nodeBorder': '#2563eb'
+    }
+}}%%
 graph TB
     subgraph Sistema["Sistema TechStyle"]
         UC1(["Registrar Venta"])
@@ -342,6 +352,9 @@ graph TB
     Ventas["👤 Gte. Ventas"] --&gt; UC6
     Ventas --&gt; UC5
     Admin["👤 Administrador"] --&gt; UC7
+
+%% This line forces the background color of the subgraph %%
+    style Sistema fill:#f0f9ff,stroke:#2563eb,stroke-width:2px
 </pre>
 </div>
 <p></p></figure><p></p>

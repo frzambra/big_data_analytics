@@ -93,7 +93,17 @@ Cada actor tiene necesidades distintas → accede a funcionalidades distintas �
 ## Diagrama de Casos de Uso de TechStyle {.scrollable}
 
 ```{mermaid}
-%%{init: {'theme': 'base', 'themeVariables': {'clusterBkg': '#dbeafe', 'clusterBorder': '#2563eb', 'titleColor': '#1e3a5f'}}}%%
+%%{init: {
+    'theme': 'base', 
+    'themeVariables': {
+        'mainBkg': '#f8fafc',
+        'clusterBkg': '#dbeafe', 
+        'clusterBorder': '#2563eb', 
+        'titleColor': '#1e3a5f',
+        'nodeBkg': '#ffffff',
+        'nodeBorder': '#2563eb'
+    }
+}}%%
 graph TB
     subgraph Sistema["Sistema TechStyle"]
         UC1(["Registrar Venta"])
@@ -114,6 +124,9 @@ graph TB
     Ventas["👤 Gte. Ventas"] --> UC6
     Ventas --> UC5
     Admin["👤 Administrador"] --> UC7
+
+%% This line forces the background color of the subgraph %%
+    style Sistema fill:#f0f9ff,stroke:#2563eb,stroke-width:2px
 ```
 
 ---

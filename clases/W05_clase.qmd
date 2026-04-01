@@ -155,8 +155,8 @@ Cada caso de uso que **guarda o consulta información** genera al menos una enti
 
 Para el caso de uso **"Procesar Devolución"**:
 
-1. ¿Qué información mínima necesitarías guardar sobre una devolución?
-2. ¿Con qué entidades existentes se relaciona DEVOLUCION? ¿Cuál es la cardinalidad?
+1. ¿Qué información mínima necesitarías guardar sobre una devolución?  
+2. ¿Con qué entidades existentes se relaciona DEVOLUCION? ¿Cuál es la cardinalidad?  
 3. ¿La devolución genera una nueva entidad o puede resolverse con un atributo en VENTA?
 
 ::: {.notes}
@@ -308,8 +308,8 @@ erDiagram
 
 <!-- **En grupos de 3 (5 minutos):** -->
 
-TechStyle quiere agregar un **módulo de categorías** con jerarquía. Ejemplo:
-- Categoría padre: "Ropa"
+TechStyle quiere agregar un **módulo de categorías** con jerarquía. Ejemplo:  
+- Categoría padre: "Ropa"  
 - Subcategorías: "Poleras", "Pantalones", "Chaquetas"
 
 1. ¿Cómo modificarías la tabla PRODUCTO para soportar esto?

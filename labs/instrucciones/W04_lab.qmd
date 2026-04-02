@@ -140,15 +140,17 @@ Asumiendo la clave primaria compuesta `(id_venta, producto_id)`:
 | `precio_unitario` | | |
 | `costo_unitario` | | |
 | `cantidad` | | |
+| `descuento_pct` | | |
+| `cantidad` | | |
 
 **6.2** Identifica qué columnas dependen **solo de `id_venta`** (no de `producto_id`):
 
-| Columna | ¿Depende solo de `id_venta`? |
+| Columna | ¿Depende solo de `id_venta`? | ¿A qué tabla moverla? |
 |---|---|
-| `fecha_venta` | |
-| `cliente_id` | |
-| `cliente_nombre` | |
-| `venta_total` | |
+| `fecha_venta` | | |
+| `cliente_id` | | |
+| `cliente_nombre` | | |
+| `venta_total` | | |
 
 **6.3** Define las tres tablas que resultan de aplicar 2FN:
 
@@ -212,7 +214,6 @@ Para cada una de las 4 tablas definidas en la Parte 2, crea un rectángulo con:
 | `email` | |
 | `region` | |
 | `segmento` | |
-| `fecha_registro` | |
 
 **Entidad PRODUCTOS:**
 
@@ -221,9 +222,8 @@ Para cada una de las 4 tablas definidas en la Parte 2, crea un rectángulo con:
 | `producto_id` | PK |
 | `nombre_producto` | |
 | `categoria` | |
-| `precio_venta` | |
+| `precio_unitario` | |
 | `costo_unitario` | |
-| `stock` | |
 
 **Entidad VENTAS:**
 
@@ -240,8 +240,9 @@ Para cada una de las 4 tablas definidas en la Parte 2, crea un rectángulo con:
 | `venta_id` | PK, FK → VENTAS |
 | `producto_id` | PK, FK → PRODUCTOS |
 | `cantidad` | |
-| `precio_unitario` | |
 | `descuento_pct` | |
+| `venta_total` | |
+
 
 ### Paso 10: Dibujar las relaciones
 
@@ -299,7 +300,6 @@ Completa el diccionario para las 4 tablas. Usa los tipos SQL estándar:
 | `email` | `VARCHAR(100)` | Sí | UNIQUE | Correo electrónico (único en el sistema) |
 | `region` | `VARCHAR(50)` | Sí | | Región de residencia |
 | `segmento` | `VARCHAR(20)` | No | CHECK: Premium / Estándar / Básico | Segmento comercial del cliente |
-| `fecha_registro` | `DATE` | Sí | | Fecha en que el cliente se registró |
 
 **Tabla: PRODUCTOS**
 
@@ -310,9 +310,8 @@ Completa los campos en blanco:
 | `producto_id` | | Sí | PK | |
 | `nombre_producto` | | Sí | | Nombre comercial del producto |
 | `categoria` | | Sí | | Ej: Calzado, Ropa, Accesorios |
-| `precio_venta` | `DECIMAL(10,2)` | Sí | CHECK > 0 | Precio de venta al público |
-| `costo_unitario` | | Sí | | Costo de adquisición |
-| `stock` | | Sí | DEFAULT 0 | Unidades disponibles en bodega |
+| `precio_unitario` | `DECIMAL(10,2)` | Sí | CHECK > 0 | Precio de venta al público |
+| `costo_unitario` | | Sí | | Costo de producción |
 
 **Tabla: VENTAS**
 
@@ -329,8 +328,8 @@ Completa los campos en blanco:
 | `venta_id` | `INT` | Sí | PK, FK → VENTAS | |
 | `producto_id` | `INT` | Sí | PK, FK → PRODUCTOS | |
 | `cantidad` | | Sí | CHECK > 0 | |
-| `precio_unitario` | `DECIMAL(10,2)` | Sí | | Precio al momento de la venta (puede diferir del precio actual del producto) |
 | `descuento_pct` | | No | CHECK 0–100, DEFAULT 0 | Porcentaje de descuento aplicado |
+| `venta_total` | `DECIMAL(10,2)` | Sí | | Venta total (depende de la cantidad y el precio unitario) |
 
 ::: {.callout-important}
 **¿Por qué `precio_unitario` está en DETALLE_VENTAS y no solo en PRODUCTOS?**

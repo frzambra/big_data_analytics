@@ -508,6 +508,16 @@ Note
 <td></td>
 <td></td>
 </tr>
+<tr class="even">
+<td><code>descuento_pct</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>cantidad</code></td>
+<td></td>
+<td></td>
+</tr>
 </tbody>
 </table>
 <p><strong>6.2</strong> Identifica qué columnas dependen <strong>solo de <code>id_venta</code></strong> (no de <code>producto_id</code>):</p>
@@ -674,10 +684,6 @@ Tip
 <td><code>segmento</code></td>
 <td></td>
 </tr>
-<tr class="odd">
-<td><code>fecha_registro</code></td>
-<td></td>
-</tr>
 </tbody>
 </table>
 <p><strong>Entidad PRODUCTOS:</strong></p>
@@ -702,15 +708,11 @@ Tip
 <td></td>
 </tr>
 <tr class="even">
-<td><code>precio_venta</code></td>
+<td><code>precio_unitario</code></td>
 <td></td>
 </tr>
 <tr class="odd">
 <td><code>costo_unitario</code></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><code>stock</code></td>
 <td></td>
 </tr>
 </tbody>
@@ -760,11 +762,11 @@ Tip
 <td></td>
 </tr>
 <tr class="even">
-<td><code>precio_unitario</code></td>
+<td><code>descuento_pct</code></td>
 <td></td>
 </tr>
 <tr class="odd">
-<td><code>descuento_pct</code></td>
+<td><code>venta_total</code></td>
 <td></td>
 </tr>
 </tbody>
@@ -934,13 +936,6 @@ Note
 <td>CHECK: Premium / Estándar / Básico</td>
 <td>Segmento comercial del cliente</td>
 </tr>
-<tr class="odd">
-<td><code>fecha_registro</code></td>
-<td><code>DATE</code></td>
-<td>Sí</td>
-<td></td>
-<td>Fecha en que el cliente se registró</td>
-</tr>
 </tbody>
 </table>
 <p><strong>Tabla: PRODUCTOS</strong></p>
@@ -985,7 +980,7 @@ Note
 <td>Ej: Calzado, Ropa, Accesorios</td>
 </tr>
 <tr class="even">
-<td><code>precio_venta</code></td>
+<td><code>precio_unitario</code></td>
 <td><code>DECIMAL(10,2)</code></td>
 <td>Sí</td>
 <td>CHECK &gt; 0</td>
@@ -996,14 +991,7 @@ Note
 <td></td>
 <td>Sí</td>
 <td></td>
-<td>Costo de adquisición</td>
-</tr>
-<tr class="even">
-<td><code>stock</code></td>
-<td></td>
-<td>Sí</td>
-<td>DEFAULT 0</td>
-<td>Unidades disponibles en bodega</td>
+<td>Costo de producción</td>
 </tr>
 </tbody>
 </table>
@@ -1083,18 +1071,18 @@ Note
 <td></td>
 </tr>
 <tr class="even">
-<td><code>precio_unitario</code></td>
-<td><code>DECIMAL(10,2)</code></td>
-<td>Sí</td>
-<td></td>
-<td>Precio al momento de la venta (puede diferir del precio actual del producto)</td>
-</tr>
-<tr class="odd">
 <td><code>descuento_pct</code></td>
 <td></td>
 <td>No</td>
 <td>CHECK 0–100, DEFAULT 0</td>
 <td>Porcentaje de descuento aplicado</td>
+</tr>
+<tr class="odd">
+<td><code>venta_total</code></td>
+<td><code>DECIMAL(10,2)</code></td>
+<td>Sí</td>
+<td></td>
+<td>Venta total (depende de la cantidad y el precio unitario)</td>
 </tr>
 </tbody>
 </table>

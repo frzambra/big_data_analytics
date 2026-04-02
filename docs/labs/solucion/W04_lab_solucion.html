@@ -894,8 +894,8 @@ Important
 <td><code>despachos</code> (despacho_id, venta_id FK, repartidor_id FK, direccion, hora_salida, hora_entrega, estado) + <code>repartidores</code> (repartidor_id, nombre, vehiculo, zona_asignada). La relación sería: VENTAS 1:1 DESPACHOS ∗:1 REPARTIDORES.</td>
 </tr>
 <tr class="even">
-<td>¿Por qué <code>precio_unitario</code> está en DETALLE_VENTAS y no en PRODUCTOS?</td>
-<td>Porque el precio de un producto cambia con el tiempo (promociones, inflación, ajustes). Una venta de enero a $89.990 debe conservar ese precio histórico aunque hoy el producto valga $99.990. Si el precio solo existiera en <code>productos</code>, no habría forma de auditar ventas pasadas correctamente.</td>
+<td>¿Por qué <code>venta_total</code> no se almacena en ninguna tabla del modelo relacional, si aparece en la planilla plana?</td>
+<td>Porque es un valor <strong>derivado</strong>: se calcula como <code>productos.precio_unitario × detalle_ventas.cantidad × (1 − detalle_ventas.descuento_pct / 100)</code>. Almacenarlo violaría 3FN — sería una dependencia funcional entre atributos ya existentes en el modelo. Cuando se necesita, se obtiene con un JOIN entre <code>detalle_ventas</code> y <code>productos</code>.</td>
 </tr>
 </tbody>
 </table>

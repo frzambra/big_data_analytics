@@ -66,7 +66,6 @@ def _normalizar(df: pd.DataFrame):
         .reset_index(drop=True)
     )
     clientes["email"] = clientes["cliente_id"].map(email_canonico)
-    clientes["fecha_registro"] = pd.NaT
 
     # 2FN → PRODUCTOS
     productos = (
@@ -75,12 +74,10 @@ def _normalizar(df: pd.DataFrame):
         .drop_duplicates(subset=["producto_id"])
         .rename(columns={
             "producto_nombre": "nombre_producto",
-            "precio_unitario": "precio_venta",
         })
         .sort_values("producto_id")
         .reset_index(drop=True)
     )
-    productos["stock"] = 0
 
     # 3FN → VENTAS (sin datos del cliente repetidos)
     ventas = (
@@ -93,7 +90,7 @@ def _normalizar(df: pd.DataFrame):
 
     # Tabla puente N:M → DETALLE_VENTAS
     detalle = (
-        df[["id_venta", "producto_id", "cantidad", "precio_unitario", "descuento_pct"]]
+        df[["id_venta", "producto_id", "cantidad", "descuento_pct"]]
         .rename(columns={"id_venta": "venta_id"})
         .sort_values(["venta_id", "producto_id"])
         .reset_index(drop=True)
@@ -118,8 +115,7 @@ CREATE TABLE clientes (
     apellido        VARCHAR(50)     NOT NULL,
     email           VARCHAR(100)    UNIQUE NOT NULL,
     region          VARCHAR(50)     NOT NULL,
-    segmento        VARCHAR(20)     CHECK (segmento IN ('Premium', 'Estándar', 'Básico')),
-    fecha_registro  DATE            NOT NULL
+    segmento        VARCHAR(20)     CHECK (segmento IN ('Premium', 'Estándar', 'Básico'))
 );
 
 -- 2. PRODUCTOS (sin dependencias foráneas)
@@ -127,9 +123,8 @@ CREATE TABLE productos (
     producto_id      INT             PRIMARY KEY,
     nombre_producto  VARCHAR(100)    NOT NULL,
     categoria        VARCHAR(50)     NOT NULL,
-    precio_venta     DECIMAL(10,2)   NOT NULL CHECK (precio_venta > 0),
-    costo_unitario   DECIMAL(10,2)   NOT NULL CHECK (costo_unitario > 0),
-    stock            INT             NOT NULL DEFAULT 0 CHECK (stock >= 0)
+    precio_unitario     DECIMAL(10,2)   NOT NULL CHECK (precio_unitario > 0),
+    costo_unitario   DECIMAL(10,2)   NOT NULL CHECK (costo_unitario > 0)
 );
 
 -- 3. VENTAS (depende de CLIENTES)
@@ -145,7 +140,6 @@ CREATE TABLE detalle_ventas (
     venta_id        VARCHAR(10)    NOT NULL,
     producto_id     INT            NOT NULL,
     cantidad        INT            NOT NULL CHECK (cantidad > 0),
-    precio_unitario DECIMAL(10,2)  NOT NULL CHECK (precio_unitario > 0),
     descuento_pct   DECIMAL(5,2)   NOT NULL DEFAULT 0
                     CHECK (descuento_pct >= 0 AND descuento_pct <= 100),
     PRIMARY KEY (venta_id, producto_id),
@@ -428,7 +422,6 @@ def server(input, output, session):
                 "costo_unitario": [35000],
                 "cantidad": ["NULL — sin ventas aun"],
                 "descuento_pct": ["NULL"],
-                "venta_total": ["NULL"],
             }
         )
         return render.DataGrid(ejemplo)
@@ -563,7 +556,6 @@ def server(input, output, session):
             ("email", False, False),
             ("region", False, False),
             ("segmento", False, False),
-            ("fecha_registro", False, False),
         ], "#27ae60")
 
         #  VENTAS (centro, arriba)
@@ -578,7 +570,6 @@ def server(input, output, session):
             ("venta_id", True, True),
             ("producto_id", True, True),
             ("cantidad", False, False),
-            ("precio_unitario", False, False),
             ("descuento_pct", False, False),
         ], "#e67e22")
 
@@ -587,9 +578,8 @@ def server(input, output, session):
             ("producto_id", True, False),
             ("nombre_producto", False, False),
             ("categoria", False, False),
-            ("precio_venta", False, False),
+            ("precio_unitario", False, False),
             ("costo_unitario", False, False),
-            ("stock", False, False),
         ], "#8e44ad")
 
         # ── Líneas de relación ─────────────────────────────────────────────────
@@ -761,14 +751,14 @@ def server(input, output, session):
             ax_clientes,
             f"CLIENTES  ({len(clientes_df)} filas)",
             ["cliente_id (PK)", "nombre", "apellido", "email",
-             "region", "segmento", "fecha_registro"],
+             "region", "segmento"],
             "#27ae60",
         )
         _tabla_ax(
             ax_productos,
             f"PRODUCTOS  ({len(productos_df)} filas)",
             ["producto_id (PK)", "nombre_producto", "categoria",
-             "precio_venta", "costo_unitario", "stock"],
+             "precio_unitario", "costo_unitario"],
             "#8e44ad",
         )
         _tabla_ax(
@@ -777,7 +767,7 @@ def server(input, output, session):
             ["venta_id (PK)", "fecha", "cliente_id (FK)",
              "——————————————",
              "venta_id (PK, FK)", "producto_id (PK, FK)",
-             "cantidad", "precio_unitario", "descuento_pct"],
+             "cantidad", "descuento_pct"],
             "#2980b9",
         )
 

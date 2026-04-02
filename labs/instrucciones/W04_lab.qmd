@@ -444,7 +444,7 @@ Responde en conjunto con tu compañero:
 | ¿En qué parte de la normalización fue más difícil decidir qué tabla pertenece a qué entidad? | |
 | ¿Podría haber una 4FN o 5FN? ¿Cuándo se usarían? | |
 | Si TechStyle agrega un módulo de despacho (con dirección de entrega, repartidor, hora de entrega), ¿qué nuevas entidades agregarías al modelo? | |
-| ¿Por qué el `precio_unitario` se guarda en `DETALLE_VENTAS` y no se puede simplemente calcular desde `PRODUCTOS`? | |
+| ¿Por qué `venta_total` no se almacena en ninguna tabla del modelo relacional, si aparece en la planilla plana? | |
 
 ---
 

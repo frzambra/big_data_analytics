@@ -146,7 +146,7 @@ Asumiendo la clave primaria compuesta `(id_venta, producto_id)`:
 **6.2** Identifica qué columnas dependen **solo de `id_venta`** (no de `producto_id`):
 
 | Columna | ¿Depende solo de `id_venta`? | ¿A qué tabla moverla? |
-|---|---|
+|---|---|---|
 | `fecha_venta` | | |
 | `cliente_id` | | |
 | `cliente_nombre` | | |

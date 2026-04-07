@@ -295,6 +295,10 @@ format:
       <span class="card-subtitle">Auditoría de planilla plana · Normalización · Diagrama MER en draw.io · Diccionario de Datos · CREATE TABLE</span>
       <div class="card-links">
         <a class="link-lab" href="labs/instrucciones/W04_lab.html">Ver laboratorio →</a>
+        <span class="link-divider">|</span>
+        <a class="link-sol" href="labs/solucion/W04_lab_solucion.html">Ver solución →</a>
+        <span class="link-divider">|</span>
+        <a class="link-shiny" href="https://frzambra.shinyapps.io/w04-techstyle-modelo/" target="_blank">Dashboard →</a>
       </div>
     </div>
   </div>

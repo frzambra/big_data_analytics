@@ -1,0 +1,415 @@
+---
+title: "Solemne 1: Sistemas de Información y Modelamiento de Datos"
+subtitle: "S01 · Unidades I y II · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+## Instrucciones Generales
+
+- Trabajo **individual**.
+- **Duración total**: 2 horas 30 minutos.
+- Sube tus respuestas a la plataforma del curso al finalizar el tiempo.
+- Usa los archivos de datos entregados por el docente: `solemne_pedidos_planos.csv`.
+
+**Distribución de puntaje:**
+
+| Pregunta | Tema | Tiempo sugerido | Puntaje |
+|---|---|---|---|
+| 1 | Sistemas de Información y Calidad de Datos | 40 min | 30 pts |
+| 2 | Del OLTP al Modelo Analítico | 50 min | 35 pts |
+| 3 | Modelamiento Entidad-Relación | 60 min | 35 pts |
+| | **Total** | **2h 30min** | **100 pts** |
+
+::: {.callout-important}
+Responde directamente en este documento (copia la sección en Word/Google Docs) o en el formulario entregado por el docente. Todas las respuestas deben estar **justificadas** con evidencia de los datos.
+:::
+
+---
+
+## Pregunta 1 — Sistemas de Información y Calidad de Datos {#sec-p1}
+
+**40 minutos · 30 puntos**
+
+### Contexto
+
+**DeliverChile** es una plataforma de delivery de comida con operaciones en cuatro regiones del país. Su equipo de TI registra todas las transacciones en una planilla plana llamada `solemne_pedidos_planos.csv`.
+
+La gerenta de operaciones, **Valentina**, acaba de contratar a tres analistas con tareas distintas:
+
+| Analista | Rol | Necesidad de información |
+|---|---|---|
+| **Rodrigo** | Repartidor (turno mañana) | Saber qué pedidos tiene asignados hoy, la dirección de entrega y el tiempo estimado |
+| **Camila** | Analista de Marketing | Ver la evolución semanal de pedidos por categoría de cocina y el ticket promedio por comuna |
+| **Valentina** | Gerenta de Operaciones | Monitorear los KPIs financieros del mes: ingresos totales, margen promedio y tasa de pedidos con descuento |
+
+### Parte A — Clasificación de Usuarios y Sistemas de Información {#sec-p1a}
+
+**10 puntos**
+
+**A.1** Para cada analista, clasifica su necesidad según el **nivel organizacional** (Operativo / Táctico / Estratégico) y el **tipo de sistema de información** más adecuado (TPS, MIS/BI, EIS/DSS). Completa la tabla:
+
+| Analista | Nivel organizacional | Tipo de SI | Justificación (1–2 líneas) |
+|---|---|---|---|
+| Rodrigo | | | |
+| Camila | | | |
+| Valentina | | | |
+
+**A.2** Imagina que el equipo de TI construye un reporte distinto para cada uno de los tres usuarios. El campo `total_pedido` del archivo aparece en cada reporte de manera diferente:
+
+- En el reporte de Rodrigo: no aparece — no es relevante para su tarea.
+- En el reporte de Camila: aparece agregado como suma semanal por categoría de cocina.
+- En el reporte de Valentina: aparece como total mensual comparado con el mes anterior.
+
+¿Qué principio de los sistemas de información explica que el mismo dato bruto se transforme y presente de manera diferente según el usuario? Justifica en 3 líneas.
+
+---
+
+### Parte B — Auditoría de Calidad de Datos {#sec-p1b}
+
+**15 puntos**
+
+A continuación se muestra un extracto de `solemne_pedidos_planos.csv`. Examínalo con atención:
+
+| id_pedido | fecha_pedido | cliente_id | cliente_nombre | cliente_email | cliente_comuna | restaurante_id | restaurante_nombre | categoria_cocina | tiempo_entrega_min | total_pedido |
+|---|---|---|---|---|---|---|---|---|---|---|
+| P001 | 2024-03-15 | C005 | Ana Torres | ana.torres@gmail.com | Ñuñoa | R012 | Sushi Kioto | Japonesa | 35 | 18500 |
+| P002 | 15/03/2024 | C005 | Ana Torres | ana.torres@hotmail | Ñuñoa | R008 | Pizza Roma | Italiana | 28 | 12900 |
+| P003 | 2024-03-16 | C011 | carlos mendez | carlos.m@gmail.com | ÑUÑOA | R012 | Sushi Kioto | Japonesa | -12 | 22000 |
+| P004 | 2024-03-16 | C019 | María López | | Las Condes | R003 | Burger Bros | Americana | 42 | 9500 |
+| P005 | 2024-03-17 | C005 | Ana Torres | ana.torres@gmail.com | Nuñoa | R008 | Pizza Roma | italiana | 31 | 15200 |
+| P006 | 2024-03-17 | C011 | Carlos Mendez | carlos.m@gmail.com | Ñuñoa | R003 | Burger Bros | Americana | 55 | 8700 |
+
+**B.1** Identifica al menos **cinco problemas de calidad de datos** presentes en este extracto. Para cada uno, indica la columna afectada, el tipo de problema, la dimensión de calidad comprometida y el impacto potencial en el análisis. Completa la tabla:
+
+| N° | Columna afectada | Descripción del problema | Dimensión de calidad | Impacto en el análisis |
+|---|---|---|---|---|
+| 1 | | | | |
+| 2 | | | | |
+| 3 | | | | |
+| 4 | | | | |
+| 5 | | | | |
+
+::: {.callout-note}
+**Dimensiones de calidad**: Exactitud, Completitud, Consistencia, Oportunidad.
+:::
+
+**B.2** El equipo de TI propone corregir el problema de la columna `cliente_comuna` usando Power Query con la siguiente transformación:
+
+```
+Reemplazar "ÑUÑOA" → "Ñuñoa"
+Reemplazar "Nuñoa" → "Ñuñoa"
+```
+
+¿Esta corrección es suficiente para garantizar la calidad de esa columna en el dataset completo? ¿Qué limitación tiene esta solución? Responde en 3 líneas.
+
+---
+
+### Parte C — Reflexión sobre el Valor de los Datos {#sec-p1c}
+
+**5 puntos**
+
+**C.1** Valentina quiere saber cuánto tarda en promedio cada repartidor en entregar un pedido, para evaluar si hay diferencias de desempeño entre zonas. Con base en el extracto de datos anterior, ¿puede responder esa pregunta directamente leyendo el CSV? ¿Qué proceso debe ocurrir primero? Explica usando el concepto **dato → información → conocimiento**.
+
+---
+
+## Pregunta 2 — Del OLTP al Modelo Analítico {#sec-p2}
+
+**50 minutos · 35 puntos**
+
+### Contexto
+
+El equipo de TI de DeliverChile tiene los datos distribuidos en **tres sistemas OLTP independientes**:
+
+| Sistema | Área responsable | Archivo |
+|---|---|---|
+| Sistema de pedidos | Operaciones | `oltp_pedidos.csv` |
+| Sistema de clientes | Marketing | `oltp_clientes.csv` |
+| Sistema de restaurantes | Partnerships | `oltp_restaurantes.csv` |
+
+El analista Juan ejecutó un proceso ETL con Power Query para integrar las tres fuentes. A continuación se describen los problemas que encontró en cada tabla y las transformaciones que aplicó:
+
+---
+
+### Parte A — Identificar Pasos ETL {#sec-p2a}
+
+**12 puntos**
+
+**A.1** Los siguientes son problemas encontrados en las fuentes OLTP. Para cada problema, indica en qué **fase del ETL** se resuelve (Extracción, Transformación o Carga) y describe brevemente **cómo se corregiría en Power Query**:
+
+| Problema encontrado | Tabla afectada | Fase ETL | Cómo se corrige en Power Query |
+|---|---|---|---|
+| La columna `ID_Cliente` en pedidos se llama `CustomerID` en clientes — no se pueden unir directamente | pedidos / clientes | | |
+| La columna `Fecha_Venta` en pedidos tiene formato `DD/MM/YYYY` — Power Query la importa como texto en vez de fecha | pedidos | | |
+| Hay 3 pedidos con `Total_Venta` igual a 0 o negativo | pedidos | | |
+| La columna `Ciudad` tiene valores como "LAS CONDES" / "Las condes" o "providencia" / "Ñuñoa" / "Nuñoa" — mezcla de mayúsculas, minúsculas y errores de escritura | clientes | | |
+| La columna `Linea` tiene valores: "japonesa", "ITALIANA", "PERUANA", "Americana" — capitalización inconsistente entre filas | restaurantes | | |
+| Hay 3 clientes sin valor en la columna `Correo` | clientes | | |
+
+**A.2** Después de ejecutar el ETL, Juan construyó el siguiente modelo en Power BI:
+
+```
+[oltp_clientes]  ────┐
+                     ├──→  [oltp_pedidos]  ←──── [oltp_restaurantes]
+```
+
+- ¿Cómo se llama este tipo de modelo de datos? ¿Qué tabla es la tabla de hechos y cuáles son las tablas de dimensiones?
+- ¿Este modelo es más adecuado para un sistema OLTP o OLAP? Justifica en 2 líneas.
+
+---
+
+### Parte B — Decisión Basada en Datos {#sec-p2b}
+
+**18 puntos**
+
+Después de construir el modelo, Juan generó el siguiente resumen de KPIs para Valentina:
+
+**KPIs del mes de marzo 2024 — DeliverChile:**
+
+| Categoría de cocina | Pedidos totales | Ingreso total (CLP) | Ticket promedio (CLP) | Tiempo promedio entrega (min) | Tasa de descuento (%) |
+|---|---|---|---|---|---|
+| Japonesa | 1.842 | 47.230.000 | 25.640 | 38 | 12% |
+| Italiana | 2.315 | 38.450.000 | 16.610 | 29 | 8% |
+| Americana | 3.108 | 28.900.000 | 9.300 | 22 | 5% |
+| Peruana | 987 | 31.750.000 | 32.170 | 45 | 18% |
+| Mexicana | 1.203 | 19.600.000 | 16.290 | 31 | 14% |
+
+Valentina debe tomar **dos decisiones** este mes:
+
+1. **Decisión de campaña de marketing**: tiene un presupuesto de $8.000.000 CLP para promocionar **una sola categoría de cocina**. El objetivo es maximizar el ingreso total.
+
+2. **Decisión de eficiencia operacional**: quiere identificar qué categoría tiene el **mayor problema de tiempos de entrega** para asignar más repartidores.
+
+**B.1** Responde cada decisión con una recomendación basada en los datos de la tabla. Para cada recomendación incluye:
+- La categoría elegida.
+- Al menos **dos indicadores** de la tabla que justifican la decisión.
+- Una **limitación** del análisis (¿qué dato te faltaría para estar más seguro?).
+
+---
+
+### Parte C — Dashboard Ejecutivo en Power BI {#sec-p2c}
+
+**15 puntos**
+
+Con el modelo estrella construido en la Parte A, construye en Power BI una página llamada **"Vista Ejecutiva"** diseñada para Valentina (nivel estratégico).
+
+**Archivo de datos**: usa `solemne_modelo.pbix` entregado por el docente — las tres tablas ya están cargadas, relacionadas y con los nombres de columna ya limpios según la siguiente tabla de renombrado aplicada durante el ETL:
+
+| Nombre original (OLTP) | Nombre en el `.pbix` | Tabla |
+|---|---|---|
+| `Total_Venta` | `total_pedido` | `oltp_pedidos` |
+| `Tiempo_Entrega` | `tiempo_entrega_min` | `oltp_pedidos` |
+| `Linea` | `categoria_cocina` | `oltp_restaurantes` |
+
+El dashboard debe incluir exactamente los siguientes elementos:
+
+**C.1** Cuatro **tarjetas de KPI**:
+
+| Tarjeta | Qué mostrar | Campo fuente |
+|---|---|---|
+| Ingreso total del período | Suma de `total_pedido` | `oltp_pedidos` |
+| Número de pedidos | Conteo de filas | `oltp_pedidos` |
+| Ticket promedio | Ingreso total ÷ Nº de pedidos | Medida calculada |
+| Tiempo promedio de entrega | Promedio de `tiempo_entrega_min` | `oltp_pedidos` |
+
+**C.2** Un **gráfico de barras** con:
+
+- Eje: `categoria_cocina` (de `oltp_restaurantes`)
+- Valores: suma de `total_pedido`
+- Ordenado de mayor a menor ingreso
+- Título: "Ingreso por Categoría de Cocina"
+
+**C.3** Un **segmentador** por `categoria_cocina` que filtre toda la página.
+
+::: {.callout-note}
+**Criterio de diseño**: el dashboard debe permitir a Valentina responder en menos de 10 segundos las preguntas: ¿cuánto ingresamos este período? ¿qué categoría genera más ingresos?
+:::
+
+**Entregable**: captura de pantalla de la página completa, guardada como `S01_dashboard_[apellido].png` y subida junto con el resto de las respuestas.
+
+---
+
+## Pregunta 3 — Modelamiento Entidad-Relación {#sec-p3}
+
+**60 minutos · 35 puntos**
+
+### Contexto
+
+El equipo de TI de DeliverChile todavía almacena toda la información en una única tabla plana: `solemne_pedidos_planos.csv`. Tu tarea es diseñar el modelo relacional que permitirá migrar esta información a una base de datos MySQL.
+
+La tabla plana tiene las siguientes columnas:
+
+| Columna | Descripción |
+|---|---|
+| `id_pedido` | Identificador único del pedido |
+| `fecha_pedido` | Fecha y hora de la transacción |
+| `cliente_id` | Código del cliente |
+| `cliente_nombre` | Nombre completo del cliente |
+| `cliente_email` | Correo electrónico del cliente |
+| `cliente_telefono` | Teléfono del cliente |
+| `cliente_comuna` | Comuna de residencia del cliente |
+| `restaurante_id` | Código del restaurante |
+| `restaurante_nombre` | Nombre del restaurante |
+| `categoria_cocina` | Tipo de cocina (Japonesa, Italiana, etc.) |
+| `repartidor_id` | Código del repartidor asignado |
+| `tiempo_entrega_min` | Minutos transcurridos desde el pedido hasta la entrega |
+| `producto_id` | Código del producto pedido |
+| `producto_nombre` | Nombre del plato |
+| `precio_unitario` | Precio de venta del producto |
+| `cantidad` | Unidades pedidas |
+| `descuento_pct` | Porcentaje de descuento aplicado |
+| `total_pedido` | Monto total del pedido (precio × cantidad × (1 − descuento)) |
+
+::: {.callout-important}
+**`total_pedido` es una columna derivada**: su valor se puede calcular en cualquier momento a partir de `precio_unitario`, `cantidad` y `descuento_pct`. En el modelo relacional normalizado, este campo **no se almacena** — se obtiene mediante una consulta. Identificar esto es parte del ejercicio.
+:::
+
+---
+
+### Parte A — Diagnóstico de Normalización {#sec-p3a}
+
+**10 puntos**
+
+**A.1** Responde el siguiente diagnóstico de formas normales para la tabla plana:
+
+| Pregunta | Respuesta |
+|---|---|
+| ¿La tabla cumple la **1FN**? ¿Por qué sí o no? | |
+| Asumiendo clave compuesta `(id_pedido, producto_id)`, ¿cumple la **2FN**? Identifica una dependencia parcial concreta (nombra las columnas implicadas). | |
+| ¿Cumple la **3FN**? Identifica una dependencia transitiva concreta (nombra las columnas implicadas). | |
+
+**A.2** Contesta estas preguntas mirando la estructura de la tabla:
+
+1. Si el restaurante "Sushi Kioto" cambia su categoría de cocina de "Japonesa" a "Asiática fusion", ¿cuántas filas habría que actualizar? ¿Qué anomalía describe este problema?
+2. Si eliminamos todos los pedidos del cliente C005, ¿qué información perdemos que no debería perderse?
+
+---
+
+### Parte B — Normalizar: Definir las Tablas {#sec-p3b}
+
+**10 puntos**
+
+Aplicando las tres formas normales, la tabla plana debe separarse en **4 tablas**. Completa la definición de cada tabla indicando su clave primaria y las columnas que contiene:
+
+| Tabla | Clave primaria | Columnas que incluye |
+|---|---|---|
+| `clientes` | | |
+| `restaurantes` | | |
+| `pedidos` | | |
+| `detalle_pedidos` | *(compuesta)* | |
+
+::: {.callout-note}
+**Pista**: La columna `repartidor_id` pertenece al pedido (un repartidor se asigna a un pedido completo, no a cada ítem). No es necesario crear una tabla separada de repartidores para este ejercicio.
+:::
+
+::: {.callout-important}
+**Al terminar deberías tener 4 tablas**: `clientes`, `restaurantes`, `pedidos` y `detalle_pedidos`. Define también las claves foráneas de las tablas que las necesiten.
+:::
+
+---
+
+### Parte C — Sentencias CREATE TABLE en SQL {#sec-p3c}
+
+**10 puntos**
+
+Escribe las sentencias `CREATE TABLE` para las tablas **`restaurantes`** y **`pedidos`**. Se te entrega la tabla `clientes` ya resuelta como referencia.
+
+**Referencia — Tabla `clientes` (ya resuelta):**
+
+```sql
+CREATE TABLE clientes (
+    cliente_id      INT           PRIMARY KEY,
+    nombre          VARCHAR(100)  NOT NULL,
+    email           VARCHAR(100)  UNIQUE NOT NULL,
+    telefono        VARCHAR(15),
+    comuna          VARCHAR(50)   NOT NULL
+);
+```
+
+**Tu tarea — Tabla `restaurantes`** (escríbela desde cero):
+
+```sql
+-- Escribe aquí la sentencia CREATE TABLE restaurantes
+-- Recuerda: incluir PK, nombre, categoria_cocina con restricción de valores válidos
+```
+
+**Tu tarea — Tabla `pedidos`** (escríbela desde cero):
+
+```sql
+-- Escribe aquí la sentencia CREATE TABLE pedidos
+-- Recuerda:
+--   - PK: id_pedido
+--   - FK hacia clientes
+--   - FK hacia restaurantes
+--   - repartidor_id como atributo simple (INT)
+--   - fecha_pedido como DATETIME
+--   - tiempo_entrega_min como INT
+```
+
+::: {.callout-note}
+**Orden de creación**: Crea primero las tablas sin dependencias foráneas (`clientes`, `restaurantes`), luego las que dependen de ellas (`pedidos`, `detalle_pedidos`).
+:::
+
+---
+
+### Parte D — Integridad Referencial y Reflexión {#sec-p3d}
+
+**5 puntos**
+
+Responde brevemente:
+
+1. ¿Qué ocurre en MySQL si se intenta insertar una fila en `detalle_pedidos` con un `id_pedido` que no existe en la tabla `pedidos`? ¿Qué mecanismo lo impide?
+
+2. Un desarrollador propone eliminar las claves foráneas para "simplificar" la base de datos y mejorar la velocidad de inserción. Menciona **un riesgo concreto** que generaría esta decisión para DeliverChile, usando un ejemplo de los datos.
+
+3. Completa la siguiente tabla comparando el modelo antes y después de la normalización:
+
+| Dimensión | Tabla plana (antes) | Modelo relacional 3FN (después) |
+|---|---|---|
+| ¿Dónde se almacena el email de un cliente? | En cada fila de sus pedidos | |
+| ¿Cómo se actualiza el nombre de un restaurante? | | |
+| ¿Puede existir un restaurante sin pedidos en el sistema? | No — desaparecería si se borran sus pedidos | |
+
+---
+
+## Criterios de Evaluación
+
+### Pregunta 1 (30 pts)
+
+| Criterio | Puntaje |
+|---|---|
+| A.1: Clasificación correcta de los 3 usuarios (nivel + tipo SI + justificación) | 6 pts |
+| A.2: Explicación del principio de presentación diferenciada por usuario | 4 pts |
+| B.1: Cinco problemas de calidad identificados correctamente | 10 pts |
+| B.2: Crítica a la solución de reemplazo manual | 5 pts |
+| C.1: Explicación del ciclo dato → información → conocimiento aplicado al caso | 5 pts |
+| **Subtotal** | **30 pts** |
+
+### Pregunta 2 (35 pts)
+
+| Criterio | Puntaje |
+|---|---|
+| A.1: Identificación correcta de fase ETL y corrección para los 6 problemas | 8 pts |
+| A.2: Identificación del modelo estrella, tabla de hechos, dimensiones y OLAP | 4 pts |
+| B.1: Recomendaciones justificadas con datos para ambas decisiones | 8 pts |
+| C.1: Cuatro tarjetas con medidas correctas | 5 pts |
+| C.2: Gráfico de barras correctamente configurado y ordenado | 5 pts |
+| C.3: Segmentador funcional y captura de pantalla entregada | 5 pts |
+| **Subtotal** | **35 pts** |
+
+### Pregunta 3 (35 pts)
+
+| Criterio | Puntaje |
+|---|---|
+| A.1: Diagnóstico correcto de 1FN, 2FN y 3FN con ejemplos concretos | 6 pts |
+| A.2: Identificación de anomalía de actualización y anomalía de eliminación | 4 pts |
+| B: Definición correcta de las 4 tablas con columnas y claves | 10 pts |
+| C: Sentencias CREATE TABLE con PK, FK, tipos y restricciones correctos | 10 pts |
+| D: Integridad referencial y tabla comparativa | 5 pts |
+| **Subtotal** | **35 pts** |
+
+| | **Total** | **100 pts** |

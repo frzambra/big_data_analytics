@@ -1,0 +1,7 @@
+RestauranteID,Nombre_Rest,Linea,Activo
+R003,Burger Bros,AMERICANA,TRUE
+R005,El Ceviche,peruana,TRUE
+R007,Taco Loco,mexicana,TRUE
+R008,Pizza Roma,Italiana,TRUE
+R012,Sushi Kioto,japonesa,TRUE
+R017,Don Sushi,japonesa,TRUE

@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Solemne 1: Sistemas de Información y Modelamiento de Datos</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-538d5bc5c147f17fcaa17a1866cecc2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#instrucciones-generales" id="toc-instrucciones-generales" class="nav-link active" data-scroll-target="#instrucciones-generales"><span class="header-section-number">1</span> Instrucciones Generales</a></li>
+  <li><a href="#sec-p1" id="toc-sec-p1" class="nav-link" data-scroll-target="#sec-p1"><span class="header-section-number">2</span> Pregunta 1 — Sistemas de Información y Calidad de Datos</a>
+  <ul class="collapse">
+  <li><a href="#contexto" id="toc-contexto" class="nav-link" data-scroll-target="#contexto"><span class="header-section-number">2.1</span> Contexto</a></li>
+  <li><a href="#sec-p1a" id="toc-sec-p1a" class="nav-link" data-scroll-target="#sec-p1a"><span class="header-section-number">2.2</span> Parte A — Clasificación de Usuarios y Sistemas de Información</a></li>
+  <li><a href="#sec-p1b" id="toc-sec-p1b" class="nav-link" data-scroll-target="#sec-p1b"><span class="header-section-number">2.3</span> Parte B — Auditoría de Calidad de Datos</a></li>
+  <li><a href="#sec-p1c" id="toc-sec-p1c" class="nav-link" data-scroll-target="#sec-p1c"><span class="header-section-number">2.4</span> Parte C — Reflexión sobre el Valor de los Datos</a></li>
+  </ul></li>
+  <li><a href="#sec-p2" id="toc-sec-p2" class="nav-link" data-scroll-target="#sec-p2"><span class="header-section-number">3</span> Pregunta 2 — Del OLTP al Modelo Analítico</a>
+  <ul class="collapse">
+  <li><a href="#contexto-1" id="toc-contexto-1" class="nav-link" data-scroll-target="#contexto-1"><span class="header-section-number">3.1</span> Contexto</a></li>
+  <li><a href="#sec-p2a" id="toc-sec-p2a" class="nav-link" data-scroll-target="#sec-p2a"><span class="header-section-number">3.2</span> Parte A — Identificar Pasos ETL</a></li>
+  <li><a href="#sec-p2b" id="toc-sec-p2b" class="nav-link" data-scroll-target="#sec-p2b"><span class="header-section-number">3.3</span> Parte B — Decisión Basada en Datos</a></li>
+  <li><a href="#sec-p2c" id="toc-sec-p2c" class="nav-link" data-scroll-target="#sec-p2c"><span class="header-section-number">3.4</span> Parte C — Dashboard Ejecutivo en Power BI</a></li>
+  </ul></li>
+  <li><a href="#sec-p3" id="toc-sec-p3" class="nav-link" data-scroll-target="#sec-p3"><span class="header-section-number">4</span> Pregunta 3 — Modelamiento Entidad-Relación</a>
+  <ul class="collapse">
+  <li><a href="#contexto-2" id="toc-contexto-2" class="nav-link" data-scroll-target="#contexto-2"><span class="header-section-number">4.1</span> Contexto</a></li>
+  <li><a href="#sec-p3a" id="toc-sec-p3a" class="nav-link" data-scroll-target="#sec-p3a"><span class="header-section-number">4.2</span> Parte A — Diagnóstico de Normalización</a></li>
+  <li><a href="#sec-p3b" id="toc-sec-p3b" class="nav-link" data-scroll-target="#sec-p3b"><span class="header-section-number">4.3</span> Parte B — Normalizar: Definir las Tablas</a></li>
+  <li><a href="#sec-p3c" id="toc-sec-p3c" class="nav-link" data-scroll-target="#sec-p3c"><span class="header-section-number">4.4</span> Parte C — Sentencias CREATE TABLE en SQL</a></li>
+  <li><a href="#sec-p3d" id="toc-sec-p3d" class="nav-link" data-scroll-target="#sec-p3d"><span class="header-section-number">4.5</span> Parte D — Integridad Referencial y Reflexión</a></li>
+  </ul></li>
+  <li><a href="#criterios-de-evaluación" id="toc-criterios-de-evaluación" class="nav-link" data-scroll-target="#criterios-de-evaluación"><span class="header-section-number">5</span> Criterios de Evaluación</a>
+  <ul class="collapse">
+  <li><a href="#pregunta-1-30-pts" id="toc-pregunta-1-30-pts" class="nav-link" data-scroll-target="#pregunta-1-30-pts"><span class="header-section-number">5.1</span> Pregunta 1 (30 pts)</a></li>
+  <li><a href="#pregunta-2-35-pts" id="toc-pregunta-2-35-pts" class="nav-link" data-scroll-target="#pregunta-2-35-pts"><span class="header-section-number">5.2</span> Pregunta 2 (35 pts)</a></li>
+  <li><a href="#pregunta-3-35-pts" id="toc-pregunta-3-35-pts" class="nav-link" data-scroll-target="#pregunta-3-35-pts"><span class="header-section-number">5.3</span> Pregunta 3 (35 pts)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Solemne 1: Sistemas de Información y Modelamiento de Datos</h1>
+<p class="subtitle lead">S01 · Unidades I y II · Big Data y Analytics · Universidad San Sebastián</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="instrucciones-generales" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="instrucciones-generales"><span class="header-section-number">1</span> Instrucciones Generales</h2>
+<ul>
+<li>Trabajo <strong>individual</strong>.</li>
+<li><strong>Duración total</strong>: 2 horas 30 minutos.</li>
+<li>Sube tus respuestas a la plataforma del curso al finalizar el tiempo.</li>
+<li>Usa los archivos de datos entregados por el docente: <code>solemne_pedidos_planos.csv</code>.</li>
+</ul>
+<p><strong>Distribución de puntaje:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Pregunta</th>
+<th>Tema</th>
+<th>Tiempo sugerido</th>
+<th>Puntaje</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Sistemas de Información y Calidad de Datos</td>
+<td>40 min</td>
+<td>30 pts</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Del OLTP al Modelo Analítico</td>
+<td>50 min</td>
+<td>35 pts</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Modelamiento Entidad-Relación</td>
+<td>60 min</td>
+<td>35 pts</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><strong>Total</strong></td>
+<td><strong>2h 30min</strong></td>
+<td><strong>100 pts</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Responde directamente en este documento (copia la sección en Word/Google Docs) o en el formulario entregado por el docente. Todas las respuestas deben estar <strong>justificadas</strong> con evidencia de los datos.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="sec-p1" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="sec-p1"><span class="header-section-number">2</span> Pregunta 1 — Sistemas de Información y Calidad de Datos</h2>
+<p><strong>40 minutos · 30 puntos</strong></p>
+<section id="contexto" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="contexto"><span class="header-section-number">2.1</span> Contexto</h3>
+<p><strong>DeliverChile</strong> es una plataforma de delivery de comida con operaciones en cuatro regiones del país. Su equipo de TI registra todas las transacciones en una planilla plana llamada <code>solemne_pedidos_planos.csv</code>.</p>
+<p>La gerenta de operaciones, <strong>Valentina</strong>, acaba de contratar a tres analistas con tareas distintas:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Analista</th>
+<th>Rol</th>
+<th>Necesidad de información</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Rodrigo</strong></td>
+<td>Repartidor (turno mañana)</td>
+<td>Saber qué pedidos tiene asignados hoy, la dirección de entrega y el tiempo estimado</td>
+</tr>
+<tr class="even">
+<td><strong>Camila</strong></td>
+<td>Analista de Marketing</td>
+<td>Ver la evolución semanal de pedidos por categoría de cocina y el ticket promedio por comuna</td>
+</tr>
+<tr class="odd">
+<td><strong>Valentina</strong></td>
+<td>Gerenta de Operaciones</td>
+<td>Monitorear los KPIs financieros del mes: ingresos totales, margen promedio y tasa de pedidos con descuento</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sec-p1a" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="sec-p1a"><span class="header-section-number">2.2</span> Parte A — Clasificación de Usuarios y Sistemas de Información</h3>
+<p><strong>10 puntos</strong></p>
+<p><strong>A.1</strong> Para cada analista, clasifica su necesidad según el <strong>nivel organizacional</strong> (Operativo / Táctico / Estratégico) y el <strong>tipo de sistema de información</strong> más adecuado (TPS, MIS/BI, EIS/DSS). Completa la tabla:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Analista</th>
+<th>Nivel organizacional</th>
+<th>Tipo de SI</th>
+<th>Justificación (1–2 líneas)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Rodrigo</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Camila</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Valentina</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>A.2</strong> Imagina que el equipo de TI construye un reporte distinto para cada uno de los tres usuarios. El campo <code>total_pedido</code> del archivo aparece en cada reporte de manera diferente:</p>
+<ul>
+<li>En el reporte de Rodrigo: no aparece — no es relevante para su tarea.</li>
+<li>En el reporte de Camila: aparece agregado como suma semanal por categoría de cocina.</li>
+<li>En el reporte de Valentina: aparece como total mensual comparado con el mes anterior.</li>
+</ul>
+<p>¿Qué principio de los sistemas de información explica que el mismo dato bruto se transforme y presente de manera diferente según el usuario? Justifica en 3 líneas.</p>
+<hr>
+</section>
+<section id="sec-p1b" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="sec-p1b"><span class="header-section-number">2.3</span> Parte B — Auditoría de Calidad de Datos</h3>
+<p><strong>15 puntos</strong></p>
+<p>A continuación se muestra un extracto de <code>solemne_pedidos_planos.csv</code>. Examínalo con atención:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>id_pedido</th>
+<th>fecha_pedido</th>
+<th>cliente_id</th>
+<th>cliente_nombre</th>
+<th>cliente_email</th>
+<th>cliente_comuna</th>
+<th>restaurante_id</th>
+<th>restaurante_nombre</th>
+<th>categoria_cocina</th>
+<th>tiempo_entrega_min</th>
+<th>total_pedido</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>P001</td>
+<td>2024-03-15</td>
+<td>C005</td>
+<td>Ana Torres</td>
+<td>ana.torres@gmail.com</td>
+<td>Ñuñoa</td>
+<td>R012</td>
+<td>Sushi Kioto</td>
+<td>Japonesa</td>
+<td>35</td>
+<td>18500</td>
+</tr>
+<tr class="even">
+<td>P002</td>
+<td>15/03/2024</td>
+<td>C005</td>
+<td>Ana Torres</td>
+<td>ana.torres@hotmail</td>
+<td>Ñuñoa</td>
+<td>R008</td>
+<td>Pizza Roma</td>
+<td>Italiana</td>
+<td>28</td>
+<td>12900</td>
+</tr>
+<tr class="odd">
+<td>P003</td>
+<td>2024-03-16</td>
+<td>C011</td>
+<td>carlos mendez</td>
+<td>carlos.m@gmail.com</td>
+<td>ÑUÑOA</td>
+<td>R012</td>
+<td>Sushi Kioto</td>
+<td>Japonesa</td>
+<td>-12</td>
+<td>22000</td>
+</tr>
+<tr class="even">
+<td>P004</td>
+<td>2024-03-16</td>
+<td>C019</td>
+<td>María López</td>
+<td></td>
+<td>Las Condes</td>
+<td>R003</td>
+<td>Burger Bros</td>
+<td>Americana</td>
+<td>42</td>
+<td>9500</td>
+</tr>
+<tr class="odd">
+<td>P005</td>
+<td>2024-03-17</td>
+<td>C005</td>
+<td>Ana Torres</td>
+<td>ana.torres@gmail.com</td>
+<td>Nuñoa</td>
+<td>R008</td>
+<td>Pizza Roma</td>
+<td>italiana</td>
+<td>31</td>
+<td>15200</td>
+</tr>
+<tr class="even">
+<td>P006</td>
+<td>2024-03-17</td>
+<td>C011</td>
+<td>Carlos Mendez</td>
+<td>carlos.m@gmail.com</td>
+<td>Ñuñoa</td>
+<td>R003</td>
+<td>Burger Bros</td>
+<td>Americana</td>
+<td>55</td>
+<td>8700</td>
+</tr>
+</tbody>
+</table>
+<p><strong>B.1</strong> Identifica al menos <strong>cinco problemas de calidad de datos</strong> presentes en este extracto. Para cada uno, indica la columna afectada, el tipo de problema, la dimensión de calidad comprometida y el impacto potencial en el análisis. Completa la tabla:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>N°</th>
+<th>Columna afectada</th>
+<th>Descripción del problema</th>
+<th>Dimensión de calidad</th>
+<th>Impacto en el análisis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Dimensiones de calidad</strong>: Exactitud, Completitud, Consistencia, Oportunidad.</p>
+</div>
+</div>
+<p><strong>B.2</strong> El equipo de TI propone corregir el problema de la columna <code>cliente_comuna</code> usando Power Query con la siguiente transformación:</p>
+<pre><code>Reemplazar "ÑUÑOA" → "Ñuñoa"
+Reemplazar "Nuñoa" → "Ñuñoa"</code></pre>
+<p>¿Esta corrección es suficiente para garantizar la calidad de esa columna en el dataset completo? ¿Qué limitación tiene esta solución? Responde en 3 líneas.</p>
+<hr>
+</section>
+<section id="sec-p1c" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="sec-p1c"><span class="header-section-number">2.4</span> Parte C — Reflexión sobre el Valor de los Datos</h3>
+<p><strong>5 puntos</strong></p>
+<p><strong>C.1</strong> Valentina quiere saber cuánto tarda en promedio cada repartidor en entregar un pedido, para evaluar si hay diferencias de desempeño entre zonas. Con base en el extracto de datos anterior, ¿puede responder esa pregunta directamente leyendo el CSV? ¿Qué proceso debe ocurrir primero? Explica usando el concepto <strong>dato → información → conocimiento</strong>.</p>
+<hr>
+</section>
+</section>
+<section id="sec-p2" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="sec-p2"><span class="header-section-number">3</span> Pregunta 2 — Del OLTP al Modelo Analítico</h2>
+<p><strong>50 minutos · 35 puntos</strong></p>
+<section id="contexto-1" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="contexto-1"><span class="header-section-number">3.1</span> Contexto</h3>
+<p>El equipo de TI de DeliverChile tiene los datos distribuidos en <strong>tres sistemas OLTP independientes</strong>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Sistema</th>
+<th>Área responsable</th>
+<th>Archivo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sistema de pedidos</td>
+<td>Operaciones</td>
+<td><code>oltp_pedidos.csv</code></td>
+</tr>
+<tr class="even">
+<td>Sistema de clientes</td>
+<td>Marketing</td>
+<td><code>oltp_clientes.csv</code></td>
+</tr>
+<tr class="odd">
+<td>Sistema de restaurantes</td>
+<td>Partnerships</td>
+<td><code>oltp_restaurantes.csv</code></td>
+</tr>
+</tbody>
+</table>
+<p>El analista Juan ejecutó un proceso ETL con Power Query para integrar las tres fuentes. A continuación se describen los problemas que encontró en cada tabla y las transformaciones que aplicó:</p>
+<hr>
+</section>
+<section id="sec-p2a" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="sec-p2a"><span class="header-section-number">3.2</span> Parte A — Identificar Pasos ETL</h3>
+<p><strong>12 puntos</strong></p>
+<p><strong>A.1</strong> Los siguientes son problemas encontrados en las fuentes OLTP. Para cada problema, indica en qué <strong>fase del ETL</strong> se resuelve (Extracción, Transformación o Carga) y describe brevemente <strong>cómo se corregiría en Power Query</strong>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Problema encontrado</th>
+<th>Tabla afectada</th>
+<th>Fase ETL</th>
+<th>Cómo se corrige en Power Query</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>La columna <code>ID_Cliente</code> en pedidos se llama <code>CustomerID</code> en clientes — no se pueden unir directamente</td>
+<td>pedidos / clientes</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>La columna <code>Fecha_Venta</code> en pedidos tiene formato <code>DD/MM/YYYY</code> — Power Query la importa como texto en vez de fecha</td>
+<td>pedidos</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Hay 3 pedidos con <code>Total_Venta</code> igual a 0 o negativo</td>
+<td>pedidos</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>La columna <code>Ciudad</code> tiene valores como “LAS CONDES” / “Las condes” o “providencia” / “Ñuñoa” / “Nuñoa” — mezcla de mayúsculas, minúsculas y errores de escritura</td>
+<td>clientes</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>La columna <code>Linea</code> tiene valores: “japonesa”, “ITALIANA”, “PERUANA”, “Americana” — capitalización inconsistente entre filas</td>
+<td>restaurantes</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Hay 3 clientes sin valor en la columna <code>Correo</code></td>
+<td>clientes</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>A.2</strong> Después de ejecutar el ETL, Juan construyó el siguiente modelo en Power BI:</p>
+<pre><code>[oltp_clientes]  ────┐
+                     ├──→  [oltp_pedidos]  ←──── [oltp_restaurantes]</code></pre>
+<ul>
+<li>¿Cómo se llama este tipo de modelo de datos? ¿Qué tabla es la tabla de hechos y cuáles son las tablas de dimensiones?</li>
+<li>¿Este modelo es más adecuado para un sistema OLTP o OLAP? Justifica en 2 líneas.</li>
+</ul>
+<hr>
+</section>
+<section id="sec-p2b" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="sec-p2b"><span class="header-section-number">3.3</span> Parte B — Decisión Basada en Datos</h3>
+<p><strong>18 puntos</strong></p>
+<p>Después de construir el modelo, Juan generó el siguiente resumen de KPIs para Valentina:</p>
+<p><strong>KPIs del mes de marzo 2024 — DeliverChile:</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Categoría de cocina</th>
+<th>Pedidos totales</th>
+<th>Ingreso total (CLP)</th>
+<th>Ticket promedio (CLP)</th>
+<th>Tiempo promedio entrega (min)</th>
+<th>Tasa de descuento (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Japonesa</td>
+<td>1.842</td>
+<td>47.230.000</td>
+<td>25.640</td>
+<td>38</td>
+<td>12%</td>
+</tr>
+<tr class="even">
+<td>Italiana</td>
+<td>2.315</td>
+<td>38.450.000</td>
+<td>16.610</td>
+<td>29</td>
+<td>8%</td>
+</tr>
+<tr class="odd">
+<td>Americana</td>
+<td>3.108</td>
+<td>28.900.000</td>
+<td>9.300</td>
+<td>22</td>
+<td>5%</td>
+</tr>
+<tr class="even">
+<td>Peruana</td>
+<td>987</td>
+<td>31.750.000</td>
+<td>32.170</td>
+<td>45</td>
+<td>18%</td>
+</tr>
+<tr class="odd">
+<td>Mexicana</td>
+<td>1.203</td>
+<td>19.600.000</td>
+<td>16.290</td>
+<td>31</td>
+<td>14%</td>
+</tr>
+</tbody>
+</table>
+<p>Valentina debe tomar <strong>dos decisiones</strong> este mes:</p>
+<ol type="1">
+<li><p><strong>Decisión de campaña de marketing</strong>: tiene un presupuesto de $8.000.000 CLP para promocionar <strong>una sola categoría de cocina</strong>. El objetivo es maximizar el ingreso total.</p></li>
+<li><p><strong>Decisión de eficiencia operacional</strong>: quiere identificar qué categoría tiene el <strong>mayor problema de tiempos de entrega</strong> para asignar más repartidores.</p></li>
+</ol>
+<p><strong>B.1</strong> Responde cada decisión con una recomendación basada en los datos de la tabla. Para cada recomendación incluye: - La categoría elegida. - Al menos <strong>dos indicadores</strong> de la tabla que justifican la decisión. - Una <strong>limitación</strong> del análisis (¿qué dato te faltaría para estar más seguro?).</p>
+<hr>
+</section>
+<section id="sec-p2c" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="sec-p2c"><span class="header-section-number">3.4</span> Parte C — Dashboard Ejecutivo en Power BI</h3>
+<p><strong>15 puntos</strong></p>
+<p>Con el modelo estrella construido en la Parte A, construye en Power BI una página llamada <strong>“Vista Ejecutiva”</strong> diseñada para Valentina (nivel estratégico).</p>
+<p><strong>Archivo de datos</strong>: usa <code>solemne_modelo.pbix</code> entregado por el docente — las tres tablas ya están cargadas, relacionadas y con los nombres de columna ya limpios según la siguiente tabla de renombrado aplicada durante el ETL:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Nombre original (OLTP)</th>
+<th>Nombre en el <code>.pbix</code></th>
+<th>Tabla</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Total_Venta</code></td>
+<td><code>total_pedido</code></td>
+<td><code>oltp_pedidos</code></td>
+</tr>
+<tr class="even">
+<td><code>Tiempo_Entrega</code></td>
+<td><code>tiempo_entrega_min</code></td>
+<td><code>oltp_pedidos</code></td>
+</tr>
+<tr class="odd">
+<td><code>Linea</code></td>
+<td><code>categoria_cocina</code></td>
+<td><code>oltp_restaurantes</code></td>
+</tr>
+</tbody>
+</table>
+<p>El dashboard debe incluir exactamente los siguientes elementos:</p>
+<p><strong>C.1</strong> Cuatro <strong>tarjetas de KPI</strong>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tarjeta</th>
+<th>Qué mostrar</th>
+<th>Campo fuente</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ingreso total del período</td>
+<td>Suma de <code>total_pedido</code></td>
+<td><code>oltp_pedidos</code></td>
+</tr>
+<tr class="even">
+<td>Número de pedidos</td>
+<td>Conteo de filas</td>
+<td><code>oltp_pedidos</code></td>
+</tr>
+<tr class="odd">
+<td>Ticket promedio</td>
+<td>Ingreso total ÷ Nº de pedidos</td>
+<td>Medida calculada</td>
+</tr>
+<tr class="even">
+<td>Tiempo promedio de entrega</td>
+<td>Promedio de <code>tiempo_entrega_min</code></td>
+<td><code>oltp_pedidos</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>C.2</strong> Un <strong>gráfico de barras</strong> con:</p>
+<ul>
+<li>Eje: <code>categoria_cocina</code> (de <code>oltp_restaurantes</code>)</li>
+<li>Valores: suma de <code>total_pedido</code></li>
+<li>Ordenado de mayor a menor ingreso</li>
+<li>Título: “Ingreso por Categoría de Cocina”</li>
+</ul>
+<p><strong>C.3</strong> Un <strong>segmentador</strong> por <code>categoria_cocina</code> que filtre toda la página.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Criterio de diseño</strong>: el dashboard debe permitir a Valentina responder en menos de 10 segundos las preguntas: ¿cuánto ingresamos este período? ¿qué categoría genera más ingresos?</p>
+</div>
+</div>
+<p><strong>Entregable</strong>: captura de pantalla de la página completa, guardada como <code>S01_dashboard_[apellido].png</code> y subida junto con el resto de las respuestas.</p>
+<hr>
+</section>
+</section>
+<section id="sec-p3" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="sec-p3"><span class="header-section-number">4</span> Pregunta 3 — Modelamiento Entidad-Relación</h2>
+<p><strong>60 minutos · 35 puntos</strong></p>
+<section id="contexto-2" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="contexto-2"><span class="header-section-number">4.1</span> Contexto</h3>
+<p>El equipo de TI de DeliverChile todavía almacena toda la información en una única tabla plana: <code>solemne_pedidos_planos.csv</code>. Tu tarea es diseñar el modelo relacional que permitirá migrar esta información a una base de datos MySQL.</p>
+<p>La tabla plana tiene las siguientes columnas:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Columna</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>id_pedido</code></td>
+<td>Identificador único del pedido</td>
+</tr>
+<tr class="even">
+<td><code>fecha_pedido</code></td>
+<td>Fecha y hora de la transacción</td>
+</tr>
+<tr class="odd">
+<td><code>cliente_id</code></td>
+<td>Código del cliente</td>
+</tr>
+<tr class="even">
+<td><code>cliente_nombre</code></td>
+<td>Nombre completo del cliente</td>
+</tr>
+<tr class="odd">
+<td><code>cliente_email</code></td>
+<td>Correo electrónico del cliente</td>
+</tr>
+<tr class="even">
+<td><code>cliente_telefono</code></td>
+<td>Teléfono del cliente</td>
+</tr>
+<tr class="odd">
+<td><code>cliente_comuna</code></td>
+<td>Comuna de residencia del cliente</td>
+</tr>
+<tr class="even">
+<td><code>restaurante_id</code></td>
+<td>Código del restaurante</td>
+</tr>
+<tr class="odd">
+<td><code>restaurante_nombre</code></td>
+<td>Nombre del restaurante</td>
+</tr>
+<tr class="even">
+<td><code>categoria_cocina</code></td>
+<td>Tipo de cocina (Japonesa, Italiana, etc.)</td>
+</tr>
+<tr class="odd">
+<td><code>repartidor_id</code></td>
+<td>Código del repartidor asignado</td>
+</tr>
+<tr class="even">
+<td><code>tiempo_entrega_min</code></td>
+<td>Minutos transcurridos desde el pedido hasta la entrega</td>
+</tr>
+<tr class="odd">
+<td><code>producto_id</code></td>
+<td>Código del producto pedido</td>
+</tr>
+<tr class="even">
+<td><code>producto_nombre</code></td>
+<td>Nombre del plato</td>
+</tr>
+<tr class="odd">
+<td><code>precio_unitario</code></td>
+<td>Precio de venta del producto</td>
+</tr>
+<tr class="even">
+<td><code>cantidad</code></td>
+<td>Unidades pedidas</td>
+</tr>
+<tr class="odd">
+<td><code>descuento_pct</code></td>
+<td>Porcentaje de descuento aplicado</td>
+</tr>
+<tr class="even">
+<td><code>total_pedido</code></td>
+<td>Monto total del pedido (precio × cantidad × (1 − descuento))</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong><code>total_pedido</code> es una columna derivada</strong>: su valor se puede calcular en cualquier momento a partir de <code>precio_unitario</code>, <code>cantidad</code> y <code>descuento_pct</code>. En el modelo relacional normalizado, este campo <strong>no se almacena</strong> — se obtiene mediante una consulta. Identificar esto es parte del ejercicio.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="sec-p3a" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="sec-p3a"><span class="header-section-number">4.2</span> Parte A — Diagnóstico de Normalización</h3>
+<p><strong>10 puntos</strong></p>
+<p><strong>A.1</strong> Responde el siguiente diagnóstico de formas normales para la tabla plana:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pregunta</th>
+<th>Respuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¿La tabla cumple la <strong>1FN</strong>? ¿Por qué sí o no?</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Asumiendo clave compuesta <code>(id_pedido, producto_id)</code>, ¿cumple la <strong>2FN</strong>? Identifica una dependencia parcial concreta (nombra las columnas implicadas).</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>¿Cumple la <strong>3FN</strong>? Identifica una dependencia transitiva concreta (nombra las columnas implicadas).</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>A.2</strong> Contesta estas preguntas mirando la estructura de la tabla:</p>
+<ol type="1">
+<li>Si el restaurante “Sushi Kioto” cambia su categoría de cocina de “Japonesa” a “Asiática fusion”, ¿cuántas filas habría que actualizar? ¿Qué anomalía describe este problema?</li>
+<li>Si eliminamos todos los pedidos del cliente C005, ¿qué información perdemos que no debería perderse?</li>
+</ol>
+<hr>
+</section>
+<section id="sec-p3b" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="sec-p3b"><span class="header-section-number">4.3</span> Parte B — Normalizar: Definir las Tablas</h3>
+<p><strong>10 puntos</strong></p>
+<p>Aplicando las tres formas normales, la tabla plana debe separarse en <strong>4 tablas</strong>. Completa la definición de cada tabla indicando su clave primaria y las columnas que contiene:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tabla</th>
+<th>Clave primaria</th>
+<th>Columnas que incluye</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>clientes</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>restaurantes</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>pedidos</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>detalle_pedidos</code></td>
+<td><em>(compuesta)</em></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Pista</strong>: La columna <code>repartidor_id</code> pertenece al pedido (un repartidor se asigna a un pedido completo, no a cada ítem). No es necesario crear una tabla separada de repartidores para este ejercicio.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Al terminar deberías tener 4 tablas</strong>: <code>clientes</code>, <code>restaurantes</code>, <code>pedidos</code> y <code>detalle_pedidos</code>. Define también las claves foráneas de las tablas que las necesiten.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="sec-p3c" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="sec-p3c"><span class="header-section-number">4.4</span> Parte C — Sentencias CREATE TABLE en SQL</h3>
+<p><strong>10 puntos</strong></p>
+<p>Escribe las sentencias <code>CREATE TABLE</code> para las tablas <strong><code>restaurantes</code></strong> y <strong><code>pedidos</code></strong>. Se te entrega la tabla <code>clientes</code> ya resuelta como referencia.</p>
+<p><strong>Referencia — Tabla <code>clientes</code> (ya resuelta):</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> clientes (</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    cliente_id      <span class="dt">INT</span>           <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    nombre          <span class="dt">VARCHAR</span>(<span class="dv">100</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    email           <span class="dt">VARCHAR</span>(<span class="dv">100</span>)  <span class="kw">UNIQUE</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    telefono        <span class="dt">VARCHAR</span>(<span class="dv">15</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    comuna          <span class="dt">VARCHAR</span>(<span class="dv">50</span>)   <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Tu tarea — Tabla <code>restaurantes</code></strong> (escríbela desde cero):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Escribe aquí la sentencia CREATE TABLE restaurantes</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Recuerda: incluir PK, nombre, categoria_cocina con restricción de valores válidos</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Tu tarea — Tabla <code>pedidos</code></strong> (escríbela desde cero):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Escribe aquí la sentencia CREATE TABLE pedidos</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Recuerda:</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">--   - PK: id_pedido</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">--   - FK hacia clientes</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">--   - FK hacia restaurantes</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">--   - repartidor_id como atributo simple (INT)</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">--   - fecha_pedido como DATETIME</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">--   - tiempo_entrega_min como INT</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Orden de creación</strong>: Crea primero las tablas sin dependencias foráneas (<code>clientes</code>, <code>restaurantes</code>), luego las que dependen de ellas (<code>pedidos</code>, <code>detalle_pedidos</code>).</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="sec-p3d" class="level3" data-number="4.5">
+<h3 data-number="4.5" class="anchored" data-anchor-id="sec-p3d"><span class="header-section-number">4.5</span> Parte D — Integridad Referencial y Reflexión</h3>
+<p><strong>5 puntos</strong></p>
+<p>Responde brevemente:</p>
+<ol type="1">
+<li><p>¿Qué ocurre en MySQL si se intenta insertar una fila en <code>detalle_pedidos</code> con un <code>id_pedido</code> que no existe en la tabla <code>pedidos</code>? ¿Qué mecanismo lo impide?</p></li>
+<li><p>Un desarrollador propone eliminar las claves foráneas para “simplificar” la base de datos y mejorar la velocidad de inserción. Menciona <strong>un riesgo concreto</strong> que generaría esta decisión para DeliverChile, usando un ejemplo de los datos.</p></li>
+<li><p>Completa la siguiente tabla comparando el modelo antes y después de la normalización:</p></li>
+</ol>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dimensión</th>
+<th>Tabla plana (antes)</th>
+<th>Modelo relacional 3FN (después)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¿Dónde se almacena el email de un cliente?</td>
+<td>En cada fila de sus pedidos</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>¿Cómo se actualiza el nombre de un restaurante?</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>¿Puede existir un restaurante sin pedidos en el sistema?</td>
+<td>No — desaparecería si se borran sus pedidos</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="criterios-de-evaluación" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="criterios-de-evaluación"><span class="header-section-number">5</span> Criterios de Evaluación</h2>
+<section id="pregunta-1-30-pts" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="pregunta-1-30-pts"><span class="header-section-number">5.1</span> Pregunta 1 (30 pts)</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Criterio</th>
+<th>Puntaje</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A.1: Clasificación correcta de los 3 usuarios (nivel + tipo SI + justificación)</td>
+<td>6 pts</td>
+</tr>
+<tr class="even">
+<td>A.2: Explicación del principio de presentación diferenciada por usuario</td>
+<td>4 pts</td>
+</tr>
+<tr class="odd">
+<td>B.1: Cinco problemas de calidad identificados correctamente</td>
+<td>10 pts</td>
+</tr>
+<tr class="even">
+<td>B.2: Crítica a la solución de reemplazo manual</td>
+<td>5 pts</td>
+</tr>
+<tr class="odd">
+<td>C.1: Explicación del ciclo dato → información → conocimiento aplicado al caso</td>
+<td>5 pts</td>
+</tr>
+<tr class="even">
+<td><strong>Subtotal</strong></td>
+<td><strong>30 pts</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="pregunta-2-35-pts" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="pregunta-2-35-pts"><span class="header-section-number">5.2</span> Pregunta 2 (35 pts)</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Criterio</th>
+<th>Puntaje</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A.1: Identificación correcta de fase ETL y corrección para los 6 problemas</td>
+<td>8 pts</td>
+</tr>
+<tr class="even">
+<td>A.2: Identificación del modelo estrella, tabla de hechos, dimensiones y OLAP</td>
+<td>4 pts</td>
+</tr>
+<tr class="odd">
+<td>B.1: Recomendaciones justificadas con datos para ambas decisiones</td>
+<td>8 pts</td>
+</tr>
+<tr class="even">
+<td>C.1: Cuatro tarjetas con medidas correctas</td>
+<td>5 pts</td>
+</tr>
+<tr class="odd">
+<td>C.2: Gráfico de barras correctamente configurado y ordenado</td>
+<td>5 pts</td>
+</tr>
+<tr class="even">
+<td>C.3: Segmentador funcional y captura de pantalla entregada</td>
+<td>5 pts</td>
+</tr>
+<tr class="odd">
+<td><strong>Subtotal</strong></td>
+<td><strong>35 pts</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="pregunta-3-35-pts" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="pregunta-3-35-pts"><span class="header-section-number">5.3</span> Pregunta 3 (35 pts)</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Criterio</th>
+<th>Puntaje</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A.1: Diagnóstico correcto de 1FN, 2FN y 3FN con ejemplos concretos</td>
+<td>6 pts</td>
+</tr>
+<tr class="even">
+<td>A.2: Identificación de anomalía de actualización y anomalía de eliminación</td>
+<td>4 pts</td>
+</tr>
+<tr class="odd">
+<td>B: Definición correcta de las 4 tablas con columnas y claves</td>
+<td>10 pts</td>
+</tr>
+<tr class="even">
+<td>C: Sentencias CREATE TABLE con PK, FK, tipos y restricciones correctos</td>
+<td>10 pts</td>
+</tr>
+<tr class="odd">
+<td>D: Integridad referencial y tabla comparativa</td>
+<td>5 pts</td>
+</tr>
+<tr class="even">
+<td><strong>Subtotal</strong></td>
+<td><strong>35 pts</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">| <strong>Total</strong> | <strong>100 pts</strong> |</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

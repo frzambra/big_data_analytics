@@ -6,6 +6,7 @@ project:
     - clases/*.qmd
     - labs/instrucciones/*.qmd
     - labs/solucion/*.qmd
+    - solemnes/Solemne_01/*.qmd
 
 format:
   revealjs:

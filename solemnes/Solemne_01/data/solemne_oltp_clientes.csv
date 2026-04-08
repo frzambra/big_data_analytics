@@ -1,0 +1,17 @@
+CustomerID,NombreCompleto,Correo,Ciudad,FechaRegistro,TipoCliente
+C001,Pedro Álvarez,pedro.alvarez@gmail.com,providencia,11/05/2022,Premium
+C002,Isabel Rojas,isabel.rojas@yahoo.com,LAS CONDES,24/01/2023,Básico
+C003,Diego Morales,diego.morales@gmail.com,providencia,28/06/2022,Básico
+C004,Sofía Castro,sofia.castro@hotmail.com,VITACURA,05/11/2022,Estándar
+C005,Ana Torres,ana.torres@gmail.com,Nuñoa,01/01/2022,Estándar
+C006,Martín Vega,martin.vega@gmail.com,MAIPU,04/08/2022,Estándar
+C007,Catalina Muñoz,catalina.munoz@gmail.com,SAN MIGUEL,26/11/2022,Estándar
+C008,Andrés Pinto,andres.pinto@outlook.com,LA FLORIDA,29/03/2023,Básico
+C009,Valentina Silva,v.silva@empresa.cl,Peñalolén,08/06/2023,Estándar
+C010,Rodrigo Herrera,,macul,23/06/2022,Básico
+C011,Carlos Mendez,carlos.m@gmail.com,Ñuñoa,18/10/2022,Básico
+C012,Francisca Lagos,francisca.lagos@gmail.com,recoleta,10/12/2022,Premium
+C013,Tomás Espinoza,tomas.esp@hotmail,Cerrillos,14/11/2022,Premium
+C014,Javiera Contreras,javiera.c@gmail.com,Lo Barnechea,31/05/2022,Premium
+C015,Nicolás Farías,,Pudahuel,08/09/2022,Estándar
+C019,María López,,Las condes,16/03/2022,Estándar

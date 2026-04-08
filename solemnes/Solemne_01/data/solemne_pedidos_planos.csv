@@ -1,0 +1,69 @@
+id_pedido,fecha_pedido,cliente_id,cliente_nombre,cliente_email,cliente_telefono,cliente_comuna,restaurante_id,restaurante_nombre,categoria_cocina,repartidor_id,tiempo_entrega_min,producto_id,producto_nombre,precio_unitario,cantidad,descuento_pct,total_pedido
+P001,2024-03-15,C005,Ana Torres,ana.torres@gmail.com,956789012,Ñuñoa,R012,Sushi Kioto,Japonesa,D03,35,PRD001,Salmón Roll,9250,2,0,18500
+P002,15/03/2024,C005,Ana Torres,ana.torres@hotmail,956789012,Ñuñoa,R008,Pizza Roma,Italiana,D05,28,PRD006,Pizza Napolitana,12900,1,0,12900
+P003,2024-03-16,C011,carlos mendez,carlos.m@gmail.com,912345679,ÑUÑOA,R012,Sushi Kioto,Japonesa,D03,-12,PRD002,Temaki Mixto,11000,2,0,22000
+P004,2024-03-16,C019,María López,,967890124,Las Condes,R003,Burger Bros,Americana,D07,42,PRD008,Burger Clásica,9500,1,0,9500
+P005,2024-03-17,C005,Ana Torres,ana.torres@gmail.com,956789012,Nuñoa,R008,Pizza Roma,italiana,D05,31,PRD007,Pasta Carbonara,7600,2,0,15200
+P006,2024-03-17,C011,Carlos Mendez,carlos.m@gmail.com,912345679,Ñuñoa,R003,Burger Bros,Americana,D07,55,PRD009,Burger BBQ,8700,1,0,8700
+P007,2024-01-10,C011,Carlos Mendez,carlos.m@gmail.com,912345679,Ñuñoa,R007,Taco Loco,Mexicana,D02,45,PRD014,Tacos al Pastor,6500,2,0,13000
+P008,2024-01-11,C008,Andrés Pinto,andres.pinto@outlook.com,989012345,La Florida,R008,Pizza Roma,Italiana,D08,51,PRD007,Pasta Carbonara,7600,2,10,13680
+P009,2024-01-14,C008,Andrés Pinto,andres.pinto@outlook.com,989012345,La Florida,R007,Taco Loco,Mexicana,D04,38,PRD016,Quesadilla,5500,1,0,5500
+P010,2024-01-14,C011,Carlos Mendez,carlos.m@gmail.com,912345679,Ñuñoa,R012,Sushi Kioto,Japonesa,D02,22,PRD001,Salmón Roll,9250,1,10,8325
+P011,2024-01-14,C013,Tomás Espinoza,tomas.esp@hotmail,934567891,Cerrillos,R017,Don Sushi,Japonesa,D05,28,PRD004,Dragon Roll,9000,1,0,9000
+P012,2024-01-18,C008,Andrés Pinto,andres.pinto@outlook.com,989012345,La Florida,R003,Burger Bros,Americana,D05,41,PRD010,Papas Fritas,2500,1,10,2250
+P013,2024-01-18,C002,Isabel Rojas,isabel.rojas@yahoo.com,923456789,Las Condes,R003,Burger Bros,Americana,D03,28,PRD008,Burger Clásica,9500,2,10,17100
+P014,2024-01-18,C013,Tomás Espinoza,tomas.esp@hotmail,934567891,Cerrillos,R005,El Ceviche,Peruana,D04,43,PRD011,Ceviche Clásico,9500,2,0,19000
+P015,2024-01-19,C001,Pedro Álvarez,pedro.alvarez@gmail.com,912345678,Providencia,R012,Sushi Kioto,Japonesa,D04,55,PRD003,Ramen Tonkotsu,9500,1,0,9500
+P016,2024-01-22,C001,Pedro Álvarez,pedro.alvarez@gmail.com,912345678,Providencia,R017,Don Sushi,Japonesa,D05,23,PRD004,Dragon Roll,9000,1,20,7200
+P017,2024-01-22,C003,Diego Morales,diego.morales@gmail.com,934567890,Providencia,R007,Taco Loco,Mexicana,D04,22,PRD015,Burrito Especial,8000,2,20,12800
+P018,2024-01-22,C005,Ana Torres,ana.torres@gmail.com,956789012,Ñuñoa,R008,Pizza Roma,Italiana,D02,18,PRD006,Pizza Napolitana,12900,2,10,23220
+P019,2024-01-23,C014,Javiera Contreras,javiera.c@gmail.com,945678902,Lo Barnechea,R003,Burger Bros,Americana,D05,33,PRD008,Burger Clásica,9500,1,0,9500
+P020,2024-01-23,C003,Diego Morales,diego.morales@gmail.com,934567890,Providencia,R008,Pizza Roma,Italiana,D05,50,PRD005,Pizza Margherita,8900,1,10,8010
+P021,2024-01-23,C005,Ana Torres,ana.torres@gmail.com,956789012,Nuñoa,R012,Sushi Kioto,Japonesa,D01,53,PRD003,Ramen Tonkotsu,9500,2,10,17100
+P022,2024-01-23,C011,Carlos Mendez,carlos.m@gmail.com,912345679,Ñuñoa,R007,Taco Loco,Mexicana,D06,31,PRD014,Tacos al Pastor,6500,1,10,5850
+P023,2024-01-24,C013,Tomás Espinoza,tomas.esp@hotmail,934567891,Cerrillos,R007,Taco Loco,Mexicana,D07,52,PRD015,Burrito Especial,8000,2,0,16000
+P024,2024-01-25,C002,Isabel Rojas,isabel.rojas@yahoo.com,923456789,Las Condes,R007,Taco Loco,Mexicana,D05,20,PRD015,Burrito Especial,8000,2,10,14400
+P025,2024-01-26,C002,Isabel Rojas,isabel.rojas@yahoo.com,923456789,Las Condes,R012,Sushi Kioto,Japonesa,D05,49,PRD001,Salmón Roll,9250,1,10,8325
+P026,2024-01-30,C014,Javiera Contreras,javiera.c@gmail.com,945678902,Lo Barnechea,R007,Taco Loco,Mexicana,D04,27,PRD016,Quesadilla,5500,2,20,8800
+P027,2024-01-30,C013,Tomás Espinoza,tomas.esp@hotmail,934567891,Cerrillos,R007,Taco Loco,Mexicana,D07,27,PRD016,Quesadilla,5500,1,20,4400
+P028,2024-02-02,C010,Rodrigo Herrera,rodrigo.herrera@gmail.com,901234567,Macul,R012,Sushi Kioto,Japonesa,D01,50,PRD001,Salmón Roll,9250,1,20,7400
+P029,2024-02-03,C006,Martín Vega,martin.vega@gmail.com,967890123,Maipú,R008,Pizza Roma,Italiana,D07,53,PRD006,Pizza Napolitana,12900,2,0,25800
+P030,2024-02-03,C019,María López,,967890124,Las Condes,R007,Taco Loco,Mexicana,D06,45,PRD016,Quesadilla,5500,1,0,5500
+P031,2024-02-05,C008,Andrés Pinto,andres.pinto@outlook.com,989012345,La Florida,R007,Taco Loco,Mexicana,D06,28,PRD015,Burrito Especial,8000,2,0,16000
+P032,2024-02-05,C012,Francisca Lagos,francisca.lagos@gmail.com,923456780,Recoleta,R012,Sushi Kioto,Japonesa,D02,44,PRD001,Salmón Roll,9250,2,0,18500
+P033,2024-02-06,C014,Javiera Contreras,javiera.c@gmail.com,945678902,Lo Barnechea,R017,Don Sushi,Japonesa,D07,20,PRD004,Dragon Roll,9000,1,0,9000
+P034,2024-02-08,C013,Tomás Espinoza,tomas.esp@hotmail,934567891,Cerrillos,R008,Pizza Roma,Italiana,D04,47,PRD005,Pizza Margherita,8900,2,0,17800
+P035,2024-02-10,C002,Isabel Rojas,isabel.rojas@yahoo.com,923456789,Las Condes,R012,Sushi Kioto,Japonesa,D04,43,PRD001,Salmón Roll,9250,1,10,8325
+P036,2024-02-12,C008,Andrés Pinto,andres.pinto@outlook.com,989012345,La Florida,R017,Don Sushi,Japonesa,D03,34,PRD004,Dragon Roll,9000,1,0,9000
+P037,2024-02-15,C005,Ana Torres,ana.torres@hotmail.com,956789012,Ñuñoa,R005,El Ceviche,Peruana,D02,24,PRD012,Lomo Saltado,11000,1,0,11000
+P038,2024-02-16,C019,María López,,967890124,Las Condes,R012,Sushi Kioto,Japonesa,D07,38,PRD002,Temaki Mixto,11000,2,10,19800
+P039,2024-02-17,C014,Javiera Contreras,javiera.c@gmail.com,945678902,Lo Barnechea,R017,Don Sushi,Japonesa,D04,34,PRD004,Dragon Roll,9000,2,0,18000
+P040,2024-02-17,C005,Ana Torres,ana.torres@gmail.com,956789012,ÑUÑOA,R003,Burger Bros,Americana,D06,36,PRD008,Burger Clásica,9500,1,0,9500
+P041,2024-02-17,C019,María López,,967890124,Las Condes,R003,Burger Bros,Americana,D06,38,PRD010,Papas Fritas,2500,1,10,2250
+P042,2024-02-18,C011,CARLOS MENDEZ,carlos.m@gmail.com,912345679,Ñuñoa,R007,Taco Loco,Mexicana,D03,45,PRD016,Quesadilla,5500,1,0,5500
+P043,2024-02-21,C015,Nicolás Farías,nicolas.farias@gmail.com,956789013,Pudahuel,R017,Don Sushi,Japonesa,D04,22,PRD004,Dragon Roll,9000,1,20,7200
+P044,2024-02-22,C009,Valentina Silva,v.silva@empresa.cl,990123456,Peñalolén,R012,Sushi Kioto,Japonesa,D02,33,PRD002,Temaki Mixto,11000,1,0,11000
+P045,2024-02-22,C015,Nicolás Farías,nicolas.farias@gmail.com,956789013,Pudahuel,R003,Burger Bros,Americana,D02,21,PRD010,Papas Fritas,2500,2,10,4500
+P046,2024-02-23,C005,Ana Torres,ana.torres@gmail.com,956789012,Ñuñoa,R003,Burger Bros,Americana,D04,50,PRD010,Papas Fritas,2500,2,0,5000
+P047,2024-02-25,C010,Rodrigo Herrera,rodrigo.herrera@gmail.com,901234567,Macul,R012,Sushi Kioto,Japonesa,D06,49,PRD001,Salmón Roll,9250,1,0,9250
+P048,2024-02-26,C004,Sofía Castro,sofia.castro@hotmail.com,945678901,Vitacura,R012,Sushi Kioto,Japonesa,D04,37,PRD003,Ramen Tonkotsu,9500,2,10,17100
+P049,2024-02-27,C007,Catalina Muñoz,catalina.munoz@gmail.com,978901234,San Miguel,R007,Taco Loco,Mexicana,D04,39,PRD014,Tacos al Pastor,6500,1,0,6500
+P050,2024-02-28,C009,Valentina Silva,v.silva@empresa.cl,990123456,Peñalolén,R005,El Ceviche,Peruana,D01,28,PRD012,Lomo Saltado,11000,2,0,22000
+P051,2024-03-02,C015,Nicolás Farías,nicolas.farias@gmail.com,956789013,Pudahuel,R012,Sushi Kioto,Japonesa,D08,33,PRD003,Ramen Tonkotsu,9500,2,20,15200
+P052,2024-03-02,C013,Tomás Espinoza,tomas.esp@hotmail,934567891,Cerrillos,R005,El Ceviche,Peruana,D01,29,PRD012,Lomo Saltado,11000,2,20,17600
+P053,2024-03-03,C004,Sofía Castro,sofia.castro@hotmail.com,945678901,Vitacura,R012,Sushi Kioto,Japonesa,D01,53,PRD003,Ramen Tonkotsu,9500,1,10,8550
+P054,2024-03-04,C004,Sofía Castro,sofia.castro@hotmail.com,945678901,Vitacura,R008,Pizza Roma,Italiana,D05,18,PRD007,Pasta Carbonara,7600,1,10,6840
+P055,2024-03-04,C002,Isabel Rojas,isabel.rojas@yahoo.com,923456789,Las Condes,R012,Sushi Kioto,Japonesa,D03,48,PRD001,Salmón Roll,9250,1,0,9250
+P056,2024-03-04,C002,Isabel Rojas,isabel.rojas@yahoo.com,923456789,Las Condes,R005,El Ceviche,Peruana,D04,52,PRD011,Ceviche Clásico,9500,2,0,19000
+P057,2024-03-04,C011,carlos mendez,carlos.m@gmail.com,912345679,Nuñoa,R007,Taco Loco,Mexicana,D05,28,PRD014,Tacos al Pastor,6500,2,10,11700
+P058,2024-03-05,C014,Javiera Contreras,javiera.c@gmail.com,945678902,Lo Barnechea,R017,Don Sushi,Japonesa,D05,39,PRD004,Dragon Roll,9000,1,0,9000
+P059,2024-03-05,C019,María López,,967890124,Las Condes,R007,Taco Loco,Mexicana,D05,20,PRD014,Tacos al Pastor,6500,1,10,5850
+P060,2024-03-05,C019,María López,,967890124,Las Condes,R007,Taco Loco,Mexicana,D07,18,PRD014,Tacos al Pastor,6500,1,0,6500
+P061,2024-03-09,C014,Javiera Contreras,javiera.c@gmail.com,945678902,Lo Barnechea,R007,Taco Loco,Mexicana,D02,28,PRD016,Quesadilla,5500,1,0,5500
+P062,2024-03-09,C004,Sofía Castro,sofia.castro@hotmail.com,945678901,Vitacura,R003,Burger Bros,Americana,D07,40,PRD008,Burger Clásica,9500,2,0,19000
+P063,2024-03-11,C006,Martín Vega,martin.vega@gmail.com,967890123,Maipú,R005,El Ceviche,Peruana,D01,38,PRD011,Ceviche Clásico,9500,1,0,9500
+P064,2024-03-12,C006,Martín Vega,martin.vega@gmail.com,967890123,Maipú,R005,El Ceviche,Peruana,D04,54,PRD011,Ceviche Clásico,9500,1,0,9500
+P065,2024-03-12,C001,Pedro Álvarez,pedro.alvarez@gmail.com,912345678,Providencia,R017,Don Sushi,Japonesa,D02,33,PRD004,Dragon Roll,9000,1,0,9000
+P066,2024-03-12,C005,Ana Torres,ana.torres@gmail.com,956789012,Ñuñoa,R012,Sushi Kioto,Japonesa,D06,31,PRD001,Salmón Roll,9250,2,10,16650
+P067,2024-03-13,C007,Catalina Muñoz,catalina.munoz@gmail.com,978901234,San Miguel,R008,Pizza Roma,Italiana,D02,31,PRD006,Pizza Napolitana,12900,2,0,25800
+P068,2024-03-13,C015,Nicolás Farías,nicolas.farias@gmail.com,956789013,Pudahuel,R012,Sushi Kioto,Japonesa,D07,41,PRD002,Temaki Mixto,11000,1,0,11000

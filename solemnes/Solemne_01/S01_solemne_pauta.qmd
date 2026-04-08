@@ -1,0 +1,330 @@
+---
+title: "Pauta — Solemne 1: Sistemas de Información y Modelamiento de Datos"
+subtitle: "S01 · Unidades I y II · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+::: {.callout-warning}
+**Documento de uso exclusivo del docente.** No distribuir a los estudiantes.
+:::
+
+---
+
+## Pregunta 1 — Sistemas de Información y Calidad de Datos {#sec-p1}
+
+### Parte A — Clasificación de Usuarios y Sistemas de Información
+
+**A.1** Clasificación de usuarios:
+
+| Analista | Nivel organizacional | Tipo de SI | Justificación |
+|---|---|---|---|
+| **Rodrigo** | Operativo | TPS | Necesita datos transaccionales en tiempo real (pedidos del día, dirección, tiempo estimado). El TPS registra y procesa operaciones individuales a nivel de ejecución. |
+| **Camila** | Táctico | MIS / BI | Necesita agregados semanales y tendencias por segmento (categoría de cocina, commune). El MIS/BI transforma datos operacionales en reportes de gestión para la toma de decisiones de mediano plazo. |
+| **Valentina** | Estratégico | EIS / DSS | Necesita KPIs financieros del mes para monitorear la salud del negocio y tomar decisiones de alto nivel. El EIS/DSS provee indicadores consolidados orientados a la dirección. |
+
+::: {.callout-note}
+**Criterio de corrección**: 0,5 pts por nivel correcto + 0,5 pts por tipo SI correcto + 1 pt por justificación pertinente = 2 pts por fila × 3 filas = 6 pts.
+:::
+
+---
+
+**A.2** Principio explicativo:
+
+El principio es el de **adecuación de la información al usuario** (también llamado *relevancia contextual* o *presentación orientada al rol*). Un sistema de información no entrega los datos brutos a todos por igual: transforma y agrega los datos según el nivel organizacional y el propósito de cada usuario. El dato `total_pedido` es el mismo en la fuente, pero Rodrigo no lo necesita (su tarea es operativa), Camila lo agrega por semana y categoría (análisis táctico), y Valentina lo compara mes a mes (control estratégico). La misma fuente de datos produce información distinta porque el contexto de decisión es distinto.
+
+::: {.callout-note}
+**Criterio**: 4 pts. Se espera que mencione el concepto de adecuación/relevancia al rol y ejemplifique con los tres niveles.
+:::
+
+---
+
+### Parte B — Auditoría de Calidad de Datos
+
+**B.1** Problemas de calidad en el extracto:
+
+| N° | Columna afectada | Descripción del problema | Dimensión de calidad | Impacto en el análisis |
+|---|---|---|---|---|
+| 1 | `fecha_pedido` | P002 usa formato `DD/MM/YYYY` (15/03/2024) mientras el resto usa `YYYY-MM-DD`. Dos formatos distintos para el mismo campo. | Consistencia | Power Query puede interpretar la fecha como texto o asignar mes y día invertidos, produciendo errores en series de tiempo. |
+| 2 | `cliente_email` | P002 tiene `ana.torres@hotmail` — correo sin dominio completo (falta `.com`). No es una dirección válida. | Exactitud | Campañas de email marketing fallarán para ese cliente; el correo no puede usarse para contacto ni deduplicación. |
+| 3 | `cliente_email` | P004 tiene el campo vacío — el cliente C019 no tiene correo registrado. | Completitud | Imposible contactar al cliente por correo. Análisis de tasa de registro de email arrojará un porcentaje incorrecto si no se detecta. |
+| 4 | `cliente_comuna` | Aparecen "Ñuñoa" (P001, P006), "ÑUÑOA" (P003) y "Nuñoa" (P005) para la misma commune. Capitalización y ortografía inconsistentes. | Consistencia | Al agrupar por commune, estos tres valores se tratarán como lugares distintos, fragmentando los datos de Ñuñoa en tres grupos. |
+| 5 | `tiempo_entrega_min` | P003 tiene valor `-12` — un tiempo de entrega negativo es físicamente imposible. | Exactitud | El promedio de tiempo de entrega quedará distorsionado a la baja; cualquier KPI operacional basado en este campo será incorrecto. |
+| 6 *(extra)* | `cliente_nombre` | P003 tiene `carlos mendez` en minúsculas, mientras P006 tiene `Carlos Mendez` con mayúsculas — mismo cliente, escritura distinta. | Consistencia | Duplicación aparente del cliente: si se busca por nombre, aparecerán como dos personas distintas. |
+| 7 *(extra)* | `categoria_cocina` | P005 tiene `italiana` en minúsculas; el resto usa mayúscula inicial. | Consistencia | Al filtrar o agrupar por categoría, "italiana" e "Italiana" contarán como dos categorías distintas. |
+
+::: {.callout-note}
+**Criterio**: 2 pts por problema correctamente identificado (columna + descripción + dimensión + impacto). Se requieren 5 para puntaje completo (10 pts). Los problemas 6 y 7 son válidos como crédito adicional o para compensar uno incompleto.
+:::
+
+---
+
+**B.2** Limitación de la corrección por reemplazos manuales:
+
+No es suficiente. La solución propuesta corrige únicamente las variantes conocidas al momento de escribir la transformación ("ÑUÑOA" y "Nuñoa"), pero no es generalizable: si en el futuro aparecen nuevas variantes ortográficas ("ñunoa", "Nuñoa ", con espacio al final, etc.) o errores similares en otras comunas, no serán corregidas. La solución correcta es aplicar una función de normalización sistemática en Power Query (por ejemplo, transformar toda la columna a formato *Title Case* con `Text.Proper()`) y complementarla con una tabla de referencia de valores válidos para validar el resultado.
+
+::: {.callout-note}
+**Criterio**: 5 pts. Respuesta completa: (1) señala que no es suficiente, (2) explica por qué (solo cubre casos conocidos), (3) propone alternativa sistémica. Respuesta parcial (solo "no es suficiente" sin argumento): 2 pts.
+:::
+
+---
+
+### Parte C — Reflexión sobre el Valor de los Datos
+
+**C.1** Ciclo dato → información → conocimiento:
+
+No puede responder directamente. El CSV contiene **datos**: valores crudos como `repartidor_id = REP04` y `tiempo_entrega_min = 35` en una fila, sin ningún contexto ni agregación. Para que esos valores respondan la pregunta de Valentina, primero debe ocurrir un proceso de **transformación** (el ETL): agrupar las filas por `repartidor_id`, calcular el promedio de `tiempo_entrega_min` por repartidor y, si se requiere análisis por zona, cruzarlo con la `cliente_comuna`. Solo entonces los datos se convierten en **información**: "El repartidor REP04 tarda en promedio 38 min, mientras REP07 tarda 51 min en Las Condes". Finalmente, al comparar esos promedios con el estándar de la empresa o con el desempeño histórico, Valentina obtiene **conocimiento** accionable: REP07 requiere capacitación o reasignación de zona.
+
+::: {.callout-note}
+**Criterio**: 5 pts. Se espera que use los tres conceptos correctamente (dato = valor crudo, información = dato procesado con contexto, conocimiento = base para decisión) y los aplique al caso concreto de repartidores.
+:::
+
+---
+
+## Pregunta 2 — Del OLTP al Modelo Analítico {#sec-p2}
+
+### Parte A — Identificar Pasos ETL
+
+**A.1** Fases ETL y correcciones:
+
+| Problema encontrado | Tabla afectada | Fase ETL | Cómo se corrige en Power Query |
+|---|---|---|---|
+| La columna `ID_Cliente` en pedidos se llama `CustomerID` en clientes | pedidos / clientes | **Transformación** | Usar "Cambiar nombre de columna" (*Rename Column*) en una de las dos tablas para que ambas usen el mismo nombre antes de hacer la combinación (*Merge*). |
+| `Fecha_Venta` tiene formato `DD/MM/YYYY` — se importa como texto | pedidos | **Transformación** | Seleccionar la columna → "Cambiar tipo" → Fecha, especificando la configuración regional "español (Chile)" o usando `Date.FromText([Fecha_Venta], [Culture="es-CL"])`. |
+| 3 pedidos con `Total_Venta` igual a 0 o negativo | pedidos | **Transformación** | Filtrar o marcar las filas con `Total_Venta <= 0` usando "Filtrar filas" o agregar una columna condicional que las etiquete como erróneas para revisión manual. |
+| `Ciudad` con mezcla de mayúsculas, minúsculas y errores ortográficos | clientes | **Transformación** | Aplicar `Text.Proper([Ciudad])` o "Formato → Poner en mayúscula cada palabra" para normalizar la capitalización; luego reemplazar variantes ortográficas conocidas ("Nuñoa" → "Ñuñoa"). |
+| `Linea` con capitalización inconsistente ("japonesa", "ITALIANA", etc.) | restaurantes | **Transformación** | Aplicar `Text.Proper([Linea])` para convertir todos los valores a formato "Primera letra mayúscula". |
+| 3 clientes sin valor en `Correo` | clientes | **Transformación** | Reemplazar los valores nulos con un texto indicador (`"sin correo"`) o filtrar esas filas del análisis de email si no afectan otras métricas. No se eliminan los clientes, ya que pueden tener pedidos válidos. |
+
+::: {.callout-note}
+**Criterio**: 8 pts. ~1,3 pts por fila (fase correcta + descripción de corrección válida). Aceptar respuestas equivalentes en la descripción de la corrección.
+:::
+
+---
+
+**A.2** Modelo estrella:
+
+- **Nombre del modelo**: Modelo estrella (*Star Schema*).
+- **Tabla de hechos**: `oltp_pedidos` — contiene los eventos transaccionales (pedidos) con métricas numéricas medibles (`Total_Venta`, `Tiempo_Entrega`).
+- **Tablas de dimensiones**: `oltp_clientes` y `oltp_restaurantes` — proveen los atributos descriptivos que dan contexto a cada pedido (quién compró, en qué restaurante, de qué categoría).
+- **OLTP o OLAP**: Este modelo es más adecuado para **OLAP**. El esquema estrella está diseñado para consultas analíticas de agregación (sumas por dimensión, filtros por categoría), no para el registro rápido de transacciones individuales que caracteriza al OLTP. Las relaciones desnormalizadas en las dimensiones permiten consultas rápidas sin múltiples joins.
+
+::: {.callout-note}
+**Criterio**: 4 pts. 1 pt nombre del modelo, 1 pt tabla de hechos correcta, 1 pt dimensiones correctas, 1 pt OLAP con justificación.
+:::
+
+---
+
+### Parte B — Decisión Basada en Datos
+
+**B.1** Recomendaciones:
+
+**Decisión 1 — Campaña de marketing:**
+
+- **Categoría recomendada**: **Japonesa**.
+- **Justificación con indicadores**:
+  - Es la categoría con **mayor ingreso total** ($47.230.000), un 23% más que la segunda (Italiana con $38.450.000).
+  - Tiene el **segundo ticket promedio más alto** ($25.640), lo que indica que cada pedido genera más ingreso por transacción. Una campaña que incremente el volumen de pedidos se traduce directamente en un ingreso elevado por unidad.
+- **Limitación**: Faltaría conocer el **margen de ganancia por categoría**. Si la cocina japonesa tiene costos mucho más altos (ingredientes, chefs especializados), el ingreso alto podría no reflejarse en mayor utilidad. También faltaría saber si la demanda de japonesa es elástica al precio — la campaña podría no generar pedidos adicionales si la demanda ya está saturada.
+
+**Decisión 2 — Eficiencia operacional:**
+
+- **Categoría con mayor problema**: **Peruana**.
+- **Justificación con indicadores**:
+  - Tiene el **mayor tiempo promedio de entrega** (45 min), 7 minutos más que japonesa (38 min) y más del doble que americana (22 min).
+  - Además presenta la **tasa de descuento más alta** (18%), lo que podría reflejar compensaciones por mala experiencia del cliente, posiblemente relacionadas con demoras.
+- **Limitación**: Faltaría saber si el tiempo alto se debe a la categoría en sí (restaurantes peruanos más alejados de los clientes) o a la cantidad de repartidores disponibles. Sin datos geográficos de ubicación de restaurantes y clientes, asignar más repartidores podría no resolver el problema si la causa es la distancia.
+
+::: {.callout-note}
+**Criterio**: 8 pts (4 pts por decisión). Rúbrica por decisión: 1 pt categoría correcta con datos que la respaldan, 2 pts dos indicadores pertinentes, 1 pt limitación real y específica. Aceptar Japonesa o Peruana con argumentación coherente para decisión 1.
+:::
+
+---
+
+### Parte C — Dashboard Ejecutivo en Power BI
+
+**C.1 a C.3** — Esta parte requiere entrega de captura de pantalla del archivo `.pbix`. A continuación se documenta la configuración esperada para la corrección.
+
+**Medidas DAX esperadas:**
+
+```dax
+Ingreso Total = SUM(oltp_pedidos[total_pedido])
+
+Número de Pedidos = COUNTROWS(oltp_pedidos)
+
+Ticket Promedio = DIVIDE([Ingreso Total], [Número de Pedidos])
+
+Tiempo Promedio Entrega = AVERAGE(oltp_pedidos[tiempo_entrega_min])
+```
+
+**Configuración del gráfico de barras:**
+
+- Tipo: Gráfico de barras agrupadas (horizontal) o columnas (vertical).
+- Eje X (o eje Y en barras): `oltp_restaurantes[categoria_cocina]`.
+- Valores: medida `Ingreso Total`.
+- Orden: descendente por valor (botón "..." → Ordenar por → Ingreso Total).
+- Título: "Ingreso por Categoría de Cocina".
+
+**Segmentador:**
+
+- Campo: `oltp_restaurantes[categoria_cocina]`.
+- Tipo: lista o lista desplegable.
+- Debe filtrar todas las visualizaciones de la página simultáneamente (comportamiento por defecto cuando está en la misma página).
+
+::: {.callout-note}
+**Criterio**: 15 pts (5 pts por sub-parte). C.1: las 4 tarjetas con las medidas correctas. C.2: gráfico con eje, valores y ordenamiento correctos. C.3: segmentador por `categoria_cocina` que filtra la página completa, evidenciado por la captura.
+:::
+
+---
+
+## Pregunta 3 — Modelamiento Entidad-Relación {#sec-p3}
+
+### Parte A — Diagnóstico de Normalización
+
+**A.1** Diagnóstico de formas normales:
+
+| Pregunta | Respuesta |
+|---|---|
+| ¿La tabla cumple la **1FN**? | **Sí cumple la 1FN.** Cada celda contiene un único valor atómico (no hay listas ni grupos repetidos dentro de una celda). Existe una clave candidata (`id_pedido` asumiendo un solo producto por pedido, o la clave compuesta `(id_pedido, producto_id)` si hay múltiples ítems). Todos los valores son del mismo tipo por columna. |
+| ¿Cumple la **2FN**? Dependencia parcial. | **No cumple la 2FN.** Con clave compuesta `(id_pedido, producto_id)`, existe una **dependencia parcial**: `cliente_nombre`, `cliente_email`, `cliente_comuna`, `restaurante_nombre` y `categoria_cocina` dependen solo de `id_pedido` (no del producto). Por ejemplo, `cliente_nombre → id_pedido` (el nombre del cliente lo determina el pedido, no qué producto pidió). |
+| ¿Cumple la **3FN**? Dependencia transitiva. | **No cumple la 3FN.** Existen **dependencias transitivas**: `restaurante_nombre` y `categoria_cocina` dependen de `restaurante_id`, no directamente de la clave principal. Es decir: `id_pedido → restaurante_id → categoria_cocina`. Del mismo modo, `cliente_nombre`, `cliente_email` y `cliente_comuna` dependen de `cliente_id`, que a su vez depende de `id_pedido`. |
+
+---
+
+**A.2** Anomalías:
+
+1. **Anomalía de actualización**: Si "Sushi Kioto" (R012) cambia su categoría de "Japonesa" a "Asiática fusion", habría que actualizar **todas las filas** de la tabla plana donde `restaurante_id = R012`. En el dataset de 68 filas, Sushi Kioto aparece en múltiples pedidos; todos deben actualizarse manualmente. Si se olvida una fila, la base de datos quedará **inconsistente** (el mismo restaurante con dos categorías distintas). Esta es una **anomalía de actualización** (*update anomaly*).
+
+2. **Anomalía de eliminación**: Si se eliminan todos los pedidos del cliente C005 (Ana Torres), se pierde toda la información de ese cliente: nombre, email (`ana.torres@gmail.com`), teléfono y commune. Esos datos **no existen en ningún otro lugar** del sistema — están embebidos en las filas de pedidos. Al borrar los pedidos, se borra al cliente. Esta es una **anomalía de eliminación** (*deletion anomaly*).
+
+::: {.callout-note}
+**Criterio**: 4 pts (2 pts por pregunta). Se espera que nombre correctamente la anomalía y la ejemplifique con datos concretos del caso.
+:::
+
+---
+
+### Parte B — Normalizar: Definir las Tablas
+
+| Tabla | Clave primaria | Columnas que incluye |
+|---|---|---|
+| `clientes` | `cliente_id` | `cliente_id`, `cliente_nombre`, `cliente_email`, `cliente_telefono`, `cliente_comuna` |
+| `restaurantes` | `restaurante_id` | `restaurante_id`, `restaurante_nombre`, `categoria_cocina` |
+| `pedidos` | `id_pedido` | `id_pedido`, `fecha_pedido`, `cliente_id` *(FK → clientes)*, `restaurante_id` *(FK → restaurantes)*, `repartidor_id`, `tiempo_entrega_min` |
+| `detalle_pedidos` | `(id_pedido, producto_id)` | `id_pedido` *(FK → pedidos)*, `producto_id`, `producto_nombre`, `precio_unitario`, `cantidad`, `descuento_pct` |
+
+::: {.callout-note}
+**Nota sobre `total_pedido`**: esta columna **no debe aparecer** en ninguna tabla normalizada. Es derivada: `precio_unitario × cantidad × (1 − descuento_pct/100)`. Se calcula mediante una consulta SQL, no se almacena.
+
+**Nota sobre `producto_nombre` y `precio_unitario`**: en un diseño más avanzado, estos campos irían en una tabla `productos` separada. Para este ejercicio, se acepta que queden en `detalle_pedidos` ya que no se solicita crear esa tabla adicional.
+:::
+
+::: {.callout-note}
+**Criterio**: 10 pts. ~2,5 pts por tabla (PK correcta + columnas correctas + FKs indicadas). Descontar si `total_pedido` aparece como columna almacenada en cualquier tabla.
+:::
+
+---
+
+### Parte C — Sentencias CREATE TABLE en SQL
+
+**Tabla `restaurantes`:**
+
+```sql
+CREATE TABLE restaurantes (
+    restaurante_id    VARCHAR(10)   PRIMARY KEY,
+    restaurante_nombre VARCHAR(100) NOT NULL,
+    categoria_cocina  VARCHAR(50)   NOT NULL
+        CHECK (categoria_cocina IN ('Japonesa', 'Italiana', 'Americana',
+                                    'Peruana', 'Mexicana'))
+);
+```
+
+**Tabla `pedidos`:**
+
+```sql
+CREATE TABLE pedidos (
+    id_pedido         VARCHAR(10)   PRIMARY KEY,
+    fecha_pedido      DATETIME      NOT NULL,
+    cliente_id        INT           NOT NULL,
+    restaurante_id    VARCHAR(10)   NOT NULL,
+    repartidor_id     INT,
+    tiempo_entrega_min INT,
+    FOREIGN KEY (cliente_id)     REFERENCES clientes(cliente_id),
+    FOREIGN KEY (restaurante_id) REFERENCES restaurantes(restaurante_id)
+);
+```
+
+**Tabla `detalle_pedidos`** *(no pedida, pero se incluye como referencia completa)*:
+
+```sql
+CREATE TABLE detalle_pedidos (
+    id_pedido         VARCHAR(10)   NOT NULL,
+    producto_id       VARCHAR(10)   NOT NULL,
+    producto_nombre   VARCHAR(100)  NOT NULL,
+    precio_unitario   INT           NOT NULL CHECK (precio_unitario > 0),
+    cantidad          INT           NOT NULL CHECK (cantidad > 0),
+    descuento_pct     INT           NOT NULL DEFAULT 0
+        CHECK (descuento_pct BETWEEN 0 AND 100),
+    PRIMARY KEY (id_pedido, producto_id),
+    FOREIGN KEY (id_pedido) REFERENCES pedidos(id_pedido)
+);
+```
+
+::: {.callout-note}
+**Criterio**: 10 pts (5 pts por tabla pedida). Rúbrica por tabla:
+
+- 1 pt: PK correctamente definida.
+- 1 pt: tipos de datos coherentes con los datos reales.
+- 1 pt: restricciones relevantes (NOT NULL, CHECK).
+- 2 pts: FKs correctas (aplica a `pedidos`; `restaurantes` no tiene FK).
+
+Aceptar variantes de tipos de datos razonables (`VARCHAR(5)` para IDs, `DATE` en lugar de `DATETIME`, `DECIMAL` para precios).
+:::
+
+---
+
+### Parte D — Integridad Referencial y Reflexión
+
+**1.** Si se intenta insertar una fila en `detalle_pedidos` con un `id_pedido` que no existe en `pedidos`, MySQL rechaza la inserción y lanza el error **Error 1452 (23000): Cannot add or update a child row: a foreign key constraint fails**. El mecanismo que lo impide es la **restricción de clave foránea** (*FOREIGN KEY constraint*): antes de aceptar la inserción, el motor verifica que el valor de `id_pedido` exista en la tabla padre (`pedidos`). Si no existe, la operación falla.
+
+**2.** Riesgo concreto: sin claves foráneas, sería posible registrar pedidos con `restaurante_id = R999`, un restaurante que no existe en la tabla `restaurantes`. El sistema no lo detectaría. Cuando Valentina consulte el ingreso por categoría de cocina, ese pedido no tendría categoría asignada y quedaría fuera del análisis (o generaría un valor nulo). DeliverChile tomaría decisiones basadas en datos incompletos sin saberlo. Del mismo modo, podría eliminarse un restaurante de la tabla `restaurantes` aunque tenga pedidos activos, dejando esos pedidos sin referencia válida.
+
+**3.** Tabla comparativa:
+
+| Dimensión | Tabla plana (antes) | Modelo relacional 3FN (después) |
+|---|---|---|
+| ¿Dónde se almacena el email de un cliente? | En cada fila de sus pedidos (repetido en todas las filas del cliente) | Una sola vez, en la tabla `clientes`, referenciada por `cliente_id` |
+| ¿Cómo se actualiza el nombre de un restaurante? | Hay que actualizar todas las filas donde aparece ese restaurante | Se actualiza una sola fila en la tabla `restaurantes`; todos los pedidos la reflejan automáticamente |
+| ¿Puede existir un restaurante sin pedidos en el sistema? | No — desaparecería si se borran sus pedidos | Sí — existe de forma independiente en la tabla `restaurantes` aunque no tenga pedidos asociados |
+
+::: {.callout-note}
+**Criterio**: 5 pts. Pregunta 1: 1,5 pts (nombre del error + mecanismo FK). Pregunta 2: 2 pts (riesgo concreto + ejemplo de datos). Pregunta 3: 1,5 pts (completar las dos celdas vacías correctamente).
+:::
+
+---
+
+## Resumen de Puntajes
+
+| Pregunta | Parte | Puntaje máximo |
+|---|---|---|
+| P1 | A.1 Clasificación de usuarios | 6 pts |
+| P1 | A.2 Principio de adecuación | 4 pts |
+| P1 | B.1 Cinco problemas de calidad | 10 pts |
+| P1 | B.2 Limitación de la corrección manual | 5 pts |
+| P1 | C.1 Dato → información → conocimiento | 5 pts |
+| **P1 Total** | | **30 pts** |
+| P2 | A.1 Fases ETL y correcciones | 8 pts |
+| P2 | A.2 Modelo estrella / OLAP | 4 pts |
+| P2 | B.1 Decisiones basadas en datos | 8 pts |
+| P2 | C Dashboard Power BI | 15 pts |
+| **P2 Total** | | **35 pts** |
+| P3 | A.1 Diagnóstico 1FN/2FN/3FN | 6 pts |
+| P3 | A.2 Anomalías de actualización y eliminación | 4 pts |
+| P3 | B Definición de las 4 tablas | 10 pts |
+| P3 | C Sentencias CREATE TABLE | 10 pts |
+| P3 | D Integridad referencial y reflexión | 5 pts |
+| **P3 Total** | | **35 pts** |
+| | **TOTAL** | **100 pts** |

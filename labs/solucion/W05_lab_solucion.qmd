@@ -1,0 +1,489 @@
+---
+title: "Solución — Laboratorio 5: Diseñando el Modelo Completo en MySQL Workbench"
+subtitle: "Semana 5 · W05 · Unidad II · Modelamiento de Datos · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+::: {.callout-warning}
+**Documento de uso exclusivo del docente.** No distribuir a estudiantes antes de que completen el laboratorio.
+:::
+
+---
+
+## Parte 1 — Diagrama de Casos de Uso
+
+### Paso 1.1: Actores del sistema — Respuesta esperada
+
+| Actor | Descripción breve | ¿Humano o sistema externo? |
+|---|---|---|
+| **Administrador** | Gestiona clientes y stock | Humano |
+| **Cliente** | Realiza compras y puede solicitar devoluciones | Humano |
+| **Gerente de Marketing (María)** | Consulta reportes, analiza segmentos y gestiona proveedores | Humano |
+| **Gerente de Logística (Carlos)** | Gestiona despachos y hace seguimiento de entregas | Humano |
+| **CEO / Gerente General (Roberto)** | Consulta KPIs y reportes ejecutivos | Humano |
+| **Sistema de Pago** | Confirma o rechaza transacciones de venta | Sistema externo |
+| **Sistema de Courier** | Actualiza estado de despacho y notifica entregas | Sistema externo |
+
+### Paso 1.2: Casos de uso por actor
+
+| Actor | Casos de uso |
+|---|---|
+| Administrador | Gestionar Clientes · Consultar Stock |
+| Cliente | Realizar Pedido · Consultar Estado de Despacho |
+| Gerente de Marketing | Gestionar Proveedores · Consultar Reportes de Ventas · Analizar Segmentos de Clientes |
+| Gerente de Logística | Gestionar Despachos · Gestionar Devolución |
+| CEO / Gerente General | Consultar Reportes y KPIs · Gestionar Proveedores |
+| Sistema de Pago | Procesar Transacción |
+| Sistema de Courier | Sincronizar Entrega |
+
+### Paso 3: Del diagrama a las entidades — Respuesta esperada
+
+| Caso de Uso | ¿Guarda o consulta datos? | Entidad(es) que genera o usa |
+|---|---|---|
+| Realizar Pedido | Guarda | `ventas`, `detalle_ventas` |
+| Gestionar Clientes | Guarda | `clientes` |
+| Registrar Despacho | Guarda | `despachos` |
+| Procesar Devolución | Guarda | `devoluciones` |
+| Gestionar Proveedores | Guarda | `proveedores`, `proveedor_producto` |
+| Consultar Stock | Consulta | `productos` |
+| Generar Reporte de Ventas | Consulta | `ventas`, `detalle_ventas`, `clientes`, `productos` |
+
+::: {.callout-tip}
+**Para el docente**: la conclusión clave es que el modelo de W04 (4 tablas) no cubre "Gestionar Proveedores", "Registrar Despacho" ni "Procesar Devolución". Esos tres casos de uso generan 5 entidades nuevas: `proveedores`, `proveedor_producto`, `despachos`, `devoluciones` y `categorias` (necesaria para que Marketing pueda analizar por línea de producto). Use esta tabla para justificar la expansión del modelo.
+:::
+
+---
+
+## Parte 2 — Diseñar el EER Diagram en MySQL Workbench
+
+### Paso 5: Las 9 tablas — Descripción del modelo correcto
+
+El diagrama EER debe mostrar 9 tablas con las siguientes relaciones:
+
+```
+categorias ◄─────────────── productos ──────────────────── proveedor_producto ───► proveedores
+(PK: categoria_id)          (PK: producto_id)               (PK: proveedor_id,         (PK: proveedor_id)
+(FK auto: categoria_padre_id) (FK: categoria_id)                  producto_id)
+                                    │
+                                    │ 1:N
+                                    ▼
+clientes ◄──────── ventas ──────────────────► detalle_ventas
+(PK: cliente_id)  (PK: venta_id)             (PK: venta_id, producto_id)
+                  (FK: cliente_id)            (FK: venta_id, producto_id)
+                        │
+                   ┌────┴────┐
+                1:1│         │1:N
+                   ▼         ▼
+              despachos   devoluciones
+              (FK: venta_id UNIQUE)   (FK: venta_id, producto_id)
+```
+
+### Paso 6: Relaciones — Lista de verificación
+
+| Relación | Tipo | Herramienta en Workbench | Tabla hija → Tabla padre |
+|---|---|---|---|
+| Producto pertenece a Categoría | 1:N | 1:N Non-Identifying | `productos.categoria_id` → `categorias.categoria_id` |
+| Categoría tiene Subcategoría | 1:N auto-referencial | 1:N Non-Identifying (misma tabla) | `categorias.categoria_padre_id` → `categorias.categoria_id` |
+| Cliente realiza Ventas | 1:N | 1:N Non-Identifying | `ventas.cliente_id` → `clientes.cliente_id` |
+| Venta contiene Detalles | 1:N | 1:N Identifying | `detalle_ventas.venta_id` → `ventas.venta_id` |
+| Producto aparece en Detalles | 1:N | 1:N Identifying | `detalle_ventas.producto_id` → `productos.producto_id` |
+| Proveedor ─ Producto (N:M, lado proveedor) | N:M | 1:N Identifying | `proveedor_producto.proveedor_id` → `proveedores.proveedor_id` |
+| Proveedor ─ Producto (N:M, lado producto) | N:M | 1:N Identifying | `proveedor_producto.producto_id` → `productos.producto_id` |
+| Venta genera Despacho | 1:1 | 1:N Non-Identifying + UNIQUE | `despachos.venta_id` → `ventas.venta_id` |
+| Venta origina Devoluciones | 1:N | 1:N Non-Identifying | `devoluciones.venta_id` → `ventas.venta_id` |
+| Producto referenciado en Devolución | 1:N | 1:N Non-Identifying | `devoluciones.producto_id` → `productos.producto_id` |
+
+::: {.callout-note}
+**Identifying vs. Non-Identifying:** Se usa relación **Identifying** (línea continua en Workbench) cuando la PK de la tabla hija incluye la FK del padre — como en `detalle_ventas`, cuya PK compuesta `(venta_id, producto_id)` incluye ambas FK. Se usa **Non-Identifying** (línea discontinua) cuando la FK es solo un atributo más, no parte de la PK — como en `ventas.cliente_id`.
+:::
+
+### Paso 7: Lista de verificación del diagrama
+
+- [x] 9 tablas en el diagrama
+- [x] `AUTO_INCREMENT` en todas las PK enteras de tablas independientes
+- [x] PK compuesta `(venta_id, producto_id)` en `detalle_ventas`
+- [x] PK compuesta `(proveedor_id, producto_id)` en `proveedor_producto`
+- [x] `despachos.venta_id` con restricción UNIQUE (relación 1:1 con ventas)
+- [x] FK auto-referencial `categorias.categoria_padre_id → categorias.categoria_id`
+- [x] 10 relaciones en total
+
+---
+
+## Parte 3 — Forward Engineering: Generar el SQL
+
+### Paso 9: Script DDL completo — Respuesta modelo
+
+```sql
+-- ============================================================
+-- TECHSTYLE V2 — Script DDL completo
+-- Generado con MySQL Workbench 8.0 + ajustes manuales
+-- Orden: primero tablas sin FK externas, luego las dependientes
+-- ============================================================
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- ── Esquema ────────────────────────────────────────────────
+CREATE SCHEMA IF NOT EXISTS `techstyle` DEFAULT CHARACTER SET utf8mb4;
+USE `techstyle`;
+
+-- ── 1. categorias ──────────────────────────────────────────
+DROP TABLE IF EXISTS `categorias`;
+CREATE TABLE IF NOT EXISTS `categorias` (
+    `categoria_id`       INT           NOT NULL AUTO_INCREMENT,
+    `nombre_categoria`   VARCHAR(50)   NOT NULL,
+    `descripcion`        VARCHAR(200)  NULL,
+    `categoria_padre_id` INT           NULL,
+    PRIMARY KEY (`categoria_id`),
+    INDEX `fk_categoria_padre_idx` (`categoria_padre_id` ASC),
+    CONSTRAINT `fk_categoria_padre`
+        FOREIGN KEY (`categoria_padre_id`)
+        REFERENCES `categorias` (`categoria_id`)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+) ENGINE=InnoDB;
+SHOW WARNINGS;
+
+-- ── 2. clientes ────────────────────────────────────────────
+DROP TABLE IF EXISTS `clientes`;
+CREATE TABLE IF NOT EXISTS `clientes` (
+    `cliente_id`      INT           NOT NULL AUTO_INCREMENT,
+    `nombre`          VARCHAR(50)   NOT NULL,
+    `apellido`        VARCHAR(50)   NOT NULL,
+    `email`           VARCHAR(100)  NOT NULL,
+    `region`          VARCHAR(50)   NOT NULL,
+    `segmento`        VARCHAR(20)   NULL,
+    `fecha_registro`  DATE          NOT NULL,
+    PRIMARY KEY (`cliente_id`),
+    UNIQUE INDEX `email_UNIQUE` (`email` ASC)
+) ENGINE=InnoDB;
+SHOW WARNINGS;
+
+-- ── 3. proveedores ─────────────────────────────────────────
+DROP TABLE IF EXISTS `proveedores`;
+CREATE TABLE IF NOT EXISTS `proveedores` (
+    `proveedor_id`      INT           NOT NULL AUTO_INCREMENT,
+    `nombre_proveedor`  VARCHAR(100)  NOT NULL,
+    `rut`               VARCHAR(12)   NOT NULL,
+    `contacto`          VARCHAR(100)  NULL,
+    `email`             VARCHAR(100)  NULL,
+    `telefono`          VARCHAR(20)   NULL,
+    PRIMARY KEY (`proveedor_id`),
+    UNIQUE INDEX `rut_UNIQUE` (`rut` ASC)
+) ENGINE=InnoDB;
+SHOW WARNINGS;
+
+-- ── 4. productos (FK → categorias) ─────────────────────────
+DROP TABLE IF EXISTS `productos`;
+CREATE TABLE IF NOT EXISTS `productos` (
+    `producto_id`     INT             NOT NULL AUTO_INCREMENT,
+    `nombre_producto` VARCHAR(100)    NOT NULL,
+    `categoria_id`    INT             NOT NULL,
+    `precio_venta`    DECIMAL(10,2)   NOT NULL,
+    `costo_unitario`  DECIMAL(10,2)   NOT NULL,
+    `stock`           INT             NOT NULL DEFAULT 0,
+    `activo`          TINYINT(1)      NOT NULL DEFAULT 1,
+    PRIMARY KEY (`producto_id`),
+    INDEX `fk_productos_categorias_idx` (`categoria_id` ASC),
+    CONSTRAINT `fk_productos_categorias`
+        FOREIGN KEY (`categoria_id`)
+        REFERENCES `categorias` (`categoria_id`)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+) ENGINE=InnoDB;
+SHOW WARNINGS;
+
+-- ── 5. ventas (FK → clientes) ──────────────────────────────
+DROP TABLE IF EXISTS `ventas`;
+CREATE TABLE IF NOT EXISTS `ventas` (
+    `venta_id`   INT   NOT NULL AUTO_INCREMENT,
+    `fecha`      DATE  NOT NULL,
+    `cliente_id` INT   NOT NULL,
+    PRIMARY KEY (`venta_id`),
+    INDEX `fk_ventas_clientes_idx` (`cliente_id` ASC),
+    CONSTRAINT `fk_ventas_clientes`
+        FOREIGN KEY (`cliente_id`)
+        REFERENCES `clientes` (`cliente_id`)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+) ENGINE=InnoDB;
+SHOW WARNINGS;
+
+-- ── 6. detalle_ventas (FK → ventas, productos) ─────────────
+DROP TABLE IF EXISTS `detalle_ventas`;
+CREATE TABLE IF NOT EXISTS `detalle_ventas` (
+    `venta_id`        INT             NOT NULL,
+    `producto_id`     INT             NOT NULL,
+    `cantidad`        INT             NOT NULL,
+    `precio_unitario` DECIMAL(10,2)   NOT NULL,
+    `descuento_pct`   DECIMAL(5,2)    NULL DEFAULT 0,
+    PRIMARY KEY (`venta_id`, `producto_id`),
+    INDEX `fk_detalle_productos_idx` (`producto_id` ASC),
+    CONSTRAINT `fk_detalle_ventas_ventas`
+        FOREIGN KEY (`venta_id`)
+        REFERENCES `ventas` (`venta_id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT `fk_detalle_ventas_productos`
+        FOREIGN KEY (`producto_id`)
+        REFERENCES `productos` (`producto_id`)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+) ENGINE=InnoDB;
+SHOW WARNINGS;
+
+-- ── 7. proveedor_producto (FK → proveedores, productos) ────
+DROP TABLE IF EXISTS `proveedor_producto`;
+CREATE TABLE IF NOT EXISTS `proveedor_producto` (
+    `proveedor_id`        INT             NOT NULL,
+    `producto_id`         INT             NOT NULL,
+    `precio_compra`       DECIMAL(10,2)   NOT NULL,
+    `plazo_entrega_dias`  INT             NULL,
+    `proveedor_principal` TINYINT(1)      NOT NULL DEFAULT 0,
+    PRIMARY KEY (`proveedor_id`, `producto_id`),
+    INDEX `fk_pp_productos_idx` (`producto_id` ASC),
+    CONSTRAINT `fk_pp_proveedores`
+        FOREIGN KEY (`proveedor_id`)
+        REFERENCES `proveedores` (`proveedor_id`)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE,
+    CONSTRAINT `fk_pp_productos`
+        FOREIGN KEY (`producto_id`)
+        REFERENCES `productos` (`producto_id`)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+) ENGINE=InnoDB;
+SHOW WARNINGS;
+
+-- ── 8. despachos (FK → ventas, UNIQUE → relación 1:1) ──────
+DROP TABLE IF EXISTS `despachos`;
+CREATE TABLE IF NOT EXISTS `despachos` (
+    `despacho_id`             INT           NOT NULL AUTO_INCREMENT,
+    `venta_id`                INT           NOT NULL,
+    `direccion_entrega`       VARCHAR(200)  NOT NULL,
+    `fecha_despacho`          DATE          NULL,
+    `fecha_entrega_estimada`  DATE          NULL,
+    `fecha_entrega_real`      DATE          NULL,
+    `estado`                  VARCHAR(20)   NOT NULL DEFAULT 'Pendiente',
+    PRIMARY KEY (`despacho_id`),
+    UNIQUE INDEX `venta_id_UNIQUE` (`venta_id` ASC),
+    CONSTRAINT `fk_despachos_ventas`
+        FOREIGN KEY (`venta_id`)
+        REFERENCES `ventas` (`venta_id`)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+) ENGINE=InnoDB;
+SHOW WARNINGS;
+
+-- ── 9. devoluciones (FK → ventas, productos) ───────────────
+DROP TABLE IF EXISTS `devoluciones`;
+CREATE TABLE IF NOT EXISTS `devoluciones` (
+    `devolucion_id`     INT             NOT NULL AUTO_INCREMENT,
+    `venta_id`          INT             NOT NULL,
+    `producto_id`       INT             NOT NULL,
+    `fecha_devolucion`  DATE            NOT NULL,
+    `cantidad_devuelta` INT             NOT NULL,
+    `motivo`            VARCHAR(200)    NULL,
+    `estado`            VARCHAR(20)     NOT NULL DEFAULT 'Pendiente',
+    `monto_reembolsado` DECIMAL(10,2)   NULL,
+    PRIMARY KEY (`devolucion_id`),
+    INDEX `fk_dev_ventas_idx` (`venta_id` ASC),
+    INDEX `fk_dev_productos_idx` (`producto_id` ASC),
+    CONSTRAINT `fk_devoluciones_ventas`
+        FOREIGN KEY (`venta_id`)
+        REFERENCES `ventas` (`venta_id`)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE,
+    CONSTRAINT `fk_devoluciones_productos`
+        FOREIGN KEY (`producto_id`)
+        REFERENCES `productos` (`producto_id`)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+) ENGINE=InnoDB;
+SHOW WARNINGS;
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+```
+
+---
+
+## Parte 4 — Verificar y Completar el Script SQL
+
+### Paso 10.1: Análisis de ON DELETE — Respuesta esperada
+
+| FK | ON DELETE generado por Workbench | ¿Es correcto? | Justificación |
+|---|---|---|---|
+| `ventas.cliente_id` → `clientes` | RESTRICT | **Sí** | No se debe poder eliminar un cliente que tiene historial de ventas. La eliminación debe bloquearse para preservar la trazabilidad. |
+| `detalle_ventas.venta_id` → `ventas` | CASCADE | **Sí** | Si se cancela o elimina una venta, sus ítems no tienen sentido sin ella. Eliminar la venta debe eliminar automáticamente sus líneas de detalle. |
+| `despachos.venta_id` → `ventas` | RESTRICT | **Sí** | No se debe eliminar una venta que ya tiene un despacho registrado (activo o entregado). Bloquear protege el registro logístico. |
+| `devoluciones.venta_id` → `ventas` | RESTRICT | **Sí** | No se debe eliminar una venta que tiene devoluciones asociadas. El registro de devoluciones es parte del historial financiero y no debe perderse. |
+
+::: {.callout-tip}
+**Para el docente**: Workbench genera `RESTRICT` por defecto en casi todas las FK. El único caso donde se debe corregir manualmente a `CASCADE` es `detalle_ventas.venta_id`. Use esto para discutir cuándo cada opción es apropiada: `RESTRICT` = integridad estricta, `CASCADE` = borrado en cascada, `SET NULL` = huérfanos controlados.
+:::
+
+### Paso 10.2: Restricciones CHECK — Script de ajuste
+
+```sql
+USE techstyle;
+
+-- Tabla productos
+ALTER TABLE productos ADD CONSTRAINT chk_precio_positivo
+    CHECK (precio_venta > 0);
+
+ALTER TABLE productos ADD CONSTRAINT chk_costo_positivo
+    CHECK (costo_unitario > 0);
+
+ALTER TABLE productos ADD CONSTRAINT chk_stock_positivo
+    CHECK (stock >= 0);
+
+-- Tabla detalle_ventas
+ALTER TABLE detalle_ventas ADD CONSTRAINT chk_cantidad_positiva
+    CHECK (cantidad > 0);
+
+ALTER TABLE detalle_ventas ADD CONSTRAINT chk_descuento_rango
+    CHECK (descuento_pct BETWEEN 0 AND 100);
+
+-- Tabla clientes
+ALTER TABLE clientes ADD CONSTRAINT chk_segmento_valido
+    CHECK (segmento IN ('Premium', 'Estándar', 'Básico'));
+
+-- Tabla despachos
+ALTER TABLE despachos ADD CONSTRAINT chk_estado_despacho
+    CHECK (estado IN ('Pendiente', 'En tránsito', 'Entregado', 'No entregado'));
+
+-- Tabla devoluciones (adicional recomendado)
+ALTER TABLE devoluciones ADD CONSTRAINT chk_cantidad_devuelta_positiva
+    CHECK (cantidad_devuelta > 0);
+
+ALTER TABLE devoluciones ADD CONSTRAINT chk_estado_devolucion
+    CHECK (estado IN ('Pendiente', 'Aprobada', 'Rechazada', 'Reembolsada'));
+```
+
+### Paso 10.3: Índices de rendimiento — Script completo
+
+```sql
+USE techstyle;
+
+-- Búsquedas por región y segmento (reportes de María)
+CREATE INDEX idx_clientes_region    ON clientes(region);
+CREATE INDEX idx_clientes_segmento  ON clientes(segmento);
+
+-- Consultas de ventas por rango de fechas
+CREATE INDEX idx_ventas_fecha       ON ventas(fecha);
+
+-- Búsqueda de productos por categoría
+CREATE INDEX idx_productos_categoria ON productos(categoria_id);
+
+-- Estado de despachos (panel de logística de Carlos)
+CREATE INDEX idx_despachos_estado   ON despachos(estado);
+
+-- Devoluciones por estado (gestión de postventa)
+CREATE INDEX idx_devoluciones_estado ON devoluciones(estado);
+```
+
+### Paso 11: Orden correcto de creación — Verificación
+
+El script debe crear las tablas en este orden exacto. Cualquier otro orden puede producir errores de FK:
+
+| # | Tabla | Depende de |
+|---|---|---|
+| 1 | `categorias` | — (solo FK auto-referencial) |
+| 2 | `clientes` | — |
+| 3 | `proveedores` | — |
+| 4 | `productos` | `categorias` |
+| 5 | `ventas` | `clientes` |
+| 6 | `detalle_ventas` | `ventas`, `productos` |
+| 7 | `proveedor_producto` | `proveedores`, `productos` |
+| 8 | `despachos` | `ventas` |
+| 9 | `devoluciones` | `ventas`, `productos` |
+
+::: {.callout-important}
+**Error frecuente:** Workbench a veces coloca `categorias` después de `productos` si la FK auto-referencial confunde al motor de ordenamiento. Si el script falla al ejecutarse, verificar que `categorias` aparezca antes de `productos`.
+:::
+
+---
+
+## Parte 5 — Síntesis y Reflexión
+
+### Paso 12: Comparar modelo W04 vs. W05 — Respuesta esperada
+
+| Dimensión | Modelo W04 (4 tablas) | Modelo W05 (9 tablas) |
+|---|---|---|
+| ¿Se puede saber qué proveedor abastece un producto? | No | **Sí** — tabla `proveedor_producto` registra el par proveedor-producto con precio de compra y plazo |
+| ¿Se puede rastrear el estado de un despacho? | No | **Sí** — tabla `despachos` registra estado, fechas estimada y real, y dirección de entrega |
+| ¿Se puede registrar una devolución parcial? | No | **Sí** — tabla `devoluciones` registra cantidad devuelta por ítem, no por venta completa |
+| ¿Las categorías pueden tener subcategorías? | No | **Sí** — FK auto-referencial `categoria_padre_id` permite jerarquías (ej. Ropa → Ropa Hombre → Camisas) |
+| ¿Los IDs se generan automáticamente? | No siempre | **Sí** — todas las PK enteras tienen `AUTO_INCREMENT` |
+
+### Paso 13: Preguntas de diseño — Respuestas esperadas
+
+| Pregunta | Respuesta |
+|---|---|
+| ¿Por qué `despachos.venta_id` tiene restricción UNIQUE pero `devoluciones.venta_id` no? | Porque una venta puede tener como máximo **un despacho** — todo se envía junto a una dirección. En cambio, puede generar **múltiples devoluciones**: el cliente puede devolver el producto A esta semana y el producto B la siguiente. La restricción `UNIQUE` en `despachos.venta_id` enforza la cardinalidad 1:1 con `ventas`. |
+| ¿Qué pasaría si dos grupos de analistas insertan clientes simultáneamente sin `AUTO_INCREMENT`? | Podrían asignar el mismo `cliente_id` a dos clientes distintos. MySQL rechazaría uno de los dos inserts con `ERROR 1062: Duplicate entry`. Con `AUTO_INCREMENT`, el motor gestiona la secuencia internamente con un bloqueo a nivel de contador, garantizando IDs únicos incluso con inserciones concurrentes. |
+| Si TechStyle agrega vendedores (cada venta tiene un vendedor asignado), ¿qué tabla(s) modificarías? | Se crearía una tabla `vendedores` (`vendedor_id`, `nombre`, `apellido`, `zona`, `comision_pct`) y se agregaría la columna `vendedor_id INT NOT NULL FK → vendedores` en la tabla `ventas`. No se modificarían otras tablas. |
+| ¿La tabla `proveedor_producto` viola la 3FN? Justifica. | **No viola la 3FN.** Los atributos `precio_compra`, `plazo_entrega_dias` y `proveedor_principal` dependen funcionalmente de la clave compuesta completa `(proveedor_id, producto_id)` — el precio de compra varía según el par específico proveedor-producto. No hay dependencias parciales ni transitivas. La tabla está en 3FN. |
+| ¿Por qué `precio_unitario` está en `detalle_ventas` y no se calcula desde `productos.precio_venta`? | Porque `productos.precio_venta` es el precio **vigente hoy**. Si se calculara desde esa columna, una venta del año pasado mostraría el precio actual, no el precio real que pagó el cliente. `precio_unitario` en `detalle_ventas` es el precio **histórico** — congela el valor exacto al momento de la transacción, lo que es obligatorio para auditoría financiera, reconocimiento de ingresos y análisis de márgenes históricos. |
+
+### Paso 14: Análisis de impacto en decisiones de negocio
+
+| Nueva entidad | Decisión de negocio que habilita |
+|---|---|
+| `proveedores` + `proveedor_producto` | "¿Qué proveedor tiene el menor costo para Nike Air Max?" · "¿Cuál es el margen por producto según proveedor?" · "¿Qué productos tienen un solo proveedor (riesgo de abastecimiento)?" |
+| `despachos` | "¿Cuántos despachos llegaron tarde el último mes?" · "¿Qué porcentaje de entregas cumple el plazo estimado?" · "¿Qué regiones tienen mayor tasa de no-entrega?" |
+| `devoluciones` | "¿Cuál es la tasa de devolución por producto?" · "¿Qué motivos generan más devoluciones?" · "¿Cuánto representa el monto reembolsado sobre las ventas totales?" |
+| `categorias` (con jerarquía) | "¿Qué categoría de producto genera mayor margen?" · "¿Qué subcategoría de ropa tiene mayor devolución?" · "¿Cómo se distribuyen las ventas por línea de producto?" |
+
+### Paso 15: Reporte de diseño para el equipo técnico — Respuesta modelo
+
+> **Para:** Equipo de Desarrollo
+>
+> **Asunto:** Modelo de datos TechStyle v2 — listo para implementación
+>
+> El modelo adjunto representa la arquitectura de datos de TechStyle para el sistema integrado de ventas, despacho y devoluciones. Consta de **9 tablas normalizadas hasta 3FN**, ampliando el modelo base de W04 (4 tablas) con cinco entidades nuevas: `categorias`, `proveedores`, `proveedor_producto`, `despachos` y `devoluciones`. Cada entidad responde a un requerimiento concreto del negocio planteado por los gerentes de área.
+>
+> La integridad de los datos está garantizada por **10 restricciones de clave foránea** con comportamiento `RESTRICT` por defecto, excepto en `detalle_ventas.venta_id` donde se usa `CASCADE` (al cancelar una venta, sus líneas se eliminan automáticamente). Se agregaron restricciones `CHECK` para garantizar valores positivos en precios, stocks y cantidades, y rangos válidos en descuentos y estados.
+>
+> Las tablas deben crearse en el siguiente orden para respetar las dependencias: `categorias` → `clientes` → `proveedores` → `productos` → `ventas` → `detalle_ventas` → `proveedor_producto` → `despachos` → `devoluciones`. Cualquier otro orden producirá errores de FK en la ejecución del script DDL.
+>
+> Se incluyeron 6 índices secundarios optimizados para las consultas más frecuentes: búsquedas por región y segmento de cliente (reportes de Marketing), ventas por rango de fechas, productos por categoría, y estado de despachos y devoluciones (panel de Logística). El script completo `W05_techstyle_ddl.sql` está listo para ejecutarse en MySQL Server la semana 6.
+
+---
+
+::: {.hidden}
+## Notas para el docente
+
+**Sobre la corrección del diagrama EER:**
+
+Evaluar que los estudiantes:
+1. **Distingan Identifying de Non-Identifying**: `detalle_ventas` y `proveedor_producto` deben usar relaciones Identifying (sus PK incluyen las FK). Las demás son Non-Identifying.
+2. **FK auto-referencial en `categorias`**: es el concepto más nuevo — verificar que la flecha apunte a la misma tabla con la herramienta correcta.
+3. **UNIQUE en `despachos.venta_id`**: muchos estudiantes lo omiten. Es esencial para enforcar la cardinalidad 1:1.
+
+**Sobre la corrección del SQL:**
+
+1. **Orden de tablas** — `categorias`, `clientes`, `proveedores` antes de cualquier tabla que los referencie.
+2. **ON DELETE en `detalle_ventas`** — el único lugar donde `CASCADE` es semánticamente correcto. Deducir puntos si usan `CASCADE` indiscriminadamente.
+3. **CHECK constraints** — los estudiantes tienden a olvidar `descuento_pct BETWEEN 0 AND 100` y el estado de `despachos`. Valorar que los incluyan.
+4. **Índices** — suficiente con que justifiquen qué consulta optimiza cada índice; la sintaxis exacta es secundaria.
+
+**Errores frecuentes:**
+- Crear `detalle_ventas` o `proveedor_producto` antes de sus tablas padre.
+- Olvidar `UNIQUE INDEX` en `despachos.venta_id` (la relación 1:1 no es obvia para todos).
+- Confundir la FK auto-referencial con una FK hacia otra tabla.
+- Usar `ON DELETE CASCADE` en `ventas.cliente_id` — discutir por qué eliminar clientes con historial es una mala práctica (pérdida de trazabilidad y auditoría).
+
+**Variaciones aceptables:**
+- `ENUM` en vez de `CHECK` para `segmento` y `estado` — válido en MySQL.
+- `DECIMAL(5,2)` vs `INT` en `descuento_pct` — ambos son aceptables; `DECIMAL` permite descuentos como 12.5%.
+- Índices adicionales bien justificados — sumar puntos.
+:::

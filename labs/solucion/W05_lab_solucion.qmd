@@ -45,16 +45,21 @@ format:
 
 | Caso de Uso | ¿Guarda o consulta datos? | Entidad(es) que genera o usa |
 |---|---|---|
-| Realizar Pedido | Guarda | `ventas`, `detalle_ventas` |
 | Gestionar Clientes | Guarda | `clientes` |
-| Registrar Despacho | Guarda | `despachos` |
-| Procesar Devolución | Guarda | `devoluciones` |
-| Gestionar Proveedores | Guarda | `proveedores`, `proveedor_producto` |
 | Consultar Stock | Consulta | `productos` |
-| Generar Reporte de Ventas | Consulta | `ventas`, `detalle_ventas`, `clientes`, `productos` |
+| Realizar Pedido | Guarda | `ventas`, `detalle_ventas` |
+| Consultar Estado de Despacho | Consulta | `despachos` |
+| Gestionar Proveedores | Guarda | `proveedores`, `proveedor_producto` |
+| Consultar Reportes de Ventas | Consulta | `ventas`, `detalle_ventas`, `clientes`, `productos` |
+| Analizar Segmentos de Clientes | Consulta | `clientes`, `ventas` |
+| Gestionar Despachos | Guarda | `despachos` |
+| Gestionar Devolución | Guarda | `devoluciones` |
+| Consultar Reportes y KPIs | Consulta | `ventas`, `detalle_ventas`, `clientes`, `productos`, `categorias` |
+| Procesar Transacción | Guarda | `ventas` |
+| Sincronizar Entrega | Guarda | `despachos` |
 
 ::: {.callout-tip}
-**Para el docente**: la conclusión clave es que el modelo de W04 (4 tablas) no cubre "Gestionar Proveedores", "Registrar Despacho" ni "Procesar Devolución". Esos tres casos de uso generan 5 entidades nuevas: `proveedores`, `proveedor_producto`, `despachos`, `devoluciones` y `categorias` (necesaria para que Marketing pueda analizar por línea de producto). Use esta tabla para justificar la expansión del modelo.
+**Para el docente**: la conclusión clave es que el modelo de W04 (4 tablas) no cubre "Gestionar Proveedores", "Gestionar Despachos" ni "Gestionar Devolución". Esos tres casos de uso generan 5 entidades nuevas: `proveedores`, `proveedor_producto`, `despachos`, `devoluciones` y `categorias` (necesaria para que Marketing pueda analizar por línea de producto en "Analizar Segmentos de Clientes" y "Consultar Reportes y KPIs"). Use esta tabla para justificar la expansión del modelo.
 :::
 
 ---

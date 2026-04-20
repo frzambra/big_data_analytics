@@ -307,29 +307,9 @@ Warning
 </thead>
 <tbody>
 <tr class="odd">
-<td>Realizar Pedido</td>
-<td>Guarda</td>
-<td><code>ventas</code>, <code>detalle_ventas</code></td>
-</tr>
-<tr class="even">
 <td>Gestionar Clientes</td>
 <td>Guarda</td>
 <td><code>clientes</code></td>
-</tr>
-<tr class="odd">
-<td>Registrar Despacho</td>
-<td>Guarda</td>
-<td><code>despachos</code></td>
-</tr>
-<tr class="even">
-<td>Procesar Devolución</td>
-<td>Guarda</td>
-<td><code>devoluciones</code></td>
-</tr>
-<tr class="odd">
-<td>Gestionar Proveedores</td>
-<td>Guarda</td>
-<td><code>proveedores</code>, <code>proveedor_producto</code></td>
 </tr>
 <tr class="even">
 <td>Consultar Stock</td>
@@ -337,9 +317,54 @@ Warning
 <td><code>productos</code></td>
 </tr>
 <tr class="odd">
-<td>Generar Reporte de Ventas</td>
+<td>Realizar Pedido</td>
+<td>Guarda</td>
+<td><code>ventas</code>, <code>detalle_ventas</code></td>
+</tr>
+<tr class="even">
+<td>Consultar Estado de Despacho</td>
+<td>Consulta</td>
+<td><code>despachos</code></td>
+</tr>
+<tr class="odd">
+<td>Gestionar Proveedores</td>
+<td>Guarda</td>
+<td><code>proveedores</code>, <code>proveedor_producto</code></td>
+</tr>
+<tr class="even">
+<td>Consultar Reportes de Ventas</td>
 <td>Consulta</td>
 <td><code>ventas</code>, <code>detalle_ventas</code>, <code>clientes</code>, <code>productos</code></td>
+</tr>
+<tr class="odd">
+<td>Analizar Segmentos de Clientes</td>
+<td>Consulta</td>
+<td><code>clientes</code>, <code>ventas</code></td>
+</tr>
+<tr class="even">
+<td>Gestionar Despachos</td>
+<td>Guarda</td>
+<td><code>despachos</code></td>
+</tr>
+<tr class="odd">
+<td>Gestionar Devolución</td>
+<td>Guarda</td>
+<td><code>devoluciones</code></td>
+</tr>
+<tr class="even">
+<td>Consultar Reportes y KPIs</td>
+<td>Consulta</td>
+<td><code>ventas</code>, <code>detalle_ventas</code>, <code>clientes</code>, <code>productos</code>, <code>categorias</code></td>
+</tr>
+<tr class="odd">
+<td>Procesar Transacción</td>
+<td>Guarda</td>
+<td><code>ventas</code></td>
+</tr>
+<tr class="even">
+<td>Sincronizar Entrega</td>
+<td>Guarda</td>
+<td><code>despachos</code></td>
 </tr>
 </tbody>
 </table>
@@ -353,7 +378,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Para el docente</strong>: la conclusión clave es que el modelo de W04 (4 tablas) no cubre “Gestionar Proveedores”, “Registrar Despacho” ni “Procesar Devolución”. Esos tres casos de uso generan 5 entidades nuevas: <code>proveedores</code>, <code>proveedor_producto</code>, <code>despachos</code>, <code>devoluciones</code> y <code>categorias</code> (necesaria para que Marketing pueda analizar por línea de producto). Use esta tabla para justificar la expansión del modelo.</p>
+<p><strong>Para el docente</strong>: la conclusión clave es que el modelo de W04 (4 tablas) no cubre “Gestionar Proveedores”, “Gestionar Despachos” ni “Gestionar Devolución”. Esos tres casos de uso generan 5 entidades nuevas: <code>proveedores</code>, <code>proveedor_producto</code>, <code>despachos</code>, <code>devoluciones</code> y <code>categorias</code> (necesaria para que Marketing pueda analizar por línea de producto en “Analizar Segmentos de Clientes” y “Consultar Reportes y KPIs”). Use esta tabla para justificar la expansión del modelo.</p>
 </div>
 </div>
 <hr>

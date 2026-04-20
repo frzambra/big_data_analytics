@@ -145,6 +145,15 @@ format:
   .card.evaluacion .card-title { color: var(--tierra-oscuro); }
   .card.evaluacion .card-arrow { color: var(--tierra); }
 
+  /* ── Solemne card (clickable evaluación) ─────────────── */
+  .card.solemne::before { background: var(--tierra-oscuro); }
+  .card.solemne { background: #fdf6f0; border-color: #e8c9a8; }
+  .card.solemne .card-tag { color: var(--tierra-oscuro); }
+  .card.solemne .card-title { color: var(--tierra-oscuro); }
+  .card.solemne:hover { border-color: var(--tierra); }
+  .card-links a.link-pauta { color: var(--tierra-oscuro); }
+  .card-links a.link-pauta:hover { color: #5a3d20; text-decoration: underline; }
+
   /* ── Lab card ─────────────────────────────────────────── */
   .card.lab::before { background: var(--verde-lab); }
   .card.lab { background: #f0faf4; border-color: #b2dfca; }
@@ -314,6 +323,26 @@ format:
       <span class="card-subtitle">MySQL Workbench · Diagrama UML · Implementación del modelo TechStyle</span>
       <div class="card-links">
         <a class="link-lab" href="labs/instrucciones/W05_lab.html">Ver laboratorio →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Evaluaciones ───────────────────────────────────── -->
+  <div class="section-label">
+    <div class="line"></div>
+    <span>Evaluaciones</span>
+    <div class="line"></div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card solemne">
+      <span class="card-tag">Solemne 1 · Unidades I y II</span>
+      <span class="card-title">Sistemas de Información y Modelamiento de Datos</span>
+      <span class="card-subtitle">Calidad de datos · ETL · Modelo Analítico · Normalización · CREATE TABLE · 100 pts · 2h 30min</span>
+      <div class="card-links">
+        <a class="link-lab" href="solemnes/Solemne_01/S01_solemne.html">Ver enunciado →</a>
+        <span class="link-divider">|</span>
+        <a class="link-pauta" href="solemnes/Solemne_01/S01_solemne_pauta.html">Ver pauta →</a>
       </div>
     </div>
   </div>

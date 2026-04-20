@@ -19,3 +19,6 @@ Thumbs.db
 
 /.quarto/
 **/*.quarto_ipynb
+
+# no incluir carpeta con archivos grandes de bases de datos
+/big_data_bbdd

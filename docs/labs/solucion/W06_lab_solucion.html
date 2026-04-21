@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Solución — Laboratorio 6: Construyendo la Base de Datos de TechStyle</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-538d5bc5c147f17fcaa17a1866cecc2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#parte-1-forward-engineering-generar-el-script-sql" id="toc-parte-1-forward-engineering-generar-el-script-sql" class="nav-link active" data-scroll-target="#parte-1-forward-engineering-generar-el-script-sql"><span class="header-section-number">1</span> Parte 1 — Forward Engineering: Generar el Script SQL</a></li>
+  <li><a href="#parte-2-verificar-y-completar-el-script-sql" id="toc-parte-2-verificar-y-completar-el-script-sql" class="nav-link" data-scroll-target="#parte-2-verificar-y-completar-el-script-sql"><span class="header-section-number">2</span> Parte 2 — Verificar y Completar el Script SQL</a>
+  <ul class="collapse">
+  <li><a href="#paso-4-análisis-de-on-delete-respuesta-esperada" id="toc-paso-4-análisis-de-on-delete-respuesta-esperada" class="nav-link" data-scroll-target="#paso-4-análisis-de-on-delete-respuesta-esperada"><span class="header-section-number">2.1</span> Paso 4: Análisis de ON DELETE — Respuesta esperada</a></li>
+  <li><a href="#pasos-5-y-6-restricciones-check-e-índices" id="toc-pasos-5-y-6-restricciones-check-e-índices" class="nav-link" data-scroll-target="#pasos-5-y-6-restricciones-check-e-índices"><span class="header-section-number">2.2</span> Pasos 5 y 6: Restricciones CHECK e índices</a></li>
+  <li><a href="#paso-7-orden-correcto-de-creación-verificación" id="toc-paso-7-orden-correcto-de-creación-verificación" class="nav-link" data-scroll-target="#paso-7-orden-correcto-de-creación-verificación"><span class="header-section-number">2.3</span> Paso 7: Orden correcto de creación — Verificación</a></li>
+  </ul></li>
+  <li><a href="#parte-3-ejecutar-el-ddl-en-mysql-server" id="toc-parte-3-ejecutar-el-ddl-en-mysql-server" class="nav-link" data-scroll-target="#parte-3-ejecutar-el-ddl-en-mysql-server"><span class="header-section-number">3</span> Parte 3 — Ejecutar el DDL en MySQL Server</a>
+  <ul class="collapse">
+  <li><a href="#paso-10-verificación-de-la-estructura-creada-resultados-esperados" id="toc-paso-10-verificación-de-la-estructura-creada-resultados-esperados" class="nav-link" data-scroll-target="#paso-10-verificación-de-la-estructura-creada-resultados-esperados"><span class="header-section-number">3.1</span> Paso 10: Verificación de la estructura creada — Resultados esperados</a></li>
+  </ul></li>
+  <li><a href="#parte-4-cargar-datos-iniciales-con-insert-into" id="toc-parte-4-cargar-datos-iniciales-con-insert-into" class="nav-link" data-scroll-target="#parte-4-cargar-datos-iniciales-con-insert-into"><span class="header-section-number">4</span> Parte 4 — Cargar Datos Iniciales con INSERT INTO</a>
+  <ul class="collapse">
+  <li><a href="#pasos-1114-scripts-de-inserción" id="toc-pasos-1114-scripts-de-inserción" class="nav-link" data-scroll-target="#pasos-1114-scripts-de-inserción"><span class="header-section-number">4.1</span> Pasos 11–14: Scripts de inserción</a></li>
+  <li><a href="#paso-15-insert-de-carlos-muñoz-solución" id="toc-paso-15-insert-de-carlos-muñoz-solución" class="nav-link" data-scroll-target="#paso-15-insert-de-carlos-muñoz-solución"><span class="header-section-number">4.2</span> Paso 15: INSERT de Carlos Muñoz — Solución</a></li>
+  <li><a href="#paso-16-consultas-de-diagnóstico-resultados-esperados" id="toc-paso-16-consultas-de-diagnóstico-resultados-esperados" class="nav-link" data-scroll-target="#paso-16-consultas-de-diagnóstico-resultados-esperados"><span class="header-section-number">4.3</span> Paso 16: Consultas de diagnóstico — Resultados esperados</a></li>
+  </ul></li>
+  <li><a href="#parte-5-transacciones-registrar-una-venta-completa" id="toc-parte-5-transacciones-registrar-una-venta-completa" class="nav-link" data-scroll-target="#parte-5-transacciones-registrar-una-venta-completa"><span class="header-section-number">5</span> Parte 5 — Transacciones: Registrar una Venta Completa</a>
+  <ul class="collapse">
+  <li><a href="#pasos-17-y-18-transacciones" id="toc-pasos-17-y-18-transacciones" class="nav-link" data-scroll-target="#pasos-17-y-18-transacciones"><span class="header-section-number">5.1</span> Pasos 17 y 18: Transacciones</a></li>
+  <li><a href="#paso-19-reflexión-sobre-transacciones-respuestas-esperadas" id="toc-paso-19-reflexión-sobre-transacciones-respuestas-esperadas" class="nav-link" data-scroll-target="#paso-19-reflexión-sobre-transacciones-respuestas-esperadas"><span class="header-section-number">5.2</span> Paso 19: Reflexión sobre transacciones — Respuestas esperadas</a></li>
+  </ul></li>
+  <li><a href="#parte-6-síntesis-y-reflexión" id="toc-parte-6-síntesis-y-reflexión" class="nav-link" data-scroll-target="#parte-6-síntesis-y-reflexión"><span class="header-section-number">6</span> Parte 6 — Síntesis y Reflexión</a>
+  <ul class="collapse">
+  <li><a href="#paso-20-comparar-modelo-diseñado-vs.-modelo-implementado-respuesta-esperada" id="toc-paso-20-comparar-modelo-diseñado-vs.-modelo-implementado-respuesta-esperada" class="nav-link" data-scroll-target="#paso-20-comparar-modelo-diseñado-vs.-modelo-implementado-respuesta-esperada"><span class="header-section-number">6.1</span> Paso 20: Comparar modelo diseñado vs.&nbsp;modelo implementado — Respuesta esperada</a></li>
+  <li><a href="#paso-21-preguntas-de-diseño-e-implementación-respuestas-esperadas" id="toc-paso-21-preguntas-de-diseño-e-implementación-respuestas-esperadas" class="nav-link" data-scroll-target="#paso-21-preguntas-de-diseño-e-implementación-respuestas-esperadas"><span class="header-section-number">6.2</span> Paso 21: Preguntas de diseño e implementación — Respuestas esperadas</a></li>
+  <li><a href="#paso-22-análisis-de-impacto-respuestas-esperadas" id="toc-paso-22-análisis-de-impacto-respuestas-esperadas" class="nav-link" data-scroll-target="#paso-22-análisis-de-impacto-respuestas-esperadas"><span class="header-section-number">6.3</span> Paso 22: Análisis de impacto — Respuestas esperadas</a></li>
+  <li><a href="#paso-23-reporte-de-implementación-para-roberto-respuesta-modelo" id="toc-paso-23-reporte-de-implementación-para-roberto-respuesta-modelo" class="nav-link" data-scroll-target="#paso-23-reporte-de-implementación-para-roberto-respuesta-modelo"><span class="header-section-number">6.4</span> Paso 23: Reporte de implementación para Roberto — Respuesta modelo</a></li>
+  </ul></li>
+  <li><a href="#notas-para-el-docente" id="toc-notas-para-el-docente" class="nav-link" data-scroll-target="#notas-para-el-docente"><span class="header-section-number">7</span> Notas para el docente</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Solución — Laboratorio 6: Construyendo la Base de Datos de TechStyle</h1>
+<p class="subtitle lead">Semana 6 · W06 · Unidad II · Implementación en MySQL · Universidad San Sebastián</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Documento de uso exclusivo del docente.</strong> No distribuir a estudiantes antes de que completen el laboratorio.</p>
+</div>
+</div>
+<hr>
+<section id="parte-1-forward-engineering-generar-el-script-sql" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="parte-1-forward-engineering-generar-el-script-sql"><span class="header-section-number">1</span> Parte 1 — Forward Engineering: Generar el Script SQL</h2>
+<p>Esta parte es procedimental. La única verificación evaluable es que el script resultante incluya las 9 tablas, el <code>CREATE SCHEMA IF NOT EXISTS techstyle</code> y que las tablas sin FK externas aparezcan primero.</p>
+<p><strong>Resultado esperado del Paso 3 (encabezado del script):</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @OLD_UNIQUE_CHECKS<span class="op">=</span>@@UNIQUE_CHECKS, UNIQUE_CHECKS<span class="op">=</span><span class="dv">0</span>;</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @OLD_FOREIGN_KEY_CHECKS<span class="op">=</span>@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS<span class="op">=</span><span class="dv">0</span>;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @OLD_SQL_MODE<span class="op">=</span>@@SQL_MODE, SQL_MODE<span class="op">=</span><span class="st">'...'</span>);</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">SCHEMA</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> `techstyle` <span class="kw">DEFAULT</span> <span class="dt">CHARACTER</span> <span class="kw">SET</span> utf8mb4;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">USE</span> `techstyle`;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Para el docente</strong>: verificar que los estudiantes activaron las opciones <code>Generate DROP Statements</code> y <code>Include FK Indexes</code>. Sin <code>DROP TABLE IF EXISTS</code> antes de cada <code>CREATE</code>, el script fallará si se ejecuta más de una vez — situación común en laboratorio cuando el estudiante necesita repetir la ejecución tras corregir errores.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="parte-2-verificar-y-completar-el-script-sql" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="parte-2-verificar-y-completar-el-script-sql"><span class="header-section-number">2</span> Parte 2 — Verificar y Completar el Script SQL</h2>
+<section id="paso-4-análisis-de-on-delete-respuesta-esperada" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="paso-4-análisis-de-on-delete-respuesta-esperada"><span class="header-section-number">2.1</span> Paso 4: Análisis de ON DELETE — Respuesta esperada</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>FK</th>
+<th>ON DELETE generado</th>
+<th>¿Es correcto?</th>
+<th>Justificación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ventas.cliente_id</code> → <code>clientes</code></td>
+<td>RESTRICT</td>
+<td><strong>Sí</strong></td>
+<td>No se debe eliminar un cliente con historial de ventas. La eliminación debe bloquearse para preservar trazabilidad financiera y auditoría.</td>
+</tr>
+<tr class="even">
+<td><code>detalle_ventas.venta_id</code> → <code>ventas</code></td>
+<td>RESTRICT</td>
+<td><strong>No — debe ser CASCADE</strong></td>
+<td>Si se cancela o elimina una venta, sus líneas de detalle no tienen sentido sin la cabecera. El CASCADE elimina automáticamente los ítems al borrar la venta, evitando registros huérfanos.</td>
+</tr>
+<tr class="odd">
+<td><code>despachos.venta_id</code> → <code>ventas</code></td>
+<td>RESTRICT</td>
+<td><strong>Sí</strong></td>
+<td>No se puede eliminar una venta que ya tiene un despacho registrado. El registro logístico es parte del historial operacional.</td>
+</tr>
+<tr class="even">
+<td><code>devoluciones.venta_id</code> → <code>ventas</code></td>
+<td>RESTRICT</td>
+<td><strong>Sí</strong></td>
+<td>No se puede eliminar una venta con devoluciones asociadas. El registro de devoluciones tiene impacto contable y no debe perderse.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Para el docente</strong>: el único <code>CASCADE</code> semánticamente justificado es en <code>detalle_ventas</code>. Use este punto para discutir la pregunta: “¿Los datos hijos tienen sentido independientemente del padre?”. Si la respuesta es no → <code>CASCADE</code>. Si la respuesta es sí (el hijo tiene valor propio aunque el padre no exista) → <code>RESTRICT</code> o <code>SET NULL</code>.</p>
+<p>Penalizar si los estudiantes usan <code>CASCADE</code> en <code>ventas.cliente_id</code> — ese error destruye el historial de ventas de un cliente si alguien borra por error un registro de la tabla <code>clientes</code>.</p>
+</div>
+</div>
+</section>
+<section id="pasos-5-y-6-restricciones-check-e-índices" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="pasos-5-y-6-restricciones-check-e-índices"><span class="header-section-number">2.2</span> Pasos 5 y 6: Restricciones CHECK e índices</h3>
+<p>Los scripts ya están provistos en el enunciado. Evaluar que los estudiantes los copiaron correctamente al archivo <code>.sql</code> y en el orden correcto (después de todos los <code>CREATE TABLE</code>).</p>
+<p><strong>Restricción adicional bien recibida (no obligatoria):</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> devoluciones <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_cantidad_devuelta_positiva</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (cantidad_devuelta <span class="op">&gt;</span> <span class="dv">0</span>);</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> devoluciones <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_estado_devolucion</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (estado <span class="kw">IN</span> (<span class="st">'Pendiente'</span>, <span class="st">'Aprobada'</span>, <span class="st">'Rechazada'</span>, <span class="st">'Reembolsada'</span>));</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="paso-7-orden-correcto-de-creación-verificación" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="paso-7-orden-correcto-de-creación-verificación"><span class="header-section-number">2.3</span> Paso 7: Orden correcto de creación — Verificación</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Tabla</th>
+<th>Depende de</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><code>categorias</code></td>
+<td>— (solo FK auto-referencial, no bloquea la creación)</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><code>clientes</code></td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><code>proveedores</code></td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><code>productos</code></td>
+<td><code>categorias</code></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td><code>ventas</code></td>
+<td><code>clientes</code></td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td><code>detalle_ventas</code></td>
+<td><code>ventas</code>, <code>productos</code></td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td><code>proveedor_producto</code></td>
+<td><code>proveedores</code>, <code>productos</code></td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td><code>despachos</code></td>
+<td><code>ventas</code></td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td><code>devoluciones</code></td>
+<td><code>ventas</code>, <code>productos</code></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Error frecuente</strong>: Workbench a veces coloca <code>categorias</code> después de <code>productos</code> cuando detecta la FK auto-referencial. Si el script falla con <code>errno: 150</code>, verificar que <code>categorias</code> aparezca antes que <code>productos</code>.</p>
+</div>
+</div>
+<p><strong>Script DDL completo corregido — Respuesta modelo:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- TECHSTYLE — Script DDL completo con ajustes manuales</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Generado con MySQL Workbench 8.0</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- ============================================================</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @OLD_UNIQUE_CHECKS<span class="op">=</span>@@UNIQUE_CHECKS, UNIQUE_CHECKS<span class="op">=</span><span class="dv">0</span>;</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @OLD_FOREIGN_KEY_CHECKS<span class="op">=</span>@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS<span class="op">=</span><span class="dv">0</span>;</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @OLD_SQL_MODE<span class="op">=</span>@@SQL_MODE,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    SQL_MODE<span class="op">=</span><span class="st">'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'</span>;</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">SCHEMA</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> `techstyle`</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">DEFAULT</span> <span class="dt">CHARACTER</span> <span class="kw">SET</span> utf8mb4</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    COLLATE utf8mb4_spanish_ci;</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="kw">USE</span> `techstyle`;</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">-- ── 1. categorias (FK auto-referencial) ────────────────────</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> `categorias`;</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> `categorias` (</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    `categoria_id`       <span class="dt">INT</span>          <span class="kw">NOT</span> <span class="kw">NULL</span> AUTO_INCREMENT,</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    `nombre_categoria`   <span class="dt">VARCHAR</span>(<span class="dv">50</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    `descripcion`        <span class="dt">VARCHAR</span>(<span class="dv">200</span>) <span class="kw">NULL</span>,</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    `categoria_padre_id` <span class="dt">INT</span>          <span class="kw">NULL</span>,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (`categoria_id`),</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> `fk_categoria_padre_idx` (`categoria_padre_id` <span class="kw">ASC</span>),</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CONSTRAINT</span> `fk_categoria_padre`</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>        <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (`categoria_padre_id`)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>        <span class="kw">REFERENCES</span> `categorias` (`categoria_id`)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>        <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">RESTRICT</span> <span class="kw">ON</span> <span class="kw">UPDATE</span> <span class="kw">CASCADE</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>) ENGINE<span class="op">=</span>InnoDB;</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>SHOW WARNINGS;</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="co">-- ── 2. clientes ────────────────────────────────────────────</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> `clientes`;</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> `clientes` (</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    `cliente_id`     <span class="dt">INT</span>          <span class="kw">NOT</span> <span class="kw">NULL</span> AUTO_INCREMENT,</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    `nombre`         <span class="dt">VARCHAR</span>(<span class="dv">50</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    `apellido`       <span class="dt">VARCHAR</span>(<span class="dv">50</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    `email`          <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    `region`         <span class="dt">VARCHAR</span>(<span class="dv">50</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    `segmento`       <span class="dt">VARCHAR</span>(<span class="dv">20</span>)  <span class="kw">NULL</span>,</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    `fecha_registro` <span class="dt">DATE</span>         <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (`cliente_id`),</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNIQUE</span> <span class="kw">INDEX</span> `email_UNIQUE` (`email` <span class="kw">ASC</span>)</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>) ENGINE<span class="op">=</span>InnoDB;</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>SHOW WARNINGS;</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="co">-- ── 3. proveedores ─────────────────────────────────────────</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> `proveedores`;</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> `proveedores` (</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    `proveedor_id`     <span class="dt">INT</span>          <span class="kw">NOT</span> <span class="kw">NULL</span> AUTO_INCREMENT,</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>    `nombre_proveedor` <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>    `rut`              <span class="dt">VARCHAR</span>(<span class="dv">12</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>    `contacto`         <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NULL</span>,</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>    `email`            <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NULL</span>,</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>    `telefono`         <span class="dt">VARCHAR</span>(<span class="dv">20</span>)  <span class="kw">NULL</span>,</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (`proveedor_id`),</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNIQUE</span> <span class="kw">INDEX</span> `rut_UNIQUE` (`rut` <span class="kw">ASC</span>)</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>) ENGINE<span class="op">=</span>InnoDB;</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>SHOW WARNINGS;</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="co">-- ── 4. productos (FK → categorias) ─────────────────────────</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> `productos`;</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> `productos` (</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>    `producto_id`     <span class="dt">INT</span>            <span class="kw">NOT</span> <span class="kw">NULL</span> AUTO_INCREMENT,</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>    `nombre_producto` <span class="dt">VARCHAR</span>(<span class="dv">100</span>)   <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>    `categoria_id`    <span class="dt">INT</span>            <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>    `precio_venta`    <span class="dt">DECIMAL</span>(<span class="dv">10</span>,<span class="dv">2</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>    `costo_unitario`  <span class="dt">DECIMAL</span>(<span class="dv">10</span>,<span class="dv">2</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>    `stock`           <span class="dt">INT</span>            <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">DEFAULT</span> <span class="dv">0</span>,</span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>    `activo`          TINYINT(<span class="dv">1</span>)     <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">DEFAULT</span> <span class="dv">1</span>,</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (`producto_id`),</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> `fk_productos_categorias_idx` (`categoria_id` <span class="kw">ASC</span>),</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CONSTRAINT</span> `fk_productos_categorias`</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>        <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (`categoria_id`)</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>        <span class="kw">REFERENCES</span> `categorias` (`categoria_id`)</span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>        <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">RESTRICT</span> <span class="kw">ON</span> <span class="kw">UPDATE</span> <span class="kw">CASCADE</span></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>) ENGINE<span class="op">=</span>InnoDB;</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>SHOW WARNINGS;</span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a><span class="co">-- ── 5. ventas (FK → clientes) ──────────────────────────────</span></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> `ventas`;</span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> `ventas` (</span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>    `venta_id`   <span class="dt">INT</span>  <span class="kw">NOT</span> <span class="kw">NULL</span> AUTO_INCREMENT,</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>    `fecha`      <span class="dt">DATE</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>    `cliente_id` <span class="dt">INT</span>  <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (`venta_id`),</span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> `fk_ventas_clientes_idx` (`cliente_id` <span class="kw">ASC</span>),</span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CONSTRAINT</span> `fk_ventas_clientes`</span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>        <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (`cliente_id`)</span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>        <span class="kw">REFERENCES</span> `clientes` (`cliente_id`)</span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>        <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">RESTRICT</span> <span class="kw">ON</span> <span class="kw">UPDATE</span> <span class="kw">CASCADE</span></span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>) ENGINE<span class="op">=</span>InnoDB;</span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>SHOW WARNINGS;</span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a><span class="co">-- ── 6. detalle_ventas (FK → ventas CASCADE, productos RESTRICT)</span></span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> `detalle_ventas`;</span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> `detalle_ventas` (</span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>    `venta_id`        <span class="dt">INT</span>           <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>    `producto_id`     <span class="dt">INT</span>           <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>    `cantidad`        <span class="dt">INT</span>           <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>    `precio_unitario` <span class="dt">DECIMAL</span>(<span class="dv">10</span>,<span class="dv">2</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>    `descuento_pct`   <span class="dt">DECIMAL</span>(<span class="dv">5</span>,<span class="dv">2</span>)  <span class="kw">NULL</span> <span class="kw">DEFAULT</span> <span class="dv">0</span>,</span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (`venta_id`, `producto_id`),</span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> `fk_detalle_productos_idx` (`producto_id` <span class="kw">ASC</span>),</span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CONSTRAINT</span> `fk_detalle_ventas`</span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>        <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (`venta_id`)</span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>        <span class="kw">REFERENCES</span> `ventas` (`venta_id`)</span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>        <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">CASCADE</span> <span class="kw">ON</span> <span class="kw">UPDATE</span> <span class="kw">CASCADE</span>,  <span class="co">-- único CASCADE justificado</span></span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CONSTRAINT</span> `fk_detalle_productos`</span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>        <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (`producto_id`)</span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>        <span class="kw">REFERENCES</span> `productos` (`producto_id`)</span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a>        <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">RESTRICT</span> <span class="kw">ON</span> <span class="kw">UPDATE</span> <span class="kw">CASCADE</span></span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>) ENGINE<span class="op">=</span>InnoDB;</span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>SHOW WARNINGS;</span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a><span class="co">-- ── 7. proveedor_producto (FK → proveedores, productos) ────</span></span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> `proveedor_producto`;</span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> `proveedor_producto` (</span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a>    `proveedor_id`        <span class="dt">INT</span>           <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a>    `producto_id`         <span class="dt">INT</span>           <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a>    `precio_compra`       <span class="dt">DECIMAL</span>(<span class="dv">10</span>,<span class="dv">2</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a>    `plazo_entrega_dias`  <span class="dt">INT</span>           <span class="kw">NULL</span>,</span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a>    `proveedor_principal` TINYINT(<span class="dv">1</span>)    <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">DEFAULT</span> <span class="dv">0</span>,</span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (`proveedor_id`, `producto_id`),</span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> `fk_pp_productos_idx` (`producto_id` <span class="kw">ASC</span>),</span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CONSTRAINT</span> `fk_pp_proveedores`</span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a>        <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (`proveedor_id`)</span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a>        <span class="kw">REFERENCES</span> `proveedores` (`proveedor_id`)</span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a>        <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">RESTRICT</span> <span class="kw">ON</span> <span class="kw">UPDATE</span> <span class="kw">CASCADE</span>,</span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CONSTRAINT</span> `fk_pp_productos`</span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a>        <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (`producto_id`)</span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a>        <span class="kw">REFERENCES</span> `productos` (`producto_id`)</span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a>        <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">RESTRICT</span> <span class="kw">ON</span> <span class="kw">UPDATE</span> <span class="kw">CASCADE</span></span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a>) ENGINE<span class="op">=</span>InnoDB;</span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a>SHOW WARNINGS;</span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a><span class="co">-- ── 8. despachos (1:1 con ventas via UNIQUE) ───────────────</span></span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> `despachos`;</span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> `despachos` (</span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a>    `despacho_id`            <span class="dt">INT</span>          <span class="kw">NOT</span> <span class="kw">NULL</span> AUTO_INCREMENT,</span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a>    `venta_id`               <span class="dt">INT</span>          <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a>    `direccion_entrega`      <span class="dt">VARCHAR</span>(<span class="dv">200</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a>    `fecha_despacho`         <span class="dt">DATE</span>         <span class="kw">NULL</span>,</span>
+<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a>    `fecha_entrega_estimada` <span class="dt">DATE</span>         <span class="kw">NULL</span>,</span>
+<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a>    `fecha_entrega_real`     <span class="dt">DATE</span>         <span class="kw">NULL</span>,</span>
+<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a>    `estado`                 <span class="dt">VARCHAR</span>(<span class="dv">20</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">DEFAULT</span> <span class="st">'Pendiente'</span>,</span>
+<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (`despacho_id`),</span>
+<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNIQUE</span> <span class="kw">INDEX</span> `venta_id_UNIQUE` (`venta_id` <span class="kw">ASC</span>),</span>
+<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CONSTRAINT</span> `fk_despachos_ventas`</span>
+<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a>        <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (`venta_id`)</span>
+<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a>        <span class="kw">REFERENCES</span> `ventas` (`venta_id`)</span>
+<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a>        <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">RESTRICT</span> <span class="kw">ON</span> <span class="kw">UPDATE</span> <span class="kw">CASCADE</span></span>
+<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a>) ENGINE<span class="op">=</span>InnoDB;</span>
+<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a>SHOW WARNINGS;</span>
+<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a><span class="co">-- ── 9. devoluciones (FK → ventas, productos) ───────────────</span></span>
+<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> `devoluciones`;</span>
+<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> `devoluciones` (</span>
+<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a>    `devolucion_id`     <span class="dt">INT</span>           <span class="kw">NOT</span> <span class="kw">NULL</span> AUTO_INCREMENT,</span>
+<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a>    `venta_id`          <span class="dt">INT</span>           <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a>    `producto_id`       <span class="dt">INT</span>           <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a>    `fecha_devolucion`  <span class="dt">DATE</span>          <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a>    `cantidad_devuelta` <span class="dt">INT</span>           <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a>    `motivo`            <span class="dt">VARCHAR</span>(<span class="dv">200</span>)  <span class="kw">NULL</span>,</span>
+<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a>    `estado`            <span class="dt">VARCHAR</span>(<span class="dv">20</span>)   <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">DEFAULT</span> <span class="st">'Pendiente'</span>,</span>
+<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a>    `monto_reembolsado` <span class="dt">DECIMAL</span>(<span class="dv">10</span>,<span class="dv">2</span>) <span class="kw">NULL</span>,</span>
+<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (`devolucion_id`),</span>
+<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> `fk_dev_ventas_idx`    (`venta_id`    <span class="kw">ASC</span>),</span>
+<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INDEX</span> `fk_dev_productos_idx` (`producto_id` <span class="kw">ASC</span>),</span>
+<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CONSTRAINT</span> `fk_devoluciones_ventas`</span>
+<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a>        <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (`venta_id`)</span>
+<span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a>        <span class="kw">REFERENCES</span> `ventas` (`venta_id`)</span>
+<span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a>        <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">RESTRICT</span> <span class="kw">ON</span> <span class="kw">UPDATE</span> <span class="kw">CASCADE</span>,</span>
+<span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CONSTRAINT</span> `fk_devoluciones_productos`</span>
+<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a>        <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (`producto_id`)</span>
+<span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a>        <span class="kw">REFERENCES</span> `productos` (`producto_id`)</span>
+<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a>        <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">RESTRICT</span> <span class="kw">ON</span> <span class="kw">UPDATE</span> <span class="kw">CASCADE</span></span>
+<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a>) ENGINE<span class="op">=</span>InnoDB;</span>
+<span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a>SHOW WARNINGS;</span>
+<span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> SQL_MODE<span class="op">=</span>@OLD_SQL_MODE;</span>
+<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> FOREIGN_KEY_CHECKS<span class="op">=</span>@OLD_FOREIGN_KEY_CHECKS;</span>
+<span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> UNIQUE_CHECKS<span class="op">=</span>@OLD_UNIQUE_CHECKS;</span>
+<span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a><span class="co">-- ── CHECK constraints (agregar después de todos los CREATE TABLE)</span></span>
+<span id="cb3-186"><a href="#cb3-186" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> productos       <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_precio_positivo   <span class="kw">CHECK</span> (precio_venta <span class="op">&gt;</span> <span class="dv">0</span>);</span>
+<span id="cb3-187"><a href="#cb3-187" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> productos       <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_costo_positivo    <span class="kw">CHECK</span> (costo_unitario <span class="op">&gt;</span> <span class="dv">0</span>);</span>
+<span id="cb3-188"><a href="#cb3-188" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> productos       <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_stock_no_negativo <span class="kw">CHECK</span> (stock <span class="op">&gt;=</span> <span class="dv">0</span>);</span>
+<span id="cb3-189"><a href="#cb3-189" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> detalle_ventas  <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_cantidad_positiva <span class="kw">CHECK</span> (cantidad <span class="op">&gt;</span> <span class="dv">0</span>);</span>
+<span id="cb3-190"><a href="#cb3-190" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> detalle_ventas  <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_descuento_rango   <span class="kw">CHECK</span> (descuento_pct <span class="kw">BETWEEN</span> <span class="dv">0</span> <span class="kw">AND</span> <span class="dv">100</span>);</span>
+<span id="cb3-191"><a href="#cb3-191" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> clientes        <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_segmento_valido   <span class="kw">CHECK</span> (segmento <span class="kw">IN</span> (<span class="st">'Premium'</span>, <span class="st">'Estándar'</span>, <span class="st">'Básico'</span>));</span>
+<span id="cb3-192"><a href="#cb3-192" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> despachos       <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_estado_despacho   <span class="kw">CHECK</span> (estado <span class="kw">IN</span> (<span class="st">'Pendiente'</span>, <span class="st">'En tránsito'</span>, <span class="st">'Entregado'</span>, <span class="st">'No entregado'</span>));</span>
+<span id="cb3-193"><a href="#cb3-193" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> devoluciones    <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_estado_devolucion <span class="kw">CHECK</span> (estado <span class="kw">IN</span> (<span class="st">'Pendiente'</span>, <span class="st">'Aprobada'</span>, <span class="st">'Rechazada'</span>, <span class="st">'Reembolsada'</span>));</span>
+<span id="cb3-194"><a href="#cb3-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-195"><a href="#cb3-195" aria-hidden="true" tabindex="-1"></a><span class="co">-- ── Índices de rendimiento</span></span>
+<span id="cb3-196"><a href="#cb3-196" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_clientes_region     <span class="kw">ON</span> clientes(region);</span>
+<span id="cb3-197"><a href="#cb3-197" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_clientes_segmento   <span class="kw">ON</span> clientes(segmento);</span>
+<span id="cb3-198"><a href="#cb3-198" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_ventas_fecha        <span class="kw">ON</span> ventas(fecha);</span>
+<span id="cb3-199"><a href="#cb3-199" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_productos_categoria <span class="kw">ON</span> productos(categoria_id);</span>
+<span id="cb3-200"><a href="#cb3-200" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_despachos_estado    <span class="kw">ON</span> despachos(estado);</span>
+<span id="cb3-201"><a href="#cb3-201" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_devoluciones_estado <span class="kw">ON</span> devoluciones(estado);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="parte-3-ejecutar-el-ddl-en-mysql-server" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="parte-3-ejecutar-el-ddl-en-mysql-server"><span class="header-section-number">3</span> Parte 3 — Ejecutar el DDL en MySQL Server</h2>
+<section id="paso-10-verificación-de-la-estructura-creada-resultados-esperados" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="paso-10-verificación-de-la-estructura-creada-resultados-esperados"><span class="header-section-number">3.1</span> Paso 10: Verificación de la estructura creada — Resultados esperados</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Verificación</th>
+<th>Resultado esperado</th>
+<th>Interpretación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>SHOW TABLES</code> muestra 9 tablas</td>
+<td><code>categorias</code>, <code>clientes</code>, <code>despachos</code>, <code>detalle_ventas</code>, <code>devoluciones</code>, <code>productos</code>, <code>proveedor_producto</code>, <code>proveedores</code>, <code>ventas</code></td>
+<td>Todas en orden alfabético</td>
+</tr>
+<tr class="even">
+<td><code>DESCRIBE clientes</code> muestra <code>email</code> con <code>UNI</code> en Key</td>
+<td>Fila: <code>email \| varchar(100) \| NO \| UNI \| NULL \|</code></td>
+<td>El UNIQUE INDEX fue creado correctamente</td>
+</tr>
+<tr class="odd">
+<td><code>DESCRIBE detalle_ventas</code> muestra PK compuesta</td>
+<td><code>venta_id</code> con <code>PRI</code> y <code>producto_id</code> con <code>PRI</code></td>
+<td>Ambas columnas son parte de la clave primaria</td>
+</tr>
+<tr class="even">
+<td><code>SHOW CREATE TABLE detalle_ventas</code> muestra dos FK</td>
+<td><code>fk_detalle_ventas</code> y <code>fk_detalle_productos</code> con sus <code>REFERENCES</code></td>
+<td>La FK hacia <code>ventas</code> debe tener <code>ON DELETE CASCADE</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Salida esperada de <code>DESCRIBE detalle_ventas</code>:</strong></p>
+<pre><code>+-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| venta_id        | int          | NO   | PRI | NULL    |       |
+| producto_id     | int          | NO   | PRI | NULL    |       |
+| cantidad        | int          | NO   |     | NULL    |       |
+| precio_unitario | decimal(10,2)| NO   |     | NULL    |       |
+| descuento_pct   | decimal(5,2) | YES  |     | 0.00    |       |
++-----------------+--------------+------+-----+---------+-------+</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Para el docente</strong>: si algún estudiante no tiene el <code>ON DELETE CASCADE</code> en <code>detalle_ventas</code>, puede corregirlo sin re-ejecutar todo el script:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> detalle_ventas</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">DROP</span> <span class="kw">FOREIGN</span> <span class="kw">KEY</span> fk_detalle_ventas,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> fk_detalle_ventas</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (venta_id)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">REFERENCES</span> ventas(venta_id)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">CASCADE</span> <span class="kw">ON</span> <span class="kw">UPDATE</span> <span class="kw">CASCADE</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="parte-4-cargar-datos-iniciales-con-insert-into" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="parte-4-cargar-datos-iniciales-con-insert-into"><span class="header-section-number">4</span> Parte 4 — Cargar Datos Iniciales con INSERT INTO</h2>
+<section id="pasos-1114-scripts-de-inserción" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="pasos-1114-scripts-de-inserción"><span class="header-section-number">4.1</span> Pasos 11–14: Scripts de inserción</h3>
+<p>Los datos de categorías, clientes, productos y las dos primeras ventas ya están provistos en el enunciado. Evaluar que los estudiantes los ejecutaron sin errores y que ejecutaron los <code>SELECT COUNT(*)</code> de verificación.</p>
+<p><strong>Conteos esperados después de ejecutar todos los inserts de los pasos 11–14:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tabla</th>
+<th>Filas esperadas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>categorias</code></td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td><code>clientes</code></td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td><code>productos</code></td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td><code>ventas</code></td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td><code>detalle_ventas</code></td>
+<td>4 (2 líneas por venta)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Respuesta a la pregunta del Paso 11:</strong> &gt; ¿Cómo identifica esta consulta cuáles son las categorías raíz y cuáles son subcategorías?</p>
+<p>Las categorías raíz tienen <code>categoria_padre_id = NULL</code> (sin padre). Las subcategorías tienen un valor entero en <code>categoria_padre_id</code> que referencia el <code>categoria_id</code> de su categoría padre. El <code>ORDER BY categoria_padre_id, categoria_id</code> agrupa primero los NULL (raíces) y luego las subcategorías en orden de padre.</p>
+</section>
+<section id="paso-15-insert-de-carlos-muñoz-solución" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="paso-15-insert-de-carlos-muñoz-solución"><span class="header-section-number">4.2</span> Paso 15: INSERT de Carlos Muñoz — Solución</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Carlos Muñoz (cliente_id = 3) compra el 2026-02-05</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> ventas (fecha, cliente_id) <span class="kw">VALUES</span> (<span class="st">'2026-02-05'</span>, <span class="dv">3</span>);</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @venta_carlos <span class="op">=</span> LAST_INSERT_ID();</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> detalle_ventas (venta_id, producto_id, cantidad, precio_unitario, descuento_pct)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    (@venta_carlos,  <span class="dv">8</span>, <span class="dv">1</span>, <span class="fl">39990.00</span>,  <span class="fl">0.00</span>),  <span class="co">-- Mochila Puma 20L (producto_id = 8)</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    (@venta_carlos, <span class="dv">10</span>, <span class="dv">2</span>, <span class="fl">19990.00</span>, <span class="fl">15.00</span>);  <span class="co">-- Short Nike Running x2 con 15% (producto_id = 10)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Verificación esperada de la consulta JOIN del Paso 15:</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>venta_id</th>
+<th>fecha</th>
+<th>nombre</th>
+<th>apellido</th>
+<th>nombre_producto</th>
+<th>cantidad</th>
+<th>precio_unitario</th>
+<th>descuento_pct</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>2026-01-15</td>
+<td>Juan</td>
+<td>Pérez</td>
+<td>Nike Air Max 2026</td>
+<td>1</td>
+<td>89990.00</td>
+<td>0.00</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>2026-01-15</td>
+<td>Juan</td>
+<td>Pérez</td>
+<td>Polera Adidas Clásica</td>
+<td>2</td>
+<td>24990.00</td>
+<td>10.00</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>2026-01-20</td>
+<td>María</td>
+<td>López</td>
+<td>Chaqueta The North Face</td>
+<td>1</td>
+<td>89990.00</td>
+<td>0.00</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>2026-01-20</td>
+<td>María</td>
+<td>López</td>
+<td>Gorro Nike Dri-FIT</td>
+<td>1</td>
+<td>14990.00</td>
+<td>0.00</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>2026-02-05</td>
+<td>Carlos</td>
+<td>Muñoz</td>
+<td>Mochila Puma 20L</td>
+<td>1</td>
+<td>39990.00</td>
+<td>0.00</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>2026-02-05</td>
+<td>Carlos</td>
+<td>Muñoz</td>
+<td>Short Nike Running</td>
+<td>2</td>
+<td>19990.00</td>
+<td>15.00</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Para el docente</strong>: errores frecuentes en el INSERT de Carlos: 1. Usar el número <code>3</code> directamente en <code>detalle_ventas.venta_id</code> en lugar de <code>@venta_carlos</code> — tolerable si la venta fue la tercera, pero enseñar por qué es frágil. 2. Olvidar <code>SET @venta_carlos = LAST_INSERT_ID()</code> entre los dos INSERT — el segundo INSERT en <code>detalle_ventas</code> usaría el ID incorrecto si hay otro <code>AUTO_INCREMENT</code> entre medio. 3. Invertir <code>producto_id</code>: confundir el 8 (mochila) con el 10 (short). Aceptar si los datos son correctos aunque los IDs se inviertan, siempre que el resultado del JOIN sea consistente.</p>
+</div>
+</div>
+</section>
+<section id="paso-16-consultas-de-diagnóstico-resultados-esperados" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="paso-16-consultas-de-diagnóstico-resultados-esperados"><span class="header-section-number">4.3</span> Paso 16: Consultas de diagnóstico — Resultados esperados</h3>
+<p>Todas las consultas de integridad deben retornar <strong>0 filas</strong> si los datos se insertaron correctamente:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Esperado: 0 filas (las FK ya impiden ventas de clientes inexistentes)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> v.venta_id <span class="kw">FROM</span> ventas v</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> clientes c <span class="kw">ON</span> v.cliente_id <span class="op">=</span> c.cliente_id</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> c.cliente_id <span class="kw">IS</span> <span class="kw">NULL</span>;</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- Esperado: 0 filas (ningún producto tiene stock negativo)</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> producto_id, nombre_producto, stock <span class="kw">FROM</span> productos <span class="kw">WHERE</span> stock <span class="op">&lt;</span> <span class="dv">0</span>;</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- Esperado: 0 filas (todos los precios son positivos)</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> detalle_ventas <span class="kw">WHERE</span> precio_unitario <span class="op">&lt;=</span> <span class="dv">0</span>;</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">-- Esperado: 0 filas (descuentos entre 0 y 100)</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> detalle_ventas <span class="kw">WHERE</span> descuento_pct <span class="op">&lt;</span> <span class="dv">0</span> <span class="kw">OR</span> descuento_pct <span class="op">&gt;</span> <span class="dv">100</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="parte-5-transacciones-registrar-una-venta-completa" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="parte-5-transacciones-registrar-una-venta-completa"><span class="header-section-number">5</span> Parte 5 — Transacciones: Registrar una Venta Completa</h2>
+<section id="pasos-17-y-18-transacciones" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="pasos-17-y-18-transacciones"><span class="header-section-number">5.1</span> Pasos 17 y 18: Transacciones</h3>
+<p>Los scripts ya están provistos en el enunciado. Evaluar que los estudiantes ejecutaron ambos bloques correctamente y observaron los resultados.</p>
+<p><strong>Resultado esperado tras el COMMIT (Paso 17):</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Stock descontado en productos 2 y 6</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> producto_id, nombre_producto, stock <span class="kw">FROM</span> productos <span class="kw">WHERE</span> producto_id <span class="kw">IN</span> (<span class="dv">2</span>, <span class="dv">6</span>);</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- producto_id=2: Adidas Ultraboost → stock = 89 (era 90)</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- producto_id=6: Pantalón Under Armour → stock = 94 (era 95)</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- Venta registrada para Sofía (cliente_id = 4)</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> v.venta_id, v.fecha, dv.producto_id, dv.cantidad</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> ventas v <span class="kw">JOIN</span> detalle_ventas dv <span class="kw">ON</span> v.venta_id <span class="op">=</span> dv.venta_id</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> v.cliente_id <span class="op">=</span> <span class="dv">4</span>;</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- venta_id=4, con dos líneas de detalle (producto_id=2 y producto_id=6)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado esperado tras el ROLLBACK (Paso 18):</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> ventas <span class="kw">WHERE</span> cliente_id <span class="op">=</span> <span class="dv">5</span>;</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- 0 filas — Diego Torres no tiene ventas registradas</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Para el docente</strong>: en MySQL Workbench, los errores de FK dentro de una transacción activa <strong>no hacen ROLLBACK automático</strong>. La transacción queda abierta con el error. Los estudiantes deben ejecutar <code>ROLLBACK</code> manualmente (o cerrar la sesión). Si no ejecutan el ROLLBACK, la venta de Diego puede quedar parcialmente registrada al cerrar la sesión según la configuración de <code>autocommit</code>. Este es exactamente el punto pedagógico: MySQL no adivina la intención — el código debe manejar los errores explícitamente.</p>
+</div>
+</div>
+</section>
+<section id="paso-19-reflexión-sobre-transacciones-respuestas-esperadas" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="paso-19-reflexión-sobre-transacciones-respuestas-esperadas"><span class="header-section-number">5.2</span> Paso 19: Reflexión sobre transacciones — Respuestas esperadas</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situación</th>
+<th>¿COMMIT o ROLLBACK?</th>
+<th>¿Por qué?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Se registra la venta y el detalle correctamente, pero al descontar stock uno de los productos llega a stock negativo (-1)</td>
+<td><strong>ROLLBACK</strong></td>
+<td>El CHECK <code>stock &gt;= 0</code> lanzará un error que debe tratarse como falla del proceso completo. Dejar la venta registrada con el stock inconsistente produce un estado inválido del sistema. Se hace ROLLBACK de toda la operación, se verifica el stock disponible y se informa al vendedor.</td>
+</tr>
+<tr class="even">
+<td>Se insertan 500 productos nuevos del catálogo y hay un error de tipo de dato en la fila 231</td>
+<td><strong>ROLLBACK</strong></td>
+<td>Si la carga masiva está en una transacción, el error en la fila 231 debe provocar ROLLBACK de todos los inserts previos. Un catálogo parcial (230 productos de 500) es peor que ninguno: los reportes mostrarían información incompleta. Corregir el archivo CSV y re-ejecutar la carga completa.</td>
+</tr>
+<tr class="odd">
+<td>Una devolución queda registrada en <code>devoluciones</code> pero falla el UPDATE del stock al reingresarlo</td>
+<td><strong>ROLLBACK</strong></td>
+<td>Tener una devolución aprobada sin que el stock se haya reingresado es un estado inconsistente: el sistema registra que se devolvió el producto pero las unidades no están disponibles para vender. Impacto directo en los reportes de inventario de Carlos. ROLLBACK y reintentar la operación completa.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="parte-6-síntesis-y-reflexión" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="parte-6-síntesis-y-reflexión"><span class="header-section-number">6</span> Parte 6 — Síntesis y Reflexión</h2>
+<section id="paso-20-comparar-modelo-diseñado-vs.-modelo-implementado-respuesta-esperada" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="paso-20-comparar-modelo-diseñado-vs.-modelo-implementado-respuesta-esperada"><span class="header-section-number">6.1</span> Paso 20: Comparar modelo diseñado vs.&nbsp;modelo implementado — Respuesta esperada</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dimensión</th>
+<th>Modelo en papel (W05)</th>
+<th>Base de datos real (W06)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¿Se puede saber qué proveedor abastece un producto?</td>
+<td>Sí (en el diagrama)</td>
+<td><strong>Sí</strong> — la tabla <code>proveedor_producto</code> existe en el servidor y las FK están activas</td>
+</tr>
+<tr class="even">
+<td>¿Las FK impiden ventas de clientes inexistentes?</td>
+<td>En diseño</td>
+<td><strong>Sí</strong> — MySQL lanza ERROR 1452 si <code>cliente_id</code> no existe en <code>clientes</code></td>
+</tr>
+<tr class="odd">
+<td>¿Un producto puede tener stock negativo?</td>
+<td>Según diseño, no</td>
+<td><strong>No</strong> — el CHECK <code>stock &gt;= 0</code> bloquea cualquier UPDATE que deje el stock en negativo</td>
+</tr>
+<tr class="even">
+<td>¿Una venta incompleta puede quedar registrada?</td>
+<td>En teoría, no</td>
+<td><strong>Depende</strong> — solo si se usa <code>START TRANSACTION</code>. Sin transacción explícita, cada INSERT es autocommit independiente y puede quedar un estado a medias</td>
+</tr>
+<tr class="odd">
+<td>¿Qué pasa si se borra un cliente con ventas?</td>
+<td>RESTRICT (diseño)</td>
+<td><strong>ERROR 1451</strong> — MySQL bloquea el DELETE con mensaje de violación de FK</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="paso-21-preguntas-de-diseño-e-implementación-respuestas-esperadas" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="paso-21-preguntas-de-diseño-e-implementación-respuestas-esperadas"><span class="header-section-number">6.2</span> Paso 21: Preguntas de diseño e implementación — Respuestas esperadas</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pregunta</th>
+<th>Respuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¿Por qué <code>SET @variable = LAST_INSERT_ID()</code> y no poner el número directamente (ej. <code>venta_id = 3</code>)?</td>
+<td>Porque ese número puede ser incorrecto si otro usuario insertó datos entre tus dos sentencias, o si el script se ejecuta varias veces. <code>LAST_INSERT_ID()</code> captura el ID generado por la sesión actual, no por otras conexiones. Hardcodear IDs produce errores silenciosos difíciles de detectar en producción.</td>
+</tr>
+<tr class="even">
+<td>¿Qué pasaría si dos vendedores insertan ventas para el mismo cliente al mismo tiempo sin transacciones?</td>
+<td><code>AUTO_INCREMENT</code> garantiza IDs únicos incluso con concurrencia. El riesgo sin transacciones no es el duplicado de IDs, sino la <strong>inconsistencia</strong>: si el sistema falla entre el INSERT en <code>ventas</code> y el INSERT en <code>detalle_ventas</code>, queda una venta registrada sin productos. Con transacciones, o se inserta todo o no se inserta nada.</td>
+</tr>
+<tr class="odd">
+<td>¿Por qué <code>precio_unitario</code> se guarda en <code>detalle_ventas</code> y no se calcula desde <code>productos.precio_venta</code>?</td>
+<td><code>productos.precio_venta</code> es el precio vigente <strong>hoy</strong>. Si se calculara desde ahí, una venta del año pasado mostraría el precio actual, no el precio real que pagó el cliente. <code>precio_unitario</code> en <code>detalle_ventas</code> es el precio <strong>histórico</strong> — congela el valor exacto al momento de la transacción. Es obligatorio para auditoría financiera y análisis de márgenes históricos.</td>
+</tr>
+<tr class="even">
+<td>Si TechStyle aplica un descuento general del 20% en una promoción, ¿qué operación SQL ejecutarías? ¿Dentro de una transacción?</td>
+<td>Sí, dentro de una transacción. El UPDATE afecta muchas filas y si falla a mitad hay filas con 20% y filas sin descuento. Ejemplo: <code>START TRANSACTION; UPDATE detalle_ventas dv JOIN ventas v ON dv.venta_id = v.venta_id SET dv.descuento_pct = 20.00 WHERE v.fecha BETWEEN '2026-11-01' AND '2026-11-30'; COMMIT;</code></td>
+</tr>
+<tr class="odd">
+<td>Un cliente quiere borrar su cuenta. ¿Qué debe hacer Juan antes del DELETE?</td>
+<td>Verificar si tiene historial: <code>SELECT COUNT(*) FROM ventas WHERE cliente_id = 1</code>. Si hay ventas, la FK RESTRICT bloqueará el DELETE con ERROR 1451. La práctica correcta es el <strong>soft delete</strong>: agregar columna <code>activo TINYINT(1) DEFAULT 1</code> y ejecutar <code>UPDATE clientes SET activo = 0 WHERE cliente_id = 1</code>. El historial se preserva para auditoría; el cliente simplemente se oculta de las operaciones activas.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="paso-22-análisis-de-impacto-respuestas-esperadas" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="paso-22-análisis-de-impacto-respuestas-esperadas"><span class="header-section-number">6.3</span> Paso 22: Análisis de impacto — Respuestas esperadas</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Capacidad implementada</th>
+<th>Decisión de negocio que habilita</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FK con <code>ON DELETE RESTRICT</code> en <code>ventas.cliente_id</code></td>
+<td>El historial de ventas siempre tiene trazabilidad al cliente — no hay ventas huérfanas en los reportes de María ni en la auditoría financiera</td>
+</tr>
+<tr class="even">
+<td>CHECK <code>stock &gt;= 0</code> en <code>productos</code></td>
+<td>La base de datos garantiza que nunca se registrará más stock del disponible — el panel de inventario de Carlos siempre mostrará datos reales, no negativos</td>
+</tr>
+<tr class="odd">
+<td>Transacciones en el registro de ventas</td>
+<td>Una venta nunca queda registrada a medias — si falla el descuento de stock, toda la operación se deshace. Los datos del dashboard de Roberto son siempre consistentes</td>
+</tr>
+<tr class="even">
+<td>Índice <code>idx_ventas_fecha</code> en <code>ventas(fecha)</code></td>
+<td>Los reportes de ventas por período (semana, mes, trimestre) que Roberto revisa en el CMI cargan en milisegundos aunque haya millones de registros, en vez de tardar minutos sin índice</td>
+</tr>
+<tr class="odd">
+<td>CHECK <code>segmento IN ('Premium', 'Estándar', 'Básico')</code></td>
+<td>Los análisis de segmentación de María son confiables — no pueden existir clientes en segmentos inválidos o con errores de digitación como <code>'premium'</code> (minúscula) o <code>'Premiun'</code> que fragmentarían el análisis en categorías fantasmas</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="paso-23-reporte-de-implementación-para-roberto-respuesta-modelo" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="paso-23-reporte-de-implementación-para-roberto-respuesta-modelo"><span class="header-section-number">6.4</span> Paso 23: Reporte de implementación para Roberto — Respuesta modelo</h3>
+<blockquote class="blockquote">
+<p><strong>Para:</strong> Roberto Fernández, CEO TechStyle</p>
+<p><strong>Asunto:</strong> Base de datos implementada — estado al 2026-04-21</p>
+<p>La base de datos <code>techstyle</code> fue creada exitosamente en MySQL Server. El sistema cuenta con <strong>9 tablas operativas</strong> que cubren todas las operaciones del negocio: gestión de clientes y segmentos, catálogo de productos con jerarquía de categorías, registro de ventas con detalle por producto, trazabilidad de proveedores, seguimiento de despachos y control de devoluciones. El estado actual del sistema incluye 10 categorías, 6 clientes, 10 productos y 3 ventas de prueba correctamente registradas.</p>
+<p>La consistencia de los datos está garantizada por dos mecanismos complementarios. Las <strong>restricciones de integridad referencial</strong> (FK) impiden que existan ventas sin cliente, productos sin categoría o devoluciones sin la venta que las originó. Las <strong>restricciones CHECK</strong> impiden precios negativos, stocks negativos, descuentos fuera del rango 0–100% y estados inválidos en despachos y devoluciones. Ningún usuario puede ingresar datos que violen las reglas del negocio — la base de datos los rechaza automáticamente.</p>
+<p>En comparación con Excel, el sistema actual puede gestionar millones de transacciones sin degradación de rendimiento (gracias a 6 índices de consulta), garantiza que las operaciones de venta son atómicas (una venta nunca queda registrada a medias) y elimina las anomalías de actualización, inserción y eliminación que afectaban la planilla anterior. El paso siguiente es desarrollar las consultas SQL de análisis (Semana 7) para generar los reportes de ventas, márgenes y logística que el área comercial requiere.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="notas-para-el-docente" class="level2 hidden" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="notas-para-el-docente"><span class="header-section-number">7</span> Notas para el docente</h2>
+<p><strong>Sobre la evaluación del script DDL (Partes 1–2):</strong></p>
+<p>Los tres puntos críticos a verificar: 1. <strong>Orden correcto de tablas</strong> — <code>categorias</code>, <code>clientes</code>, <code>proveedores</code> antes de las dependientes. Error frecuente: <code>categorias</code> después de <code>productos</code>. 2. <strong><code>ON DELETE CASCADE</code> en <code>detalle_ventas.venta_id</code></strong> — es el único lugar semánticamente justificado. Deducir puntos si usan CASCADE en <code>ventas.cliente_id</code> (destruye historial). 3. <strong>CHECK constraints y DROP TABLE IF EXISTS</strong> — sin DROP, el script falla en la segunda ejecución; sin CHECK, los datos pueden quedar en estados inválidos.</p>
+<p><strong>Sobre la ejecución en MySQL (Parte 3):</strong></p>
+<p>Los errores más frecuentes: - <code>ERROR 1215: Cannot add foreign key constraint</code> → tipos de datos incompatibles entre PK y FK (ej. FK es <code>VARCHAR</code> cuando la PK es <code>INT</code>). - <code>ERROR 1050: Table already exists</code> → olvidaron el <code>DROP TABLE IF EXISTS</code>. Solución: ejecutar <code>DROP DATABASE techstyle; CREATE DATABASE techstyle;</code> y re-ejecutar. - El estudiante ejecuta solo la sentencia seleccionada (⚡ vs ⚡⚡) → enseñar la diferencia entre “ejecutar línea actual” y “ejecutar script completo”.</p>
+<p><strong>Sobre el INSERT de Carlos (Paso 15):</strong></p>
+<p>Variaciones aceptables: - Usar <code>LAST_INSERT_ID()</code> directamente (sin variable) si se ejecutan los dos INSERT en orden sin ningún otro INSERT de por medio. - Hardcodear el <code>venta_id = 3</code> si el estudiante verificó que esa es la tercera venta — señalar que es frágil pero no penalizar si el resultado es correcto.</p>
+<p><strong>Sobre las transacciones (Parte 5):</strong></p>
+<p>Punto de discusión importante: en MySQL, <code>autocommit = 1</code> por defecto. Esto significa que cada sentencia DML fuera de una transacción explícita es un COMMIT automático. Los estudiantes que no usan <code>START TRANSACTION</code> están haciendo commits implícitos en cada INSERT. Mostrar con <code>SELECT @@autocommit;</code>.</p>
+<p><strong>Sobre la nota del soft delete (Paso 21):</strong></p>
+<p>Este punto es una oportunidad para introducir el concepto de <strong>datos activos vs.&nbsp;archivados</strong> sin eliminar información. En sistemas reales de comercio, prácticamente nunca se borra información histórica — se marca como inactiva. Preguntar al grupo: “¿Cuántos años debe conservar TechStyle el historial de ventas? ¿Por qué?” (Respuesta: regulación tributaria SII → mínimo 6 años en Chile).</p>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

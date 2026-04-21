@@ -1,0 +1,528 @@
+---
+title: "Solución — Laboratorio 6: Construyendo la Base de Datos de TechStyle"
+subtitle: "Semana 6 · W06 · Unidad II · Implementación en MySQL · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+::: {.callout-warning}
+**Documento de uso exclusivo del docente.** No distribuir a estudiantes antes de que completen el laboratorio.
+:::
+
+---
+
+## Parte 1 — Forward Engineering: Generar el Script SQL
+
+Esta parte es procedimental. La única verificación evaluable es que el script resultante incluya las 9 tablas, el `CREATE SCHEMA IF NOT EXISTS techstyle` y que las tablas sin FK externas aparezcan primero.
+
+**Resultado esperado del Paso 3 (encabezado del script):**
+
+```sql
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='...');
+
+CREATE SCHEMA IF NOT EXISTS `techstyle` DEFAULT CHARACTER SET utf8mb4;
+USE `techstyle`;
+```
+
+::: {.callout-note}
+**Para el docente**: verificar que los estudiantes activaron las opciones `Generate DROP Statements` y `Include FK Indexes`. Sin `DROP TABLE IF EXISTS` antes de cada `CREATE`, el script fallará si se ejecuta más de una vez — situación común en laboratorio cuando el estudiante necesita repetir la ejecución tras corregir errores.
+:::
+
+---
+
+## Parte 2 — Verificar y Completar el Script SQL
+
+### Paso 4: Análisis de ON DELETE — Respuesta esperada
+
+| FK | ON DELETE generado | ¿Es correcto? | Justificación |
+|---|---|---|---|
+| `ventas.cliente_id` → `clientes` | RESTRICT | **Sí** | No se debe eliminar un cliente con historial de ventas. La eliminación debe bloquearse para preservar trazabilidad financiera y auditoría. |
+| `detalle_ventas.venta_id` → `ventas` | RESTRICT | **No — debe ser CASCADE** | Si se cancela o elimina una venta, sus líneas de detalle no tienen sentido sin la cabecera. El CASCADE elimina automáticamente los ítems al borrar la venta, evitando registros huérfanos. |
+| `despachos.venta_id` → `ventas` | RESTRICT | **Sí** | No se puede eliminar una venta que ya tiene un despacho registrado. El registro logístico es parte del historial operacional. |
+| `devoluciones.venta_id` → `ventas` | RESTRICT | **Sí** | No se puede eliminar una venta con devoluciones asociadas. El registro de devoluciones tiene impacto contable y no debe perderse. |
+
+::: {.callout-tip}
+**Para el docente**: el único `CASCADE` semánticamente justificado es en `detalle_ventas`. Use este punto para discutir la pregunta: "¿Los datos hijos tienen sentido independientemente del padre?". Si la respuesta es no → `CASCADE`. Si la respuesta es sí (el hijo tiene valor propio aunque el padre no exista) → `RESTRICT` o `SET NULL`.
+
+Penalizar si los estudiantes usan `CASCADE` en `ventas.cliente_id` — ese error destruye el historial de ventas de un cliente si alguien borra por error un registro de la tabla `clientes`.
+:::
+
+### Pasos 5 y 6: Restricciones CHECK e índices
+
+Los scripts ya están provistos en el enunciado. Evaluar que los estudiantes los copiaron correctamente al archivo `.sql` y en el orden correcto (después de todos los `CREATE TABLE`).
+
+**Restricción adicional bien recibida (no obligatoria):**
+
+```sql
+ALTER TABLE devoluciones ADD CONSTRAINT chk_cantidad_devuelta_positiva
+    CHECK (cantidad_devuelta > 0);
+
+ALTER TABLE devoluciones ADD CONSTRAINT chk_estado_devolucion
+    CHECK (estado IN ('Pendiente', 'Aprobada', 'Rechazada', 'Reembolsada'));
+```
+
+### Paso 7: Orden correcto de creación — Verificación
+
+| # | Tabla | Depende de |
+|---|---|---|
+| 1 | `categorias` | — (solo FK auto-referencial, no bloquea la creación) |
+| 2 | `clientes` | — |
+| 3 | `proveedores` | — |
+| 4 | `productos` | `categorias` |
+| 5 | `ventas` | `clientes` |
+| 6 | `detalle_ventas` | `ventas`, `productos` |
+| 7 | `proveedor_producto` | `proveedores`, `productos` |
+| 8 | `despachos` | `ventas` |
+| 9 | `devoluciones` | `ventas`, `productos` |
+
+::: {.callout-important}
+**Error frecuente**: Workbench a veces coloca `categorias` después de `productos` cuando detecta la FK auto-referencial. Si el script falla con `errno: 150`, verificar que `categorias` aparezca antes que `productos`.
+:::
+
+**Script DDL completo corregido — Respuesta modelo:**
+
+```sql
+-- ============================================================
+-- TECHSTYLE — Script DDL completo con ajustes manuales
+-- Generado con MySQL Workbench 8.0
+-- ============================================================
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE,
+    SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+CREATE SCHEMA IF NOT EXISTS `techstyle`
+    DEFAULT CHARACTER SET utf8mb4
+    COLLATE utf8mb4_spanish_ci;
+USE `techstyle`;
+
+-- ── 1. categorias (FK auto-referencial) ────────────────────
+DROP TABLE IF EXISTS `categorias`;
+CREATE TABLE IF NOT EXISTS `categorias` (
+    `categoria_id`       INT          NOT NULL AUTO_INCREMENT,
+    `nombre_categoria`   VARCHAR(50)  NOT NULL,
+    `descripcion`        VARCHAR(200) NULL,
+    `categoria_padre_id` INT          NULL,
+    PRIMARY KEY (`categoria_id`),
+    INDEX `fk_categoria_padre_idx` (`categoria_padre_id` ASC),
+    CONSTRAINT `fk_categoria_padre`
+        FOREIGN KEY (`categoria_padre_id`)
+        REFERENCES `categorias` (`categoria_id`)
+        ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB;
+SHOW WARNINGS;
+
+-- ── 2. clientes ────────────────────────────────────────────
+DROP TABLE IF EXISTS `clientes`;
+CREATE TABLE IF NOT EXISTS `clientes` (
+    `cliente_id`     INT          NOT NULL AUTO_INCREMENT,
+    `nombre`         VARCHAR(50)  NOT NULL,
+    `apellido`       VARCHAR(50)  NOT NULL,
+    `email`          VARCHAR(100) NOT NULL,
+    `region`         VARCHAR(50)  NOT NULL,
+    `segmento`       VARCHAR(20)  NULL,
+    `fecha_registro` DATE         NOT NULL,
+    PRIMARY KEY (`cliente_id`),
+    UNIQUE INDEX `email_UNIQUE` (`email` ASC)
+) ENGINE=InnoDB;
+SHOW WARNINGS;
+
+-- ── 3. proveedores ─────────────────────────────────────────
+DROP TABLE IF EXISTS `proveedores`;
+CREATE TABLE IF NOT EXISTS `proveedores` (
+    `proveedor_id`     INT          NOT NULL AUTO_INCREMENT,
+    `nombre_proveedor` VARCHAR(100) NOT NULL,
+    `rut`              VARCHAR(12)  NOT NULL,
+    `contacto`         VARCHAR(100) NULL,
+    `email`            VARCHAR(100) NULL,
+    `telefono`         VARCHAR(20)  NULL,
+    PRIMARY KEY (`proveedor_id`),
+    UNIQUE INDEX `rut_UNIQUE` (`rut` ASC)
+) ENGINE=InnoDB;
+SHOW WARNINGS;
+
+-- ── 4. productos (FK → categorias) ─────────────────────────
+DROP TABLE IF EXISTS `productos`;
+CREATE TABLE IF NOT EXISTS `productos` (
+    `producto_id`     INT            NOT NULL AUTO_INCREMENT,
+    `nombre_producto` VARCHAR(100)   NOT NULL,
+    `categoria_id`    INT            NOT NULL,
+    `precio_venta`    DECIMAL(10,2)  NOT NULL,
+    `costo_unitario`  DECIMAL(10,2)  NOT NULL,
+    `stock`           INT            NOT NULL DEFAULT 0,
+    `activo`          TINYINT(1)     NOT NULL DEFAULT 1,
+    PRIMARY KEY (`producto_id`),
+    INDEX `fk_productos_categorias_idx` (`categoria_id` ASC),
+    CONSTRAINT `fk_productos_categorias`
+        FOREIGN KEY (`categoria_id`)
+        REFERENCES `categorias` (`categoria_id`)
+        ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB;
+SHOW WARNINGS;
+
+-- ── 5. ventas (FK → clientes) ──────────────────────────────
+DROP TABLE IF EXISTS `ventas`;
+CREATE TABLE IF NOT EXISTS `ventas` (
+    `venta_id`   INT  NOT NULL AUTO_INCREMENT,
+    `fecha`      DATE NOT NULL,
+    `cliente_id` INT  NOT NULL,
+    PRIMARY KEY (`venta_id`),
+    INDEX `fk_ventas_clientes_idx` (`cliente_id` ASC),
+    CONSTRAINT `fk_ventas_clientes`
+        FOREIGN KEY (`cliente_id`)
+        REFERENCES `clientes` (`cliente_id`)
+        ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB;
+SHOW WARNINGS;
+
+-- ── 6. detalle_ventas (FK → ventas CASCADE, productos RESTRICT)
+DROP TABLE IF EXISTS `detalle_ventas`;
+CREATE TABLE IF NOT EXISTS `detalle_ventas` (
+    `venta_id`        INT           NOT NULL,
+    `producto_id`     INT           NOT NULL,
+    `cantidad`        INT           NOT NULL,
+    `precio_unitario` DECIMAL(10,2) NOT NULL,
+    `descuento_pct`   DECIMAL(5,2)  NULL DEFAULT 0,
+    PRIMARY KEY (`venta_id`, `producto_id`),
+    INDEX `fk_detalle_productos_idx` (`producto_id` ASC),
+    CONSTRAINT `fk_detalle_ventas`
+        FOREIGN KEY (`venta_id`)
+        REFERENCES `ventas` (`venta_id`)
+        ON DELETE CASCADE ON UPDATE CASCADE,  -- único CASCADE justificado
+    CONSTRAINT `fk_detalle_productos`
+        FOREIGN KEY (`producto_id`)
+        REFERENCES `productos` (`producto_id`)
+        ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB;
+SHOW WARNINGS;
+
+-- ── 7. proveedor_producto (FK → proveedores, productos) ────
+DROP TABLE IF EXISTS `proveedor_producto`;
+CREATE TABLE IF NOT EXISTS `proveedor_producto` (
+    `proveedor_id`        INT           NOT NULL,
+    `producto_id`         INT           NOT NULL,
+    `precio_compra`       DECIMAL(10,2) NOT NULL,
+    `plazo_entrega_dias`  INT           NULL,
+    `proveedor_principal` TINYINT(1)    NOT NULL DEFAULT 0,
+    PRIMARY KEY (`proveedor_id`, `producto_id`),
+    INDEX `fk_pp_productos_idx` (`producto_id` ASC),
+    CONSTRAINT `fk_pp_proveedores`
+        FOREIGN KEY (`proveedor_id`)
+        REFERENCES `proveedores` (`proveedor_id`)
+        ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT `fk_pp_productos`
+        FOREIGN KEY (`producto_id`)
+        REFERENCES `productos` (`producto_id`)
+        ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB;
+SHOW WARNINGS;
+
+-- ── 8. despachos (1:1 con ventas via UNIQUE) ───────────────
+DROP TABLE IF EXISTS `despachos`;
+CREATE TABLE IF NOT EXISTS `despachos` (
+    `despacho_id`            INT          NOT NULL AUTO_INCREMENT,
+    `venta_id`               INT          NOT NULL,
+    `direccion_entrega`      VARCHAR(200) NOT NULL,
+    `fecha_despacho`         DATE         NULL,
+    `fecha_entrega_estimada` DATE         NULL,
+    `fecha_entrega_real`     DATE         NULL,
+    `estado`                 VARCHAR(20)  NOT NULL DEFAULT 'Pendiente',
+    PRIMARY KEY (`despacho_id`),
+    UNIQUE INDEX `venta_id_UNIQUE` (`venta_id` ASC),
+    CONSTRAINT `fk_despachos_ventas`
+        FOREIGN KEY (`venta_id`)
+        REFERENCES `ventas` (`venta_id`)
+        ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB;
+SHOW WARNINGS;
+
+-- ── 9. devoluciones (FK → ventas, productos) ───────────────
+DROP TABLE IF EXISTS `devoluciones`;
+CREATE TABLE IF NOT EXISTS `devoluciones` (
+    `devolucion_id`     INT           NOT NULL AUTO_INCREMENT,
+    `venta_id`          INT           NOT NULL,
+    `producto_id`       INT           NOT NULL,
+    `fecha_devolucion`  DATE          NOT NULL,
+    `cantidad_devuelta` INT           NOT NULL,
+    `motivo`            VARCHAR(200)  NULL,
+    `estado`            VARCHAR(20)   NOT NULL DEFAULT 'Pendiente',
+    `monto_reembolsado` DECIMAL(10,2) NULL,
+    PRIMARY KEY (`devolucion_id`),
+    INDEX `fk_dev_ventas_idx`    (`venta_id`    ASC),
+    INDEX `fk_dev_productos_idx` (`producto_id` ASC),
+    CONSTRAINT `fk_devoluciones_ventas`
+        FOREIGN KEY (`venta_id`)
+        REFERENCES `ventas` (`venta_id`)
+        ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT `fk_devoluciones_productos`
+        FOREIGN KEY (`producto_id`)
+        REFERENCES `productos` (`producto_id`)
+        ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB;
+SHOW WARNINGS;
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- ── CHECK constraints (agregar después de todos los CREATE TABLE)
+ALTER TABLE productos       ADD CONSTRAINT chk_precio_positivo   CHECK (precio_venta > 0);
+ALTER TABLE productos       ADD CONSTRAINT chk_costo_positivo    CHECK (costo_unitario > 0);
+ALTER TABLE productos       ADD CONSTRAINT chk_stock_no_negativo CHECK (stock >= 0);
+ALTER TABLE detalle_ventas  ADD CONSTRAINT chk_cantidad_positiva CHECK (cantidad > 0);
+ALTER TABLE detalle_ventas  ADD CONSTRAINT chk_descuento_rango   CHECK (descuento_pct BETWEEN 0 AND 100);
+ALTER TABLE clientes        ADD CONSTRAINT chk_segmento_valido   CHECK (segmento IN ('Premium', 'Estándar', 'Básico'));
+ALTER TABLE despachos       ADD CONSTRAINT chk_estado_despacho   CHECK (estado IN ('Pendiente', 'En tránsito', 'Entregado', 'No entregado'));
+ALTER TABLE devoluciones    ADD CONSTRAINT chk_estado_devolucion CHECK (estado IN ('Pendiente', 'Aprobada', 'Rechazada', 'Reembolsada'));
+
+-- ── Índices de rendimiento
+CREATE INDEX idx_clientes_region     ON clientes(region);
+CREATE INDEX idx_clientes_segmento   ON clientes(segmento);
+CREATE INDEX idx_ventas_fecha        ON ventas(fecha);
+CREATE INDEX idx_productos_categoria ON productos(categoria_id);
+CREATE INDEX idx_despachos_estado    ON despachos(estado);
+CREATE INDEX idx_devoluciones_estado ON devoluciones(estado);
+```
+
+---
+
+## Parte 3 — Ejecutar el DDL en MySQL Server
+
+### Paso 10: Verificación de la estructura creada — Resultados esperados
+
+| Verificación | Resultado esperado | Interpretación |
+|---|---|---|
+| `SHOW TABLES` muestra 9 tablas | `categorias`, `clientes`, `despachos`, `detalle_ventas`, `devoluciones`, `productos`, `proveedor_producto`, `proveedores`, `ventas` | Todas en orden alfabético |
+| `DESCRIBE clientes` muestra `email` con `UNI` en Key | Fila: `email \| varchar(100) \| NO \| UNI \| NULL \|` | El UNIQUE INDEX fue creado correctamente |
+| `DESCRIBE detalle_ventas` muestra PK compuesta | `venta_id` con `PRI` y `producto_id` con `PRI` | Ambas columnas son parte de la clave primaria |
+| `SHOW CREATE TABLE detalle_ventas` muestra dos FK | `fk_detalle_ventas` y `fk_detalle_productos` con sus `REFERENCES` | La FK hacia `ventas` debe tener `ON DELETE CASCADE` |
+
+**Salida esperada de `DESCRIBE detalle_ventas`:**
+
+```
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| venta_id        | int          | NO   | PRI | NULL    |       |
+| producto_id     | int          | NO   | PRI | NULL    |       |
+| cantidad        | int          | NO   |     | NULL    |       |
+| precio_unitario | decimal(10,2)| NO   |     | NULL    |       |
+| descuento_pct   | decimal(5,2) | YES  |     | 0.00    |       |
++-----------------+--------------+------+-----+---------+-------+
+```
+
+::: {.callout-note}
+**Para el docente**: si algún estudiante no tiene el `ON DELETE CASCADE` en `detalle_ventas`, puede corregirlo sin re-ejecutar todo el script:
+
+```sql
+ALTER TABLE detalle_ventas
+    DROP FOREIGN KEY fk_detalle_ventas,
+    ADD CONSTRAINT fk_detalle_ventas
+        FOREIGN KEY (venta_id)
+        REFERENCES ventas(venta_id)
+        ON DELETE CASCADE ON UPDATE CASCADE;
+```
+:::
+
+---
+
+## Parte 4 — Cargar Datos Iniciales con INSERT INTO
+
+### Pasos 11–14: Scripts de inserción
+
+Los datos de categorías, clientes, productos y las dos primeras ventas ya están provistos en el enunciado. Evaluar que los estudiantes los ejecutaron sin errores y que ejecutaron los `SELECT COUNT(*)` de verificación.
+
+**Conteos esperados después de ejecutar todos los inserts de los pasos 11–14:**
+
+| Tabla | Filas esperadas |
+|---|---|
+| `categorias` | 10 |
+| `clientes` | 6 |
+| `productos` | 10 |
+| `ventas` | 2 |
+| `detalle_ventas` | 4 (2 líneas por venta) |
+
+**Respuesta a la pregunta del Paso 11:**
+> ¿Cómo identifica esta consulta cuáles son las categorías raíz y cuáles son subcategorías?
+
+Las categorías raíz tienen `categoria_padre_id = NULL` (sin padre). Las subcategorías tienen un valor entero en `categoria_padre_id` que referencia el `categoria_id` de su categoría padre. El `ORDER BY categoria_padre_id, categoria_id` agrupa primero los NULL (raíces) y luego las subcategorías en orden de padre.
+
+### Paso 15: INSERT de Carlos Muñoz — Solución
+
+```sql
+-- Carlos Muñoz (cliente_id = 3) compra el 2026-02-05
+INSERT INTO ventas (fecha, cliente_id) VALUES ('2026-02-05', 3);
+SET @venta_carlos = LAST_INSERT_ID();
+
+INSERT INTO detalle_ventas (venta_id, producto_id, cantidad, precio_unitario, descuento_pct)
+VALUES
+    (@venta_carlos,  8, 1, 39990.00,  0.00),  -- Mochila Puma 20L (producto_id = 8)
+    (@venta_carlos, 10, 2, 19990.00, 15.00);  -- Short Nike Running x2 con 15% (producto_id = 10)
+```
+
+**Verificación esperada de la consulta JOIN del Paso 15:**
+
+| venta_id | fecha | nombre | apellido | nombre_producto | cantidad | precio_unitario | descuento_pct |
+|---|---|---|---|---|---|---|---|
+| 1 | 2026-01-15 | Juan | Pérez | Nike Air Max 2026 | 1 | 89990.00 | 0.00 |
+| 1 | 2026-01-15 | Juan | Pérez | Polera Adidas Clásica | 2 | 24990.00 | 10.00 |
+| 2 | 2026-01-20 | María | López | Chaqueta The North Face | 1 | 89990.00 | 0.00 |
+| 2 | 2026-01-20 | María | López | Gorro Nike Dri-FIT | 1 | 14990.00 | 0.00 |
+| 3 | 2026-02-05 | Carlos | Muñoz | Mochila Puma 20L | 1 | 39990.00 | 0.00 |
+| 3 | 2026-02-05 | Carlos | Muñoz | Short Nike Running | 2 | 19990.00 | 15.00 |
+
+::: {.callout-tip}
+**Para el docente**: errores frecuentes en el INSERT de Carlos:
+1. Usar el número `3` directamente en `detalle_ventas.venta_id` en lugar de `@venta_carlos` — tolerable si la venta fue la tercera, pero enseñar por qué es frágil.
+2. Olvidar `SET @venta_carlos = LAST_INSERT_ID()` entre los dos INSERT — el segundo INSERT en `detalle_ventas` usaría el ID incorrecto si hay otro `AUTO_INCREMENT` entre medio.
+3. Invertir `producto_id`: confundir el 8 (mochila) con el 10 (short). Aceptar si los datos son correctos aunque los IDs se inviertan, siempre que el resultado del JOIN sea consistente.
+:::
+
+### Paso 16: Consultas de diagnóstico — Resultados esperados
+
+Todas las consultas de integridad deben retornar **0 filas** si los datos se insertaron correctamente:
+
+```sql
+-- Esperado: 0 filas (las FK ya impiden ventas de clientes inexistentes)
+SELECT v.venta_id FROM ventas v
+LEFT JOIN clientes c ON v.cliente_id = c.cliente_id
+WHERE c.cliente_id IS NULL;
+
+-- Esperado: 0 filas (ningún producto tiene stock negativo)
+SELECT producto_id, nombre_producto, stock FROM productos WHERE stock < 0;
+
+-- Esperado: 0 filas (todos los precios son positivos)
+SELECT * FROM detalle_ventas WHERE precio_unitario <= 0;
+
+-- Esperado: 0 filas (descuentos entre 0 y 100)
+SELECT * FROM detalle_ventas WHERE descuento_pct < 0 OR descuento_pct > 100;
+```
+
+---
+
+## Parte 5 — Transacciones: Registrar una Venta Completa
+
+### Pasos 17 y 18: Transacciones
+
+Los scripts ya están provistos en el enunciado. Evaluar que los estudiantes ejecutaron ambos bloques correctamente y observaron los resultados.
+
+**Resultado esperado tras el COMMIT (Paso 17):**
+
+```sql
+-- Stock descontado en productos 2 y 6
+SELECT producto_id, nombre_producto, stock FROM productos WHERE producto_id IN (2, 6);
+-- producto_id=2: Adidas Ultraboost → stock = 89 (era 90)
+-- producto_id=6: Pantalón Under Armour → stock = 94 (era 95)
+
+-- Venta registrada para Sofía (cliente_id = 4)
+SELECT v.venta_id, v.fecha, dv.producto_id, dv.cantidad
+FROM ventas v JOIN detalle_ventas dv ON v.venta_id = dv.venta_id
+WHERE v.cliente_id = 4;
+-- venta_id=4, con dos líneas de detalle (producto_id=2 y producto_id=6)
+```
+
+**Resultado esperado tras el ROLLBACK (Paso 18):**
+
+```sql
+SELECT * FROM ventas WHERE cliente_id = 5;
+-- 0 filas — Diego Torres no tiene ventas registradas
+```
+
+::: {.callout-important}
+**Para el docente**: en MySQL Workbench, los errores de FK dentro de una transacción activa **no hacen ROLLBACK automático**. La transacción queda abierta con el error. Los estudiantes deben ejecutar `ROLLBACK` manualmente (o cerrar la sesión). Si no ejecutan el ROLLBACK, la venta de Diego puede quedar parcialmente registrada al cerrar la sesión según la configuración de `autocommit`. Este es exactamente el punto pedagógico: MySQL no adivina la intención — el código debe manejar los errores explícitamente.
+:::
+
+### Paso 19: Reflexión sobre transacciones — Respuestas esperadas
+
+| Situación | ¿COMMIT o ROLLBACK? | ¿Por qué? |
+|---|---|---|
+| Se registra la venta y el detalle correctamente, pero al descontar stock uno de los productos llega a stock negativo (-1) | **ROLLBACK** | El CHECK `stock >= 0` lanzará un error que debe tratarse como falla del proceso completo. Dejar la venta registrada con el stock inconsistente produce un estado inválido del sistema. Se hace ROLLBACK de toda la operación, se verifica el stock disponible y se informa al vendedor. |
+| Se insertan 500 productos nuevos del catálogo y hay un error de tipo de dato en la fila 231 | **ROLLBACK** | Si la carga masiva está en una transacción, el error en la fila 231 debe provocar ROLLBACK de todos los inserts previos. Un catálogo parcial (230 productos de 500) es peor que ninguno: los reportes mostrarían información incompleta. Corregir el archivo CSV y re-ejecutar la carga completa. |
+| Una devolución queda registrada en `devoluciones` pero falla el UPDATE del stock al reingresarlo | **ROLLBACK** | Tener una devolución aprobada sin que el stock se haya reingresado es un estado inconsistente: el sistema registra que se devolvió el producto pero las unidades no están disponibles para vender. Impacto directo en los reportes de inventario de Carlos. ROLLBACK y reintentar la operación completa. |
+
+---
+
+## Parte 6 — Síntesis y Reflexión
+
+### Paso 20: Comparar modelo diseñado vs. modelo implementado — Respuesta esperada
+
+| Dimensión | Modelo en papel (W05) | Base de datos real (W06) |
+|---|---|---|
+| ¿Se puede saber qué proveedor abastece un producto? | Sí (en el diagrama) | **Sí** — la tabla `proveedor_producto` existe en el servidor y las FK están activas |
+| ¿Las FK impiden ventas de clientes inexistentes? | En diseño | **Sí** — MySQL lanza ERROR 1452 si `cliente_id` no existe en `clientes` |
+| ¿Un producto puede tener stock negativo? | Según diseño, no | **No** — el CHECK `stock >= 0` bloquea cualquier UPDATE que deje el stock en negativo |
+| ¿Una venta incompleta puede quedar registrada? | En teoría, no | **Depende** — solo si se usa `START TRANSACTION`. Sin transacción explícita, cada INSERT es autocommit independiente y puede quedar un estado a medias |
+| ¿Qué pasa si se borra un cliente con ventas? | RESTRICT (diseño) | **ERROR 1451** — MySQL bloquea el DELETE con mensaje de violación de FK |
+
+### Paso 21: Preguntas de diseño e implementación — Respuestas esperadas
+
+| Pregunta | Respuesta |
+|---|---|
+| ¿Por qué `SET @variable = LAST_INSERT_ID()` y no poner el número directamente (ej. `venta_id = 3`)? | Porque ese número puede ser incorrecto si otro usuario insertó datos entre tus dos sentencias, o si el script se ejecuta varias veces. `LAST_INSERT_ID()` captura el ID generado por la sesión actual, no por otras conexiones. Hardcodear IDs produce errores silenciosos difíciles de detectar en producción. |
+| ¿Qué pasaría si dos vendedores insertan ventas para el mismo cliente al mismo tiempo sin transacciones? | `AUTO_INCREMENT` garantiza IDs únicos incluso con concurrencia. El riesgo sin transacciones no es el duplicado de IDs, sino la **inconsistencia**: si el sistema falla entre el INSERT en `ventas` y el INSERT en `detalle_ventas`, queda una venta registrada sin productos. Con transacciones, o se inserta todo o no se inserta nada. |
+| ¿Por qué `precio_unitario` se guarda en `detalle_ventas` y no se calcula desde `productos.precio_venta`? | `productos.precio_venta` es el precio vigente **hoy**. Si se calculara desde ahí, una venta del año pasado mostraría el precio actual, no el precio real que pagó el cliente. `precio_unitario` en `detalle_ventas` es el precio **histórico** — congela el valor exacto al momento de la transacción. Es obligatorio para auditoría financiera y análisis de márgenes históricos. |
+| Si TechStyle aplica un descuento general del 20% en una promoción, ¿qué operación SQL ejecutarías? ¿Dentro de una transacción? | Sí, dentro de una transacción. El UPDATE afecta muchas filas y si falla a mitad hay filas con 20% y filas sin descuento. Ejemplo: `START TRANSACTION; UPDATE detalle_ventas dv JOIN ventas v ON dv.venta_id = v.venta_id SET dv.descuento_pct = 20.00 WHERE v.fecha BETWEEN '2026-11-01' AND '2026-11-30'; COMMIT;` |
+| Un cliente quiere borrar su cuenta. ¿Qué debe hacer Juan antes del DELETE? | Verificar si tiene historial: `SELECT COUNT(*) FROM ventas WHERE cliente_id = 1`. Si hay ventas, la FK RESTRICT bloqueará el DELETE con ERROR 1451. La práctica correcta es el **soft delete**: agregar columna `activo TINYINT(1) DEFAULT 1` y ejecutar `UPDATE clientes SET activo = 0 WHERE cliente_id = 1`. El historial se preserva para auditoría; el cliente simplemente se oculta de las operaciones activas. |
+
+### Paso 22: Análisis de impacto — Respuestas esperadas
+
+| Capacidad implementada | Decisión de negocio que habilita |
+|---|---|
+| FK con `ON DELETE RESTRICT` en `ventas.cliente_id` | El historial de ventas siempre tiene trazabilidad al cliente — no hay ventas huérfanas en los reportes de María ni en la auditoría financiera |
+| CHECK `stock >= 0` en `productos` | La base de datos garantiza que nunca se registrará más stock del disponible — el panel de inventario de Carlos siempre mostrará datos reales, no negativos |
+| Transacciones en el registro de ventas | Una venta nunca queda registrada a medias — si falla el descuento de stock, toda la operación se deshace. Los datos del dashboard de Roberto son siempre consistentes |
+| Índice `idx_ventas_fecha` en `ventas(fecha)` | Los reportes de ventas por período (semana, mes, trimestre) que Roberto revisa en el CMI cargan en milisegundos aunque haya millones de registros, en vez de tardar minutos sin índice |
+| CHECK `segmento IN ('Premium', 'Estándar', 'Básico')` | Los análisis de segmentación de María son confiables — no pueden existir clientes en segmentos inválidos o con errores de digitación como `'premium'` (minúscula) o `'Premiun'` que fragmentarían el análisis en categorías fantasmas |
+
+### Paso 23: Reporte de implementación para Roberto — Respuesta modelo
+
+> **Para:** Roberto Fernández, CEO TechStyle
+>
+> **Asunto:** Base de datos implementada — estado al 2026-04-21
+>
+> La base de datos `techstyle` fue creada exitosamente en MySQL Server. El sistema cuenta con **9 tablas operativas** que cubren todas las operaciones del negocio: gestión de clientes y segmentos, catálogo de productos con jerarquía de categorías, registro de ventas con detalle por producto, trazabilidad de proveedores, seguimiento de despachos y control de devoluciones. El estado actual del sistema incluye 10 categorías, 6 clientes, 10 productos y 3 ventas de prueba correctamente registradas.
+>
+> La consistencia de los datos está garantizada por dos mecanismos complementarios. Las **restricciones de integridad referencial** (FK) impiden que existan ventas sin cliente, productos sin categoría o devoluciones sin la venta que las originó. Las **restricciones CHECK** impiden precios negativos, stocks negativos, descuentos fuera del rango 0–100% y estados inválidos en despachos y devoluciones. Ningún usuario puede ingresar datos que violen las reglas del negocio — la base de datos los rechaza automáticamente.
+>
+> En comparación con Excel, el sistema actual puede gestionar millones de transacciones sin degradación de rendimiento (gracias a 6 índices de consulta), garantiza que las operaciones de venta son atómicas (una venta nunca queda registrada a medias) y elimina las anomalías de actualización, inserción y eliminación que afectaban la planilla anterior. El paso siguiente es desarrollar las consultas SQL de análisis (Semana 7) para generar los reportes de ventas, márgenes y logística que el área comercial requiere.
+
+---
+
+::: {.hidden}
+## Notas para el docente
+
+**Sobre la evaluación del script DDL (Partes 1–2):**
+
+Los tres puntos críticos a verificar:
+1. **Orden correcto de tablas** — `categorias`, `clientes`, `proveedores` antes de las dependientes. Error frecuente: `categorias` después de `productos`.
+2. **`ON DELETE CASCADE` en `detalle_ventas.venta_id`** — es el único lugar semánticamente justificado. Deducir puntos si usan CASCADE en `ventas.cliente_id` (destruye historial).
+3. **CHECK constraints y DROP TABLE IF EXISTS** — sin DROP, el script falla en la segunda ejecución; sin CHECK, los datos pueden quedar en estados inválidos.
+
+**Sobre la ejecución en MySQL (Parte 3):**
+
+Los errores más frecuentes:
+- `ERROR 1215: Cannot add foreign key constraint` → tipos de datos incompatibles entre PK y FK (ej. FK es `VARCHAR` cuando la PK es `INT`).
+- `ERROR 1050: Table already exists` → olvidaron el `DROP TABLE IF EXISTS`. Solución: ejecutar `DROP DATABASE techstyle; CREATE DATABASE techstyle;` y re-ejecutar.
+- El estudiante ejecuta solo la sentencia seleccionada (⚡ vs ⚡⚡) → enseñar la diferencia entre "ejecutar línea actual" y "ejecutar script completo".
+
+**Sobre el INSERT de Carlos (Paso 15):**
+
+Variaciones aceptables:
+- Usar `LAST_INSERT_ID()` directamente (sin variable) si se ejecutan los dos INSERT en orden sin ningún otro INSERT de por medio.
+- Hardcodear el `venta_id = 3` si el estudiante verificó que esa es la tercera venta — señalar que es frágil pero no penalizar si el resultado es correcto.
+
+**Sobre las transacciones (Parte 5):**
+
+Punto de discusión importante: en MySQL, `autocommit = 1` por defecto. Esto significa que cada sentencia DML fuera de una transacción explícita es un COMMIT automático. Los estudiantes que no usan `START TRANSACTION` están haciendo commits implícitos en cada INSERT. Mostrar con `SELECT @@autocommit;`.
+
+**Sobre la nota del soft delete (Paso 21):**
+
+Este punto es una oportunidad para introducir el concepto de **datos activos vs. archivados** sin eliminar información. En sistemas reales de comercio, prácticamente nunca se borra información histórica — se marca como inactiva. Preguntar al grupo: "¿Cuántos años debe conservar TechStyle el historial de ventas? ¿Por qué?" (Respuesta: regulación tributaria SII → mínimo 6 años en Chile).
+:::

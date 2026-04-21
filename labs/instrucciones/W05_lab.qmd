@@ -37,11 +37,9 @@ Al terminar este laboratorio tendrás el **plano de arquitectura completo** de l
 
 | Parte | Actividad | Tiempo |
 |---|---|---|
-| 1 | Diagrama de Casos de Uso | 30 min |
-| 2 | Diseñar el EER Diagram en MySQL Workbench | 50 min |
-| 3 | Forward Engineering: generar el SQL | 20 min |
-| 4 | Verificar y completar el script SQL | 20 min |
-| 5 | Síntesis y reflexión | 20 min |
+| 1 | Diagrama de Casos de Uso | 45 min |
+| 2 | Diseñar el EER Diagram en MySQL Workbench | 75 min |
+| — | Presentación al grupo y cierre | 30 min |
 
 ---
 
@@ -277,186 +275,9 @@ Antes de continuar, revisa:
 
 **Guarda el modelo**: *File → Save Model As* → `W05_techstyle_model.mwb`.
 
----
-
-## Parte 3 — Forward Engineering: Generar el SQL {#sec-forward}
-
-**Duración: 20 minutos**
-
-### Paso 8: Configurar Forward Engineering
-
-1. En el menú de Workbench: *Database → Forward Engineer...*
-2. En la pantalla de conexión, selecciona **"Continue to next page"** sin conectar (solo queremos generar el script).
-
-   ::: {.callout-note}
-   Si Workbench requiere una conexión activa para continuar, usa la opción *File → Export → Forward Engineer SQL CREATE Script* para generar el archivo directamente.
-   :::
-
-3. En las opciones de generación, activa:
-   - [x] Generate DROP Statements Before Each CREATE Statement
-   - [x] Generate CREATE SCHEMA Statement
-   - [x] Add SHOW WARNINGS After Every DDL Statement
-   - [x] Include FK Indexes
-
-4. En la selección de objetos, asegúrate de que las 9 tablas estén marcadas.
-5. Avanza hasta la pantalla de **revisión del SQL** y cópialo.
-
-### Paso 9: Guardar el script
-
-1. Crea un archivo `W05_techstyle_ddl.sql` con el SQL generado.
-2. Revisa el encabezado del archivo: debería incluir `CREATE SCHEMA IF NOT EXISTS techstyle` y las 9 tablas en el orden correcto.
-
-::: {.callout-important}
-**El orden de las tablas en el script importa.** Workbench debería resolverlo automáticamente, pero verifica que `clientes`, `categorias` y `proveedores` aparezcan antes que las tablas que los referencian.
+::: {.callout-note}
+**El laboratorio continúa la próxima semana**: en W06_lab generarás el script SQL desde este modelo (Forward Engineering), lo ejecutarás en MySQL Server y cargarás los primeros datos reales de TechStyle.
 :::
-
----
-
-## Parte 4 — Verificar y Completar el Script SQL {#sec-verificar}
-
-**Duración: 20 minutos**
-
-### Paso 10: Revisar el SQL generado
-
-Abre `W05_techstyle_ddl.sql` en un editor de texto y responde:
-
-**10.1** ¿Qué valor tienen los parámetros `ON DELETE` y `ON UPDATE` en las FK generadas por Workbench? ¿Es el comportamiento adecuado para cada relación?
-
-| FK | ON DELETE generado | ¿Es correcto? | Si no, ¿cuál debería ser? |
-|---|---|---|---|
-| `ventas.cliente_id` → `clientes` | | | |
-| `detalle_ventas.venta_id` → `ventas` | | | |
-| `despachos.venta_id` → `ventas` | | | |
-| `devoluciones.venta_id` → `ventas` | | | |
-
-::: {.callout-tip}
-**Criterio de decisión:** si se elimina el padre, ¿los hijos deben eliminarse también (CASCADE), bloquearse la eliminación (RESTRICT) o quedar como huérfanos con NULL (SET NULL)?
-
-Ejemplo: si se cancela (elimina) una venta, los detalles de esa venta no tienen sentido sin ella → CASCADE tiene sentido. Pero si se intenta eliminar un cliente con historial de ventas, eso debería bloquearse → RESTRICT.
-:::
-
-**10.2** Agrega manualmente las restricciones CHECK que Workbench no genera automáticamente. Edita el archivo SQL y agrega:
-
-```sql
--- En la tabla productos:
-ALTER TABLE productos ADD CONSTRAINT chk_precio_positivo
-    CHECK (precio_venta > 0);
-
-ALTER TABLE productos ADD CONSTRAINT chk_costo_positivo
-    CHECK (costo_unitario > 0);
-
-ALTER TABLE productos ADD CONSTRAINT chk_stock_positivo
-    CHECK (stock >= 0);
-
--- En la tabla detalle_ventas:
-ALTER TABLE detalle_ventas ADD CONSTRAINT chk_cantidad_positiva
-    CHECK (cantidad > 0);
-
-ALTER TABLE detalle_ventas ADD CONSTRAINT chk_descuento_rango
-    CHECK (descuento_pct BETWEEN 0 AND 100);
-
--- En la tabla clientes:
-ALTER TABLE clientes ADD CONSTRAINT chk_segmento_valido
-    CHECK (segmento IN ('Premium', 'Estándar', 'Básico'));
-
--- En la tabla despachos:
-ALTER TABLE despachos ADD CONSTRAINT chk_estado_despacho
-    CHECK (estado IN ('Pendiente', 'En tránsito', 'Entregado', 'No entregado'));
-```
-
-**10.3** Agrega los índices de rendimiento para las consultas más frecuentes de TechStyle:
-
-```sql
--- Búsquedas frecuentes por región y segmento (reportes de María)
-CREATE INDEX idx_clientes_region ON clientes(region);
-CREATE INDEX idx_clientes_segmento ON clientes(segmento);
-
--- Consultas de ventas por rango de fechas (reportes de ventas)
-CREATE INDEX idx_ventas_fecha ON ventas(fecha);
-
--- Búsqueda de productos por categoría
-CREATE INDEX idx_productos_categoria ON productos(categoria_id);
-
--- Estado de despachos (consulta de logística)
-CREATE INDEX idx_despachos_estado ON despachos(estado);
-```
-
-### Paso 11: Verificar el orden de creación
-
-El script final debe crear las tablas en este orden. Verifica que sea así:
-
-1. `categorias`
-2. `clientes`
-3. `proveedores`
-4. `productos` (FK → categorias)
-5. `ventas` (FK → clientes)
-6. `detalle_ventas` (FK → ventas, productos)
-7. `proveedor_producto` (FK → proveedores, productos)
-8. `despachos` (FK → ventas)
-9. `devoluciones` (FK → ventas, productos)
-
-::: {.callout-important}
-Si el script tiene las tablas en orden incorrecto, reordénalas manualmente en el archivo `.sql`. La semana 6 ejecutarás exactamente este script en MySQL Server — si el orden es incorrecto, habrá errores.
-:::
-
----
-
-## Parte 5 — Síntesis y Reflexión {#sec-reflexion}
-
-**Duración: 20 minutos**
-
-### Paso 12: Comparar el modelo W04 vs. W05
-
-| Dimensión | Modelo W04 (4 tablas) | Modelo W05 (9 tablas) |
-|---|---|---|
-| ¿Se puede saber qué proveedor abastece un producto? | No | |
-| ¿Se puede rastrear el estado de un despacho? | No | |
-| ¿Se puede registrar una devolución parcial? | No | |
-| ¿Las categorías pueden tener subcategorías? | No | |
-| ¿Los IDs se generan automáticamente? | No siempre | |
-
-### Paso 13: Preguntas de diseño
-
-Responde en grupo:
-
-| Pregunta | Respuesta |
-|---|---|
-| ¿Por qué `despachos.venta_id` tiene restricción UNIQUE pero `devoluciones.venta_id` no? | |
-| ¿Qué pasaría si dos grupos de analistas insertan clientes simultáneamente sin `AUTO_INCREMENT`? | |
-| Si TechStyle agrega vendedores (cada venta tiene un vendedor asignado), ¿qué tabla(s) modificarías? | |
-| ¿La tabla `proveedor_producto` viola la 3FN? Justifica. | |
-| ¿Por qué `precio_unitario` está en `detalle_ventas` y no se calcula desde `productos.precio_venta`? | |
-
-### Paso 14: Análisis de impacto en decisiones de negocio
-
-Para cada nueva entidad agregada en W05, identifica qué decisiones de negocio habilita:
-
-| Nueva entidad | Decisión de negocio que habilita |
-|---|---|
-| `proveedores` + `proveedor_producto` | Ej: "¿Qué proveedor tiene el menor precio para Nike Air Max?" |
-| `despachos` | |
-| `devoluciones` | |
-| `categorias` (con jerarquía) | |
-
-::: {.callout-tip}
-Piensa en los reportes que María, Carlos o Roberto necesitarían para tomar decisiones. Sin la entidad, esa decisión no puede respaldarse con datos.
-:::
-
-### Paso 15: Reporte de diseño para el equipo técnico
-
-Redacta un párrafo breve (6–8 líneas) como si fueras Juan presentando el modelo ampliado al equipo de desarrollo que implementará la base de datos la semana 6:
-
-> **Para:** Equipo de Desarrollo
->
-> **Asunto:** Modelo de datos TechStyle v2 — listo para implementación
->
-> El modelo adjunto representa la arquitectura de datos de TechStyle para el sistema de ventas, despacho y devoluciones... *(continúa)*
-
-Incluye:
-- Cuántas tablas tiene el modelo y por qué ese número (¿qué resuelve cada una?).
-- Qué restricciones de integridad garantizan la consistencia de los datos.
-- En qué orden deben crearse las tablas y por qué.
-- Qué índices se incluyeron y para qué consultas están optimizados.
 
 ---
 
@@ -467,9 +288,7 @@ Sube a la plataforma los siguientes archivos comprimidos en `W05_lab_[apellido1]
 | Archivo | Contenido |
 |---|---|
 | `W05_casos_uso.png` | Diagrama de Casos de Uso exportado desde draw.io |
-| `W05_techstyle_model.mwb` | Modelo EER de MySQL Workbench con las 9 tablas |
-| `W05_techstyle_ddl.sql` | Script SQL completo con CREATE TABLE, CHECK y CREATE INDEX |
-| `W05_reflexion.pdf` o `.docx` | Respuestas de las preguntas de reflexión + reporte de diseño |
+| `W05_techstyle_model.mwb` | Modelo EER de MySQL Workbench con las 9 tablas y sus relaciones |
 
 ---
 
@@ -477,8 +296,6 @@ Sube a la plataforma los siguientes archivos comprimidos en `W05_lab_[apellido1]
 
 | Criterio | Puntaje |
 |---|---|
-| Diagrama de Casos de Uso: actores correctos, casos de uso completos, conexión a entidades (Parte 1) | 15 pts |
-| EER Diagram: 9 tablas completas, relaciones y cardinalidades correctas (Parte 2) | 30 pts |
-| Script DDL: orden correcto, FK con ON DELETE apropiado, CHECK e índices incluidos (Partes 3–4) | 30 pts |
-| Reflexión: análisis de diseño y reporte para el equipo técnico (Parte 5) | 25 pts |
+| Diagrama de Casos de Uso: actores correctos, casos de uso completos, conexión a entidades (Parte 1) | 40 pts |
+| EER Diagram: 9 tablas completas, relaciones y cardinalidades correctas, FK auto-referencial de categorías (Parte 2) | 60 pts |
 | **Total** | **100 pts** |

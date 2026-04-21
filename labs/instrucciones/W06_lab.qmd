@@ -1,0 +1,562 @@
+---
+title: "Laboratorio 6: Construyendo la Base de Datos de TechStyle"
+subtitle: "Semana 6 · W06 · Unidad II · Implementación en MySQL · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+## Contexto
+
+En el laboratorio anterior diseñaste el modelo completo de TechStyle con 9 tablas en MySQL Workbench. Hoy ese modelo pasa del papel a la realidad: generarás el script SQL, lo ejecutarás en MySQL Server, cargarás los primeros datos y practicarás transacciones para garantizar la integridad de las operaciones.
+
+Al terminar este laboratorio tendrás la **base de datos de TechStyle funcionando en MySQL**, con datos reales y lista para las consultas de la semana 7.
+
+---
+
+## Instrucciones generales
+
+- Trabajarás **en los mismos grupos del laboratorio anterior**.
+- **Duración total**: 2 horas 30 minutos.
+- Necesitas el archivo `W05_techstyle_model.mwb` guardado en W05 — ábrelo antes de empezar.
+
+**Herramientas necesarias:**
+
+| Herramienta | Uso |
+|---|---|
+| **MySQL Workbench 8.0** | Forward Engineering y conexión al servidor |
+| **MySQL Server 8.0** | Motor de base de datos donde se ejecutará el script |
+| Editor de texto (VS Code u otro) | Editar el script SQL generado |
+
+**Estructura del laboratorio:**
+
+| Parte | Actividad | Tiempo |
+|---|---|---|
+| 1 | Forward Engineering: generar el script SQL | 20 min |
+| 2 | Verificar y completar el script SQL | 20 min |
+| 3 | Ejecutar el DDL en MySQL Server | 25 min |
+| 4 | Cargar datos iniciales con INSERT INTO | 40 min |
+| 5 | Transacciones: registrar una venta completa | 25 min |
+| 6 | Síntesis y reflexión | 20 min |
+
+---
+
+## Parte 1 — Forward Engineering: Generar el Script SQL {#sec-forward}
+
+**Duración: 20 minutos**
+
+### Paso 1: Abrir el modelo de W05
+
+1. Abre **MySQL Workbench**.
+2. Ve a *File → Open Model* y selecciona `W05_techstyle_model.mwb`.
+3. Verifica que el diagrama EER con las 9 tablas esté visible.
+
+### Paso 2: Configurar Forward Engineering
+
+1. En el menú de Workbench: *Database → Forward Engineer...*
+2. En la pantalla de conexión, selecciona **"Continue to next page"** sin conectar (solo generaremos el script por ahora).
+
+   ::: {.callout-note}
+   Si Workbench requiere una conexión activa, usa la alternativa: *File → Export → Forward Engineer SQL CREATE Script*.
+   :::
+
+3. En las opciones de generación, activa las siguientes opciones:
+   - [x] Generate DROP Statements Before Each CREATE Statement
+   - [x] Generate CREATE SCHEMA Statement
+   - [x] Add SHOW WARNINGS After Every DDL Statement
+   - [x] Include FK Indexes
+
+4. En la selección de objetos, verifica que las **9 tablas** estén marcadas.
+5. Avanza hasta la pantalla de revisión del SQL y cópialo.
+
+### Paso 3: Guardar el script
+
+1. Crea un archivo nuevo llamado `W06_techstyle_ddl.sql`.
+2. Pega el SQL generado y guarda el archivo.
+3. El encabezado debería incluir `CREATE SCHEMA IF NOT EXISTS` y las tablas en orden jerárquico.
+
+::: {.callout-important}
+**El orden de las tablas importa.** Verifica que aparezcan primero las tablas sin FK (`categorias`, `clientes`, `proveedores`) y luego las que las referencian. Si el orden está incorrecto, reordénalas manualmente antes de continuar.
+:::
+
+---
+
+## Parte 2 — Verificar y Completar el Script SQL {#sec-verificar}
+
+**Duración: 20 minutos**
+
+Abre `W06_techstyle_ddl.sql` en el editor de texto y realiza las siguientes revisiones y correcciones.
+
+### Paso 4: Revisar los comportamientos ON DELETE
+
+Workbench genera por defecto `ON DELETE RESTRICT`. Analiza si ese comportamiento es correcto para cada FK y corrígelo donde sea necesario:
+
+| FK | ON DELETE generado | ¿Es correcto? | Si no, ¿cuál debería ser? |
+|---|---|---|---|
+| `ventas.cliente_id` → `clientes` | RESTRICT | | |
+| `detalle_ventas.venta_id` → `ventas` | RESTRICT | | |
+| `despachos.venta_id` → `ventas` | RESTRICT | | |
+| `devoluciones.venta_id` → `ventas` | RESTRICT | | |
+
+::: {.callout-tip}
+**Criterio de decisión**: si se elimina el registro padre, ¿los hijos deben eliminarse también (`CASCADE`), bloquearse la eliminación (`RESTRICT`), o quedar con NULL (`SET NULL`)?
+
+- Un cliente con historial de ventas **no debería poder borrarse** → `RESTRICT`.
+- Los detalles de una venta eliminada **no tienen sentido sin ella** → `CASCADE`.
+:::
+
+### Paso 5: Agregar restricciones CHECK
+
+Workbench no genera restricciones CHECK automáticamente. Agrégalas al final del script, después de todos los `CREATE TABLE`:
+
+```sql
+-- Restricciones de negocio en productos
+ALTER TABLE productos ADD CONSTRAINT chk_precio_positivo
+    CHECK (precio_venta > 0);
+ALTER TABLE productos ADD CONSTRAINT chk_costo_positivo
+    CHECK (costo_unitario > 0);
+ALTER TABLE productos ADD CONSTRAINT chk_stock_no_negativo
+    CHECK (stock >= 0);
+
+-- Restricciones en detalle_ventas
+ALTER TABLE detalle_ventas ADD CONSTRAINT chk_cantidad_positiva
+    CHECK (cantidad > 0);
+ALTER TABLE detalle_ventas ADD CONSTRAINT chk_descuento_rango
+    CHECK (descuento_pct BETWEEN 0 AND 100);
+
+-- Restricciones de dominio
+ALTER TABLE clientes ADD CONSTRAINT chk_segmento_valido
+    CHECK (segmento IN ('Premium', 'Estándar', 'Básico'));
+ALTER TABLE despachos ADD CONSTRAINT chk_estado_despacho
+    CHECK (estado IN ('Pendiente', 'En tránsito', 'Entregado', 'No entregado'));
+ALTER TABLE devoluciones ADD CONSTRAINT chk_estado_devolucion
+    CHECK (estado IN ('Pendiente', 'Aprobada', 'Rechazada'));
+```
+
+### Paso 6: Agregar índices de rendimiento
+
+Agrega los siguientes índices al final del script para optimizar las consultas más frecuentes:
+
+```sql
+-- Consultas de María: ventas por región y segmento
+CREATE INDEX idx_clientes_region    ON clientes(region);
+CREATE INDEX idx_clientes_segmento  ON clientes(segmento);
+
+-- Consultas de ventas por rango de fechas
+CREATE INDEX idx_ventas_fecha       ON ventas(fecha);
+
+-- Búsqueda de productos por categoría
+CREATE INDEX idx_productos_categoria ON productos(categoria_id);
+
+-- Consultas de logística por estado de despacho
+CREATE INDEX idx_despachos_estado   ON despachos(estado);
+```
+
+### Paso 7: Verificar el orden final del script
+
+El script completo debe crear las tablas en este orden exacto:
+
+1. `categorias`
+2. `clientes`
+3. `proveedores`
+4. `productos` (FK → `categorias`)
+5. `ventas` (FK → `clientes`)
+6. `detalle_ventas` (FK → `ventas`, `productos`)
+7. `proveedor_producto` (FK → `proveedores`, `productos`)
+8. `despachos` (FK → `ventas`)
+9. `devoluciones` (FK → `ventas`, `productos`)
+
+Guarda el archivo después de todas las modificaciones.
+
+---
+
+## Parte 3 — Ejecutar el DDL en MySQL Server {#sec-ejecutar}
+
+**Duración: 25 minutos**
+
+### Paso 8: Conectarse al servidor MySQL
+
+1. En MySQL Workbench, haz clic en la conexión **"Local instance MySQL80"** (o la que corresponda a tu instalación).
+2. Si es la primera vez, configura la conexión: *Database → Connect to Database* → hostname `127.0.0.1`, puerto `3306`, usuario `root`.
+3. Ingresa la contraseña y verifica que el panel de consultas (`Query 1`) esté disponible.
+
+::: {.callout-tip}
+Si no tienes MySQL Server instalado, descarga MySQL Community Server desde [dev.mysql.com/downloads/mysql](https://dev.mysql.com/downloads/mysql/) e instálalo con las opciones por defecto.
+:::
+
+### Paso 9: Ejecutar el script DDL
+
+1. En Workbench: *File → Open SQL Script* → selecciona `W06_techstyle_ddl.sql`.
+2. Haz clic en el ícono del **rayo (⚡)** para ejecutar todo el script.
+3. Observa el panel *Action Output* en la parte inferior: cada sentencia debería mostrar `✔` verde.
+
+::: {.callout-important}
+Si aparece algún error (`✖` rojo), **no sigas adelante**. Lee el mensaje de error, identifica en qué tabla ocurrió y corrige el script antes de re-ejecutar.
+
+Los errores más comunes:
+- `Table doesn't exist`: tabla referenciada en una FK aún no creada → revisa el orden.
+- `Can't create table ... errno: 150`: FK mal definida → revisa que los tipos de PK y FK sean idénticos.
+:::
+
+### Paso 10: Verificar la estructura creada
+
+Ejecuta las siguientes sentencias de verificación en una nueva pestaña de consulta:
+
+```sql
+USE techstyle;
+
+-- Listar todas las tablas
+SHOW TABLES;
+
+-- Verificar estructura de dos tablas clave
+DESCRIBE clientes;
+DESCRIBE detalle_ventas;
+
+-- Ver las FK definidas en detalle_ventas
+SHOW CREATE TABLE detalle_ventas\G
+```
+
+Completa la siguiente tabla con lo que observas:
+
+| Verificación | Resultado esperado | ¿Coincide? |
+|---|---|---|
+| `SHOW TABLES` muestra 9 tablas | 9 tablas listadas | |
+| `DESCRIBE clientes` muestra `email` con `UNI` en Key | Sí | |
+| `DESCRIBE detalle_ventas` muestra PK compuesta | `venta_id` y `producto_id` ambos con `PRI` | |
+| `SHOW CREATE TABLE detalle_ventas` muestra dos FK | FK a `ventas` y FK a `productos` | |
+
+::: {.callout-note}
+`DESCRIBE` es el comando de diagnóstico más útil en el trabajo diario con MySQL. Memorízalo.
+:::
+
+---
+
+## Parte 4 — Cargar Datos Iniciales con INSERT INTO {#sec-insertar}
+
+**Duración: 40 minutos**
+
+Ahora poblarás la base de datos con datos reales de TechStyle. Recuerda: **el orden de inserción sigue la jerarquía de FK** — padres antes que hijos.
+
+### Paso 11: Insertar categorías
+
+```sql
+USE techstyle;
+
+-- Categorías raíz (sin padre)
+INSERT INTO categorias (nombre_categoria, categoria_padre_id) VALUES
+    ('Calzado',     NULL),
+    ('Ropa',        NULL),
+    ('Accesorios',  NULL);
+
+-- Subcategorías (referencian los IDs generados arriba)
+INSERT INTO categorias (nombre_categoria, categoria_padre_id) VALUES
+    ('Zapatillas',  1),
+    ('Sandalias',   1),
+    ('Poleras',     2),
+    ('Pantalones',  2),
+    ('Chaquetas',   2),
+    ('Mochilas',    3),
+    ('Gorros',      3);
+```
+
+Verifica que se insertaron correctamente:
+
+```sql
+SELECT categoria_id, nombre_categoria, categoria_padre_id
+FROM categorias
+ORDER BY categoria_padre_id, categoria_id;
+```
+
+**Pregunta**: ¿Cómo identifica esta consulta cuáles son las categorías raíz y cuáles son subcategorías?
+
+### Paso 12: Insertar clientes
+
+```sql
+INSERT INTO clientes (nombre, apellido, email, region, segmento, fecha_registro) VALUES
+    ('Juan',   'Pérez',    'juan.perez@mail.com',    'Metropolitana', 'Premium',  '2024-03-15'),
+    ('María',  'López',    'maria.lopez@mail.com',   'Valparaíso',    'Estándar', '2024-04-02'),
+    ('Carlos', 'Muñoz',    'carlos.munoz@mail.com',  'Biobío',        'Básico',   '2024-05-18'),
+    ('Sofía',  'Ramírez',  'sofia.ramirez@mail.com', 'Metropolitana', 'Premium',  '2024-06-30'),
+    ('Diego',  'Torres',   'diego.torres@mail.com',  'Araucanía',     'Estándar', '2024-07-11'),
+    ('Paula',  'Vega',     'paula.vega@mail.com',    'Coquimbo',      'Básico',   '2024-08-22');
+```
+
+### Paso 13: Insertar productos
+
+```sql
+INSERT INTO productos (nombre_producto, categoria_id, precio_venta, costo_unitario, stock) VALUES
+    ('Nike Air Max 2026',       4,  89990.00,  45000.00, 150),
+    ('Adidas Ultraboost 24',    4, 119990.00,  65000.00,  90),
+    ('Puma Suede Classic',      4,  54990.00,  28000.00, 120),
+    ('Polera Adidas Clásica',   6,  24990.00,  12000.00, 200),
+    ('Polera Nike Dri-FIT',     6,  29990.00,  15000.00, 180),
+    ('Pantalón Under Armour',   7,  44990.00,  22000.00,  95),
+    ('Chaqueta The North Face', 8,  89990.00,  50000.00,  60),
+    ('Mochila Puma 20L',        9,  39990.00,  20000.00,  80),
+    ('Gorro Nike Dri-FIT',     10,  14990.00,   7000.00, 160),
+    ('Short Nike Running',      7,  19990.00,   9000.00, 175);
+```
+
+::: {.callout-tip}
+Después de cada INSERT, ejecuta `SELECT COUNT(*) FROM nombre_tabla` para confirmar que las filas se insertaron. Desarrolla este hábito de verificación en cada carga de datos.
+:::
+
+### Paso 14: Insertar ventas y detalles
+
+```sql
+-- Venta 1: Juan compra zapatillas y polera (15 enero 2026)
+INSERT INTO ventas (fecha, cliente_id) VALUES ('2026-01-15', 1);
+
+INSERT INTO detalle_ventas (venta_id, producto_id, cantidad, precio_unitario, descuento_pct)
+VALUES
+    (LAST_INSERT_ID(), 1, 1, 89990.00,  0.00),  -- Nike Air Max
+    (LAST_INSERT_ID(), 4, 2, 24990.00, 10.00);  -- Poleras x2 con 10% descuento
+```
+
+::: {.callout-important}
+**Problema con `LAST_INSERT_ID()`**: cuando usas dos INSERT seguidos, el segundo `LAST_INSERT_ID()` en `detalle_ventas` aún apunta al `venta_id` recién creado — no al `producto_id`. Esto es correcto: `LAST_INSERT_ID()` devuelve el último ID generado por un `AUTO_INCREMENT`, que en este caso fue el de `ventas`.
+
+Sin embargo, si en el mismo script insertas dos ventas distintas seguidas, el ID puede cambiar. La solución segura es usar una variable:
+
+```sql
+-- Venta 2: María compra chaqueta (20 enero 2026) — forma segura
+INSERT INTO ventas (fecha, cliente_id) VALUES ('2026-01-20', 2);
+SET @venta_maria = LAST_INSERT_ID();
+
+INSERT INTO detalle_ventas (venta_id, producto_id, cantidad, precio_unitario, descuento_pct)
+VALUES
+    (@venta_maria, 7, 1, 89990.00, 0.00),   -- Chaqueta The North Face
+    (@venta_maria, 9, 1, 14990.00, 0.00);   -- Gorro Nike
+```
+:::
+
+### Paso 15: Insertar una tercera venta tú mismo
+
+Sin usar el código de ejemplo, escribe el INSERT para la siguiente situación:
+
+> **Carlos Muñoz** realiza una compra el **2026-02-05**: compra 1 mochila Puma a precio normal y 2 shorts Nike Running con un descuento del 15%.
+
+```sql
+-- Escribe tu INSERT aquí:
+INSERT INTO ventas ...
+
+INSERT INTO detalle_ventas ...
+```
+
+Verifica que se insertó correctamente:
+
+```sql
+SELECT v.venta_id, v.fecha, c.nombre, c.apellido,
+       p.nombre_producto, dv.cantidad, dv.precio_unitario, dv.descuento_pct
+FROM ventas v
+JOIN clientes c        ON v.cliente_id   = c.cliente_id
+JOIN detalle_ventas dv ON v.venta_id     = dv.venta_id
+JOIN productos p       ON dv.producto_id = p.producto_id
+ORDER BY v.venta_id;
+```
+
+::: {.callout-note}
+Esta consulta usa `JOIN` — no te preocupes si aún no dominas la sintaxis, el tema se profundiza en W07. Por ahora úsala para verificar tus datos.
+:::
+
+### Paso 16: Verificar integridad de los datos
+
+Ejecuta las siguientes consultas de diagnóstico. Si todas retornan 0 filas, la base de datos está en estado consistente.
+
+```sql
+-- ¿Hay ventas sin cliente válido?
+SELECT v.venta_id FROM ventas v
+LEFT JOIN clientes c ON v.cliente_id = c.cliente_id
+WHERE c.cliente_id IS NULL;
+
+-- ¿Hay productos con stock negativo?
+SELECT producto_id, nombre_producto, stock FROM productos
+WHERE stock < 0;
+
+-- ¿Hay líneas de detalle con precio cero o negativo?
+SELECT * FROM detalle_ventas WHERE precio_unitario <= 0;
+
+-- ¿Hay descuentos fuera del rango 0–100?
+SELECT * FROM detalle_ventas
+WHERE descuento_pct < 0 OR descuento_pct > 100;
+```
+
+---
+
+## Parte 5 — Transacciones: Registrar una Venta Completa {#sec-transacciones}
+
+**Duración: 25 minutos**
+
+Una transacción garantiza que una operación de negocio compuesta se ejecute **completamente o no se ejecute en absoluto**.
+
+### Paso 17: Transacción exitosa (COMMIT)
+
+Registra una venta completa usando una transacción. Copia y ejecuta el siguiente bloque:
+
+```sql
+-- Iniciar la transacción
+START TRANSACTION;
+
+-- Paso 1: crear la venta
+INSERT INTO ventas (fecha, cliente_id) VALUES (CURDATE(), 4);  -- Sofía Ramírez
+SET @venta_sofia = LAST_INSERT_ID();
+
+-- Paso 2: agregar los productos
+INSERT INTO detalle_ventas (venta_id, producto_id, cantidad, precio_unitario, descuento_pct)
+VALUES
+    (@venta_sofia, 2, 1, 119990.00, 5.00),  -- Adidas Ultraboost con 5%
+    (@venta_sofia, 6, 1,  44990.00, 0.00);  -- Pantalón Under Armour
+
+-- Paso 3: descontar el stock
+UPDATE productos SET stock = stock - 1 WHERE producto_id = 2;
+UPDATE productos SET stock = stock - 1 WHERE producto_id = 6;
+
+-- Confirmar todos los cambios
+COMMIT;
+```
+
+Verifica el resultado:
+
+```sql
+-- ¿El stock se descontó correctamente?
+SELECT producto_id, nombre_producto, stock
+FROM productos
+WHERE producto_id IN (2, 6);
+
+-- ¿La venta y su detalle quedaron registrados?
+SELECT v.venta_id, v.fecha, dv.producto_id, dv.cantidad
+FROM ventas v
+JOIN detalle_ventas dv ON v.venta_id = dv.venta_id
+WHERE v.cliente_id = 4;
+```
+
+### Paso 18: Simular un error y hacer ROLLBACK
+
+Ahora simularás una situación donde la operación debe deshacerse.
+
+```sql
+-- Iniciar la transacción
+START TRANSACTION;
+
+-- Paso 1: crear la venta
+INSERT INTO ventas (fecha, cliente_id) VALUES (CURDATE(), 5);  -- Diego Torres
+SET @venta_diego = LAST_INSERT_ID();
+
+-- Paso 2: agregar producto (cantidad correcta)
+INSERT INTO detalle_ventas (venta_id, producto_id, cantidad, precio_unitario)
+VALUES (@venta_diego, 8, 1, 39990.00);
+
+-- Paso 3: intentar agregar un producto con cliente_id inválido en otra tabla
+-- (simulamos que el sistema detectó un error de validación)
+-- Por ejemplo, el producto_id 99 no existe:
+INSERT INTO detalle_ventas (venta_id, producto_id, cantidad, precio_unitario)
+VALUES (@venta_diego, 99, 2, 15000.00);
+-- ^ Este INSERT fallará con error de FK
+
+-- Si llegamos aquí significa que ocurrió un error: deshacer todo
+ROLLBACK;
+```
+
+::: {.callout-important}
+En MySQL Workbench, el INSERT con el `producto_id = 99` fallará con un error de FK. La transacción queda **abierta pero con error pendiente**. Debes ejecutar `ROLLBACK` manualmente.
+
+Verifica que Diego Torres no tenga ventas registradas:
+```sql
+SELECT * FROM ventas WHERE cliente_id = 5;
+```
+Si `ROLLBACK` funcionó correctamente, esta consulta retornará 0 filas.
+:::
+
+### Paso 19: Reflexión sobre transacciones
+
+Responde en grupo:
+
+| Situación | ¿COMMIT o ROLLBACK? | ¿Por qué? |
+|---|---|---|
+| Se registra la venta y el detalle correctamente, pero al descontar stock uno de los productos llega a stock negativo (-1) | | |
+| Se insertan 500 productos nuevos del catálogo de temporada. A mitad de camino hay un error de tipo de dato en la fila 231 | | |
+| Una devolución queda registrada en `devoluciones` pero falla el `UPDATE` del stock al intentar reingresarlo | | |
+
+---
+
+## Parte 6 — Síntesis y Reflexión {#sec-reflexion}
+
+**Duración: 20 minutos**
+
+### Paso 20: Comparar el modelo diseñado vs. el modelo implementado
+
+| Dimensión | Modelo en papel (W05) | Base de datos real (W06) |
+|---|---|---|
+| ¿Se puede saber qué proveedor abastece un producto? | Sí (diagrama) | |
+| ¿Las FK impiden ventas de clientes inexistentes? | En diseño | |
+| ¿Un producto puede tener stock negativo? | Según diseño, no | |
+| ¿Una venta incompleta puede quedar registrada? | En teoría, no | |
+| ¿Qué pasa si se borra un cliente con ventas? | RESTRICT (diseño) | |
+
+### Paso 21: Preguntas de diseño e implementación
+
+Responde en grupo:
+
+| Pregunta | Respuesta |
+|---|---|
+| ¿Por qué se usa `SET @variable = LAST_INSERT_ID()` en lugar de poner el número directamente (ej. `venta_id = 3`)? | |
+| ¿Qué pasaría si dos vendedores insertan una venta para el mismo cliente al mismo tiempo sin transacciones? | |
+| ¿Por qué `precio_unitario` se guarda en `detalle_ventas` y no se calcula desde `productos.precio_venta` en cada consulta? | |
+| Si TechStyle aplica un descuento general del 20% en una promoción, ¿qué operación SQL ejecutarías? ¿Dentro de una transacción? | |
+| Un cliente quiere borrar su cuenta. ¿Qué debe hacer Juan antes de ejecutar `DELETE FROM clientes WHERE cliente_id = 1`? | |
+
+### Paso 22: Análisis de impacto — del modelo a las decisiones
+
+Para cada nueva capacidad que tiene ahora la base de datos, identifica la decisión de negocio que habilita:
+
+| Capacidad implementada | Decisión de negocio que habilita |
+|---|---|
+| FK con `ON DELETE RESTRICT` en `ventas.cliente_id` | Ej: "Garantizamos que el historial de ventas nunca pierde la referencia al cliente" |
+| CHECK `stock >= 0` en `productos` | |
+| Transacciones en el registro de ventas | |
+| Índice `idx_ventas_fecha` en `ventas(fecha)` | |
+| CHECK `segmento IN ('Premium', 'Estándar', 'Básico')` | |
+
+### Paso 23: Reporte de implementación
+
+Redacta un párrafo breve (6–8 líneas) como si fueras Juan informando a Roberto sobre el estado del sistema al cierre del día:
+
+> **Para:** Roberto Fernández, CEO TechStyle
+>
+> **Asunto:** Base de datos implementada — estado al 2026-04-21
+>
+> La base de datos `techstyle` fue creada exitosamente en MySQL Server. Contiene... *(continúa)*
+
+Incluye:
+- Cuántas tablas están operativas y cuántos registros tiene cada una.
+- Qué restricciones de integridad garantizan la consistencia de los datos.
+- Qué puede hacerse ahora que no era posible con Excel.
+- Qué falta aún para que el sistema sea completamente operativo.
+
+---
+
+## Entregable
+
+Sube a la plataforma los siguientes archivos comprimidos en `W06_lab_[apellido1]_[apellido2].zip`:
+
+| Archivo | Contenido |
+|---|---|
+| `W06_techstyle_ddl.sql` | Script DDL completo: CREATE TABLE, CHECK, índices y ON DELETE corregidos |
+| `W06_inserts.sql` | Script con todos los INSERT de las Partes 4 y 5 (incluyendo el INSERT de Carlos que escribiste tú) |
+| `W06_reflexion.pdf` o `.docx` | Respuestas de las preguntas de reflexión + reporte para Roberto |
+
+---
+
+## Criterios de Evaluación
+
+| Criterio | Puntaje |
+|---|---|
+| Script DDL: orden correcto, FK con ON DELETE apropiado, CHECK e índices incluidos (Partes 1–2) | 25 pts |
+| Ejecución correcta en MySQL: 9 tablas creadas sin errores, verificación con DESCRIBE y SHOW CREATE TABLE (Parte 3) | 20 pts |
+| Inserts correctos: orden de inserción, uso de variables para IDs, datos completos (Parte 4) | 25 pts |
+| Transacciones: COMMIT y ROLLBACK funcionando, reflexión sobre escenarios (Parte 5) | 15 pts |
+| Síntesis: análisis de impacto y reporte para Roberto (Parte 6) | 15 pts |
+| **Total** | **100 pts** |

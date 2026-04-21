@@ -1,0 +1,690 @@
+---
+title: "De los Planos a la Realidad"
+subtitle: "Implementación en MySQL: DDL, DML y Transacciones · Semana 6 · Unidad II"
+author: "Universidad San Sebastián"
+date: "Abril 2026"
+format:
+  revealjs:
+    theme: sky
+    incremental: false
+    slide-number: true
+    footer: "Big Data y Analytics · USS · 2026"
+---
+
+## ¿Dónde Estamos?
+
+::: {.incremental}
+- **W04**: Diseñamos el MER de TechStyle y normalizamos hasta 3FN.
+- **W05**: Ampliamos el modelo (Proveedores, Despachos, Devoluciones), aprendimos MySQL Workbench y generamos el script DDL.
+- **Hoy (W06)**: Ejecutamos ese script — la base de datos pasa de plano a sistema real — y cargamos los primeros datos.
+:::
+
+::: {.fragment}
+**El entregable de hoy**: una base de datos funcional en MySQL con datos reales de TechStyle.
+:::
+
+---
+
+## El Problema de Roberto Esta Semana
+
+El directorio de TechStyle aprobó el modelo diseñado en W05. Roberto convoca a Juan, el analista de datos:
+
+::: {.incremental}
+- **Roberto**: "El modelo está aprobado. Necesito la base de datos funcionando para el lunes. El equipo de ventas quiere ingresar los primeros registros."
+- **María**: "¿Cuándo puedo hacer mi primera consulta real? Necesito ver las ventas del trimestre."
+- **Carlos**: "¿Cómo me aseguro de que si falla la carga de datos a mitad de camino, no queden registros a medias?"
+:::
+
+::: {.fragment}
+**Tres tareas para Juan**: crear la base de datos, cargar datos iniciales y garantizar que las operaciones sean seguras ante fallas.
+:::
+
+---
+
+## De los Planos a la Construcción
+
+En W05, Juan entregó un plano arquitectónico. Ahora toca construir.
+
+| Etapa | Analogía | Herramienta SQL |
+|---|---|---|
+| Diseño del modelo | Plano arquitectónico | MER + MySQL Workbench |
+| Crear la estructura | Construir los muros | `CREATE TABLE` (DDL) |
+| Ingresar datos | Amueblar las habitaciones | `INSERT INTO` (DML) |
+| Operaciones seguras | Seguros contra incendio | Transacciones |
+
+::: {.fragment}
+**DDL** (Data Definition Language): define la *estructura* de la base de datos.
+**DML** (Data Manipulation Language): manipula los *datos* dentro de esa estructura.
+:::
+
+---
+
+## Arquitectura de MySQL: ¿Qué Hay Dentro?
+
+```{mermaid}
+graph TD
+    A["MySQL Server"] --> B["Base de Datos: techstyle"]
+    B --> C["Tabla: clientes"]
+    B --> D["Tabla: productos"]
+    B --> E["Tabla: ventas"]
+    B --> F["Tabla: detalle_venta"]
+    B --> G["... (9 tablas en total)"]
+    style A fill:#e3f2fd,stroke:#1565c0
+    style B fill:#fff3e0,stroke:#e65100
+```
+
+::: {.fragment}
+Un servidor MySQL puede contener **múltiples bases de datos**. Una base de datos contiene múltiples tablas. Juan creará la base de datos `techstyle` y luego todas sus tablas dentro de ella.
+:::
+
+---
+
+## Paso 1: Crear la Base de Datos
+
+```sql
+-- Crear la base de datos
+CREATE DATABASE IF NOT EXISTS techstyle
+    CHARACTER SET utf8mb4
+    COLLATE utf8mb4_spanish_ci;
+
+-- Seleccionar la base de datos activa
+USE techstyle;
+```
+
+::: {.fragment}
+**`IF NOT EXISTS`**: evita error si ya existe. Útil para re-ejecutar el script sin problemas.
+
+**`CHARACTER SET utf8mb4`**: soporta todos los caracteres del español (ñ, tildes) y emojis.
+
+**`COLLATE utf8mb4_spanish_ci`**: las comparaciones de texto respetan el orden del alfabeto español (`ci` = case-insensitive: 'Juan' = 'juan').
+:::
+
+---
+
+## El Diccionario de Datos: La Guía de Construcción
+
+El **Diccionario de Datos** especifica, tabla por tabla, cada columna con su tipo, restricciones y descripción.
+
+::: {.fragment}
+**Tabla CLIENTES — Diccionario de Datos:**
+
+::: {style="font-size: 0.65em; width: 100%;"}
+| Columna | Tipo | NOT NULL | Restricción | Descripción |
+|---|---|---|---|---|
+| `cliente_id` | `INT` | Sí | PK, AUTO_INCREMENT | Identificador único del cliente |
+| `nombre` | `VARCHAR(50)` | Sí | | Nombre de pila |
+| `apellido` | `VARCHAR(50)` | Sí | | Apellido paterno |
+| `email` | `VARCHAR(100)` | Sí | UNIQUE | Correo único por cliente |
+| `region` | `VARCHAR(50)` | Sí | | Región de Chile del cliente |
+| `segmento` | `VARCHAR(20)` | No | CHECK: Premium/Estándar/Básico | Segmento comercial |
+| `fecha_registro` | `DATE` | Sí | | Fecha de alta en el sistema |
+:::
+:::
+
+---
+
+## El Diccionario de Datos: Tabla PRODUCTOS
+
+::: {style="font-size: 0.65em; width: 100%;"}
+| Columna | Tipo | NOT NULL | Restricción | Descripción |
+|---|---|---|---|---|
+| `producto_id` | `INT` | Sí | PK, AUTO_INCREMENT | Identificador único del producto |
+| `nombre_producto` | `VARCHAR(100)` | Sí | | Nombre comercial del producto |
+| `categoria_id` | `INT` | Sí | FK → CATEGORIAS | Categoría a la que pertenece |
+| `precio_venta` | `DECIMAL(10,2)` | Sí | CHECK > 0 | Precio de venta al público |
+| `costo_unitario` | `DECIMAL(10,2)` | No | CHECK > 0 | Costo de adquisición |
+| `stock` | `INT` | Sí | DEFAULT 0, CHECK ≥ 0 | Unidades disponibles en bodega |
+:::
+
+::: {.fragment}
+**`DECIMAL(10,2)`**: hasta 10 dígitos en total, 2 decimales. Ejemplo: `89990.00`. Se usa para dinero porque evita errores de redondeo que `FLOAT` puede introducir.
+:::
+
+---
+
+## Paso 2: Crear las Tablas (Orden Importa)
+
+Las tablas se crean **de padre a hijo**: primero las que no tienen FK, luego las que referencian a otras.
+
+```sql
+-- 1° CATEGORIAS (sin FK externa)
+CREATE TABLE categorias (
+    categoria_id       INT          NOT NULL AUTO_INCREMENT,
+    nombre_categoria   VARCHAR(50)  NOT NULL,
+    categoria_padre_id INT          NULL,
+    PRIMARY KEY (categoria_id),
+    FOREIGN KEY (categoria_padre_id)
+        REFERENCES categorias(categoria_id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+);
+
+-- 2° CLIENTES (sin FK)
+CREATE TABLE clientes (
+    cliente_id      INT          NOT NULL AUTO_INCREMENT,
+    nombre          VARCHAR(50)  NOT NULL,
+    apellido        VARCHAR(50)  NOT NULL,
+    email           VARCHAR(100) NOT NULL,
+    region          VARCHAR(50)  NOT NULL,
+    segmento        VARCHAR(20)  NULL
+        CHECK (segmento IN ('Premium', 'Estándar', 'Básico')),
+    fecha_registro  DATE         NOT NULL,
+    PRIMARY KEY (cliente_id),
+    UNIQUE (email)
+);
+```
+
+---
+
+## Paso 2: Tablas con Claves Foráneas
+
+```sql
+-- 3° PRODUCTOS (FK → CATEGORIAS)
+CREATE TABLE productos (
+    producto_id      INT           NOT NULL AUTO_INCREMENT,
+    nombre_producto  VARCHAR(100)  NOT NULL,
+    categoria_id     INT           NOT NULL,
+    precio_venta     DECIMAL(10,2) NOT NULL CHECK (precio_venta > 0),
+    costo_unitario   DECIMAL(10,2) NULL     CHECK (costo_unitario > 0),
+    stock            INT           NOT NULL DEFAULT 0
+        CHECK (stock >= 0),
+    PRIMARY KEY (producto_id),
+    FOREIGN KEY (categoria_id)
+        REFERENCES categorias(categoria_id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+);
+
+-- 4° VENTAS (FK → CLIENTES)
+CREATE TABLE ventas (
+    venta_id    INT  NOT NULL AUTO_INCREMENT,
+    fecha       DATE NOT NULL,
+    cliente_id  INT  NOT NULL,
+    PRIMARY KEY (venta_id),
+    FOREIGN KEY (cliente_id)
+        REFERENCES clientes(cliente_id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+);
+```
+
+---
+
+## Paso 2: Tabla de Detalle (Clave Compuesta)
+
+```sql
+-- 5° DETALLE_VENTA (FK → VENTAS y PRODUCTOS)
+CREATE TABLE detalle_venta (
+    venta_id        INT           NOT NULL,
+    producto_id     INT           NOT NULL,
+    cantidad        INT           NOT NULL CHECK (cantidad > 0),
+    precio_unitario DECIMAL(10,2) NOT NULL CHECK (precio_unitario > 0),
+    descuento_pct   DECIMAL(5,2)  NOT NULL DEFAULT 0.00
+        CHECK (descuento_pct BETWEEN 0 AND 100),
+    PRIMARY KEY (venta_id, producto_id),
+    FOREIGN KEY (venta_id)
+        REFERENCES ventas(venta_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (producto_id)
+        REFERENCES productos(producto_id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+);
+```
+
+::: {.fragment}
+**`ON DELETE CASCADE` en detalle_venta**: si se elimina una venta (ej. cancelación), sus líneas de detalle se eliminan automáticamente. Tiene sentido: no existen líneas sin venta padre.
+:::
+
+---
+
+## 🚀 Desafío Rápido 1 {background-color="#e8f4f8"}
+
+<!-- **En parejas (4 minutos):** -->
+
+Analiza el siguiente fragmento del script de TechStyle:
+
+```sql
+CREATE TABLE despachos (
+    despacho_id        INT          NOT NULL AUTO_INCREMENT,
+    venta_id           INT          NOT NULL,
+    direccion_entrega  VARCHAR(200) NOT NULL,
+    fecha_despacho     DATE         NOT NULL,
+    fecha_entrega_est  DATE         NULL,
+    estado             VARCHAR(20)  NOT NULL DEFAULT 'Pendiente',
+    PRIMARY KEY (despacho_id),
+    FOREIGN KEY (venta_id)
+        REFERENCES ventas(venta_id)
+        ON DELETE RESTRICT
+);
+```
+
+1. ¿Por qué `fecha_entrega_est` permite NULL pero `fecha_despacho` no?
+2. ¿Qué pasa si intentas insertar un despacho con `venta_id = 999` y esa venta no existe?
+3. Agrega una restricción CHECK para que `estado` solo acepte los valores válidos del negocio.
+
+::: {.notes}
+**Solución Desafío Rápido 1**
+
+1. **`fecha_despacho` NOT NULL / `fecha_entrega_est` NULL**:
+   - `fecha_despacho`: es el momento en que el paquete sale de bodega. Si estamos registrando el despacho, esa fecha ya ocurrió — siempre existe.
+   - `fecha_entrega_est`: es una estimación futura. Puede no estar definida aún cuando se crea el registro, o puede no calcularse para despachos especiales. NULL aquí significa "aún no determinada", lo cual es una información válida.
+
+2. **FK violation**: MySQL lanzará el error `ERROR 1452: Cannot add or update a child row: a foreign key constraint fails`. El INSERT es rechazado completamente — ningún dato parcial queda guardado.
+
+3. **CHECK para estado**:
+   ```sql
+   estado VARCHAR(20) NOT NULL DEFAULT 'Pendiente'
+       CHECK (estado IN ('Pendiente', 'En tránsito', 'Entregado', 'No entregado'))
+   ```
+
+   *Punto de cierre*: la pregunta 1 muestra que NOT NULL / NULL no son decisiones técnicas arbitrarias — son decisiones de negocio. ¿Cuándo existe este dato? ¿Puede no existir en alguna etapa del ciclo de vida del registro? El analista debe preguntarlo al área usuaria antes de decidir.
+:::
+
+---
+
+## Paso 3: Insertar Datos con INSERT INTO
+
+Una vez creada la estructura, hay que poblar las tablas. La sentencia `INSERT INTO` agrega nuevas filas.
+
+```sql
+-- Sintaxis básica: se especifican columnas y valores
+INSERT INTO clientes (nombre, apellido, email, region, segmento, fecha_registro)
+VALUES ('Juan', 'Pérez', 'juan.perez@mail.com', 'Metropolitana', 'Premium', '2024-03-15');
+
+-- MySQL asigna cliente_id = 1 automáticamente (AUTO_INCREMENT)
+```
+
+::: {.fragment}
+**Buena práctica**: siempre listar explícitamente las columnas. Si en el futuro se agrega una columna a la tabla, un INSERT sin lista de columnas fallará porque el número de valores ya no coincide.
+:::
+
+---
+
+## INSERT de Múltiples Filas
+
+```sql
+-- Insertar múltiples clientes en una sola sentencia (más eficiente)
+INSERT INTO clientes (nombre, apellido, email, region, segmento, fecha_registro)
+VALUES
+    ('María',   'López',    'maria.lopez@mail.com',    'Valparaíso',    'Estándar', '2024-04-02'),
+    ('Carlos',  'Muñoz',    'carlos.munoz@mail.com',   'Biobío',        'Básico',   '2024-05-18'),
+    ('Sofía',   'Ramírez',  'sofia.ramirez@mail.com',  'Metropolitana', 'Premium',  '2024-06-30'),
+    ('Diego',   'Torres',   'diego.torres@mail.com',   'Araucanía',     'Estándar', '2024-07-11');
+```
+
+::: {.fragment}
+**Insertar con relaciones:**
+
+```sql
+-- Primero la categoría padre
+INSERT INTO categorias (nombre_categoria, categoria_padre_id)
+VALUES ('Ropa', NULL);  -- categoria_id = 1
+
+-- Luego las subcategorías (referencian el id 1)
+INSERT INTO categorias (nombre_categoria, categoria_padre_id)
+VALUES ('Poleras', 1), ('Pantalones', 1), ('Chaquetas', 1);
+```
+:::
+
+---
+
+## El Orden de INSERT También Importa
+
+Al igual que con CREATE TABLE, los datos deben insertarse respetando las relaciones.
+
+::: {.incremental}
+1. Insertar **CATEGORIAS** antes que PRODUCTOS.
+2. Insertar **CLIENTES** antes que VENTAS.
+3. Insertar **PRODUCTOS** antes que DETALLE_VENTA.
+4. Insertar **VENTAS** antes que DETALLE_VENTA y DESPACHOS.
+:::
+
+::: {.fragment}
+**¿Qué pasa si Juan intenta insertar una venta antes de insertar el cliente?**
+
+```
+ERROR 1452: Cannot add or update a child row:
+a foreign key constraint fails
+(`techstyle`.`ventas`, CONSTRAINT `ventas_ibfk_1`
+FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`cliente_id`))
+```
+
+MySQL protege la integridad — no permite datos huérfanos.
+:::
+
+---
+
+## 🚀 Desafío Rápido 2 {background-color="#e8f4f8"}
+
+<!-- **En grupos de 3 (5 minutos):** -->
+
+TechStyle tiene este producto: *Nike Air Max 2026, categoría Calzado (categoria_id = 5), precio venta $89.990, costo unitario $45.000, stock 150 unidades*.
+
+1. Escribe el `INSERT INTO` correcto para agregar este producto.
+2. Juan intenta insertar el mismo email de un cliente ya registrado. ¿Qué error recibe y por qué?
+3. ¿Qué diferencia hay entre omitir una columna en el INSERT vs. poner `NULL` explícitamente?
+
+::: {.notes}
+**Solución Desafío Rápido 2**
+
+1. **INSERT correcto:**
+   ```sql
+   INSERT INTO productos (nombre_producto, categoria_id, precio_venta, costo_unitario, stock)
+   VALUES ('Nike Air Max 2026', 5, 89990.00, 45000.00, 150);
+   ```
+   Nota: no incluimos `producto_id` porque es AUTO_INCREMENT.
+
+2. **Error de email duplicado:**
+   ```
+   ERROR 1062: Duplicate entry 'juan@mail.com' for key 'clientes.email'
+   ```
+   La restricción UNIQUE sobre `email` impide tener dos clientes con el mismo correo. Esto es una regla de negocio crítica: el email es el identificador de acceso del cliente al sistema.
+
+3. **Omitir columna vs. NULL explícito:**
+   - Omitir una columna con DEFAULT: MySQL usa el valor DEFAULT definido. Ej: `stock` tiene DEFAULT 0, si se omite quedará en 0.
+   - Omitir una columna sin DEFAULT y NOT NULL: MySQL lanza error.
+   - Poner `NULL` explícito: funciona si la columna lo permite; fuerza el valor a NULL independiente del DEFAULT.
+
+   ```sql
+   -- Equivalentes si la columna tiene DEFAULT 0:
+   INSERT INTO productos (nombre_producto, categoria_id, precio_venta) VALUES (...);
+   INSERT INTO productos (nombre_producto, categoria_id, precio_venta, stock) VALUES (..., 0);
+   ```
+
+   *Punto de cierre*: omitir columnas no es descuido — es delegar la responsabilidad al DEFAULT. Pero el analista debe saber qué DEFAULT tiene cada columna antes de omitirla.
+:::
+
+---
+
+## ¿Qué es una Transacción?
+
+Carlos pregunta: "¿Qué pasa si al registrar una venta, el sistema falla a mitad de camino?"
+
+::: {.fragment}
+Una **transacción** es un conjunto de operaciones SQL que se ejecutan como una **unidad atómica**:
+
+- O todas tienen éxito y se guardan juntas.
+- O alguna falla y **ninguna** queda guardada.
+:::
+
+::: {.fragment}
+**Ejemplo**: registrar la venta de Juan que compró 2 productos:
+
+```
+Paso 1: INSERT en VENTAS          (crea la venta V001)
+Paso 2: INSERT en DETALLE_VENTA   (línea producto P001)
+Paso 3: INSERT en DETALLE_VENTA   (línea producto P002)
+Paso 4: UPDATE en PRODUCTOS       (descuenta stock P001)
+Paso 5: UPDATE en PRODUCTOS       (descuenta stock P002)
+```
+
+Si el servidor falla después del Paso 2, ¿qué queda? Una venta sin stock actualizado y con solo un producto. Dato incorrecto.
+:::
+
+---
+
+## BEGIN, COMMIT y ROLLBACK
+
+```sql
+-- Iniciar la transacción
+START TRANSACTION;
+
+-- Paso 1: crear la venta
+INSERT INTO ventas (fecha, cliente_id) VALUES ('2026-04-21', 1);
+
+-- Paso 2 y 3: agregar los productos
+INSERT INTO detalle_venta (venta_id, producto_id, cantidad, precio_unitario)
+VALUES (LAST_INSERT_ID(), 3, 1, 89990.00);
+
+INSERT INTO detalle_venta (venta_id, producto_id, cantidad, precio_unitario)
+VALUES (LAST_INSERT_ID(), 7, 2, 24990.00);
+
+-- Paso 4 y 5: descontar stock
+UPDATE productos SET stock = stock - 1 WHERE producto_id = 3;
+UPDATE productos SET stock = stock - 2 WHERE producto_id = 7;
+
+-- Si todo salió bien: confirmar
+COMMIT;
+
+-- Si algo falló: deshacer todo
+-- ROLLBACK;
+```
+
+::: {.fragment}
+**`LAST_INSERT_ID()`**: devuelve el ID generado por el último AUTO_INCREMENT — así usamos el `venta_id` recién creado sin tener que consultarlo.
+:::
+
+---
+
+## COMMIT y ROLLBACK: Lo Que Ocurre Internamente
+
+```{mermaid}
+graph LR
+    A["START TRANSACTION"] --> B["INSERT ventas"]
+    B --> C["INSERT detalle x2"]
+    C --> D["UPDATE stock x2"]
+    D --> E{¿Todo OK?}
+    E -->|Sí| F["COMMIT\n✅ Datos guardados"]
+    E -->|Error| G["ROLLBACK\n❌ Nada guardado"]
+    style F fill:#d4edda,stroke:#28a745
+    style G fill:#f8d7da,stroke:#dc3545
+```
+
+::: {.fragment}
+Hasta que se ejecuta `COMMIT`, los cambios existen solo en la sesión del usuario actual. Otros usuarios no los ven. El `COMMIT` los hace permanentes y visibles para todos.
+:::
+
+---
+
+## Las Propiedades ACID
+
+Las transacciones garantizan las propiedades **ACID** — el estándar de confiabilidad para bases de datos.
+
+| Propiedad | Significado | En TechStyle |
+|---|---|---|
+| **A**tomicidad | Todo o nada | Venta + detalle + stock como una sola unidad |
+| **C**onsistencia | Los datos siempre cumplen las reglas | FK, CHECK, NOT NULL se verifican al COMMIT |
+| **I**solación | Las transacciones no se interfieren | Dos vendedores pueden operar simultáneamente |
+| **D**urabilidad | Un COMMIT sobrevive fallos del sistema | La venta queda en disco, no solo en memoria |
+
+::: {.fragment}
+> Las propiedades ACID son la razón por la que un banco puede garantizar que tu transferencia llegó o no llegó — nunca a medias.
+:::
+
+---
+
+## Transacciones y Casos de Error Reales
+
+¿Qué pasa si el stock de un producto llega a negativo? Juan quiere impedirlo.
+
+```sql
+START TRANSACTION;
+
+-- Verificar stock ANTES de descontar
+SELECT stock INTO @stock_actual
+FROM productos WHERE producto_id = 3;
+
+-- Si no hay suficiente stock, hacer ROLLBACK
+IF @stock_actual < 5 THEN
+    ROLLBACK;
+    SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Stock insuficiente para completar la venta';
+ELSE
+    UPDATE productos SET stock = stock - 5 WHERE producto_id = 3;
+    COMMIT;
+END IF;
+```
+
+::: {.fragment}
+En sistemas reales, esta lógica se implementa en un **Stored Procedure** (procedimiento almacenado) dentro de MySQL, o desde el código de la aplicación antes de ejecutar el UPDATE.
+:::
+
+---
+
+## 🚀 Desafío Rápido 3 {background-color="#e8f4f8"}
+
+<!-- **En grupos de 3 (5 minutos):** -->
+
+Analiza estos escenarios de TechStyle y decide: ¿`COMMIT` o `ROLLBACK`?
+
+**Escenario A**: Juan procesa una devolución de María. Actualiza `devoluciones` correctamente, pero al intentar hacer `UPDATE ventas` recibe el error 1451 (FK violation).
+
+**Escenario B**: Se está cargando el catálogo nuevo de 500 productos. Después de insertar 380 productos, hay un corte de luz.
+
+**Escenario C**: Roberto pide eliminar a un cliente que tiene 15 ventas históricas. El `DELETE FROM clientes` recibe error 1451.
+
+Para cada escenario: ¿Qué pasa con los datos? ¿Qué debería hacer Juan?
+
+::: {.notes}
+**Solución Desafío Rápido 3**
+
+**Escenario A — ROLLBACK automático:**
+- El error 1451 (violación de FK) en el UPDATE dentro de una transacción activa no hace ROLLBACK automático en MySQL — la transacción sigue abierta pero el UPDATE falló.
+- Juan debe ejecutar `ROLLBACK` manualmente para deshacer el INSERT en `devoluciones`.
+- Luego investigar por qué el UPDATE de ventas falla: probablemente la lógica de la devolución está incorrecta — no debería modificar directamente la tabla de ventas.
+- **Lección**: MySQL no siempre hace ROLLBACK automático ante errores DML. El código de la aplicación debe verificar cada paso y hacer ROLLBACK explícito ante cualquier error.
+
+**Escenario B — ROLLBACK automático:**
+- Si el INSERT masivo estaba dentro de una transacción (START TRANSACTION), el corte de luz provoca que MySQL al reiniciarse aplique el log de transacciones y haga ROLLBACK de todo lo no confirmado.
+- Si no estaba en una transacción explícita, cada INSERT es una transacción implícita — los 380 productos insertados quedan confirmados y los 120 restantes no.
+- **Lección**: las cargas masivas de datos deben realizarse dentro de una transacción explícita para garantizar que el catálogo quede completo o no quede nada.
+
+**Escenario C — Error de integridad, no hay transacción que deshacer:**
+- El error 1451 ocurre en un DELETE de CLIENTES porque las FK de VENTAS tienen ON DELETE RESTRICT.
+- MySQL rechaza el DELETE — no hay datos modificados que deshacer.
+- Juan no puede borrar el cliente mientras tenga ventas asociadas. Opciones según la política del negocio:
+  1. No borrar — mantener el historial (lo más común en comercio).
+  2. Marcar el cliente como inactivo con un campo `activo BOOLEAN DEFAULT TRUE`.
+  3. Archivar el cliente en otra tabla antes de eliminar.
+- **Lección**: ON DELETE RESTRICT protege la integridad histórica. En sistemas de negocio reales, casi nunca se elimina información — se marca como inactiva.
+
+*Punto de cierre*: las transacciones y las restricciones de FK no son obstáculos técnicos — son el sistema nervioso de la integridad del negocio. Un analista que entiende esto puede diseñar operaciones confiables.
+:::
+
+---
+
+## Verificar la Estructura Creada
+
+Después de ejecutar el script, Juan verifica que todo quedó bien:
+
+```sql
+-- Ver todas las tablas de la base de datos
+SHOW TABLES;
+
+-- Ver la estructura de una tabla
+DESCRIBE clientes;
+DESCRIBE ventas;
+
+-- Ver las FK definidas en una tabla
+SHOW CREATE TABLE detalle_venta;
+
+-- Contar filas insertadas
+SELECT COUNT(*) AS total_clientes FROM clientes;
+SELECT COUNT(*) AS total_productos FROM productos;
+```
+
+::: {.fragment}
+**`DESCRIBE`** es la herramienta de diagnóstico básica del analista: muestra columnas, tipos, si permite NULL, si tiene clave y el valor DEFAULT.
+:::
+
+---
+
+## Verificar la Integridad con SELECT
+
+```sql
+-- ¿Hay ventas sin cliente válido? (debería ser 0 con FK activa)
+SELECT v.venta_id, v.cliente_id
+FROM ventas v
+LEFT JOIN clientes c ON v.cliente_id = c.cliente_id
+WHERE c.cliente_id IS NULL;
+
+-- ¿Hay productos con stock negativo? (violación de CHECK)
+SELECT producto_id, nombre_producto, stock
+FROM productos
+WHERE stock < 0;
+
+-- ¿Hay detalle_venta con precio 0 o negativo?
+SELECT * FROM detalle_venta
+WHERE precio_unitario <= 0;
+```
+
+::: {.fragment}
+Estas consultas son el **test de integridad** que Juan ejecuta después de cada carga de datos. Si todas retornan 0 filas, la base de datos está en estado consistente.
+:::
+
+---
+
+## Modificar la Estructura: ALTER TABLE
+
+Después de crear la base de datos, pueden surgir cambios de requerimientos.
+
+```sql
+-- Agregar una columna nueva a CLIENTES
+ALTER TABLE clientes
+ADD COLUMN telefono VARCHAR(15) NULL AFTER apellido;
+
+-- Modificar el tipo de una columna existente
+ALTER TABLE productos
+MODIFY COLUMN nombre_producto VARCHAR(150) NOT NULL;
+
+-- Agregar un índice para mejorar consultas por región
+ALTER TABLE clientes
+ADD INDEX idx_region (region);
+
+-- Agregar un índice para consultas frecuentes por fecha de venta
+ALTER TABLE ventas
+ADD INDEX idx_fecha (fecha);
+```
+
+::: {.fragment}
+**Regla de oro**: `ALTER TABLE` en producción debe planificarse con cuidado. En tablas con millones de filas, puede bloquear la tabla por minutos. En TechStyle con 8,5 millones de clientes, esto es una operación de mantenimiento programado.
+:::
+
+---
+
+## Conexión con la Toma de Decisiones
+
+¿Por qué le importa todo esto a Roberto y María?
+
+::: {.incremental}
+- Una base de datos implementada **correctamente** garantiza que cada INSERT y UPDATE cumple las reglas del negocio automáticamente — sin depender de que cada usuario recuerde aplicarlas.
+- Las **transacciones** aseguran que los datos del CMI de Roberto siempre muestran un estado consistente — nunca una venta a medias o un stock negativo.
+- Un sistema que rechaza datos inválidos en origen es mucho más barato que uno que los acepta y luego requiere procesos de limpieza.
+:::
+
+::: {.fragment}
+> Un sistema de información confiable no depende de las buenas intenciones de los usuarios — depende de las restricciones del modelo de datos.
+:::
+
+---
+
+## Puntos Clave de la Semana 6
+
+::: {.incremental}
+- **DDL vs DML**: `CREATE TABLE` define estructura; `INSERT INTO` agrega datos. El orden de ejecución en ambos casos sigue la jerarquía de FK (padres antes que hijos).
+- **El Diccionario de Datos** es el contrato entre el analista y la base de datos: especifica tipo, restricciones y significado de cada columna.
+- **`AUTO_INCREMENT`** genera IDs únicos automáticamente; `LAST_INSERT_ID()` permite referenciarlo en la misma transacción.
+- Una **transacción** (`START TRANSACTION` / `COMMIT` / `ROLLBACK`) garantiza que operaciones compuestas sean atómicas — todo o nada.
+- Las propiedades **ACID** son el fundamento de la confiabilidad de cualquier sistema de información empresarial.
+- Las restricciones (FK, CHECK, UNIQUE) no son obstáculos — son la implementación técnica de las reglas del negocio.
+:::
+
+---
+
+## Preview del Laboratorio W06
+
+**Lab W06: Construyendo la Base de Datos de TechStyle**
+
+::: {.incremental}
+- Ejecutarás el script DDL completo generado en W05 para crear las 9 tablas de TechStyle.
+- Cargarás datos reales desde archivos CSV usando `LOAD DATA` e `INSERT INTO`.
+- Implementarás y probarás transacciones para el registro de ventas.
+- Verificarás la integridad mediante consultas de diagnóstico.
+- Al finalizar, tendrás la base de datos de TechStyle poblada y lista para las consultas de la W07.
+:::
+
+::: {.fragment}
+> El trabajo de hoy es el que separa un modelo de papel de un sistema que puede responder preguntas de negocio reales.
+:::

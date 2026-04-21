@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Laboratorio 6: Construyendo la Base de Datos de TechStyle</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-538d5bc5c147f17fcaa17a1866cecc2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#contexto" id="toc-contexto" class="nav-link active" data-scroll-target="#contexto"><span class="header-section-number">1</span> Contexto</a></li>
+  <li><a href="#instrucciones-generales" id="toc-instrucciones-generales" class="nav-link" data-scroll-target="#instrucciones-generales"><span class="header-section-number">2</span> Instrucciones generales</a></li>
+  <li><a href="#sec-forward" id="toc-sec-forward" class="nav-link" data-scroll-target="#sec-forward"><span class="header-section-number">3</span> Parte 1 — Forward Engineering: Generar el Script SQL</a>
+  <ul class="collapse">
+  <li><a href="#paso-1-abrir-el-modelo-de-w05" id="toc-paso-1-abrir-el-modelo-de-w05" class="nav-link" data-scroll-target="#paso-1-abrir-el-modelo-de-w05"><span class="header-section-number">3.1</span> Paso 1: Abrir el modelo de W05</a></li>
+  <li><a href="#paso-2-configurar-forward-engineering" id="toc-paso-2-configurar-forward-engineering" class="nav-link" data-scroll-target="#paso-2-configurar-forward-engineering"><span class="header-section-number">3.2</span> Paso 2: Configurar Forward Engineering</a></li>
+  <li><a href="#paso-3-guardar-el-script" id="toc-paso-3-guardar-el-script" class="nav-link" data-scroll-target="#paso-3-guardar-el-script"><span class="header-section-number">3.3</span> Paso 3: Guardar el script</a></li>
+  </ul></li>
+  <li><a href="#sec-verificar" id="toc-sec-verificar" class="nav-link" data-scroll-target="#sec-verificar"><span class="header-section-number">4</span> Parte 2 — Verificar y Completar el Script SQL</a>
+  <ul class="collapse">
+  <li><a href="#paso-4-revisar-los-comportamientos-on-delete" id="toc-paso-4-revisar-los-comportamientos-on-delete" class="nav-link" data-scroll-target="#paso-4-revisar-los-comportamientos-on-delete"><span class="header-section-number">4.1</span> Paso 4: Revisar los comportamientos ON DELETE</a></li>
+  <li><a href="#paso-5-agregar-restricciones-check" id="toc-paso-5-agregar-restricciones-check" class="nav-link" data-scroll-target="#paso-5-agregar-restricciones-check"><span class="header-section-number">4.2</span> Paso 5: Agregar restricciones CHECK</a></li>
+  <li><a href="#paso-6-agregar-índices-de-rendimiento" id="toc-paso-6-agregar-índices-de-rendimiento" class="nav-link" data-scroll-target="#paso-6-agregar-índices-de-rendimiento"><span class="header-section-number">4.3</span> Paso 6: Agregar índices de rendimiento</a></li>
+  <li><a href="#paso-7-verificar-el-orden-final-del-script" id="toc-paso-7-verificar-el-orden-final-del-script" class="nav-link" data-scroll-target="#paso-7-verificar-el-orden-final-del-script"><span class="header-section-number">4.4</span> Paso 7: Verificar el orden final del script</a></li>
+  </ul></li>
+  <li><a href="#sec-ejecutar" id="toc-sec-ejecutar" class="nav-link" data-scroll-target="#sec-ejecutar"><span class="header-section-number">5</span> Parte 3 — Ejecutar el DDL en MySQL Server</a>
+  <ul class="collapse">
+  <li><a href="#paso-8-conectarse-al-servidor-mysql" id="toc-paso-8-conectarse-al-servidor-mysql" class="nav-link" data-scroll-target="#paso-8-conectarse-al-servidor-mysql"><span class="header-section-number">5.1</span> Paso 8: Conectarse al servidor MySQL</a></li>
+  <li><a href="#paso-9-ejecutar-el-script-ddl" id="toc-paso-9-ejecutar-el-script-ddl" class="nav-link" data-scroll-target="#paso-9-ejecutar-el-script-ddl"><span class="header-section-number">5.2</span> Paso 9: Ejecutar el script DDL</a></li>
+  <li><a href="#paso-10-verificar-la-estructura-creada" id="toc-paso-10-verificar-la-estructura-creada" class="nav-link" data-scroll-target="#paso-10-verificar-la-estructura-creada"><span class="header-section-number">5.3</span> Paso 10: Verificar la estructura creada</a></li>
+  </ul></li>
+  <li><a href="#sec-insertar" id="toc-sec-insertar" class="nav-link" data-scroll-target="#sec-insertar"><span class="header-section-number">6</span> Parte 4 — Cargar Datos Iniciales con INSERT INTO</a>
+  <ul class="collapse">
+  <li><a href="#paso-11-insertar-categorías" id="toc-paso-11-insertar-categorías" class="nav-link" data-scroll-target="#paso-11-insertar-categorías"><span class="header-section-number">6.1</span> Paso 11: Insertar categorías</a></li>
+  <li><a href="#paso-12-insertar-clientes" id="toc-paso-12-insertar-clientes" class="nav-link" data-scroll-target="#paso-12-insertar-clientes"><span class="header-section-number">6.2</span> Paso 12: Insertar clientes</a></li>
+  <li><a href="#paso-13-insertar-productos" id="toc-paso-13-insertar-productos" class="nav-link" data-scroll-target="#paso-13-insertar-productos"><span class="header-section-number">6.3</span> Paso 13: Insertar productos</a></li>
+  <li><a href="#paso-14-insertar-ventas-y-detalles" id="toc-paso-14-insertar-ventas-y-detalles" class="nav-link" data-scroll-target="#paso-14-insertar-ventas-y-detalles"><span class="header-section-number">6.4</span> Paso 14: Insertar ventas y detalles</a></li>
+  <li><a href="#paso-15-insertar-una-tercera-venta-tú-mismo" id="toc-paso-15-insertar-una-tercera-venta-tú-mismo" class="nav-link" data-scroll-target="#paso-15-insertar-una-tercera-venta-tú-mismo"><span class="header-section-number">6.5</span> Paso 15: Insertar una tercera venta tú mismo</a></li>
+  <li><a href="#paso-16-verificar-integridad-de-los-datos" id="toc-paso-16-verificar-integridad-de-los-datos" class="nav-link" data-scroll-target="#paso-16-verificar-integridad-de-los-datos"><span class="header-section-number">6.6</span> Paso 16: Verificar integridad de los datos</a></li>
+  </ul></li>
+  <li><a href="#sec-transacciones" id="toc-sec-transacciones" class="nav-link" data-scroll-target="#sec-transacciones"><span class="header-section-number">7</span> Parte 5 — Transacciones: Registrar una Venta Completa</a>
+  <ul class="collapse">
+  <li><a href="#paso-17-transacción-exitosa-commit" id="toc-paso-17-transacción-exitosa-commit" class="nav-link" data-scroll-target="#paso-17-transacción-exitosa-commit"><span class="header-section-number">7.1</span> Paso 17: Transacción exitosa (COMMIT)</a></li>
+  <li><a href="#paso-18-simular-un-error-y-hacer-rollback" id="toc-paso-18-simular-un-error-y-hacer-rollback" class="nav-link" data-scroll-target="#paso-18-simular-un-error-y-hacer-rollback"><span class="header-section-number">7.2</span> Paso 18: Simular un error y hacer ROLLBACK</a></li>
+  <li><a href="#paso-19-reflexión-sobre-transacciones" id="toc-paso-19-reflexión-sobre-transacciones" class="nav-link" data-scroll-target="#paso-19-reflexión-sobre-transacciones"><span class="header-section-number">7.3</span> Paso 19: Reflexión sobre transacciones</a></li>
+  </ul></li>
+  <li><a href="#sec-reflexion" id="toc-sec-reflexion" class="nav-link" data-scroll-target="#sec-reflexion"><span class="header-section-number">8</span> Parte 6 — Síntesis y Reflexión</a>
+  <ul class="collapse">
+  <li><a href="#paso-20-comparar-el-modelo-diseñado-vs.-el-modelo-implementado" id="toc-paso-20-comparar-el-modelo-diseñado-vs.-el-modelo-implementado" class="nav-link" data-scroll-target="#paso-20-comparar-el-modelo-diseñado-vs.-el-modelo-implementado"><span class="header-section-number">8.1</span> Paso 20: Comparar el modelo diseñado vs.&nbsp;el modelo implementado</a></li>
+  <li><a href="#paso-21-preguntas-de-diseño-e-implementación" id="toc-paso-21-preguntas-de-diseño-e-implementación" class="nav-link" data-scroll-target="#paso-21-preguntas-de-diseño-e-implementación"><span class="header-section-number">8.2</span> Paso 21: Preguntas de diseño e implementación</a></li>
+  <li><a href="#paso-22-análisis-de-impacto-del-modelo-a-las-decisiones" id="toc-paso-22-análisis-de-impacto-del-modelo-a-las-decisiones" class="nav-link" data-scroll-target="#paso-22-análisis-de-impacto-del-modelo-a-las-decisiones"><span class="header-section-number">8.3</span> Paso 22: Análisis de impacto — del modelo a las decisiones</a></li>
+  <li><a href="#paso-23-reporte-de-implementación" id="toc-paso-23-reporte-de-implementación" class="nav-link" data-scroll-target="#paso-23-reporte-de-implementación"><span class="header-section-number">8.4</span> Paso 23: Reporte de implementación</a></li>
+  </ul></li>
+  <li><a href="#entregable" id="toc-entregable" class="nav-link" data-scroll-target="#entregable"><span class="header-section-number">9</span> Entregable</a></li>
+  <li><a href="#criterios-de-evaluación" id="toc-criterios-de-evaluación" class="nav-link" data-scroll-target="#criterios-de-evaluación"><span class="header-section-number">10</span> Criterios de Evaluación</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Laboratorio 6: Construyendo la Base de Datos de TechStyle</h1>
+<p class="subtitle lead">Semana 6 · W06 · Unidad II · Implementación en MySQL · Universidad San Sebastián</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="contexto" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="contexto"><span class="header-section-number">1</span> Contexto</h2>
+<p>En el laboratorio anterior diseñaste el modelo completo de TechStyle con 9 tablas en MySQL Workbench. Hoy ese modelo pasa del papel a la realidad: generarás el script SQL, lo ejecutarás en MySQL Server, cargarás los primeros datos y practicarás transacciones para garantizar la integridad de las operaciones.</p>
+<p>Al terminar este laboratorio tendrás la <strong>base de datos de TechStyle funcionando en MySQL</strong>, con datos reales y lista para las consultas de la semana 7.</p>
+<hr>
+</section>
+<section id="instrucciones-generales" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="instrucciones-generales"><span class="header-section-number">2</span> Instrucciones generales</h2>
+<ul>
+<li>Trabajarás <strong>en los mismos grupos del laboratorio anterior</strong>.</li>
+<li><strong>Duración total</strong>: 2 horas 30 minutos.</li>
+<li>Necesitas el archivo <code>W05_techstyle_model.mwb</code> guardado en W05 — ábrelo antes de empezar.</li>
+</ul>
+<p><strong>Herramientas necesarias:</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Herramienta</th>
+<th>Uso</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>MySQL Workbench 8.0</strong></td>
+<td>Forward Engineering y conexión al servidor</td>
+</tr>
+<tr class="even">
+<td><strong>MySQL Server 8.0</strong></td>
+<td>Motor de base de datos donde se ejecutará el script</td>
+</tr>
+<tr class="odd">
+<td>Editor de texto (VS Code u otro)</td>
+<td>Editar el script SQL generado</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Estructura del laboratorio:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parte</th>
+<th>Actividad</th>
+<th>Tiempo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Forward Engineering: generar el script SQL</td>
+<td>20 min</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Verificar y completar el script SQL</td>
+<td>20 min</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Ejecutar el DDL en MySQL Server</td>
+<td>25 min</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Cargar datos iniciales con INSERT INTO</td>
+<td>40 min</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Transacciones: registrar una venta completa</td>
+<td>25 min</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Síntesis y reflexión</td>
+<td>20 min</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="sec-forward" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="sec-forward"><span class="header-section-number">3</span> Parte 1 — Forward Engineering: Generar el Script SQL</h2>
+<p><strong>Duración: 20 minutos</strong></p>
+<section id="paso-1-abrir-el-modelo-de-w05" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="paso-1-abrir-el-modelo-de-w05"><span class="header-section-number">3.1</span> Paso 1: Abrir el modelo de W05</h3>
+<ol type="1">
+<li>Abre <strong>MySQL Workbench</strong>.</li>
+<li>Ve a <em>File → Open Model</em> y selecciona <code>W05_techstyle_model.mwb</code>.</li>
+<li>Verifica que el diagrama EER con las 9 tablas esté visible.</li>
+</ol>
+</section>
+<section id="paso-2-configurar-forward-engineering" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="paso-2-configurar-forward-engineering"><span class="header-section-number">3.2</span> Paso 2: Configurar Forward Engineering</h3>
+<ol type="1">
+<li><p>En el menú de Workbench: <em>Database → Forward Engineer…</em></p></li>
+<li><p>En la pantalla de conexión, selecciona <strong>“Continue to next page”</strong> sin conectar (solo generaremos el script por ahora).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si Workbench requiere una conexión activa, usa la alternativa: <em>File → Export → Forward Engineer SQL CREATE Script</em>.</p>
+</div>
+</div></li>
+<li><p>En las opciones de generación, activa las siguientes opciones:</p>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="">Generate DROP Statements Before Each CREATE Statement</label></li>
+<li><label><input type="checkbox" checked="">Generate CREATE SCHEMA Statement</label></li>
+<li><label><input type="checkbox" checked="">Add SHOW WARNINGS After Every DDL Statement</label></li>
+<li><label><input type="checkbox" checked="">Include FK Indexes</label></li>
+</ul></li>
+<li><p>En la selección de objetos, verifica que las <strong>9 tablas</strong> estén marcadas.</p></li>
+<li><p>Avanza hasta la pantalla de revisión del SQL y cópialo.</p></li>
+</ol>
+</section>
+<section id="paso-3-guardar-el-script" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="paso-3-guardar-el-script"><span class="header-section-number">3.3</span> Paso 3: Guardar el script</h3>
+<ol type="1">
+<li>Crea un archivo nuevo llamado <code>W06_techstyle_ddl.sql</code>.</li>
+<li>Pega el SQL generado y guarda el archivo.</li>
+<li>El encabezado debería incluir <code>CREATE SCHEMA IF NOT EXISTS</code> y las tablas en orden jerárquico.</li>
+</ol>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>El orden de las tablas importa.</strong> Verifica que aparezcan primero las tablas sin FK (<code>categorias</code>, <code>clientes</code>, <code>proveedores</code>) y luego las que las referencian. Si el orden está incorrecto, reordénalas manualmente antes de continuar.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="sec-verificar" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="sec-verificar"><span class="header-section-number">4</span> Parte 2 — Verificar y Completar el Script SQL</h2>
+<p><strong>Duración: 20 minutos</strong></p>
+<p>Abre <code>W06_techstyle_ddl.sql</code> en el editor de texto y realiza las siguientes revisiones y correcciones.</p>
+<section id="paso-4-revisar-los-comportamientos-on-delete" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="paso-4-revisar-los-comportamientos-on-delete"><span class="header-section-number">4.1</span> Paso 4: Revisar los comportamientos ON DELETE</h3>
+<p>Workbench genera por defecto <code>ON DELETE RESTRICT</code>. Analiza si ese comportamiento es correcto para cada FK y corrígelo donde sea necesario:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>FK</th>
+<th>ON DELETE generado</th>
+<th>¿Es correcto?</th>
+<th>Si no, ¿cuál debería ser?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ventas.cliente_id</code> → <code>clientes</code></td>
+<td>RESTRICT</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>detalle_ventas.venta_id</code> → <code>ventas</code></td>
+<td>RESTRICT</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>despachos.venta_id</code> → <code>ventas</code></td>
+<td>RESTRICT</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>devoluciones.venta_id</code> → <code>ventas</code></td>
+<td>RESTRICT</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Criterio de decisión</strong>: si se elimina el registro padre, ¿los hijos deben eliminarse también (<code>CASCADE</code>), bloquearse la eliminación (<code>RESTRICT</code>), o quedar con NULL (<code>SET NULL</code>)?</p>
+<ul>
+<li>Un cliente con historial de ventas <strong>no debería poder borrarse</strong> → <code>RESTRICT</code>.</li>
+<li>Los detalles de una venta eliminada <strong>no tienen sentido sin ella</strong> → <code>CASCADE</code>.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="paso-5-agregar-restricciones-check" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="paso-5-agregar-restricciones-check"><span class="header-section-number">4.2</span> Paso 5: Agregar restricciones CHECK</h3>
+<p>Workbench no genera restricciones CHECK automáticamente. Agrégalas al final del script, después de todos los <code>CREATE TABLE</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Restricciones de negocio en productos</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> productos <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_precio_positivo</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (precio_venta <span class="op">&gt;</span> <span class="dv">0</span>);</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> productos <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_costo_positivo</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (costo_unitario <span class="op">&gt;</span> <span class="dv">0</span>);</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> productos <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_stock_no_negativo</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (stock <span class="op">&gt;=</span> <span class="dv">0</span>);</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- Restricciones en detalle_ventas</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> detalle_ventas <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_cantidad_positiva</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (cantidad <span class="op">&gt;</span> <span class="dv">0</span>);</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> detalle_ventas <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_descuento_rango</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (descuento_pct <span class="kw">BETWEEN</span> <span class="dv">0</span> <span class="kw">AND</span> <span class="dv">100</span>);</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">-- Restricciones de dominio</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> clientes <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_segmento_valido</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (segmento <span class="kw">IN</span> (<span class="st">'Premium'</span>, <span class="st">'Estándar'</span>, <span class="st">'Básico'</span>));</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> despachos <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_estado_despacho</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (estado <span class="kw">IN</span> (<span class="st">'Pendiente'</span>, <span class="st">'En tránsito'</span>, <span class="st">'Entregado'</span>, <span class="st">'No entregado'</span>));</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> devoluciones <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_estado_devolucion</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (estado <span class="kw">IN</span> (<span class="st">'Pendiente'</span>, <span class="st">'Aprobada'</span>, <span class="st">'Rechazada'</span>));</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="paso-6-agregar-índices-de-rendimiento" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="paso-6-agregar-índices-de-rendimiento"><span class="header-section-number">4.3</span> Paso 6: Agregar índices de rendimiento</h3>
+<p>Agrega los siguientes índices al final del script para optimizar las consultas más frecuentes:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Consultas de María: ventas por región y segmento</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_clientes_region    <span class="kw">ON</span> clientes(region);</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_clientes_segmento  <span class="kw">ON</span> clientes(segmento);</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- Consultas de ventas por rango de fechas</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_ventas_fecha       <span class="kw">ON</span> ventas(fecha);</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Búsqueda de productos por categoría</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_productos_categoria <span class="kw">ON</span> productos(categoria_id);</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">-- Consultas de logística por estado de despacho</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_despachos_estado   <span class="kw">ON</span> despachos(estado);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="paso-7-verificar-el-orden-final-del-script" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="paso-7-verificar-el-orden-final-del-script"><span class="header-section-number">4.4</span> Paso 7: Verificar el orden final del script</h3>
+<p>El script completo debe crear las tablas en este orden exacto:</p>
+<ol type="1">
+<li><code>categorias</code></li>
+<li><code>clientes</code></li>
+<li><code>proveedores</code></li>
+<li><code>productos</code> (FK → <code>categorias</code>)</li>
+<li><code>ventas</code> (FK → <code>clientes</code>)</li>
+<li><code>detalle_ventas</code> (FK → <code>ventas</code>, <code>productos</code>)</li>
+<li><code>proveedor_producto</code> (FK → <code>proveedores</code>, <code>productos</code>)</li>
+<li><code>despachos</code> (FK → <code>ventas</code>)</li>
+<li><code>devoluciones</code> (FK → <code>ventas</code>, <code>productos</code>)</li>
+</ol>
+<p>Guarda el archivo después de todas las modificaciones.</p>
+<hr>
+</section>
+</section>
+<section id="sec-ejecutar" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="sec-ejecutar"><span class="header-section-number">5</span> Parte 3 — Ejecutar el DDL en MySQL Server</h2>
+<p><strong>Duración: 25 minutos</strong></p>
+<section id="paso-8-conectarse-al-servidor-mysql" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="paso-8-conectarse-al-servidor-mysql"><span class="header-section-number">5.1</span> Paso 8: Conectarse al servidor MySQL</h3>
+<ol type="1">
+<li>En MySQL Workbench, haz clic en la conexión <strong>“Local instance MySQL80”</strong> (o la que corresponda a tu instalación).</li>
+<li>Si es la primera vez, configura la conexión: <em>Database → Connect to Database</em> → hostname <code>127.0.0.1</code>, puerto <code>3306</code>, usuario <code>root</code>.</li>
+<li>Ingresa la contraseña y verifica que el panel de consultas (<code>Query 1</code>) esté disponible.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si no tienes MySQL Server instalado, descarga MySQL Community Server desde <a href="https://dev.mysql.com/downloads/mysql/">dev.mysql.com/downloads/mysql</a> e instálalo con las opciones por defecto.</p>
+</div>
+</div>
+</section>
+<section id="paso-9-ejecutar-el-script-ddl" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="paso-9-ejecutar-el-script-ddl"><span class="header-section-number">5.2</span> Paso 9: Ejecutar el script DDL</h3>
+<ol type="1">
+<li>En Workbench: <em>File → Open SQL Script</em> → selecciona <code>W06_techstyle_ddl.sql</code>.</li>
+<li>Haz clic en el ícono del <strong>rayo (⚡)</strong> para ejecutar todo el script.</li>
+<li>Observa el panel <em>Action Output</em> en la parte inferior: cada sentencia debería mostrar <code>✔</code> verde.</li>
+</ol>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si aparece algún error (<code>✖</code> rojo), <strong>no sigas adelante</strong>. Lee el mensaje de error, identifica en qué tabla ocurrió y corrige el script antes de re-ejecutar.</p>
+<p>Los errores más comunes: - <code>Table doesn't exist</code>: tabla referenciada en una FK aún no creada → revisa el orden. - <code>Can't create table ... errno: 150</code>: FK mal definida → revisa que los tipos de PK y FK sean idénticos.</p>
+</div>
+</div>
+</section>
+<section id="paso-10-verificar-la-estructura-creada" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="paso-10-verificar-la-estructura-creada"><span class="header-section-number">5.3</span> Paso 10: Verificar la estructura creada</h3>
+<p>Ejecuta las siguientes sentencias de verificación en una nueva pestaña de consulta:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">USE</span> techstyle;</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Listar todas las tablas</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>SHOW <span class="kw">TABLES</span>;</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- Verificar estructura de dos tablas clave</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>DESCRIBE clientes;</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>DESCRIBE detalle_ventas;</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- Ver las FK definidas en detalle_ventas</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>SHOW <span class="kw">CREATE</span> <span class="kw">TABLE</span> detalle_ventas\G</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Completa la siguiente tabla con lo que observas:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Verificación</th>
+<th>Resultado esperado</th>
+<th>¿Coincide?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>SHOW TABLES</code> muestra 9 tablas</td>
+<td>9 tablas listadas</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>DESCRIBE clientes</code> muestra <code>email</code> con <code>UNI</code> en Key</td>
+<td>Sí</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>DESCRIBE detalle_ventas</code> muestra PK compuesta</td>
+<td><code>venta_id</code> y <code>producto_id</code> ambos con <code>PRI</code></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>SHOW CREATE TABLE detalle_ventas</code> muestra dos FK</td>
+<td>FK a <code>ventas</code> y FK a <code>productos</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>DESCRIBE</code> es el comando de diagnóstico más útil en el trabajo diario con MySQL. Memorízalo.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="sec-insertar" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="sec-insertar"><span class="header-section-number">6</span> Parte 4 — Cargar Datos Iniciales con INSERT INTO</h2>
+<p><strong>Duración: 40 minutos</strong></p>
+<p>Ahora poblarás la base de datos con datos reales de TechStyle. Recuerda: <strong>el orden de inserción sigue la jerarquía de FK</strong> — padres antes que hijos.</p>
+<section id="paso-11-insertar-categorías" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="paso-11-insertar-categorías"><span class="header-section-number">6.1</span> Paso 11: Insertar categorías</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">USE</span> techstyle;</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Categorías raíz (sin padre)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> categorias (nombre_categoria, categoria_padre_id) <span class="kw">VALUES</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Calzado'</span>,     <span class="kw">NULL</span>),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Ropa'</span>,        <span class="kw">NULL</span>),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Accesorios'</span>,  <span class="kw">NULL</span>);</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- Subcategorías (referencian los IDs generados arriba)</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> categorias (nombre_categoria, categoria_padre_id) <span class="kw">VALUES</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Zapatillas'</span>,  <span class="dv">1</span>),</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Sandalias'</span>,   <span class="dv">1</span>),</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Poleras'</span>,     <span class="dv">2</span>),</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Pantalones'</span>,  <span class="dv">2</span>),</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Chaquetas'</span>,   <span class="dv">2</span>),</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Mochilas'</span>,    <span class="dv">3</span>),</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Gorros'</span>,      <span class="dv">3</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Verifica que se insertaron correctamente:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> categoria_id, nombre_categoria, categoria_padre_id</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> categorias</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> categoria_padre_id, categoria_id;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Pregunta</strong>: ¿Cómo identifica esta consulta cuáles son las categorías raíz y cuáles son subcategorías?</p>
+</section>
+<section id="paso-12-insertar-clientes" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="paso-12-insertar-clientes"><span class="header-section-number">6.2</span> Paso 12: Insertar clientes</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> clientes (nombre, apellido, email, region, segmento, fecha_registro) <span class="kw">VALUES</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Juan'</span>,   <span class="st">'Pérez'</span>,    <span class="st">'juan.perez@mail.com'</span>,    <span class="st">'Metropolitana'</span>, <span class="st">'Premium'</span>,  <span class="st">'2024-03-15'</span>),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'María'</span>,  <span class="st">'López'</span>,    <span class="st">'maria.lopez@mail.com'</span>,   <span class="st">'Valparaíso'</span>,    <span class="st">'Estándar'</span>, <span class="st">'2024-04-02'</span>),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Carlos'</span>, <span class="st">'Muñoz'</span>,    <span class="st">'carlos.munoz@mail.com'</span>,  <span class="st">'Biobío'</span>,        <span class="st">'Básico'</span>,   <span class="st">'2024-05-18'</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Sofía'</span>,  <span class="st">'Ramírez'</span>,  <span class="st">'sofia.ramirez@mail.com'</span>, <span class="st">'Metropolitana'</span>, <span class="st">'Premium'</span>,  <span class="st">'2024-06-30'</span>),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Diego'</span>,  <span class="st">'Torres'</span>,   <span class="st">'diego.torres@mail.com'</span>,  <span class="st">'Araucanía'</span>,     <span class="st">'Estándar'</span>, <span class="st">'2024-07-11'</span>),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Paula'</span>,  <span class="st">'Vega'</span>,     <span class="st">'paula.vega@mail.com'</span>,    <span class="st">'Coquimbo'</span>,      <span class="st">'Básico'</span>,   <span class="st">'2024-08-22'</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="paso-13-insertar-productos" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="paso-13-insertar-productos"><span class="header-section-number">6.3</span> Paso 13: Insertar productos</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> productos (nombre_producto, categoria_id, precio_venta, costo_unitario, stock) <span class="kw">VALUES</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Nike Air Max 2026'</span>,       <span class="dv">4</span>,  <span class="fl">89990.00</span>,  <span class="fl">45000.00</span>, <span class="dv">150</span>),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Adidas Ultraboost 24'</span>,    <span class="dv">4</span>, <span class="fl">119990.00</span>,  <span class="fl">65000.00</span>,  <span class="dv">90</span>),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Puma Suede Classic'</span>,      <span class="dv">4</span>,  <span class="fl">54990.00</span>,  <span class="fl">28000.00</span>, <span class="dv">120</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Polera Adidas Clásica'</span>,   <span class="dv">6</span>,  <span class="fl">24990.00</span>,  <span class="fl">12000.00</span>, <span class="dv">200</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Polera Nike Dri-FIT'</span>,     <span class="dv">6</span>,  <span class="fl">29990.00</span>,  <span class="fl">15000.00</span>, <span class="dv">180</span>),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Pantalón Under Armour'</span>,   <span class="dv">7</span>,  <span class="fl">44990.00</span>,  <span class="fl">22000.00</span>,  <span class="dv">95</span>),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Chaqueta The North Face'</span>, <span class="dv">8</span>,  <span class="fl">89990.00</span>,  <span class="fl">50000.00</span>,  <span class="dv">60</span>),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Mochila Puma 20L'</span>,        <span class="dv">9</span>,  <span class="fl">39990.00</span>,  <span class="fl">20000.00</span>,  <span class="dv">80</span>),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Gorro Nike Dri-FIT'</span>,     <span class="dv">10</span>,  <span class="fl">14990.00</span>,   <span class="fl">7000.00</span>, <span class="dv">160</span>),</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Short Nike Running'</span>,      <span class="dv">7</span>,  <span class="fl">19990.00</span>,   <span class="fl">9000.00</span>, <span class="dv">175</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Después de cada INSERT, ejecuta <code>SELECT COUNT(*) FROM nombre_tabla</code> para confirmar que las filas se insertaron. Desarrolla este hábito de verificación en cada carga de datos.</p>
+</div>
+</div>
+</section>
+<section id="paso-14-insertar-ventas-y-detalles" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="paso-14-insertar-ventas-y-detalles"><span class="header-section-number">6.4</span> Paso 14: Insertar ventas y detalles</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Venta 1: Juan compra zapatillas y polera (15 enero 2026)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> ventas (fecha, cliente_id) <span class="kw">VALUES</span> (<span class="st">'2026-01-15'</span>, <span class="dv">1</span>);</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> detalle_ventas (venta_id, producto_id, cantidad, precio_unitario, descuento_pct)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    (LAST_INSERT_ID(), <span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">89990.00</span>,  <span class="fl">0.00</span>),  <span class="co">-- Nike Air Max</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    (LAST_INSERT_ID(), <span class="dv">4</span>, <span class="dv">2</span>, <span class="fl">24990.00</span>, <span class="fl">10.00</span>);  <span class="co">-- Poleras x2 con 10% descuento</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Problema con <code>LAST_INSERT_ID()</code></strong>: cuando usas dos INSERT seguidos, el segundo <code>LAST_INSERT_ID()</code> en <code>detalle_ventas</code> aún apunta al <code>venta_id</code> recién creado — no al <code>producto_id</code>. Esto es correcto: <code>LAST_INSERT_ID()</code> devuelve el último ID generado por un <code>AUTO_INCREMENT</code>, que en este caso fue el de <code>ventas</code>.</p>
+<p>Sin embargo, si en el mismo script insertas dos ventas distintas seguidas, el ID puede cambiar. La solución segura es usar una variable:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Venta 2: María compra chaqueta (20 enero 2026) — forma segura</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> ventas (fecha, cliente_id) <span class="kw">VALUES</span> (<span class="st">'2026-01-20'</span>, <span class="dv">2</span>);</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @venta_maria <span class="op">=</span> LAST_INSERT_ID();</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> detalle_ventas (venta_id, producto_id, cantidad, precio_unitario, descuento_pct)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    (@venta_maria, <span class="dv">7</span>, <span class="dv">1</span>, <span class="fl">89990.00</span>, <span class="fl">0.00</span>),   <span class="co">-- Chaqueta The North Face</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    (@venta_maria, <span class="dv">9</span>, <span class="dv">1</span>, <span class="fl">14990.00</span>, <span class="fl">0.00</span>);   <span class="co">-- Gorro Nike</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section>
+<section id="paso-15-insertar-una-tercera-venta-tú-mismo" class="level3" data-number="6.5">
+<h3 data-number="6.5" class="anchored" data-anchor-id="paso-15-insertar-una-tercera-venta-tú-mismo"><span class="header-section-number">6.5</span> Paso 15: Insertar una tercera venta tú mismo</h3>
+<p>Sin usar el código de ejemplo, escribe el INSERT para la siguiente situación:</p>
+<blockquote class="blockquote">
+<p><strong>Carlos Muñoz</strong> realiza una compra el <strong>2026-02-05</strong>: compra 1 mochila Puma a precio normal y 2 shorts Nike Running con un descuento del 15%.</p>
+</blockquote>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Escribe tu INSERT aquí:</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> ventas <span class="op">..</span>.</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> detalle_ventas <span class="op">..</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Verifica que se insertó correctamente:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> v.venta_id, v.fecha, c.nombre, c.apellido,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>       p.nombre_producto, dv.cantidad, dv.precio_unitario, dv.descuento_pct</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> ventas v</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> clientes c        <span class="kw">ON</span> v.cliente_id   <span class="op">=</span> c.cliente_id</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> detalle_ventas dv <span class="kw">ON</span> v.venta_id     <span class="op">=</span> dv.venta_id</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> productos p       <span class="kw">ON</span> dv.producto_id <span class="op">=</span> p.producto_id</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> v.venta_id;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Esta consulta usa <code>JOIN</code> — no te preocupes si aún no dominas la sintaxis, el tema se profundiza en W07. Por ahora úsala para verificar tus datos.</p>
+</div>
+</div>
+</section>
+<section id="paso-16-verificar-integridad-de-los-datos" class="level3" data-number="6.6">
+<h3 data-number="6.6" class="anchored" data-anchor-id="paso-16-verificar-integridad-de-los-datos"><span class="header-section-number">6.6</span> Paso 16: Verificar integridad de los datos</h3>
+<p>Ejecuta las siguientes consultas de diagnóstico. Si todas retornan 0 filas, la base de datos está en estado consistente.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- ¿Hay ventas sin cliente válido?</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> v.venta_id <span class="kw">FROM</span> ventas v</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> clientes c <span class="kw">ON</span> v.cliente_id <span class="op">=</span> c.cliente_id</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> c.cliente_id <span class="kw">IS</span> <span class="kw">NULL</span>;</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- ¿Hay productos con stock negativo?</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> producto_id, nombre_producto, stock <span class="kw">FROM</span> productos</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> stock <span class="op">&lt;</span> <span class="dv">0</span>;</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- ¿Hay líneas de detalle con precio cero o negativo?</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> detalle_ventas <span class="kw">WHERE</span> precio_unitario <span class="op">&lt;=</span> <span class="dv">0</span>;</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">-- ¿Hay descuentos fuera del rango 0–100?</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> detalle_ventas</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> descuento_pct <span class="op">&lt;</span> <span class="dv">0</span> <span class="kw">OR</span> descuento_pct <span class="op">&gt;</span> <span class="dv">100</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="sec-transacciones" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="sec-transacciones"><span class="header-section-number">7</span> Parte 5 — Transacciones: Registrar una Venta Completa</h2>
+<p><strong>Duración: 25 minutos</strong></p>
+<p>Una transacción garantiza que una operación de negocio compuesta se ejecute <strong>completamente o no se ejecute en absoluto</strong>.</p>
+<section id="paso-17-transacción-exitosa-commit" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="paso-17-transacción-exitosa-commit"><span class="header-section-number">7.1</span> Paso 17: Transacción exitosa (COMMIT)</h3>
+<p>Registra una venta completa usando una transacción. Copia y ejecuta el siguiente bloque:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Iniciar la transacción</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">START</span> <span class="kw">TRANSACTION</span>;</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Paso 1: crear la venta</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> ventas (fecha, cliente_id) <span class="kw">VALUES</span> (CURDATE(), <span class="dv">4</span>);  <span class="co">-- Sofía Ramírez</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @venta_sofia <span class="op">=</span> LAST_INSERT_ID();</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Paso 2: agregar los productos</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> detalle_ventas (venta_id, producto_id, cantidad, precio_unitario, descuento_pct)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    (@venta_sofia, <span class="dv">2</span>, <span class="dv">1</span>, <span class="fl">119990.00</span>, <span class="fl">5.00</span>),  <span class="co">-- Adidas Ultraboost con 5%</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    (@venta_sofia, <span class="dv">6</span>, <span class="dv">1</span>,  <span class="fl">44990.00</span>, <span class="fl">0.00</span>);  <span class="co">-- Pantalón Under Armour</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">-- Paso 3: descontar el stock</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> productos <span class="kw">SET</span> stock <span class="op">=</span> stock <span class="op">-</span> <span class="dv">1</span> <span class="kw">WHERE</span> producto_id <span class="op">=</span> <span class="dv">2</span>;</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> productos <span class="kw">SET</span> stock <span class="op">=</span> stock <span class="op">-</span> <span class="dv">1</span> <span class="kw">WHERE</span> producto_id <span class="op">=</span> <span class="dv">6</span>;</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co">-- Confirmar todos los cambios</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="kw">COMMIT</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Verifica el resultado:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- ¿El stock se descontó correctamente?</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> producto_id, nombre_producto, stock</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> productos</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> producto_id <span class="kw">IN</span> (<span class="dv">2</span>, <span class="dv">6</span>);</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- ¿La venta y su detalle quedaron registrados?</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> v.venta_id, v.fecha, dv.producto_id, dv.cantidad</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> ventas v</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> detalle_ventas dv <span class="kw">ON</span> v.venta_id <span class="op">=</span> dv.venta_id</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> v.cliente_id <span class="op">=</span> <span class="dv">4</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="paso-18-simular-un-error-y-hacer-rollback" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="paso-18-simular-un-error-y-hacer-rollback"><span class="header-section-number">7.2</span> Paso 18: Simular un error y hacer ROLLBACK</h3>
+<p>Ahora simularás una situación donde la operación debe deshacerse.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Iniciar la transacción</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">START</span> <span class="kw">TRANSACTION</span>;</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Paso 1: crear la venta</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> ventas (fecha, cliente_id) <span class="kw">VALUES</span> (CURDATE(), <span class="dv">5</span>);  <span class="co">-- Diego Torres</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @venta_diego <span class="op">=</span> LAST_INSERT_ID();</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Paso 2: agregar producto (cantidad correcta)</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> detalle_ventas (venta_id, producto_id, cantidad, precio_unitario)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (@venta_diego, <span class="dv">8</span>, <span class="dv">1</span>, <span class="fl">39990.00</span>);</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co">-- Paso 3: intentar agregar un producto con cliente_id inválido en otra tabla</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">-- (simulamos que el sistema detectó un error de validación)</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co">-- Por ejemplo, el producto_id 99 no existe:</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> detalle_ventas (venta_id, producto_id, cantidad, precio_unitario)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (@venta_diego, <span class="dv">99</span>, <span class="dv">2</span>, <span class="fl">15000.00</span>);</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co">-- ^ Este INSERT fallará con error de FK</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co">-- Si llegamos aquí significa que ocurrió un error: deshacer todo</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="kw">ROLLBACK</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En MySQL Workbench, el INSERT con el <code>producto_id = 99</code> fallará con un error de FK. La transacción queda <strong>abierta pero con error pendiente</strong>. Debes ejecutar <code>ROLLBACK</code> manualmente.</p>
+<p>Verifica que Diego Torres no tenga ventas registradas:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> ventas <span class="kw">WHERE</span> cliente_id <span class="op">=</span> <span class="dv">5</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Si <code>ROLLBACK</code> funcionó correctamente, esta consulta retornará 0 filas.</p>
+</div>
+</div>
+</section>
+<section id="paso-19-reflexión-sobre-transacciones" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="paso-19-reflexión-sobre-transacciones"><span class="header-section-number">7.3</span> Paso 19: Reflexión sobre transacciones</h3>
+<p>Responde en grupo:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situación</th>
+<th>¿COMMIT o ROLLBACK?</th>
+<th>¿Por qué?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Se registra la venta y el detalle correctamente, pero al descontar stock uno de los productos llega a stock negativo (-1)</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Se insertan 500 productos nuevos del catálogo de temporada. A mitad de camino hay un error de tipo de dato en la fila 231</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Una devolución queda registrada en <code>devoluciones</code> pero falla el <code>UPDATE</code> del stock al intentar reingresarlo</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="sec-reflexion" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="sec-reflexion"><span class="header-section-number">8</span> Parte 6 — Síntesis y Reflexión</h2>
+<p><strong>Duración: 20 minutos</strong></p>
+<section id="paso-20-comparar-el-modelo-diseñado-vs.-el-modelo-implementado" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="paso-20-comparar-el-modelo-diseñado-vs.-el-modelo-implementado"><span class="header-section-number">8.1</span> Paso 20: Comparar el modelo diseñado vs.&nbsp;el modelo implementado</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dimensión</th>
+<th>Modelo en papel (W05)</th>
+<th>Base de datos real (W06)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¿Se puede saber qué proveedor abastece un producto?</td>
+<td>Sí (diagrama)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>¿Las FK impiden ventas de clientes inexistentes?</td>
+<td>En diseño</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>¿Un producto puede tener stock negativo?</td>
+<td>Según diseño, no</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>¿Una venta incompleta puede quedar registrada?</td>
+<td>En teoría, no</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>¿Qué pasa si se borra un cliente con ventas?</td>
+<td>RESTRICT (diseño)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="paso-21-preguntas-de-diseño-e-implementación" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="paso-21-preguntas-de-diseño-e-implementación"><span class="header-section-number">8.2</span> Paso 21: Preguntas de diseño e implementación</h3>
+<p>Responde en grupo:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pregunta</th>
+<th>Respuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¿Por qué se usa <code>SET @variable = LAST_INSERT_ID()</code> en lugar de poner el número directamente (ej. <code>venta_id = 3</code>)?</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>¿Qué pasaría si dos vendedores insertan una venta para el mismo cliente al mismo tiempo sin transacciones?</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>¿Por qué <code>precio_unitario</code> se guarda en <code>detalle_ventas</code> y no se calcula desde <code>productos.precio_venta</code> en cada consulta?</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Si TechStyle aplica un descuento general del 20% en una promoción, ¿qué operación SQL ejecutarías? ¿Dentro de una transacción?</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Un cliente quiere borrar su cuenta. ¿Qué debe hacer Juan antes de ejecutar <code>DELETE FROM clientes WHERE cliente_id = 1</code>?</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="paso-22-análisis-de-impacto-del-modelo-a-las-decisiones" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="paso-22-análisis-de-impacto-del-modelo-a-las-decisiones"><span class="header-section-number">8.3</span> Paso 22: Análisis de impacto — del modelo a las decisiones</h3>
+<p>Para cada nueva capacidad que tiene ahora la base de datos, identifica la decisión de negocio que habilita:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Capacidad implementada</th>
+<th>Decisión de negocio que habilita</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FK con <code>ON DELETE RESTRICT</code> en <code>ventas.cliente_id</code></td>
+<td>Ej: “Garantizamos que el historial de ventas nunca pierde la referencia al cliente”</td>
+</tr>
+<tr class="even">
+<td>CHECK <code>stock &gt;= 0</code> en <code>productos</code></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Transacciones en el registro de ventas</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Índice <code>idx_ventas_fecha</code> en <code>ventas(fecha)</code></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>CHECK <code>segmento IN ('Premium', 'Estándar', 'Básico')</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="paso-23-reporte-de-implementación" class="level3" data-number="8.4">
+<h3 data-number="8.4" class="anchored" data-anchor-id="paso-23-reporte-de-implementación"><span class="header-section-number">8.4</span> Paso 23: Reporte de implementación</h3>
+<p>Redacta un párrafo breve (6–8 líneas) como si fueras Juan informando a Roberto sobre el estado del sistema al cierre del día:</p>
+<blockquote class="blockquote">
+<p><strong>Para:</strong> Roberto Fernández, CEO TechStyle</p>
+<p><strong>Asunto:</strong> Base de datos implementada — estado al 2026-04-21</p>
+<p>La base de datos <code>techstyle</code> fue creada exitosamente en MySQL Server. Contiene… <em>(continúa)</em></p>
+</blockquote>
+<p>Incluye: - Cuántas tablas están operativas y cuántos registros tiene cada una. - Qué restricciones de integridad garantizan la consistencia de los datos. - Qué puede hacerse ahora que no era posible con Excel. - Qué falta aún para que el sistema sea completamente operativo.</p>
+<hr>
+</section>
+</section>
+<section id="entregable" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="entregable"><span class="header-section-number">9</span> Entregable</h2>
+<p>Sube a la plataforma los siguientes archivos comprimidos en <code>W06_lab_[apellido1]_[apellido2].zip</code>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Archivo</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>W06_techstyle_ddl.sql</code></td>
+<td>Script DDL completo: CREATE TABLE, CHECK, índices y ON DELETE corregidos</td>
+</tr>
+<tr class="even">
+<td><code>W06_inserts.sql</code></td>
+<td>Script con todos los INSERT de las Partes 4 y 5 (incluyendo el INSERT de Carlos que escribiste tú)</td>
+</tr>
+<tr class="odd">
+<td><code>W06_reflexion.pdf</code> o <code>.docx</code></td>
+<td>Respuestas de las preguntas de reflexión + reporte para Roberto</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="criterios-de-evaluación" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="criterios-de-evaluación"><span class="header-section-number">10</span> Criterios de Evaluación</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Criterio</th>
+<th>Puntaje</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Script DDL: orden correcto, FK con ON DELETE apropiado, CHECK e índices incluidos (Partes 1–2)</td>
+<td>25 pts</td>
+</tr>
+<tr class="even">
+<td>Ejecución correcta en MySQL: 9 tablas creadas sin errores, verificación con DESCRIBE y SHOW CREATE TABLE (Parte 3)</td>
+<td>20 pts</td>
+</tr>
+<tr class="odd">
+<td>Inserts correctos: orden de inserción, uso de variables para IDs, datos completos (Parte 4)</td>
+<td>25 pts</td>
+</tr>
+<tr class="even">
+<td>Transacciones: COMMIT y ROLLBACK funcionando, reflexión sobre escenarios (Parte 5)</td>
+<td>15 pts</td>
+</tr>
+<tr class="odd">
+<td>Síntesis: análisis de impacto y reporte para Roberto (Parte 6)</td>
+<td>15 pts</td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td><strong>100 pts</strong></td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

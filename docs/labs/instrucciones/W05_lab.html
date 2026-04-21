@@ -20,41 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -133,25 +98,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#paso-6-dibujar-las-relaciones" id="toc-paso-6-dibujar-las-relaciones" class="nav-link" data-scroll-target="#paso-6-dibujar-las-relaciones"><span class="header-section-number">4.3</span> Paso 6: Dibujar las relaciones</a></li>
   <li><a href="#paso-7-verificar-el-diagrama" id="toc-paso-7-verificar-el-diagrama" class="nav-link" data-scroll-target="#paso-7-verificar-el-diagrama"><span class="header-section-number">4.4</span> Paso 7: Verificar el diagrama</a></li>
   </ul></li>
-  <li><a href="#sec-forward" id="toc-sec-forward" class="nav-link" data-scroll-target="#sec-forward"><span class="header-section-number">5</span> Parte 3 — Forward Engineering: Generar el SQL</a>
-  <ul class="collapse">
-  <li><a href="#paso-8-configurar-forward-engineering" id="toc-paso-8-configurar-forward-engineering" class="nav-link" data-scroll-target="#paso-8-configurar-forward-engineering"><span class="header-section-number">5.1</span> Paso 8: Configurar Forward Engineering</a></li>
-  <li><a href="#paso-9-guardar-el-script" id="toc-paso-9-guardar-el-script" class="nav-link" data-scroll-target="#paso-9-guardar-el-script"><span class="header-section-number">5.2</span> Paso 9: Guardar el script</a></li>
-  </ul></li>
-  <li><a href="#sec-verificar" id="toc-sec-verificar" class="nav-link" data-scroll-target="#sec-verificar"><span class="header-section-number">6</span> Parte 4 — Verificar y Completar el Script SQL</a>
-  <ul class="collapse">
-  <li><a href="#paso-10-revisar-el-sql-generado" id="toc-paso-10-revisar-el-sql-generado" class="nav-link" data-scroll-target="#paso-10-revisar-el-sql-generado"><span class="header-section-number">6.1</span> Paso 10: Revisar el SQL generado</a></li>
-  <li><a href="#paso-11-verificar-el-orden-de-creación" id="toc-paso-11-verificar-el-orden-de-creación" class="nav-link" data-scroll-target="#paso-11-verificar-el-orden-de-creación"><span class="header-section-number">6.2</span> Paso 11: Verificar el orden de creación</a></li>
-  </ul></li>
-  <li><a href="#sec-reflexion" id="toc-sec-reflexion" class="nav-link" data-scroll-target="#sec-reflexion"><span class="header-section-number">7</span> Parte 5 — Síntesis y Reflexión</a>
-  <ul class="collapse">
-  <li><a href="#paso-12-comparar-el-modelo-w04-vs.-w05" id="toc-paso-12-comparar-el-modelo-w04-vs.-w05" class="nav-link" data-scroll-target="#paso-12-comparar-el-modelo-w04-vs.-w05"><span class="header-section-number">7.1</span> Paso 12: Comparar el modelo W04 vs.&nbsp;W05</a></li>
-  <li><a href="#paso-13-preguntas-de-diseño" id="toc-paso-13-preguntas-de-diseño" class="nav-link" data-scroll-target="#paso-13-preguntas-de-diseño"><span class="header-section-number">7.2</span> Paso 13: Preguntas de diseño</a></li>
-  <li><a href="#paso-14-análisis-de-impacto-en-decisiones-de-negocio" id="toc-paso-14-análisis-de-impacto-en-decisiones-de-negocio" class="nav-link" data-scroll-target="#paso-14-análisis-de-impacto-en-decisiones-de-negocio"><span class="header-section-number">7.3</span> Paso 14: Análisis de impacto en decisiones de negocio</a></li>
-  <li><a href="#paso-15-reporte-de-diseño-para-el-equipo-técnico" id="toc-paso-15-reporte-de-diseño-para-el-equipo-técnico" class="nav-link" data-scroll-target="#paso-15-reporte-de-diseño-para-el-equipo-técnico"><span class="header-section-number">7.4</span> Paso 15: Reporte de diseño para el equipo técnico</a></li>
-  </ul></li>
-  <li><a href="#entregable" id="toc-entregable" class="nav-link" data-scroll-target="#entregable"><span class="header-section-number">8</span> Entregable</a></li>
-  <li><a href="#criterios-de-evaluación" id="toc-criterios-de-evaluación" class="nav-link" data-scroll-target="#criterios-de-evaluación"><span class="header-section-number">9</span> Criterios de Evaluación</a></li>
+  <li><a href="#entregable" id="toc-entregable" class="nav-link" data-scroll-target="#entregable"><span class="header-section-number">5</span> Entregable</a></li>
+  <li><a href="#criterios-de-evaluación" id="toc-criterios-de-evaluación" class="nav-link" data-scroll-target="#criterios-de-evaluación"><span class="header-section-number">6</span> Criterios de Evaluación</a></li>
   </ul>
 </nav>
     </div>
@@ -232,27 +180,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td>1</td>
 <td>Diagrama de Casos de Uso</td>
-<td>30 min</td>
+<td>45 min</td>
 </tr>
 <tr class="even">
 <td>2</td>
 <td>Diseñar el EER Diagram en MySQL Workbench</td>
-<td>50 min</td>
+<td>75 min</td>
 </tr>
 <tr class="odd">
-<td>3</td>
-<td>Forward Engineering: generar el SQL</td>
-<td>20 min</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>Verificar y completar el script SQL</td>
-<td>20 min</td>
-</tr>
-<tr class="odd">
-<td>5</td>
-<td>Síntesis y reflexión</td>
-<td>20 min</td>
+<td>—</td>
+<td>Presentación al grupo y cierre</td>
+<td>30 min</td>
 </tr>
 </tbody>
 </table>
@@ -987,17 +925,6 @@ Tip
 <li><label><input type="checkbox">¿Hay 10 relaciones en total?</label></li>
 </ul>
 <p><strong>Guarda el modelo</strong>: <em>File → Save Model As</em> → <code>W05_techstyle_model.mwb</code>.</p>
-<hr>
-</section>
-</section>
-<section id="sec-forward" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="sec-forward"><span class="header-section-number">5</span> Parte 3 — Forward Engineering: Generar el SQL</h2>
-<p><strong>Duración: 20 minutos</strong></p>
-<section id="paso-8-configurar-forward-engineering" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="paso-8-configurar-forward-engineering"><span class="header-section-number">5.1</span> Paso 8: Configurar Forward Engineering</h3>
-<ol type="1">
-<li><p>En el menú de Workbench: <em>Database → Forward Engineer…</em></p></li>
-<li><p>En la pantalla de conexión, selecciona <strong>“Continue to next page”</strong> sin conectar (solo queremos generar el script).</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1008,309 +935,14 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Si Workbench requiere una conexión activa para continuar, usa la opción <em>File → Export → Forward Engineer SQL CREATE Script</em> para generar el archivo directamente.</p>
-</div>
-</div></li>
-<li><p>En las opciones de generación, activa:</p>
-<ul class="task-list">
-<li><label><input type="checkbox" checked="">Generate DROP Statements Before Each CREATE Statement</label></li>
-<li><label><input type="checkbox" checked="">Generate CREATE SCHEMA Statement</label></li>
-<li><label><input type="checkbox" checked="">Add SHOW WARNINGS After Every DDL Statement</label></li>
-<li><label><input type="checkbox" checked="">Include FK Indexes</label></li>
-</ul></li>
-<li><p>En la selección de objetos, asegúrate de que las 9 tablas estén marcadas.</p></li>
-<li><p>Avanza hasta la pantalla de <strong>revisión del SQL</strong> y cópialo.</p></li>
-</ol>
-</section>
-<section id="paso-9-guardar-el-script" class="level3" data-number="5.2">
-<h3 data-number="5.2" class="anchored" data-anchor-id="paso-9-guardar-el-script"><span class="header-section-number">5.2</span> Paso 9: Guardar el script</h3>
-<ol type="1">
-<li>Crea un archivo <code>W05_techstyle_ddl.sql</code> con el SQL generado.</li>
-<li>Revisa el encabezado del archivo: debería incluir <code>CREATE SCHEMA IF NOT EXISTS techstyle</code> y las 9 tablas en el orden correcto.</li>
-</ol>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>El orden de las tablas en el script importa.</strong> Workbench debería resolverlo automáticamente, pero verifica que <code>clientes</code>, <code>categorias</code> y <code>proveedores</code> aparezcan antes que las tablas que los referencian.</p>
+<p><strong>El laboratorio continúa la próxima semana</strong>: en W06_lab generarás el script SQL desde este modelo (Forward Engineering), lo ejecutarás en MySQL Server y cargarás los primeros datos reales de TechStyle.</p>
 </div>
 </div>
 <hr>
 </section>
 </section>
-<section id="sec-verificar" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="sec-verificar"><span class="header-section-number">6</span> Parte 4 — Verificar y Completar el Script SQL</h2>
-<p><strong>Duración: 20 minutos</strong></p>
-<section id="paso-10-revisar-el-sql-generado" class="level3" data-number="6.1">
-<h3 data-number="6.1" class="anchored" data-anchor-id="paso-10-revisar-el-sql-generado"><span class="header-section-number">6.1</span> Paso 10: Revisar el SQL generado</h3>
-<p>Abre <code>W05_techstyle_ddl.sql</code> en un editor de texto y responde:</p>
-<p><strong>10.1</strong> ¿Qué valor tienen los parámetros <code>ON DELETE</code> y <code>ON UPDATE</code> en las FK generadas por Workbench? ¿Es el comportamiento adecuado para cada relación?</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>FK</th>
-<th>ON DELETE generado</th>
-<th>¿Es correcto?</th>
-<th>Si no, ¿cuál debería ser?</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>ventas.cliente_id</code> → <code>clientes</code></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><code>detalle_ventas.venta_id</code> → <code>ventas</code></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><code>despachos.venta_id</code> → <code>ventas</code></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><code>devoluciones.venta_id</code> → <code>ventas</code></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Criterio de decisión:</strong> si se elimina el padre, ¿los hijos deben eliminarse también (CASCADE), bloquearse la eliminación (RESTRICT) o quedar como huérfanos con NULL (SET NULL)?</p>
-<p>Ejemplo: si se cancela (elimina) una venta, los detalles de esa venta no tienen sentido sin ella → CASCADE tiene sentido. Pero si se intenta eliminar un cliente con historial de ventas, eso debería bloquearse → RESTRICT.</p>
-</div>
-</div>
-<p><strong>10.2</strong> Agrega manualmente las restricciones CHECK que Workbench no genera automáticamente. Edita el archivo SQL y agrega:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- En la tabla productos:</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> productos <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_precio_positivo</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (precio_venta <span class="op">&gt;</span> <span class="dv">0</span>);</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> productos <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_costo_positivo</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (costo_unitario <span class="op">&gt;</span> <span class="dv">0</span>);</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> productos <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_stock_positivo</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (stock <span class="op">&gt;=</span> <span class="dv">0</span>);</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">-- En la tabla detalle_ventas:</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> detalle_ventas <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_cantidad_positiva</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (cantidad <span class="op">&gt;</span> <span class="dv">0</span>);</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> detalle_ventas <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_descuento_rango</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (descuento_pct <span class="kw">BETWEEN</span> <span class="dv">0</span> <span class="kw">AND</span> <span class="dv">100</span>);</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">-- En la tabla clientes:</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> clientes <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_segmento_valido</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (segmento <span class="kw">IN</span> (<span class="st">'Premium'</span>, <span class="st">'Estándar'</span>, <span class="st">'Básico'</span>));</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">-- En la tabla despachos:</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> despachos <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_estado_despacho</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (estado <span class="kw">IN</span> (<span class="st">'Pendiente'</span>, <span class="st">'En tránsito'</span>, <span class="st">'Entregado'</span>, <span class="st">'No entregado'</span>));</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>10.3</strong> Agrega los índices de rendimiento para las consultas más frecuentes de TechStyle:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Búsquedas frecuentes por región y segmento (reportes de María)</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_clientes_region <span class="kw">ON</span> clientes(region);</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_clientes_segmento <span class="kw">ON</span> clientes(segmento);</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- Consultas de ventas por rango de fechas (reportes de ventas)</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_ventas_fecha <span class="kw">ON</span> ventas(fecha);</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Búsqueda de productos por categoría</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_productos_categoria <span class="kw">ON</span> productos(categoria_id);</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">-- Estado de despachos (consulta de logística)</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_despachos_estado <span class="kw">ON</span> despachos(estado);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="paso-11-verificar-el-orden-de-creación" class="level3" data-number="6.2">
-<h3 data-number="6.2" class="anchored" data-anchor-id="paso-11-verificar-el-orden-de-creación"><span class="header-section-number">6.2</span> Paso 11: Verificar el orden de creación</h3>
-<p>El script final debe crear las tablas en este orden. Verifica que sea así:</p>
-<ol type="1">
-<li><code>categorias</code></li>
-<li><code>clientes</code></li>
-<li><code>proveedores</code></li>
-<li><code>productos</code> (FK → categorias)</li>
-<li><code>ventas</code> (FK → clientes)</li>
-<li><code>detalle_ventas</code> (FK → ventas, productos)</li>
-<li><code>proveedor_producto</code> (FK → proveedores, productos)</li>
-<li><code>despachos</code> (FK → ventas)</li>
-<li><code>devoluciones</code> (FK → ventas, productos)</li>
-</ol>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Si el script tiene las tablas en orden incorrecto, reordénalas manualmente en el archivo <code>.sql</code>. La semana 6 ejecutarás exactamente este script en MySQL Server — si el orden es incorrecto, habrá errores.</p>
-</div>
-</div>
-<hr>
-</section>
-</section>
-<section id="sec-reflexion" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="sec-reflexion"><span class="header-section-number">7</span> Parte 5 — Síntesis y Reflexión</h2>
-<p><strong>Duración: 20 minutos</strong></p>
-<section id="paso-12-comparar-el-modelo-w04-vs.-w05" class="level3" data-number="7.1">
-<h3 data-number="7.1" class="anchored" data-anchor-id="paso-12-comparar-el-modelo-w04-vs.-w05"><span class="header-section-number">7.1</span> Paso 12: Comparar el modelo W04 vs.&nbsp;W05</h3>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Dimensión</th>
-<th>Modelo W04 (4 tablas)</th>
-<th>Modelo W05 (9 tablas)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>¿Se puede saber qué proveedor abastece un producto?</td>
-<td>No</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>¿Se puede rastrear el estado de un despacho?</td>
-<td>No</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>¿Se puede registrar una devolución parcial?</td>
-<td>No</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>¿Las categorías pueden tener subcategorías?</td>
-<td>No</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>¿Los IDs se generan automáticamente?</td>
-<td>No siempre</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="paso-13-preguntas-de-diseño" class="level3" data-number="7.2">
-<h3 data-number="7.2" class="anchored" data-anchor-id="paso-13-preguntas-de-diseño"><span class="header-section-number">7.2</span> Paso 13: Preguntas de diseño</h3>
-<p>Responde en grupo:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Pregunta</th>
-<th>Respuesta</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>¿Por qué <code>despachos.venta_id</code> tiene restricción UNIQUE pero <code>devoluciones.venta_id</code> no?</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>¿Qué pasaría si dos grupos de analistas insertan clientes simultáneamente sin <code>AUTO_INCREMENT</code>?</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Si TechStyle agrega vendedores (cada venta tiene un vendedor asignado), ¿qué tabla(s) modificarías?</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>¿La tabla <code>proveedor_producto</code> viola la 3FN? Justifica.</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>¿Por qué <code>precio_unitario</code> está en <code>detalle_ventas</code> y no se calcula desde <code>productos.precio_venta</code>?</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="paso-14-análisis-de-impacto-en-decisiones-de-negocio" class="level3" data-number="7.3">
-<h3 data-number="7.3" class="anchored" data-anchor-id="paso-14-análisis-de-impacto-en-decisiones-de-negocio"><span class="header-section-number">7.3</span> Paso 14: Análisis de impacto en decisiones de negocio</h3>
-<p>Para cada nueva entidad agregada en W05, identifica qué decisiones de negocio habilita:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Nueva entidad</th>
-<th>Decisión de negocio que habilita</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>proveedores</code> + <code>proveedor_producto</code></td>
-<td>Ej: “¿Qué proveedor tiene el menor precio para Nike Air Max?”</td>
-</tr>
-<tr class="even">
-<td><code>despachos</code></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><code>devoluciones</code></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><code>categorias</code> (con jerarquía)</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Piensa en los reportes que María, Carlos o Roberto necesitarían para tomar decisiones. Sin la entidad, esa decisión no puede respaldarse con datos.</p>
-</div>
-</div>
-</section>
-<section id="paso-15-reporte-de-diseño-para-el-equipo-técnico" class="level3" data-number="7.4">
-<h3 data-number="7.4" class="anchored" data-anchor-id="paso-15-reporte-de-diseño-para-el-equipo-técnico"><span class="header-section-number">7.4</span> Paso 15: Reporte de diseño para el equipo técnico</h3>
-<p>Redacta un párrafo breve (6–8 líneas) como si fueras Juan presentando el modelo ampliado al equipo de desarrollo que implementará la base de datos la semana 6:</p>
-<blockquote class="blockquote">
-<p><strong>Para:</strong> Equipo de Desarrollo</p>
-<p><strong>Asunto:</strong> Modelo de datos TechStyle v2 — listo para implementación</p>
-<p>El modelo adjunto representa la arquitectura de datos de TechStyle para el sistema de ventas, despacho y devoluciones… <em>(continúa)</em></p>
-</blockquote>
-<p>Incluye: - Cuántas tablas tiene el modelo y por qué ese número (¿qué resuelve cada una?). - Qué restricciones de integridad garantizan la consistencia de los datos. - En qué orden deben crearse las tablas y por qué. - Qué índices se incluyeron y para qué consultas están optimizados.</p>
-<hr>
-</section>
-</section>
-<section id="entregable" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="entregable"><span class="header-section-number">8</span> Entregable</h2>
+<section id="entregable" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="entregable"><span class="header-section-number">5</span> Entregable</h2>
 <p>Sube a la plataforma los siguientes archivos comprimidos en <code>W05_lab_[apellido1]_[apellido2].zip</code>:</p>
 <table class="caption-top table">
 <colgroup>
@@ -1330,22 +962,14 @@ Tip
 </tr>
 <tr class="even">
 <td><code>W05_techstyle_model.mwb</code></td>
-<td>Modelo EER de MySQL Workbench con las 9 tablas</td>
-</tr>
-<tr class="odd">
-<td><code>W05_techstyle_ddl.sql</code></td>
-<td>Script SQL completo con CREATE TABLE, CHECK y CREATE INDEX</td>
-</tr>
-<tr class="even">
-<td><code>W05_reflexion.pdf</code> o <code>.docx</code></td>
-<td>Respuestas de las preguntas de reflexión + reporte de diseño</td>
+<td>Modelo EER de MySQL Workbench con las 9 tablas y sus relaciones</td>
 </tr>
 </tbody>
 </table>
 <hr>
 </section>
-<section id="criterios-de-evaluación" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="criterios-de-evaluación"><span class="header-section-number">9</span> Criterios de Evaluación</h2>
+<section id="criterios-de-evaluación" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="criterios-de-evaluación"><span class="header-section-number">6</span> Criterios de Evaluación</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -1360,19 +984,11 @@ Tip
 <tbody>
 <tr class="odd">
 <td>Diagrama de Casos de Uso: actores correctos, casos de uso completos, conexión a entidades (Parte 1)</td>
-<td>15 pts</td>
+<td>40 pts</td>
 </tr>
 <tr class="even">
-<td>EER Diagram: 9 tablas completas, relaciones y cardinalidades correctas (Parte 2)</td>
-<td>30 pts</td>
-</tr>
-<tr class="odd">
-<td>Script DDL: orden correcto, FK con ON DELETE apropiado, CHECK e índices incluidos (Partes 3–4)</td>
-<td>30 pts</td>
-</tr>
-<tr class="even">
-<td>Reflexión: análisis de diseño y reporte para el equipo técnico (Parte 5)</td>
-<td>25 pts</td>
+<td>EER Diagram: 9 tablas completas, relaciones y cardinalidades correctas, FK auto-referencial de categorías (Parte 2)</td>
+<td>60 pts</td>
 </tr>
 <tr class="odd">
 <td><strong>Total</strong></td>

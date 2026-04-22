@@ -200,7 +200,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">De los Planos a la Realidad</h1>
-  <p class="subtitle">Implementación en MySQL: DDL, DML y Transacciones · Semana 6 · Unidad II</p>
+  <p class="subtitle">DDL, Diccionario de Datos e Inserción · Semana 6 · Unidad II</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -232,7 +232,7 @@ Universidad San Sebastián
 <li class="fragment"><strong>Carlos</strong>: “¿Cómo me aseguro de que si falla la carga de datos a mitad de camino, no queden registros a medias?”</li>
 </ul>
 <div class="fragment">
-<p><strong>Tres tareas para Juan</strong>: crear la base de datos, cargar datos iniciales y garantizar que las operaciones sean seguras ante fallas.</p>
+<p><strong>Dos tareas para Juan hoy</strong>: crear la base de datos y cargar los datos iniciales. La pregunta de Carlos la responderemos en W07.</p>
 </div>
 </section>
 <section id="de-los-planos-a-la-construcción" class="slide level2">
@@ -265,7 +265,7 @@ Universidad San Sebastián
 <tr class="even">
 <td>Operaciones seguras</td>
 <td>Seguros contra incendio</td>
-<td>Transacciones</td>
+<td>Transacciones (W07)</td>
 </tr>
 </tbody>
 </table>
@@ -684,273 +684,28 @@ FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`cliente_id`))</code></pre>
           display:block!important;
       }</style></aside>
 </section>
-<section id="qué-es-una-transacción" class="slide level2">
-<h2>¿Qué es una Transacción?</h2>
-<p>Carlos pregunta: “¿Qué pasa si al registrar una venta, el sistema falla a mitad de camino?”</p>
-<div class="fragment">
-<p>Una <strong>transacción</strong> es un conjunto de operaciones SQL que se ejecutan como una <strong>unidad atómica</strong>:</p>
-<ul>
-<li>O todas tienen éxito y se guardan juntas.</li>
-<li>O alguna falla y <strong>ninguna</strong> queda guardada.</li>
-</ul>
-</div>
-<div class="fragment">
-<p><strong>Ejemplo</strong>: registrar la venta de Juan que compró 2 productos:</p>
-<pre><code>Paso 1: INSERT en VENTAS          (crea la venta V001)
-Paso 2: INSERT en DETALLE_VENTA   (línea producto P001)
-Paso 3: INSERT en DETALLE_VENTA   (línea producto P002)
-Paso 4: UPDATE en PRODUCTOS       (descuenta stock P001)
-Paso 5: UPDATE en PRODUCTOS       (descuenta stock P002)</code></pre>
-<p>Si el servidor falla después del Paso 2, ¿qué queda? Una venta sin stock actualizado y con solo un producto. Dato incorrecto.</p>
-</div>
-</section>
-<section id="begin-commit-y-rollback" class="slide level2">
-<h2>BEGIN, COMMIT y ROLLBACK</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a></a><span class="co">-- Iniciar la transacción</span></span>
-<span id="cb15-2"><a></a><span class="kw">START</span> <span class="kw">TRANSACTION</span>;</span>
-<span id="cb15-3"><a></a></span>
-<span id="cb15-4"><a></a><span class="co">-- Paso 1: crear la venta</span></span>
-<span id="cb15-5"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> ventas (fecha, cliente_id) <span class="kw">VALUES</span> (<span class="st">'2026-04-21'</span>, <span class="dv">1</span>);</span>
-<span id="cb15-6"><a></a></span>
-<span id="cb15-7"><a></a><span class="co">-- Paso 2 y 3: agregar los productos</span></span>
-<span id="cb15-8"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> detalle_venta (venta_id, producto_id, cantidad, precio_unitario)</span>
-<span id="cb15-9"><a></a><span class="kw">VALUES</span> (LAST_INSERT_ID(), <span class="dv">3</span>, <span class="dv">1</span>, <span class="fl">89990.00</span>);</span>
-<span id="cb15-10"><a></a></span>
-<span id="cb15-11"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> detalle_venta (venta_id, producto_id, cantidad, precio_unitario)</span>
-<span id="cb15-12"><a></a><span class="kw">VALUES</span> (LAST_INSERT_ID(), <span class="dv">7</span>, <span class="dv">2</span>, <span class="fl">24990.00</span>);</span>
-<span id="cb15-13"><a></a></span>
-<span id="cb15-14"><a></a><span class="co">-- Paso 4 y 5: descontar stock</span></span>
-<span id="cb15-15"><a></a><span class="kw">UPDATE</span> productos <span class="kw">SET</span> stock <span class="op">=</span> stock <span class="op">-</span> <span class="dv">1</span> <span class="kw">WHERE</span> producto_id <span class="op">=</span> <span class="dv">3</span>;</span>
-<span id="cb15-16"><a></a><span class="kw">UPDATE</span> productos <span class="kw">SET</span> stock <span class="op">=</span> stock <span class="op">-</span> <span class="dv">2</span> <span class="kw">WHERE</span> producto_id <span class="op">=</span> <span class="dv">7</span>;</span>
-<span id="cb15-17"><a></a></span>
-<span id="cb15-18"><a></a><span class="co">-- Si todo salió bien: confirmar</span></span>
-<span id="cb15-19"><a></a><span class="kw">COMMIT</span>;</span>
-<span id="cb15-20"><a></a></span>
-<span id="cb15-21"><a></a><span class="co">-- Si algo falló: deshacer todo</span></span>
-<span id="cb15-22"><a></a><span class="co">-- ROLLBACK;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="fragment">
-<p><strong><code>LAST_INSERT_ID()</code></strong>: devuelve el ID generado por el último AUTO_INCREMENT — así usamos el <code>venta_id</code> recién creado sin tener que consultarlo.</p>
-</div>
-</section>
-<section id="commit-y-rollback-lo-que-ocurre-internamente" class="slide level2">
-<h2>COMMIT y ROLLBACK: Lo Que Ocurre Internamente</h2>
-<div class="cell" data-reveal="true" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph LR
-    A["START TRANSACTION"] --&gt; B["INSERT ventas"]
-    B --&gt; C["INSERT detalle x2"]
-    C --&gt; D["UPDATE stock x2"]
-    D --&gt; E{¿Todo OK?}
-    E --&gt;|Sí| F["COMMIT\n✅ Datos guardados"]
-    E --&gt;|Error| G["ROLLBACK\n❌ Nada guardado"]
-    style F fill:#d4edda,stroke:#28a745
-    style G fill:#f8d7da,stroke:#dc3545
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>Hasta que se ejecuta <code>COMMIT</code>, los cambios existen solo en la sesión del usuario actual. Otros usuarios no los ven. El <code>COMMIT</code> los hace permanentes y visibles para todos.</p>
-</div>
-</section>
-<section id="las-propiedades-acid" class="slide level2">
-<h2>Las Propiedades ACID</h2>
-<p>Las transacciones garantizan las propiedades <strong>ACID</strong> — el estándar de confiabilidad para bases de datos.</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Propiedad</th>
-<th>Significado</th>
-<th>En TechStyle</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>A</strong>tomicidad</td>
-<td>Todo o nada</td>
-<td>Venta + detalle + stock como una sola unidad</td>
-</tr>
-<tr class="even">
-<td><strong>C</strong>onsistencia</td>
-<td>Los datos siempre cumplen las reglas</td>
-<td>FK, CHECK, NOT NULL se verifican al COMMIT</td>
-</tr>
-<tr class="odd">
-<td><strong>I</strong>solación</td>
-<td>Las transacciones no se interfieren</td>
-<td>Dos vendedores pueden operar simultáneamente</td>
-</tr>
-<tr class="even">
-<td><strong>D</strong>urabilidad</td>
-<td>Un COMMIT sobrevive fallos del sistema</td>
-<td>La venta queda en disco, no solo en memoria</td>
-</tr>
-</tbody>
-</table>
-<div class="fragment">
-<blockquote>
-<p>Las propiedades ACID son la razón por la que un banco puede garantizar que tu transferencia llegó o no llegó — nunca a medias.</p>
-</blockquote>
-</div>
-</section>
-<section id="transacciones-y-casos-de-error-reales" class="slide level2">
-<h2>Transacciones y Casos de Error Reales</h2>
-<p>¿Qué pasa si el stock de un producto llega a negativo? Juan quiere impedirlo.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a></a><span class="kw">START</span> <span class="kw">TRANSACTION</span>;</span>
-<span id="cb16-2"><a></a></span>
-<span id="cb16-3"><a></a><span class="co">-- Verificar stock ANTES de descontar</span></span>
-<span id="cb16-4"><a></a><span class="kw">SELECT</span> stock <span class="kw">INTO</span> @stock_actual</span>
-<span id="cb16-5"><a></a><span class="kw">FROM</span> productos <span class="kw">WHERE</span> producto_id <span class="op">=</span> <span class="dv">3</span>;</span>
-<span id="cb16-6"><a></a></span>
-<span id="cb16-7"><a></a><span class="co">-- Si no hay suficiente stock, hacer ROLLBACK</span></span>
-<span id="cb16-8"><a></a><span class="cf">IF</span> @stock_actual <span class="op">&lt;</span> <span class="dv">5</span> <span class="cf">THEN</span></span>
-<span id="cb16-9"><a></a>    <span class="kw">ROLLBACK</span>;</span>
-<span id="cb16-10"><a></a>    SIGNAL SQLSTATE <span class="st">'45000'</span></span>
-<span id="cb16-11"><a></a>        <span class="kw">SET</span> MESSAGE_TEXT <span class="op">=</span> <span class="st">'Stock insuficiente para completar la venta'</span>;</span>
-<span id="cb16-12"><a></a><span class="cf">ELSE</span></span>
-<span id="cb16-13"><a></a>    <span class="kw">UPDATE</span> productos <span class="kw">SET</span> stock <span class="op">=</span> stock <span class="op">-</span> <span class="dv">5</span> <span class="kw">WHERE</span> producto_id <span class="op">=</span> <span class="dv">3</span>;</span>
-<span id="cb16-14"><a></a>    <span class="kw">COMMIT</span>;</span>
-<span id="cb16-15"><a></a><span class="cf">END</span> <span class="cf">IF</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="fragment">
-<p>En sistemas reales, esta lógica se implementa en un <strong>Stored Procedure</strong> (procedimiento almacenado) dentro de MySQL, o desde el código de la aplicación antes de ejecutar el UPDATE.</p>
-</div>
-</section>
-<section id="desafío-rápido-3" class="slide level2" data-background-color="#e8f4f8">
-<h2>🚀 Desafío Rápido 3</h2>
-<!-- **En grupos de 3 (5 minutos):** -->
-<p>Analiza estos escenarios de TechStyle y decide: ¿<code>COMMIT</code> o <code>ROLLBACK</code>?</p>
-<p><strong>Escenario A</strong>: Juan procesa una devolución de María. Actualiza <code>devoluciones</code> correctamente, pero al intentar hacer <code>UPDATE ventas</code> recibe el error 1451 (FK violation).</p>
-<p><strong>Escenario B</strong>: Se está cargando el catálogo nuevo de 500 productos. Después de insertar 380 productos, hay un corte de luz.</p>
-<p><strong>Escenario C</strong>: Roberto pide eliminar a un cliente que tiene 15 ventas históricas. El <code>DELETE FROM clientes</code> recibe error 1451.</p>
-<p>Para cada escenario: ¿Qué pasa con los datos? ¿Qué debería hacer Juan?</p>
-<aside class="notes">
-<p><strong>Solución Desafío Rápido 3</strong></p>
-<p><strong>Escenario A — ROLLBACK automático:</strong> - El error 1451 (violación de FK) en el UPDATE dentro de una transacción activa no hace ROLLBACK automático en MySQL — la transacción sigue abierta pero el UPDATE falló. - Juan debe ejecutar <code>ROLLBACK</code> manualmente para deshacer el INSERT en <code>devoluciones</code>. - Luego investigar por qué el UPDATE de ventas falla: probablemente la lógica de la devolución está incorrecta — no debería modificar directamente la tabla de ventas. - <strong>Lección</strong>: MySQL no siempre hace ROLLBACK automático ante errores DML. El código de la aplicación debe verificar cada paso y hacer ROLLBACK explícito ante cualquier error.</p>
-<p><strong>Escenario B — ROLLBACK automático:</strong> - Si el INSERT masivo estaba dentro de una transacción (START TRANSACTION), el corte de luz provoca que MySQL al reiniciarse aplique el log de transacciones y haga ROLLBACK de todo lo no confirmado. - Si no estaba en una transacción explícita, cada INSERT es una transacción implícita — los 380 productos insertados quedan confirmados y los 120 restantes no. - <strong>Lección</strong>: las cargas masivas de datos deben realizarse dentro de una transacción explícita para garantizar que el catálogo quede completo o no quede nada.</p>
-<p><strong>Escenario C — Error de integridad, no hay transacción que deshacer:</strong> - El error 1451 ocurre en un DELETE de CLIENTES porque las FK de VENTAS tienen ON DELETE RESTRICT. - MySQL rechaza el DELETE — no hay datos modificados que deshacer. - Juan no puede borrar el cliente mientras tenga ventas asociadas. Opciones según la política del negocio: 1. No borrar — mantener el historial (lo más común en comercio). 2. Marcar el cliente como inactivo con un campo <code>activo BOOLEAN DEFAULT TRUE</code>. 3. Archivar el cliente en otra tabla antes de eliminar. - <strong>Lección</strong>: ON DELETE RESTRICT protege la integridad histórica. En sistemas de negocio reales, casi nunca se elimina información — se marca como inactiva.</p>
-<p><em>Punto de cierre</em>: las transacciones y las restricciones de FK no son obstáculos técnicos — son el sistema nervioso de la integridad del negocio. Un analista que entiende esto puede diseñar operaciones confiables.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="verificar-la-estructura-creada" class="slide level2">
-<h2>Verificar la Estructura Creada</h2>
-<p>Después de ejecutar el script, Juan verifica que todo quedó bien:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a></a><span class="co">-- Ver todas las tablas de la base de datos</span></span>
-<span id="cb17-2"><a></a>SHOW <span class="kw">TABLES</span>;</span>
-<span id="cb17-3"><a></a></span>
-<span id="cb17-4"><a></a><span class="co">-- Ver la estructura de una tabla</span></span>
-<span id="cb17-5"><a></a>DESCRIBE clientes;</span>
-<span id="cb17-6"><a></a>DESCRIBE ventas;</span>
-<span id="cb17-7"><a></a></span>
-<span id="cb17-8"><a></a><span class="co">-- Ver las FK definidas en una tabla</span></span>
-<span id="cb17-9"><a></a>SHOW <span class="kw">CREATE</span> <span class="kw">TABLE</span> detalle_venta;</span>
-<span id="cb17-10"><a></a></span>
-<span id="cb17-11"><a></a><span class="co">-- Contar filas insertadas</span></span>
-<span id="cb17-12"><a></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_clientes <span class="kw">FROM</span> clientes;</span>
-<span id="cb17-13"><a></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_productos <span class="kw">FROM</span> productos;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="fragment">
-<p><strong><code>DESCRIBE</code></strong> es la herramienta de diagnóstico básica del analista: muestra columnas, tipos, si permite NULL, si tiene clave y el valor DEFAULT.</p>
-</div>
-</section>
-<section id="verificar-la-integridad-con-select" class="slide level2">
-<h2>Verificar la Integridad con SELECT</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb18-1"><a></a><span class="co">-- ¿Hay ventas sin cliente válido? (debería ser 0 con FK activa)</span></span>
-<span id="cb18-2"><a></a><span class="kw">SELECT</span> v.venta_id, v.cliente_id</span>
-<span id="cb18-3"><a></a><span class="kw">FROM</span> ventas v</span>
-<span id="cb18-4"><a></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> clientes c <span class="kw">ON</span> v.cliente_id <span class="op">=</span> c.cliente_id</span>
-<span id="cb18-5"><a></a><span class="kw">WHERE</span> c.cliente_id <span class="kw">IS</span> <span class="kw">NULL</span>;</span>
-<span id="cb18-6"><a></a></span>
-<span id="cb18-7"><a></a><span class="co">-- ¿Hay productos con stock negativo? (violación de CHECK)</span></span>
-<span id="cb18-8"><a></a><span class="kw">SELECT</span> producto_id, nombre_producto, stock</span>
-<span id="cb18-9"><a></a><span class="kw">FROM</span> productos</span>
-<span id="cb18-10"><a></a><span class="kw">WHERE</span> stock <span class="op">&lt;</span> <span class="dv">0</span>;</span>
-<span id="cb18-11"><a></a></span>
-<span id="cb18-12"><a></a><span class="co">-- ¿Hay detalle_venta con precio 0 o negativo?</span></span>
-<span id="cb18-13"><a></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> detalle_venta</span>
-<span id="cb18-14"><a></a><span class="kw">WHERE</span> precio_unitario <span class="op">&lt;=</span> <span class="dv">0</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="fragment">
-<p>Estas consultas son el <strong>test de integridad</strong> que Juan ejecuta después de cada carga de datos. Si todas retornan 0 filas, la base de datos está en estado consistente.</p>
-</div>
-</section>
-<section id="modificar-la-estructura-alter-table" class="slide level2">
-<h2>Modificar la Estructura: ALTER TABLE</h2>
-<p>Después de crear la base de datos, pueden surgir cambios de requerimientos.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb19-1"><a></a><span class="co">-- Agregar una columna nueva a CLIENTES</span></span>
-<span id="cb19-2"><a></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> clientes</span>
-<span id="cb19-3"><a></a><span class="kw">ADD</span> <span class="kw">COLUMN</span> telefono <span class="dt">VARCHAR</span>(<span class="dv">15</span>) <span class="kw">NULL</span> <span class="kw">AFTER</span> apellido;</span>
-<span id="cb19-4"><a></a></span>
-<span id="cb19-5"><a></a><span class="co">-- Modificar el tipo de una columna existente</span></span>
-<span id="cb19-6"><a></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> productos</span>
-<span id="cb19-7"><a></a><span class="kw">MODIFY</span> <span class="kw">COLUMN</span> nombre_producto <span class="dt">VARCHAR</span>(<span class="dv">150</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>;</span>
-<span id="cb19-8"><a></a></span>
-<span id="cb19-9"><a></a><span class="co">-- Agregar un índice para mejorar consultas por región</span></span>
-<span id="cb19-10"><a></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> clientes</span>
-<span id="cb19-11"><a></a><span class="kw">ADD</span> <span class="kw">INDEX</span> idx_region (region);</span>
-<span id="cb19-12"><a></a></span>
-<span id="cb19-13"><a></a><span class="co">-- Agregar un índice para consultas frecuentes por fecha de venta</span></span>
-<span id="cb19-14"><a></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> ventas</span>
-<span id="cb19-15"><a></a><span class="kw">ADD</span> <span class="kw">INDEX</span> idx_fecha (fecha);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="fragment">
-<p><strong>Regla de oro</strong>: <code>ALTER TABLE</code> en producción debe planificarse con cuidado. En tablas con millones de filas, puede bloquear la tabla por minutos. En TechStyle con 8,5 millones de clientes, esto es una operación de mantenimiento programado.</p>
-</div>
-</section>
-<section id="conexión-con-la-toma-de-decisiones" class="slide level2">
-<h2>Conexión con la Toma de Decisiones</h2>
-<p>¿Por qué le importa todo esto a Roberto y María?</p>
-<ul>
-<li class="fragment">Una base de datos implementada <strong>correctamente</strong> garantiza que cada INSERT y UPDATE cumple las reglas del negocio automáticamente — sin depender de que cada usuario recuerde aplicarlas.</li>
-<li class="fragment">Las <strong>transacciones</strong> aseguran que los datos del CMI de Roberto siempre muestran un estado consistente — nunca una venta a medias o un stock negativo.</li>
-<li class="fragment">Un sistema que rechaza datos inválidos en origen es mucho más barato que uno que los acepta y luego requiere procesos de limpieza.</li>
-</ul>
-<div class="fragment">
-<blockquote>
-<p>Un sistema de información confiable no depende de las buenas intenciones de los usuarios — depende de las restricciones del modelo de datos.</p>
-</blockquote>
-</div>
-</section>
 <section id="puntos-clave-de-la-semana-6" class="slide level2">
 <h2>Puntos Clave de la Semana 6</h2>
 <ul>
-<li class="fragment"><strong>DDL vs DML</strong>: <code>CREATE TABLE</code> define estructura; <code>INSERT INTO</code> agrega datos. El orden de ejecución en ambos casos sigue la jerarquía de FK (padres antes que hijos).</li>
-<li class="fragment"><strong>El Diccionario de Datos</strong> es el contrato entre el analista y la base de datos: especifica tipo, restricciones y significado de cada columna.</li>
-<li class="fragment"><strong><code>AUTO_INCREMENT</code></strong> genera IDs únicos automáticamente; <code>LAST_INSERT_ID()</code> permite referenciarlo en la misma transacción.</li>
-<li class="fragment">Una <strong>transacción</strong> (<code>START TRANSACTION</code> / <code>COMMIT</code> / <code>ROLLBACK</code>) garantiza que operaciones compuestas sean atómicas — todo o nada.</li>
-<li class="fragment">Las propiedades <strong>ACID</strong> son el fundamento de la confiabilidad de cualquier sistema de información empresarial.</li>
-<li class="fragment">Las restricciones (FK, CHECK, UNIQUE) no son obstáculos — son la implementación técnica de las reglas del negocio.</li>
+<li class="fragment"><strong>DDL vs DML</strong>: <code>CREATE TABLE</code> define la estructura; <code>INSERT INTO</code> agrega los datos. El orden de ejecución en ambos casos sigue la jerarquía de FK (tablas padre antes que tablas hijo).</li>
+<li class="fragment"><strong>El Diccionario de Datos</strong> especifica tipo, restricciones y significado de cada columna — es el contrato entre el analista y la base de datos.</li>
+<li class="fragment">Los tipos de datos (<code>VARCHAR</code>, <code>INT</code>, <code>DECIMAL</code>, <code>DATE</code>) y las restricciones (<code>NOT NULL</code>, <code>UNIQUE</code>, <code>CHECK</code>) son la implementación técnica de las reglas del negocio.</li>
+<li class="fragment"><strong><code>AUTO_INCREMENT</code></strong> genera identificadores únicos automáticamente; nunca se incluye en el <code>INSERT INTO</code>.</li>
+<li class="fragment">Insertar datos con FK exige respetar el orden: primero los registros padre, luego los registros hijo.</li>
 </ul>
 </section>
 <section id="preview-del-laboratorio-w06" class="slide level2">
 <h2>Preview del Laboratorio W06</h2>
-<p><strong>Lab W06: Construyendo la Base de Datos de TechStyle</strong></p>
+<p><strong>Lab W06: Creando e Insertando Datos en TechStyle</strong></p>
 <ul>
-<li class="fragment">Ejecutarás el script DDL completo generado en W05 para crear las 9 tablas de TechStyle.</li>
-<li class="fragment">Cargarás datos reales desde archivos CSV usando <code>LOAD DATA</code> e <code>INSERT INTO</code>.</li>
-<li class="fragment">Implementarás y probarás transacciones para el registro de ventas.</li>
-<li class="fragment">Verificarás la integridad mediante consultas de diagnóstico.</li>
-<li class="fragment">Al finalizar, tendrás la base de datos de TechStyle poblada y lista para las consultas de la W07.</li>
+<li class="fragment">Ejecutarás el script DDL completo generado en W05 para crear las 9 tablas de TechStyle en MySQL.</li>
+<li class="fragment">Cargarás los primeros datos mediante sentencias <code>INSERT INTO</code> respetando el orden de claves foráneas.</li>
+<li class="fragment">Verificarás la estructura creada con <code>SHOW TABLES</code> y <code>DESCRIBE</code>.</li>
+<li class="fragment">Al finalizar, tendrás la base de datos de TechStyle con estructura completa y datos iniciales listos.</li>
 </ul>
 <div class="fragment">
 <blockquote>
-<p>El trabajo de hoy es el que separa un modelo de papel de un sistema que puede responder preguntas de negocio reales.</p>
+<p>En W07 aprenderemos a garantizar que operaciones compuestas — como registrar una venta con múltiples productos — sean completamente seguras ante fallas del sistema.</p>
 </blockquote>
 </div>
 

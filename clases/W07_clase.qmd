@@ -1,0 +1,373 @@
+---
+title: "Operaciones Seguras y Confiables"
+subtitle: "Transacciones, ACID y Verificación de Integridad · Semana 7 · Unidad II"
+author: "Universidad San Sebastián"
+date: "Abril 2026"
+format:
+  revealjs:
+    theme: sky
+    incremental: false
+    slide-number: true
+    footer: "Big Data y Analytics · USS · 2026"
+---
+
+## ¿Dónde Estamos?
+
+::: {.incremental}
+- **W04–W05**: Diseñamos el modelo MER de TechStyle, normalizamos hasta 3FN y generamos el script DDL con MySQL Workbench.
+- **W06**: Ejecutamos el DDL — creamos las 9 tablas — y cargamos los primeros datos con `INSERT INTO`.
+- **Hoy (W07)**: La base de datos tiene estructura y datos. Ahora necesitamos garantizar que las operaciones sean **seguras y confiables** ante fallas del sistema.
+:::
+
+::: {.fragment}
+**El problema de hoy**: ¿qué pasa si el sistema falla a mitad de una operación compuesta?
+:::
+
+---
+
+## El Problema de Carlos Esta Semana
+
+Con la base de datos de TechStyle en producción, el equipo de ventas empieza a operar. Carlos, jefe de operaciones, alerta a Juan:
+
+::: {.incremental}
+- **Carlos**: "Ayer al registrar una venta, la aplicación se cayó. Quedó la venta creada pero sin el detalle de productos ni el stock actualizado."
+- **Roberto**: "¿Cómo puedo confiar en los datos del CMI si las operaciones pueden quedar a medias?"
+- **María**: "Además, necesito agregar campos al modelo actual. ¿Puedo modificar las tablas sin perder los datos existentes?"
+:::
+
+::: {.fragment}
+**Tres desafíos para Juan**: garantizar operaciones atómicas, entender las propiedades de confiabilidad y modificar la estructura sin destruir datos.
+:::
+
+---
+
+## ¿Qué es una Transacción?
+
+Carlos pregunta: "¿Qué pasa si al registrar una venta, el sistema falla a mitad de camino?"
+
+::: {.fragment}
+Una **transacción** es un conjunto de operaciones SQL que se ejecutan como una **unidad atómica**:
+
+- O todas tienen éxito y se guardan juntas.
+- O alguna falla y **ninguna** queda guardada.
+:::
+
+::: {.fragment}
+**Ejemplo**: registrar la venta de Juan que compró 2 productos:
+
+```
+Paso 1: INSERT en VENTAS          (crea la venta V001)
+Paso 2: INSERT en DETALLE_VENTA   (línea producto P001)
+Paso 3: INSERT en DETALLE_VENTA   (línea producto P002)
+Paso 4: UPDATE en PRODUCTOS       (descuenta stock P001)
+Paso 5: UPDATE en PRODUCTOS       (descuenta stock P002)
+```
+
+Si el servidor falla después del Paso 2, ¿qué queda? Una venta sin stock actualizado y con solo un producto. Dato incorrecto.
+:::
+
+---
+
+## BEGIN, COMMIT y ROLLBACK
+
+```sql
+-- Iniciar la transacción
+START TRANSACTION;
+
+-- Paso 1: crear la venta
+INSERT INTO ventas (fecha, cliente_id) VALUES ('2026-04-28', 1);
+
+-- Paso 2 y 3: agregar los productos
+INSERT INTO detalle_venta (venta_id, producto_id, cantidad, precio_unitario)
+VALUES (LAST_INSERT_ID(), 3, 1, 89990.00);
+
+INSERT INTO detalle_venta (venta_id, producto_id, cantidad, precio_unitario)
+VALUES (LAST_INSERT_ID(), 7, 2, 24990.00);
+
+-- Paso 4 y 5: descontar stock
+UPDATE productos SET stock = stock - 1 WHERE producto_id = 3;
+UPDATE productos SET stock = stock - 2 WHERE producto_id = 7;
+
+-- Si todo salió bien: confirmar
+COMMIT;
+
+-- Si algo falló: deshacer todo
+-- ROLLBACK;
+```
+
+::: {.fragment}
+**`LAST_INSERT_ID()`**: devuelve el ID generado por el último AUTO_INCREMENT — así usamos el `venta_id` recién creado sin tener que consultarlo.
+:::
+
+---
+
+## COMMIT y ROLLBACK: Lo Que Ocurre Internamente
+
+```{mermaid}
+graph LR
+    A["START TRANSACTION"] --> B["INSERT ventas"]
+    B --> C["INSERT detalle x2"]
+    C --> D["UPDATE stock x2"]
+    D --> E{¿Todo OK?}
+    E -->|Sí| F["COMMIT\n✅ Datos guardados"]
+    E -->|Error| G["ROLLBACK\n❌ Nada guardado"]
+    style F fill:#d4edda,stroke:#28a745
+    style G fill:#f8d7da,stroke:#dc3545
+```
+
+::: {.fragment}
+Hasta que se ejecuta `COMMIT`, los cambios existen solo en la sesión del usuario actual. Otros usuarios no los ven. El `COMMIT` los hace permanentes y visibles para todos.
+:::
+
+---
+
+## Las Propiedades ACID
+
+Las transacciones garantizan las propiedades **ACID** — el estándar de confiabilidad para bases de datos.
+
+| Propiedad | Significado | En TechStyle |
+|---|---|---|
+| **A**tomicidad | Todo o nada | Venta + detalle + stock como una sola unidad |
+| **C**onsistencia | Los datos siempre cumplen las reglas | FK, CHECK, NOT NULL se verifican al COMMIT |
+| **I**solación | Las transacciones no se interfieren | Dos vendedores pueden operar simultáneamente |
+| **D**urabilidad | Un COMMIT sobrevive fallos del sistema | La venta queda en disco, no solo en memoria |
+
+::: {.fragment}
+> Las propiedades ACID son la razón por la que un banco puede garantizar que tu transferencia llegó o no llegó — nunca a medias.
+:::
+
+---
+
+## Transacciones y Casos de Error Reales
+
+¿Qué pasa si el stock de un producto llega a negativo? Juan quiere impedirlo.
+
+```sql
+START TRANSACTION;
+
+-- Verificar stock ANTES de descontar
+SELECT stock INTO @stock_actual
+FROM productos WHERE producto_id = 3;
+
+-- Si no hay suficiente stock, hacer ROLLBACK
+IF @stock_actual < 5 THEN
+    ROLLBACK;
+    SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Stock insuficiente para completar la venta';
+ELSE
+    UPDATE productos SET stock = stock - 5 WHERE producto_id = 3;
+    COMMIT;
+END IF;
+```
+
+::: {.fragment}
+En sistemas reales, esta lógica se implementa en un **Stored Procedure** (procedimiento almacenado) dentro de MySQL, o desde el código de la aplicación antes de ejecutar el UPDATE.
+:::
+
+---
+
+## 🚀 Desafío Rápido 1 {background-color="#e8f4f8"}
+
+<!-- **En grupos de 3 (5 minutos):** -->
+
+Analiza estos escenarios de TechStyle y decide: ¿`COMMIT` o `ROLLBACK`?
+
+**Escenario A**: Juan procesa una devolución de María. Actualiza `devoluciones` correctamente, pero al intentar hacer `UPDATE ventas` recibe el error 1451 (FK violation).
+
+**Escenario B**: Se está cargando el catálogo nuevo de 500 productos. Después de insertar 380 productos, hay un corte de luz.
+
+**Escenario C**: Roberto pide eliminar a un cliente que tiene 15 ventas históricas. El `DELETE FROM clientes` recibe error 1451.
+
+Para cada escenario: ¿Qué pasa con los datos? ¿Qué debería hacer Juan?
+
+::: {.notes}
+**Solución Desafío Rápido 1**
+
+**Escenario A — ROLLBACK manual:**
+- El error 1451 (violación de FK) en el UPDATE dentro de una transacción activa no hace ROLLBACK automático en MySQL — la transacción sigue abierta pero el UPDATE falló.
+- Juan debe ejecutar `ROLLBACK` manualmente para deshacer el INSERT en `devoluciones`.
+- Luego investigar por qué el UPDATE de ventas falla: probablemente la lógica de la devolución está incorrecta — no debería modificar directamente la tabla de ventas.
+- **Lección**: MySQL no siempre hace ROLLBACK automático ante errores DML. El código de la aplicación debe verificar cada paso y hacer ROLLBACK explícito ante cualquier error.
+
+**Escenario B — ROLLBACK automático:**
+- Si el INSERT masivo estaba dentro de una transacción (START TRANSACTION), el corte de luz provoca que MySQL al reiniciarse aplique el log de transacciones y haga ROLLBACK de todo lo no confirmado.
+- Si no estaba en una transacción explícita, cada INSERT es una transacción implícita — los 380 productos insertados quedan confirmados y los 120 restantes no.
+- **Lección**: las cargas masivas de datos deben realizarse dentro de una transacción explícita para garantizar que el catálogo quede completo o no quede nada.
+
+**Escenario C — Error de integridad, no hay transacción que deshacer:**
+- El error 1451 ocurre en un DELETE de CLIENTES porque las FK de VENTAS tienen ON DELETE RESTRICT.
+- MySQL rechaza el DELETE — no hay datos modificados que deshacer.
+- Juan no puede borrar el cliente mientras tenga ventas asociadas. Opciones según la política del negocio:
+  1. No borrar — mantener el historial (lo más común en comercio).
+  2. Marcar el cliente como inactivo con un campo `activo BOOLEAN DEFAULT TRUE`.
+  3. Archivar el cliente en otra tabla antes de eliminar.
+- **Lección**: ON DELETE RESTRICT protege la integridad histórica. En sistemas de negocio reales, casi nunca se elimina información — se marca como inactiva.
+
+*Punto de cierre*: las transacciones y las restricciones de FK no son obstáculos técnicos — son el sistema nervioso de la integridad del negocio. Un analista que entiende esto puede diseñar operaciones confiables.
+:::
+
+---
+
+## Verificar la Estructura Creada
+
+Después de ejecutar el script, Juan verifica que todo quedó bien:
+
+```sql
+-- Ver todas las tablas de la base de datos
+SHOW TABLES;
+
+-- Ver la estructura de una tabla
+DESCRIBE clientes;
+DESCRIBE ventas;
+
+-- Ver las FK definidas en una tabla
+SHOW CREATE TABLE detalle_venta;
+
+-- Contar filas insertadas
+SELECT COUNT(*) AS total_clientes FROM clientes;
+SELECT COUNT(*) AS total_productos FROM productos;
+```
+
+::: {.fragment}
+**`DESCRIBE`** es la herramienta de diagnóstico básica del analista: muestra columnas, tipos, si permite NULL, si tiene clave y el valor DEFAULT.
+:::
+
+---
+
+## Verificar la Integridad con SELECT
+
+```sql
+-- ¿Hay ventas sin cliente válido? (debería ser 0 con FK activa)
+SELECT v.venta_id, v.cliente_id
+FROM ventas v
+LEFT JOIN clientes c ON v.cliente_id = c.cliente_id
+WHERE c.cliente_id IS NULL;
+
+-- ¿Hay productos con stock negativo? (violación de CHECK)
+SELECT producto_id, nombre_producto, stock
+FROM productos
+WHERE stock < 0;
+
+-- ¿Hay detalle_venta con precio 0 o negativo?
+SELECT * FROM detalle_venta
+WHERE precio_unitario <= 0;
+```
+
+::: {.fragment}
+Estas consultas son el **test de integridad** que Juan ejecuta después de cada carga de datos. Si todas retornan 0 filas, la base de datos está en estado consistente.
+:::
+
+---
+
+## Modificar la Estructura: ALTER TABLE
+
+Después de crear la base de datos, pueden surgir cambios de requerimientos.
+
+```sql
+-- Agregar una columna nueva a CLIENTES
+ALTER TABLE clientes
+ADD COLUMN telefono VARCHAR(15) NULL AFTER apellido;
+
+-- Modificar el tipo de una columna existente
+ALTER TABLE productos
+MODIFY COLUMN nombre_producto VARCHAR(150) NOT NULL;
+
+-- Agregar un índice para mejorar consultas por región
+ALTER TABLE clientes
+ADD INDEX idx_region (region);
+
+-- Agregar un índice para consultas frecuentes por fecha de venta
+ALTER TABLE ventas
+ADD INDEX idx_fecha (fecha);
+```
+
+::: {.fragment}
+**Regla de oro**: `ALTER TABLE` en producción debe planificarse con cuidado. En tablas con millones de filas, puede bloquear la tabla por minutos. En TechStyle con 8,5 millones de clientes, esto es una operación de mantenimiento programado.
+:::
+
+---
+
+## 🚀 Desafío Rápido 2 {background-color="#e8f4f8"}
+
+María necesita agregar el campo `rut` a la tabla `clientes` (único por cliente, formato `VARCHAR(12)`) y un campo `activo` para marcar clientes dados de baja sin eliminarlos.
+
+1. Escribe los dos `ALTER TABLE` necesarios. ¿Qué restricciones agregarías a cada columna?
+2. ¿Por qué conviene usar un campo `activo BOOLEAN` en vez de eliminar el registro con `DELETE`?
+3. Hay 850.000 filas en `clientes`. ¿Qué consideraciones operativas deberías tener antes de ejecutar el `ALTER TABLE` en producción?
+
+::: {.notes}
+**Solución Desafío Rápido 2**
+
+1. **ALTER TABLE para agregar los campos:**
+   ```sql
+   ALTER TABLE clientes
+   ADD COLUMN rut VARCHAR(12) NULL UNIQUE AFTER cliente_id;
+
+   ALTER TABLE clientes
+   ADD COLUMN activo BOOLEAN NOT NULL DEFAULT TRUE;
+   ```
+   - `rut` es NULL inicialmente porque los clientes existentes no tienen rut cargado aún.
+   - UNIQUE garantiza que no haya dos clientes con el mismo RUT.
+   - `activo` DEFAULT TRUE: todos los clientes existentes se marcan como activos automáticamente.
+
+2. **Por qué `activo` vs `DELETE`:**
+   - Un cliente con ventas históricas no puede eliminarse (ON DELETE RESTRICT en ventas).
+   - Eliminar registros destruye el historial de transacciones — inaceptable en comercio.
+   - Con `activo = FALSE` la aplicación puede filtrar clientes dados de baja sin perder la trazabilidad.
+   - El CMI de Roberto siempre puede acceder al historial completo.
+
+3. **Consideraciones operativas:**
+   - En MySQL moderno, ADD COLUMN con DEFAULT puede no reescribir todas las filas, pero MODIFY COLUMN sí puede bloquear la tabla.
+   - En tablas grandes: ejecutar en horario de bajo tráfico o usar herramientas de migración no bloqueante.
+   - Siempre hacer backup antes de un ALTER TABLE en producción.
+   - Probar el ALTER en una copia de la base de datos antes de ejecutarlo en producción.
+
+*Punto de cierre*: el modelo de datos no es estático — evoluciona con el negocio. La habilidad de modificar la estructura de forma controlada, sin interrumpir las operaciones, es una competencia crítica del analista de datos.
+:::
+
+---
+
+## Conexión con la Toma de Decisiones
+
+¿Por qué le importa todo esto a Roberto y María?
+
+::: {.incremental}
+- Una base de datos implementada **correctamente** garantiza que cada INSERT y UPDATE cumple las reglas del negocio automáticamente — sin depender de que cada usuario recuerde aplicarlas.
+- Las **transacciones** aseguran que los datos del CMI de Roberto siempre muestran un estado consistente — nunca una venta a medias o un stock negativo.
+- Un sistema que rechaza datos inválidos en origen es mucho más barato que uno que los acepta y luego requiere procesos de limpieza.
+:::
+
+::: {.fragment}
+> Un sistema de información confiable no depende de las buenas intenciones de los usuarios — depende de las restricciones del modelo de datos.
+:::
+
+---
+
+## Puntos Clave de la Semana 7
+
+::: {.incremental}
+- Una **transacción** (`START TRANSACTION` / `COMMIT` / `ROLLBACK`) garantiza que operaciones compuestas sean atómicas — todo o nada.
+- **`LAST_INSERT_ID()`** permite encadenar operaciones dentro de una transacción usando el ID recién generado por AUTO_INCREMENT.
+- Las propiedades **ACID** — Atomicidad, Consistencia, Aislamiento, Durabilidad — son el fundamento de la confiabilidad de cualquier sistema de información empresarial.
+- Los comandos de **verificación** (`SHOW TABLES`, `DESCRIBE`, `SHOW CREATE TABLE`) y las consultas de integridad son la rutina de diagnóstico del analista tras cada carga de datos.
+- **`ALTER TABLE`** permite evolucionar la estructura de la base de datos sin destruir los datos existentes — pero requiere planificación en tablas grandes.
+- Las restricciones (FK, CHECK, UNIQUE) y las transacciones no son obstáculos — son la implementación técnica de las reglas del negocio.
+:::
+
+---
+
+## Preview del Laboratorio W07
+
+**Lab W07: Transacciones y Verificación en TechStyle**
+
+::: {.incremental}
+- Implementarás transacciones para el registro seguro de ventas: INSERT en ventas + detalle + UPDATE de stock como una unidad atómica.
+- Probarás escenarios de COMMIT y ROLLBACK para verificar el comportamiento ante errores.
+- Ejecutarás consultas de verificación de integridad sobre la base de datos poblada en W06.
+- Aplicarás `ALTER TABLE` para extender el modelo con nuevos campos requeridos por el equipo de TechStyle.
+- Al finalizar, tendrás la base de datos de TechStyle operando con transacciones confiables y el modelo extendido.
+:::
+
+::: {.fragment}
+> En W08 comenzaremos a consultar y analizar los datos acumulados — las preguntas de negocio de Roberto y María empezarán a responderse.
+:::

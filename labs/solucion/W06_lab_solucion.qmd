@@ -30,9 +30,6 @@ CREATE SCHEMA IF NOT EXISTS `techstyle` DEFAULT CHARACTER SET utf8mb4;
 USE `techstyle`;
 ```
 
-::: {.callout-note}
-**Para el docente**: verificar que los estudiantes activaron las opciones `Generate DROP Statements` y `Include FK Indexes`. Sin `DROP TABLE IF EXISTS` antes de cada `CREATE`, el script fallará si se ejecuta más de una vez — situación común en laboratorio cuando el estudiante necesita repetir la ejecución tras corregir errores.
-:::
 
 ---
 
@@ -62,9 +59,6 @@ Los scripts ya están provistos en el enunciado. Evaluar que los estudiantes los
 ```sql
 ALTER TABLE devoluciones ADD CONSTRAINT chk_cantidad_devuelta_positiva
     CHECK (cantidad_devuelta > 0);
-
-ALTER TABLE devoluciones ADD CONSTRAINT chk_estado_devolucion
-    CHECK (estado IN ('Pendiente', 'Aprobada', 'Rechazada', 'Reembolsada'));
 ```
 
 ### Paso 7: Orden correcto de creación — Verificación
@@ -280,7 +274,7 @@ ALTER TABLE detalle_ventas  ADD CONSTRAINT chk_cantidad_positiva CHECK (cantidad
 ALTER TABLE detalle_ventas  ADD CONSTRAINT chk_descuento_rango   CHECK (descuento_pct BETWEEN 0 AND 100);
 ALTER TABLE clientes        ADD CONSTRAINT chk_segmento_valido   CHECK (segmento IN ('Premium', 'Estándar', 'Básico'));
 ALTER TABLE despachos       ADD CONSTRAINT chk_estado_despacho   CHECK (estado IN ('Pendiente', 'En tránsito', 'Entregado', 'No entregado'));
-ALTER TABLE devoluciones    ADD CONSTRAINT chk_estado_devolucion CHECK (estado IN ('Pendiente', 'Aprobada', 'Rechazada', 'Reembolsada'));
+ALTER TABLE devoluciones    ADD CONSTRAINT chk_estado_devolucion CHECK (estado IN ('Pendiente', 'Aprobada', 'Rechazada'));
 
 -- ── Índices de rendimiento
 CREATE INDEX idx_clientes_region     ON clientes(region);
@@ -288,7 +282,6 @@ CREATE INDEX idx_clientes_segmento   ON clientes(segmento);
 CREATE INDEX idx_ventas_fecha        ON ventas(fecha);
 CREATE INDEX idx_productos_categoria ON productos(categoria_id);
 CREATE INDEX idx_despachos_estado    ON despachos(estado);
-CREATE INDEX idx_devoluciones_estado ON devoluciones(estado);
 ```
 
 ---
@@ -407,91 +400,25 @@ SELECT * FROM detalle_ventas WHERE descuento_pct < 0 OR descuento_pct > 100;
 
 ---
 
-## Parte 5 — Transacciones: Registrar una Venta Completa
+## Entregable
 
-### Pasos 17 y 18: Transacciones
+Sube a la plataforma los siguientes archivos comprimidos en `W06_lab_[apellido1]_[apellido2].zip`:
 
-Los scripts ya están provistos en el enunciado. Evaluar que los estudiantes ejecutaron ambos bloques correctamente y observaron los resultados.
-
-**Resultado esperado tras el COMMIT (Paso 17):**
-
-```sql
--- Stock descontado en productos 2 y 6
-SELECT producto_id, nombre_producto, stock FROM productos WHERE producto_id IN (2, 6);
--- producto_id=2: Adidas Ultraboost → stock = 89 (era 90)
--- producto_id=6: Pantalón Under Armour → stock = 94 (era 95)
-
--- Venta registrada para Sofía (cliente_id = 4)
-SELECT v.venta_id, v.fecha, dv.producto_id, dv.cantidad
-FROM ventas v JOIN detalle_ventas dv ON v.venta_id = dv.venta_id
-WHERE v.cliente_id = 4;
--- venta_id=4, con dos líneas de detalle (producto_id=2 y producto_id=6)
-```
-
-**Resultado esperado tras el ROLLBACK (Paso 18):**
-
-```sql
-SELECT * FROM ventas WHERE cliente_id = 5;
--- 0 filas — Diego Torres no tiene ventas registradas
-```
-
-::: {.callout-important}
-**Para el docente**: en MySQL Workbench, los errores de FK dentro de una transacción activa **no hacen ROLLBACK automático**. La transacción queda abierta con el error. Los estudiantes deben ejecutar `ROLLBACK` manualmente (o cerrar la sesión). Si no ejecutan el ROLLBACK, la venta de Diego puede quedar parcialmente registrada al cerrar la sesión según la configuración de `autocommit`. Este es exactamente el punto pedagógico: MySQL no adivina la intención — el código debe manejar los errores explícitamente.
-:::
-
-### Paso 19: Reflexión sobre transacciones — Respuestas esperadas
-
-| Situación | ¿COMMIT o ROLLBACK? | ¿Por qué? |
-|---|---|---|
-| Se registra la venta y el detalle correctamente, pero al descontar stock uno de los productos llega a stock negativo (-1) | **ROLLBACK** | El CHECK `stock >= 0` lanzará un error que debe tratarse como falla del proceso completo. Dejar la venta registrada con el stock inconsistente produce un estado inválido del sistema. Se hace ROLLBACK de toda la operación, se verifica el stock disponible y se informa al vendedor. |
-| Se insertan 500 productos nuevos del catálogo y hay un error de tipo de dato en la fila 231 | **ROLLBACK** | Si la carga masiva está en una transacción, el error en la fila 231 debe provocar ROLLBACK de todos los inserts previos. Un catálogo parcial (230 productos de 500) es peor que ninguno: los reportes mostrarían información incompleta. Corregir el archivo CSV y re-ejecutar la carga completa. |
-| Una devolución queda registrada en `devoluciones` pero falla el UPDATE del stock al reingresarlo | **ROLLBACK** | Tener una devolución aprobada sin que el stock se haya reingresado es un estado inconsistente: el sistema registra que se devolvió el producto pero las unidades no están disponibles para vender. Impacto directo en los reportes de inventario de Carlos. ROLLBACK y reintentar la operación completa. |
+| Archivo | Contenido |
+|---|---|
+| `W06_techstyle_ddl.sql` | Script DDL completo: CREATE TABLE, CHECK, índices y ON DELETE corregidos |
+| `W06_inserts.sql` | Script con todos los INSERT de la Parte 4 (incluyendo el INSERT de Carlos que escribiste tú) |
 
 ---
 
-## Parte 6 — Síntesis y Reflexión
+## Criterios de Evaluación
 
-### Paso 20: Comparar modelo diseñado vs. modelo implementado — Respuesta esperada
-
-| Dimensión | Modelo en papel (W05) | Base de datos real (W06) |
-|---|---|---|
-| ¿Se puede saber qué proveedor abastece un producto? | Sí (en el diagrama) | **Sí** — la tabla `proveedor_producto` existe en el servidor y las FK están activas |
-| ¿Las FK impiden ventas de clientes inexistentes? | En diseño | **Sí** — MySQL lanza ERROR 1452 si `cliente_id` no existe en `clientes` |
-| ¿Un producto puede tener stock negativo? | Según diseño, no | **No** — el CHECK `stock >= 0` bloquea cualquier UPDATE que deje el stock en negativo |
-| ¿Una venta incompleta puede quedar registrada? | En teoría, no | **Depende** — solo si se usa `START TRANSACTION`. Sin transacción explícita, cada INSERT es autocommit independiente y puede quedar un estado a medias |
-| ¿Qué pasa si se borra un cliente con ventas? | RESTRICT (diseño) | **ERROR 1451** — MySQL bloquea el DELETE con mensaje de violación de FK |
-
-### Paso 21: Preguntas de diseño e implementación — Respuestas esperadas
-
-| Pregunta | Respuesta |
+| Criterio | Puntaje |
 |---|---|
-| ¿Por qué `SET @variable = LAST_INSERT_ID()` y no poner el número directamente (ej. `venta_id = 3`)? | Porque ese número puede ser incorrecto si otro usuario insertó datos entre tus dos sentencias, o si el script se ejecuta varias veces. `LAST_INSERT_ID()` captura el ID generado por la sesión actual, no por otras conexiones. Hardcodear IDs produce errores silenciosos difíciles de detectar en producción. |
-| ¿Qué pasaría si dos vendedores insertan ventas para el mismo cliente al mismo tiempo sin transacciones? | `AUTO_INCREMENT` garantiza IDs únicos incluso con concurrencia. El riesgo sin transacciones no es el duplicado de IDs, sino la **inconsistencia**: si el sistema falla entre el INSERT en `ventas` y el INSERT en `detalle_ventas`, queda una venta registrada sin productos. Con transacciones, o se inserta todo o no se inserta nada. |
-| ¿Por qué `precio_unitario` se guarda en `detalle_ventas` y no se calcula desde `productos.precio_venta`? | `productos.precio_venta` es el precio vigente **hoy**. Si se calculara desde ahí, una venta del año pasado mostraría el precio actual, no el precio real que pagó el cliente. `precio_unitario` en `detalle_ventas` es el precio **histórico** — congela el valor exacto al momento de la transacción. Es obligatorio para auditoría financiera y análisis de márgenes históricos. |
-| Si TechStyle aplica un descuento general del 20% en una promoción, ¿qué operación SQL ejecutarías? ¿Dentro de una transacción? | Sí, dentro de una transacción. El UPDATE afecta muchas filas y si falla a mitad hay filas con 20% y filas sin descuento. Ejemplo: `START TRANSACTION; UPDATE detalle_ventas dv JOIN ventas v ON dv.venta_id = v.venta_id SET dv.descuento_pct = 20.00 WHERE v.fecha BETWEEN '2026-11-01' AND '2026-11-30'; COMMIT;` |
-| Un cliente quiere borrar su cuenta. ¿Qué debe hacer Juan antes del DELETE? | Verificar si tiene historial: `SELECT COUNT(*) FROM ventas WHERE cliente_id = 1`. Si hay ventas, la FK RESTRICT bloqueará el DELETE con ERROR 1451. La práctica correcta es el **soft delete**: agregar columna `activo TINYINT(1) DEFAULT 1` y ejecutar `UPDATE clientes SET activo = 0 WHERE cliente_id = 1`. El historial se preserva para auditoría; el cliente simplemente se oculta de las operaciones activas. |
-
-### Paso 22: Análisis de impacto — Respuestas esperadas
-
-| Capacidad implementada | Decisión de negocio que habilita |
-|---|---|
-| FK con `ON DELETE RESTRICT` en `ventas.cliente_id` | El historial de ventas siempre tiene trazabilidad al cliente — no hay ventas huérfanas en los reportes de María ni en la auditoría financiera |
-| CHECK `stock >= 0` en `productos` | La base de datos garantiza que nunca se registrará más stock del disponible — el panel de inventario de Carlos siempre mostrará datos reales, no negativos |
-| Transacciones en el registro de ventas | Una venta nunca queda registrada a medias — si falla el descuento de stock, toda la operación se deshace. Los datos del dashboard de Roberto son siempre consistentes |
-| Índice `idx_ventas_fecha` en `ventas(fecha)` | Los reportes de ventas por período (semana, mes, trimestre) que Roberto revisa en el CMI cargan en milisegundos aunque haya millones de registros, en vez de tardar minutos sin índice |
-| CHECK `segmento IN ('Premium', 'Estándar', 'Básico')` | Los análisis de segmentación de María son confiables — no pueden existir clientes en segmentos inválidos o con errores de digitación como `'premium'` (minúscula) o `'Premiun'` que fragmentarían el análisis en categorías fantasmas |
-
-### Paso 23: Reporte de implementación para Roberto — Respuesta modelo
-
-> **Para:** Roberto Fernández, CEO TechStyle
->
-> **Asunto:** Base de datos implementada — estado al 2026-04-21
->
-> La base de datos `techstyle` fue creada exitosamente en MySQL Server. El sistema cuenta con **9 tablas operativas** que cubren todas las operaciones del negocio: gestión de clientes y segmentos, catálogo de productos con jerarquía de categorías, registro de ventas con detalle por producto, trazabilidad de proveedores, seguimiento de despachos y control de devoluciones. El estado actual del sistema incluye 10 categorías, 6 clientes, 10 productos y 3 ventas de prueba correctamente registradas.
->
-> La consistencia de los datos está garantizada por dos mecanismos complementarios. Las **restricciones de integridad referencial** (FK) impiden que existan ventas sin cliente, productos sin categoría o devoluciones sin la venta que las originó. Las **restricciones CHECK** impiden precios negativos, stocks negativos, descuentos fuera del rango 0–100% y estados inválidos en despachos y devoluciones. Ningún usuario puede ingresar datos que violen las reglas del negocio — la base de datos los rechaza automáticamente.
->
-> En comparación con Excel, el sistema actual puede gestionar millones de transacciones sin degradación de rendimiento (gracias a 6 índices de consulta), garantiza que las operaciones de venta son atómicas (una venta nunca queda registrada a medias) y elimina las anomalías de actualización, inserción y eliminación que afectaban la planilla anterior. El paso siguiente es desarrollar las consultas SQL de análisis (Semana 7) para generar los reportes de ventas, márgenes y logística que el área comercial requiere.
+| Script DDL: orden correcto, FK con ON DELETE apropiado, CHECK e índices incluidos (Partes 1–2) | 35 pts |
+| Ejecución correcta en MySQL: 9 tablas creadas sin errores, verificación con DESCRIBE y SHOW CREATE TABLE (Parte 3) | 25 pts |
+| Inserts correctos: orden de inserción, uso de variables para IDs, datos completos (Parte 4) | 40 pts |
+| **Total** | **100 pts** |
 
 ---
 
@@ -517,12 +444,4 @@ Los errores más frecuentes:
 Variaciones aceptables:
 - Usar `LAST_INSERT_ID()` directamente (sin variable) si se ejecutan los dos INSERT en orden sin ningún otro INSERT de por medio.
 - Hardcodear el `venta_id = 3` si el estudiante verificó que esa es la tercera venta — señalar que es frágil pero no penalizar si el resultado es correcto.
-
-**Sobre las transacciones (Parte 5):**
-
-Punto de discusión importante: en MySQL, `autocommit = 1` por defecto. Esto significa que cada sentencia DML fuera de una transacción explícita es un COMMIT automático. Los estudiantes que no usan `START TRANSACTION` están haciendo commits implícitos en cada INSERT. Mostrar con `SELECT @@autocommit;`.
-
-**Sobre la nota del soft delete (Paso 21):**
-
-Este punto es una oportunidad para introducir el concepto de **datos activos vs. archivados** sin eliminar información. En sistemas reales de comercio, prácticamente nunca se borra información histórica — se marca como inactiva. Preguntar al grupo: "¿Cuántos años debe conservar TechStyle el historial de ventas? ¿Por qué?" (Respuesta: regulación tributaria SII → mínimo 6 años en Chile).
 :::

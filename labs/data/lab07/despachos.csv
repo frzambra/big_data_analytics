@@ -1,0 +1,4 @@
+venta_id,fecha_despacho,estado,transportista,numero_seguimiento
+1,2026-01-16,Entregado,Chilexpress,CHX-2026-00101
+2,2026-01-21,En tránsito,Starken,STK-2026-00089
+3,,Pendiente,,

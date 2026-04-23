@@ -135,18 +135,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#paso-15-insert-de-carlos-muñoz-solución" id="toc-paso-15-insert-de-carlos-muñoz-solución" class="nav-link" data-scroll-target="#paso-15-insert-de-carlos-muñoz-solución"><span class="header-section-number">4.2</span> Paso 15: INSERT de Carlos Muñoz — Solución</a></li>
   <li><a href="#paso-16-consultas-de-diagnóstico-resultados-esperados" id="toc-paso-16-consultas-de-diagnóstico-resultados-esperados" class="nav-link" data-scroll-target="#paso-16-consultas-de-diagnóstico-resultados-esperados"><span class="header-section-number">4.3</span> Paso 16: Consultas de diagnóstico — Resultados esperados</a></li>
   </ul></li>
-  <li><a href="#parte-5-transacciones-registrar-una-venta-completa" id="toc-parte-5-transacciones-registrar-una-venta-completa" class="nav-link" data-scroll-target="#parte-5-transacciones-registrar-una-venta-completa"><span class="header-section-number">5</span> Parte 5 — Transacciones: Registrar una Venta Completa</a>
-  <ul class="collapse">
-  <li><a href="#pasos-17-y-18-transacciones" id="toc-pasos-17-y-18-transacciones" class="nav-link" data-scroll-target="#pasos-17-y-18-transacciones"><span class="header-section-number">5.1</span> Pasos 17 y 18: Transacciones</a></li>
-  <li><a href="#paso-19-reflexión-sobre-transacciones-respuestas-esperadas" id="toc-paso-19-reflexión-sobre-transacciones-respuestas-esperadas" class="nav-link" data-scroll-target="#paso-19-reflexión-sobre-transacciones-respuestas-esperadas"><span class="header-section-number">5.2</span> Paso 19: Reflexión sobre transacciones — Respuestas esperadas</a></li>
-  </ul></li>
-  <li><a href="#parte-6-síntesis-y-reflexión" id="toc-parte-6-síntesis-y-reflexión" class="nav-link" data-scroll-target="#parte-6-síntesis-y-reflexión"><span class="header-section-number">6</span> Parte 6 — Síntesis y Reflexión</a>
-  <ul class="collapse">
-  <li><a href="#paso-20-comparar-modelo-diseñado-vs.-modelo-implementado-respuesta-esperada" id="toc-paso-20-comparar-modelo-diseñado-vs.-modelo-implementado-respuesta-esperada" class="nav-link" data-scroll-target="#paso-20-comparar-modelo-diseñado-vs.-modelo-implementado-respuesta-esperada"><span class="header-section-number">6.1</span> Paso 20: Comparar modelo diseñado vs.&nbsp;modelo implementado — Respuesta esperada</a></li>
-  <li><a href="#paso-21-preguntas-de-diseño-e-implementación-respuestas-esperadas" id="toc-paso-21-preguntas-de-diseño-e-implementación-respuestas-esperadas" class="nav-link" data-scroll-target="#paso-21-preguntas-de-diseño-e-implementación-respuestas-esperadas"><span class="header-section-number">6.2</span> Paso 21: Preguntas de diseño e implementación — Respuestas esperadas</a></li>
-  <li><a href="#paso-22-análisis-de-impacto-respuestas-esperadas" id="toc-paso-22-análisis-de-impacto-respuestas-esperadas" class="nav-link" data-scroll-target="#paso-22-análisis-de-impacto-respuestas-esperadas"><span class="header-section-number">6.3</span> Paso 22: Análisis de impacto — Respuestas esperadas</a></li>
-  <li><a href="#paso-23-reporte-de-implementación-para-roberto-respuesta-modelo" id="toc-paso-23-reporte-de-implementación-para-roberto-respuesta-modelo" class="nav-link" data-scroll-target="#paso-23-reporte-de-implementación-para-roberto-respuesta-modelo"><span class="header-section-number">6.4</span> Paso 23: Reporte de implementación para Roberto — Respuesta modelo</a></li>
-  </ul></li>
+  <li><a href="#entregable" id="toc-entregable" class="nav-link" data-scroll-target="#entregable"><span class="header-section-number">5</span> Entregable</a></li>
+  <li><a href="#criterios-de-evaluación" id="toc-criterios-de-evaluación" class="nav-link" data-scroll-target="#criterios-de-evaluación"><span class="header-section-number">6</span> Criterios de Evaluación</a></li>
   <li><a href="#notas-para-el-docente" id="toc-notas-para-el-docente" class="nav-link" data-scroll-target="#notas-para-el-docente"><span class="header-section-number">7</span> Notas para el docente</a></li>
   </ul>
 </nav>
@@ -198,19 +188,6 @@ Warning
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">SCHEMA</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> `techstyle` <span class="kw">DEFAULT</span> <span class="dt">CHARACTER</span> <span class="kw">SET</span> utf8mb4;</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">USE</span> `techstyle`;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Para el docente</strong>: verificar que los estudiantes activaron las opciones <code>Generate DROP Statements</code> y <code>Include FK Indexes</code>. Sin <code>DROP TABLE IF EXISTS</code> antes de cada <code>CREATE</code>, el script fallará si se ejecuta más de una vez — situación común en laboratorio cuando el estudiante necesita repetir la ejecución tras corregir errores.</p>
-</div>
-</div>
 <hr>
 </section>
 <section id="parte-2-verificar-y-completar-el-script-sql" class="level2" data-number="2">
@@ -279,10 +256,7 @@ Tip
 <p>Los scripts ya están provistos en el enunciado. Evaluar que los estudiantes los copiaron correctamente al archivo <code>.sql</code> y en el orden correcto (después de todos los <code>CREATE TABLE</code>).</p>
 <p><strong>Restricción adicional bien recibida (no obligatoria):</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> devoluciones <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_cantidad_devuelta_positiva</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (cantidad_devuelta <span class="op">&gt;</span> <span class="dv">0</span>);</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> devoluciones <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_estado_devolucion</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (estado <span class="kw">IN</span> (<span class="st">'Pendiente'</span>, <span class="st">'Aprobada'</span>, <span class="st">'Rechazada'</span>, <span class="st">'Reembolsada'</span>));</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (cantidad_devuelta <span class="op">&gt;</span> <span class="dv">0</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="paso-7-orden-correcto-de-creación-verificación" class="level3" data-number="2.3">
 <h3 data-number="2.3" class="anchored" data-anchor-id="paso-7-orden-correcto-de-creación-verificación"><span class="header-section-number">2.3</span> Paso 7: Orden correcto de creación — Verificación</h3>
@@ -553,15 +527,14 @@ Important
 <span id="cb3-190"><a href="#cb3-190" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> detalle_ventas  <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_descuento_rango   <span class="kw">CHECK</span> (descuento_pct <span class="kw">BETWEEN</span> <span class="dv">0</span> <span class="kw">AND</span> <span class="dv">100</span>);</span>
 <span id="cb3-191"><a href="#cb3-191" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> clientes        <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_segmento_valido   <span class="kw">CHECK</span> (segmento <span class="kw">IN</span> (<span class="st">'Premium'</span>, <span class="st">'Estándar'</span>, <span class="st">'Básico'</span>));</span>
 <span id="cb3-192"><a href="#cb3-192" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> despachos       <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_estado_despacho   <span class="kw">CHECK</span> (estado <span class="kw">IN</span> (<span class="st">'Pendiente'</span>, <span class="st">'En tránsito'</span>, <span class="st">'Entregado'</span>, <span class="st">'No entregado'</span>));</span>
-<span id="cb3-193"><a href="#cb3-193" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> devoluciones    <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_estado_devolucion <span class="kw">CHECK</span> (estado <span class="kw">IN</span> (<span class="st">'Pendiente'</span>, <span class="st">'Aprobada'</span>, <span class="st">'Rechazada'</span>, <span class="st">'Reembolsada'</span>));</span>
+<span id="cb3-193"><a href="#cb3-193" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> devoluciones    <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_estado_devolucion <span class="kw">CHECK</span> (estado <span class="kw">IN</span> (<span class="st">'Pendiente'</span>, <span class="st">'Aprobada'</span>, <span class="st">'Rechazada'</span>));</span>
 <span id="cb3-194"><a href="#cb3-194" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-195"><a href="#cb3-195" aria-hidden="true" tabindex="-1"></a><span class="co">-- ── Índices de rendimiento</span></span>
 <span id="cb3-196"><a href="#cb3-196" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_clientes_region     <span class="kw">ON</span> clientes(region);</span>
 <span id="cb3-197"><a href="#cb3-197" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_clientes_segmento   <span class="kw">ON</span> clientes(segmento);</span>
 <span id="cb3-198"><a href="#cb3-198" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_ventas_fecha        <span class="kw">ON</span> ventas(fecha);</span>
 <span id="cb3-199"><a href="#cb3-199" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_productos_categoria <span class="kw">ON</span> productos(categoria_id);</span>
-<span id="cb3-200"><a href="#cb3-200" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_despachos_estado    <span class="kw">ON</span> despachos(estado);</span>
-<span id="cb3-201"><a href="#cb3-201" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_devoluciones_estado <span class="kw">ON</span> devoluciones(estado);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-200"><a href="#cb3-200" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_despachos_estado    <span class="kw">ON</span> despachos(estado);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 </section>
@@ -806,123 +779,35 @@ Tip
 <hr>
 </section>
 </section>
-<section id="parte-5-transacciones-registrar-una-venta-completa" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="parte-5-transacciones-registrar-una-venta-completa"><span class="header-section-number">5</span> Parte 5 — Transacciones: Registrar una Venta Completa</h2>
-<section id="pasos-17-y-18-transacciones" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="pasos-17-y-18-transacciones"><span class="header-section-number">5.1</span> Pasos 17 y 18: Transacciones</h3>
-<p>Los scripts ya están provistos en el enunciado. Evaluar que los estudiantes ejecutaron ambos bloques correctamente y observaron los resultados.</p>
-<p><strong>Resultado esperado tras el COMMIT (Paso 17):</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Stock descontado en productos 2 y 6</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> producto_id, nombre_producto, stock <span class="kw">FROM</span> productos <span class="kw">WHERE</span> producto_id <span class="kw">IN</span> (<span class="dv">2</span>, <span class="dv">6</span>);</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- producto_id=2: Adidas Ultraboost → stock = 89 (era 90)</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- producto_id=6: Pantalón Under Armour → stock = 94 (era 95)</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- Venta registrada para Sofía (cliente_id = 4)</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> v.venta_id, v.fecha, dv.producto_id, dv.cantidad</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> ventas v <span class="kw">JOIN</span> detalle_ventas dv <span class="kw">ON</span> v.venta_id <span class="op">=</span> dv.venta_id</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> v.cliente_id <span class="op">=</span> <span class="dv">4</span>;</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- venta_id=4, con dos líneas de detalle (producto_id=2 y producto_id=6)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado esperado tras el ROLLBACK (Paso 18):</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> ventas <span class="kw">WHERE</span> cliente_id <span class="op">=</span> <span class="dv">5</span>;</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- 0 filas — Diego Torres no tiene ventas registradas</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Para el docente</strong>: en MySQL Workbench, los errores de FK dentro de una transacción activa <strong>no hacen ROLLBACK automático</strong>. La transacción queda abierta con el error. Los estudiantes deben ejecutar <code>ROLLBACK</code> manualmente (o cerrar la sesión). Si no ejecutan el ROLLBACK, la venta de Diego puede quedar parcialmente registrada al cerrar la sesión según la configuración de <code>autocommit</code>. Este es exactamente el punto pedagógico: MySQL no adivina la intención — el código debe manejar los errores explícitamente.</p>
-</div>
-</div>
-</section>
-<section id="paso-19-reflexión-sobre-transacciones-respuestas-esperadas" class="level3" data-number="5.2">
-<h3 data-number="5.2" class="anchored" data-anchor-id="paso-19-reflexión-sobre-transacciones-respuestas-esperadas"><span class="header-section-number">5.2</span> Paso 19: Reflexión sobre transacciones — Respuestas esperadas</h3>
+<section id="entregable" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="entregable"><span class="header-section-number">5</span> Entregable</h2>
+<p>Sube a la plataforma los siguientes archivos comprimidos en <code>W06_lab_[apellido1]_[apellido2].zip</code>:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Situación</th>
-<th>¿COMMIT o ROLLBACK?</th>
-<th>¿Por qué?</th>
+<th>Archivo</th>
+<th>Contenido</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Se registra la venta y el detalle correctamente, pero al descontar stock uno de los productos llega a stock negativo (-1)</td>
-<td><strong>ROLLBACK</strong></td>
-<td>El CHECK <code>stock &gt;= 0</code> lanzará un error que debe tratarse como falla del proceso completo. Dejar la venta registrada con el stock inconsistente produce un estado inválido del sistema. Se hace ROLLBACK de toda la operación, se verifica el stock disponible y se informa al vendedor.</td>
+<td><code>W06_techstyle_ddl.sql</code></td>
+<td>Script DDL completo: CREATE TABLE, CHECK, índices y ON DELETE corregidos</td>
 </tr>
 <tr class="even">
-<td>Se insertan 500 productos nuevos del catálogo y hay un error de tipo de dato en la fila 231</td>
-<td><strong>ROLLBACK</strong></td>
-<td>Si la carga masiva está en una transacción, el error en la fila 231 debe provocar ROLLBACK de todos los inserts previos. Un catálogo parcial (230 productos de 500) es peor que ninguno: los reportes mostrarían información incompleta. Corregir el archivo CSV y re-ejecutar la carga completa.</td>
-</tr>
-<tr class="odd">
-<td>Una devolución queda registrada en <code>devoluciones</code> pero falla el UPDATE del stock al reingresarlo</td>
-<td><strong>ROLLBACK</strong></td>
-<td>Tener una devolución aprobada sin que el stock se haya reingresado es un estado inconsistente: el sistema registra que se devolvió el producto pero las unidades no están disponibles para vender. Impacto directo en los reportes de inventario de Carlos. ROLLBACK y reintentar la operación completa.</td>
+<td><code>W06_inserts.sql</code></td>
+<td>Script con todos los INSERT de la Parte 4 (incluyendo el INSERT de Carlos que escribiste tú)</td>
 </tr>
 </tbody>
 </table>
 <hr>
 </section>
-</section>
-<section id="parte-6-síntesis-y-reflexión" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="parte-6-síntesis-y-reflexión"><span class="header-section-number">6</span> Parte 6 — Síntesis y Reflexión</h2>
-<section id="paso-20-comparar-modelo-diseñado-vs.-modelo-implementado-respuesta-esperada" class="level3" data-number="6.1">
-<h3 data-number="6.1" class="anchored" data-anchor-id="paso-20-comparar-modelo-diseñado-vs.-modelo-implementado-respuesta-esperada"><span class="header-section-number">6.1</span> Paso 20: Comparar modelo diseñado vs.&nbsp;modelo implementado — Respuesta esperada</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Dimensión</th>
-<th>Modelo en papel (W05)</th>
-<th>Base de datos real (W06)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>¿Se puede saber qué proveedor abastece un producto?</td>
-<td>Sí (en el diagrama)</td>
-<td><strong>Sí</strong> — la tabla <code>proveedor_producto</code> existe en el servidor y las FK están activas</td>
-</tr>
-<tr class="even">
-<td>¿Las FK impiden ventas de clientes inexistentes?</td>
-<td>En diseño</td>
-<td><strong>Sí</strong> — MySQL lanza ERROR 1452 si <code>cliente_id</code> no existe en <code>clientes</code></td>
-</tr>
-<tr class="odd">
-<td>¿Un producto puede tener stock negativo?</td>
-<td>Según diseño, no</td>
-<td><strong>No</strong> — el CHECK <code>stock &gt;= 0</code> bloquea cualquier UPDATE que deje el stock en negativo</td>
-</tr>
-<tr class="even">
-<td>¿Una venta incompleta puede quedar registrada?</td>
-<td>En teoría, no</td>
-<td><strong>Depende</strong> — solo si se usa <code>START TRANSACTION</code>. Sin transacción explícita, cada INSERT es autocommit independiente y puede quedar un estado a medias</td>
-</tr>
-<tr class="odd">
-<td>¿Qué pasa si se borra un cliente con ventas?</td>
-<td>RESTRICT (diseño)</td>
-<td><strong>ERROR 1451</strong> — MySQL bloquea el DELETE con mensaje de violación de FK</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="paso-21-preguntas-de-diseño-e-implementación-respuestas-esperadas" class="level3" data-number="6.2">
-<h3 data-number="6.2" class="anchored" data-anchor-id="paso-21-preguntas-de-diseño-e-implementación-respuestas-esperadas"><span class="header-section-number">6.2</span> Paso 21: Preguntas de diseño e implementación — Respuestas esperadas</h3>
+<section id="criterios-de-evaluación" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="criterios-de-evaluación"><span class="header-section-number">6</span> Criterios de Evaluación</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -930,82 +815,30 @@ Important
 </colgroup>
 <thead>
 <tr class="header">
-<th>Pregunta</th>
-<th>Respuesta</th>
+<th>Criterio</th>
+<th>Puntaje</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>¿Por qué <code>SET @variable = LAST_INSERT_ID()</code> y no poner el número directamente (ej. <code>venta_id = 3</code>)?</td>
-<td>Porque ese número puede ser incorrecto si otro usuario insertó datos entre tus dos sentencias, o si el script se ejecuta varias veces. <code>LAST_INSERT_ID()</code> captura el ID generado por la sesión actual, no por otras conexiones. Hardcodear IDs produce errores silenciosos difíciles de detectar en producción.</td>
+<td>Script DDL: orden correcto, FK con ON DELETE apropiado, CHECK e índices incluidos (Partes 1–2)</td>
+<td>35 pts</td>
 </tr>
 <tr class="even">
-<td>¿Qué pasaría si dos vendedores insertan ventas para el mismo cliente al mismo tiempo sin transacciones?</td>
-<td><code>AUTO_INCREMENT</code> garantiza IDs únicos incluso con concurrencia. El riesgo sin transacciones no es el duplicado de IDs, sino la <strong>inconsistencia</strong>: si el sistema falla entre el INSERT en <code>ventas</code> y el INSERT en <code>detalle_ventas</code>, queda una venta registrada sin productos. Con transacciones, o se inserta todo o no se inserta nada.</td>
+<td>Ejecución correcta en MySQL: 9 tablas creadas sin errores, verificación con DESCRIBE y SHOW CREATE TABLE (Parte 3)</td>
+<td>25 pts</td>
 </tr>
 <tr class="odd">
-<td>¿Por qué <code>precio_unitario</code> se guarda en <code>detalle_ventas</code> y no se calcula desde <code>productos.precio_venta</code>?</td>
-<td><code>productos.precio_venta</code> es el precio vigente <strong>hoy</strong>. Si se calculara desde ahí, una venta del año pasado mostraría el precio actual, no el precio real que pagó el cliente. <code>precio_unitario</code> en <code>detalle_ventas</code> es el precio <strong>histórico</strong> — congela el valor exacto al momento de la transacción. Es obligatorio para auditoría financiera y análisis de márgenes históricos.</td>
+<td>Inserts correctos: orden de inserción, uso de variables para IDs, datos completos (Parte 4)</td>
+<td>40 pts</td>
 </tr>
 <tr class="even">
-<td>Si TechStyle aplica un descuento general del 20% en una promoción, ¿qué operación SQL ejecutarías? ¿Dentro de una transacción?</td>
-<td>Sí, dentro de una transacción. El UPDATE afecta muchas filas y si falla a mitad hay filas con 20% y filas sin descuento. Ejemplo: <code>START TRANSACTION; UPDATE detalle_ventas dv JOIN ventas v ON dv.venta_id = v.venta_id SET dv.descuento_pct = 20.00 WHERE v.fecha BETWEEN '2026-11-01' AND '2026-11-30'; COMMIT;</code></td>
-</tr>
-<tr class="odd">
-<td>Un cliente quiere borrar su cuenta. ¿Qué debe hacer Juan antes del DELETE?</td>
-<td>Verificar si tiene historial: <code>SELECT COUNT(*) FROM ventas WHERE cliente_id = 1</code>. Si hay ventas, la FK RESTRICT bloqueará el DELETE con ERROR 1451. La práctica correcta es el <strong>soft delete</strong>: agregar columna <code>activo TINYINT(1) DEFAULT 1</code> y ejecutar <code>UPDATE clientes SET activo = 0 WHERE cliente_id = 1</code>. El historial se preserva para auditoría; el cliente simplemente se oculta de las operaciones activas.</td>
+<td><strong>Total</strong></td>
+<td><strong>100 pts</strong></td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="paso-22-análisis-de-impacto-respuestas-esperadas" class="level3" data-number="6.3">
-<h3 data-number="6.3" class="anchored" data-anchor-id="paso-22-análisis-de-impacto-respuestas-esperadas"><span class="header-section-number">6.3</span> Paso 22: Análisis de impacto — Respuestas esperadas</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Capacidad implementada</th>
-<th>Decisión de negocio que habilita</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>FK con <code>ON DELETE RESTRICT</code> en <code>ventas.cliente_id</code></td>
-<td>El historial de ventas siempre tiene trazabilidad al cliente — no hay ventas huérfanas en los reportes de María ni en la auditoría financiera</td>
-</tr>
-<tr class="even">
-<td>CHECK <code>stock &gt;= 0</code> en <code>productos</code></td>
-<td>La base de datos garantiza que nunca se registrará más stock del disponible — el panel de inventario de Carlos siempre mostrará datos reales, no negativos</td>
-</tr>
-<tr class="odd">
-<td>Transacciones en el registro de ventas</td>
-<td>Una venta nunca queda registrada a medias — si falla el descuento de stock, toda la operación se deshace. Los datos del dashboard de Roberto son siempre consistentes</td>
-</tr>
-<tr class="even">
-<td>Índice <code>idx_ventas_fecha</code> en <code>ventas(fecha)</code></td>
-<td>Los reportes de ventas por período (semana, mes, trimestre) que Roberto revisa en el CMI cargan en milisegundos aunque haya millones de registros, en vez de tardar minutos sin índice</td>
-</tr>
-<tr class="odd">
-<td>CHECK <code>segmento IN ('Premium', 'Estándar', 'Básico')</code></td>
-<td>Los análisis de segmentación de María son confiables — no pueden existir clientes en segmentos inválidos o con errores de digitación como <code>'premium'</code> (minúscula) o <code>'Premiun'</code> que fragmentarían el análisis en categorías fantasmas</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="paso-23-reporte-de-implementación-para-roberto-respuesta-modelo" class="level3" data-number="6.4">
-<h3 data-number="6.4" class="anchored" data-anchor-id="paso-23-reporte-de-implementación-para-roberto-respuesta-modelo"><span class="header-section-number">6.4</span> Paso 23: Reporte de implementación para Roberto — Respuesta modelo</h3>
-<blockquote class="blockquote">
-<p><strong>Para:</strong> Roberto Fernández, CEO TechStyle</p>
-<p><strong>Asunto:</strong> Base de datos implementada — estado al 2026-04-21</p>
-<p>La base de datos <code>techstyle</code> fue creada exitosamente en MySQL Server. El sistema cuenta con <strong>9 tablas operativas</strong> que cubren todas las operaciones del negocio: gestión de clientes y segmentos, catálogo de productos con jerarquía de categorías, registro de ventas con detalle por producto, trazabilidad de proveedores, seguimiento de despachos y control de devoluciones. El estado actual del sistema incluye 10 categorías, 6 clientes, 10 productos y 3 ventas de prueba correctamente registradas.</p>
-<p>La consistencia de los datos está garantizada por dos mecanismos complementarios. Las <strong>restricciones de integridad referencial</strong> (FK) impiden que existan ventas sin cliente, productos sin categoría o devoluciones sin la venta que las originó. Las <strong>restricciones CHECK</strong> impiden precios negativos, stocks negativos, descuentos fuera del rango 0–100% y estados inválidos en despachos y devoluciones. Ningún usuario puede ingresar datos que violen las reglas del negocio — la base de datos los rechaza automáticamente.</p>
-<p>En comparación con Excel, el sistema actual puede gestionar millones de transacciones sin degradación de rendimiento (gracias a 6 índices de consulta), garantiza que las operaciones de venta son atómicas (una venta nunca queda registrada a medias) y elimina las anomalías de actualización, inserción y eliminación que afectaban la planilla anterior. El paso siguiente es desarrollar las consultas SQL de análisis (Semana 7) para generar los reportes de ventas, márgenes y logística que el área comercial requiere.</p>
-</blockquote>
 <hr>
-</section>
 </section>
 <section id="notas-para-el-docente" class="level2 hidden" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="notas-para-el-docente"><span class="header-section-number">7</span> Notas para el docente</h2>
@@ -1015,10 +848,6 @@ Important
 <p>Los errores más frecuentes: - <code>ERROR 1215: Cannot add foreign key constraint</code> → tipos de datos incompatibles entre PK y FK (ej. FK es <code>VARCHAR</code> cuando la PK es <code>INT</code>). - <code>ERROR 1050: Table already exists</code> → olvidaron el <code>DROP TABLE IF EXISTS</code>. Solución: ejecutar <code>DROP DATABASE techstyle; CREATE DATABASE techstyle;</code> y re-ejecutar. - El estudiante ejecuta solo la sentencia seleccionada (⚡ vs ⚡⚡) → enseñar la diferencia entre “ejecutar línea actual” y “ejecutar script completo”.</p>
 <p><strong>Sobre el INSERT de Carlos (Paso 15):</strong></p>
 <p>Variaciones aceptables: - Usar <code>LAST_INSERT_ID()</code> directamente (sin variable) si se ejecutan los dos INSERT en orden sin ningún otro INSERT de por medio. - Hardcodear el <code>venta_id = 3</code> si el estudiante verificó que esa es la tercera venta — señalar que es frágil pero no penalizar si el resultado es correcto.</p>
-<p><strong>Sobre las transacciones (Parte 5):</strong></p>
-<p>Punto de discusión importante: en MySQL, <code>autocommit = 1</code> por defecto. Esto significa que cada sentencia DML fuera de una transacción explícita es un COMMIT automático. Los estudiantes que no usan <code>START TRANSACTION</code> están haciendo commits implícitos en cada INSERT. Mostrar con <code>SELECT @@autocommit;</code>.</p>
-<p><strong>Sobre la nota del soft delete (Paso 21):</strong></p>
-<p>Este punto es una oportunidad para introducir el concepto de <strong>datos activos vs.&nbsp;archivados</strong> sin eliminar información. En sistemas reales de comercio, prácticamente nunca se borra información histórica — se marca como inactiva. Preguntar al grupo: “¿Cuántos años debe conservar TechStyle el historial de ventas? ¿Por qué?” (Respuesta: regulación tributaria SII → mínimo 6 años en Chile).</p>
 </section>
 
 

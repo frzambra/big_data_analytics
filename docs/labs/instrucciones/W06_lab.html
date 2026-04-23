@@ -148,21 +148,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#paso-15-insertar-una-tercera-venta-tú-mismo" id="toc-paso-15-insertar-una-tercera-venta-tú-mismo" class="nav-link" data-scroll-target="#paso-15-insertar-una-tercera-venta-tú-mismo"><span class="header-section-number">6.5</span> Paso 15: Insertar una tercera venta tú mismo</a></li>
   <li><a href="#paso-16-verificar-integridad-de-los-datos" id="toc-paso-16-verificar-integridad-de-los-datos" class="nav-link" data-scroll-target="#paso-16-verificar-integridad-de-los-datos"><span class="header-section-number">6.6</span> Paso 16: Verificar integridad de los datos</a></li>
   </ul></li>
-  <li><a href="#sec-transacciones" id="toc-sec-transacciones" class="nav-link" data-scroll-target="#sec-transacciones"><span class="header-section-number">7</span> Parte 5 — Transacciones: Registrar una Venta Completa</a>
-  <ul class="collapse">
-  <li><a href="#paso-17-transacción-exitosa-commit" id="toc-paso-17-transacción-exitosa-commit" class="nav-link" data-scroll-target="#paso-17-transacción-exitosa-commit"><span class="header-section-number">7.1</span> Paso 17: Transacción exitosa (COMMIT)</a></li>
-  <li><a href="#paso-18-simular-un-error-y-hacer-rollback" id="toc-paso-18-simular-un-error-y-hacer-rollback" class="nav-link" data-scroll-target="#paso-18-simular-un-error-y-hacer-rollback"><span class="header-section-number">7.2</span> Paso 18: Simular un error y hacer ROLLBACK</a></li>
-  <li><a href="#paso-19-reflexión-sobre-transacciones" id="toc-paso-19-reflexión-sobre-transacciones" class="nav-link" data-scroll-target="#paso-19-reflexión-sobre-transacciones"><span class="header-section-number">7.3</span> Paso 19: Reflexión sobre transacciones</a></li>
-  </ul></li>
-  <li><a href="#sec-reflexion" id="toc-sec-reflexion" class="nav-link" data-scroll-target="#sec-reflexion"><span class="header-section-number">8</span> Parte 6 — Síntesis y Reflexión</a>
-  <ul class="collapse">
-  <li><a href="#paso-20-comparar-el-modelo-diseñado-vs.-el-modelo-implementado" id="toc-paso-20-comparar-el-modelo-diseñado-vs.-el-modelo-implementado" class="nav-link" data-scroll-target="#paso-20-comparar-el-modelo-diseñado-vs.-el-modelo-implementado"><span class="header-section-number">8.1</span> Paso 20: Comparar el modelo diseñado vs.&nbsp;el modelo implementado</a></li>
-  <li><a href="#paso-21-preguntas-de-diseño-e-implementación" id="toc-paso-21-preguntas-de-diseño-e-implementación" class="nav-link" data-scroll-target="#paso-21-preguntas-de-diseño-e-implementación"><span class="header-section-number">8.2</span> Paso 21: Preguntas de diseño e implementación</a></li>
-  <li><a href="#paso-22-análisis-de-impacto-del-modelo-a-las-decisiones" id="toc-paso-22-análisis-de-impacto-del-modelo-a-las-decisiones" class="nav-link" data-scroll-target="#paso-22-análisis-de-impacto-del-modelo-a-las-decisiones"><span class="header-section-number">8.3</span> Paso 22: Análisis de impacto — del modelo a las decisiones</a></li>
-  <li><a href="#paso-23-reporte-de-implementación" id="toc-paso-23-reporte-de-implementación" class="nav-link" data-scroll-target="#paso-23-reporte-de-implementación"><span class="header-section-number">8.4</span> Paso 23: Reporte de implementación</a></li>
-  </ul></li>
-  <li><a href="#entregable" id="toc-entregable" class="nav-link" data-scroll-target="#entregable"><span class="header-section-number">9</span> Entregable</a></li>
-  <li><a href="#criterios-de-evaluación" id="toc-criterios-de-evaluación" class="nav-link" data-scroll-target="#criterios-de-evaluación"><span class="header-section-number">10</span> Criterios de Evaluación</a></li>
+  <li><a href="#entregable" id="toc-entregable" class="nav-link" data-scroll-target="#entregable"><span class="header-section-number">7</span> Entregable</a></li>
+  <li><a href="#criterios-de-evaluación" id="toc-criterios-de-evaluación" class="nav-link" data-scroll-target="#criterios-de-evaluación"><span class="header-section-number">8</span> Criterios de Evaluación</a></li>
   </ul>
 </nav>
     </div>
@@ -191,15 +178,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="contexto" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="contexto"><span class="header-section-number">1</span> Contexto</h2>
-<p>En el laboratorio anterior diseñaste el modelo completo de TechStyle con 9 tablas en MySQL Workbench. Hoy ese modelo pasa del papel a la realidad: generarás el script SQL, lo ejecutarás en MySQL Server, cargarás los primeros datos y practicarás transacciones para garantizar la integridad de las operaciones.</p>
-<p>Al terminar este laboratorio tendrás la <strong>base de datos de TechStyle funcionando en MySQL</strong>, con datos reales y lista para las consultas de la semana 7.</p>
+<p>En el laboratorio anterior diseñaste el modelo completo de TechStyle con 9 tablas en MySQL Workbench. Hoy ese modelo pasa del papel a la realidad: generarás el script SQL, lo ejecutarás en MySQL Server y cargarás los primeros datos.</p>
+<p>Al terminar este laboratorio tendrás la <strong>base de datos de TechStyle funcionando en MySQL</strong>, con datos reales y lista para trabajar transacciones e integridad en el laboratorio de la semana 7.</p>
 <hr>
 </section>
 <section id="instrucciones-generales" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="instrucciones-generales"><span class="header-section-number">2</span> Instrucciones generales</h2>
 <ul>
 <li>Trabajarás <strong>en los mismos grupos del laboratorio anterior</strong>.</li>
-<li><strong>Duración total</strong>: 2 horas 30 minutos.</li>
+<li><strong>Duración total</strong>: 2 horas.</li>
 <li>Necesitas el archivo <code>W05_techstyle_model.mwb</code> guardado en W05 — ábrelo antes de empezar.</li>
 </ul>
 <p><strong>Herramientas necesarias:</strong></p>
@@ -259,16 +246,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Cargar datos iniciales con INSERT INTO</td>
 <td>40 min</td>
 </tr>
-<tr class="odd">
-<td>5</td>
-<td>Transacciones: registrar una venta completa</td>
-<td>25 min</td>
-</tr>
-<tr class="even">
-<td>6</td>
-<td>Síntesis y reflexión</td>
-<td>20 min</td>
-</tr>
 </tbody>
 </table>
 <hr>
@@ -302,13 +279,6 @@ Note
 <p>Si Workbench requiere una conexión activa, usa la alternativa: <em>File → Export → Forward Engineer SQL CREATE Script</em>.</p>
 </div>
 </div></li>
-<li><p>En las opciones de generación, activa las siguientes opciones:</p>
-<ul class="task-list">
-<li><label><input type="checkbox" checked="">Generate DROP Statements Before Each CREATE Statement</label></li>
-<li><label><input type="checkbox" checked="">Generate CREATE SCHEMA Statement</label></li>
-<li><label><input type="checkbox" checked="">Add SHOW WARNINGS After Every DDL Statement</label></li>
-<li><label><input type="checkbox" checked="">Include FK Indexes</label></li>
-</ul></li>
 <li><p>En la selección de objetos, verifica que las <strong>9 tablas</strong> estén marcadas.</p></li>
 <li><p>Avanza hasta la pantalla de revisión del SQL y cópialo.</p></li>
 </ol>
@@ -720,258 +690,8 @@ Note
 <hr>
 </section>
 </section>
-<section id="sec-transacciones" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="sec-transacciones"><span class="header-section-number">7</span> Parte 5 — Transacciones: Registrar una Venta Completa</h2>
-<p><strong>Duración: 25 minutos</strong></p>
-<p>Una transacción garantiza que una operación de negocio compuesta se ejecute <strong>completamente o no se ejecute en absoluto</strong>.</p>
-<section id="paso-17-transacción-exitosa-commit" class="level3" data-number="7.1">
-<h3 data-number="7.1" class="anchored" data-anchor-id="paso-17-transacción-exitosa-commit"><span class="header-section-number">7.1</span> Paso 17: Transacción exitosa (COMMIT)</h3>
-<p>Registra una venta completa usando una transacción. Copia y ejecuta el siguiente bloque:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Iniciar la transacción</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">START</span> <span class="kw">TRANSACTION</span>;</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Paso 1: crear la venta</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> ventas (fecha, cliente_id) <span class="kw">VALUES</span> (CURDATE(), <span class="dv">4</span>);  <span class="co">-- Sofía Ramírez</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @venta_sofia <span class="op">=</span> LAST_INSERT_ID();</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Paso 2: agregar los productos</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> detalle_ventas (venta_id, producto_id, cantidad, precio_unitario, descuento_pct)</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    (@venta_sofia, <span class="dv">2</span>, <span class="dv">1</span>, <span class="fl">119990.00</span>, <span class="fl">5.00</span>),  <span class="co">-- Adidas Ultraboost con 5%</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    (@venta_sofia, <span class="dv">6</span>, <span class="dv">1</span>,  <span class="fl">44990.00</span>, <span class="fl">0.00</span>);  <span class="co">-- Pantalón Under Armour</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">-- Paso 3: descontar el stock</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> productos <span class="kw">SET</span> stock <span class="op">=</span> stock <span class="op">-</span> <span class="dv">1</span> <span class="kw">WHERE</span> producto_id <span class="op">=</span> <span class="dv">2</span>;</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> productos <span class="kw">SET</span> stock <span class="op">=</span> stock <span class="op">-</span> <span class="dv">1</span> <span class="kw">WHERE</span> producto_id <span class="op">=</span> <span class="dv">6</span>;</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co">-- Confirmar todos los cambios</span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="kw">COMMIT</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Verifica el resultado:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- ¿El stock se descontó correctamente?</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> producto_id, nombre_producto, stock</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> productos</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> producto_id <span class="kw">IN</span> (<span class="dv">2</span>, <span class="dv">6</span>);</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- ¿La venta y su detalle quedaron registrados?</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> v.venta_id, v.fecha, dv.producto_id, dv.cantidad</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> ventas v</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> detalle_ventas dv <span class="kw">ON</span> v.venta_id <span class="op">=</span> dv.venta_id</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> v.cliente_id <span class="op">=</span> <span class="dv">4</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="paso-18-simular-un-error-y-hacer-rollback" class="level3" data-number="7.2">
-<h3 data-number="7.2" class="anchored" data-anchor-id="paso-18-simular-un-error-y-hacer-rollback"><span class="header-section-number">7.2</span> Paso 18: Simular un error y hacer ROLLBACK</h3>
-<p>Ahora simularás una situación donde la operación debe deshacerse.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Iniciar la transacción</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">START</span> <span class="kw">TRANSACTION</span>;</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Paso 1: crear la venta</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> ventas (fecha, cliente_id) <span class="kw">VALUES</span> (CURDATE(), <span class="dv">5</span>);  <span class="co">-- Diego Torres</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @venta_diego <span class="op">=</span> LAST_INSERT_ID();</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Paso 2: agregar producto (cantidad correcta)</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> detalle_ventas (venta_id, producto_id, cantidad, precio_unitario)</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (@venta_diego, <span class="dv">8</span>, <span class="dv">1</span>, <span class="fl">39990.00</span>);</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co">-- Paso 3: intentar agregar un producto con cliente_id inválido en otra tabla</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">-- (simulamos que el sistema detectó un error de validación)</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co">-- Por ejemplo, el producto_id 99 no existe:</span></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> detalle_ventas (venta_id, producto_id, cantidad, precio_unitario)</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (@venta_diego, <span class="dv">99</span>, <span class="dv">2</span>, <span class="fl">15000.00</span>);</span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co">-- ^ Este INSERT fallará con error de FK</span></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co">-- Si llegamos aquí significa que ocurrió un error: deshacer todo</span></span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="kw">ROLLBACK</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>En MySQL Workbench, el INSERT con el <code>producto_id = 99</code> fallará con un error de FK. La transacción queda <strong>abierta pero con error pendiente</strong>. Debes ejecutar <code>ROLLBACK</code> manualmente.</p>
-<p>Verifica que Diego Torres no tenga ventas registradas:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> ventas <span class="kw">WHERE</span> cliente_id <span class="op">=</span> <span class="dv">5</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Si <code>ROLLBACK</code> funcionó correctamente, esta consulta retornará 0 filas.</p>
-</div>
-</div>
-</section>
-<section id="paso-19-reflexión-sobre-transacciones" class="level3" data-number="7.3">
-<h3 data-number="7.3" class="anchored" data-anchor-id="paso-19-reflexión-sobre-transacciones"><span class="header-section-number">7.3</span> Paso 19: Reflexión sobre transacciones</h3>
-<p>Responde en grupo:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Situación</th>
-<th>¿COMMIT o ROLLBACK?</th>
-<th>¿Por qué?</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Se registra la venta y el detalle correctamente, pero al descontar stock uno de los productos llega a stock negativo (-1)</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Se insertan 500 productos nuevos del catálogo de temporada. A mitad de camino hay un error de tipo de dato en la fila 231</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Una devolución queda registrada en <code>devoluciones</code> pero falla el <code>UPDATE</code> del stock al intentar reingresarlo</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<hr>
-</section>
-</section>
-<section id="sec-reflexion" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="sec-reflexion"><span class="header-section-number">8</span> Parte 6 — Síntesis y Reflexión</h2>
-<p><strong>Duración: 20 minutos</strong></p>
-<section id="paso-20-comparar-el-modelo-diseñado-vs.-el-modelo-implementado" class="level3" data-number="8.1">
-<h3 data-number="8.1" class="anchored" data-anchor-id="paso-20-comparar-el-modelo-diseñado-vs.-el-modelo-implementado"><span class="header-section-number">8.1</span> Paso 20: Comparar el modelo diseñado vs.&nbsp;el modelo implementado</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Dimensión</th>
-<th>Modelo en papel (W05)</th>
-<th>Base de datos real (W06)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>¿Se puede saber qué proveedor abastece un producto?</td>
-<td>Sí (diagrama)</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>¿Las FK impiden ventas de clientes inexistentes?</td>
-<td>En diseño</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>¿Un producto puede tener stock negativo?</td>
-<td>Según diseño, no</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>¿Una venta incompleta puede quedar registrada?</td>
-<td>En teoría, no</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>¿Qué pasa si se borra un cliente con ventas?</td>
-<td>RESTRICT (diseño)</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="paso-21-preguntas-de-diseño-e-implementación" class="level3" data-number="8.2">
-<h3 data-number="8.2" class="anchored" data-anchor-id="paso-21-preguntas-de-diseño-e-implementación"><span class="header-section-number">8.2</span> Paso 21: Preguntas de diseño e implementación</h3>
-<p>Responde en grupo:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Pregunta</th>
-<th>Respuesta</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>¿Por qué se usa <code>SET @variable = LAST_INSERT_ID()</code> en lugar de poner el número directamente (ej. <code>venta_id = 3</code>)?</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>¿Qué pasaría si dos vendedores insertan una venta para el mismo cliente al mismo tiempo sin transacciones?</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>¿Por qué <code>precio_unitario</code> se guarda en <code>detalle_ventas</code> y no se calcula desde <code>productos.precio_venta</code> en cada consulta?</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Si TechStyle aplica un descuento general del 20% en una promoción, ¿qué operación SQL ejecutarías? ¿Dentro de una transacción?</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Un cliente quiere borrar su cuenta. ¿Qué debe hacer Juan antes de ejecutar <code>DELETE FROM clientes WHERE cliente_id = 1</code>?</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="paso-22-análisis-de-impacto-del-modelo-a-las-decisiones" class="level3" data-number="8.3">
-<h3 data-number="8.3" class="anchored" data-anchor-id="paso-22-análisis-de-impacto-del-modelo-a-las-decisiones"><span class="header-section-number">8.3</span> Paso 22: Análisis de impacto — del modelo a las decisiones</h3>
-<p>Para cada nueva capacidad que tiene ahora la base de datos, identifica la decisión de negocio que habilita:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Capacidad implementada</th>
-<th>Decisión de negocio que habilita</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>FK con <code>ON DELETE RESTRICT</code> en <code>ventas.cliente_id</code></td>
-<td>Ej: “Garantizamos que el historial de ventas nunca pierde la referencia al cliente”</td>
-</tr>
-<tr class="even">
-<td>CHECK <code>stock &gt;= 0</code> en <code>productos</code></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Transacciones en el registro de ventas</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Índice <code>idx_ventas_fecha</code> en <code>ventas(fecha)</code></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>CHECK <code>segmento IN ('Premium', 'Estándar', 'Básico')</code></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="paso-23-reporte-de-implementación" class="level3" data-number="8.4">
-<h3 data-number="8.4" class="anchored" data-anchor-id="paso-23-reporte-de-implementación"><span class="header-section-number">8.4</span> Paso 23: Reporte de implementación</h3>
-<p>Redacta un párrafo breve (6–8 líneas) como si fueras Juan informando a Roberto sobre el estado del sistema al cierre del día:</p>
-<blockquote class="blockquote">
-<p><strong>Para:</strong> Roberto Fernández, CEO TechStyle</p>
-<p><strong>Asunto:</strong> Base de datos implementada — estado al 2026-04-21</p>
-<p>La base de datos <code>techstyle</code> fue creada exitosamente en MySQL Server. Contiene… <em>(continúa)</em></p>
-</blockquote>
-<p>Incluye: - Cuántas tablas están operativas y cuántos registros tiene cada una. - Qué restricciones de integridad garantizan la consistencia de los datos. - Qué puede hacerse ahora que no era posible con Excel. - Qué falta aún para que el sistema sea completamente operativo.</p>
-<hr>
-</section>
-</section>
-<section id="entregable" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="entregable"><span class="header-section-number">9</span> Entregable</h2>
+<section id="entregable" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="entregable"><span class="header-section-number">7</span> Entregable</h2>
 <p>Sube a la plataforma los siguientes archivos comprimidos en <code>W06_lab_[apellido1]_[apellido2].zip</code>:</p>
 <table class="caption-top table">
 <colgroup>
@@ -991,18 +711,14 @@ Important
 </tr>
 <tr class="even">
 <td><code>W06_inserts.sql</code></td>
-<td>Script con todos los INSERT de las Partes 4 y 5 (incluyendo el INSERT de Carlos que escribiste tú)</td>
-</tr>
-<tr class="odd">
-<td><code>W06_reflexion.pdf</code> o <code>.docx</code></td>
-<td>Respuestas de las preguntas de reflexión + reporte para Roberto</td>
+<td>Script con todos los INSERT de la Parte 4 (incluyendo el INSERT de Carlos que escribiste tú)</td>
 </tr>
 </tbody>
 </table>
 <hr>
 </section>
-<section id="criterios-de-evaluación" class="level2" data-number="10">
-<h2 data-number="10" class="anchored" data-anchor-id="criterios-de-evaluación"><span class="header-section-number">10</span> Criterios de Evaluación</h2>
+<section id="criterios-de-evaluación" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="criterios-de-evaluación"><span class="header-section-number">8</span> Criterios de Evaluación</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -1017,23 +733,15 @@ Important
 <tbody>
 <tr class="odd">
 <td>Script DDL: orden correcto, FK con ON DELETE apropiado, CHECK e índices incluidos (Partes 1–2)</td>
-<td>25 pts</td>
+<td>35 pts</td>
 </tr>
 <tr class="even">
 <td>Ejecución correcta en MySQL: 9 tablas creadas sin errores, verificación con DESCRIBE y SHOW CREATE TABLE (Parte 3)</td>
-<td>20 pts</td>
+<td>25 pts</td>
 </tr>
 <tr class="odd">
 <td>Inserts correctos: orden de inserción, uso de variables para IDs, datos completos (Parte 4)</td>
-<td>25 pts</td>
-</tr>
-<tr class="even">
-<td>Transacciones: COMMIT y ROLLBACK funcionando, reflexión sobre escenarios (Parte 5)</td>
-<td>15 pts</td>
-</tr>
-<tr class="odd">
-<td>Síntesis: análisis de impacto y reporte para Roberto (Parte 6)</td>
-<td>15 pts</td>
+<td>40 pts</td>
 </tr>
 <tr class="even">
 <td><strong>Total</strong></td>

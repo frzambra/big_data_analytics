@@ -129,27 +129,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#paso-5-cargar-devoluciones" id="toc-paso-5-cargar-devoluciones" class="nav-link" data-scroll-target="#paso-5-cargar-devoluciones"><span class="header-section-number">3.5</span> Paso 5: Cargar devoluciones</a></li>
   <li><a href="#paso-6-verificar-el-estado-completo-de-la-base-de-datos" id="toc-paso-6-verificar-el-estado-completo-de-la-base-de-datos" class="nav-link" data-scroll-target="#paso-6-verificar-el-estado-completo-de-la-base-de-datos"><span class="header-section-number">3.6</span> Paso 6: Verificar el estado completo de la base de datos</a></li>
   </ul></li>
-  <li><a href="#sec-transacciones" id="toc-sec-transacciones" class="nav-link" data-scroll-target="#sec-transacciones"><span class="header-section-number">4</span> Parte 2 — Transacciones: Registrar una Venta Completa</a>
+  <li><a href="#sec-consultas" id="toc-sec-consultas" class="nav-link" data-scroll-target="#sec-consultas"><span class="header-section-number">4</span> Parte 2 — Primer Vistazo a Consultas con JOIN</a>
   <ul class="collapse">
-  <li><a href="#paso-7-transacción-exitosa-commit" id="toc-paso-7-transacción-exitosa-commit" class="nav-link" data-scroll-target="#paso-7-transacción-exitosa-commit"><span class="header-section-number">4.1</span> Paso 7: Transacción exitosa (COMMIT)</a></li>
-  <li><a href="#paso-8-simular-un-error-y-hacer-rollback" id="toc-paso-8-simular-un-error-y-hacer-rollback" class="nav-link" data-scroll-target="#paso-8-simular-un-error-y-hacer-rollback"><span class="header-section-number">4.2</span> Paso 8: Simular un error y hacer ROLLBACK</a></li>
-  <li><a href="#paso-9-reflexión-sobre-transacciones" id="toc-paso-9-reflexión-sobre-transacciones" class="nav-link" data-scroll-target="#paso-9-reflexión-sobre-transacciones"><span class="header-section-number">4.3</span> Paso 9: Reflexión sobre transacciones</a></li>
+  <li><a href="#paso-10-de-dónde-vienen-nuestros-productos" id="toc-paso-10-de-dónde-vienen-nuestros-productos" class="nav-link" data-scroll-target="#paso-10-de-dónde-vienen-nuestros-productos"><span class="header-section-number">4.1</span> Paso 10: ¿De dónde vienen nuestros productos?</a></li>
+  <li><a href="#paso-11-cuál-es-el-estado-de-los-despachos" id="toc-paso-11-cuál-es-el-estado-de-los-despachos" class="nav-link" data-scroll-target="#paso-11-cuál-es-el-estado-de-los-despachos"><span class="header-section-number">4.2</span> Paso 11: ¿Cuál es el estado de los despachos?</a></li>
+  <li><a href="#paso-12-hay-devoluciones-que-atender" id="toc-paso-12-hay-devoluciones-que-atender" class="nav-link" data-scroll-target="#paso-12-hay-devoluciones-que-atender"><span class="header-section-number">4.3</span> Paso 12: ¿Hay devoluciones que atender?</a></li>
   </ul></li>
-  <li><a href="#sec-consultas" id="toc-sec-consultas" class="nav-link" data-scroll-target="#sec-consultas"><span class="header-section-number">5</span> Parte 3 — Primer Vistazo a Consultas con JOIN</a>
+  <li><a href="#sec-reflexion" id="toc-sec-reflexion" class="nav-link" data-scroll-target="#sec-reflexion"><span class="header-section-number">5</span> Parte 3 — Síntesis y Reflexión</a>
   <ul class="collapse">
-  <li><a href="#paso-10-de-dónde-vienen-nuestros-productos" id="toc-paso-10-de-dónde-vienen-nuestros-productos" class="nav-link" data-scroll-target="#paso-10-de-dónde-vienen-nuestros-productos"><span class="header-section-number">5.1</span> Paso 10: ¿De dónde vienen nuestros productos?</a></li>
-  <li><a href="#paso-11-cuál-es-el-estado-de-los-despachos" id="toc-paso-11-cuál-es-el-estado-de-los-despachos" class="nav-link" data-scroll-target="#paso-11-cuál-es-el-estado-de-los-despachos"><span class="header-section-number">5.2</span> Paso 11: ¿Cuál es el estado de los despachos?</a></li>
-  <li><a href="#paso-12-hay-devoluciones-que-atender" id="toc-paso-12-hay-devoluciones-que-atender" class="nav-link" data-scroll-target="#paso-12-hay-devoluciones-que-atender"><span class="header-section-number">5.3</span> Paso 12: ¿Hay devoluciones que atender?</a></li>
+  <li><a href="#paso-13-comparar-el-modelo-diseñado-vs.-el-modelo-implementado" id="toc-paso-13-comparar-el-modelo-diseñado-vs.-el-modelo-implementado" class="nav-link" data-scroll-target="#paso-13-comparar-el-modelo-diseñado-vs.-el-modelo-implementado"><span class="header-section-number">5.1</span> Paso 13: Comparar el modelo diseñado vs.&nbsp;el modelo implementado</a></li>
+  <li><a href="#paso-14-preguntas-de-diseño-e-implementación" id="toc-paso-14-preguntas-de-diseño-e-implementación" class="nav-link" data-scroll-target="#paso-14-preguntas-de-diseño-e-implementación"><span class="header-section-number">5.2</span> Paso 14: Preguntas de diseño e implementación</a></li>
+  <li><a href="#paso-15-análisis-de-impacto-del-modelo-a-las-decisiones" id="toc-paso-15-análisis-de-impacto-del-modelo-a-las-decisiones" class="nav-link" data-scroll-target="#paso-15-análisis-de-impacto-del-modelo-a-las-decisiones"><span class="header-section-number">5.3</span> Paso 15: Análisis de impacto — del modelo a las decisiones</a></li>
+  <li><a href="#paso-16-reporte-de-implementación" id="toc-paso-16-reporte-de-implementación" class="nav-link" data-scroll-target="#paso-16-reporte-de-implementación"><span class="header-section-number">5.4</span> Paso 16: Reporte de implementación</a></li>
   </ul></li>
-  <li><a href="#sec-reflexion" id="toc-sec-reflexion" class="nav-link" data-scroll-target="#sec-reflexion"><span class="header-section-number">6</span> Parte 4 — Síntesis y Reflexión</a>
-  <ul class="collapse">
-  <li><a href="#paso-13-comparar-el-modelo-diseñado-vs.-el-modelo-implementado" id="toc-paso-13-comparar-el-modelo-diseñado-vs.-el-modelo-implementado" class="nav-link" data-scroll-target="#paso-13-comparar-el-modelo-diseñado-vs.-el-modelo-implementado"><span class="header-section-number">6.1</span> Paso 13: Comparar el modelo diseñado vs.&nbsp;el modelo implementado</a></li>
-  <li><a href="#paso-14-preguntas-de-diseño-e-implementación" id="toc-paso-14-preguntas-de-diseño-e-implementación" class="nav-link" data-scroll-target="#paso-14-preguntas-de-diseño-e-implementación"><span class="header-section-number">6.2</span> Paso 14: Preguntas de diseño e implementación</a></li>
-  <li><a href="#paso-15-análisis-de-impacto-del-modelo-a-las-decisiones" id="toc-paso-15-análisis-de-impacto-del-modelo-a-las-decisiones" class="nav-link" data-scroll-target="#paso-15-análisis-de-impacto-del-modelo-a-las-decisiones"><span class="header-section-number">6.3</span> Paso 15: Análisis de impacto — del modelo a las decisiones</a></li>
-  <li><a href="#paso-16-reporte-de-implementación" id="toc-paso-16-reporte-de-implementación" class="nav-link" data-scroll-target="#paso-16-reporte-de-implementación"><span class="header-section-number">6.4</span> Paso 16: Reporte de implementación</a></li>
-  </ul></li>
-  <li><a href="#entregable" id="toc-entregable" class="nav-link" data-scroll-target="#entregable"><span class="header-section-number">7</span> Entregable</a></li>
-  <li><a href="#criterios-de-evaluación" id="toc-criterios-de-evaluación" class="nav-link" data-scroll-target="#criterios-de-evaluación"><span class="header-section-number">8</span> Criterios de Evaluación</a></li>
+  <li><a href="#entregable" id="toc-entregable" class="nav-link" data-scroll-target="#entregable"><span class="header-section-number">6</span> Entregable</a></li>
+  <li><a href="#criterios-de-evaluación" id="toc-criterios-de-evaluación" class="nav-link" data-scroll-target="#criterios-de-evaluación"><span class="header-section-number">7</span> Criterios de Evaluación</a></li>
   </ul>
 </nav>
     </div>
@@ -186,7 +180,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="2" class="anchored" data-anchor-id="instrucciones-generales"><span class="header-section-number">2</span> Instrucciones generales</h2>
 <ul>
 <li>Trabajarás <strong>en los mismos grupos de los laboratorios anteriores</strong>.</li>
-<li><strong>Duración total</strong>: 2 horas 10 minutos.</li>
+<li><strong>Duración total</strong>: 1 hora 25 minutos.</li>
 <li>Necesitas la base de datos <code>techstyle</code> con los datos del laboratorio W06 ya cargados.</li>
 </ul>
 <p><strong>Herramientas necesarias:</strong></p>
@@ -229,16 +223,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td>2</td>
-<td>Transacciones: registrar una venta completa</td>
-<td>45 min</td>
-</tr>
-<tr class="odd">
-<td>3</td>
 <td>Primer vistazo a consultas con JOIN</td>
 <td>25 min</td>
 </tr>
-<tr class="even">
-<td>4</td>
+<tr class="odd">
+<td>3</td>
 <td>Síntesis y reflexión</td>
 <td>20 min</td>
 </tr>
@@ -540,176 +529,57 @@ Tip
 <hr>
 </section>
 </section>
-<section id="sec-transacciones" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="sec-transacciones"><span class="header-section-number">4</span> Parte 2 — Transacciones: Registrar una Venta Completa</h2>
-<p><strong>Duración: 45 minutos</strong></p>
-<p>Una transacción garantiza que una operación de negocio compuesta se ejecute <strong>completamente o no se ejecute en absoluto</strong>.</p>
-<section id="paso-7-transacción-exitosa-commit" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="paso-7-transacción-exitosa-commit"><span class="header-section-number">4.1</span> Paso 7: Transacción exitosa (COMMIT)</h3>
-<p>Registra una venta completa — incluyendo la venta, los detalles, el descuento de stock y la creación del despacho — dentro de una sola transacción:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Iniciar la transacción</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">START</span> <span class="kw">TRANSACTION</span>;</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Paso a: crear la venta</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> ventas (fecha, cliente_id) <span class="kw">VALUES</span> (CURDATE(), <span class="dv">4</span>);  <span class="co">-- Sofía Ramírez</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @venta_sofia <span class="op">=</span> LAST_INSERT_ID();</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Paso b: agregar los productos</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> detalle_ventas (venta_id, producto_id, cantidad, precio_unitario, descuento_pct)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    (@venta_sofia, <span class="dv">2</span>, <span class="dv">1</span>, <span class="fl">119990.00</span>, <span class="fl">5.00</span>),  <span class="co">-- Adidas Ultraboost con 5%</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    (@venta_sofia, <span class="dv">6</span>, <span class="dv">1</span>,  <span class="fl">44990.00</span>, <span class="fl">0.00</span>);  <span class="co">-- Pantalón Under Armour</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">-- Paso c: descontar el stock</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> productos <span class="kw">SET</span> stock <span class="op">=</span> stock <span class="op">-</span> <span class="dv">1</span> <span class="kw">WHERE</span> producto_id <span class="op">=</span> <span class="dv">2</span>;</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> productos <span class="kw">SET</span> stock <span class="op">=</span> stock <span class="op">-</span> <span class="dv">1</span> <span class="kw">WHERE</span> producto_id <span class="op">=</span> <span class="dv">6</span>;</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">-- Paso d: crear el despacho pendiente (direccion_entrega es NOT NULL)</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> despachos (venta_id, direccion_entrega, estado)</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (@venta_sofia, <span class="st">'Av. Marta Colvin 10120, Las Condes, Santiago'</span>, <span class="st">'Pendiente'</span>);</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co">-- Confirmar todos los cambios</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="kw">COMMIT</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Verifica el resultado:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- ¿El stock se descontó correctamente?</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> producto_id, nombre_producto, stock</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> productos</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> producto_id <span class="kw">IN</span> (<span class="dv">2</span>, <span class="dv">6</span>);</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- ¿La venta, el detalle y el despacho quedaron registrados?</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> v.venta_id, v.fecha, dv.producto_id, dv.cantidad, d.estado <span class="kw">AS</span> estado_despacho</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> ventas v</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> detalle_ventas dv <span class="kw">ON</span> v.venta_id <span class="op">=</span> dv.venta_id</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> despachos d       <span class="kw">ON</span> v.venta_id <span class="op">=</span> d.venta_id</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> v.cliente_id <span class="op">=</span> <span class="dv">4</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="paso-8-simular-un-error-y-hacer-rollback" class="level3" data-number="4.2">
-<h3 data-number="4.2" class="anchored" data-anchor-id="paso-8-simular-un-error-y-hacer-rollback"><span class="header-section-number">4.2</span> Paso 8: Simular un error y hacer ROLLBACK</h3>
-<p>Simularás una situación donde la operación debe deshacerse completamente.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Iniciar la transacción</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">START</span> <span class="kw">TRANSACTION</span>;</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Paso a: crear la venta</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> ventas (fecha, cliente_id) <span class="kw">VALUES</span> (CURDATE(), <span class="dv">5</span>);  <span class="co">-- Diego Torres</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> @venta_diego <span class="op">=</span> LAST_INSERT_ID();</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Paso b: agregar un producto válido</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> detalle_ventas (venta_id, producto_id, cantidad, precio_unitario)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (@venta_diego, <span class="dv">8</span>, <span class="dv">1</span>, <span class="fl">39990.00</span>);</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">-- Paso c: intentar agregar un producto inexistente (producto_id 99 no existe)</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> detalle_ventas (venta_id, producto_id, cantidad, precio_unitario)</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (@venta_diego, <span class="dv">99</span>, <span class="dv">2</span>, <span class="fl">15000.00</span>);</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">-- ^ Este INSERT fallará con error de FK</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">-- Deshacer toda la operación</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="kw">ROLLBACK</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>El INSERT con <code>producto_id = 99</code> fallará con error de FK. La transacción queda <strong>abierta pero con error pendiente</strong> — debes ejecutar <code>ROLLBACK</code> manualmente en Workbench.</p>
-<p>Verifica que Diego Torres no tenga ventas ni despachos registrados:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> ventas    <span class="kw">WHERE</span> cliente_id <span class="op">=</span> <span class="dv">5</span>;</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> despachos <span class="kw">WHERE</span> venta_id <span class="kw">IN</span> (<span class="kw">SELECT</span> venta_id <span class="kw">FROM</span> ventas <span class="kw">WHERE</span> cliente_id <span class="op">=</span> <span class="dv">5</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Ambas consultas deben retornar 0 filas.</p>
-</div>
-</div>
-</section>
-<section id="paso-9-reflexión-sobre-transacciones" class="level3" data-number="4.3">
-<h3 data-number="4.3" class="anchored" data-anchor-id="paso-9-reflexión-sobre-transacciones"><span class="header-section-number">4.3</span> Paso 9: Reflexión sobre transacciones</h3>
-<p>Responde en grupo:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Situación</th>
-<th>¿COMMIT o ROLLBACK?</th>
-<th>¿Por qué?</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Se registra la venta y el detalle correctamente, pero al descontar stock uno de los productos llega a stock negativo (-1)</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Se insertan 500 productos nuevos del catálogo de temporada. A mitad de camino hay un error de tipo de dato en la fila 231</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Una devolución queda registrada en <code>devoluciones</code> pero falla el <code>UPDATE</code> del stock al intentar reingresarlo</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<hr>
-</section>
-</section>
-<section id="sec-consultas" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="sec-consultas"><span class="header-section-number">5</span> Parte 3 — Primer Vistazo a Consultas con JOIN</h2>
+<section id="sec-consultas" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="sec-consultas"><span class="header-section-number">4</span> Parte 2 — Primer Vistazo a Consultas con JOIN</h2>
 <p><strong>Duración: 25 minutos</strong></p>
 <p>Hasta ahora has usado INSERT y UPDATE. Ahora harás las primeras preguntas a la base de datos. Los JOIN que ves aquí se estudiarán en profundidad en W08 — por ahora, úsalos para leer los resultados y conectarlos con decisiones de negocio.</p>
-<section id="paso-10-de-dónde-vienen-nuestros-productos" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="paso-10-de-dónde-vienen-nuestros-productos"><span class="header-section-number">5.1</span> Paso 10: ¿De dónde vienen nuestros productos?</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- ¿Qué productos provee cada proveedor y a qué precio?</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> pv.nombre_proveedor,</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>       pr.nombre_producto,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>       pp.precio_compra,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>       pr.precio_venta,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>       <span class="fu">ROUND</span>(pr.precio_venta <span class="op">-</span> pp.precio_compra, <span class="dv">0</span>) <span class="kw">AS</span> margen_bruto</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> proveedores pv</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> proveedor_producto pp <span class="kw">ON</span> pv.proveedor_id <span class="op">=</span> pp.proveedor_id</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> productos pr           <span class="kw">ON</span> pp.producto_id  <span class="op">=</span> pr.producto_id</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> pv.nombre_proveedor, margen_bruto <span class="kw">DESC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="paso-10-de-dónde-vienen-nuestros-productos" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="paso-10-de-dónde-vienen-nuestros-productos"><span class="header-section-number">4.1</span> Paso 10: ¿De dónde vienen nuestros productos?</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- ¿Qué productos provee cada proveedor y a qué precio?</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> pv.nombre_proveedor,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>       pr.nombre_producto,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>       pp.precio_compra,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>       pr.precio_venta,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>       <span class="fu">ROUND</span>(pr.precio_venta <span class="op">-</span> pp.precio_compra, <span class="dv">0</span>) <span class="kw">AS</span> margen_bruto</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> proveedores pv</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> proveedor_producto pp <span class="kw">ON</span> pv.proveedor_id <span class="op">=</span> pp.proveedor_id</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> productos pr           <span class="kw">ON</span> pp.producto_id  <span class="op">=</span> pr.producto_id</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> pv.nombre_proveedor, margen_bruto <span class="kw">DESC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Pregunta</strong>: ¿Cuál es el producto con mayor margen bruto? ¿Qué decisión de negocio podría tomar Roberto con esta información?</p>
 </section>
-<section id="paso-11-cuál-es-el-estado-de-los-despachos" class="level3" data-number="5.2">
-<h3 data-number="5.2" class="anchored" data-anchor-id="paso-11-cuál-es-el-estado-de-los-despachos"><span class="header-section-number">5.2</span> Paso 11: ¿Cuál es el estado de los despachos?</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Estado de todos los despachos con nombre del cliente</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> d.despacho_id,</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>       c.nombre,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>       c.apellido,</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>       c.region,</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>       d.direccion_entrega,</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>       d.fecha_despacho,</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>       d.fecha_entrega_estimada,</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>       d.fecha_entrega_real,</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>       d.estado</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> despachos d</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> ventas v   <span class="kw">ON</span> d.venta_id   <span class="op">=</span> v.venta_id</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> clientes c <span class="kw">ON</span> v.cliente_id <span class="op">=</span> c.cliente_id</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> d.estado;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="paso-11-cuál-es-el-estado-de-los-despachos" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="paso-11-cuál-es-el-estado-de-los-despachos"><span class="header-section-number">4.2</span> Paso 11: ¿Cuál es el estado de los despachos?</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Estado de todos los despachos con nombre del cliente</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> d.despacho_id,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>       c.nombre,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>       c.apellido,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>       c.region,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>       d.direccion_entrega,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>       d.fecha_despacho,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>       d.fecha_entrega_estimada,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>       d.fecha_entrega_real,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>       d.estado</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> despachos d</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> ventas v   <span class="kw">ON</span> d.venta_id   <span class="op">=</span> v.venta_id</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> clientes c <span class="kw">ON</span> v.cliente_id <span class="op">=</span> c.cliente_id</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> d.estado;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Pregunta</strong>: ¿Qué debería hacer el equipo de logística con los despachos en estado <code>'Pendiente'</code>?</p>
 </section>
-<section id="paso-12-hay-devoluciones-que-atender" class="level3" data-number="5.3">
-<h3 data-number="5.3" class="anchored" data-anchor-id="paso-12-hay-devoluciones-que-atender"><span class="header-section-number">5.3</span> Paso 12: ¿Hay devoluciones que atender?</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Devoluciones pendientes con detalle del cliente y producto</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> dev.devolucion_id,</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>       c.nombre,</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>       c.apellido,</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>       p.nombre_producto,</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>       dev.motivo,</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>       dev.estado,</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>       dev.fecha_devolucion</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> devoluciones dev</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> ventas v    <span class="kw">ON</span> dev.venta_id    <span class="op">=</span> v.venta_id</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> clientes c  <span class="kw">ON</span> v.cliente_id   <span class="op">=</span> c.cliente_id</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> productos p <span class="kw">ON</span> dev.producto_id <span class="op">=</span> p.producto_id</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> dev.estado <span class="op">=</span> <span class="st">'Pendiente'</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="paso-12-hay-devoluciones-que-atender" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="paso-12-hay-devoluciones-que-atender"><span class="header-section-number">4.3</span> Paso 12: ¿Hay devoluciones que atender?</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Devoluciones pendientes con detalle del cliente y producto</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> dev.devolucion_id,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>       c.nombre,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>       c.apellido,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>       p.nombre_producto,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>       dev.motivo,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>       dev.estado,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>       dev.fecha_devolucion</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> devoluciones dev</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> ventas v    <span class="kw">ON</span> dev.venta_id    <span class="op">=</span> v.venta_id</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> clientes c  <span class="kw">ON</span> v.cliente_id   <span class="op">=</span> c.cliente_id</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> productos p <span class="kw">ON</span> dev.producto_id <span class="op">=</span> p.producto_id</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> dev.estado <span class="op">=</span> <span class="st">'Pendiente'</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -727,11 +597,11 @@ Note
 <hr>
 </section>
 </section>
-<section id="sec-reflexion" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="sec-reflexion"><span class="header-section-number">6</span> Parte 4 — Síntesis y Reflexión</h2>
+<section id="sec-reflexion" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="sec-reflexion"><span class="header-section-number">5</span> Parte 3 — Síntesis y Reflexión</h2>
 <p><strong>Duración: 20 minutos</strong></p>
-<section id="paso-13-comparar-el-modelo-diseñado-vs.-el-modelo-implementado" class="level3" data-number="6.1">
-<h3 data-number="6.1" class="anchored" data-anchor-id="paso-13-comparar-el-modelo-diseñado-vs.-el-modelo-implementado"><span class="header-section-number">6.1</span> Paso 13: Comparar el modelo diseñado vs.&nbsp;el modelo implementado</h3>
+<section id="paso-13-comparar-el-modelo-diseñado-vs.-el-modelo-implementado" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="paso-13-comparar-el-modelo-diseñado-vs.-el-modelo-implementado"><span class="header-section-number">5.1</span> Paso 13: Comparar el modelo diseñado vs.&nbsp;el modelo implementado</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -774,8 +644,8 @@ Note
 </tbody>
 </table>
 </section>
-<section id="paso-14-preguntas-de-diseño-e-implementación" class="level3" data-number="6.2">
-<h3 data-number="6.2" class="anchored" data-anchor-id="paso-14-preguntas-de-diseño-e-implementación"><span class="header-section-number">6.2</span> Paso 14: Preguntas de diseño e implementación</h3>
+<section id="paso-14-preguntas-de-diseño-e-implementación" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="paso-14-preguntas-de-diseño-e-implementación"><span class="header-section-number">5.2</span> Paso 14: Preguntas de diseño e implementación</h3>
 <p>Responde en grupo:</p>
 <table class="caption-top table">
 <colgroup>
@@ -812,8 +682,8 @@ Note
 </tbody>
 </table>
 </section>
-<section id="paso-15-análisis-de-impacto-del-modelo-a-las-decisiones" class="level3" data-number="6.3">
-<h3 data-number="6.3" class="anchored" data-anchor-id="paso-15-análisis-de-impacto-del-modelo-a-las-decisiones"><span class="header-section-number">6.3</span> Paso 15: Análisis de impacto — del modelo a las decisiones</h3>
+<section id="paso-15-análisis-de-impacto-del-modelo-a-las-decisiones" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="paso-15-análisis-de-impacto-del-modelo-a-las-decisiones"><span class="header-section-number">5.3</span> Paso 15: Análisis de impacto — del modelo a las decisiones</h3>
 <p>Para cada capacidad implementada, identifica la decisión de negocio que habilita:</p>
 <table class="caption-top table">
 <colgroup>
@@ -850,8 +720,8 @@ Note
 </tbody>
 </table>
 </section>
-<section id="paso-16-reporte-de-implementación" class="level3" data-number="6.4">
-<h3 data-number="6.4" class="anchored" data-anchor-id="paso-16-reporte-de-implementación"><span class="header-section-number">6.4</span> Paso 16: Reporte de implementación</h3>
+<section id="paso-16-reporte-de-implementación" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="paso-16-reporte-de-implementación"><span class="header-section-number">5.4</span> Paso 16: Reporte de implementación</h3>
 <p>Redacta un párrafo breve (6–8 líneas) como si fueras Juan informando a Roberto sobre el estado del sistema al cierre del día:</p>
 <blockquote class="blockquote">
 <p><strong>Para:</strong> Roberto Fernández, CEO TechStyle</p>
@@ -862,8 +732,8 @@ Note
 <hr>
 </section>
 </section>
-<section id="entregable" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="entregable"><span class="header-section-number">7</span> Entregable</h2>
+<section id="entregable" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="entregable"><span class="header-section-number">6</span> Entregable</h2>
 <p>Sube a la plataforma los siguientes archivos comprimidos en <code>W07_lab_[apellido1]_[apellido2].zip</code>:</p>
 <table class="caption-top table">
 <colgroup>
@@ -882,10 +752,6 @@ Note
 <td>Script con los comandos <code>LOAD DATA LOCAL INFILE</code> de la Parte 1 (ajustados a tu ruta real)</td>
 </tr>
 <tr class="even">
-<td><code>W07_transacciones.sql</code></td>
-<td>Script con las transacciones COMMIT y ROLLBACK de la Parte 2</td>
-</tr>
-<tr class="odd">
 <td><code>W07_reflexion.pdf</code> o <code>.docx</code></td>
 <td>Respuestas de las preguntas de reflexión + reporte para Roberto</td>
 </tr>
@@ -893,8 +759,8 @@ Note
 </table>
 <hr>
 </section>
-<section id="criterios-de-evaluación" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="criterios-de-evaluación"><span class="header-section-number">8</span> Criterios de Evaluación</h2>
+<section id="criterios-de-evaluación" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="criterios-de-evaluación"><span class="header-section-number">7</span> Criterios de Evaluación</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -909,21 +775,17 @@ Note
 <tbody>
 <tr class="odd">
 <td>Carga completa de las 4 tablas faltantes, verificación de filas (Parte 1)</td>
+<td>40 pts</td>
+</tr>
+<tr class="even">
+<td>Consultas con JOIN: resultados correctos, respuestas a preguntas de negocio (Parte 2)</td>
+<td>30 pts</td>
+</tr>
+<tr class="odd">
+<td>Síntesis: análisis de impacto, preguntas de diseño y reporte para Roberto (Parte 3)</td>
 <td>30 pts</td>
 </tr>
 <tr class="even">
-<td>Transacciones: COMMIT y ROLLBACK funcionando, reflexión sobre escenarios (Parte 2)</td>
-<td>35 pts</td>
-</tr>
-<tr class="odd">
-<td>Consultas con JOIN: resultados correctos, respuestas a preguntas de negocio (Parte 3)</td>
-<td>15 pts</td>
-</tr>
-<tr class="even">
-<td>Síntesis: análisis de impacto, preguntas de diseño y reporte para Roberto (Parte 4)</td>
-<td>20 pts</td>
-</tr>
-<tr class="odd">
 <td><strong>Total</strong></td>
 <td><strong>100 pts</strong></td>
 </tr>

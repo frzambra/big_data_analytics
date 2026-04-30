@@ -20,7 +20,7 @@ Al terminar este laboratorio tendrás la base de datos **completamente poblada**
 ## Instrucciones generales
 
 - Trabajarás **en los mismos grupos de los laboratorios anteriores**.
-- **Duración total**: 2 horas 10 minutos.
+- **Duración total**: 1 hora 25 minutos.
 - Necesitas la base de datos `techstyle` con los datos del laboratorio W06 ya cargados.
 
 **Herramientas necesarias:**
@@ -35,9 +35,8 @@ Al terminar este laboratorio tendrás la base de datos **completamente poblada**
 | Parte | Actividad | Tiempo |
 |---|---|---|
 | 1 | Cargar las tablas faltantes | 40 min |
-| 2 | Transacciones: registrar una venta completa | 45 min |
-| 3 | Primer vistazo a consultas con JOIN | 25 min |
-| 4 | Síntesis y reflexión | 20 min |
+| 2 | Primer vistazo a consultas con JOIN | 25 min |
+| 3 | Síntesis y reflexión | 20 min |
 
 ---
 
@@ -236,107 +235,7 @@ Completa la tabla con los resultados:
 
 ---
 
-## Parte 2 — Transacciones: Registrar una Venta Completa {#sec-transacciones}
-
-**Duración: 45 minutos**
-
-Una transacción garantiza que una operación de negocio compuesta se ejecute **completamente o no se ejecute en absoluto**.
-
-### Paso 7: Transacción exitosa (COMMIT)
-
-Registra una venta completa — incluyendo la venta, los detalles, el descuento de stock y la creación del despacho — dentro de una sola transacción:
-
-```sql
--- Iniciar la transacción
-START TRANSACTION;
-
--- Paso a: crear la venta
-INSERT INTO ventas (fecha, cliente_id) VALUES (CURDATE(), 4);  -- Sofía Ramírez
-SET @venta_sofia = LAST_INSERT_ID();
-
--- Paso b: agregar los productos
-INSERT INTO detalle_ventas (venta_id, producto_id, cantidad, precio_unitario, descuento_pct)
-VALUES
-    (@venta_sofia, 2, 1, 119990.00, 5.00),  -- Adidas Ultraboost con 5%
-    (@venta_sofia, 6, 1,  44990.00, 0.00);  -- Pantalón Under Armour
-
--- Paso c: descontar el stock
-UPDATE productos SET stock = stock - 1 WHERE producto_id = 2;
-UPDATE productos SET stock = stock - 1 WHERE producto_id = 6;
-
--- Paso d: crear el despacho pendiente (direccion_entrega es NOT NULL)
-INSERT INTO despachos (venta_id, direccion_entrega, estado)
-VALUES (@venta_sofia, 'Av. Marta Colvin 10120, Las Condes, Santiago', 'Pendiente');
-
--- Confirmar todos los cambios
-COMMIT;
-```
-
-Verifica el resultado:
-
-```sql
--- ¿El stock se descontó correctamente?
-SELECT producto_id, nombre_producto, stock
-FROM productos
-WHERE producto_id IN (2, 6);
-
--- ¿La venta, el detalle y el despacho quedaron registrados?
-SELECT v.venta_id, v.fecha, dv.producto_id, dv.cantidad, d.estado AS estado_despacho
-FROM ventas v
-JOIN detalle_ventas dv ON v.venta_id = dv.venta_id
-JOIN despachos d       ON v.venta_id = d.venta_id
-WHERE v.cliente_id = 4;
-```
-
-### Paso 8: Simular un error y hacer ROLLBACK
-
-Simularás una situación donde la operación debe deshacerse completamente.
-
-```sql
--- Iniciar la transacción
-START TRANSACTION;
-
--- Paso a: crear la venta
-INSERT INTO ventas (fecha, cliente_id) VALUES (CURDATE(), 5);  -- Diego Torres
-SET @venta_diego = LAST_INSERT_ID();
-
--- Paso b: agregar un producto válido
-INSERT INTO detalle_ventas (venta_id, producto_id, cantidad, precio_unitario)
-VALUES (@venta_diego, 8, 1, 39990.00);
-
--- Paso c: intentar agregar un producto inexistente (producto_id 99 no existe)
-INSERT INTO detalle_ventas (venta_id, producto_id, cantidad, precio_unitario)
-VALUES (@venta_diego, 99, 2, 15000.00);
--- ^ Este INSERT fallará con error de FK
-
--- Deshacer toda la operación
-ROLLBACK;
-```
-
-::: {.callout-important}
-El INSERT con `producto_id = 99` fallará con error de FK. La transacción queda **abierta pero con error pendiente** — debes ejecutar `ROLLBACK` manualmente en Workbench.
-
-Verifica que Diego Torres no tenga ventas ni despachos registrados:
-```sql
-SELECT * FROM ventas    WHERE cliente_id = 5;
-SELECT * FROM despachos WHERE venta_id IN (SELECT venta_id FROM ventas WHERE cliente_id = 5);
-```
-Ambas consultas deben retornar 0 filas.
-:::
-
-### Paso 9: Reflexión sobre transacciones
-
-Responde en grupo:
-
-| Situación | ¿COMMIT o ROLLBACK? | ¿Por qué? |
-|---|---|---|
-| Se registra la venta y el detalle correctamente, pero al descontar stock uno de los productos llega a stock negativo (-1) | | |
-| Se insertan 500 productos nuevos del catálogo de temporada. A mitad de camino hay un error de tipo de dato en la fila 231 | | |
-| Una devolución queda registrada en `devoluciones` pero falla el `UPDATE` del stock al intentar reingresarlo | | |
-
----
-
-## Parte 3 — Primer Vistazo a Consultas con JOIN {#sec-consultas}
+## Parte 2 — Primer Vistazo a Consultas con JOIN {#sec-consultas}
 
 **Duración: 25 minutos**
 
@@ -406,7 +305,7 @@ Observa la estructura: siempre hay un `FROM` (tabla principal), y luego `JOIN ..
 
 ---
 
-## Parte 4 — Síntesis y Reflexión {#sec-reflexion}
+## Parte 3 — Síntesis y Reflexión {#sec-reflexion}
 
 **Duración: 20 minutos**
 
@@ -469,7 +368,6 @@ Sube a la plataforma los siguientes archivos comprimidos en `W07_lab_[apellido1]
 | Archivo | Contenido |
 |---|---|
 | `W07_carga.sql` | Script con los comandos `LOAD DATA LOCAL INFILE` de la Parte 1 (ajustados a tu ruta real) |
-| `W07_transacciones.sql` | Script con las transacciones COMMIT y ROLLBACK de la Parte 2 |
 | `W07_reflexion.pdf` o `.docx` | Respuestas de las preguntas de reflexión + reporte para Roberto |
 
 ---
@@ -478,8 +376,7 @@ Sube a la plataforma los siguientes archivos comprimidos en `W07_lab_[apellido1]
 
 | Criterio | Puntaje |
 |---|---|
-| Carga completa de las 4 tablas faltantes, verificación de filas (Parte 1) | 30 pts |
-| Transacciones: COMMIT y ROLLBACK funcionando, reflexión sobre escenarios (Parte 2) | 35 pts |
-| Consultas con JOIN: resultados correctos, respuestas a preguntas de negocio (Parte 3) | 15 pts |
-| Síntesis: análisis de impacto, preguntas de diseño y reporte para Roberto (Parte 4) | 20 pts |
+| Carga completa de las 4 tablas faltantes, verificación de filas (Parte 1) | 40 pts |
+| Consultas con JOIN: resultados correctos, respuestas a preguntas de negocio (Parte 2) | 30 pts |
+| Síntesis: análisis de impacto, preguntas de diseño y reporte para Roberto (Parte 3) | 30 pts |
 | **Total** | **100 pts** |

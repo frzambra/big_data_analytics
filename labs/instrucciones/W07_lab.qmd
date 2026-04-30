@@ -92,7 +92,8 @@ LOAD DATA LOCAL INFILE '/ruta/a/proveedores.csv'
     CHARACTER SET utf8mb4
     FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
     LINES TERMINATED BY '\n'
-    IGNORE 1 ROWS;
+    IGNORE 1 ROWS
+    (proveedor_id, nombre_proveedor, rut, contacto, email, telefono);
 
 SELECT COUNT(*) AS filas_cargadas FROM proveedores;
 -- Resultado esperado: 4
@@ -120,17 +121,18 @@ LOAD DATA LOCAL INFILE '/ruta/a/proveedor_producto.csv'
     CHARACTER SET utf8mb4
     FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
     LINES TERMINATED BY '\n'
-    IGNORE 1 ROWS;
+    IGNORE 1 ROWS
+    (proveedor_id, producto_id, precio_compra, plazo_entrega_dias, proveedor_principal);
 
 SELECT COUNT(*) AS filas_cargadas FROM proveedor_producto;
 -- Resultado esperado: 10
 ```
 
-**Pregunta**: ¿Por qué `precio_proveedor` se guarda en `proveedor_producto` y no directamente en `productos`? ¿Qué pasaría si un producto tuviera dos proveedores con precios distintos?
+**Pregunta**: ¿Por qué `precio_compra` se guarda en `proveedor_producto` y no directamente en `productos`? ¿Qué pasaría si un producto tuviera dos proveedores con precios distintos?
 
 ### Paso 4: Cargar despachos (con valores NULL)
 
-El archivo `despachos.csv` tiene filas donde `fecha_despacho`, `transportista` y `numero_seguimiento` están vacíos — representan un despacho aún no procesado. MySQL no convierte campos vacíos a `NULL` automáticamente, por lo que se necesita una cláusula `SET` con `NULLIF`:
+El archivo `despachos.csv` tiene filas donde `fecha_despacho`, `fecha_entrega_estimada` y `fecha_entrega_real` están vacíos — representan un despacho aún no procesado o no entregado. MySQL no convierte campos vacíos a `NULL` automáticamente, por lo que se necesita una cláusula `SET` con `NULLIF`:
 
 ```sql
 LOAD DATA LOCAL INFILE '/ruta/a/despachos.csv'
@@ -139,11 +141,11 @@ LOAD DATA LOCAL INFILE '/ruta/a/despachos.csv'
     FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
     LINES TERMINATED BY '\n'
     IGNORE 1 ROWS
-    (venta_id, @fecha_despacho, estado, @transportista, @numero_seguimiento)
+    (venta_id, direccion_entrega, @fecha_despacho, @fecha_entrega_estimada, @fecha_entrega_real, estado)
 SET
-    fecha_despacho     = NULLIF(@fecha_despacho, ''),
-    transportista      = NULLIF(@transportista, ''),
-    numero_seguimiento = NULLIF(@numero_seguimiento, '');
+    fecha_despacho          = NULLIF(@fecha_despacho, ''),
+    fecha_entrega_estimada  = NULLIF(@fecha_entrega_estimada, ''),
+    fecha_entrega_real      = NULLIF(@fecha_entrega_real, '');
 
 SELECT * FROM despachos;
 ```
@@ -162,7 +164,10 @@ LOAD DATA LOCAL INFILE '/ruta/a/devoluciones.csv'
     CHARACTER SET utf8mb4
     FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
     LINES TERMINATED BY '\n'
-    IGNORE 1 ROWS;
+    IGNORE 1 ROWS
+    (venta_id, producto_id, fecha_devolucion, cantidad_devuelta, motivo, estado, @monto_reembolsado)
+SET
+    monto_reembolsado = NULLIF(@monto_reembolsado, '');
 
 SELECT COUNT(*) AS filas_cargadas FROM devoluciones;
 -- Resultado esperado: 1
@@ -173,29 +178,29 @@ SELECT COUNT(*) AS filas_cargadas FROM devoluciones;
 
 ```sql
 -- Proveedores
-INSERT INTO proveedores (nombre_proveedor, pais, email, telefono) VALUES
-    ('Nike Distribuciones Chile',  'Chile',      'contacto@nikedist.cl',    '+56 2 2345 6789'),
-    ('Adidas Importaciones Sur',   'Argentina',  'ventas@adidassur.com.ar', '+54 11 4567 8901'),
-    ('Puma Latam Distribuidora',   'Brasil',     'pedidos@pumalatam.com',   '+55 11 9876 5432'),
-    ('Multimarca Sport Ltda.',     'Chile',      'info@multimarcasport.cl', '+56 9 8765 4321');
+INSERT INTO proveedores (proveedor_id, nombre_proveedor, rut, contacto, email, telefono) VALUES
+    (1, 'Nike Distribuciones Chile', '76.543.210-1', 'Felipe Morales',  'contacto@nikedist.cl',    '+56 2 2345 6789'),
+    (2, 'Adidas Importaciones Sur',  '76.234.567-8', 'Carolina Vidal',  'ventas@adidassur.com.ar', '+54 11 4567 8901'),
+    (3, 'Puma Latam Distribuidora',  '76.345.678-9', 'Lucas Ferreira',  'pedidos@pumalatam.com',   '+55 11 9876 5432'),
+    (4, 'Multimarca Sport Ltda.',    '76.456.789-0', 'Andrea Salinas',  'info@multimarcasport.cl', '+56 9 8765 4321');
 
 -- Proveedor–producto
-INSERT INTO proveedor_producto (proveedor_id, producto_id, precio_proveedor, fecha_inicio) VALUES
-    (1, 1, 42000.00, '2025-01-01'), (1, 5, 13500.00, '2025-01-01'),
-    (1, 9,  6500.00, '2025-01-01'), (1,10,  8500.00, '2025-01-01'),
-    (2, 2, 62000.00, '2025-02-01'), (2, 4, 11000.00, '2025-02-01'),
-    (3, 3, 26000.00, '2025-01-15'), (3, 8, 18500.00, '2025-01-15'),
-    (4, 6, 20000.00, '2025-03-01'), (4, 7, 47000.00, '2025-03-01');
+INSERT INTO proveedor_producto (proveedor_id, producto_id, precio_compra, plazo_entrega_dias, proveedor_principal) VALUES
+    (1, 1, 42000.00, 14, 1), (1, 5, 13500.00, 14, 1),
+    (1, 9,  6500.00, 14, 1), (1,10,  8500.00, 14, 1),
+    (2, 2, 62000.00, 21, 1), (2, 4, 11000.00, 21, 1),
+    (3, 3, 26000.00, 21, 1), (3, 8, 18500.00, 21, 1),
+    (4, 6, 20000.00,  7, 1), (4, 7, 47000.00,  7, 1);
 
 -- Despachos
-INSERT INTO despachos (venta_id, fecha_despacho, estado, transportista, numero_seguimiento) VALUES
-    (1, '2026-01-16', 'Entregado',   'Chilexpress', 'CHX-2026-00101'),
-    (2, '2026-01-21', 'En tránsito', 'Starken',     'STK-2026-00089'),
-    (3,  NULL,        'Pendiente',    NULL,           NULL);
+INSERT INTO despachos (venta_id, direccion_entrega, fecha_despacho, fecha_entrega_estimada, fecha_entrega_real, estado) VALUES
+    (1, 'Av. Providencia 1234, Providencia, Santiago', '2026-01-16', '2026-01-19', '2026-01-18', 'Entregado'),
+    (2, 'Cerro Alegre 567, Valparaíso',                '2026-01-21', '2026-01-24',  NULL,        'En tránsito'),
+    (3, 'Av. O''Higgins 890, Concepción',               NULL,         NULL,          NULL,        'Pendiente');
 
 -- Devoluciones
-INSERT INTO devoluciones (venta_id, producto_id, fecha_devolucion, motivo, estado) VALUES
-    (1, 4, '2026-01-25', 'Talla incorrecta', 'Pendiente');
+INSERT INTO devoluciones (venta_id, producto_id, fecha_devolucion, cantidad_devuelta, motivo, estado) VALUES
+    (1, 4, '2026-01-25', 1, 'Talla incorrecta', 'Pendiente');
 ```
 :::
 
@@ -259,9 +264,9 @@ VALUES
 UPDATE productos SET stock = stock - 1 WHERE producto_id = 2;
 UPDATE productos SET stock = stock - 1 WHERE producto_id = 6;
 
--- Paso d: crear el despacho pendiente
-INSERT INTO despachos (venta_id, fecha_despacho, estado, transportista, numero_seguimiento)
-VALUES (@venta_sofia, NULL, 'Pendiente', NULL, NULL);
+-- Paso d: crear el despacho pendiente (direccion_entrega es NOT NULL)
+INSERT INTO despachos (venta_id, direccion_entrega, estado)
+VALUES (@venta_sofia, 'Av. Marta Colvin 10120, Las Condes, Santiago', 'Pendiente');
 
 -- Confirmar todos los cambios
 COMMIT;
@@ -343,9 +348,9 @@ Hasta ahora has usado INSERT y UPDATE. Ahora harás las primeras preguntas a la 
 -- ¿Qué productos provee cada proveedor y a qué precio?
 SELECT pv.nombre_proveedor,
        pr.nombre_producto,
-       pp.precio_proveedor,
+       pp.precio_compra,
        pr.precio_venta,
-       ROUND(pr.precio_venta - pp.precio_proveedor, 0) AS margen_bruto
+       ROUND(pr.precio_venta - pp.precio_compra, 0) AS margen_bruto
 FROM proveedores pv
 JOIN proveedor_producto pp ON pv.proveedor_id = pp.proveedor_id
 JOIN productos pr           ON pp.producto_id  = pr.producto_id
@@ -362,9 +367,11 @@ SELECT d.despacho_id,
        c.nombre,
        c.apellido,
        c.region,
-       d.estado,
-       d.transportista,
-       d.numero_seguimiento
+       d.direccion_entrega,
+       d.fecha_despacho,
+       d.fecha_entrega_estimada,
+       d.fecha_entrega_real,
+       d.estado
 FROM despachos d
 JOIN ventas v   ON d.venta_id   = v.venta_id
 JOIN clientes c ON v.cliente_id = c.cliente_id

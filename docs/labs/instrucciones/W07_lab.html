@@ -321,10 +321,11 @@ Important
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">CHARACTER</span> <span class="kw">SET</span> utf8mb4</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    FIELDS TERMINATED <span class="kw">BY</span> <span class="st">','</span> OPTIONALLY ENCLOSED <span class="kw">BY</span> <span class="st">'"'</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    LINES TERMINATED <span class="kw">BY</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    IGNORE <span class="dv">1</span> <span class="kw">ROWS</span>;</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> filas_cargadas <span class="kw">FROM</span> proveedores;</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">-- Resultado esperado: 4</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    IGNORE <span class="dv">1</span> <span class="kw">ROWS</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    (proveedor_id, nombre_proveedor, rut, contacto, email, telefono);</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> filas_cargadas <span class="kw">FROM</span> proveedores;</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">-- Resultado esperado: 4</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -365,26 +366,27 @@ Note
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">CHARACTER</span> <span class="kw">SET</span> utf8mb4</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    FIELDS TERMINATED <span class="kw">BY</span> <span class="st">','</span> OPTIONALLY ENCLOSED <span class="kw">BY</span> <span class="st">'"'</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    LINES TERMINATED <span class="kw">BY</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    IGNORE <span class="dv">1</span> <span class="kw">ROWS</span>;</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> filas_cargadas <span class="kw">FROM</span> proveedor_producto;</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- Resultado esperado: 10</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Pregunta</strong>: ¿Por qué <code>precio_proveedor</code> se guarda en <code>proveedor_producto</code> y no directamente en <code>productos</code>? ¿Qué pasaría si un producto tuviera dos proveedores con precios distintos?</p>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    IGNORE <span class="dv">1</span> <span class="kw">ROWS</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    (proveedor_id, producto_id, precio_compra, plazo_entrega_dias, proveedor_principal);</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> filas_cargadas <span class="kw">FROM</span> proveedor_producto;</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- Resultado esperado: 10</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Pregunta</strong>: ¿Por qué <code>precio_compra</code> se guarda en <code>proveedor_producto</code> y no directamente en <code>productos</code>? ¿Qué pasaría si un producto tuviera dos proveedores con precios distintos?</p>
 </section>
 <section id="paso-4-cargar-despachos-con-valores-null" class="level3" data-number="3.4">
 <h3 data-number="3.4" class="anchored" data-anchor-id="paso-4-cargar-despachos-con-valores-null"><span class="header-section-number">3.4</span> Paso 4: Cargar despachos (con valores NULL)</h3>
-<p>El archivo <code>despachos.csv</code> tiene filas donde <code>fecha_despacho</code>, <code>transportista</code> y <code>numero_seguimiento</code> están vacíos — representan un despacho aún no procesado. MySQL no convierte campos vacíos a <code>NULL</code> automáticamente, por lo que se necesita una cláusula <code>SET</code> con <code>NULLIF</code>:</p>
+<p>El archivo <code>despachos.csv</code> tiene filas donde <code>fecha_despacho</code>, <code>fecha_entrega_estimada</code> y <code>fecha_entrega_real</code> están vacíos — representan un despacho aún no procesado o no entregado. MySQL no convierte campos vacíos a <code>NULL</code> automáticamente, por lo que se necesita una cláusula <code>SET</code> con <code>NULLIF</code>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>LOAD <span class="kw">DATA</span> <span class="kw">LOCAL</span> INFILE <span class="st">'/ruta/a/despachos.csv'</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INTO</span> <span class="kw">TABLE</span> despachos</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">CHARACTER</span> <span class="kw">SET</span> utf8mb4</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    FIELDS TERMINATED <span class="kw">BY</span> <span class="st">','</span> OPTIONALLY ENCLOSED <span class="kw">BY</span> <span class="st">'"'</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    LINES TERMINATED <span class="kw">BY</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    IGNORE <span class="dv">1</span> <span class="kw">ROWS</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    (venta_id, @fecha_despacho, estado, @transportista, @numero_seguimiento)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    (venta_id, direccion_entrega, @fecha_despacho, @fecha_entrega_estimada, @fecha_entrega_real, estado)</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    fecha_despacho     <span class="op">=</span> <span class="fu">NULLIF</span>(@fecha_despacho, <span class="st">''</span>),</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    transportista      <span class="op">=</span> <span class="fu">NULLIF</span>(@transportista, <span class="st">''</span>),</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    numero_seguimiento <span class="op">=</span> <span class="fu">NULLIF</span>(@numero_seguimiento, <span class="st">''</span>);</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    fecha_despacho          <span class="op">=</span> <span class="fu">NULLIF</span>(@fecha_despacho, <span class="st">''</span>),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    fecha_entrega_estimada  <span class="op">=</span> <span class="fu">NULLIF</span>(@fecha_entrega_estimada, <span class="st">''</span>),</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    fecha_entrega_real      <span class="op">=</span> <span class="fu">NULLIF</span>(@fecha_entrega_real, <span class="st">''</span>);</span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> despachos;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -409,10 +411,13 @@ Tip
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">CHARACTER</span> <span class="kw">SET</span> utf8mb4</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    FIELDS TERMINATED <span class="kw">BY</span> <span class="st">','</span> OPTIONALLY ENCLOSED <span class="kw">BY</span> <span class="st">'"'</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    LINES TERMINATED <span class="kw">BY</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    IGNORE <span class="dv">1</span> <span class="kw">ROWS</span>;</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> filas_cargadas <span class="kw">FROM</span> devoluciones;</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- Resultado esperado: 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    IGNORE <span class="dv">1</span> <span class="kw">ROWS</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    (venta_id, producto_id, fecha_devolucion, cantidad_devuelta, motivo, estado, @monto_reembolsado)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    monto_reembolsado <span class="op">=</span> <span class="fu">NULLIF</span>(@monto_reembolsado, <span class="st">''</span>);</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> filas_cargadas <span class="kw">FROM</span> devoluciones;</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">-- Resultado esperado: 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -426,29 +431,29 @@ Tip
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Proveedores</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> proveedores (nombre_proveedor, pais, email, telefono) <span class="kw">VALUES</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Nike Distribuciones Chile'</span>,  <span class="st">'Chile'</span>,      <span class="st">'contacto@nikedist.cl'</span>,    <span class="st">'+56 2 2345 6789'</span>),</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Adidas Importaciones Sur'</span>,   <span class="st">'Argentina'</span>,  <span class="st">'ventas@adidassur.com.ar'</span>, <span class="st">'+54 11 4567 8901'</span>),</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Puma Latam Distribuidora'</span>,   <span class="st">'Brasil'</span>,     <span class="st">'pedidos@pumalatam.com'</span>,   <span class="st">'+55 11 9876 5432'</span>),</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Multimarca Sport Ltda.'</span>,     <span class="st">'Chile'</span>,      <span class="st">'info@multimarcasport.cl'</span>, <span class="st">'+56 9 8765 4321'</span>);</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> proveedores (proveedor_id, nombre_proveedor, rut, contacto, email, telefono) <span class="kw">VALUES</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'Nike Distribuciones Chile'</span>, <span class="st">'76.543.210-1'</span>, <span class="st">'Felipe Morales'</span>,  <span class="st">'contacto@nikedist.cl'</span>,    <span class="st">'+56 2 2345 6789'</span>),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'Adidas Importaciones Sur'</span>,  <span class="st">'76.234.567-8'</span>, <span class="st">'Carolina Vidal'</span>,  <span class="st">'ventas@adidassur.com.ar'</span>, <span class="st">'+54 11 4567 8901'</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">'Puma Latam Distribuidora'</span>,  <span class="st">'76.345.678-9'</span>, <span class="st">'Lucas Ferreira'</span>,  <span class="st">'pedidos@pumalatam.com'</span>,   <span class="st">'+55 11 9876 5432'</span>),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">4</span>, <span class="st">'Multimarca Sport Ltda.'</span>,    <span class="st">'76.456.789-0'</span>, <span class="st">'Andrea Salinas'</span>,  <span class="st">'info@multimarcasport.cl'</span>, <span class="st">'+56 9 8765 4321'</span>);</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Proveedor–producto</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> proveedor_producto (proveedor_id, producto_id, precio_proveedor, fecha_inicio) <span class="kw">VALUES</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">42000.00</span>, <span class="st">'2025-01-01'</span>), (<span class="dv">1</span>, <span class="dv">5</span>, <span class="fl">13500.00</span>, <span class="st">'2025-01-01'</span>),</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="dv">9</span>,  <span class="fl">6500.00</span>, <span class="st">'2025-01-01'</span>), (<span class="dv">1</span>,<span class="dv">10</span>,  <span class="fl">8500.00</span>, <span class="st">'2025-01-01'</span>),</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="dv">2</span>, <span class="fl">62000.00</span>, <span class="st">'2025-02-01'</span>), (<span class="dv">2</span>, <span class="dv">4</span>, <span class="fl">11000.00</span>, <span class="st">'2025-02-01'</span>),</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="dv">3</span>, <span class="fl">26000.00</span>, <span class="st">'2025-01-15'</span>), (<span class="dv">3</span>, <span class="dv">8</span>, <span class="fl">18500.00</span>, <span class="st">'2025-01-15'</span>),</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">4</span>, <span class="dv">6</span>, <span class="fl">20000.00</span>, <span class="st">'2025-03-01'</span>), (<span class="dv">4</span>, <span class="dv">7</span>, <span class="fl">47000.00</span>, <span class="st">'2025-03-01'</span>);</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> proveedor_producto (proveedor_id, producto_id, precio_compra, plazo_entrega_dias, proveedor_principal) <span class="kw">VALUES</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">42000.00</span>, <span class="dv">14</span>, <span class="dv">1</span>), (<span class="dv">1</span>, <span class="dv">5</span>, <span class="fl">13500.00</span>, <span class="dv">14</span>, <span class="dv">1</span>),</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="dv">9</span>,  <span class="fl">6500.00</span>, <span class="dv">14</span>, <span class="dv">1</span>), (<span class="dv">1</span>,<span class="dv">10</span>,  <span class="fl">8500.00</span>, <span class="dv">14</span>, <span class="dv">1</span>),</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="dv">2</span>, <span class="fl">62000.00</span>, <span class="dv">21</span>, <span class="dv">1</span>), (<span class="dv">2</span>, <span class="dv">4</span>, <span class="fl">11000.00</span>, <span class="dv">21</span>, <span class="dv">1</span>),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="dv">3</span>, <span class="fl">26000.00</span>, <span class="dv">21</span>, <span class="dv">1</span>), (<span class="dv">3</span>, <span class="dv">8</span>, <span class="fl">18500.00</span>, <span class="dv">21</span>, <span class="dv">1</span>),</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">4</span>, <span class="dv">6</span>, <span class="fl">20000.00</span>,  <span class="dv">7</span>, <span class="dv">1</span>), (<span class="dv">4</span>, <span class="dv">7</span>, <span class="fl">47000.00</span>,  <span class="dv">7</span>, <span class="dv">1</span>);</span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">-- Despachos</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> despachos (venta_id, fecha_despacho, estado, transportista, numero_seguimiento) <span class="kw">VALUES</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2026-01-16'</span>, <span class="st">'Entregado'</span>,   <span class="st">'Chilexpress'</span>, <span class="st">'CHX-2026-00101'</span>),</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2026-01-21'</span>, <span class="st">'En tránsito'</span>, <span class="st">'Starken'</span>,     <span class="st">'STK-2026-00089'</span>),</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>,  <span class="kw">NULL</span>,        <span class="st">'Pendiente'</span>,    <span class="kw">NULL</span>,           <span class="kw">NULL</span>);</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> despachos (venta_id, direccion_entrega, fecha_despacho, fecha_entrega_estimada, fecha_entrega_real, estado) <span class="kw">VALUES</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'Av. Providencia 1234, Providencia, Santiago'</span>, <span class="st">'2026-01-16'</span>, <span class="st">'2026-01-19'</span>, <span class="st">'2026-01-18'</span>, <span class="st">'Entregado'</span>),</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'Cerro Alegre 567, Valparaíso'</span>,                <span class="st">'2026-01-21'</span>, <span class="st">'2026-01-24'</span>,  <span class="kw">NULL</span>,        <span class="st">'En tránsito'</span>),</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">'Av. O</span><span class="ch">''</span><span class="st">Higgins 890, Concepción'</span>,               <span class="kw">NULL</span>,         <span class="kw">NULL</span>,          <span class="kw">NULL</span>,        <span class="st">'Pendiente'</span>);</span>
 <span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">-- Devoluciones</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> devoluciones (venta_id, producto_id, fecha_devolucion, motivo, estado) <span class="kw">VALUES</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="dv">4</span>, <span class="st">'2026-01-25'</span>, <span class="st">'Talla incorrecta'</span>, <span class="st">'Pendiente'</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> devoluciones (venta_id, producto_id, fecha_devolucion, cantidad_devuelta, motivo, estado) <span class="kw">VALUES</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="dv">4</span>, <span class="st">'2026-01-25'</span>, <span class="dv">1</span>, <span class="st">'Talla incorrecta'</span>, <span class="st">'Pendiente'</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -559,9 +564,9 @@ Tip
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> productos <span class="kw">SET</span> stock <span class="op">=</span> stock <span class="op">-</span> <span class="dv">1</span> <span class="kw">WHERE</span> producto_id <span class="op">=</span> <span class="dv">2</span>;</span>
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> productos <span class="kw">SET</span> stock <span class="op">=</span> stock <span class="op">-</span> <span class="dv">1</span> <span class="kw">WHERE</span> producto_id <span class="op">=</span> <span class="dv">6</span>;</span>
 <span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">-- Paso d: crear el despacho pendiente</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> despachos (venta_id, fecha_despacho, estado, transportista, numero_seguimiento)</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (@venta_sofia, <span class="kw">NULL</span>, <span class="st">'Pendiente'</span>, <span class="kw">NULL</span>, <span class="kw">NULL</span>);</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">-- Paso d: crear el despacho pendiente (direccion_entrega es NOT NULL)</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> despachos (venta_id, direccion_entrega, estado)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (@venta_sofia, <span class="st">'Av. Marta Colvin 10120, Las Condes, Santiago'</span>, <span class="st">'Pendiente'</span>);</span>
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co">-- Confirmar todos los cambios</span></span>
 <span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="kw">COMMIT</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -663,9 +668,9 @@ Important
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- ¿Qué productos provee cada proveedor y a qué precio?</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> pv.nombre_proveedor,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>       pr.nombre_producto,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>       pp.precio_proveedor,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>       pp.precio_compra,</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>       pr.precio_venta,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>       <span class="fu">ROUND</span>(pr.precio_venta <span class="op">-</span> pp.precio_proveedor, <span class="dv">0</span>) <span class="kw">AS</span> margen_bruto</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>       <span class="fu">ROUND</span>(pr.precio_venta <span class="op">-</span> pp.precio_compra, <span class="dv">0</span>) <span class="kw">AS</span> margen_bruto</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> proveedores pv</span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> proveedor_producto pp <span class="kw">ON</span> pv.proveedor_id <span class="op">=</span> pp.proveedor_id</span>
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> productos pr           <span class="kw">ON</span> pp.producto_id  <span class="op">=</span> pr.producto_id</span>
@@ -679,13 +684,15 @@ Important
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>       c.nombre,</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>       c.apellido,</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>       c.region,</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>       d.estado,</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>       d.transportista,</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>       d.numero_seguimiento</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> despachos d</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> ventas v   <span class="kw">ON</span> d.venta_id   <span class="op">=</span> v.venta_id</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> clientes c <span class="kw">ON</span> v.cliente_id <span class="op">=</span> c.cliente_id</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> d.estado;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>       d.direccion_entrega,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>       d.fecha_despacho,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>       d.fecha_entrega_estimada,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>       d.fecha_entrega_real,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>       d.estado</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> despachos d</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> ventas v   <span class="kw">ON</span> d.venta_id   <span class="op">=</span> v.venta_id</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> clientes c <span class="kw">ON</span> v.cliente_id <span class="op">=</span> c.cliente_id</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> d.estado;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Pregunta</strong>: ¿Qué debería hacer el equipo de logística con los despachos en estado <code>'Pendiente'</code>?</p>
 </section>
 <section id="paso-12-hay-devoluciones-que-atender" class="level3" data-number="5.3">

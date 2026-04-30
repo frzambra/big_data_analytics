@@ -1,4 +1,4 @@
-venta_id,fecha_despacho,estado,transportista,numero_seguimiento
-1,2026-01-16,Entregado,Chilexpress,CHX-2026-00101
-2,2026-01-21,En tránsito,Starken,STK-2026-00089
-3,,Pendiente,,
+venta_id,direccion_entrega,fecha_despacho,fecha_entrega_estimada,fecha_entrega_real,estado
+1,"Av. Providencia 1234, Providencia, Santiago",2026-01-16,2026-01-19,2026-01-18,Entregado
+2,"Cerro Alegre 567, Valparaíso",2026-01-21,2026-01-24,,En tránsito
+3,"Av. O'Higgins 890, Concepción",,,,Pendiente

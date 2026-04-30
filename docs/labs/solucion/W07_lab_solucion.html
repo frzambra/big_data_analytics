@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Solución — Laboratorio 7: Completar, Operar y Consultar TechStyle</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-538d5bc5c147f17fcaa17a1866cecc2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#parte-1-cargar-las-tablas-faltantes-desde-csv" id="toc-parte-1-cargar-las-tablas-faltantes-desde-csv" class="nav-link active" data-scroll-target="#parte-1-cargar-las-tablas-faltantes-desde-csv"><span class="header-section-number">1</span> Parte 1 — Cargar las Tablas Faltantes desde CSV</a>
+  <ul class="collapse">
+  <li><a href="#nota-sobre-esquemas" id="toc-nota-sobre-esquemas" class="nav-link" data-scroll-target="#nota-sobre-esquemas"><span class="header-section-number">1.1</span> Nota sobre esquemas</a></li>
+  <li><a href="#pasos-16-scripts-de-carga-resultado-modelo" id="toc-pasos-16-scripts-de-carga-resultado-modelo" class="nav-link" data-scroll-target="#pasos-16-scripts-de-carga-resultado-modelo"><span class="header-section-number">1.2</span> Pasos 1–6: Scripts de carga — Resultado modelo</a></li>
+  <li><a href="#pregunta-del-paso-3-por-qué-precio_compra-va-en-proveedor_producto" id="toc-pregunta-del-paso-3-por-qué-precio_compra-va-en-proveedor_producto" class="nav-link" data-scroll-target="#pregunta-del-paso-3-por-qué-precio_compra-va-en-proveedor_producto"><span class="header-section-number">1.3</span> Pregunta del Paso 3 — ¿Por qué <code>precio_compra</code> va en <code>proveedor_producto</code>?</a></li>
+  </ul></li>
+  <li><a href="#parte-2-transacciones-registrar-una-venta-completa" id="toc-parte-2-transacciones-registrar-una-venta-completa" class="nav-link" data-scroll-target="#parte-2-transacciones-registrar-una-venta-completa"><span class="header-section-number">2</span> Parte 2 — Transacciones: Registrar una Venta Completa</a>
+  <ul class="collapse">
+  <li><a href="#paso-7-commit-resultado-esperado-post-transacción" id="toc-paso-7-commit-resultado-esperado-post-transacción" class="nav-link" data-scroll-target="#paso-7-commit-resultado-esperado-post-transacción"><span class="header-section-number">2.1</span> Paso 7: COMMIT — Resultado esperado post-transacción</a></li>
+  <li><a href="#paso-8-rollback-verificación" id="toc-paso-8-rollback-verificación" class="nav-link" data-scroll-target="#paso-8-rollback-verificación"><span class="header-section-number">2.2</span> Paso 8: ROLLBACK — Verificación</a></li>
+  <li><a href="#paso-9-reflexión-sobre-transacciones-respuestas-esperadas" id="toc-paso-9-reflexión-sobre-transacciones-respuestas-esperadas" class="nav-link" data-scroll-target="#paso-9-reflexión-sobre-transacciones-respuestas-esperadas"><span class="header-section-number">2.3</span> Paso 9: Reflexión sobre transacciones — Respuestas esperadas</a></li>
+  </ul></li>
+  <li><a href="#parte-3-primer-vistazo-a-consultas-con-join" id="toc-parte-3-primer-vistazo-a-consultas-con-join" class="nav-link" data-scroll-target="#parte-3-primer-vistazo-a-consultas-con-join"><span class="header-section-number">3</span> Parte 3 — Primer Vistazo a Consultas con JOIN</a>
+  <ul class="collapse">
+  <li><a href="#paso-10-de-dónde-vienen-nuestros-productos-resultado-esperado" id="toc-paso-10-de-dónde-vienen-nuestros-productos-resultado-esperado" class="nav-link" data-scroll-target="#paso-10-de-dónde-vienen-nuestros-productos-resultado-esperado"><span class="header-section-number">3.1</span> Paso 10: ¿De dónde vienen nuestros productos? — Resultado esperado</a></li>
+  <li><a href="#paso-11-estado-de-despachos-resultado-esperado" id="toc-paso-11-estado-de-despachos-resultado-esperado" class="nav-link" data-scroll-target="#paso-11-estado-de-despachos-resultado-esperado"><span class="header-section-number">3.2</span> Paso 11: Estado de despachos — Resultado esperado</a></li>
+  <li><a href="#paso-12-devoluciones-pendientes-resultado-esperado" id="toc-paso-12-devoluciones-pendientes-resultado-esperado" class="nav-link" data-scroll-target="#paso-12-devoluciones-pendientes-resultado-esperado"><span class="header-section-number">3.3</span> Paso 12: Devoluciones pendientes — Resultado esperado</a></li>
+  </ul></li>
+  <li><a href="#parte-4-síntesis-y-reflexión" id="toc-parte-4-síntesis-y-reflexión" class="nav-link" data-scroll-target="#parte-4-síntesis-y-reflexión"><span class="header-section-number">4</span> Parte 4 — Síntesis y Reflexión</a>
+  <ul class="collapse">
+  <li><a href="#paso-13-modelo-diseñado-vs.-modelo-implementado" id="toc-paso-13-modelo-diseñado-vs.-modelo-implementado" class="nav-link" data-scroll-target="#paso-13-modelo-diseñado-vs.-modelo-implementado"><span class="header-section-number">4.1</span> Paso 13: Modelo diseñado vs.&nbsp;modelo implementado</a></li>
+  <li><a href="#paso-14-preguntas-de-diseño-e-implementación-respuestas-esperadas" id="toc-paso-14-preguntas-de-diseño-e-implementación-respuestas-esperadas" class="nav-link" data-scroll-target="#paso-14-preguntas-de-diseño-e-implementación-respuestas-esperadas"><span class="header-section-number">4.2</span> Paso 14: Preguntas de diseño e implementación — Respuestas esperadas</a></li>
+  <li><a href="#paso-15-análisis-de-impacto-decisiones-de-negocio-habilitadas" id="toc-paso-15-análisis-de-impacto-decisiones-de-negocio-habilitadas" class="nav-link" data-scroll-target="#paso-15-análisis-de-impacto-decisiones-de-negocio-habilitadas"><span class="header-section-number">4.3</span> Paso 15: Análisis de impacto — Decisiones de negocio habilitadas</a></li>
+  <li><a href="#paso-16-reporte-para-roberto-respuesta-modelo" id="toc-paso-16-reporte-para-roberto-respuesta-modelo" class="nav-link" data-scroll-target="#paso-16-reporte-para-roberto-respuesta-modelo"><span class="header-section-number">4.4</span> Paso 16: Reporte para Roberto — Respuesta modelo</a></li>
+  </ul></li>
+  <li><a href="#errores-frecuentes-y-cómo-evaluarlos" id="toc-errores-frecuentes-y-cómo-evaluarlos" class="nav-link" data-scroll-target="#errores-frecuentes-y-cómo-evaluarlos"><span class="header-section-number">5</span> Errores frecuentes y cómo evaluarlos</a></li>
+  <li><a href="#entregable-archivos-de-referencia" id="toc-entregable-archivos-de-referencia" class="nav-link" data-scroll-target="#entregable-archivos-de-referencia"><span class="header-section-number">6</span> Entregable — Archivos de referencia</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Solución — Laboratorio 7: Completar, Operar y Consultar TechStyle</h1>
+<p class="subtitle lead">Semana 7 · W07 · Unidad II · Transacciones y Consultas · Universidad San Sebastián</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Documento de uso exclusivo del docente.</strong> No distribuir a estudiantes antes de que completen el laboratorio.</p>
+</div>
+</div>
+<hr>
+<section id="parte-1-cargar-las-tablas-faltantes-desde-csv" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="parte-1-cargar-las-tablas-faltantes-desde-csv"><span class="header-section-number">1</span> Parte 1 — Cargar las Tablas Faltantes desde CSV</h2>
+<section id="nota-sobre-esquemas" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="nota-sobre-esquemas"><span class="header-section-number">1.1</span> Nota sobre esquemas</h3>
+<p>Los CSV del laboratorio siguen el esquema de la solución modelo de W06:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tabla</th>
+<th>Columnas en el CSV</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>proveedores</code></td>
+<td>proveedor_id, nombre_proveedor, rut, contacto, email, telefono</td>
+</tr>
+<tr class="even">
+<td><code>proveedor_producto</code></td>
+<td>proveedor_id, producto_id, precio_compra, plazo_entrega_dias, proveedor_principal</td>
+</tr>
+<tr class="odd">
+<td><code>despachos</code></td>
+<td>venta_id, direccion_entrega, fecha_despacho, fecha_entrega_estimada, fecha_entrega_real, estado</td>
+</tr>
+<tr class="even">
+<td><code>devoluciones</code></td>
+<td>venta_id, producto_id, fecha_devolucion, cantidad_devuelta, motivo, estado, monto_reembolsado</td>
+</tr>
+</tbody>
+</table>
+<p>Si el modelo de un grupo tiene nombres distintos (p.ej. <code>rut</code> en proveedores, <code>precio_compra</code> en proveedor_producto), <strong>aceptar la solución si la columna de cada LOAD DATA coincide con su propio diseño</strong>. El enunciado explícitamente señala esa flexibilidad.</p>
+</section>
+<section id="pasos-16-scripts-de-carga-resultado-modelo" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="pasos-16-scripts-de-carga-resultado-modelo"><span class="header-section-number">1.2</span> Pasos 1–6: Scripts de carga — Resultado modelo</h3>
+<p>El script completo está en <code>labs/data/lab07/W07_carga.sql</code>. Los puntos críticos a verificar:</p>
+<p><strong>Paso 2 — proveedores</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>LOAD <span class="kw">DATA</span> <span class="kw">LOCAL</span> INFILE <span class="st">'/ruta/a/proveedores.csv'</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INTO</span> <span class="kw">TABLE</span> proveedores</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">CHARACTER</span> <span class="kw">SET</span> utf8mb4</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    FIELDS TERMINATED <span class="kw">BY</span> <span class="st">','</span> OPTIONALLY ENCLOSED <span class="kw">BY</span> <span class="st">'"'</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    LINES TERMINATED <span class="kw">BY</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    IGNORE <span class="dv">1</span> <span class="kw">ROWS</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    (proveedor_id, nombre_proveedor, rut, contacto, email, telefono);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>El listado explícito de columnas garantiza que el mapeo sea correcto independientemente de si el grupo tiene columnas adicionales en su diseño.</p>
+<p><strong>Paso 4 — despachos (manejo de NULL)</strong></p>
+<p>El uso de <code>@variable</code> + <code>NULLIF</code> es el punto más técnico del laboratorio. Tres fechas pueden ser NULL (despachos en estado Pendiente o En tránsito sin entrega confirmada):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>LOAD <span class="kw">DATA</span> <span class="kw">LOCAL</span> INFILE <span class="st">'/ruta/a/despachos.csv'</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INTO</span> <span class="kw">TABLE</span> despachos</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">..</span>.</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    (venta_id, direccion_entrega, @fecha_despacho, @fecha_entrega_estimada, @fecha_entrega_real, estado)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    fecha_despacho          <span class="op">=</span> <span class="fu">NULLIF</span>(@fecha_despacho, <span class="st">''</span>),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    fecha_entrega_estimada  <span class="op">=</span> <span class="fu">NULLIF</span>(@fecha_entrega_estimada, <span class="st">''</span>),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    fecha_entrega_real      <span class="op">=</span> <span class="fu">NULLIF</span>(@fecha_entrega_real, <span class="st">''</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Por qué funciona así</strong>: MySQL lee cada campo del CSV como texto en la variable temporal. <code>NULLIF(x, '')</code> convierte la cadena vacía en <code>NULL</code>; si tiene contenido lo inserta tal cual. Sin esto, MySQL insertaría <code>''</code> (cadena vacía) en lugar de <code>NULL</code>, violando la semántica del campo.</p>
+<p><strong>Paso 6 — Verificación completa — Resultados esperados</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tabla</th>
+<th>Filas esperadas</th>
+<th>Filas reales</th>
+<th>¿Coincide?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>categorias</code></td>
+<td>10</td>
+<td>10</td>
+<td>Sí</td>
+</tr>
+<tr class="even">
+<td><code>clientes</code></td>
+<td>6</td>
+<td>6</td>
+<td>Sí</td>
+</tr>
+<tr class="odd">
+<td><code>proveedores</code></td>
+<td>4</td>
+<td>4</td>
+<td>Sí</td>
+</tr>
+<tr class="even">
+<td><code>productos</code></td>
+<td>10</td>
+<td>10</td>
+<td>Sí</td>
+</tr>
+<tr class="odd">
+<td><code>ventas</code></td>
+<td>3</td>
+<td>3</td>
+<td>Sí</td>
+</tr>
+<tr class="even">
+<td><code>detalle_ventas</code></td>
+<td>5</td>
+<td>5</td>
+<td>Sí</td>
+</tr>
+<tr class="odd">
+<td><code>proveedor_producto</code></td>
+<td>10</td>
+<td>10</td>
+<td>Sí</td>
+</tr>
+<tr class="even">
+<td><code>despachos</code></td>
+<td>3</td>
+<td>3</td>
+<td>Sí</td>
+</tr>
+<tr class="odd">
+<td><code>devoluciones</code></td>
+<td>1</td>
+<td>1</td>
+<td>Sí</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Error frecuente</strong>: <code>Loading local data is disabled</code> → el grupo olvidó activar <code>OPT_LOCAL_INFILE=1</code> en la conexión de Workbench (además del <code>SET GLOBAL local_infile = 1</code>). Ambas configuraciones son necesarias.</p>
+<p><strong>Error frecuente 2</strong>: El LOAD DATA de <code>despachos</code> falla con error de FK si se intenta cargar antes de que existan las ventas 1, 2 y 3. Verificar el orden de ejecución.</p>
+</div>
+</div>
+</section>
+<section id="pregunta-del-paso-3-por-qué-precio_compra-va-en-proveedor_producto" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="pregunta-del-paso-3-por-qué-precio_compra-va-en-proveedor_producto"><span class="header-section-number">1.3</span> Pregunta del Paso 3 — ¿Por qué <code>precio_compra</code> va en <code>proveedor_producto</code>?</h3>
+<p><strong>Respuesta esperada</strong>: Porque un producto puede tener más de un proveedor y cada uno puede ofrecer un precio distinto. Si <code>precio_compra</code> estuviera en <code>productos</code>, solo podría guardarse un precio y se perdería la información sobre el proveedor más económico. La tabla <code>proveedor_producto</code> modela la relación muchos-a-muchos entre proveedores y productos, y almacena los atributos propios de esa relación (precio de compra, plazo de entrega, si es el proveedor principal).</p>
+<hr>
+</section>
+</section>
+<section id="parte-2-transacciones-registrar-una-venta-completa" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="parte-2-transacciones-registrar-una-venta-completa"><span class="header-section-number">2</span> Parte 2 — Transacciones: Registrar una Venta Completa</h2>
+<section id="paso-7-commit-resultado-esperado-post-transacción" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="paso-7-commit-resultado-esperado-post-transacción"><span class="header-section-number">2.1</span> Paso 7: COMMIT — Resultado esperado post-transacción</h3>
+<p><strong>Stock después del COMMIT</strong> (los valores parten de los cargados en W06):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>producto_id</th>
+<th>nombre_producto</th>
+<th>stock antes</th>
+<th>stock después</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>Adidas Ultraboost 24</td>
+<td>90</td>
+<td><strong>89</strong></td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Pantalón Under Armour</td>
+<td>95</td>
+<td><strong>94</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consulta JOIN de verificación — resultado esperado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>venta_id</th>
+<th>fecha</th>
+<th>producto_id</th>
+<th>cantidad</th>
+<th>estado_despacho</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4</td>
+<td>2026-04-30</td>
+<td>2</td>
+<td>1</td>
+<td>Pendiente</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>2026-04-30</td>
+<td>6</td>
+<td>1</td>
+<td>Pendiente</td>
+</tr>
+</tbody>
+</table>
+<p>La fecha corresponde al día de ejecución (<code>CURDATE()</code>). El <code>venta_id = 4</code> es el esperado si solo existían 3 ventas previas.</p>
+</section>
+<section id="paso-8-rollback-verificación" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="paso-8-rollback-verificación"><span class="header-section-number">2.2</span> Paso 8: ROLLBACK — Verificación</h3>
+<p>Después del ROLLBACK, ambas consultas deben retornar 0 filas:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> ventas    <span class="kw">WHERE</span> cliente_id <span class="op">=</span> <span class="dv">5</span>;  <span class="co">-- 0 filas</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> despachos</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> venta_id <span class="kw">IN</span> (<span class="kw">SELECT</span> venta_id <span class="kw">FROM</span> ventas <span class="kw">WHERE</span> cliente_id <span class="op">=</span> <span class="dv">5</span>);  <span class="co">-- 0 filas</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Para el docente</strong>: el error que produce MySQL es:</p>
+<pre><code>ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails
+(`techstyle`.`detalle_ventas`, CONSTRAINT `fk_detalle_productos`
+FOREIGN KEY (`producto_id`) REFERENCES `productos` (`producto_id`))</code></pre>
+<p>La transacción queda <strong>abierta pero marcada con error</strong>. El grupo debe ejecutar <code>ROLLBACK</code> manualmente. Si el grupo hizo <code>COMMIT</code> en lugar de <code>ROLLBACK</code>, el error FK lo impide de todas formas — el estado del <code>venta_id</code> vacío puede requerir limpieza manual.</p>
+<p>Si alguien ejecutó <code>ROLLBACK</code> después de que MySQL ya hizo rollback automático del INSERT fallido pero antes de cerrar la transacción, el comportamiento es correcto: la venta de Diego no queda registrada.</p>
+</div>
+</div>
+</section>
+<section id="paso-9-reflexión-sobre-transacciones-respuestas-esperadas" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="paso-9-reflexión-sobre-transacciones-respuestas-esperadas"><span class="header-section-number">2.3</span> Paso 9: Reflexión sobre transacciones — Respuestas esperadas</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situación</th>
+<th>¿COMMIT o ROLLBACK?</th>
+<th>¿Por qué?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>La venta y el detalle se insertan, pero el stock de un producto llegaría a -1</td>
+<td><strong>ROLLBACK</strong></td>
+<td>El CHECK <code>stock &gt;= 0</code> lanzaría un error que viola la integridad del negocio. No tiene sentido vender unidades que no existen. La transacción completa debe deshacerse.</td>
+</tr>
+<tr class="even">
+<td>500 productos nuevos, error de tipo en la fila 231</td>
+<td><strong>ROLLBACK</strong></td>
+<td>A mitad del proceso el catálogo queda en estado inconsistente: algunos productos nuevos existirían y otros no. Es mejor deshacer todo y corregir la fila 231 antes de reintentar.</td>
+</tr>
+<tr class="odd">
+<td>La devolución queda registrada pero falla el UPDATE de stock</td>
+<td><strong>ROLLBACK</strong></td>
+<td>El sistema quedaría en estado incongruente: la devolución dice que el producto volvió, pero el stock no lo refleja. ROLLBACK garantiza que ambas operaciones ocurran juntas o ninguna.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Concepto clave para reforzar</strong>: una transacción modela una <em>unidad de negocio indivisible</em>. La pregunta para decidir es: “¿Tiene sentido que esta parte del proceso ocurra sin que ocurra la otra?”. Si la respuesta es no → ROLLBACK.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="parte-3-primer-vistazo-a-consultas-con-join" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="parte-3-primer-vistazo-a-consultas-con-join"><span class="header-section-number">3</span> Parte 3 — Primer Vistazo a Consultas con JOIN</h2>
+<section id="paso-10-de-dónde-vienen-nuestros-productos-resultado-esperado" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="paso-10-de-dónde-vienen-nuestros-productos-resultado-esperado"><span class="header-section-number">3.1</span> Paso 10: ¿De dónde vienen nuestros productos? — Resultado esperado</h3>
+<pre><code>nombre_proveedor          | nombre_producto          | precio_compra | precio_venta | margen_bruto
+--------------------------|-------------------------|--------------|--------------|-------------
+Adidas Importaciones Sur  | Adidas Ultraboost 24    | 62000.00     | 119990.00    | 57990
+Adidas Importaciones Sur  | Polera Adidas Clásica   | 11000.00     |  24990.00    | 13990
+Multimarca Sport Ltda.    | Chaqueta The North Face | 47000.00     |  89990.00    | 42990
+Multimarca Sport Ltda.    | Pantalón Under Armour   | 20000.00     |  44990.00    | 24990
+Nike Distribuciones Chile | Nike Air Max 2026       | 42000.00     |  89990.00    | 47990
+Nike Distribuciones Chile | Polera Nike Dri-FIT     | 13500.00     |  29990.00    | 16490
+Nike Distribuciones Chile | Short Nike Running      |  8500.00     |  19990.00    | 11490
+Nike Distribuciones Chile | Gorro Nike Dri-FIT      |  6500.00     |  14990.00    |  8490
+Puma Latam Distribuidora  | Puma Suede Classic      | 26000.00     |  54990.00    | 28990
+Puma Latam Distribuidora  | Mochila Puma 20L        | 18500.00     |  39990.00    | 21490</code></pre>
+<p><strong>Respuesta esperada a la pregunta</strong>: El producto con mayor margen bruto es el <strong>Adidas Ultraboost 24</strong> con $57.990 por unidad. Roberto podría decidir priorizarlo en la vitrina de la tienda online, incluirlo en campañas de marketing o negociar mayores volúmenes de compra con Adidas Importaciones Sur para aumentar aún más el margen.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Para el docente</strong>: el Gorro Nike Dri-FIT tiene el margen más bajo ($1.490). Una buena discusión es: ¿tiene sentido seguir vendiéndolo? ¿O sirve como producto de entrada (bajo ticket) para atraer clientes que luego compran zapatillas?</p>
+</div>
+</div>
+</section>
+<section id="paso-11-estado-de-despachos-resultado-esperado" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="paso-11-estado-de-despachos-resultado-esperado"><span class="header-section-number">3.2</span> Paso 11: Estado de despachos — Resultado esperado</h3>
+<p>Después de la Parte 1 (3 despachos) y la Parte 2 (1 despacho nuevo de Sofía), la consulta retorna 4 filas:</p>
+<pre><code>despacho_id | nombre  | apellido | region         | estado      | direccion_entrega
+------------|---------|----------|----------------|-------------|------------------------------------------
+1           | Juan    | Pérez    | Metropolitana  | Entregado   | Av. Providencia 1234, Providencia, Santiago
+2           | María   | López    | Valparaíso     | En tránsito | Cerro Alegre 567, Valparaíso
+3           | Carlos  | Muñoz    | Biobío         | Pendiente   | Av. O'Higgins 890, Concepción
+4           | Sofía   | Ramírez  | Metropolitana  | Pendiente   | Av. Marta Colvin 10120, Las Condes, Santiago</code></pre>
+<p><em>(Ordenado por <code>d.estado</code> ascendente: Entregado → En tránsito → Pendiente)</em></p>
+<p><strong>Respuesta esperada</strong>: El equipo de logística debe gestionar los 2 despachos en estado <code>'Pendiente'</code> (Carlos Muñoz y Sofía Ramírez): coordinar el retiro en bodega, actualizar el estado a <code>'En tránsito'</code> y registrar la fecha de despacho real y la fecha estimada de entrega con la fecha de despacho real.</p>
+</section>
+<section id="paso-12-devoluciones-pendientes-resultado-esperado" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="paso-12-devoluciones-pendientes-resultado-esperado"><span class="header-section-number">3.3</span> Paso 12: Devoluciones pendientes — Resultado esperado</h3>
+<pre><code>devolucion_id | nombre | apellido | nombre_producto      | motivo            | estado   | fecha_devolucion
+--------------|--------|----------|---------------------|-------------------|----------|-----------------
+1             | Juan   | Pérez    | Polera Adidas Clásica| Talla incorrecta  | Pendiente| 2026-01-25</code></pre>
+<p><strong>Respuesta a la pregunta grupal</strong>: La consulta de <strong>proveedores y márgenes</strong> (Paso 10) responde una pregunta imposible en Excel simple: “¿Cuánto ganamos por cada producto según cada proveedor?” — porque requiere cruzar tres tablas simultáneamente (proveedores, proveedor_producto, productos). En Excel, esto se haría con múltiples BUSCARV anidados y sería propenso a errores. La consulta de despachos también cruza 3 tablas; la de devoluciones cruza 4. Ninguna es trivial en Excel sin Power Query.</p>
+<hr>
+</section>
+</section>
+<section id="parte-4-síntesis-y-reflexión" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="parte-4-síntesis-y-reflexión"><span class="header-section-number">4</span> Parte 4 — Síntesis y Reflexión</h2>
+<section id="paso-13-modelo-diseñado-vs.-modelo-implementado" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="paso-13-modelo-diseñado-vs.-modelo-implementado"><span class="header-section-number">4.1</span> Paso 13: Modelo diseñado vs.&nbsp;modelo implementado</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dimensión</th>
+<th>Modelo en papel (W05)</th>
+<th>Base de datos real (W06–W07)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¿Se puede saber qué proveedor abastece un producto?</td>
+<td>Sí (diagrama)</td>
+<td><strong>Sí</strong> — tabla <code>proveedor_producto</code> con FK a ambas entidades</td>
+</tr>
+<tr class="even">
+<td>¿Las FK impiden ventas de clientes inexistentes?</td>
+<td>En diseño</td>
+<td><strong>Sí</strong> — <code>ventas.cliente_id</code> con <code>ON DELETE RESTRICT</code> lo impide en tiempo de ejecución</td>
+</tr>
+<tr class="odd">
+<td>¿Un producto puede tener stock negativo?</td>
+<td>Según diseño, no</td>
+<td><strong>No</strong> — <code>CHECK (stock &gt;= 0)</code> lanza error si se intenta</td>
+</tr>
+<tr class="even">
+<td>¿Una venta incompleta puede quedar registrada?</td>
+<td>En teoría, no</td>
+<td><strong>No</strong> — las transacciones garantizan atomicidad: o se registra todo o nada</td>
+</tr>
+<tr class="odd">
+<td>¿Qué pasa si se borra un cliente con ventas?</td>
+<td>RESTRICT (diseño)</td>
+<td><strong>Error bloqueante</strong> — MySQL retorna ERROR 1451 y rechaza el DELETE</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="paso-14-preguntas-de-diseño-e-implementación-respuestas-esperadas" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="paso-14-preguntas-de-diseño-e-implementación-respuestas-esperadas"><span class="header-section-number">4.2</span> Paso 14: Preguntas de diseño e implementación — Respuestas esperadas</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pregunta</th>
+<th>Respuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¿Por qué <code>SET @variable = LAST_INSERT_ID()</code> en lugar de poner el número directamente?</td>
+<td>Porque el número del ID lo genera MySQL automáticamente y puede cambiar si hay otras inserciones concurrentes o si el script se ejecuta en otra base con distinto estado del auto_increment. La variable captura el ID en el momento exacto de la inserción, haciéndolo portable y seguro.</td>
+</tr>
+<tr class="even">
+<td>¿Qué pasaría si dos vendedores insertan una venta para el mismo cliente sin transacciones?</td>
+<td>Podrían quedar ventas duplicadas o con datos parciales: uno puede insertar la cabecera de ventas mientras el otro inserta los detalles del primero en otra venta. Las transacciones + el aislamiento del motor impiden que una operación incompleta sea visible para otras sesiones.</td>
+</tr>
+<tr class="odd">
+<td>¿Por qué <code>precio_unitario</code> se guarda en <code>detalle_ventas</code> y no se calcula desde <code>productos.precio_venta</code>?</td>
+<td>Porque el precio puede cambiar en el futuro. Si se consultara siempre el precio actual, todas las ventas históricas mostrarían el precio de hoy. Guardarlo en el momento de la venta garantiza que el registro refleje exactamente lo que el cliente pagó, lo cual es un requisito legal y contable.</td>
+</tr>
+<tr class="even">
+<td>Si TechStyle aplica un descuento general del 20%, ¿qué SQL ejecutarías? ¿Dentro de una transacción?</td>
+<td><code>UPDATE productos SET precio_venta = precio_venta * 0.80;</code> — sí, dentro de una transacción, porque si el UPDATE falla a mitad (ej. error de conexión), algunos productos quedarían con descuento y otros no, generando precios inconsistentes.</td>
+</tr>
+<tr class="odd">
+<td>Un cliente quiere borrar su cuenta. ¿Qué debe hacer Juan antes del DELETE?</td>
+<td>Primero verificar si el cliente tiene ventas asociadas (<code>SELECT * FROM ventas WHERE cliente_id = X</code>). Si las tiene, la FK con <code>ON DELETE RESTRICT</code> impedirá el borrado. Juan debe decidir con Roberto qué política aplicar: ¿anonimizar el cliente en lugar de borrarlo? ¿Archivar el historial? El borrado físico destruye trazabilidad financiera.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="paso-15-análisis-de-impacto-decisiones-de-negocio-habilitadas" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="paso-15-análisis-de-impacto-decisiones-de-negocio-habilitadas"><span class="header-section-number">4.3</span> Paso 15: Análisis de impacto — Decisiones de negocio habilitadas</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Capacidad implementada</th>
+<th>Decisión de negocio que habilita</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FK con <code>ON DELETE RESTRICT</code> en <code>ventas.cliente_id</code></td>
+<td>“Garantizamos que el historial de ventas nunca pierde la referencia al cliente — el dato histórico es inviolable para auditoría y contabilidad.”</td>
+</tr>
+<tr class="even">
+<td>CHECK <code>stock &gt;= 0</code> en <code>productos</code></td>
+<td>“El sistema nunca registrará una venta de un producto sin existencia — elimina la posibilidad de vender ‘aire’ y los problemas de despacho asociados.”</td>
+</tr>
+<tr class="odd">
+<td>Transacciones en el registro de ventas</td>
+<td>“Una venta queda completamente registrada o no queda en absoluto — no pueden existir ventas sin stock descontado ni despachos sin venta, lo que garantiza la coherencia entre el área comercial y la logística.”</td>
+</tr>
+<tr class="even">
+<td>Índice <code>idx_ventas_fecha</code> en <code>ventas(fecha)</code></td>
+<td>“Las consultas de ventas por rango de fechas (reportes diarios, semanales, de temporada) responden en milisegundos incluso con millones de registros — Roberto recibe sus reportes de cierre en tiempo real.”</td>
+</tr>
+<tr class="odd">
+<td>CHECK <code>segmento IN ('Premium', 'Estándar', 'Básico')</code> en <code>clientes</code></td>
+<td>“Los datos de segmentación son confiables para las campañas de marketing de María — no puede existir un cliente con segmento ‘VIP’ o ‘elite’ que nadie definió, lo que garantiza que los filtros de campaña funcionen correctamente.”</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="paso-16-reporte-para-roberto-respuesta-modelo" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="paso-16-reporte-para-roberto-respuesta-modelo"><span class="header-section-number">4.4</span> Paso 16: Reporte para Roberto — Respuesta modelo</h3>
+<blockquote class="blockquote">
+<p><strong>Para:</strong> Roberto Fernández, CEO TechStyle</p>
+<p><strong>De:</strong> Juan (DBA) — <strong>Asunto:</strong> Base de datos completamente operativa — estado al 2026-04-28</p>
+<p>La base de datos <code>techstyle</code> está completamente poblada en MySQL Server. Contiene 9 tablas operativas con un total de 42 registros distribuidos de la siguiente forma: 10 categorías de productos, 6 clientes, 4 proveedores, 10 productos del catálogo, 4 ventas registradas, 5 líneas de detalle, 10 relaciones proveedor-producto, 4 despachos (2 pendientes, 1 en tránsito, 1 entregado) y 1 devolución en proceso. Las restricciones de integridad activas garantizan que no existan ventas sin cliente válido, stock negativo, precios en cero, ni segmentos de cliente fuera de los tres definidos. Gracias a las transacciones, cada venta se registra de forma atómica: si algo falla, el sistema deshace automáticamente la operación completa. A diferencia de Excel, el sistema puede responder en segundos preguntas que cruzan múltiples áreas del negocio (margen por proveedor, estado logístico por cliente, devoluciones pendientes). Los siguientes pasos son implementar la lógica de consultas analíticas, conectar un frontend para el equipo de ventas, y definir una política de respaldo de datos.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="errores-frecuentes-y-cómo-evaluarlos" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="errores-frecuentes-y-cómo-evaluarlos"><span class="header-section-number">5</span> Errores frecuentes y cómo evaluarlos</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Error</th>
+<th>Severidad</th>
+<th>Orientación docente</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Loading local data is disabled</code></td>
+<td>Procedimental</td>
+<td>No penalizar si el grupo usó el INSERT alternativo y los datos son correctos.</td>
+</tr>
+<tr class="even">
+<td>Columnas mal mapeadas en LOAD DATA (campos en el orden incorrecto)</td>
+<td>Medio</td>
+<td>Los datos quedan en columnas incorrectas. Verificar con <code>SELECT * FROM tabla LIMIT 5</code>.</td>
+</tr>
+<tr class="odd">
+<td>ROLLBACK no ejecutado después del error de FK</td>
+<td>Conceptual</td>
+<td>Indica que el grupo no comprendió que la transacción queda abierta. Reforzar el concepto de “transacción abierta vs.&nbsp;cerrada”.</td>
+</tr>
+<tr class="even">
+<td>COMMIT después de un error de FK</td>
+<td>Conceptual</td>
+<td>MySQL rechaza el COMMIT cuando hay un error pendiente (<code>ERROR 1213</code>). Aprovechar para explicar el comportamiento del motor.</td>
+</tr>
+<tr class="odd">
+<td><code>precio_unitario</code> sacado de <code>productos</code> en lugar de guardarse en <code>detalle_ventas</code></td>
+<td>Diseño</td>
+<td>Indicar que el precio cambia en el tiempo y el historial perdería precisión.</td>
+</tr>
+<tr class="even">
+<td>Hardcodear <code>venta_id = 4</code> en lugar de usar <code>@venta_sofia</code></td>
+<td>Estilo</td>
+<td>Aceptable si el resultado es correcto; señalar por qué es frágil en producción.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="entregable-archivos-de-referencia" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="entregable-archivos-de-referencia"><span class="header-section-number">6</span> Entregable — Archivos de referencia</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Archivo del docente</th>
+<th>Corresponde a</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>labs/data/lab07/W07_carga.sql</code></td>
+<td>Solución modelo de la Parte 1</td>
+</tr>
+<tr class="even">
+<td><code>labs/data/lab07/W07_transacciones.sql</code></td>
+<td>Solución modelo de la Parte 2</td>
+</tr>
+<tr class="odd">
+<td><code>labs/solucion/W07_lab_solucion.qmd</code></td>
+<td>Este documento</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

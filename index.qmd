@@ -342,6 +342,23 @@ format:
         <!-- <a class="link-sol" href="labs/solucion/W06_lab_solucion.html">Ver solución →</a> -->
       </div>
     </div>
+
+    <a class="card semana" href="clases/W07_clase.html">
+      <span class="card-tag">W07 · Presentación</span>
+      <span class="card-title">Operaciones Seguras y Confiables</span>
+      <span class="card-subtitle">Transacciones · ACID · COMMIT/ROLLBACK · LAST_INSERT_ID() · ALTER TABLE · Verificación de integridad</span>
+      <span class="card-arrow">Ver presentación →</span>
+    </a>
+    <div class="card lab">
+      <span class="card-tag">W07 · Laboratorio</span>
+      <span class="card-title">Completar, Operar y Consultar TechStyle</span>
+      <span class="card-subtitle">LOAD DATA LOCAL INFILE · Transacciones COMMIT/ROLLBACK · Primer vistazo a JOIN</span>
+      <div class="card-links">
+        <a class="link-lab" href="labs/instrucciones/W07_lab.html">Ver laboratorio →</a>
+        <span class="link-divider">|</span>
+        <!-- <a class="link-sol" href="labs/solucion/W07_lab_solucion.html">Ver solución →</a> -->
+      </div>
+    </div>
   </div>
 
   <!-- ── Evaluaciones ───────────────────────────────────── -->

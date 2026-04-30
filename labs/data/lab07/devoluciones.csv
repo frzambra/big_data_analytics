@@ -1,2 +1,2 @@
-venta_id,producto_id,fecha_devolucion,motivo,estado
-1,4,2026-01-25,Talla incorrecta,Pendiente
+venta_id,producto_id,fecha_devolucion,cantidad_devuelta,motivo,estado,monto_reembolsado
+1,4,2026-01-25,1,Talla incorrecta,Pendiente,

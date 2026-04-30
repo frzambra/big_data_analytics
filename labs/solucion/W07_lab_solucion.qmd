@@ -1,0 +1,267 @@
+---
+title: "Solución — Laboratorio 7: Completar, Operar y Consultar TechStyle"
+subtitle: "Semana 7 · W07 · Unidad II · Transacciones y Consultas · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+::: {.callout-warning}
+**Documento de uso exclusivo del docente.** No distribuir a estudiantes antes de que completen el laboratorio.
+:::
+
+---
+
+## Parte 1 — Cargar las Tablas Faltantes desde CSV
+
+### Nota sobre esquemas
+
+Los CSV del laboratorio siguen el esquema de la solución modelo de W06:
+
+| Tabla | Columnas en el CSV |
+|---|---|
+| `proveedores` | proveedor_id, nombre_proveedor, rut, contacto, email, telefono |
+| `proveedor_producto` | proveedor_id, producto_id, precio_compra, plazo_entrega_dias, proveedor_principal |
+| `despachos` | venta_id, direccion_entrega, fecha_despacho, fecha_entrega_estimada, fecha_entrega_real, estado |
+| `devoluciones` | venta_id, producto_id, fecha_devolucion, cantidad_devuelta, motivo, estado, monto_reembolsado |
+
+Si el modelo de un grupo tiene nombres distintos (p.ej. `rut` en proveedores, `precio_compra` en proveedor_producto), **aceptar la solución si la columna de cada LOAD DATA coincide con su propio diseño**. El enunciado explícitamente señala esa flexibilidad.
+
+### Pasos 1–6: Scripts de carga — Resultado modelo
+
+El script completo está en `labs/data/lab07/W07_carga.sql`. Los puntos críticos a verificar:
+
+**Paso 2 — proveedores**
+
+```sql
+LOAD DATA LOCAL INFILE '/ruta/a/proveedores.csv'
+    INTO TABLE proveedores
+    CHARACTER SET utf8mb4
+    FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+    LINES TERMINATED BY '\n'
+    IGNORE 1 ROWS
+    (proveedor_id, nombre_proveedor, rut, contacto, email, telefono);
+```
+
+El listado explícito de columnas garantiza que el mapeo sea correcto independientemente de si el grupo tiene columnas adicionales en su diseño.
+
+**Paso 4 — despachos (manejo de NULL)**
+
+El uso de `@variable` + `NULLIF` es el punto más técnico del laboratorio. Tres fechas pueden ser NULL (despachos en estado Pendiente o En tránsito sin entrega confirmada):
+
+```sql
+LOAD DATA LOCAL INFILE '/ruta/a/despachos.csv'
+    INTO TABLE despachos
+    ...
+    (venta_id, direccion_entrega, @fecha_despacho, @fecha_entrega_estimada, @fecha_entrega_real, estado)
+SET
+    fecha_despacho          = NULLIF(@fecha_despacho, ''),
+    fecha_entrega_estimada  = NULLIF(@fecha_entrega_estimada, ''),
+    fecha_entrega_real      = NULLIF(@fecha_entrega_real, '');
+```
+
+**Por qué funciona así**: MySQL lee cada campo del CSV como texto en la variable temporal. `NULLIF(x, '')` convierte la cadena vacía en `NULL`; si tiene contenido lo inserta tal cual. Sin esto, MySQL insertaría `''` (cadena vacía) en lugar de `NULL`, violando la semántica del campo.
+
+**Paso 6 — Verificación completa — Resultados esperados**
+
+| Tabla | Filas esperadas | Filas reales | ¿Coincide? |
+|---|---|---|---|
+| `categorias` | 10 | 10 | Sí |
+| `clientes` | 6 | 6 | Sí |
+| `proveedores` | 4 | 4 | Sí |
+| `productos` | 10 | 10 | Sí |
+| `ventas` | 3 | 3 | Sí |
+| `detalle_ventas` | 5 | 5 | Sí |
+| `proveedor_producto` | 10 | 10 | Sí |
+| `despachos` | 3 | 3 | Sí |
+| `devoluciones` | 1 | 1 | Sí |
+
+::: {.callout-tip}
+**Error frecuente**: `Loading local data is disabled` → el grupo olvidó activar `OPT_LOCAL_INFILE=1` en la conexión de Workbench (además del `SET GLOBAL local_infile = 1`). Ambas configuraciones son necesarias.
+
+**Error frecuente 2**: El LOAD DATA de `despachos` falla con error de FK si se intenta cargar antes de que existan las ventas 1, 2 y 3. Verificar el orden de ejecución.
+:::
+
+### Pregunta del Paso 3 — ¿Por qué `precio_compra` va en `proveedor_producto`?
+
+**Respuesta esperada**: Porque un producto puede tener más de un proveedor y cada uno puede ofrecer un precio distinto. Si `precio_compra` estuviera en `productos`, solo podría guardarse un precio y se perdería la información sobre el proveedor más económico. La tabla `proveedor_producto` modela la relación muchos-a-muchos entre proveedores y productos, y almacena los atributos propios de esa relación (precio de compra, plazo de entrega, si es el proveedor principal).
+
+---
+
+## Parte 2 — Transacciones: Registrar una Venta Completa
+
+### Paso 7: COMMIT — Resultado esperado post-transacción
+
+**Stock después del COMMIT** (los valores parten de los cargados en W06):
+
+| producto_id | nombre_producto | stock antes | stock después |
+|---|---|---|---|
+| 2 | Adidas Ultraboost 24 | 90 | **89** |
+| 6 | Pantalón Under Armour | 95 | **94** |
+
+**Consulta JOIN de verificación — resultado esperado:**
+
+| venta_id | fecha | producto_id | cantidad | estado_despacho |
+|---|---|---|---|---|
+| 4 | 2026-04-30 | 2 | 1 | Pendiente |
+| 4 | 2026-04-30 | 6 | 1 | Pendiente |
+
+La fecha corresponde al día de ejecución (`CURDATE()`). El `venta_id = 4` es el esperado si solo existían 3 ventas previas.
+
+### Paso 8: ROLLBACK — Verificación
+
+Después del ROLLBACK, ambas consultas deben retornar 0 filas:
+
+```sql
+SELECT * FROM ventas    WHERE cliente_id = 5;  -- 0 filas
+SELECT * FROM despachos
+    WHERE venta_id IN (SELECT venta_id FROM ventas WHERE cliente_id = 5);  -- 0 filas
+```
+
+::: {.callout-important}
+**Para el docente**: el error que produce MySQL es:
+
+```
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails
+(`techstyle`.`detalle_ventas`, CONSTRAINT `fk_detalle_productos`
+FOREIGN KEY (`producto_id`) REFERENCES `productos` (`producto_id`))
+```
+
+La transacción queda **abierta pero marcada con error**. El grupo debe ejecutar `ROLLBACK` manualmente. Si el grupo hizo `COMMIT` en lugar de `ROLLBACK`, el error FK lo impide de todas formas — el estado del `venta_id` vacío puede requerir limpieza manual.
+
+Si alguien ejecutó `ROLLBACK` después de que MySQL ya hizo rollback automático del INSERT fallido pero antes de cerrar la transacción, el comportamiento es correcto: la venta de Diego no queda registrada.
+:::
+
+### Paso 9: Reflexión sobre transacciones — Respuestas esperadas
+
+| Situación | ¿COMMIT o ROLLBACK? | ¿Por qué? |
+|---|---|---|
+| La venta y el detalle se insertan, pero el stock de un producto llegaría a -1 | **ROLLBACK** | El CHECK `stock >= 0` lanzaría un error que viola la integridad del negocio. No tiene sentido vender unidades que no existen. La transacción completa debe deshacerse. |
+| 500 productos nuevos, error de tipo en la fila 231 | **ROLLBACK** | A mitad del proceso el catálogo queda en estado inconsistente: algunos productos nuevos existirían y otros no. Es mejor deshacer todo y corregir la fila 231 antes de reintentar. |
+| La devolución queda registrada pero falla el UPDATE de stock | **ROLLBACK** | El sistema quedaría en estado incongruente: la devolución dice que el producto volvió, pero el stock no lo refleja. ROLLBACK garantiza que ambas operaciones ocurran juntas o ninguna. |
+
+::: {.callout-tip}
+**Concepto clave para reforzar**: una transacción modela una *unidad de negocio indivisible*. La pregunta para decidir es: "¿Tiene sentido que esta parte del proceso ocurra sin que ocurra la otra?". Si la respuesta es no → ROLLBACK.
+:::
+
+---
+
+## Parte 3 — Primer Vistazo a Consultas con JOIN
+
+### Paso 10: ¿De dónde vienen nuestros productos? — Resultado esperado
+
+```
+nombre_proveedor          | nombre_producto          | precio_compra | precio_venta | margen_bruto
+--------------------------|-------------------------|--------------|--------------|-------------
+Adidas Importaciones Sur  | Adidas Ultraboost 24    | 62000.00     | 119990.00    | 57990
+Adidas Importaciones Sur  | Polera Adidas Clásica   | 11000.00     |  24990.00    | 13990
+Multimarca Sport Ltda.    | Chaqueta The North Face | 47000.00     |  89990.00    | 42990
+Multimarca Sport Ltda.    | Pantalón Under Armour   | 20000.00     |  44990.00    | 24990
+Nike Distribuciones Chile | Nike Air Max 2026       | 42000.00     |  89990.00    | 47990
+Nike Distribuciones Chile | Polera Nike Dri-FIT     | 13500.00     |  29990.00    | 16490
+Nike Distribuciones Chile | Short Nike Running      |  8500.00     |  19990.00    | 11490
+Nike Distribuciones Chile | Gorro Nike Dri-FIT      |  6500.00     |  14990.00    |  8490
+Puma Latam Distribuidora  | Puma Suede Classic      | 26000.00     |  54990.00    | 28990
+Puma Latam Distribuidora  | Mochila Puma 20L        | 18500.00     |  39990.00    | 21490
+```
+
+**Respuesta esperada a la pregunta**: El producto con mayor margen bruto es el **Adidas Ultraboost 24** con $57.990 por unidad. Roberto podría decidir priorizarlo en la vitrina de la tienda online, incluirlo en campañas de marketing o negociar mayores volúmenes de compra con Adidas Importaciones Sur para aumentar aún más el margen.
+
+::: {.callout-note}
+**Para el docente**: el Gorro Nike Dri-FIT tiene el margen más bajo ($1.490). Una buena discusión es: ¿tiene sentido seguir vendiéndolo? ¿O sirve como producto de entrada (bajo ticket) para atraer clientes que luego compran zapatillas?
+:::
+
+### Paso 11: Estado de despachos — Resultado esperado
+
+Después de la Parte 1 (3 despachos) y la Parte 2 (1 despacho nuevo de Sofía), la consulta retorna 4 filas:
+
+```
+despacho_id | nombre  | apellido | region         | estado      | direccion_entrega
+------------|---------|----------|----------------|-------------|------------------------------------------
+1           | Juan    | Pérez    | Metropolitana  | Entregado   | Av. Providencia 1234, Providencia, Santiago
+2           | María   | López    | Valparaíso     | En tránsito | Cerro Alegre 567, Valparaíso
+3           | Carlos  | Muñoz    | Biobío         | Pendiente   | Av. O'Higgins 890, Concepción
+4           | Sofía   | Ramírez  | Metropolitana  | Pendiente   | Av. Marta Colvin 10120, Las Condes, Santiago
+```
+
+*(Ordenado por `d.estado` ascendente: Entregado → En tránsito → Pendiente)*
+
+**Respuesta esperada**: El equipo de logística debe gestionar los 2 despachos en estado `'Pendiente'` (Carlos Muñoz y Sofía Ramírez): coordinar el retiro en bodega, actualizar el estado a `'En tránsito'` y registrar la fecha de despacho real y la fecha estimada de entrega con la fecha de despacho real.
+
+### Paso 12: Devoluciones pendientes — Resultado esperado
+
+```
+devolucion_id | nombre | apellido | nombre_producto      | motivo            | estado   | fecha_devolucion
+--------------|--------|----------|---------------------|-------------------|----------|-----------------
+1             | Juan   | Pérez    | Polera Adidas Clásica| Talla incorrecta  | Pendiente| 2026-01-25
+```
+
+**Respuesta a la pregunta grupal**: La consulta de **proveedores y márgenes** (Paso 10) responde una pregunta imposible en Excel simple: "¿Cuánto ganamos por cada producto según cada proveedor?" — porque requiere cruzar tres tablas simultáneamente (proveedores, proveedor_producto, productos). En Excel, esto se haría con múltiples BUSCARV anidados y sería propenso a errores. La consulta de despachos también cruza 3 tablas; la de devoluciones cruza 4. Ninguna es trivial en Excel sin Power Query.
+
+---
+
+## Parte 4 — Síntesis y Reflexión
+
+### Paso 13: Modelo diseñado vs. modelo implementado
+
+| Dimensión | Modelo en papel (W05) | Base de datos real (W06–W07) |
+|---|---|---|
+| ¿Se puede saber qué proveedor abastece un producto? | Sí (diagrama) | **Sí** — tabla `proveedor_producto` con FK a ambas entidades |
+| ¿Las FK impiden ventas de clientes inexistentes? | En diseño | **Sí** — `ventas.cliente_id` con `ON DELETE RESTRICT` lo impide en tiempo de ejecución |
+| ¿Un producto puede tener stock negativo? | Según diseño, no | **No** — `CHECK (stock >= 0)` lanza error si se intenta |
+| ¿Una venta incompleta puede quedar registrada? | En teoría, no | **No** — las transacciones garantizan atomicidad: o se registra todo o nada |
+| ¿Qué pasa si se borra un cliente con ventas? | RESTRICT (diseño) | **Error bloqueante** — MySQL retorna ERROR 1451 y rechaza el DELETE |
+
+### Paso 14: Preguntas de diseño e implementación — Respuestas esperadas
+
+| Pregunta | Respuesta |
+|---|---|
+| ¿Por qué `SET @variable = LAST_INSERT_ID()` en lugar de poner el número directamente? | Porque el número del ID lo genera MySQL automáticamente y puede cambiar si hay otras inserciones concurrentes o si el script se ejecuta en otra base con distinto estado del auto_increment. La variable captura el ID en el momento exacto de la inserción, haciéndolo portable y seguro. |
+| ¿Qué pasaría si dos vendedores insertan una venta para el mismo cliente sin transacciones? | Podrían quedar ventas duplicadas o con datos parciales: uno puede insertar la cabecera de ventas mientras el otro inserta los detalles del primero en otra venta. Las transacciones + el aislamiento del motor impiden que una operación incompleta sea visible para otras sesiones. |
+| ¿Por qué `precio_unitario` se guarda en `detalle_ventas` y no se calcula desde `productos.precio_venta`? | Porque el precio puede cambiar en el futuro. Si se consultara siempre el precio actual, todas las ventas históricas mostrarían el precio de hoy. Guardarlo en el momento de la venta garantiza que el registro refleje exactamente lo que el cliente pagó, lo cual es un requisito legal y contable. |
+| Si TechStyle aplica un descuento general del 20%, ¿qué SQL ejecutarías? ¿Dentro de una transacción? | `UPDATE productos SET precio_venta = precio_venta * 0.80;` — sí, dentro de una transacción, porque si el UPDATE falla a mitad (ej. error de conexión), algunos productos quedarían con descuento y otros no, generando precios inconsistentes. |
+| Un cliente quiere borrar su cuenta. ¿Qué debe hacer Juan antes del DELETE? | Primero verificar si el cliente tiene ventas asociadas (`SELECT * FROM ventas WHERE cliente_id = X`). Si las tiene, la FK con `ON DELETE RESTRICT` impedirá el borrado. Juan debe decidir con Roberto qué política aplicar: ¿anonimizar el cliente en lugar de borrarlo? ¿Archivar el historial? El borrado físico destruye trazabilidad financiera. |
+
+### Paso 15: Análisis de impacto — Decisiones de negocio habilitadas
+
+| Capacidad implementada | Decisión de negocio que habilita |
+|---|---|
+| FK con `ON DELETE RESTRICT` en `ventas.cliente_id` | "Garantizamos que el historial de ventas nunca pierde la referencia al cliente — el dato histórico es inviolable para auditoría y contabilidad." |
+| CHECK `stock >= 0` en `productos` | "El sistema nunca registrará una venta de un producto sin existencia — elimina la posibilidad de vender 'aire' y los problemas de despacho asociados." |
+| Transacciones en el registro de ventas | "Una venta queda completamente registrada o no queda en absoluto — no pueden existir ventas sin stock descontado ni despachos sin venta, lo que garantiza la coherencia entre el área comercial y la logística." |
+| Índice `idx_ventas_fecha` en `ventas(fecha)` | "Las consultas de ventas por rango de fechas (reportes diarios, semanales, de temporada) responden en milisegundos incluso con millones de registros — Roberto recibe sus reportes de cierre en tiempo real." |
+| CHECK `segmento IN ('Premium', 'Estándar', 'Básico')` en `clientes` | "Los datos de segmentación son confiables para las campañas de marketing de María — no puede existir un cliente con segmento 'VIP' o 'elite' que nadie definió, lo que garantiza que los filtros de campaña funcionen correctamente." |
+
+### Paso 16: Reporte para Roberto — Respuesta modelo
+
+> **Para:** Roberto Fernández, CEO TechStyle
+>
+> **De:** Juan (DBA) — **Asunto:** Base de datos completamente operativa — estado al 2026-04-28
+>
+> La base de datos `techstyle` está completamente poblada en MySQL Server. Contiene 9 tablas operativas con un total de 42 registros distribuidos de la siguiente forma: 10 categorías de productos, 6 clientes, 4 proveedores, 10 productos del catálogo, 4 ventas registradas, 5 líneas de detalle, 10 relaciones proveedor-producto, 4 despachos (2 pendientes, 1 en tránsito, 1 entregado) y 1 devolución en proceso. Las restricciones de integridad activas garantizan que no existan ventas sin cliente válido, stock negativo, precios en cero, ni segmentos de cliente fuera de los tres definidos. Gracias a las transacciones, cada venta se registra de forma atómica: si algo falla, el sistema deshace automáticamente la operación completa. A diferencia de Excel, el sistema puede responder en segundos preguntas que cruzan múltiples áreas del negocio (margen por proveedor, estado logístico por cliente, devoluciones pendientes). Los siguientes pasos son implementar la lógica de consultas analíticas, conectar un frontend para el equipo de ventas, y definir una política de respaldo de datos.
+
+---
+
+## Errores frecuentes y cómo evaluarlos
+
+| Error | Severidad | Orientación docente |
+|---|---|---|
+| `Loading local data is disabled` | Procedimental | No penalizar si el grupo usó el INSERT alternativo y los datos son correctos. |
+| Columnas mal mapeadas en LOAD DATA (campos en el orden incorrecto) | Medio | Los datos quedan en columnas incorrectas. Verificar con `SELECT * FROM tabla LIMIT 5`. |
+| ROLLBACK no ejecutado después del error de FK | Conceptual | Indica que el grupo no comprendió que la transacción queda abierta. Reforzar el concepto de "transacción abierta vs. cerrada". |
+| COMMIT después de un error de FK | Conceptual | MySQL rechaza el COMMIT cuando hay un error pendiente (`ERROR 1213`). Aprovechar para explicar el comportamiento del motor. |
+| `precio_unitario` sacado de `productos` en lugar de guardarse en `detalle_ventas` | Diseño | Indicar que el precio cambia en el tiempo y el historial perdería precisión. |
+| Hardcodear `venta_id = 4` en lugar de usar `@venta_sofia` | Estilo | Aceptable si el resultado es correcto; señalar por qué es frágil en producción. |
+
+---
+
+## Entregable — Archivos de referencia
+
+| Archivo del docente | Corresponde a |
+|---|---|
+| `labs/data/lab07/W07_carga.sql` | Solución modelo de la Parte 1 |
+| `labs/data/lab07/W07_transacciones.sql` | Solución modelo de la Parte 2 |
+| `labs/solucion/W07_lab_solucion.qmd` | Este documento |

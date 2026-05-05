@@ -316,7 +316,6 @@ Observa la estructura: siempre hay un `FROM` (tabla principal), y luego `JOIN ..
 | ¿Se puede saber qué proveedor abastece un producto? | Sí (diagrama) | |
 | ¿Las FK impiden ventas de clientes inexistentes? | En diseño | |
 | ¿Un producto puede tener stock negativo? | Según diseño, no | |
-| ¿Una venta incompleta puede quedar registrada? | En teoría, no | |
 | ¿Qué pasa si se borra un cliente con ventas? | RESTRICT (diseño) | |
 
 ### Paso 14: Preguntas de diseño e implementación
@@ -339,7 +338,6 @@ Para cada capacidad implementada, identifica la decisión de negocio que habilit
 |---|---|
 | FK con `ON DELETE RESTRICT` en `ventas.cliente_id` | Ej: "Garantizamos que el historial de ventas nunca pierde la referencia al cliente" |
 | CHECK `stock >= 0` en `productos` | |
-| Transacciones en el registro de ventas | |
 | Índice `idx_ventas_fecha` en `ventas(fecha)` | |
 | CHECK `segmento IN ('Premium', 'Estándar', 'Básico')` | |
 

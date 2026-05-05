@@ -1,0 +1,536 @@
+---
+title: "Consultas SQL: Del Dato a la Decisión"
+subtitle: "SELECT, Filtros, Agregaciones y JOINs · Semana 8 · Unidad II"
+author: "Universidad San Sebastián"
+date: "Mayo 2026"
+format:
+  revealjs:
+    theme: sky
+    incremental: false
+    slide-number: true
+    footer: "Big Data y Analytics · USS · 2026"
+---
+
+## ¿Dónde Estamos?
+
+::: {.incremental}
+- **W04–W05**: Diseñamos el modelo MER de TechStyle, normalizamos hasta 3FN y generamos el script DDL.
+- **W06**: Ejecutamos el DDL — 9 tablas creadas — y cargamos los primeros datos.
+- **W07**: Completamos la carga de datos, implementamos transacciones ACID y verificamos la integridad.
+- **Hoy (W08)**: La base de datos está completa y confiable. Ahora viene la parte que justifica todo el esfuerzo anterior: **responder preguntas de negocio con SQL**.
+:::
+
+::: {.fragment}
+**El objetivo de hoy**: transformar filas y columnas en información útil para Roberto, María y Carlos.
+:::
+
+---
+
+## El Problema de Roberto Esta Semana
+
+Con TechStyle operativo, Roberto cita a Juan para una reunión urgente:
+
+::: {.incremental}
+- **Roberto** (CEO): "Necesito saber cuáles son nuestros productos más vendidos para decidir qué poner en la campaña de invierno."
+- **María** (Marketing): "Yo necesito identificar qué clientes llevan más de 3 meses sin comprar. Son nuestro público objetivo para la campaña."
+- **Carlos** (Operaciones): "¿Cuántos pedidos están pendientes de despacho esta semana? ¿Cuánto representa en pesos?"
+:::
+
+::: {.fragment}
+**Los tres están pidiendo lo mismo**: que los datos en la base de datos se conviertan en respuestas concretas.
+
+Juan sabe que ninguna de estas preguntas puede responderse mirando una tabla directamente — requieren **consultas SQL**.
+:::
+
+---
+
+## La Anatomía de un SELECT
+
+Toda consulta SQL sigue la misma estructura base:
+
+```sql
+SELECT   columnas_que_quieres_ver
+FROM     tabla_donde_están_los_datos
+WHERE    condición_para_filtrar_filas
+ORDER BY columna_para_ordenar;
+```
+
+::: {.fragment}
+**Ejemplo concreto** — Juan quiere ver el catálogo de productos de TechStyle ordenado por precio:
+
+```sql
+SELECT nombre_producto,
+       precio_venta,
+       stock
+FROM   productos
+ORDER BY precio_venta DESC;
+```
+:::
+
+::: {.fragment}
+**Alias**: se pueden renombrar columnas para que el reporte sea más legible:
+
+```sql
+SELECT nombre_producto          AS producto,
+       precio_venta             AS "Precio de Venta ($)",
+       stock                    AS "Unidades Disponibles"
+FROM   productos
+ORDER BY precio_venta DESC;
+```
+:::
+
+---
+
+## WHERE: Filtrar para Decidir
+
+Roberto necesita ver solo los productos con **stock bajo** (menos de 20 unidades):
+
+```sql
+SELECT nombre_producto, stock, precio_venta
+FROM   productos
+WHERE  stock < 20
+ORDER BY stock ASC;
+```
+
+::: {.fragment .small}
+**Operadores disponibles en WHERE:**
+
+| Operador | Uso | Ejemplo |
+|---|---|---|
+| `=`, `!=`, `<>` | Igualdad / diferencia | `segmento = 'Premium'` |
+| `<`, `>`, `<=`, `>=` | Comparación numérica | `precio_venta >= 50000` |
+| `BETWEEN x AND y` | Rango inclusivo | `fecha BETWEEN '2026-01-01' AND '2026-03-31'` |
+| `IN (a, b, c)` | Lista de valores | `region IN ('RM', 'Valparaíso')` |
+| `LIKE '%texto%'` | Texto parcial | `nombre LIKE '%Running%'` |
+| `IS NULL / IS NOT NULL` | Presencia de datos | `fecha_entrega_real IS NULL` |
+| `AND`, `OR`, `NOT` | Combinar condiciones | `stock < 5 AND precio_venta > 30000` |
+:::
+
+---
+
+## WHERE en Acción: Las Preguntas de María
+
+María necesita sus clientes objetivos para la campaña de invierno:
+
+```sql
+-- Clientes de la Región Metropolitana en segmento Premium
+SELECT nombre,
+       apellido,
+       email,
+       segmento
+FROM   clientes
+WHERE  region = 'RM'
+  AND  segmento = 'Premium'
+ORDER BY apellido ASC;
+```
+
+::: {.fragment}
+```sql
+-- Productos de la categoría "Zapatillas" con precio entre $40.000 y $100.000
+SELECT nombre_producto,
+       precio_venta,
+       stock
+FROM   productos
+WHERE  categoria_id IN (
+           SELECT categoria_id FROM categorias
+           WHERE nombre_categoria = 'Zapatillas'
+       )
+  AND  precio_venta BETWEEN 40000 AND 100000;
+```
+:::
+
+::: {.fragment}
+**`LIMIT`**: cuando solo se necesitan los primeros N resultados — útil para "top 5", "últimos 10":
+
+```sql
+SELECT nombre_producto, precio_venta
+FROM   productos
+ORDER BY precio_venta DESC
+LIMIT 5;   -- solo los 5 productos más caros
+```
+:::
+
+---
+
+## 🚀 Desafío Rápido 1 {background-color="#e8f4f8"}
+
+Escribe la consulta SQL que responde cada pregunta. Solo tienes acceso a las tablas `clientes`, `productos` y `ventas`.
+
+**Pregunta A**: ¿Qué productos tienen stock igual a cero? Muestra nombre y categoría.
+
+**Pregunta B**: ¿Qué clientes registraron ventas en enero de 2026? Muestra solo cliente_id y fecha. *(Pista: usa la tabla `ventas` y `BETWEEN`)*
+
+**Pregunta C**: ¿Cuáles son los 3 productos con mayor precio de venta? Muestra nombre y precio.
+
+**Pregunta D — Desafío**: ¿Qué clientes *no* están en la RM ni en Valparaíso? ¿Cuántos son? *(Pista: `NOT IN` o `<>` con `AND`)*
+
+::: {.notes}
+**Solución Desafío Rápido 1**
+
+**A:**
+```sql
+SELECT nombre_producto, categoria_id
+FROM productos
+WHERE stock = 0;
+```
+
+**B:**
+```sql
+SELECT cliente_id, fecha
+FROM ventas
+WHERE fecha BETWEEN '2026-01-01' AND '2026-01-31';
+```
+
+**C:**
+```sql
+SELECT nombre_producto, precio_venta
+FROM productos
+ORDER BY precio_venta DESC
+LIMIT 3;
+```
+
+**D:**
+```sql
+SELECT nombre, apellido, region
+FROM clientes
+WHERE region NOT IN ('RM', 'Valparaíso');
+
+-- Para contar:
+SELECT COUNT(*) AS fuera_de_rm_valpo
+FROM clientes
+WHERE region NOT IN ('RM', 'Valparaíso');
+```
+
+*Punto de cierre*: notar que la Pregunta B requiere acceder a `ventas`, no a `clientes` — los datos del cliente están en una tabla, sus compras en otra. Esto anticipa la necesidad de los JOINs.
+:::
+
+---
+
+## Funciones de Agregación
+
+Roberto no solo quiere ver filas — quiere **resumir**: totales, promedios, conteos.
+
+```sql
+-- ¿Cuántos clientes tiene TechStyle?
+SELECT COUNT(*) AS total_clientes FROM clientes;
+
+-- ¿Cuál es el precio promedio de los productos?
+SELECT AVG(precio_venta) AS precio_promedio FROM productos;
+
+-- ¿Cuánto vale el inventario total?
+SELECT SUM(precio_venta * stock) AS valor_inventario FROM productos;
+
+-- ¿Cuál es el producto más caro y el más barato?
+SELECT MAX(precio_venta) AS precio_maximo,
+       MIN(precio_venta) AS precio_minimo
+FROM productos;
+```
+
+::: {.fragment}
+| Función | Qué calcula |
+|---|---|
+| `COUNT(*)` | Número de filas |
+| `COUNT(columna)` | Filas donde esa columna no es NULL |
+| `SUM(columna)` | Suma de todos los valores |
+| `AVG(columna)` | Promedio |
+| `MAX(columna)` | Valor máximo |
+| `MIN(columna)` | Valor mínimo |
+:::
+
+---
+
+## GROUP BY: Agrupar para Comparar
+
+Las funciones de agregación son más poderosas cuando se aplican **por grupo**. Carlos quiere saber cuántos productos tiene cada categoría:
+
+```sql
+SELECT   c.nombre_categoria,
+         COUNT(p.producto_id)       AS cantidad_productos,
+         AVG(p.precio_venta)        AS precio_promedio,
+         SUM(p.precio_venta * p.stock) AS valor_inventario
+FROM     productos p
+JOIN     categorias c ON p.categoria_id = c.categoria_id
+GROUP BY c.nombre_categoria
+ORDER BY valor_inventario DESC;
+```
+
+::: {.fragment}
+**Regla clave**: en un `SELECT` con `GROUP BY`, cada columna que no es una función de agregación **debe aparecer en el GROUP BY**.
+
+```{mermaid}
+graph LR
+    A["Tabla productos\n(10 filas)"] --> B["GROUP BY categoria"]
+    B --> C["Zapatillas: 3 filas"]
+    B --> D["Poleras: 4 filas"]
+    B --> E["Accesorios: 3 filas"]
+    C --> F["COUNT=3, AVG=89.990"]
+    D --> G["COUNT=4, AVG=24.990"]
+    E --> H["COUNT=3, AVG=12.990"]
+```
+:::
+
+---
+
+## HAVING: Filtrar Grupos
+
+`WHERE` filtra filas **antes** de agrupar. `HAVING` filtra grupos **después** de agrupar.
+
+Roberto quiere ver solo las **categorías con valor de inventario superior a $500.000**:
+
+```sql
+SELECT   c.nombre_categoria,
+         COUNT(p.producto_id)              AS cantidad_productos,
+         SUM(p.precio_venta * p.stock)     AS valor_inventario
+FROM     productos p
+JOIN     categorias c ON p.categoria_id = c.categoria_id
+GROUP BY c.nombre_categoria
+HAVING   SUM(p.precio_venta * p.stock) > 500000
+ORDER BY valor_inventario DESC;
+```
+
+::: {.fragment}
+**¿Por qué no usar WHERE aquí?**
+
+```sql
+-- ❌ Esto falla — WHERE no puede usar funciones de agregación
+WHERE SUM(precio_venta * stock) > 500000
+
+-- ✅ HAVING es la cláusula correcta para filtrar resultados agregados
+HAVING SUM(precio_venta * stock) > 500000
+```
+:::
+
+::: {.fragment}
+> **Regla mnemotécnica**: `WHERE` filtra filas individuales; `HAVING` filtra el resultado de los grupos.
+:::
+
+---
+
+## 🚀 Desafío Rápido 2 {background-color="#e8f4f8"}
+
+Usando `GROUP BY` y `HAVING`, responde las preguntas de TechStyle:
+
+**Pregunta A**: ¿Cuántas ventas se realizaron en cada mes de 2026? *(Pista: `MONTH(fecha)` extrae el mes de una fecha)*
+
+**Pregunta B**: ¿Qué categorías tienen **más de 2 productos** en el catálogo?
+
+**Pregunta C — Desafío**: Roberto quiere ver los clientes que tienen **más de 1 venta** registrada, con el total de ventas por cliente. *(Tablas: `ventas`, `clientes`)*
+
+::: {.notes}
+**Solución Desafío Rápido 2**
+
+**A:**
+```sql
+SELECT MONTH(fecha) AS mes,
+       YEAR(fecha)  AS año,
+       COUNT(*)     AS total_ventas
+FROM ventas
+WHERE YEAR(fecha) = 2026
+GROUP BY YEAR(fecha), MONTH(fecha)
+ORDER BY mes;
+```
+
+**B:**
+```sql
+SELECT categoria_id, COUNT(*) AS cantidad_productos
+FROM productos
+GROUP BY categoria_id
+HAVING COUNT(*) > 2;
+```
+(Con JOIN para mostrar el nombre de la categoría:)
+```sql
+SELECT c.nombre_categoria, COUNT(p.producto_id) AS cantidad_productos
+FROM productos p
+JOIN categorias c ON p.categoria_id = c.categoria_id
+GROUP BY c.nombre_categoria
+HAVING COUNT(p.producto_id) > 2;
+```
+
+**C:**
+```sql
+SELECT cl.nombre,
+       cl.apellido,
+       COUNT(v.venta_id) AS total_ventas
+FROM clientes cl
+JOIN ventas v ON cl.cliente_id = v.cliente_id
+GROUP BY cl.cliente_id, cl.nombre, cl.apellido
+HAVING COUNT(v.venta_id) > 1
+ORDER BY total_ventas DESC;
+```
+
+*Punto de cierre*: la Pregunta C introduce el JOIN de forma natural — los datos del cliente están en una tabla y los de sus ventas en otra. Transición perfecta para la siguiente sección.
+:::
+
+---
+
+## JOIN: El Puente Entre Tablas
+
+En el laboratorio W07 ya usaste JOINs. Hoy los entendemos formalmente.
+
+**¿Por qué necesitamos JOINs?** Porque los datos están distribuidos en tablas separadas para evitar redundancia — y necesitamos combinarlos para responder preguntas de negocio.
+
+```{mermaid}
+graph LR
+    A["ventas\nventa_id | cliente_id | fecha"] -->|"JOIN ON\ncliente_id"| C["Resultado\nventa_id | nombre | fecha"]
+    B["clientes\ncliente_id | nombre | apellido"] -->|"JOIN ON\ncliente_id"| C
+    style C fill:#d4edda,stroke:#28a745
+```
+
+::: {.fragment}
+**Sintaxis básica del INNER JOIN:**
+
+```sql
+SELECT v.venta_id,
+       c.nombre,
+       c.apellido,
+       v.fecha
+FROM   ventas v
+       INNER JOIN clientes c ON v.cliente_id = c.cliente_id
+ORDER BY v.fecha DESC;
+```
+
+`INNER JOIN` retorna solo las filas que tienen **coincidencia en ambas tablas**.
+:::
+
+---
+
+## LEFT JOIN: Incluir los que No Tienen Contraparte
+
+Carlos necesita ver **todas las ventas**, incluyendo las que aún no tienen despacho asignado:
+
+```sql
+-- INNER JOIN: solo ventas CON despacho
+SELECT v.venta_id, v.fecha, d.estado
+FROM   ventas v
+       INNER JOIN despachos d ON v.venta_id = d.venta_id;
+
+-- LEFT JOIN: TODAS las ventas, con o sin despacho
+SELECT v.venta_id,
+       v.fecha,
+       d.estado                            AS estado_despacho,
+       IFNULL(d.estado, 'Sin despacho')   AS estado_legible
+FROM   ventas v
+       LEFT JOIN despachos d ON v.venta_id = d.venta_id;
+```
+
+::: {.fragment}
+**Diferencia clave:**
+
+| | INNER JOIN | LEFT JOIN |
+|---|---|---|
+| Ventas con despacho | ✅ Incluye | ✅ Incluye |
+| Ventas sin despacho | ❌ Excluye | ✅ Incluye (con NULL) |
+
+`IFNULL(columna, 'texto')` reemplaza los NULL con un valor legible en el reporte.
+:::
+
+---
+
+## JOIN con Múltiples Tablas
+
+Para responder preguntas complejas, se encadenan varios JOINs. Roberto quiere el detalle completo de cada venta:
+
+```sql
+SELECT v.venta_id,
+       v.fecha,
+       c.nombre                                    AS cliente,
+       c.region,
+       p.nombre_producto                           AS producto,
+       dv.cantidad,
+       dv.precio_unitario,
+       dv.cantidad * dv.precio_unitario            AS subtotal
+FROM   ventas v
+       JOIN clientes     c  ON v.cliente_id  = c.cliente_id
+       JOIN detalle_ventas dv ON v.venta_id = dv.venta_id
+       JOIN productos     p  ON dv.producto_id = p.producto_id
+ORDER BY v.fecha DESC, v.venta_id;
+```
+
+::: {.fragment}
+**Estrategia para construir un JOIN múltiple:**
+
+1. Identificar la tabla central (normalmente la tabla de hechos: `ventas`, `detalle_ventas`).
+2. Agregar cada `JOIN` necesario para traer los atributos descriptivos (nombre del cliente, nombre del producto).
+3. Verificar que la condición `ON` usa las FK correctas.
+:::
+
+---
+
+## Construyendo el Reporte de Roberto
+
+La pregunta original: ¿cuáles son los productos más vendidos?
+
+```sql
+SELECT   p.nombre_producto,
+         cat.nombre_categoria,
+         SUM(dv.cantidad)                       AS unidades_vendidas,
+         SUM(dv.cantidad * dv.precio_unitario)  AS ingresos_totales,
+         AVG(dv.precio_unitario)                AS precio_promedio_venta
+FROM     detalle_ventas dv
+         JOIN productos   p   ON dv.producto_id  = p.producto_id
+         JOIN categorias  cat ON p.categoria_id  = cat.categoria_id
+GROUP BY p.producto_id, p.nombre_producto, cat.nombre_categoria
+ORDER BY ingresos_totales DESC
+LIMIT 5;
+```
+
+::: {.fragment}
+Esta consulta combina todo lo visto hoy:
+
+- **JOIN** para cruzar detalle de ventas con productos y categorías.
+- **SUM** y **AVG** para calcular métricas por producto.
+- **GROUP BY** para obtener un resultado por producto.
+- **ORDER BY + LIMIT** para obtener el top 5.
+:::
+
+::: {.fragment}
+> Este resultado puede exportarse directamente a un dashboard en Power BI o Excel — exactamente lo que Roberto necesita para su CMI.
+:::
+
+---
+
+## Conexión con la Toma de Decisiones
+
+¿Por qué le importa todo esto a Roberto y María?
+
+::: {.incremental}
+- Una base de datos relacional **sin consultas** es solo almacenamiento. Las consultas SQL son lo que transforma los datos en **información accionable**.
+- `WHERE` implementa el criterio de decisión: "muéstrame solo lo que importa". `GROUP BY` implementa la perspectiva analítica: "compara por región, por categoría, por período".
+- El mismo dato (precio_unitario en detalle_ventas) responde múltiples preguntas: margen, ranking de productos, tendencia de precios — dependiendo de cómo se construya la consulta.
+- Un analista que sabe combinar `JOIN` + `GROUP BY` + `HAVING` puede reemplazar semanas de trabajo manual en Excel con una consulta de 10 líneas.
+:::
+
+::: {.fragment}
+> La base de datos no decide sola — pero un analista con SQL puede hacer que los datos hablen.
+:::
+
+---
+
+## Puntos Clave de la Semana 8
+
+::: {.incremental}
+- **`SELECT … FROM … WHERE … ORDER BY`** es la estructura base de toda consulta; `LIMIT` acota el resultado a los primeros N registros.
+- **`WHERE`** filtra filas individuales antes de cualquier cálculo; sus operadores incluyen `=`, `BETWEEN`, `IN`, `LIKE` e `IS NULL`.
+- Las **funciones de agregación** (`COUNT`, `SUM`, `AVG`, `MAX`, `MIN`) resumen múltiples filas en un único valor por grupo.
+- **`GROUP BY`** segmenta el resultado por categoría, región, período u otra dimensión; **`HAVING`** filtra esos grupos después del cálculo.
+- **`INNER JOIN`** combina filas que tienen coincidencia en ambas tablas; **`LEFT JOIN`** incluye todas las filas de la tabla izquierda, con NULL donde no hay coincidencia.
+- Para construir un reporte complejo: identifica la tabla de hechos, agrega los JOINs necesarios para los atributos descriptivos, aplica la agregación y filtra con HAVING.
+:::
+
+---
+
+## Preview del Laboratorio W08
+
+**Lab W08: Reportes de Negocio para TechStyle**
+
+::: {.incremental}
+- Responderás las preguntas de Roberto, María y Carlos con consultas SQL reales sobre la base de datos `techstyle` que construiste en W04–W07.
+- Practicarás `WHERE` con condiciones múltiples, funciones de fecha y operadores de texto.
+- Construirás reportes agregados con `GROUP BY` y `HAVING`: ventas por categoría, clientes por segmento, despachos por estado.
+- Usarás `INNER JOIN` y `LEFT JOIN` para cruzar tablas y generar el detalle completo de ventas, incluyendo productos sin movimiento.
+- Al finalizar, tendrás un set de 8 consultas documentadas que sirven como base para el reporte final de la **Solemne 2**.
+:::
+
+::: {.fragment}
+> En W09 completaremos el arsenal: subconsultas, JOINs con agregación avanzada y la preparación del proyecto de Solemne 2.
+:::

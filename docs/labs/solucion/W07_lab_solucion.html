@@ -591,10 +591,6 @@ Note
 <td>Porque el precio puede cambiar en el futuro. Si se consultara siempre el precio actual, todas las ventas históricas mostrarían el precio de hoy. Guardarlo en el momento de la venta garantiza que el registro refleje exactamente lo que el cliente pagó, lo cual es un requisito legal y contable.</td>
 </tr>
 <tr class="even">
-<td>Si TechStyle aplica un descuento general del 20%, ¿qué SQL ejecutarías? ¿Dentro de una transacción?</td>
-<td><code>UPDATE productos SET precio_venta = precio_venta * 0.80;</code> — sí, dentro de una transacción, porque si el UPDATE falla a mitad (ej. error de conexión), algunos productos quedarían con descuento y otros no, generando precios inconsistentes.</td>
-</tr>
-<tr class="odd">
 <td>Un cliente quiere borrar su cuenta. ¿Qué debe hacer Juan antes del DELETE?</td>
 <td>Primero verificar si el cliente tiene ventas asociadas (<code>SELECT * FROM ventas WHERE cliente_id = X</code>). Si las tiene, la FK con <code>ON DELETE RESTRICT</code> impedirá el borrado. Juan debe decidir con Roberto qué política aplicar: ¿anonimizar el cliente en lugar de borrarlo? ¿Archivar el historial? El borrado físico destruye trazabilidad financiera.</td>
 </tr>
@@ -624,14 +620,10 @@ Note
 <td>“El sistema nunca registrará una venta de un producto sin existencia — elimina la posibilidad de vender ‘aire’ y los problemas de despacho asociados.”</td>
 </tr>
 <tr class="odd">
-<td>Transacciones en el registro de ventas</td>
-<td>“Una venta queda completamente registrada o no queda en absoluto — no pueden existir ventas sin stock descontado ni despachos sin venta, lo que garantiza la coherencia entre el área comercial y la logística.”</td>
-</tr>
-<tr class="even">
 <td>Índice <code>idx_ventas_fecha</code> en <code>ventas(fecha)</code></td>
 <td>“Las consultas de ventas por rango de fechas (reportes diarios, semanales, de temporada) responden en milisegundos incluso con millones de registros — Roberto recibe sus reportes de cierre en tiempo real.”</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>CHECK <code>segmento IN ('Premium', 'Estándar', 'Básico')</code> en <code>clientes</code></td>
 <td>“Los datos de segmentación son confiables para las campañas de marketing de María — no puede existir un cliente con segmento ‘VIP’ o ‘elite’ que nadie definió, lo que garantiza que los filtros de campaña funcionen correctamente.”</td>
 </tr>
@@ -675,21 +667,16 @@ Note
 <td>Los datos quedan en columnas incorrectas. Verificar con <code>SELECT * FROM tabla LIMIT 5</code>.</td>
 </tr>
 <tr class="odd">
-<td>ROLLBACK no ejecutado después del error de FK</td>
-<td>Conceptual</td>
-<td>Indica que el grupo no comprendió que la transacción queda abierta. Reforzar el concepto de “transacción abierta vs.&nbsp;cerrada”.</td>
-</tr>
-<tr class="even">
 <td>COMMIT después de un error de FK</td>
 <td>Conceptual</td>
 <td>MySQL rechaza el COMMIT cuando hay un error pendiente (<code>ERROR 1213</code>). Aprovechar para explicar el comportamiento del motor.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>precio_unitario</code> sacado de <code>productos</code> en lugar de guardarse en <code>detalle_ventas</code></td>
 <td>Diseño</td>
 <td>Indicar que el precio cambia en el tiempo y el historial perdería precisión.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Hardcodear <code>venta_id = 4</code> en lugar de usar <code>@venta_sofia</code></td>
 <td>Estilo</td>
 <td>Aceptable si el resultado es correcto; señalar por qué es frágil en producción.</td>
@@ -701,10 +688,6 @@ Note
 <section id="entregable-archivos-de-referencia" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="entregable-archivos-de-referencia"><span class="header-section-number">6</span> Entregable — Archivos de referencia</h2>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Archivo del docente</th>
@@ -717,7 +700,7 @@ Note
 <td>Solución modelo de la Parte 1</td>
 </tr>
 <tr class="even">
-<td><code>labs/data/lab07/W07_transacciones.sql</code></td>
+<td><code>labs/data/lab07/W07_joins.sql</code></td>
 <td>Solución modelo de la Parte 2</td>
 </tr>
 <tr class="odd">

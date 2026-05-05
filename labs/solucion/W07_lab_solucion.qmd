@@ -222,7 +222,6 @@ devolucion_id | nombre | apellido | nombre_producto      | motivo            | e
 | ¿Por qué `SET @variable = LAST_INSERT_ID()` en lugar de poner el número directamente? | Porque el número del ID lo genera MySQL automáticamente y puede cambiar si hay otras inserciones concurrentes o si el script se ejecuta en otra base con distinto estado del auto_increment. La variable captura el ID en el momento exacto de la inserción, haciéndolo portable y seguro. |
 | ¿Qué pasaría si dos vendedores insertan una venta para el mismo cliente sin transacciones? | Podrían quedar ventas duplicadas o con datos parciales: uno puede insertar la cabecera de ventas mientras el otro inserta los detalles del primero en otra venta. Las transacciones + el aislamiento del motor impiden que una operación incompleta sea visible para otras sesiones. |
 | ¿Por qué `precio_unitario` se guarda en `detalle_ventas` y no se calcula desde `productos.precio_venta`? | Porque el precio puede cambiar en el futuro. Si se consultara siempre el precio actual, todas las ventas históricas mostrarían el precio de hoy. Guardarlo en el momento de la venta garantiza que el registro refleje exactamente lo que el cliente pagó, lo cual es un requisito legal y contable. |
-| Si TechStyle aplica un descuento general del 20%, ¿qué SQL ejecutarías? ¿Dentro de una transacción? | `UPDATE productos SET precio_venta = precio_venta * 0.80;` — sí, dentro de una transacción, porque si el UPDATE falla a mitad (ej. error de conexión), algunos productos quedarían con descuento y otros no, generando precios inconsistentes. |
 | Un cliente quiere borrar su cuenta. ¿Qué debe hacer Juan antes del DELETE? | Primero verificar si el cliente tiene ventas asociadas (`SELECT * FROM ventas WHERE cliente_id = X`). Si las tiene, la FK con `ON DELETE RESTRICT` impedirá el borrado. Juan debe decidir con Roberto qué política aplicar: ¿anonimizar el cliente en lugar de borrarlo? ¿Archivar el historial? El borrado físico destruye trazabilidad financiera. |
 
 ### Paso 15: Análisis de impacto — Decisiones de negocio habilitadas
@@ -231,7 +230,6 @@ devolucion_id | nombre | apellido | nombre_producto      | motivo            | e
 |---|---|
 | FK con `ON DELETE RESTRICT` en `ventas.cliente_id` | "Garantizamos que el historial de ventas nunca pierde la referencia al cliente — el dato histórico es inviolable para auditoría y contabilidad." |
 | CHECK `stock >= 0` en `productos` | "El sistema nunca registrará una venta de un producto sin existencia — elimina la posibilidad de vender 'aire' y los problemas de despacho asociados." |
-| Transacciones en el registro de ventas | "Una venta queda completamente registrada o no queda en absoluto — no pueden existir ventas sin stock descontado ni despachos sin venta, lo que garantiza la coherencia entre el área comercial y la logística." |
 | Índice `idx_ventas_fecha` en `ventas(fecha)` | "Las consultas de ventas por rango de fechas (reportes diarios, semanales, de temporada) responden en milisegundos incluso con millones de registros — Roberto recibe sus reportes de cierre en tiempo real." |
 | CHECK `segmento IN ('Premium', 'Estándar', 'Básico')` en `clientes` | "Los datos de segmentación son confiables para las campañas de marketing de María — no puede existir un cliente con segmento 'VIP' o 'elite' que nadie definió, lo que garantiza que los filtros de campaña funcionen correctamente." |
 
@@ -251,7 +249,6 @@ devolucion_id | nombre | apellido | nombre_producto      | motivo            | e
 |---|---|---|
 | `Loading local data is disabled` | Procedimental | No penalizar si el grupo usó el INSERT alternativo y los datos son correctos. |
 | Columnas mal mapeadas en LOAD DATA (campos en el orden incorrecto) | Medio | Los datos quedan en columnas incorrectas. Verificar con `SELECT * FROM tabla LIMIT 5`. |
-| ROLLBACK no ejecutado después del error de FK | Conceptual | Indica que el grupo no comprendió que la transacción queda abierta. Reforzar el concepto de "transacción abierta vs. cerrada". |
 | COMMIT después de un error de FK | Conceptual | MySQL rechaza el COMMIT cuando hay un error pendiente (`ERROR 1213`). Aprovechar para explicar el comportamiento del motor. |
 | `precio_unitario` sacado de `productos` en lugar de guardarse en `detalle_ventas` | Diseño | Indicar que el precio cambia en el tiempo y el historial perdería precisión. |
 | Hardcodear `venta_id = 4` en lugar de usar `@venta_sofia` | Estilo | Aceptable si el resultado es correcto; señalar por qué es frágil en producción. |
@@ -263,5 +260,5 @@ devolucion_id | nombre | apellido | nombre_producto      | motivo            | e
 | Archivo del docente | Corresponde a |
 |---|---|
 | `labs/data/lab07/W07_carga.sql` | Solución modelo de la Parte 1 |
-| `labs/data/lab07/W07_transacciones.sql` | Solución modelo de la Parte 2 |
+| `labs/data/lab07/W07_joins.sql` | Solución modelo de la Parte 2 |
 | `labs/solucion/W07_lab_solucion.qmd` | Este documento |

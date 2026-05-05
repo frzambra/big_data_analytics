@@ -1,0 +1,518 @@
+---
+title: "Laboratorio 8: Consultando TechStyle"
+subtitle: "Semana 8 · W08 · Unidad II · SELECT, Agregaciones y JOINs · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+## Contexto
+
+En los laboratorios W06 y W07 construiste la base de datos de TechStyle: 9 tablas, datos reales y operaciones transaccionales garantizadas. Hoy llega la parte que justifica todo ese trabajo: **responder preguntas de negocio reales con SQL**.
+
+Roberto (CEO), María (Marketing) y Carlos (Operaciones) tienen preguntas concretas que esperan respuesta. Juan —tu rol como analista de datos— usará `SELECT`, `WHERE`, `GROUP BY`, `HAVING` y `JOIN` para convertir los datos almacenados en información accionable.
+
+Al terminar este laboratorio tendrás un **set de 8 consultas documentadas** que servirán como base para el proyecto de la Solemne 2.
+
+---
+
+## Instrucciones generales
+
+- Trabajarás **en los mismos grupos de los laboratorios anteriores**.
+- **Duración total**: 2 horas 30 minutos.
+- Necesitas la base de datos `techstyle` completamente poblada del laboratorio W07.
+
+**Herramientas necesarias:**
+
+| Herramienta | Uso |
+|---|---|
+| **MySQL Workbench 8.0** | Escritura y ejecución de consultas |
+| **MySQL Server 8.0** | Motor donde está la base de datos `techstyle` |
+
+**Estructura del laboratorio:**
+
+| Parte | Actividad | Tiempo |
+|---|---|---|
+| 1 | SELECT y WHERE: filtrar para decidir | 35 min |
+| 2 | Agregaciones: GROUP BY y HAVING | 40 min |
+| 3 | JOINs: cruzar tablas para reportes completos | 40 min |
+| 4 | Síntesis: reportes para el equipo directivo | 35 min |
+
+---
+
+## Parte 1 — SELECT y WHERE: Filtrar para Decidir {#sec-select}
+
+**Duración: 35 minutos**
+
+### Paso 1: Conectar y explorar la base de datos
+
+Abre MySQL Workbench y conéctate al servidor local. Antes de escribir cualquier consulta, oriéntate:
+
+```sql
+USE techstyle;
+
+-- ¿Cuántos registros hay en cada tabla?
+SELECT 'clientes'    AS tabla, COUNT(*) AS filas FROM clientes    UNION ALL
+SELECT 'productos',           COUNT(*)           FROM productos   UNION ALL
+SELECT 'ventas',              COUNT(*)           FROM ventas      UNION ALL
+SELECT 'detalle_ventas',      COUNT(*)           FROM detalle_ventas;
+```
+
+Completa la tabla con los resultados:
+
+| Tabla | Filas |
+|---|---|
+| `clientes` | |
+| `productos` | |
+| `ventas` | |
+| `detalle_ventas` | |
+
+### Paso 2: Catálogo completo ordenado por precio
+
+María necesita revisar el catálogo completo para la campaña de invierno, ordenado de más caro a más barato:
+
+```sql
+SELECT nombre_producto              AS producto,
+       precio_venta                 AS "Precio ($)",
+       costo_unitario               AS "Costo ($)",
+       precio_venta - costo_unitario AS "Margen Bruto ($)",
+       stock                        AS "Stock disponible"
+FROM   productos
+ORDER BY precio_venta DESC;
+```
+
+**Pregunta 1.1**: ¿Qué producto tiene el mayor margen bruto en pesos? ¿Y el menor? ¿Qué decisión comercial podría tomar María con esta información?
+
+### Paso 3: Alertas de stock bajo
+
+Carlos necesita saber qué productos requieren reposición urgente. Define como umbral crítico un stock inferior a 100 unidades:
+
+```sql
+SELECT nombre_producto,
+       stock,
+       precio_venta,
+       stock * costo_unitario AS "Valor a reponer ($)"
+FROM   productos
+WHERE  stock < 100
+ORDER BY stock ASC;
+```
+
+**Pregunta 1.2**: ¿Cuántos productos están en alerta de stock? ¿Cuál representa mayor urgencia para el negocio — el de menor stock o el de mayor valor a reponer?
+
+### Paso 4: Clientes por región y segmento
+
+María quiere identificar los clientes Premium de la Región Metropolitana para la campaña de invierno:
+
+```sql
+SELECT nombre,
+       apellido,
+       email,
+       segmento,
+       fecha_registro
+FROM   clientes
+WHERE  region = 'Metropolitana'
+  AND  segmento = 'Premium'
+ORDER BY fecha_registro ASC;
+```
+
+Ahora escribe tú la consulta que responde: **¿qué clientes NO son de la Región Metropolitana ni de Valparaíso?**
+
+```sql
+-- Escribe tu consulta aquí:
+SELECT ...
+FROM   clientes
+WHERE  ...
+ORDER BY region, apellido;
+```
+
+::: {.callout-tip}
+Usa `NOT IN ('Metropolitana', 'Valparaíso')` o combina dos condiciones con `AND` y `<>`.
+:::
+
+### Paso 5: Buscar productos por nombre parcial
+
+Carlos necesita encontrar todos los productos de la marca Nike en el catálogo:
+
+```sql
+SELECT nombre_producto,
+       precio_venta,
+       stock
+FROM   productos
+WHERE  nombre_producto LIKE '%Nike%'
+ORDER BY precio_venta DESC;
+```
+
+**Pregunta 1.3**: ¿Cuántos productos Nike tiene TechStyle? ¿Cuál es su precio promedio? *(No uses SQL aún — estimación a ojo de la tabla resultante)*
+
+### Paso 6: Ventas en un rango de fechas
+
+Roberto quiere ver todas las ventas registradas en enero de 2026:
+
+```sql
+SELECT venta_id,
+       fecha,
+       cliente_id
+FROM   ventas
+WHERE  fecha BETWEEN '2026-01-01' AND '2026-01-31'
+ORDER BY fecha;
+```
+
+**Pregunta 1.4**: ¿Cuántas ventas se realizaron en enero? ¿Y cuántas en total tiene la base de datos? ¿Qué limitación tiene esta consulta para informar a Roberto? *(Pista: piensa en qué información falta)*
+
+---
+
+## Parte 2 — Agregaciones: GROUP BY y HAVING {#sec-agregaciones}
+
+**Duración: 40 minutos**
+
+### Paso 7: Resumen del catálogo por categoría
+
+```sql
+SELECT   cat.nombre_categoria,
+         COUNT(p.producto_id)                    AS cantidad_productos,
+         ROUND(AVG(p.precio_venta), 0)           AS precio_promedio,
+         MIN(p.precio_venta)                     AS precio_minimo,
+         MAX(p.precio_venta)                     AS precio_maximo,
+         SUM(p.stock)                            AS stock_total
+FROM     productos p
+         JOIN categorias cat ON p.categoria_id = cat.categoria_id
+GROUP BY cat.nombre_categoria
+ORDER BY precio_promedio DESC;
+```
+
+Completa la tabla de análisis:
+
+| Categoría | ¿Tiene más de 1 producto? | ¿Es la categoría con mayor precio promedio? |
+|---|---|---|
+| Zapatillas | | |
+| Poleras | | |
+| Pantalones | | |
+| Chaquetas | | |
+| Mochilas | | |
+| Gorros | | |
+
+**Pregunta 2.1**: María quiere enfocar la campaña en las 2 categorías con mayor precio promedio. ¿Cuáles son?
+
+### Paso 8: Valor total del inventario
+
+Roberto necesita saber cuánto capital tiene TechStyle inmovilizado en inventario:
+
+```sql
+-- Valor total del inventario al costo
+SELECT SUM(stock * costo_unitario)    AS "Capital en inventario ($)",
+       SUM(stock * precio_venta)      AS "Valor potencial de venta ($)",
+       SUM(stock * precio_venta)
+         - SUM(stock * costo_unitario) AS "Margen potencial total ($)"
+FROM   productos;
+```
+
+**Pregunta 2.2**: ¿Cuánto ganaría TechStyle si vendiera todo su inventario actual? ¿Es ese un escenario realista? ¿Por qué?
+
+### Paso 9: Valor de inventario por categoría — solo las que superan $2.000.000
+
+```sql
+SELECT   cat.nombre_categoria,
+         SUM(p.stock * p.precio_venta) AS valor_inventario
+FROM     productos p
+         JOIN categorias cat ON p.categoria_id = cat.categoria_id
+GROUP BY cat.nombre_categoria
+HAVING   SUM(p.stock * p.precio_venta) > 2000000
+ORDER BY valor_inventario DESC;
+```
+
+Ahora escribe tú la consulta que responde: **¿qué categorías tienen un precio promedio de venta superior a $40.000?**
+
+```sql
+-- Escribe tu consulta aquí:
+SELECT   cat.nombre_categoria,
+         ROUND(AVG(p.precio_venta), 0) AS precio_promedio
+FROM     productos p
+         JOIN categorias cat ON p.categoria_id = cat.categoria_id
+GROUP BY ...
+HAVING   ...
+ORDER BY precio_promedio DESC;
+```
+
+### Paso 10: Ventas por mes
+
+Roberto quiere ver la evolución mensual de ventas para identificar estacionalidad:
+
+```sql
+SELECT   YEAR(fecha)                AS año,
+         MONTH(fecha)               AS mes,
+         COUNT(venta_id)            AS total_ventas
+FROM     ventas
+GROUP BY YEAR(fecha), MONTH(fecha)
+ORDER BY año, mes;
+```
+
+**Pregunta 2.3**: ¿En qué mes se concentran más ventas? ¿Qué limitación tiene este análisis con los datos actuales de TechStyle? *(Pista: piensa en el volumen de datos disponible)*
+
+### Paso 11: Clientes por segmento
+
+```sql
+SELECT   segmento,
+         COUNT(cliente_id)          AS cantidad_clientes,
+         COUNT(cliente_id) * 100.0
+           / (SELECT COUNT(*) FROM clientes) AS porcentaje
+FROM     clientes
+GROUP BY segmento
+ORDER BY cantidad_clientes DESC;
+```
+
+**Pregunta 2.4**: ¿Cuál es el segmento más numeroso? ¿Cuál debería recibir más atención en la estrategia de retención según Roberto?
+
+::: {.callout-note}
+La subquery `(SELECT COUNT(*) FROM clientes)` dentro del SELECT es una forma de calcular porcentajes sin necesitar una tabla adicional. La verás con más detalle en W09.
+:::
+
+---
+
+## Parte 3 — JOINs: Cruzar Tablas para Reportes Completos {#sec-joins}
+
+**Duración: 40 minutos**
+
+### Paso 12: Detalle completo de ventas (INNER JOIN)
+
+La pregunta más básica que Roberto no puede responder solo con la tabla `ventas`: ¿quién compró qué y cuándo?
+
+```sql
+SELECT v.venta_id,
+       v.fecha,
+       c.nombre                                      AS cliente,
+       c.apellido,
+       c.region,
+       p.nombre_producto                             AS producto,
+       dv.cantidad,
+       dv.precio_unitario,
+       ROUND(dv.precio_unitario
+             * dv.cantidad
+             * (1 - dv.descuento_pct / 100), 0)     AS subtotal_con_descuento
+FROM   ventas v
+       JOIN clientes      c  ON v.cliente_id    = c.cliente_id
+       JOIN detalle_ventas dv ON v.venta_id      = dv.venta_id
+       JOIN productos      p  ON dv.producto_id  = p.producto_id
+ORDER BY v.fecha DESC, v.venta_id;
+```
+
+**Pregunta 3.1**: ¿Qué línea de venta generó el mayor subtotal? ¿Cuál fue la compra total de cada cliente? *(Estimación a partir del resultado — no uses SQL aún)*
+
+### Paso 13: Total facturado por venta
+
+Ahora agrega los subtotales de cada venta para obtener el total facturado:
+
+```sql
+SELECT v.venta_id,
+       v.fecha,
+       c.nombre                                      AS cliente,
+       c.apellido,
+       COUNT(dv.producto_id)                         AS lineas_de_detalle,
+       ROUND(SUM(dv.precio_unitario
+                 * dv.cantidad
+                 * (1 - dv.descuento_pct / 100)), 0) AS total_facturado
+FROM   ventas v
+       JOIN clientes       c  ON v.cliente_id   = c.cliente_id
+       JOIN detalle_ventas dv ON v.venta_id      = dv.venta_id
+GROUP BY v.venta_id, v.fecha, c.nombre, c.apellido
+ORDER BY total_facturado DESC;
+```
+
+**Pregunta 3.2**: ¿Cuál fue la venta de mayor valor? ¿Y el cliente con mayor gasto acumulado?
+
+### Paso 14: Estado de despachos con nombre del cliente (INNER JOIN)
+
+Carlos necesita el reporte de estado de todos los despachos:
+
+```sql
+SELECT d.despacho_id,
+       c.nombre                                      AS cliente,
+       c.apellido,
+       c.region,
+       d.fecha_despacho,
+       d.fecha_entrega_estimada,
+       d.fecha_entrega_real,
+       d.estado,
+       CASE
+           WHEN d.fecha_entrega_real IS NOT NULL
+                AND d.fecha_entrega_real <= d.fecha_entrega_estimada
+                THEN 'A tiempo'
+           WHEN d.fecha_entrega_real IS NOT NULL
+                AND d.fecha_entrega_real > d.fecha_entrega_estimada
+                THEN 'Atrasado'
+           WHEN d.estado = 'En tránsito'
+                THEN 'En camino'
+           ELSE 'Sin despachar'
+       END                                           AS cumplimiento
+FROM   despachos d
+       JOIN ventas   v ON d.venta_id   = v.venta_id
+       JOIN clientes c ON v.cliente_id = c.cliente_id
+ORDER BY d.estado, d.fecha_entrega_estimada;
+```
+
+::: {.callout-tip}
+**`CASE WHEN ... THEN ... ELSE ... END`** es el equivalente SQL de un `IF` de Excel. Permite clasificar filas según condiciones, generando una columna calculada con categorías de texto. Lo usarás con frecuencia en reportes.
+:::
+
+**Pregunta 3.3**: ¿Hay algún despacho atrasado? ¿Qué debería hacer Carlos con los despachos en estado `'Pendiente'`?
+
+### Paso 15: Ventas con y sin despacho (LEFT JOIN)
+
+¿Hay ventas que aún no tienen despacho asignado? Con INNER JOIN no lo sabrías — necesitas LEFT JOIN:
+
+```sql
+SELECT v.venta_id,
+       v.fecha,
+       c.nombre                            AS cliente,
+       d.despacho_id,
+       IFNULL(d.estado, '⚠ Sin despacho') AS estado_despacho
+FROM   ventas v
+       JOIN clientes  c ON v.cliente_id = c.cliente_id
+       LEFT JOIN despachos d ON v.venta_id = d.venta_id
+ORDER BY d.despacho_id IS NULL DESC,  -- las ventas sin despacho aparecen primero
+         v.fecha;
+```
+
+**Pregunta 3.4**: ¿Cuántas ventas tienen despacho asignado? ¿Cuántas no? ¿Qué implica para el área de operaciones?
+
+### Paso 16: Productos sin ventas (LEFT JOIN inverso)
+
+María quiere saber qué productos **nunca han sido vendidos** — para evaluar si deben retirarse del catálogo:
+
+```sql
+SELECT p.nombre_producto,
+       p.precio_venta,
+       p.stock,
+       cat.nombre_categoria
+FROM   productos p
+       JOIN categorias cat ON p.categoria_id = cat.categoria_id
+       LEFT JOIN detalle_ventas dv ON p.producto_id = dv.producto_id
+WHERE  dv.producto_id IS NULL
+ORDER BY p.precio_venta DESC;
+```
+
+::: {.callout-note}
+El patrón `LEFT JOIN ... WHERE tabla_derecha.id IS NULL` es la forma estándar de encontrar registros **sin contraparte** — en este caso, productos sin ninguna línea de venta. Es uno de los patrones más útiles para detectar datos huérfanos o inactivos.
+:::
+
+**Pregunta 3.5**: ¿Hay productos sin ventas? ¿Qué recomendaría Juan a María con esta información?
+
+---
+
+## Parte 4 — Síntesis: Reportes para el Equipo Directivo {#sec-reportes}
+
+**Duración: 35 minutos**
+
+Con las herramientas aprendidas hoy, construye los reportes que Roberto, María y Carlos necesitan para tomar decisiones.
+
+### Paso 17: Reporte de Roberto — Productos más vendidos
+
+Combina JOINs con agregaciones para identificar qué productos generan más ingresos:
+
+```sql
+SELECT   p.nombre_producto,
+         cat.nombre_categoria,
+         SUM(dv.cantidad)                               AS unidades_vendidas,
+         ROUND(SUM(dv.precio_unitario
+                   * dv.cantidad
+                   * (1 - dv.descuento_pct / 100)), 0) AS ingresos_netos,
+         ROUND(AVG(dv.precio_unitario), 0)              AS precio_promedio_venta
+FROM     detalle_ventas dv
+         JOIN productos   p   ON dv.producto_id  = p.producto_id
+         JOIN categorias  cat ON p.categoria_id  = cat.categoria_id
+GROUP BY p.producto_id, p.nombre_producto, cat.nombre_categoria
+ORDER BY ingresos_netos DESC;
+```
+
+**Pregunta 4.1**: ¿Cuál es el producto estrella de TechStyle? ¿Coincide el producto más vendido en unidades con el que genera más ingresos? ¿Qué implica esa diferencia (si existe)?
+
+### Paso 18: Reporte de María — Compras por segmento de cliente
+
+```sql
+SELECT   cl.segmento,
+         COUNT(DISTINCT v.venta_id)                     AS total_ventas,
+         COUNT(DISTINCT cl.cliente_id)                  AS clientes_activos,
+         ROUND(SUM(dv.precio_unitario
+                   * dv.cantidad
+                   * (1 - dv.descuento_pct / 100)), 0)  AS ingresos_totales,
+         ROUND(SUM(dv.precio_unitario
+                   * dv.cantidad
+                   * (1 - dv.descuento_pct / 100))
+               / COUNT(DISTINCT v.venta_id), 0)          AS ticket_promedio
+FROM     clientes cl
+         JOIN ventas        v  ON cl.cliente_id  = v.cliente_id
+         JOIN detalle_ventas dv ON v.venta_id     = dv.venta_id
+GROUP BY cl.segmento
+ORDER BY ingresos_totales DESC;
+```
+
+**Pregunta 4.2**: ¿Qué segmento tiene el ticket promedio más alto? ¿Coincide con el segmento que genera más ingresos totales? ¿Qué estrategia podría diseñar María con este análisis?
+
+### Paso 19: Reporte de Carlos — Margen por proveedor
+
+Carlos necesita saber qué proveedores abastecen los productos con mayor margen:
+
+```sql
+SELECT   pv.nombre_proveedor,
+         COUNT(pp.producto_id)                       AS productos_abastecidos,
+         ROUND(AVG(p.precio_venta - pp.precio_compra), 0) AS margen_promedio,
+         ROUND(MIN(p.precio_venta - pp.precio_compra), 0) AS margen_minimo,
+         ROUND(MAX(p.precio_venta - pp.precio_compra), 0) AS margen_maximo
+FROM     proveedores pv
+         JOIN proveedor_producto pp ON pv.proveedor_id = pp.proveedor_id
+         JOIN productos          p  ON pp.producto_id  = p.producto_id
+GROUP BY pv.proveedor_id, pv.nombre_proveedor
+ORDER BY margen_promedio DESC;
+```
+
+**Pregunta 4.3**: ¿Con qué proveedor trabaja TechStyle de forma más rentable? ¿Qué negociación podría proponerle Carlos al proveedor con menor margen?
+
+### Paso 20: Documentar las 8 consultas del laboratorio
+
+Copia cada consulta que respondió una pregunta de negocio y completa la siguiente tabla. Estas 8 consultas formarán la base del proyecto de Solemne 2.
+
+| N° | Consulta (descripción breve) | Pregunta de negocio que responde | Persona interesada |
+|---|---|---|---|
+| Q1 | Catálogo ordenado por precio con margen bruto | ¿Qué productos tienen mayor margen? | María |
+| Q2 | Alertas de stock bajo (< 100 unidades) | ¿Qué productos necesitan reposición? | Carlos |
+| Q3 | Clientes por segmento con porcentaje | ¿Cómo se distribuye la base de clientes? | Roberto |
+| Q4 | Valor de inventario por categoría (> $2.000.000) | ¿Dónde está concentrado el capital? | Roberto |
+| Q5 | Detalle completo de ventas con subtotales | ¿Quién compró qué y a qué precio? | Roberto |
+| Q6 | Estado de despachos con clasificación de cumplimiento | ¿Hay despachos atrasados? | Carlos |
+| Q7 | Productos más vendidos por ingresos netos | ¿Cuáles son los productos estrella? | Roberto / María |
+| Q8 | Margen promedio por proveedor | ¿Qué proveedor es más rentable? | Carlos |
+
+Para cada consulta, agrega un comentario SQL con la pregunta de negocio que responde:
+
+```sql
+-- Q7: Productos más vendidos por ingresos netos
+-- Pregunta: ¿Cuáles son los productos estrella de TechStyle?
+-- Interesado: Roberto (decisión de campaña de invierno)
+SELECT   p.nombre_producto,
+         ...
+```
+
+---
+
+## Entregable
+
+Sube a la plataforma los siguientes archivos comprimidos en `W08_lab_[apellido1]_[apellido2].zip`:
+
+| Archivo | Contenido |
+|---|---|
+| `W08_consultas.sql` | Las 8 consultas documentadas con comentario de pregunta de negocio (Paso 20) |
+| `W08_reportes.pdf` o `.docx` | Respuestas a las preguntas de análisis (1.1 a 4.3), con los resultados de al menos 3 consultas capturados en tabla o screenshot |
+
+---
+
+## Criterios de Evaluación
+
+| Criterio | Puntaje |
+|---|---|
+| Consultas de SELECT y WHERE correctas: sintaxis, filtros aplicados, resultados coherentes con los datos (Parte 1) | 25 pts |
+| Consultas con GROUP BY y HAVING: agrupación correcta, función de agregación apropiada, HAVING bien usado (Parte 2) | 25 pts |
+| JOINs correctos: tipo de JOIN apropiado (INNER vs LEFT), condición ON con las FK correctas, resultados completos (Parte 3) | 30 pts |
+| Reportes documentados: 8 consultas con comentario de negocio, análisis escrito de al menos 3 preguntas (Parte 4) | 20 pts |
+| **Total** | **100 pts** |

@@ -415,6 +415,9 @@ Universidad San Sebastián
 <span id="cb12-11"><a></a><span class="kw">SELECT</span> <span class="fu">MAX</span>(precio_venta) <span class="kw">AS</span> precio_maximo,</span>
 <span id="cb12-12"><a></a>       <span class="fu">MIN</span>(precio_venta) <span class="kw">AS</span> precio_minimo</span>
 <span id="cb12-13"><a></a><span class="kw">FROM</span> productos;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="funciones-de-agregación-1" class="slide level2">
+<h2>Funciones de Agregación</h2>
 <div class="fragment">
 <table class="caption-top">
 <thead>
@@ -463,6 +466,9 @@ Universidad San Sebastián
 <span id="cb13-6"><a></a><span class="kw">JOIN</span>     categorias c <span class="kw">ON</span> p.categoria_id <span class="op">=</span> c.categoria_id</span>
 <span id="cb13-7"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> c.nombre_categoria</span>
 <span id="cb13-8"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> valor_inventario <span class="kw">DESC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="group-by-agrupar-para-comparar-1" class="slide level2">
+<h2>GROUP BY: Agrupar para Comparar</h2>
 <div class="fragment">
 <p><strong>Regla clave</strong>: en un <code>SELECT</code> con <code>GROUP BY</code>, cada columna que no es una función de agregación <strong>debe aparecer en el GROUP BY</strong>.</p>
 <div class="cell" data-reveal="true" data-layout-align="default">

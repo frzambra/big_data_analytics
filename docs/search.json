@@ -1810,14 +1810,28 @@
     "href": "clases/W08_clase.html#funciones-de-agregación",
     "title": "Consultas SQL: Del Dato a la Decisión",
     "section": "Funciones de Agregación",
-    "text": "Funciones de Agregación\nRoberto no solo quiere ver filas — quiere resumir: totales, promedios, conteos.\n-- ¿Cuántos clientes tiene TechStyle?\nSELECT COUNT(*) AS total_clientes FROM clientes;\n\n-- ¿Cuál es el precio promedio de los productos?\nSELECT AVG(precio_venta) AS precio_promedio FROM productos;\n\n-- ¿Cuánto vale el inventario total?\nSELECT SUM(precio_venta * stock) AS valor_inventario FROM productos;\n\n-- ¿Cuál es el producto más caro y el más barato?\nSELECT MAX(precio_venta) AS precio_maximo,\n       MIN(precio_venta) AS precio_minimo\nFROM productos;\n\n\n\n\nFunción\nQué calcula\n\n\n\n\nCOUNT(*)\nNúmero de filas\n\n\nCOUNT(columna)\nFilas donde esa columna no es NULL\n\n\nSUM(columna)\nSuma de todos los valores\n\n\nAVG(columna)\nPromedio\n\n\nMAX(columna)\nValor máximo\n\n\nMIN(columna)\nValor mínimo"
+    "text": "Funciones de Agregación\nRoberto no solo quiere ver filas — quiere resumir: totales, promedios, conteos.\n-- ¿Cuántos clientes tiene TechStyle?\nSELECT COUNT(*) AS total_clientes FROM clientes;\n\n-- ¿Cuál es el precio promedio de los productos?\nSELECT AVG(precio_venta) AS precio_promedio FROM productos;\n\n-- ¿Cuánto vale el inventario total?\nSELECT SUM(precio_venta * stock) AS valor_inventario FROM productos;\n\n-- ¿Cuál es el producto más caro y el más barato?\nSELECT MAX(precio_venta) AS precio_maximo,\n       MIN(precio_venta) AS precio_minimo\nFROM productos;"
+  },
+  {
+    "objectID": "clases/W08_clase.html#funciones-de-agregación-1",
+    "href": "clases/W08_clase.html#funciones-de-agregación-1",
+    "title": "Consultas SQL: Del Dato a la Decisión",
+    "section": "Funciones de Agregación",
+    "text": "Funciones de Agregación\n\n\n\n\nFunción\nQué calcula\n\n\n\n\nCOUNT(*)\nNúmero de filas\n\n\nCOUNT(columna)\nFilas donde esa columna no es NULL\n\n\nSUM(columna)\nSuma de todos los valores\n\n\nAVG(columna)\nPromedio\n\n\nMAX(columna)\nValor máximo\n\n\nMIN(columna)\nValor mínimo"
   },
   {
     "objectID": "clases/W08_clase.html#group-by-agrupar-para-comparar",
     "href": "clases/W08_clase.html#group-by-agrupar-para-comparar",
     "title": "Consultas SQL: Del Dato a la Decisión",
     "section": "GROUP BY: Agrupar para Comparar",
-    "text": "GROUP BY: Agrupar para Comparar\nLas funciones de agregación son más poderosas cuando se aplican por grupo. Carlos quiere saber cuántos productos tiene cada categoría:\nSELECT   c.nombre_categoria,\n         COUNT(p.producto_id)       AS cantidad_productos,\n         AVG(p.precio_venta)        AS precio_promedio,\n         SUM(p.precio_venta * p.stock) AS valor_inventario\nFROM     productos p\nJOIN     categorias c ON p.categoria_id = c.categoria_id\nGROUP BY c.nombre_categoria\nORDER BY valor_inventario DESC;\n\nRegla clave: en un SELECT con GROUP BY, cada columna que no es una función de agregación debe aparecer en el GROUP BY.\n\n\n\n\n\ngraph LR\n    A[\"Tabla productos\\n(10 filas)\"] --&gt; B[\"GROUP BY categoria\"]\n    B --&gt; C[\"Zapatillas: 3 filas\"]\n    B --&gt; D[\"Poleras: 4 filas\"]\n    B --&gt; E[\"Accesorios: 3 filas\"]\n    C --&gt; F[\"COUNT=3, AVG=89.990\"]\n    D --&gt; G[\"COUNT=4, AVG=24.990\"]\n    E --&gt; H[\"COUNT=3, AVG=12.990\"]"
+    "text": "GROUP BY: Agrupar para Comparar\nLas funciones de agregación son más poderosas cuando se aplican por grupo. Carlos quiere saber cuántos productos tiene cada categoría:\nSELECT   c.nombre_categoria,\n         COUNT(p.producto_id)       AS cantidad_productos,\n         AVG(p.precio_venta)        AS precio_promedio,\n         SUM(p.precio_venta * p.stock) AS valor_inventario\nFROM     productos p\nJOIN     categorias c ON p.categoria_id = c.categoria_id\nGROUP BY c.nombre_categoria\nORDER BY valor_inventario DESC;"
+  },
+  {
+    "objectID": "clases/W08_clase.html#group-by-agrupar-para-comparar-1",
+    "href": "clases/W08_clase.html#group-by-agrupar-para-comparar-1",
+    "title": "Consultas SQL: Del Dato a la Decisión",
+    "section": "GROUP BY: Agrupar para Comparar",
+    "text": "GROUP BY: Agrupar para Comparar\n\nRegla clave: en un SELECT con GROUP BY, cada columna que no es una función de agregación debe aparecer en el GROUP BY.\n\n\n\n\n\ngraph LR\n    A[\"Tabla productos\\n(10 filas)\"] --&gt; B[\"GROUP BY categoria\"]\n    B --&gt; C[\"Zapatillas: 3 filas\"]\n    B --&gt; D[\"Poleras: 4 filas\"]\n    B --&gt; E[\"Accesorios: 3 filas\"]\n    C --&gt; F[\"COUNT=3, AVG=89.990\"]\n    D --&gt; G[\"COUNT=4, AVG=24.990\"]\n    E --&gt; H[\"COUNT=3, AVG=12.990\"]"
   },
   {
     "objectID": "clases/W08_clase.html#having-filtrar-grupos",

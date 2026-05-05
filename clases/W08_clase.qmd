@@ -226,6 +226,9 @@ SELECT MAX(precio_venta) AS precio_maximo,
 FROM productos;
 ```
 
+## Funciones de Agregación
+
+
 ::: {.fragment}
 | Función | Qué calcula |
 |---|---|
@@ -253,6 +256,8 @@ JOIN     categorias c ON p.categoria_id = c.categoria_id
 GROUP BY c.nombre_categoria
 ORDER BY valor_inventario DESC;
 ```
+
+## GROUP BY: Agrupar para Comparar
 
 ::: {.fragment}
 **Regla clave**: en un `SELECT` con `GROUP BY`, cada columna que no es una función de agregación **debe aparecer en el GROUP BY**.

@@ -29,8 +29,8 @@ Al terminar este laboratorio tendrás un **set de 8 consultas documentadas** que
 
 | Herramienta | Uso |
 |---|---|
-| **MySQL Workbench 8.0** | Escritura y ejecución de consultas |
-| **MySQL Server 8.0** | Motor donde está la base de datos `techstyle` |
+| **Heidi SQL** | Escritura y ejecución de consultas |
+| **Oracle Cloud / MySQL Server** | Motor donde está la base de datos `techstyle` |
 
 **Estructura del laboratorio:**
 
@@ -52,7 +52,7 @@ Al terminar este laboratorio tendrás un **set de 8 consultas documentadas** que
 Abre MySQL Workbench y conéctate al servidor local. Antes de escribir cualquier consulta, oriéntate:
 
 ```sql
-USE techstyle;
+USE techstyle_bigdata;
 
 -- ¿Cuántos registros hay en cada tabla?
 SELECT 'clientes'    AS tabla, COUNT(*) AS filas FROM clientes    UNION ALL
@@ -70,7 +70,7 @@ Completa la tabla con los resultados:
 | `ventas` | |
 | `detalle_ventas` | |
 
-### Paso 2: Catálogo completo ordenado por precio
+### Paso 2: Catálogo completo ordenado por precio (Q1)
 
 María necesita revisar el catálogo completo para la campaña de invierno, ordenado de más caro a más barato:
 
@@ -86,7 +86,7 @@ ORDER BY precio_venta DESC;
 
 **Pregunta 1.1**: ¿Qué producto tiene el mayor margen bruto en pesos? ¿Y el menor? ¿Qué decisión comercial podría tomar María con esta información?
 
-### Paso 3: Alertas de stock bajo
+### Paso 3: Alertas de stock bajo (Q3)
 
 Carlos necesita saber qué productos requieren reposición urgente. Define como umbral crítico un stock inferior a 100 unidades:
 
@@ -102,7 +102,7 @@ ORDER BY stock ASC;
 
 **Pregunta 1.2**: ¿Cuántos productos están en alerta de stock? ¿Cuál representa mayor urgencia para el negocio — el de menor stock o el de mayor valor a reponer?
 
-### Paso 4: Clientes por región y segmento
+### Paso 4: Clientes por región y segmento (Q3)
 
 María quiere identificar los clientes Premium de la Región Metropolitana para la campaña de invierno:
 
@@ -219,7 +219,7 @@ FROM   productos;
 
 **Pregunta 2.2**: ¿Cuánto ganaría TechStyle si vendiera todo su inventario actual? ¿Es ese un escenario realista? ¿Por qué?
 
-### Paso 9: Valor de inventario por categoría — solo las que superan $2.000.000
+### Paso 9: Valor de inventario por categoría — solo las que superan $2.000.000 (Q4)
 
 ```sql
 SELECT   cat.nombre_categoria,
@@ -283,7 +283,7 @@ La subquery `(SELECT COUNT(*) FROM clientes)` dentro del SELECT es una forma de 
 
 **Duración: 40 minutos**
 
-### Paso 12: Detalle completo de ventas (INNER JOIN)
+### Paso 12: Detalle completo de ventas (INNER JOIN) (Q5)
 
 La pregunta más básica que Roberto no puede responder solo con la tabla `ventas`: ¿quién compró qué y cuándo?
 
@@ -330,7 +330,7 @@ ORDER BY total_facturado DESC;
 
 **Pregunta 3.2**: ¿Cuál fue la venta de mayor valor? ¿Y el cliente con mayor gasto acumulado?
 
-### Paso 14: Ventas con y sin despacho (LEFT JOIN)
+### Paso 14: Ventas con y sin despacho (LEFT JOIN) (Q6)
 
 ¿Hay ventas que aún no tienen despacho asignado? Con INNER JOIN no lo sabrías — necesitas LEFT JOIN:
 
@@ -419,7 +419,7 @@ ORDER BY margen_promedio DESC;
 
 ### Paso 20: Documentar las 8 consultas del laboratorio
 
-Copia cada consulta que respondió una pregunta de negocio y completa la siguiente tabla. Estas 8 consultas formarán la base del proyecto de Solemne 2.
+Copia cada consulta que respondió una pregunta de negocio y completa la siguiente tabla. 
 
 | N° | Consulta (descripción breve) | Pregunta de negocio que responde | Persona interesada |
 |---|---|---|---|
@@ -429,8 +429,10 @@ Copia cada consulta que respondió una pregunta de negocio y completa la siguien
 | Q4 | Valor de inventario por categoría (> $2.000.000) | ¿Dónde está concentrado el capital? | Roberto |
 | Q5 | Detalle completo de ventas con subtotales | ¿Quién compró qué y a qué precio? | Roberto |
 | Q6 | Estado de despachos con clasificación de cumplimiento | ¿Hay despachos atrasados? | Carlos |
-| Q7 | Productos más vendidos por ingresos netos | ¿Cuáles son los productos estrella? | Roberto / María |
-| Q8 | Margen promedio por proveedor | ¿Qué proveedor es más rentable? | Carlos |
+| Q7 | Reporte de Roberto | ¿Cuáles son los productos más vendidos? | Roberto |
+| Q8 | Reporte de María | ¿Cuáles son las compras por segmento de cliente? | María |
+| Q9 | Reporte de Carlos | ¿Cuáles es el margen por cada proveedor? | Carlos |
+
 
 Para cada consulta, agrega un comentario SQL con la pregunta de negocio que responde:
 

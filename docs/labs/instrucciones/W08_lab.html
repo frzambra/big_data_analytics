@@ -123,9 +123,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#sec-select" id="toc-sec-select" class="nav-link" data-scroll-target="#sec-select"><span class="header-section-number">3</span> Parte 1 — SELECT y WHERE: Filtrar para Decidir</a>
   <ul class="collapse">
   <li><a href="#paso-1-conectar-y-explorar-la-base-de-datos" id="toc-paso-1-conectar-y-explorar-la-base-de-datos" class="nav-link" data-scroll-target="#paso-1-conectar-y-explorar-la-base-de-datos"><span class="header-section-number">3.1</span> Paso 1: Conectar y explorar la base de datos</a></li>
-  <li><a href="#paso-2-catálogo-completo-ordenado-por-precio" id="toc-paso-2-catálogo-completo-ordenado-por-precio" class="nav-link" data-scroll-target="#paso-2-catálogo-completo-ordenado-por-precio"><span class="header-section-number">3.2</span> Paso 2: Catálogo completo ordenado por precio</a></li>
-  <li><a href="#paso-3-alertas-de-stock-bajo" id="toc-paso-3-alertas-de-stock-bajo" class="nav-link" data-scroll-target="#paso-3-alertas-de-stock-bajo"><span class="header-section-number">3.3</span> Paso 3: Alertas de stock bajo</a></li>
-  <li><a href="#paso-4-clientes-por-región-y-segmento" id="toc-paso-4-clientes-por-región-y-segmento" class="nav-link" data-scroll-target="#paso-4-clientes-por-región-y-segmento"><span class="header-section-number">3.4</span> Paso 4: Clientes por región y segmento</a></li>
+  <li><a href="#paso-2-catálogo-completo-ordenado-por-precio-q1" id="toc-paso-2-catálogo-completo-ordenado-por-precio-q1" class="nav-link" data-scroll-target="#paso-2-catálogo-completo-ordenado-por-precio-q1"><span class="header-section-number">3.2</span> Paso 2: Catálogo completo ordenado por precio (Q1)</a></li>
+  <li><a href="#paso-3-alertas-de-stock-bajo-q3" id="toc-paso-3-alertas-de-stock-bajo-q3" class="nav-link" data-scroll-target="#paso-3-alertas-de-stock-bajo-q3"><span class="header-section-number">3.3</span> Paso 3: Alertas de stock bajo (Q3)</a></li>
+  <li><a href="#paso-4-clientes-por-región-y-segmento-q3" id="toc-paso-4-clientes-por-región-y-segmento-q3" class="nav-link" data-scroll-target="#paso-4-clientes-por-región-y-segmento-q3"><span class="header-section-number">3.4</span> Paso 4: Clientes por región y segmento (Q3)</a></li>
   <li><a href="#paso-5-buscar-productos-por-nombre-parcial" id="toc-paso-5-buscar-productos-por-nombre-parcial" class="nav-link" data-scroll-target="#paso-5-buscar-productos-por-nombre-parcial"><span class="header-section-number">3.5</span> Paso 5: Buscar productos por nombre parcial</a></li>
   <li><a href="#paso-6-ventas-en-un-rango-de-fechas" id="toc-paso-6-ventas-en-un-rango-de-fechas" class="nav-link" data-scroll-target="#paso-6-ventas-en-un-rango-de-fechas"><span class="header-section-number">3.6</span> Paso 6: Ventas en un rango de fechas</a></li>
   </ul></li>
@@ -133,15 +133,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#paso-7-resumen-del-catálogo-por-categoría" id="toc-paso-7-resumen-del-catálogo-por-categoría" class="nav-link" data-scroll-target="#paso-7-resumen-del-catálogo-por-categoría"><span class="header-section-number">4.1</span> Paso 7: Resumen del catálogo por categoría</a></li>
   <li><a href="#paso-8-valor-total-del-inventario" id="toc-paso-8-valor-total-del-inventario" class="nav-link" data-scroll-target="#paso-8-valor-total-del-inventario"><span class="header-section-number">4.2</span> Paso 8: Valor total del inventario</a></li>
-  <li><a href="#paso-9-valor-de-inventario-por-categoría-solo-las-que-superan-2.000.000" id="toc-paso-9-valor-de-inventario-por-categoría-solo-las-que-superan-2.000.000" class="nav-link" data-scroll-target="#paso-9-valor-de-inventario-por-categoría-solo-las-que-superan-2.000.000"><span class="header-section-number">4.3</span> Paso 9: Valor de inventario por categoría — solo las que superan $2.000.000</a></li>
+  <li><a href="#paso-9-valor-de-inventario-por-categoría-solo-las-que-superan-2.000.000-q4" id="toc-paso-9-valor-de-inventario-por-categoría-solo-las-que-superan-2.000.000-q4" class="nav-link" data-scroll-target="#paso-9-valor-de-inventario-por-categoría-solo-las-que-superan-2.000.000-q4"><span class="header-section-number">4.3</span> Paso 9: Valor de inventario por categoría — solo las que superan $2.000.000 (Q4)</a></li>
   <li><a href="#paso-10-ventas-por-mes" id="toc-paso-10-ventas-por-mes" class="nav-link" data-scroll-target="#paso-10-ventas-por-mes"><span class="header-section-number">4.4</span> Paso 10: Ventas por mes</a></li>
   <li><a href="#paso-11-clientes-por-segmento" id="toc-paso-11-clientes-por-segmento" class="nav-link" data-scroll-target="#paso-11-clientes-por-segmento"><span class="header-section-number">4.5</span> Paso 11: Clientes por segmento</a></li>
   </ul></li>
   <li><a href="#sec-joins" id="toc-sec-joins" class="nav-link" data-scroll-target="#sec-joins"><span class="header-section-number">5</span> Parte 3 — JOINs: Cruzar Tablas para Reportes Completos</a>
   <ul class="collapse">
-  <li><a href="#paso-12-detalle-completo-de-ventas-inner-join" id="toc-paso-12-detalle-completo-de-ventas-inner-join" class="nav-link" data-scroll-target="#paso-12-detalle-completo-de-ventas-inner-join"><span class="header-section-number">5.1</span> Paso 12: Detalle completo de ventas (INNER JOIN)</a></li>
+  <li><a href="#paso-12-detalle-completo-de-ventas-inner-join-q5" id="toc-paso-12-detalle-completo-de-ventas-inner-join-q5" class="nav-link" data-scroll-target="#paso-12-detalle-completo-de-ventas-inner-join-q5"><span class="header-section-number">5.1</span> Paso 12: Detalle completo de ventas (INNER JOIN) (Q5)</a></li>
   <li><a href="#paso-13-total-facturado-por-venta" id="toc-paso-13-total-facturado-por-venta" class="nav-link" data-scroll-target="#paso-13-total-facturado-por-venta"><span class="header-section-number">5.2</span> Paso 13: Total facturado por venta</a></li>
-  <li><a href="#paso-14-ventas-con-y-sin-despacho-left-join" id="toc-paso-14-ventas-con-y-sin-despacho-left-join" class="nav-link" data-scroll-target="#paso-14-ventas-con-y-sin-despacho-left-join"><span class="header-section-number">5.3</span> Paso 14: Ventas con y sin despacho (LEFT JOIN)</a></li>
+  <li><a href="#paso-14-ventas-con-y-sin-despacho-left-join-q6" id="toc-paso-14-ventas-con-y-sin-despacho-left-join-q6" class="nav-link" data-scroll-target="#paso-14-ventas-con-y-sin-despacho-left-join-q6"><span class="header-section-number">5.3</span> Paso 14: Ventas con y sin despacho (LEFT JOIN) (Q6)</a></li>
   </ul></li>
   <li><a href="#sec-reportes" id="toc-sec-reportes" class="nav-link" data-scroll-target="#sec-reportes"><span class="header-section-number">6</span> Parte 4 — Síntesis: Reportes para el Equipo Directivo</a>
   <ul class="collapse">
@@ -194,6 +194,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p><strong>Herramientas necesarias:</strong></p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Herramienta</th>
@@ -202,11 +206,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>MySQL Workbench 8.0</strong></td>
+<td><strong>Heidi SQL</strong></td>
 <td>Escritura y ejecución de consultas</td>
 </tr>
 <tr class="even">
-<td><strong>MySQL Server 8.0</strong></td>
+<td><strong>Oracle Cloud / MySQL Server</strong></td>
 <td>Motor donde está la base de datos <code>techstyle</code></td>
 </tr>
 </tbody>
@@ -251,7 +255,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="paso-1-conectar-y-explorar-la-base-de-datos" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="paso-1-conectar-y-explorar-la-base-de-datos"><span class="header-section-number">3.1</span> Paso 1: Conectar y explorar la base de datos</h3>
 <p>Abre MySQL Workbench y conéctate al servidor local. Antes de escribir cualquier consulta, oriéntate:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">USE</span> techstyle;</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">USE</span> techstyle_bigdata;</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- ¿Cuántos registros hay en cada tabla?</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'clientes'</span>    <span class="kw">AS</span> tabla, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> filas <span class="kw">FROM</span> clientes    <span class="kw">UNION</span> <span class="kw">ALL</span></span>
@@ -286,8 +290,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="paso-2-catálogo-completo-ordenado-por-precio" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="paso-2-catálogo-completo-ordenado-por-precio"><span class="header-section-number">3.2</span> Paso 2: Catálogo completo ordenado por precio</h3>
+<section id="paso-2-catálogo-completo-ordenado-por-precio-q1" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="paso-2-catálogo-completo-ordenado-por-precio-q1"><span class="header-section-number">3.2</span> Paso 2: Catálogo completo ordenado por precio (Q1)</h3>
 <p>María necesita revisar el catálogo completo para la campaña de invierno, ordenado de más caro a más barato:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nombre_producto              <span class="kw">AS</span> producto,</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>       precio_venta                 <span class="kw">AS</span> <span class="ot">"Precio ($)"</span>,</span>
@@ -298,8 +302,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> precio_venta <span class="kw">DESC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Pregunta 1.1</strong>: ¿Qué producto tiene el mayor margen bruto en pesos? ¿Y el menor? ¿Qué decisión comercial podría tomar María con esta información?</p>
 </section>
-<section id="paso-3-alertas-de-stock-bajo" class="level3" data-number="3.3">
-<h3 data-number="3.3" class="anchored" data-anchor-id="paso-3-alertas-de-stock-bajo"><span class="header-section-number">3.3</span> Paso 3: Alertas de stock bajo</h3>
+<section id="paso-3-alertas-de-stock-bajo-q3" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="paso-3-alertas-de-stock-bajo-q3"><span class="header-section-number">3.3</span> Paso 3: Alertas de stock bajo (Q3)</h3>
 <p>Carlos necesita saber qué productos requieren reposición urgente. Define como umbral crítico un stock inferior a 100 unidades:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nombre_producto,</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>       stock,</span>
@@ -310,8 +314,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> stock <span class="kw">ASC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Pregunta 1.2</strong>: ¿Cuántos productos están en alerta de stock? ¿Cuál representa mayor urgencia para el negocio — el de menor stock o el de mayor valor a reponer?</p>
 </section>
-<section id="paso-4-clientes-por-región-y-segmento" class="level3" data-number="3.4">
-<h3 data-number="3.4" class="anchored" data-anchor-id="paso-4-clientes-por-región-y-segmento"><span class="header-section-number">3.4</span> Paso 4: Clientes por región y segmento</h3>
+<section id="paso-4-clientes-por-región-y-segmento-q3" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="paso-4-clientes-por-región-y-segmento-q3"><span class="header-section-number">3.4</span> Paso 4: Clientes por región y segmento (Q3)</h3>
 <p>María quiere identificar los clientes Premium de la Región Metropolitana para la campaña de invierno:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nombre,</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>       apellido,</span>
@@ -481,8 +485,8 @@ Tip
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   productos;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Pregunta 2.2</strong>: ¿Cuánto ganaría TechStyle si vendiera todo su inventario actual? ¿Es ese un escenario realista? ¿Por qué?</p>
 </section>
-<section id="paso-9-valor-de-inventario-por-categoría-solo-las-que-superan-2.000.000" class="level3" data-number="4.3">
-<h3 data-number="4.3" class="anchored" data-anchor-id="paso-9-valor-de-inventario-por-categoría-solo-las-que-superan-2.000.000"><span class="header-section-number">4.3</span> Paso 9: Valor de inventario por categoría — solo las que superan $2.000.000</h3>
+<section id="paso-9-valor-de-inventario-por-categoría-solo-las-que-superan-2.000.000-q4" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="paso-9-valor-de-inventario-por-categoría-solo-las-que-superan-2.000.000-q4"><span class="header-section-number">4.3</span> Paso 9: Valor de inventario por categoría — solo las que superan $2.000.000 (Q4)</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span>   cat.nombre_categoria,</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">SUM</span>(p.stock <span class="op">*</span> p.precio_venta) <span class="kw">AS</span> valor_inventario</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>     productos p</span>
@@ -540,8 +544,8 @@ Note
 <section id="sec-joins" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="sec-joins"><span class="header-section-number">5</span> Parte 3 — JOINs: Cruzar Tablas para Reportes Completos</h2>
 <p><strong>Duración: 40 minutos</strong></p>
-<section id="paso-12-detalle-completo-de-ventas-inner-join" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="paso-12-detalle-completo-de-ventas-inner-join"><span class="header-section-number">5.1</span> Paso 12: Detalle completo de ventas (INNER JOIN)</h3>
+<section id="paso-12-detalle-completo-de-ventas-inner-join-q5" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="paso-12-detalle-completo-de-ventas-inner-join-q5"><span class="header-section-number">5.1</span> Paso 12: Detalle completo de ventas (INNER JOIN) (Q5)</h3>
 <p>La pregunta más básica que Roberto no puede responder solo con la tabla <code>ventas</code>: ¿quién compró qué y cuándo?</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> v.venta_id,</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>       v.fecha,</span>
@@ -579,8 +583,8 @@ Note
 <span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> total_facturado <span class="kw">DESC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Pregunta 3.2</strong>: ¿Cuál fue la venta de mayor valor? ¿Y el cliente con mayor gasto acumulado?</p>
 </section>
-<section id="paso-14-ventas-con-y-sin-despacho-left-join" class="level3" data-number="5.3">
-<h3 data-number="5.3" class="anchored" data-anchor-id="paso-14-ventas-con-y-sin-despacho-left-join"><span class="header-section-number">5.3</span> Paso 14: Ventas con y sin despacho (LEFT JOIN)</h3>
+<section id="paso-14-ventas-con-y-sin-despacho-left-join-q6" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="paso-14-ventas-con-y-sin-despacho-left-join-q6"><span class="header-section-number">5.3</span> Paso 14: Ventas con y sin despacho (LEFT JOIN) (Q6)</h3>
 <p>¿Hay ventas que aún no tienen despacho asignado? Con INNER JOIN no lo sabrías — necesitas LEFT JOIN:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> v.venta_id,</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>       v.fecha,</span>
@@ -652,7 +656,7 @@ Note
 </section>
 <section id="paso-20-documentar-las-8-consultas-del-laboratorio" class="level3" data-number="6.4">
 <h3 data-number="6.4" class="anchored" data-anchor-id="paso-20-documentar-las-8-consultas-del-laboratorio"><span class="header-section-number">6.4</span> Paso 20: Documentar las 8 consultas del laboratorio</h3>
-<p>Copia cada consulta que respondió una pregunta de negocio y completa la siguiente tabla. Estas 8 consultas formarán la base del proyecto de Solemne 2.</p>
+<p>Copia cada consulta que respondió una pregunta de negocio y completa la siguiente tabla.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -707,14 +711,20 @@ Note
 </tr>
 <tr class="odd">
 <td>Q7</td>
-<td>Productos más vendidos por ingresos netos</td>
-<td>¿Cuáles son los productos estrella?</td>
-<td>Roberto / María</td>
+<td>Reporte de Roberto</td>
+<td>¿Cuáles son los productos más vendidos?</td>
+<td>Roberto</td>
 </tr>
 <tr class="even">
 <td>Q8</td>
-<td>Margen promedio por proveedor</td>
-<td>¿Qué proveedor es más rentable?</td>
+<td>Reporte de María</td>
+<td>¿Cuáles son las compras por segmento de cliente?</td>
+<td>María</td>
+</tr>
+<tr class="odd">
+<td>Q9</td>
+<td>Reporte de Carlos</td>
+<td>¿Cuáles es el margen por cada proveedor?</td>
 <td>Carlos</td>
 </tr>
 </tbody>

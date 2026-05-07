@@ -134,29 +134,29 @@ Usa `NOT IN ('Metropolitana', 'Valparaíso')` o combina dos condiciones con `AND
 
 ### Paso 5: Buscar productos por nombre parcial
 
-Carlos necesita encontrar todos los productos de la marca Nike en el catálogo:
+Carlos necesita encontrar todos los productos de tipo Mochila en el catálogo:
 
 ```sql
 SELECT nombre_producto,
        precio_venta,
        stock
 FROM   productos
-WHERE  nombre_producto LIKE '%Nike%'
+WHERE  nombre_producto LIKE '%Mochila%'
 ORDER BY precio_venta DESC;
 ```
 
-**Pregunta 1.3**: ¿Cuántos productos Nike tiene TechStyle? ¿Cuál es su precio promedio? *(No uses SQL aún — estimación a ojo de la tabla resultante)*
+**Pregunta 1.3**: ¿Cuántos productos Mochila tiene TechStyle? ¿Cuál es su precio promedio? *(No uses SQL aún — estimación a ojo de la tabla resultante)*
 
 ### Paso 6: Ventas en un rango de fechas
 
-Roberto quiere ver todas las ventas registradas en enero de 2026:
+Roberto quiere ver todas las ventas registradas en enero de 2024:
 
 ```sql
 SELECT venta_id,
        fecha,
        cliente_id
 FROM   ventas
-WHERE  fecha BETWEEN '2026-01-01' AND '2026-01-31'
+WHERE  fecha BETWEEN '2024-01-01' AND '2024-01-31'
 ORDER BY fecha;
 ```
 
@@ -187,12 +187,20 @@ Completa la tabla de análisis:
 
 | Categoría | ¿Tiene más de 1 producto? | ¿Es la categoría con mayor precio promedio? |
 |---|---|---|
-| Zapatillas | | |
-| Poleras | | |
-| Pantalones | | |
-| Chaquetas | | |
-| Mochilas | | |
-| Gorros | | |
+| Fotografía | | |
+| Audio | | |
+| Computación | | |
+| Bolsos y Mochilas | | |
+| Calzado | | |
+| Outdoor | | |
+| Cocina | | |
+| Dormitorio | | |
+| Ropa Hombre | | |
+| Ropa Mujer | | |
+| Joyería y Bisutería | | |
+| Lentes | | |
+| Decoración | | |
+| Fitness | | |
 
 **Pregunta 2.1**: María quiere enfocar la campaña en las 2 categorías con mayor precio promedio. ¿Cuáles son?
 
@@ -322,43 +330,7 @@ ORDER BY total_facturado DESC;
 
 **Pregunta 3.2**: ¿Cuál fue la venta de mayor valor? ¿Y el cliente con mayor gasto acumulado?
 
-### Paso 14: Estado de despachos con nombre del cliente (INNER JOIN)
-
-Carlos necesita el reporte de estado de todos los despachos:
-
-```sql
-SELECT d.despacho_id,
-       c.nombre                                      AS cliente,
-       c.apellido,
-       c.region,
-       d.fecha_despacho,
-       d.fecha_entrega_estimada,
-       d.fecha_entrega_real,
-       d.estado,
-       CASE
-           WHEN d.fecha_entrega_real IS NOT NULL
-                AND d.fecha_entrega_real <= d.fecha_entrega_estimada
-                THEN 'A tiempo'
-           WHEN d.fecha_entrega_real IS NOT NULL
-                AND d.fecha_entrega_real > d.fecha_entrega_estimada
-                THEN 'Atrasado'
-           WHEN d.estado = 'En tránsito'
-                THEN 'En camino'
-           ELSE 'Sin despachar'
-       END                                           AS cumplimiento
-FROM   despachos d
-       JOIN ventas   v ON d.venta_id   = v.venta_id
-       JOIN clientes c ON v.cliente_id = c.cliente_id
-ORDER BY d.estado, d.fecha_entrega_estimada;
-```
-
-::: {.callout-tip}
-**`CASE WHEN ... THEN ... ELSE ... END`** es el equivalente SQL de un `IF` de Excel. Permite clasificar filas según condiciones, generando una columna calculada con categorías de texto. Lo usarás con frecuencia en reportes.
-:::
-
-**Pregunta 3.3**: ¿Hay algún despacho atrasado? ¿Qué debería hacer Carlos con los despachos en estado `'Pendiente'`?
-
-### Paso 15: Ventas con y sin despacho (LEFT JOIN)
+### Paso 14: Ventas con y sin despacho (LEFT JOIN)
 
 ¿Hay ventas que aún no tienen despacho asignado? Con INNER JOIN no lo sabrías — necesitas LEFT JOIN:
 
@@ -375,31 +347,7 @@ ORDER BY d.despacho_id IS NULL DESC,  -- las ventas sin despacho aparecen primer
          v.fecha;
 ```
 
-**Pregunta 3.4**: ¿Cuántas ventas tienen despacho asignado? ¿Cuántas no? ¿Qué implica para el área de operaciones?
-
-### Paso 16: Productos sin ventas (LEFT JOIN inverso)
-
-María quiere saber qué productos **nunca han sido vendidos** — para evaluar si deben retirarse del catálogo:
-
-```sql
-SELECT p.nombre_producto,
-       p.precio_venta,
-       p.stock,
-       cat.nombre_categoria
-FROM   productos p
-       JOIN categorias cat ON p.categoria_id = cat.categoria_id
-       LEFT JOIN detalle_ventas dv ON p.producto_id = dv.producto_id
-WHERE  dv.producto_id IS NULL
-ORDER BY p.precio_venta DESC;
-```
-
-::: {.callout-note}
-El patrón `LEFT JOIN ... WHERE tabla_derecha.id IS NULL` es la forma estándar de encontrar registros **sin contraparte** — en este caso, productos sin ninguna línea de venta. Es uno de los patrones más útiles para detectar datos huérfanos o inactivos.
-:::
-
-**Pregunta 3.5**: ¿Hay productos sin ventas? ¿Qué recomendaría Juan a María con esta información?
-
----
+**Pregunta 3.3**: ¿Cuántas ventas tienen despacho asignado? ¿Cuántas no? ¿Qué implica para el área de operaciones?
 
 ## Parte 4 — Síntesis: Reportes para el Equipo Directivo {#sec-reportes}
 

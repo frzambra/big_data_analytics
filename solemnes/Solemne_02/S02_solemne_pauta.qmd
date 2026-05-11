@@ -1,0 +1,488 @@
+---
+title: "Pauta — Solemne 2: Modelamiento, Implementación y Consultas SQL"
+subtitle: "S02 · Unidad II · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+::: {.callout-warning}
+**Documento de uso exclusivo del docente.** No distribuir a los estudiantes.
+:::
+
+---
+
+## Pregunta 1 — Diseño del Modelo Relacional {#sec-p1}
+
+### Parte B — Diseño del Modelo Relacional
+
+| Tabla | Clave primaria | Columnas que incluye | Claves foráneas |
+|---|---|---|---|
+| `generos` | `genero_id` | `genero_id`, `nombre` | — |
+| `peliculas` | `pelicula_id` | `pelicula_id`, `titulo`, `genero_id`, `duracion_min`, `clasificacion` | `genero_id → generos` |
+| `salas` | `sala_id` | `sala_id`, `nombre`, `capacidad`, `tipo` | — |
+| `clientes` | `cliente_id` | `cliente_id`, `nombre`, `apellido`, `email`, `segmento` | — |
+| `funciones` | `funcion_id` | `funcion_id`, `pelicula_id`, `sala_id`, `fecha`, `hora`, `precio_base` | `pelicula_id → peliculas`, `sala_id → salas` |
+| `entradas` | `(funcion_id, cliente_id)` ó `entrada_id` auto | `entrada_id`, `funcion_id`, `cliente_id`, `cantidad`, `descuento_pct` | `funcion_id → funciones`, `cliente_id → clientes` |
+
+::: {.callout-note}
+**Nota sobre `total_pagado`**: no debe aparecer en ninguna tabla. Es derivada: `cantidad × precio_base × (1 − descuento_pct/100)`. Descontar 1 pt si aparece como columna almacenada.
+
+**Nota sobre la PK de `entradas`**: se acepta tanto la clave compuesta `(funcion_id, cliente_id)` como una PK surrogate `entrada_id AUTO_INCREMENT` (más práctica en MySQL).
+
+**Criterio**: ~3,3 pts por tabla (PK correcta + columnas correctas + FKs indicadas). 20 pts total. Descontar 1 pt si `total_pagado` aparece como columna almacenada en cualquier tabla.
+:::
+
+---
+
+### Parte C — Diagrama Entidad-Relación
+
+**Cardinalidades esperadas:**
+
+| Relación | Cardinalidad |
+|---|---|
+| `generos` — `peliculas` | 1:N (un género tiene muchas películas) |
+| `salas` — `funciones` | 1:N (una sala tiene muchas funciones) |
+| `peliculas` — `funciones` | 1:N (una película tiene muchas funciones) |
+| `funciones` — `entradas` | 1:N (una función tiene muchas entradas vendidas) |
+| `clientes` — `entradas` | 1:N (un cliente puede comprar entradas en muchas ocasiones) |
+
+**Diagrama textual de referencia (notación simplificada):**
+
+```
+[generos]──1──<──N──[peliculas]──1──<──N──[funciones]──1──<──N──[entradas]
+                                              |                       |
+                                       N──>──1                 N──>──1
+                                           [salas]           [clientes]
+```
+
+::: {.callout-note}
+**Criterio**: 10 pts. 1 pt por cardinalidad correcta × 5 relaciones = 5 pts + 3 pts por representación gráfica con las 6 entidades presentes y las PK/FK identificadas + 2 pts por notación correcta (cardinalidades y direcciones de las relaciones).
+:::
+
+---
+
+## Pregunta 2 — Implementación SQL {#sec-p2}
+
+### Parte A — CREATE TABLE
+
+**Tabla `peliculas`:**
+
+```sql
+CREATE TABLE peliculas (
+    pelicula_id   INT          NOT NULL AUTO_INCREMENT,
+    titulo        VARCHAR(100) NOT NULL,
+    genero_id     INT          NOT NULL,
+    duracion_min  INT          NOT NULL,
+    clasificacion VARCHAR(5)   NOT NULL,
+    CONSTRAINT pk_peliculas      PRIMARY KEY (pelicula_id),
+    CONSTRAINT fk_pel_genero     FOREIGN KEY (genero_id)
+        REFERENCES generos(genero_id),
+    CONSTRAINT chk_duracion      CHECK (duracion_min > 0),
+    CONSTRAINT chk_clasificacion CHECK (clasificacion IN ('TE', 'G', 'G14', 'G18'))
+);
+```
+
+::: {.callout-note}
+**Criterio**: 9 pts. 2 pts PK + AUTO_INCREMENT, 2,5 pts FK con REFERENCES correcta, 2 pts CHECK clasificacion con los 4 valores, 1,5 pts CHECK duracion > 0, 1 pt tipos coherentes.
+:::
+
+---
+
+**Tabla `salas`:**
+
+```sql
+CREATE TABLE salas (
+    sala_id   INT         NOT NULL AUTO_INCREMENT,
+    nombre    VARCHAR(50) NOT NULL,
+    capacidad INT         NOT NULL,
+    tipo      VARCHAR(5)  NOT NULL,
+    CONSTRAINT pk_salas      PRIMARY KEY (sala_id),
+    CONSTRAINT chk_capacidad CHECK (capacidad > 0),
+    CONSTRAINT chk_tipo      CHECK (tipo IN ('2D', '3D', '4DX'))
+);
+```
+
+::: {.callout-note}
+**Criterio**: 8 pts. 2 pts PK + AUTO_INCREMENT, 2,5 pts CHECK tipo con los 3 valores, 2 pts CHECK capacidad > 0, 1,5 pts tipos coherentes y NOT NULL completos.
+:::
+
+---
+
+**Tabla `funciones`:**
+
+```sql
+CREATE TABLE funciones (
+    funcion_id  INT  NOT NULL AUTO_INCREMENT,
+    pelicula_id INT  NOT NULL,
+    sala_id     INT  NOT NULL,
+    fecha       DATE NOT NULL,
+    hora        TIME NOT NULL,
+    precio_base INT  NOT NULL,
+    CONSTRAINT pk_funciones    PRIMARY KEY (funcion_id),
+    CONSTRAINT fk_fun_pelicula FOREIGN KEY (pelicula_id)
+        REFERENCES peliculas(pelicula_id),
+    CONSTRAINT fk_fun_sala     FOREIGN KEY (sala_id)
+        REFERENCES salas(sala_id),
+    CONSTRAINT chk_precio      CHECK (precio_base > 0)
+);
+```
+
+::: {.callout-note}
+**Criterio**: 9 pts. 1,5 pts PK, 2,5 pts FK hacia peliculas, 2,5 pts FK hacia salas, 1,5 pts CHECK precio > 0, 1 pt tipos DATE y TIME correctos.
+:::
+
+---
+
+### Parte B — DML: Inserción y Modificación
+
+**B.1** Insertar nueva sala y nueva película con género nuevo:
+
+```sql
+-- Insertar la nueva sala
+INSERT INTO salas (nombre, capacidad, tipo)
+VALUES ('Sala VIP', 60, '4DX');
+
+-- Insertar el nuevo género (Aventura no existía)
+INSERT INTO generos (nombre)
+VALUES ('Aventura');
+
+-- Insertar la película usando el id del género recién creado
+INSERT INTO peliculas (titulo, genero_id, duracion_min, clasificacion)
+VALUES ('El Gran Viaje', LAST_INSERT_ID(), 110, 'G14');
+```
+
+Alternativa válida (consultando primero el id):
+
+```sql
+-- Primero obtener el id del nuevo género
+SELECT genero_id FROM generos WHERE nombre = 'Aventura';
+-- Luego insertar con ese valor concreto (ej: 6)
+INSERT INTO peliculas (titulo, genero_id, duracion_min, clasificacion)
+VALUES ('El Gran Viaje', 6, 110, 'G14');
+```
+
+::: {.callout-note}
+**Criterio**: 3 pts. 1 pt INSERT sala correcto, 1 pt INSERT genero correcto, 1 pt INSERT pelicula con referencia correcta al nuevo genero_id.
+:::
+
+---
+
+**B.2** Actualizar segmento de cliente:
+
+```sql
+UPDATE clientes
+SET    segmento = 'VIP'
+WHERE  cliente_id = 3;
+```
+
+::: {.callout-note}
+**Criterio**: 3 pts. 1,5 pts UPDATE correcto (tabla + SET correcto) + 1,5 pts WHERE con cliente_id = 3 (penalizar si falta el WHERE — actualiza toda la tabla).
+:::
+
+---
+
+**B.3** Análisis de restricciones:
+
+1. **FK violation al insertar función con sala_id = 99**: MySQL rechaza la operación con el error `Error 1452 (23000): Cannot add or update a child row: a foreign key constraint fails`. El mecanismo que lo impide es la **restricción de clave foránea (FOREIGN KEY)**: antes de aceptar el INSERT, el motor verifica que el valor de `sala_id` exista en la tabla `salas`. Como `sala_id = 99` no existe, la inserción falla.
+
+2. **CHECK violation con descuento_pct = 120**: La restricción `CHECK (descuento_pct BETWEEN 0 AND 100)` definida en `entradas` rechaza el valor. MySQL lanza `Error 3819 (HY000): Check constraint 'chk_descuento' is violated`. El registro no se inserta.
+
+::: {.callout-note}
+**Criterio**: 3 pts (1,5 pts por pregunta). Se espera que nombre el mecanismo específico (FK constraint / CHECK constraint) y describa el error que devuelve MySQL.
+:::
+
+---
+
+## Pregunta 3 — Consultas SQL para Decisiones {#sec-p3}
+
+### Parte A — SELECT y WHERE
+
+**Q1 — Clientes VIP**
+
+```sql
+-- Q1: Lista todos los clientes VIP ordenados por apellido ascendente.
+SELECT cliente_id,
+       nombre,
+       apellido,
+       email
+FROM   clientes
+WHERE  segmento = 'VIP'
+ORDER BY apellido ASC;
+```
+
+**Resultado esperado** (4 filas):
+
+| cliente_id | nombre | apellido | email |
+|---|---|---|---|
+| 7 | Valentina | Castro | v.castro@gmail.com |
+| 10 | Sebastián | Fuentes | s.fuentes@gmail.com |
+| 1 | Ana | López | ana.lopez@gmail.com |
+| 4 | Juan | Torres | j.torres@gmail.com |
+
+::: {.callout-note}
+**Criterio**: 4 pts. 1 pt SELECT columnas correctas, 1 pt FROM tabla correcta, 1 pt WHERE segmento = 'VIP', 1 pt ORDER BY apellido ASC.
+:::
+
+---
+
+**Q2 — Películas para adultos con larga duración**
+
+```sql
+-- Q2: Películas con clasificación G14 o G18, con nombre del género.
+SELECT p.titulo,
+       g.nombre              AS genero,
+       p.duracion_min,
+       p.clasificacion
+FROM   peliculas p
+       JOIN generos g ON p.genero_id = g.genero_id
+WHERE  p.clasificacion IN ('G14', 'G18')
+ORDER BY p.duracion_min DESC;
+```
+
+**Resultado esperado** (6 filas):
+
+| titulo | genero | duracion_min | clasificacion |
+|---|---|---|---|
+| Ruta Peligrosa | Acción | 142 | G14 |
+| Voces del Silencio | Drama | 126 | G14 |
+| Guardianes del Cosmos | Acción | 130 | G14 |
+| Voces del Silencio | Drama | 126 | G14 |
+| El Último Grito | Terror | 105 | G18 |
+| La Noche Eterna | Terror | 98 | G18 |
+
+*(Orden exacto: Ruta Peligrosa 142, Guardianes 130, Voces 126, El Último Grito 105, La Noche Eterna 98)*
+
+::: {.callout-note}
+**Criterio**: 4 pts. 1 pt JOIN correcto con ON correcto, 1 pt WHERE con IN y los dos valores, 1 pt columnas del SELECT correctas, 1 pt ORDER BY DESC.
+:::
+
+---
+
+**Q3 — Funciones de abril 2026**
+
+```sql
+-- Q3: Todas las funciones programadas en abril de 2026.
+SELECT funcion_id,
+       fecha,
+       hora,
+       precio_base
+FROM   funciones
+WHERE  fecha BETWEEN '2026-04-01' AND '2026-04-30'
+ORDER BY fecha, hora;
+```
+
+Alternativa válida: `WHERE MONTH(fecha) = 4 AND YEAR(fecha) = 2026`
+
+**Resultado esperado** (10 filas, funcion_id 1 al 10):
+
+| funcion_id | fecha | hora | precio_base |
+|---|---|---|---|
+| 1 | 2026-04-15 | 16:00 | 6500 |
+| 3 | 2026-04-16 | 14:00 | 5500 |
+| 4 | 2026-04-16 | 20:00 | 12000 |
+| ... | ... | ... | ... |
+| 10 | 2026-04-26 | 15:00 | 7000 |
+
+::: {.callout-note}
+**Criterio**: 4 pts. 1 pt SELECT correcto, 1 pt FROM funciones, 1,5 pts WHERE BETWEEN con fechas correctas, 0,5 pts ORDER BY fecha, hora.
+:::
+
+---
+
+### Parte B — Agregaciones: GROUP BY y HAVING
+
+**Q4 — Películas por género**
+
+```sql
+-- Q4: Cantidad de películas por género.
+SELECT   g.nombre               AS genero,
+         COUNT(p.pelicula_id)   AS cantidad_peliculas
+FROM     peliculas p
+         JOIN generos g ON p.genero_id = g.genero_id
+GROUP BY g.genero_id, g.nombre
+ORDER BY cantidad_peliculas DESC;
+```
+
+**Resultado esperado** (5 filas):
+
+| genero | cantidad_peliculas |
+|---|---|
+| Acción | 2 |
+| Comedia | 2 |
+| Drama | 2 |
+| Terror | 2 |
+| Animación | 1 |
+
+::: {.callout-note}
+**Criterio**: 4 pts. 1 pt JOIN correcto, 1 pt GROUP BY genero, 1 pt COUNT correcto, 1 pt ORDER BY DESC.
+:::
+
+---
+
+**Q5 — Funciones por sala (con HAVING)**
+
+```sql
+-- Q5: Salas con 3 o más funciones programadas.
+SELECT   s.nombre             AS sala,
+         s.tipo,
+         COUNT(f.funcion_id)  AS total_funciones
+FROM     funciones f
+         JOIN salas s ON f.sala_id = s.sala_id
+GROUP BY s.sala_id, s.nombre, s.tipo
+HAVING   COUNT(f.funcion_id) >= 3
+ORDER BY total_funciones DESC;
+```
+
+**Resultado esperado** (2 filas — Sala Premium queda excluida con solo 2 funciones):
+
+| sala | tipo | total_funciones |
+|---|---|---|
+| Sala 1 | 2D | 6 |
+| Sala 2 | 3D | 4 |
+
+::: {.callout-note}
+**Criterio**: 4 pts. 1 pt JOIN correcto, 1 pt GROUP BY sala, 1 pt HAVING con COUNT >= 3, 1 pt resultado correcto (Sala Premium excluida).
+:::
+
+---
+
+**Q6 — Ingresos por género**
+
+```sql
+-- Q6: Ingreso total y entradas vendidas por género.
+SELECT   g.nombre                                      AS genero,
+         SUM(e.cantidad)                               AS total_entradas_vendidas,
+         ROUND(SUM(e.cantidad
+                   * f.precio_base
+                   * (1 - e.descuento_pct / 100)), 0) AS ingreso_total
+FROM     entradas e
+         JOIN funciones f  ON e.funcion_id  = f.funcion_id
+         JOIN peliculas p  ON f.pelicula_id = p.pelicula_id
+         JOIN generos   g  ON p.genero_id   = g.genero_id
+GROUP BY g.genero_id, g.nombre
+ORDER BY ingreso_total DESC;
+```
+
+**Resultado esperado** (5 filas):
+
+| genero | total_entradas_vendidas | ingreso_total |
+|---|---|---|
+| Acción | 25 | 136.650 |
+| Comedia | 16 | 92.700 |
+| Drama | 13 | 85.300 |
+| Animación | 6 | 31.900 |
+| Terror | 10 | 31.525 |
+
+**Análisis esperado**: Acción es el género con mayor ingreso total ($136.650) Y el mayor número de entradas vendidas (25), lo que confirma que es el motor financiero de CineMax. Sin embargo, Terror tiene 10 entradas vendidas pero solo $31.525 en ingresos, lo que sugiere que sus funciones se realizan en salas más pequeñas o con menor precio base. La recomendación para Alejandra sería mantener o aumentar la programación de películas de Acción para maximizar ingresos, y revisar la estrategia de precios para Terror, que tiene demanda pero bajo ingreso relativo.
+
+::: {.callout-note}
+**Criterio**: 4 pts para la consulta + 1 pt para el análisis escrito. Consulta: 1 pt 4-tabla JOIN correcto, 1 pt cálculo de ingreso con fórmula correcta, 1 pt GROUP BY genero, 1 pt ORDER BY ingreso DESC. Análisis: 1 pt recomendación con datos que la justifican.
+:::
+
+---
+
+### Parte C — JOINs para Reportes Completos
+
+**Q7 — Detalle completo de ventas**
+
+```sql
+-- Q7: Detalle completo de cada compra de entradas.
+SELECT e.entrada_id,
+       c.nombre                                        AS nombre_cliente,
+       c.apellido,
+       c.segmento,
+       p.titulo                                        AS pelicula,
+       s.nombre                                        AS sala,
+       f.fecha,
+       f.hora,
+       e.cantidad,
+       e.descuento_pct,
+       ROUND(e.cantidad
+             * f.precio_base
+             * (1 - e.descuento_pct / 100), 0)        AS total_a_pagar
+FROM   entradas   e
+       JOIN clientes  c ON e.cliente_id  = c.cliente_id
+       JOIN funciones f ON e.funcion_id  = f.funcion_id
+       JOIN peliculas p ON f.pelicula_id = p.pelicula_id
+       JOIN salas     s ON f.sala_id     = s.sala_id
+ORDER BY f.fecha DESC, e.entrada_id ASC;
+```
+
+**Resultado esperado**: 24 filas. La columna `total_a_pagar` varía según el `precio_base` de la función y el `descuento_pct` de cada entrada. Los valores de referencia para las primeras filas (función más reciente, F12 del 2026-05-02):
+
+| entrada_id | nombre_cliente | apellido | segmento | pelicula | sala | fecha | hora | cantidad | descuento_pct | total_a_pagar |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 23 | Juan | Torres | VIP | Voces del Silencio | Sala 2 | 2026-05-02 | 19:00 | 2 | 15.00 | 12.750 |
+| 24 | Ana | López | VIP | Voces del Silencio | Sala 2 | 2026-05-02 | 19:00 | 1 | 10.00 | 6.750 |
+
+::: {.callout-note}
+**Criterio**: 6 pts. 2 pts 5-tabla JOIN completo y correcto (cada JOIN con su ON correcto), 2 pts cálculo de `total_a_pagar` correcto, 1 pt columnas del SELECT completas, 1 pt ORDER BY correcto.
+:::
+
+---
+
+**Q8 — Películas con y sin funciones programadas**
+
+```sql
+-- Q8: Todas las películas con el total de funciones programadas (0 si ninguna).
+SELECT   p.titulo,
+         g.nombre                  AS genero,
+         COUNT(f.funcion_id)       AS total_funciones
+FROM     peliculas p
+         JOIN    generos   g ON p.genero_id   = g.genero_id
+         LEFT JOIN funciones f ON p.pelicula_id = f.pelicula_id
+GROUP BY p.pelicula_id, p.titulo, g.nombre
+ORDER BY total_funciones ASC, p.titulo;
+```
+
+**Resultado esperado** (9 filas):
+
+| titulo | genero | total_funciones |
+|---|---|---|
+| La Noche Eterna | Terror | 0 |
+| Entre Nosotros | Comedia | 1 |
+| Mundos Animados | Animación | 1 |
+| Ruta Peligrosa | Acción | 1 |
+| Voces del Silencio | Drama | 1 |
+| El Último Grito | Terror | 1 |
+| La Familia Perfecta | Comedia | 2 |
+| Sombras del Pasado | Drama | 2 |
+| Guardianes del Cosmos | Acción | 3 |
+
+**Análisis esperado**: "La Noche Eterna" tiene `total_funciones = 0`. Desde el punto de vista del negocio, esto puede explicarse porque: (1) la película está en el catálogo pero aún no se ha programado su estreno (está en pre-lanzamiento), (2) fue evaluada por el equipo de programación pero descartada por ser G18 y tener baja demanda esperada en ese segmento, o (3) existe un error operacional donde la película fue registrada en el sistema pero su función fue cancelada. El análisis de datos no puede distinguir entre estas causas — Alejandra debería confirmarlo con el equipo de programación.
+
+::: {.callout-note}
+**Criterio**: 4 pts para la consulta + 1 pt para el análisis. Consulta: 1,5 pts LEFT JOIN entre peliculas y funciones correcto (no INNER JOIN — con INNER JOIN se pierden las películas sin funciones), 1 pt JOIN peliculas-generos correcto, 1 pt GROUP BY correcto, 0,5 pts ORDER BY con total_funciones ASC. Análisis: 1 pt explicación coherente con al menos 1 causa plausible desde el negocio.
+:::
+
+---
+
+## Resumen de Puntajes
+
+| Pregunta | Parte | Puntaje máximo |
+|---|---|---|
+| P1 | B Definición de las 6 tablas (PK, columnas, FK) | 20 pts |
+| P1 | C Diagrama ER con entidades, relaciones y cardinalidades | 10 pts |
+| **P1 Total** | | **30 pts** |
+| P2 | A `peliculas` (FK, CHECK clasificacion, CHECK duracion) | 9 pts |
+| P2 | A `salas` (CHECK tipo, CHECK capacidad) | 8 pts |
+| P2 | A `funciones` (dos FK, CHECK precio) | 9 pts |
+| P2 | B.1 INSERT sala + INSERT genero + INSERT pelicula | 3 pts |
+| P2 | B.2 UPDATE segmento cliente | 3 pts |
+| P2 | B.3 Análisis FK violation y CHECK violation | 3 pts |
+| **P2 Total** | | **35 pts** |
+| P3 | Q1 SELECT VIP + ORDER BY | 4 pts |
+| P3 | Q2 JOIN + WHERE IN + ORDER BY DESC | 4 pts |
+| P3 | Q3 WHERE BETWEEN fechas + ORDER BY | 4 pts |
+| P3 | Q4 GROUP BY + JOIN genero | 4 pts |
+| P3 | Q5 GROUP BY + HAVING ≥ 3 + JOIN sala | 4 pts |
+| P3 | Q6 Multi-JOIN + fórmula ingreso + análisis | 5 pts |
+| P3 | Q7 5-tabla JOIN + total_a_pagar calculado | 6 pts |
+| P3 | Q8 LEFT JOIN + análisis películas sin funciones | 5 pts |
+| P3 | Capturas de pantalla (mínimo 4 consultas) | 3 pts |
+| **P3 Total** | | **35 pts** |
+| | **TOTAL** | **100 pts** |

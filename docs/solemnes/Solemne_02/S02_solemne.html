@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Solemne 2: Modelamiento, Implementación y Consultas SQL</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="S02_solemne_files/libs/clipboard/clipboard.min.js"></script>
+<script src="S02_solemne_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="S02_solemne_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="S02_solemne_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="S02_solemne_files/libs/quarto-html/popper.min.js"></script>
+<script src="S02_solemne_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="S02_solemne_files/libs/quarto-html/anchor.min.js"></script>
+<link href="S02_solemne_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="S02_solemne_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="S02_solemne_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="S02_solemne_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="S02_solemne_files/libs/bootstrap/bootstrap-88e02f1c44f87c7f532509a952f3301d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#instrucciones-generales" id="toc-instrucciones-generales" class="nav-link active" data-scroll-target="#instrucciones-generales"><span class="header-section-number">1</span> Instrucciones Generales</a></li>
+  <li><a href="#sec-contexto" id="toc-sec-contexto" class="nav-link" data-scroll-target="#sec-contexto"><span class="header-section-number">2</span> Contexto del Caso: CineMax</a></li>
+  <li><a href="#sec-p1" id="toc-sec-p1" class="nav-link" data-scroll-target="#sec-p1"><span class="header-section-number">3</span> Pregunta 1 — Diseño del Modelo Relacional</a>
+  <ul class="collapse">
+  <li><a href="#contexto" id="toc-contexto" class="nav-link" data-scroll-target="#contexto"><span class="header-section-number">3.1</span> Contexto</a></li>
+  <li><a href="#sec-p1b" id="toc-sec-p1b" class="nav-link" data-scroll-target="#sec-p1b"><span class="header-section-number">3.2</span> Parte B — Diseño del Modelo Relacional</a></li>
+  <li><a href="#sec-p1c" id="toc-sec-p1c" class="nav-link" data-scroll-target="#sec-p1c"><span class="header-section-number">3.3</span> Parte C — Diagrama Entidad-Relación</a></li>
+  </ul></li>
+  <li><a href="#sec-p2" id="toc-sec-p2" class="nav-link" data-scroll-target="#sec-p2"><span class="header-section-number">4</span> Pregunta 2 — Implementación SQL</a>
+  <ul class="collapse">
+  <li><a href="#contexto-1" id="toc-contexto-1" class="nav-link" data-scroll-target="#contexto-1"><span class="header-section-number">4.1</span> Contexto</a></li>
+  <li><a href="#sec-p2a" id="toc-sec-p2a" class="nav-link" data-scroll-target="#sec-p2a"><span class="header-section-number">4.2</span> Parte A — CREATE TABLE</a></li>
+  <li><a href="#sec-p2b" id="toc-sec-p2b" class="nav-link" data-scroll-target="#sec-p2b"><span class="header-section-number">4.3</span> Parte B — DML: Inserción y Modificación</a></li>
+  </ul></li>
+  <li><a href="#sec-p3" id="toc-sec-p3" class="nav-link" data-scroll-target="#sec-p3"><span class="header-section-number">5</span> Pregunta 3 — Consultas SQL para Decisiones</a>
+  <ul class="collapse">
+  <li><a href="#configuración-del-entorno" id="toc-configuración-del-entorno" class="nav-link" data-scroll-target="#configuración-del-entorno"><span class="header-section-number">5.1</span> Configuración del entorno</a></li>
+  <li><a href="#sec-p3a" id="toc-sec-p3a" class="nav-link" data-scroll-target="#sec-p3a"><span class="header-section-number">5.2</span> Parte A — SELECT y WHERE</a></li>
+  <li><a href="#sec-p3b" id="toc-sec-p3b" class="nav-link" data-scroll-target="#sec-p3b"><span class="header-section-number">5.3</span> Parte B — Agregaciones: GROUP BY y HAVING</a></li>
+  <li><a href="#sec-p3c" id="toc-sec-p3c" class="nav-link" data-scroll-target="#sec-p3c"><span class="header-section-number">5.4</span> Parte C — JOINs para Reportes Completos</a></li>
+  </ul></li>
+  <li><a href="#criterios-de-evaluación" id="toc-criterios-de-evaluación" class="nav-link" data-scroll-target="#criterios-de-evaluación"><span class="header-section-number">6</span> Criterios de Evaluación</a>
+  <ul class="collapse">
+  <li><a href="#pregunta-1-30-pts" id="toc-pregunta-1-30-pts" class="nav-link" data-scroll-target="#pregunta-1-30-pts"><span class="header-section-number">6.1</span> Pregunta 1 (30 pts)</a></li>
+  <li><a href="#pregunta-2-35-pts" id="toc-pregunta-2-35-pts" class="nav-link" data-scroll-target="#pregunta-2-35-pts"><span class="header-section-number">6.2</span> Pregunta 2 (35 pts)</a></li>
+  <li><a href="#pregunta-3-35-pts" id="toc-pregunta-3-35-pts" class="nav-link" data-scroll-target="#pregunta-3-35-pts"><span class="header-section-number">6.3</span> Pregunta 3 (35 pts)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Solemne 2: Modelamiento, Implementación y Consultas SQL</h1>
+<p class="subtitle lead">S02 · Unidad II · Big Data y Analytics · Universidad San Sebastián</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="instrucciones-generales" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="instrucciones-generales"><span class="header-section-number">1</span> Instrucciones Generales</h2>
+<ul>
+<li>Trabajo <strong>individual</strong>.</li>
+<li><strong>Duración total</strong>: 2 horas 30 minutos.</li>
+<li>Sube tus respuestas a la plataforma del curso al finalizar el tiempo.</li>
+</ul>
+<p><strong>Distribución de puntaje:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Pregunta</th>
+<th>Tema</th>
+<th>Tiempo sugerido</th>
+<th>Puntaje</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Diseño del Modelo Relacional</td>
+<td>40 min</td>
+<td>30 pts</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Implementación SQL</td>
+<td>50 min</td>
+<td>35 pts</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Consultas SQL para Decisiones</td>
+<td>60 min</td>
+<td>35 pts</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><strong>Total</strong></td>
+<td><strong>2h 30min</strong></td>
+<td><strong>100 pts</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Entregables:</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Archivo</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>S02_respuestas_[apellido].docx</code></td>
+<td>Respuestas escritas de P1 y P2</td>
+</tr>
+<tr class="even">
+<td><code>S02_consultas_[apellido].sql</code></td>
+<td>Las 8 consultas de P3, documentadas con comentarios</td>
+</tr>
+<tr class="odd">
+<td><code>S02_capturas_[apellido].pdf</code></td>
+<td>Capturas de pantalla de los resultados de P3 (mínimo 4)</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Para la Pregunta 3</strong>: carga la base de datos <code>cinemax_db.sql</code> en HeidiSQL antes de comenzar esa sección. El archivo estará disponible en la carpeta compartida del docente.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>total_pagado</code> es una columna <strong>derivada</strong>: su valor se calcula como <code>cantidad × precio_base × (1 − descuento_pct / 100)</code>. En un modelo relacional normalizado este campo <strong>no se almacena</strong> — se obtiene mediante una consulta. Tener esto en cuenta en la Pregunta 1 y en la Pregunta 3.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="sec-contexto" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="sec-contexto"><span class="header-section-number">2</span> Contexto del Caso: CineMax</h2>
+<p><strong>CineMax</strong> es una cadena de cines chilena con tres salas en Santiago. Actualmente, todo el registro de ventas se mantiene en una única hoja de cálculo llamada <code>cinemax_ventas_planas.csv</code>.</p>
+<p>La directora de operaciones, <strong>Alejandra</strong>, contrató a Juan como analista de datos para modernizar el sistema. La misión de Juan es:</p>
+<ol type="1">
+<li>Diseñar un modelo relacional que elimine las redundancias de la planilla plana.</li>
+<li>Implementar la base de datos en MySQL con las restricciones de integridad adecuadas.</li>
+<li>Escribir consultas SQL que permitan a Alejandra, al equipo de marketing y al equipo de operaciones tomar decisiones basadas en datos.</li>
+</ol>
+<hr>
+</section>
+<section id="sec-p1" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="sec-p1"><span class="header-section-number">3</span> Pregunta 1 — Diseño del Modelo Relacional</h2>
+<p><strong>40 minutos · 30 puntos</strong></p>
+<section id="contexto" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="contexto"><span class="header-section-number">3.1</span> Contexto</h3>
+<p>Juan descargó un extracto de <code>cinemax_ventas_planas.csv</code>. La hoja tiene una fila por cada compra de entradas:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>id_transaccion</th>
+<th>id_funcion</th>
+<th>fecha_funcion</th>
+<th>sala</th>
+<th>capacidad_sala</th>
+<th>tipo_sala</th>
+<th>titulo_pelicula</th>
+<th>genero</th>
+<th>duracion_min</th>
+<th>clasificacion</th>
+<th>cliente_id</th>
+<th>cliente_nombre</th>
+<th>cliente_email</th>
+<th>segmento</th>
+<th>cantidad</th>
+<th>precio_base</th>
+<th>descuento_pct</th>
+<th>total_pagado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>T001</td>
+<td>F001</td>
+<td>2026-04-15</td>
+<td>Sala 1</td>
+<td>150</td>
+<td>2D</td>
+<td>Guardianes del Cosmos</td>
+<td>Acción</td>
+<td>130</td>
+<td>G14</td>
+<td>C001</td>
+<td>Ana López</td>
+<td>ana.lopez@gmail.com</td>
+<td>VIP</td>
+<td>2</td>
+<td>6500</td>
+<td>10</td>
+<td>11700</td>
+</tr>
+<tr class="even">
+<td>T002</td>
+<td>F001</td>
+<td>2026-04-15</td>
+<td>Sala 1</td>
+<td>150</td>
+<td>2D</td>
+<td>Guardianes del Cosmos</td>
+<td>Acción</td>
+<td>130</td>
+<td>G14</td>
+<td>C003</td>
+<td>María Silva</td>
+<td>maria.silva@outlook.com</td>
+<td>Regular</td>
+<td>3</td>
+<td>6500</td>
+<td>0</td>
+<td>19500</td>
+</tr>
+<tr class="odd">
+<td>T003</td>
+<td>F003</td>
+<td>2026-04-16</td>
+<td>Sala 1</td>
+<td>150</td>
+<td>2D</td>
+<td>La Familia Perfecta</td>
+<td>comedia</td>
+<td>95</td>
+<td>TE</td>
+<td>C005</td>
+<td>Camila Reyes</td>
+<td>c.reyes@gmail.com</td>
+<td>Regular</td>
+<td>2</td>
+<td>5500</td>
+<td>0</td>
+<td>11000</td>
+</tr>
+<tr class="even">
+<td>T004</td>
+<td>F004</td>
+<td>16/04/2026</td>
+<td>Sala Premium</td>
+<td>80</td>
+<td>4DX</td>
+<td>La Familia Perfecta</td>
+<td>Comedia</td>
+<td>95</td>
+<td>TE</td>
+<td>C001</td>
+<td>Ana López</td>
+<td>ana.lopez@gmail.com</td>
+<td>VIP</td>
+<td>2</td>
+<td>12000</td>
+<td>-5</td>
+<td>25200</td>
+</tr>
+<tr class="odd">
+<td>T005</td>
+<td>F002</td>
+<td>2026-04-15</td>
+<td>Sala 2</td>
+<td>120</td>
+<td>3D</td>
+<td>Guardianes del Cosmos</td>
+<td>ACCIÓN</td>
+<td>130</td>
+<td>G14</td>
+<td>C004</td>
+<td>Juan Torres</td>
+<td></td>
+<td>Vip</td>
+<td>4</td>
+<td>8000</td>
+<td>10</td>
+<td>28800</td>
+</tr>
+<tr class="even">
+<td>T006</td>
+<td>F005</td>
+<td>2026-04-18</td>
+<td>Sala 2</td>
+<td>120</td>
+<td>3D</td>
+<td>Sombras del Pasado</td>
+<td>Drama</td>
+<td>118</td>
+<td>G</td>
+<td>C002</td>
+<td>Pedro Muñoz</td>
+<td>pedro.munoz@hotmail</td>
+<td>Regular</td>
+<td>2</td>
+<td>7000</td>
+<td>0</td>
+<td>14000</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="sec-p1b" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="sec-p1b"><span class="header-section-number">3.2</span> Parte B — Diseño del Modelo Relacional</h3>
+<p><strong>20 puntos</strong></p>
+<p>Aplicando las formas normales, la tabla plana debe descomponerse en <strong>6 tablas</strong>. Completa la definición de cada tabla indicando su clave primaria, las columnas que contiene y las claves foráneas si las tiene:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tabla</th>
+<th>Clave primaria</th>
+<th>Columnas que incluye</th>
+<th>Claves foráneas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>generos</code></td>
+<td></td>
+<td></td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td><code>peliculas</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>salas</code></td>
+<td></td>
+<td></td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td><code>clientes</code></td>
+<td></td>
+<td></td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td><code>funciones</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>entradas</code></td>
+<td><em>(compuesta)</em></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Recuerda</strong>: <code>total_pagado</code> es derivado. No debe aparecer como columna almacenada en ninguna tabla.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="sec-p1c" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="sec-p1c"><span class="header-section-number">3.3</span> Parte C — Diagrama Entidad-Relación</h3>
+<p><strong>10 puntos</strong></p>
+<p>Dibuja (en papel o en draw.io/dbdiagram.io) el diagrama Entidad-Relación del modelo que definiste en la Parte B. El diagrama debe mostrar:</p>
+<ol type="1">
+<li>Las 6 entidades con sus atributos principales.</li>
+<li>Las relaciones entre entidades con su <strong>cardinalidad</strong> (1:N, M:N, etc.).</li>
+<li>Las claves primarias (subrayadas) y foráneas (identificadas con FK).</li>
+</ol>
+<p>Si usas draw.io o dbdiagram.io, exporta el diagrama como imagen e inclúyela en tu documento de respuestas.</p>
+<p><strong>Guía de cardinalidades a verificar:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Relación</th>
+<th>Cardinalidad esperada</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>generos</code> — <code>peliculas</code></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>salas</code> — <code>funciones</code></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>peliculas</code> — <code>funciones</code></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>funciones</code> — <code>entradas</code></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>clientes</code> — <code>entradas</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="sec-p2" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="sec-p2"><span class="header-section-number">4</span> Pregunta 2 — Implementación SQL</h2>
+<p><strong>50 minutos · 35 puntos</strong></p>
+<section id="contexto-1" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="contexto-1"><span class="header-section-number">4.1</span> Contexto</h3>
+<p>Juan ya tiene el modelo diseñado. Ahora debe implementarlo en MySQL. A continuación se entregan las sentencias <code>CREATE TABLE</code> de dos tablas como referencia:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> generos (</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    genero_id <span class="dt">INT</span>         <span class="kw">NOT</span> <span class="kw">NULL</span> AUTO_INCREMENT,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    nombre    <span class="dt">VARCHAR</span>(<span class="dv">50</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CONSTRAINT</span> pk_generos <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (genero_id)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> clientes (</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    cliente_id <span class="dt">INT</span>          <span class="kw">NOT</span> <span class="kw">NULL</span> AUTO_INCREMENT,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    nombre     <span class="dt">VARCHAR</span>(<span class="dv">50</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    apellido   <span class="dt">VARCHAR</span>(<span class="dv">50</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    email      <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    segmento   <span class="dt">VARCHAR</span>(<span class="dv">20</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CONSTRAINT</span> pk_clientes       <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (cliente_id),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CONSTRAINT</span> uq_clientes_email <span class="kw">UNIQUE</span> (email),</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CONSTRAINT</span> chk_segmento      <span class="kw">CHECK</span> (segmento <span class="kw">IN</span> (<span class="st">'Regular'</span>, <span class="st">'VIP'</span>))</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+<section id="sec-p2a" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="sec-p2a"><span class="header-section-number">4.2</span> Parte A — CREATE TABLE</h3>
+<p><strong>26 puntos</strong></p>
+<p>Escribe las sentencias <code>CREATE TABLE</code> para las tres tablas indicadas. Para cada una aplica las restricciones de integridad que correspondan: <code>PRIMARY KEY</code>, <code>FOREIGN KEY</code>, <code>NOT NULL</code>, <code>CHECK</code>, <code>UNIQUE</code> donde sea pertinente.</p>
+<p><strong>Tu tarea — Tabla <code>peliculas</code></strong> (incluye FK hacia <code>generos</code>, CHECK en <code>clasificacion</code>):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Escribe aquí la sentencia CREATE TABLE peliculas</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Recuerda:</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">--   - PK: pelicula_id (INT, AUTO_INCREMENT)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">--   - Columnas: titulo, genero_id (FK → generos), duracion_min, clasificacion</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">--   - clasificacion acepta solo: 'TE', 'G', 'G14', 'G18'</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">--   - duracion_min debe ser mayor a 0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Tu tarea — Tabla <code>salas</code></strong> (incluye CHECK en <code>tipo</code>):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Escribe aquí la sentencia CREATE TABLE salas</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Recuerda:</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">--   - PK: sala_id (INT, AUTO_INCREMENT)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">--   - Columnas: nombre, capacidad, tipo</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">--   - tipo acepta solo: '2D', '3D', '4DX'</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">--   - capacidad debe ser mayor a 0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Tu tarea — Tabla <code>funciones</code></strong> (incluye FK hacia <code>peliculas</code> y <code>salas</code>):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Escribe aquí la sentencia CREATE TABLE funciones</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Recuerda:</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">--   - PK: funcion_id (INT, AUTO_INCREMENT)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">--   - Columnas: pelicula_id (FK → peliculas), sala_id (FK → salas),</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">--               fecha (DATE), hora (TIME), precio_base (INT)</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">--   - precio_base debe ser mayor a 0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Orden de creación</strong>: <code>generos</code> y <code>salas</code> primero (sin dependencias foráneas), luego <code>peliculas</code> (depende de <code>generos</code>), luego <code>funciones</code> (depende de <code>peliculas</code> y <code>salas</code>).</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="sec-p2b" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="sec-p2b"><span class="header-section-number">4.3</span> Parte B — DML: Inserción y Modificación</h3>
+<p><strong>9 puntos</strong></p>
+<p><strong>B.1</strong> (3 pts) Escribe las sentencias <code>INSERT INTO</code> para registrar los siguientes datos en la base de datos <strong>ya creada</strong>. Las tablas <code>generos</code> y <code>peliculas</code> ya existen y contienen datos.</p>
+<ul>
+<li>Insertar una nueva sala: nombre “Sala VIP”, capacidad 60, tipo “4DX”.</li>
+<li>Insertar una nueva película: título “El Gran Viaje”, género “Aventura” (que <strong>no existe</strong> todavía en la tabla <code>generos</code>), duración 110 minutos, clasificación “G14”.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para la película nueva necesitarás primero insertar el género y luego usar su <code>genero_id</code> generado. Usa <code>LAST_INSERT_ID()</code> o consulta el id del género recién insertado.</p>
+</div>
+</div>
+<p><strong>B.2</strong> (3 pts) El cliente con <code>cliente_id = 3</code> cambió su plan de “Regular” a “VIP”. Escribe la sentencia <code>UPDATE</code> correspondiente.</p>
+<p><strong>B.3</strong> (3 pts) Responde brevemente:</p>
+<ol type="1">
+<li><p>Si intentas insertar una función con <code>sala_id = 99</code> (que no existe en <code>salas</code>), ¿qué responde MySQL y qué mecanismo lo impide?</p></li>
+<li><p>Si intentas registrar una entrada con <code>descuento_pct = 120</code>, ¿qué restricción se activa y cuál sería el mensaje de error aproximado?</p></li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="sec-p3" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="sec-p3"><span class="header-section-number">5</span> Pregunta 3 — Consultas SQL para Decisiones</h2>
+<p><strong>45 minutos · 35 puntos</strong></p>
+<section id="configuración-del-entorno" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="configuración-del-entorno"><span class="header-section-number">5.1</span> Configuración del entorno</h3>
+<p>Carga el script <code>cinemax_db.sql</code> en HeidiSQL. Verifica que se crearon las 6 tablas y que contienen datos ejecutando:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">USE</span> cinemax;</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'generos'</span>   <span class="kw">AS</span> tabla, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> filas <span class="kw">FROM</span> generos   <span class="kw">UNION</span> <span class="kw">ALL</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'peliculas'</span>,          <span class="fu">COUNT</span>(<span class="op">*</span>)           <span class="kw">FROM</span> peliculas <span class="kw">UNION</span> <span class="kw">ALL</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'salas'</span>,              <span class="fu">COUNT</span>(<span class="op">*</span>)           <span class="kw">FROM</span> salas     <span class="kw">UNION</span> <span class="kw">ALL</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'clientes'</span>,           <span class="fu">COUNT</span>(<span class="op">*</span>)           <span class="kw">FROM</span> clientes  <span class="kw">UNION</span> <span class="kw">ALL</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'funciones'</span>,          <span class="fu">COUNT</span>(<span class="op">*</span>)           <span class="kw">FROM</span> funciones <span class="kw">UNION</span> <span class="kw">ALL</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'entradas'</span>,           <span class="fu">COUNT</span>(<span class="op">*</span>)           <span class="kw">FROM</span> entradas;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Deberías obtener: 5 géneros · 9 películas · 3 salas · 10 clientes · 12 funciones · 24 entradas.</p>
+<p>Para cada consulta: escríbela en tu archivo <code>.sql</code> con el comentario indicado, ejecútala y captura el resultado en pantalla.</p>
+<hr>
+</section>
+<section id="sec-p3a" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="sec-p3a"><span class="header-section-number">5.2</span> Parte A — SELECT y WHERE</h3>
+<p><strong>12 puntos</strong></p>
+<p><strong>Q1 — Clientes VIP</strong> (4 pts)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Q1: Lista todos los clientes VIP ordenados por apellido ascendente.</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Muestra: cliente_id, nombre, apellido, email.</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">..</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Q2 — Películas para adultos con larga duración</strong> (4 pts)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Q2: Lista todas las películas con clasificación G14 o G18,</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">--     mostrando su título, nombre del género, duración y clasificación.</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">--     Ordena por duración de mayor a menor.</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Requiere: JOIN entre peliculas y generos.</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">..</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Q3 — Funciones de abril 2026</strong> (4 pts)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Q3: Lista todas las funciones programadas en abril de 2026.</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Muestra: funcion_id, fecha, hora, precio_base.</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Ordena por fecha y hora.</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">..</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+<section id="sec-p3b" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="sec-p3b"><span class="header-section-number">5.3</span> Parte B — Agregaciones: GROUP BY y HAVING</h3>
+<p><strong>12 puntos</strong></p>
+<p><strong>Q4 — Películas por género</strong> (4 pts)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Q4: Muestra cuántas películas tiene cada género.</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Muestra: nombre del género, cantidad de películas.</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Ordena por cantidad de mayor a menor.</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Requiere: JOIN entre peliculas y generos.</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">..</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Q5 — Funciones por sala</strong> (4 pts)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Q5: Muestra cuántas funciones tiene cada sala.</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Muestra solo las salas con 3 o más funciones programadas.</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Muestra: nombre de sala, tipo, total_funciones.</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Ordena por total_funciones de mayor a menor.</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- Requiere: JOIN entre funciones y salas.</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">..</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Q6 — Ingresos por género</strong> (4 pts)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Q6: Calcula el ingreso total generado por cada género.</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- El ingreso de cada entrada es: cantidad × precio_base × (1 - descuento_pct / 100)</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Muestra: nombre del género, total_entradas_vendidas, ingreso_total.</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Ordena por ingreso_total de mayor a menor.</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- Requiere: JOIN entre entradas, funciones, peliculas y generos.</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">..</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Pregunta de análisis Q6</strong>: ¿Qué género genera más ingresos para CineMax? ¿Coincide con el género con más entradas vendidas? ¿Qué estrategia de programación recomendarías a Alejandra con base en estos datos?</p>
+<hr>
+</section>
+<section id="sec-p3c" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="sec-p3c"><span class="header-section-number">5.4</span> Parte C — JOINs para Reportes Completos</h3>
+<p><strong>11 puntos</strong></p>
+<p><strong>Q7 — Detalle completo de ventas</strong> (6 pts)</p>
+<p>Alejandra quiere un reporte con el detalle de cada transacción:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Q7: Lista el detalle de cada compra de entradas.</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Muestra: entrada_id, nombre y apellido del cliente, segmento,</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">--          título de la película, nombre de la sala, fecha, hora,</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">--          cantidad, descuento_pct,</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">--          total_a_pagar (calculado: cantidad × precio_base × (1 - descuento_pct/100)).</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- Ordena por fecha DESC, entrada_id ASC.</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- Requiere: JOIN entre entradas, clientes, funciones, peliculas, salas.</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">..</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Q8 — Películas con y sin funciones programadas</strong> (5 pts)</p>
+<p>El equipo de programación quiere saber qué películas están en el catálogo pero aún no tienen ninguna función asignada:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Q8: Lista TODAS las películas del catálogo con el total de funciones programadas.</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Muestra: título, nombre del género, total_funciones (0 si no tiene ninguna).</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Ordena por total_funciones ASC (las sin funciones aparecen primero).</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Requiere: LEFT JOIN entre peliculas, generos y funciones.</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">..</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Pregunta de análisis Q8</strong>: ¿Cuál película tiene <code>total_funciones = 0</code>? ¿Qué podría explicar esa situación desde el punto de vista del negocio?</p>
+<hr>
+</section>
+</section>
+<section id="criterios-de-evaluación" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="criterios-de-evaluación"><span class="header-section-number">6</span> Criterios de Evaluación</h2>
+<section id="pregunta-1-30-pts" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="pregunta-1-30-pts"><span class="header-section-number">6.1</span> Pregunta 1 (30 pts)</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Criterio</th>
+<th>Puntaje</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>B: Definición correcta de las 6 tablas (PK, columnas, FK)</td>
+<td>20 pts</td>
+</tr>
+<tr class="even">
+<td>C: Diagrama ER con entidades, relaciones y cardinalidades correctas</td>
+<td>10 pts</td>
+</tr>
+<tr class="odd">
+<td><strong>Subtotal</strong></td>
+<td><strong>30 pts</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="pregunta-2-35-pts" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="pregunta-2-35-pts"><span class="header-section-number">6.2</span> Pregunta 2 (35 pts)</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Criterio</th>
+<th>Puntaje</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A: <code>peliculas</code> — PK, FK, tipos y CHECK correctos</td>
+<td>9 pts</td>
+</tr>
+<tr class="even">
+<td>A: <code>salas</code> — PK, tipos y CHECK correctos</td>
+<td>8 pts</td>
+</tr>
+<tr class="odd">
+<td>A: <code>funciones</code> — PK, dos FK, tipos y CHECK correcto</td>
+<td>9 pts</td>
+</tr>
+<tr class="even">
+<td>B.1: INSERT correcto con uso de LAST_INSERT_ID() o equivalente</td>
+<td>3 pts</td>
+</tr>
+<tr class="odd">
+<td>B.2: UPDATE correcto con WHERE específico</td>
+<td>3 pts</td>
+</tr>
+<tr class="even">
+<td>B.3: Explicación correcta de FK y CHECK violations</td>
+<td>3 pts (1,5 c/u)</td>
+</tr>
+<tr class="odd">
+<td><strong>Subtotal</strong></td>
+<td><strong>35 pts</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="pregunta-3-35-pts" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="pregunta-3-35-pts"><span class="header-section-number">6.3</span> Pregunta 3 (35 pts)</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Criterio</th>
+<th>Puntaje</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Q1: SELECT + WHERE + ORDER BY correcto, resultado visible en captura</td>
+<td>4 pts</td>
+</tr>
+<tr class="even">
+<td>Q2: JOIN + WHERE con IN + ORDER BY correcto</td>
+<td>4 pts</td>
+</tr>
+<tr class="odd">
+<td>Q3: WHERE con BETWEEN + ORDER BY correcto</td>
+<td>4 pts</td>
+</tr>
+<tr class="even">
+<td>Q4: GROUP BY + JOIN correcto, orden descendente</td>
+<td>4 pts</td>
+</tr>
+<tr class="odd">
+<td>Q5: GROUP BY + HAVING ≥ 3 + JOIN correcto</td>
+<td>4 pts</td>
+</tr>
+<tr class="even">
+<td>Q6: Agregación multi-JOIN, cálculo de ingreso correcto, análisis escrito</td>
+<td>4 pts + 1 análisis</td>
+</tr>
+<tr class="odd">
+<td>Q7: 5-tabla JOIN correcto, columna total_a_pagar calculada</td>
+<td>6 pts</td>
+</tr>
+<tr class="even">
+<td>Q8: LEFT JOIN correcto, películas sin funciones identificadas, análisis escrito</td>
+<td>4 pts + 1 análisis</td>
+</tr>
+<tr class="odd">
+<td><strong>Subtotal</strong></td>
+<td><strong>35 pts</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">| <strong>Total</strong> | <strong>100 pts</strong> |</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

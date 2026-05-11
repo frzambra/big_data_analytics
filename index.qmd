@@ -396,6 +396,17 @@ format:
         <a class="link-pauta" href="solemnes/Solemne_01/S01_solemne_pauta.html">Ver pauta →</a>
       </div>
     </div>
+
+    <div class="card solemne">
+      <span class="card-tag">Solemne 2 · Unidad II</span>
+      <span class="card-title">Modelamiento, Implementación y Consultas SQL</span>
+      <span class="card-subtitle">Normalización · CREATE TABLE · DML · Transacciones · SELECT · GROUP BY · JOINs · 100 pts · 2h 30min</span>
+      <div class="card-links">
+        <a class="link-lab" href="solemnes/Solemne_02/S02_solemne.html">Ver enunciado →</a>
+        <span class="link-divider">|</span>
+        <a class="link-pauta" href="solemnes/Solemne_02/S02_solemne_pauta.html">Ver pauta →</a>
+      </div>
+    </div>
   </div>
 
 </div>

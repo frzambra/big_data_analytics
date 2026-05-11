@@ -1,0 +1,386 @@
+---
+title: "Solemne 2: Modelamiento, Implementación y Consultas SQL"
+subtitle: "S02 · Unidad II · Big Data y Analytics · Universidad San Sebastián"
+format:
+  html:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    theme: cosmo
+---
+
+## Instrucciones Generales
+
+- Trabajo **individual**.
+- **Duración total**: 2 horas 30 minutos.
+- Sube tus respuestas a la plataforma del curso al finalizar el tiempo.
+
+**Distribución de puntaje:**
+
+| Pregunta | Tema | Tiempo sugerido | Puntaje |
+|---|---|---|---|
+| 1 | Diseño del Modelo Relacional | 40 min | 30 pts |
+| 2 | Implementación SQL | 50 min | 35 pts |
+| 3 | Consultas SQL para Decisiones | 60 min | 35 pts |
+| | **Total** | **2h 30min** | **100 pts** |
+
+**Entregables:**
+
+| Archivo | Contenido |
+|---|---|
+| `S02_respuestas_[apellido].docx` | Respuestas escritas de P1 y P2 |
+| `S02_consultas_[apellido].sql` | Las 8 consultas de P3, documentadas con comentarios |
+| `S02_capturas_[apellido].pdf` | Capturas de pantalla de los resultados de P3 (mínimo 4) |
+
+::: {.callout-important}
+**Para la Pregunta 3**: carga la base de datos `cinemax_db.sql` en HeidiSQL antes de comenzar esa sección. El archivo estará disponible en la carpeta compartida del docente.
+:::
+
+::: {.callout-warning}
+`total_pagado` es una columna **derivada**: su valor se calcula como `cantidad × precio_base × (1 − descuento_pct / 100)`. En un modelo relacional normalizado este campo **no se almacena** — se obtiene mediante una consulta. Tener esto en cuenta en la Pregunta 1 y en la Pregunta 3.
+:::
+
+---
+
+## Contexto del Caso: CineMax {#sec-contexto}
+
+**CineMax** es una cadena de cines chilena con tres salas en Santiago. Actualmente, todo el registro de ventas se mantiene en una única hoja de cálculo llamada `cinemax_ventas_planas.csv`.
+
+La directora de operaciones, **Alejandra**, contrató a Juan como analista de datos para modernizar el sistema. La misión de Juan es:
+
+1. Diseñar un modelo relacional que elimine las redundancias de la planilla plana.
+2. Implementar la base de datos en MySQL con las restricciones de integridad adecuadas.
+3. Escribir consultas SQL que permitan a Alejandra, al equipo de marketing y al equipo de operaciones tomar decisiones basadas en datos.
+
+---
+
+## Pregunta 1 — Diseño del Modelo Relacional {#sec-p1}
+
+**40 minutos · 30 puntos**
+
+### Contexto
+
+Juan descargó un extracto de `cinemax_ventas_planas.csv`. La hoja tiene una fila por cada compra de entradas:
+
+| id_transaccion | id_funcion | fecha_funcion | sala | capacidad_sala | tipo_sala | titulo_pelicula | genero | duracion_min | clasificacion | cliente_id | cliente_nombre | cliente_email | segmento | cantidad | precio_base | descuento_pct | total_pagado |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| T001 | F001 | 2026-04-15 | Sala 1 | 150 | 2D | Guardianes del Cosmos | Acción | 130 | G14 | C001 | Ana López | ana.lopez@gmail.com | VIP | 2 | 6500 | 10 | 11700 |
+| T002 | F001 | 2026-04-15 | Sala 1 | 150 | 2D | Guardianes del Cosmos | Acción | 130 | G14 | C003 | María Silva | maria.silva@outlook.com | Regular | 3 | 6500 | 0 | 19500 |
+| T003 | F003 | 2026-04-16 | Sala 1 | 150 | 2D | La Familia Perfecta | comedia | 95 | TE | C005 | Camila Reyes | c.reyes@gmail.com | Regular | 2 | 5500 | 0 | 11000 |
+| T004 | F004 | 16/04/2026 | Sala Premium | 80 | 4DX | La Familia Perfecta | Comedia | 95 | TE | C001 | Ana López | ana.lopez@gmail.com | VIP | 2 | 12000 | -5 | 25200 |
+| T005 | F002 | 2026-04-15 | Sala 2 | 120 | 3D | Guardianes del Cosmos | ACCIÓN | 130 | G14 | C004 | Juan Torres | | Vip | 4 | 8000 | 10 | 28800 |
+| T006 | F005 | 2026-04-18 | Sala 2 | 120 | 3D | Sombras del Pasado | Drama | 118 | G | C002 | Pedro Muñoz | pedro.munoz@hotmail | Regular | 2 | 7000 | 0 | 14000 |
+
+---
+
+### Parte B — Diseño del Modelo Relacional {#sec-p1b}
+
+**20 puntos**
+
+Aplicando las formas normales, la tabla plana debe descomponerse en **6 tablas**. Completa la definición de cada tabla indicando su clave primaria, las columnas que contiene y las claves foráneas si las tiene:
+
+| Tabla | Clave primaria | Columnas que incluye | Claves foráneas |
+|---|---|---|---|
+| `generos` | | | — |
+| `peliculas` | | | |
+| `salas` | | | — |
+| `clientes` | | | — |
+| `funciones` | | | |
+| `entradas` | *(compuesta)* | | |
+
+::: {.callout-important}
+**Recuerda**: `total_pagado` es derivado. No debe aparecer como columna almacenada en ninguna tabla.
+:::
+
+---
+
+### Parte C — Diagrama Entidad-Relación {#sec-p1c}
+
+**10 puntos**
+
+Dibuja en draw.io el diagrama Entidad-Relación del modelo que definiste en la Parte B. El diagrama debe mostrar:
+
+1. Las 6 entidades con sus atributos principales.
+2. Las relaciones entre entidades con su **cardinalidad** (1:N, M:N, etc.).
+3. Las claves primarias (subrayadas) y foráneas (identificadas con FK).
+
+Exporta el diagrama draw.io como imagen e inclúyela en tu documento de respuestas.
+
+**Guía de cardinalidades a verificar:**
+
+| Relación | Cardinalidad esperada |
+|---|---|
+| `generos` — `peliculas` | |
+| `salas` — `funciones` | |
+| `peliculas` — `funciones` | |
+| `funciones` — `entradas` | |
+| `clientes` — `entradas` | |
+
+---
+
+## Pregunta 2 — Implementación SQL {#sec-p2}
+
+**50 minutos · 35 puntos**
+
+### Contexto
+
+Juan ya tiene el modelo diseñado. Ahora debe implementarlo en MySQL. A continuación se entregan las sentencias `CREATE TABLE` de dos tablas como referencia:
+
+```sql
+CREATE TABLE generos (
+    genero_id INT         NOT NULL AUTO_INCREMENT,
+    nombre    VARCHAR(50) NOT NULL,
+    CONSTRAINT pk_generos PRIMARY KEY (genero_id)
+);
+
+CREATE TABLE clientes (
+    cliente_id INT          NOT NULL AUTO_INCREMENT,
+    nombre     VARCHAR(50)  NOT NULL,
+    apellido   VARCHAR(50)  NOT NULL,
+    email      VARCHAR(100) NOT NULL,
+    segmento   VARCHAR(20)  NOT NULL,
+    CONSTRAINT pk_clientes       PRIMARY KEY (cliente_id),
+    CONSTRAINT uq_clientes_email UNIQUE (email),
+    CONSTRAINT chk_segmento      CHECK (segmento IN ('Regular', 'VIP'))
+);
+```
+
+---
+
+### Parte A — CREATE TABLE {#sec-p2a}
+
+**26 puntos**
+
+Escribe las sentencias `CREATE TABLE` para las tres tablas indicadas. Para cada una aplica las restricciones de integridad que correspondan: `PRIMARY KEY`, `FOREIGN KEY`, `NOT NULL`, `CHECK`, `UNIQUE` donde sea pertinente.
+
+**Tu tarea — Tabla `peliculas`** (incluye FK hacia `generos`, CHECK en `clasificacion`):
+
+```sql
+-- Escribe aquí la sentencia CREATE TABLE peliculas
+-- Recuerda:
+--   - PK: pelicula_id (INT, AUTO_INCREMENT)
+--   - Columnas: titulo, genero_id (FK → generos), duracion_min, clasificacion
+--   - clasificacion acepta solo: 'TE', 'G', 'G14', 'G18'
+--   - duracion_min debe ser mayor a 0
+```
+
+**Tu tarea — Tabla `salas`** (incluye CHECK en `tipo`):
+
+```sql
+-- Escribe aquí la sentencia CREATE TABLE salas
+-- Recuerda:
+--   - PK: sala_id (INT, AUTO_INCREMENT)
+--   - Columnas: nombre, capacidad, tipo
+--   - tipo acepta solo: '2D', '3D', '4DX'
+--   - capacidad debe ser mayor a 0
+```
+
+**Tu tarea — Tabla `funciones`** (incluye FK hacia `peliculas` y `salas`):
+
+```sql
+-- Escribe aquí la sentencia CREATE TABLE funciones
+-- Recuerda:
+--   - PK: funcion_id (INT, AUTO_INCREMENT)
+--   - Columnas: pelicula_id (FK → peliculas), sala_id (FK → salas),
+--               fecha (DATE), hora (TIME), precio_base (INT)
+--   - precio_base debe ser mayor a 0
+```
+
+::: {.callout-note}
+**Orden de creación**: `generos` y `salas` primero (sin dependencias foráneas), luego `peliculas` (depende de `generos`), luego `funciones` (depende de `peliculas` y `salas`).
+:::
+
+---
+
+### Parte B — DML: Inserción y Modificación {#sec-p2b}
+
+**9 puntos**
+
+**B.1** (3 pts) Escribe las sentencias `INSERT INTO` para registrar los siguientes datos en la base de datos **ya creada**. Las tablas `generos` y `peliculas` ya existen y contienen datos.
+
+- Insertar una nueva sala: nombre "Sala VIP", capacidad 60, tipo "4DX".
+- Insertar una nueva película: título "El Gran Viaje", género "Aventura" (que **no existe** todavía en la tabla `generos`), duración 110 minutos, clasificación "G14".
+
+::: {.callout-tip}
+Para la película nueva necesitarás primero insertar el género y luego usar su `genero_id` generado. Usa `LAST_INSERT_ID()` o consulta el id del género recién insertado.
+:::
+
+**B.2** (3 pts) El cliente con `cliente_id = 3` cambió su plan de "Regular" a "VIP". Escribe la sentencia `UPDATE` correspondiente.
+
+**B.3** (3 pts) Responde brevemente:
+
+1. Si intentas insertar una función con `sala_id = 99` (que no existe en `salas`), ¿qué responde MySQL y qué mecanismo lo impide?
+
+2. Si intentas registrar una entrada con `descuento_pct = 120`, ¿qué restricción se activa y cuál sería el mensaje de error aproximado?
+
+---
+
+## Pregunta 3 — Consultas SQL para Decisiones {#sec-p3}
+
+**45 minutos · 35 puntos**
+
+### Configuración del entorno
+
+Carga el script `cinemax_db.sql` en HeidiSQL. Verifica que se crearon las 6 tablas y que contienen datos ejecutando:
+
+```sql
+USE cinemax;
+SELECT 'generos'   AS tabla, COUNT(*) AS filas FROM generos   UNION ALL
+SELECT 'peliculas',          COUNT(*)           FROM peliculas UNION ALL
+SELECT 'salas',              COUNT(*)           FROM salas     UNION ALL
+SELECT 'clientes',           COUNT(*)           FROM clientes  UNION ALL
+SELECT 'funciones',          COUNT(*)           FROM funciones UNION ALL
+SELECT 'entradas',           COUNT(*)           FROM entradas;
+```
+
+Deberías obtener: 5 géneros · 9 películas · 3 salas · 10 clientes · 12 funciones · 24 entradas.
+
+Para cada consulta: escríbela en tu archivo `.sql` con el comentario indicado, ejecútala y captura el resultado en pantalla.
+
+---
+
+### Parte A — SELECT y WHERE {#sec-p3a}
+
+**12 puntos**
+
+**Q1 — Clientes VIP** (4 pts)
+
+```sql
+-- Q1: Lista todos los clientes VIP ordenados por apellido ascendente.
+-- Muestra: cliente_id, nombre, apellido, email.
+SELECT ...
+```
+
+**Q2 — Películas para adultos con larga duración** (4 pts)
+
+```sql
+-- Q2: Lista todas las películas con clasificación G14 o G18,
+--     mostrando su título, nombre del género, duración y clasificación.
+--     Ordena por duración de mayor a menor.
+-- Requiere: JOIN entre peliculas y generos.
+SELECT ...
+```
+
+**Q3 — Funciones de abril 2026** (4 pts)
+
+```sql
+-- Q3: Lista todas las funciones programadas en abril de 2026.
+-- Muestra: funcion_id, fecha, hora, precio_base.
+-- Ordena por fecha y hora.
+SELECT ...
+```
+
+---
+
+### Parte B — Agregaciones: GROUP BY y HAVING {#sec-p3b}
+
+**12 puntos**
+
+**Q4 — Películas por género** (4 pts)
+
+```sql
+-- Q4: Muestra cuántas películas tiene cada género.
+-- Muestra: nombre del género, cantidad de películas.
+-- Ordena por cantidad de mayor a menor.
+-- Requiere: JOIN entre peliculas y generos.
+SELECT ...
+```
+
+**Q5 — Funciones por sala** (4 pts)
+
+```sql
+-- Q5: Muestra cuántas funciones tiene cada sala.
+-- Muestra solo las salas con 3 o más funciones programadas.
+-- Muestra: nombre de sala, tipo, total_funciones.
+-- Ordena por total_funciones de mayor a menor.
+-- Requiere: JOIN entre funciones y salas.
+SELECT ...
+```
+
+**Q6 — Ingresos por género** (4 pts)
+
+```sql
+-- Q6: Calcula el ingreso total generado por cada género.
+-- El ingreso de cada entrada es: cantidad × precio_base × (1 - descuento_pct / 100)
+-- Muestra: nombre del género, total_entradas_vendidas, ingreso_total.
+-- Ordena por ingreso_total de mayor a menor.
+-- Requiere: JOIN entre entradas, funciones, peliculas y generos.
+SELECT ...
+```
+
+**Pregunta de análisis Q6**: ¿Qué género genera más ingresos para CineMax? ¿Coincide con el género con más entradas vendidas? ¿Qué estrategia de programación recomendarías a Alejandra con base en estos datos?
+
+---
+
+### Parte C — JOINs para Reportes Completos {#sec-p3c}
+
+**11 puntos**
+
+**Q7 — Detalle completo de ventas** (6 pts)
+
+Alejandra quiere un reporte con el detalle de cada transacción:
+
+```sql
+-- Q7: Lista el detalle de cada compra de entradas.
+-- Muestra: entrada_id, nombre y apellido del cliente, segmento,
+--          título de la película, nombre de la sala, fecha, hora,
+--          cantidad, descuento_pct,
+--          total_a_pagar (calculado: cantidad × precio_base × (1 - descuento_pct/100)).
+-- Ordena por fecha DESC, entrada_id ASC.
+-- Requiere: JOIN entre entradas, clientes, funciones, peliculas, salas.
+SELECT ...
+```
+
+**Q8 — Películas con y sin funciones programadas** (5 pts)
+
+El equipo de programación quiere saber qué películas están en el catálogo pero aún no tienen ninguna función asignada:
+
+```sql
+-- Q8: Lista TODAS las películas del catálogo con el total de funciones programadas.
+-- Muestra: título, nombre del género, total_funciones (0 si no tiene ninguna).
+-- Ordena por total_funciones ASC (las sin funciones aparecen primero).
+-- Requiere: LEFT JOIN entre peliculas, generos y funciones.
+SELECT ...
+```
+
+**Pregunta de análisis Q8**: ¿Cuál película tiene `total_funciones = 0`? ¿Qué podría explicar esa situación desde el punto de vista del negocio?
+
+---
+
+## Criterios de Evaluación
+
+### Pregunta 1 (30 pts)
+
+| Criterio | Puntaje |
+|---|---|
+| B: Definición correcta de las 6 tablas (PK, columnas, FK) | 20 pts |
+| C: Diagrama ER con entidades, relaciones y cardinalidades correctas | 10 pts |
+| **Subtotal** | **30 pts** |
+
+### Pregunta 2 (35 pts)
+
+| Criterio | Puntaje |
+|---|---|
+| A: `peliculas` — PK, FK, tipos y CHECK correctos | 9 pts |
+| A: `salas` — PK, tipos y CHECK correctos | 8 pts |
+| A: `funciones` — PK, dos FK, tipos y CHECK correcto | 9 pts |
+| B.1: INSERT correcto con uso de LAST_INSERT_ID() o equivalente | 3 pts |
+| B.2: UPDATE correcto con WHERE específico | 3 pts |
+| B.3: Explicación correcta de FK y CHECK violations | 3 pts (1,5 c/u) |
+| **Subtotal** | **35 pts** |
+
+### Pregunta 3 (35 pts)
+
+| Criterio | Puntaje |
+|---|---|
+| Q1: SELECT + WHERE + ORDER BY correcto, resultado visible en captura | 4 pts |
+| Q2: JOIN + WHERE con IN + ORDER BY correcto | 4 pts |
+| Q3: WHERE con BETWEEN + ORDER BY correcto | 4 pts |
+| Q4: GROUP BY + JOIN correcto, orden descendente | 4 pts |
+| Q5: GROUP BY + HAVING ≥ 3 + JOIN correcto | 4 pts |
+| Q6: Agregación multi-JOIN, cálculo de ingreso correcto, análisis escrito | 4 pts + 1 análisis |
+| Q7: 5-tabla JOIN correcto, columna total_a_pagar calculada | 6 pts |
+| Q8: LEFT JOIN correcto, películas sin funciones identificadas, análisis escrito | 4 pts + 1 análisis |
+| **Subtotal** | **35 pts** |
+
+| | **Total** | **100 pts** |

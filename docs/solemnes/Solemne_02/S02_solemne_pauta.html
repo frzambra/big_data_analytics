@@ -58,33 +58,69 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="S02_solemne_pauta_files/libs/clipboard/clipboard.min.js"></script>
-<script src="S02_solemne_pauta_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="S02_solemne_pauta_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="S02_solemne_pauta_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="S02_solemne_pauta_files/libs/quarto-html/popper.min.js"></script>
-<script src="S02_solemne_pauta_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="S02_solemne_pauta_files/libs/quarto-html/anchor.min.js"></script>
-<link href="S02_solemne_pauta_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="S02_solemne_pauta_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="S02_solemne_pauta_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="S02_solemne_pauta_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="S02_solemne_pauta_files/libs/bootstrap/bootstrap-88e02f1c44f87c7f532509a952f3301d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-538d5bc5c147f17fcaa17a1866cecc2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
 
 
 </head>
 
 <body class="quarto-light">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Contenido</h2>
    
   <ul>
   <li><a href="#sec-p1" id="toc-sec-p1" class="nav-link active" data-scroll-target="#sec-p1"><span class="header-section-number">1</span> Pregunta 1 — Diseño del Modelo Relacional</a>
   <ul class="collapse">
-  <li><a href="#parte-b-diseño-del-modelo-relacional" id="toc-parte-b-diseño-del-modelo-relacional" class="nav-link" data-scroll-target="#parte-b-diseño-del-modelo-relacional"><span class="header-section-number">1.1</span> Parte B — Diseño del Modelo Relacional</a></li>
+  <li><a href="#parte-b-definición-de-tablas" id="toc-parte-b-definición-de-tablas" class="nav-link" data-scroll-target="#parte-b-definición-de-tablas"><span class="header-section-number">1.1</span> Parte B — Definición de Tablas</a></li>
   <li><a href="#parte-c-diagrama-entidad-relación" id="toc-parte-c-diagrama-entidad-relación" class="nav-link" data-scroll-target="#parte-c-diagrama-entidad-relación"><span class="header-section-number">1.2</span> Parte C — Diagrama Entidad-Relación</a></li>
   </ul></li>
   <li><a href="#sec-p2" id="toc-sec-p2" class="nav-link" data-scroll-target="#sec-p2"><span class="header-section-number">2</span> Pregunta 2 — Implementación SQL</a>
@@ -101,7 +137,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#resumen-de-puntajes" id="toc-resumen-de-puntajes" class="nav-link" data-scroll-target="#resumen-de-puntajes"><span class="header-section-number">4</span> Resumen de Puntajes</a></li>
   </ul>
 </nav>
-</div>
+    </div>
+<!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -140,8 +177,8 @@ Warning
 <hr>
 <section id="sec-p1" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="sec-p1"><span class="header-section-number">1</span> Pregunta 1 — Diseño del Modelo Relacional</h2>
-<section id="parte-b-diseño-del-modelo-relacional" class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="parte-b-diseño-del-modelo-relacional"><span class="header-section-number">1.1</span> Parte B — Diseño del Modelo Relacional</h3>
+<section id="parte-b-definición-de-tablas" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="parte-b-definición-de-tablas"><span class="header-section-number">1.1</span> Parte B — Definición de Tablas</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -503,7 +540,7 @@ Note
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>       <span class="kw">JOIN</span> generos g <span class="kw">ON</span> p.genero_id <span class="op">=</span> g.genero_id</span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  p.clasificacion <span class="kw">IN</span> (<span class="st">'G14'</span>, <span class="st">'G18'</span>)</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> p.duracion_min <span class="kw">DESC</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado esperado</strong> (6 filas):</p>
+<p><strong>Resultado esperado</strong> (5 filas):</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -521,30 +558,24 @@ Note
 <td>G14</td>
 </tr>
 <tr class="even">
-<td>Voces del Silencio</td>
-<td>Drama</td>
-<td>126</td>
-<td>G14</td>
-</tr>
-<tr class="odd">
 <td>Guardianes del Cosmos</td>
 <td>Acción</td>
 <td>130</td>
 <td>G14</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Voces del Silencio</td>
 <td>Drama</td>
 <td>126</td>
 <td>G14</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>El Último Grito</td>
 <td>Terror</td>
 <td>105</td>
 <td>G18</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>La Noche Eterna</td>
 <td>Terror</td>
 <td>98</td>
@@ -797,7 +828,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Criterio</strong>: 4 pts para la consulta + 1 pt para el análisis escrito. Consulta: 1 pt 4-tabla JOIN correcto, 1 pt cálculo de ingreso con fórmula correcta, 1 pt GROUP BY genero, 1 pt ORDER BY ingreso DESC. Análisis: 1 pt recomendación con datos que la justifican.</p>
+<p><strong>Criterio</strong>: 4 pts. Consulta: 1 pt 4-tabla JOIN correcto, 1 pt cálculo de ingreso con fórmula correcta, 1 pt GROUP BY genero + ORDER BY ingreso DESC, 1 pt análisis escrito con recomendación respaldada por los datos.</p>
 </div>
 </div>
 <hr>
@@ -1076,7 +1107,7 @@ Note
 <tr class="even">
 <td>P3</td>
 <td>Q6 Multi-JOIN + fórmula ingreso + análisis</td>
-<td>5 pts</td>
+<td>4 pts</td>
 </tr>
 <tr class="odd">
 <td>P3</td>
@@ -1089,26 +1120,22 @@ Note
 <td>5 pts</td>
 </tr>
 <tr class="odd">
-<td>P3</td>
-<td>Capturas de pantalla (mínimo 4 consultas)</td>
-<td>3 pts</td>
-</tr>
-<tr class="even">
 <td><strong>P3 Total</strong></td>
 <td></td>
 <td><strong>35 pts</strong></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td></td>
 <td><strong>TOTAL</strong></td>
 <td><strong>100 pts</strong></td>
 </tr>
 </tbody>
 </table>
+
+
 </section>
 
-</main>
-<!-- /main column -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

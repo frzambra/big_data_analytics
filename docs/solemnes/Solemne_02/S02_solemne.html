@@ -58,27 +58,63 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="S02_solemne_files/libs/clipboard/clipboard.min.js"></script>
-<script src="S02_solemne_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="S02_solemne_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="S02_solemne_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="S02_solemne_files/libs/quarto-html/popper.min.js"></script>
-<script src="S02_solemne_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="S02_solemne_files/libs/quarto-html/anchor.min.js"></script>
-<link href="S02_solemne_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="S02_solemne_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="S02_solemne_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="S02_solemne_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="S02_solemne_files/libs/bootstrap/bootstrap-88e02f1c44f87c7f532509a952f3301d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-538d5bc5c147f17fcaa17a1866cecc2b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
 
 
 </head>
 
 <body class="quarto-light">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Contenido</h2>
    
   <ul>
@@ -87,8 +123,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#sec-p1" id="toc-sec-p1" class="nav-link" data-scroll-target="#sec-p1"><span class="header-section-number">3</span> Pregunta 1 — Diseño del Modelo Relacional</a>
   <ul class="collapse">
   <li><a href="#contexto" id="toc-contexto" class="nav-link" data-scroll-target="#contexto"><span class="header-section-number">3.1</span> Contexto</a></li>
-  <li><a href="#sec-p1b" id="toc-sec-p1b" class="nav-link" data-scroll-target="#sec-p1b"><span class="header-section-number">3.2</span> Parte B — Diseño del Modelo Relacional</a></li>
-  <li><a href="#sec-p1c" id="toc-sec-p1c" class="nav-link" data-scroll-target="#sec-p1c"><span class="header-section-number">3.3</span> Parte C — Diagrama Entidad-Relación</a></li>
+  <li><a href="#sec-p1b" id="toc-sec-p1b" class="nav-link" data-scroll-target="#sec-p1b"><span class="header-section-number">3.2</span> Parte A — Diseño del Modelo Relacional</a></li>
+  <li><a href="#sec-p1c" id="toc-sec-p1c" class="nav-link" data-scroll-target="#sec-p1c"><span class="header-section-number">3.3</span> Parte B — Diagrama Entidad-Relación</a></li>
   </ul></li>
   <li><a href="#sec-p2" id="toc-sec-p2" class="nav-link" data-scroll-target="#sec-p2"><span class="header-section-number">4</span> Pregunta 2 — Implementación SQL</a>
   <ul class="collapse">
@@ -111,7 +147,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   </ul>
 </nav>
-</div>
+    </div>
+<!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -419,7 +456,7 @@ Warning
 <hr>
 </section>
 <section id="sec-p1b" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="sec-p1b"><span class="header-section-number">3.2</span> Parte B — Diseño del Modelo Relacional</h3>
+<h3 data-number="3.2" class="anchored" data-anchor-id="sec-p1b"><span class="header-section-number">3.2</span> Parte A — Diseño del Modelo Relacional</h3>
 <p><strong>20 puntos</strong></p>
 <p>Aplicando las formas normales, la tabla plana debe descomponerse en <strong>6 tablas</strong>. Completa la definición de cada tabla indicando su clave primaria, las columnas que contiene y las claves foráneas si las tiene:</p>
 <table class="caption-top table">
@@ -486,15 +523,15 @@ Important
 <hr>
 </section>
 <section id="sec-p1c" class="level3" data-number="3.3">
-<h3 data-number="3.3" class="anchored" data-anchor-id="sec-p1c"><span class="header-section-number">3.3</span> Parte C — Diagrama Entidad-Relación</h3>
+<h3 data-number="3.3" class="anchored" data-anchor-id="sec-p1c"><span class="header-section-number">3.3</span> Parte B — Diagrama Entidad-Relación</h3>
 <p><strong>10 puntos</strong></p>
-<p>Dibuja (en papel o en draw.io/dbdiagram.io) el diagrama Entidad-Relación del modelo que definiste en la Parte B. El diagrama debe mostrar:</p>
+<p>Dibuja en draw.io el diagrama Entidad-Relación del modelo que definiste en la Parte B. El diagrama debe mostrar:</p>
 <ol type="1">
 <li>Las 6 entidades con sus atributos principales.</li>
 <li>Las relaciones entre entidades con su <strong>cardinalidad</strong> (1:N, M:N, etc.).</li>
 <li>Las claves primarias (subrayadas) y foráneas (identificadas con FK).</li>
 </ol>
-<p>Si usas draw.io o dbdiagram.io, exporta el diagrama como imagen e inclúyela en tu documento de respuestas.</p>
+<p>Exporta el diagrama draw.io como imagen e inclúyela en tu documento de respuestas.</p>
 <p><strong>Guía de cardinalidades a verificar:</strong></p>
 <table class="caption-top table">
 <thead>
@@ -625,7 +662,7 @@ Tip
 </section>
 <section id="sec-p3" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="sec-p3"><span class="header-section-number">5</span> Pregunta 3 — Consultas SQL para Decisiones</h2>
-<p><strong>45 minutos · 35 puntos</strong></p>
+<p><strong>60 minutos · 35 puntos</strong></p>
 <section id="configuración-del-entorno" class="level3" data-number="5.1">
 <h3 data-number="5.1" class="anchored" data-anchor-id="configuración-del-entorno"><span class="header-section-number">5.1</span> Configuración del entorno</h3>
 <p>Carga el script <code>cinemax_db.sql</code> en HeidiSQL. Verifica que se crearon las 6 tablas y que contienen datos ejecutando:</p>
@@ -727,11 +764,11 @@ Tip
 </thead>
 <tbody>
 <tr class="odd">
-<td>B: Definición correcta de las 6 tablas (PK, columnas, FK)</td>
+<td>A: Definición correcta de las 6 tablas (PK, columnas, FK)</td>
 <td>20 pts</td>
 </tr>
 <tr class="even">
-<td>C: Diagrama ER con entidades, relaciones y cardinalidades correctas</td>
+<td>B: Diagrama ER con entidades, relaciones y cardinalidades correctas</td>
 <td>10 pts</td>
 </tr>
 <tr class="odd">
@@ -822,7 +859,7 @@ Tip
 </tr>
 <tr class="even">
 <td>Q6: Agregación multi-JOIN, cálculo de ingreso correcto, análisis escrito</td>
-<td>4 pts + 1 análisis</td>
+<td>4 pts</td>
 </tr>
 <tr class="odd">
 <td>Q7: 5-tabla JOIN correcto, columna total_a_pagar calculada</td>
@@ -839,11 +876,12 @@ Tip
 </tbody>
 </table>
 <div class="line-block">| <strong>Total</strong> | <strong>100 pts</strong> |</div>
+
+
 </section>
 </section>
 
-</main>
-<!-- /main column -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

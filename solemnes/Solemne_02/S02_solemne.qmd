@@ -73,7 +73,7 @@ Juan descargó un extracto de `cinemax_ventas_planas.csv`. La hoja tiene una fil
 
 ---
 
-### Parte B — Diseño del Modelo Relacional {#sec-p1b}
+### Parte A — Diseño del Modelo Relacional {#sec-p1b}
 
 **20 puntos**
 
@@ -94,7 +94,7 @@ Aplicando las formas normales, la tabla plana debe descomponerse en **6 tablas**
 
 ---
 
-### Parte C — Diagrama Entidad-Relación {#sec-p1c}
+### Parte B — Diagrama Entidad-Relación {#sec-p1c}
 
 **10 puntos**
 
@@ -217,7 +217,7 @@ Para la película nueva necesitarás primero insertar el género y luego usar su
 
 ## Pregunta 3 — Consultas SQL para Decisiones {#sec-p3}
 
-**45 minutos · 35 puntos**
+**60 minutos · 35 puntos**
 
 ### Configuración del entorno
 
@@ -353,8 +353,8 @@ SELECT ...
 
 | Criterio | Puntaje |
 |---|---|
-| B: Definición correcta de las 6 tablas (PK, columnas, FK) | 20 pts |
-| C: Diagrama ER con entidades, relaciones y cardinalidades correctas | 10 pts |
+| A: Definición correcta de las 6 tablas (PK, columnas, FK) | 20 pts |
+| B: Diagrama ER con entidades, relaciones y cardinalidades correctas | 10 pts |
 | **Subtotal** | **30 pts** |
 
 ### Pregunta 2 (35 pts)
@@ -378,7 +378,7 @@ SELECT ...
 | Q3: WHERE con BETWEEN + ORDER BY correcto | 4 pts |
 | Q4: GROUP BY + JOIN correcto, orden descendente | 4 pts |
 | Q5: GROUP BY + HAVING ≥ 3 + JOIN correcto | 4 pts |
-| Q6: Agregación multi-JOIN, cálculo de ingreso correcto, análisis escrito | 4 pts + 1 análisis |
+| Q6: Agregación multi-JOIN, cálculo de ingreso correcto, análisis escrito | 4 pts |
 | Q7: 5-tabla JOIN correcto, columna total_a_pagar calculada | 6 pts |
 | Q8: LEFT JOIN correcto, películas sin funciones identificadas, análisis escrito | 4 pts + 1 análisis |
 | **Subtotal** | **35 pts** |

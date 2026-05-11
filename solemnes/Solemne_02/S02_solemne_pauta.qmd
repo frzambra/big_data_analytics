@@ -17,7 +17,7 @@ format:
 
 ## Pregunta 1 — Diseño del Modelo Relacional {#sec-p1}
 
-### Parte B — Diseño del Modelo Relacional
+### Parte B — Definición de Tablas
 
 | Tabla | Clave primaria | Columnas que incluye | Claves foráneas |
 |---|---|---|---|
@@ -243,12 +243,11 @@ WHERE  p.clasificacion IN ('G14', 'G18')
 ORDER BY p.duracion_min DESC;
 ```
 
-**Resultado esperado** (6 filas):
+**Resultado esperado** (5 filas):
 
 | titulo | genero | duracion_min | clasificacion |
 |---|---|---|---|
 | Ruta Peligrosa | Acción | 142 | G14 |
-| Voces del Silencio | Drama | 126 | G14 |
 | Guardianes del Cosmos | Acción | 130 | G14 |
 | Voces del Silencio | Drama | 126 | G14 |
 | El Último Grito | Terror | 105 | G18 |
@@ -380,7 +379,7 @@ ORDER BY ingreso_total DESC;
 **Análisis esperado**: Acción es el género con mayor ingreso total ($136.650) Y el mayor número de entradas vendidas (25), lo que confirma que es el motor financiero de CineMax. Sin embargo, Terror tiene 10 entradas vendidas pero solo $31.525 en ingresos, lo que sugiere que sus funciones se realizan en salas más pequeñas o con menor precio base. La recomendación para Alejandra sería mantener o aumentar la programación de películas de Acción para maximizar ingresos, y revisar la estrategia de precios para Terror, que tiene demanda pero bajo ingreso relativo.
 
 ::: {.callout-note}
-**Criterio**: 4 pts para la consulta + 1 pt para el análisis escrito. Consulta: 1 pt 4-tabla JOIN correcto, 1 pt cálculo de ingreso con fórmula correcta, 1 pt GROUP BY genero, 1 pt ORDER BY ingreso DESC. Análisis: 1 pt recomendación con datos que la justifican.
+**Criterio**: 4 pts. Consulta: 1 pt 4-tabla JOIN correcto, 1 pt cálculo de ingreso con fórmula correcta, 1 pt GROUP BY genero + ORDER BY ingreso DESC, 1 pt análisis escrito con recomendación respaldada por los datos.
 :::
 
 ---
@@ -480,9 +479,8 @@ ORDER BY total_funciones ASC, p.titulo;
 | P3 | Q3 WHERE BETWEEN fechas + ORDER BY | 4 pts |
 | P3 | Q4 GROUP BY + JOIN genero | 4 pts |
 | P3 | Q5 GROUP BY + HAVING ≥ 3 + JOIN sala | 4 pts |
-| P3 | Q6 Multi-JOIN + fórmula ingreso + análisis | 5 pts |
+| P3 | Q6 Multi-JOIN + fórmula ingreso + análisis | 4 pts |
 | P3 | Q7 5-tabla JOIN + total_a_pagar calculado | 6 pts |
 | P3 | Q8 LEFT JOIN + análisis películas sin funciones | 5 pts |
-| P3 | Capturas de pantalla (mínimo 4 consultas) | 3 pts |
 | **P3 Total** | | **35 pts** |
 | | **TOTAL** | **100 pts** |
